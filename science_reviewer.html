@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🔬 Science Reviewer</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Fredoka+One&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --sky: #38bdf8;
+  --sky-dark: #0284c7;
+  --mint: #34d399;
+  --coral: #fb7185;
+  --amber: #fbbf24;
+  --purple: #a78bfa;
+  --bg: #0f172a;
+  --surface: #1e293b;
+  --surface2: #273548;
+  --text: #f1f5f9;
+  --muted: #94a3b8;
+  --border: #334155;
+}
+
+body {
+  font-family: 'Nunito', sans-serif;
+  background: var(--bg);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--text);
+  background-image: radial-gradient(ellipse at 20% 20%, rgba(56,189,248,.07) 0%, transparent 60%),
+                    radial-gradient(ellipse at 80% 80%, rgba(167,139,250,.07) 0%, transparent 60%);
+}
+
+header {
+  width: 100%;
+  background: linear-gradient(135deg, #0c4a6e, #1e1b4b);
+  border-bottom: 1px solid var(--border);
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 4px 30px rgba(0,0,0,.4);
+}
+
+.header-icon {
+  font-size: 2rem;
+  animation: float 3s ease-in-out infinite;
+}
+@keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+
+header h1 {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.5rem;
+  background: linear-gradient(90deg, var(--sky), var(--purple));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+header .sub { font-size: .75rem; color: var(--muted); margin-top: 1px; }
+
+.header-controls {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.score-pill {
+  background: rgba(56,189,248,.15);
+  border: 1px solid rgba(56,189,248,.3);
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-weight: 800;
+  font-size: .85rem;
+  color: var(--sky);
+}
+
+.audio-btn {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  background: var(--surface2);
+  color: var(--text);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all .2s;
+  display: flex; align-items: center; justify-content: center;
+}
+.audio-btn:hover { background: var(--sky-dark); border-color: var(--sky); }
+.audio-btn.active { background: var(--sky-dark); border-color: var(--sky); color: white; }
+
+.chat-wrap {
+  width: 100%;
+  max-width: 680px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 16px 14px 0;
+}
+
+#chat-box {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding-bottom: 10px;
+  max-height: calc(100vh - 200px);
+  scroll-behavior: smooth;
+}
+
+#chat-box::-webkit-scrollbar { width: 4px; }
+#chat-box::-webkit-scrollbar-track { background: transparent; }
+#chat-box::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+.msg { display: flex; gap: 8px; }
+.msg.user { flex-direction: row-reverse; }
+
+.avatar {
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  font-size: 1rem;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.msg.bot .avatar { background: linear-gradient(135deg, #0c4a6e, #312e81); border: 1.5px solid rgba(56,189,248,.3); }
+.msg.user .avatar { background: linear-gradient(135deg, #164e63, #0c4a6e); border: 1.5px solid rgba(56,189,248,.2); }
+
+.bubble {
+  max-width: 78%;
+  padding: 11px 16px;
+  border-radius: 18px;
+  font-size: .9rem;
+  line-height: 1.6;
+  animation: pop .2s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes pop { from { transform: scale(.88) translateY(6px); opacity:0; } to { transform: scale(1) translateY(0); opacity:1; } }
+
+.msg.bot .bubble {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-bottom-left-radius: 5px;
+  color: var(--text);
+}
+.msg.user .bubble {
+  background: linear-gradient(135deg, var(--sky-dark), #1d4ed8);
+  border-bottom-right-radius: 5px;
+  color: white;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(56,189,248,.12);
+  border: 1.5px solid rgba(56,189,248,.35);
+  color: var(--sky);
+  border-radius: 30px;
+  padding: 5px 13px;
+  margin: 5px 4px 0 0;
+  font-size: .8rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all .15s;
+  user-select: none;
+  font-family: 'Nunito', sans-serif;
+}
+.chip:hover {
+  background: var(--sky-dark);
+  color: white;
+  border-color: var(--sky);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(56,189,248,.3);
+}
+
+/* Multiple choice option buttons */
+.mc-options {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-top: 10px;
+  width: 100%;
+}
+.mc-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255,255,255,.04);
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  padding: 9px 14px;
+  color: var(--text);
+  font-family: 'Nunito', sans-serif;
+  font-size: .88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all .15s;
+  text-align: left;
+  width: 100%;
+}
+.mc-btn:hover:not(:disabled) {
+  background: rgba(56,189,248,.12);
+  border-color: var(--sky);
+  color: var(--sky);
+  transform: translateX(3px);
+}
+.mc-btn .letter {
+  display: flex; align-items: center; justify-content: center;
+  width: 26px; height: 26px;
+  border-radius: 8px;
+  background: rgba(56,189,248,.15);
+  border: 1px solid rgba(56,189,248,.3);
+  color: var(--sky);
+  font-size: .78rem;
+  font-weight: 800;
+  flex-shrink: 0;
+  transition: all .15s;
+}
+.mc-btn:hover:not(:disabled) .letter {
+  background: var(--sky-dark);
+  color: white;
+}
+.mc-btn.correct {
+  background: rgba(52,211,153,.15) !important;
+  border-color: #34d399 !important;
+  color: #34d399 !important;
+  cursor: default;
+}
+.mc-btn.correct .letter { background: #34d399 !important; color: white !important; border-color: #34d399 !important; }
+.mc-btn.wrong {
+  background: rgba(251,113,133,.12) !important;
+  border-color: #fb7185 !important;
+  color: #fb7185 !important;
+  cursor: default;
+}
+.mc-btn.wrong .letter { background: #fb7185 !important; color: white !important; border-color: #fb7185 !important; }
+.mc-btn:disabled { cursor: default; transform: none !important; }
+
+.topic-tag {
+  display: inline-block;
+  background: linear-gradient(135deg, var(--purple), #7c3aed);
+  color: white;
+  font-size: .68rem;
+  font-weight: 800;
+  border-radius: 20px;
+  padding: 2px 10px;
+  margin-bottom: 5px;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+}
+
+/* speaking animation */
+.speaker-wave {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 14px;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+.speaker-wave span {
+  display: block;
+  width: 3px;
+  border-radius: 2px;
+  background: var(--sky);
+  animation: wave 1s ease-in-out infinite;
+}
+.speaker-wave span:nth-child(1) { height: 4px; animation-delay: 0s; }
+.speaker-wave span:nth-child(2) { height: 10px; animation-delay: .1s; }
+.speaker-wave span:nth-child(3) { height: 6px; animation-delay: .2s; }
+.speaker-wave span:nth-child(4) { height: 12px; animation-delay: .15s; }
+.speaker-wave span:nth-child(5) { height: 4px; animation-delay: .05s; }
+@keyframes wave { 0%,100% { transform: scaleY(1); } 50% { transform: scaleY(1.8); } }
+
+.typing {
+  display: flex;
+  gap: 4px;
+  padding: 12px 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  border-bottom-left-radius: 5px;
+  width: fit-content;
+}
+.dot { width: 7px; height: 7px; border-radius: 50%; background: var(--sky); animation: bounce .9s infinite; }
+.dot:nth-child(2) { animation-delay: .15s; }
+.dot:nth-child(3) { animation-delay: .3s; }
+@keyframes bounce { 0%,80%,100% { transform: translateY(0); opacity:.6; } 40% { transform: translateY(-7px); opacity:1; } }
+
+.input-bar {
+  width: 100%;
+  max-width: 680px;
+  padding: 10px 14px 18px;
+  display: flex;
+  gap: 8px;
+  background: var(--bg);
+  position: sticky;
+  bottom: 0;
+}
+
+#user-input {
+  flex: 1;
+  padding: 12px 18px;
+  border: 2px solid var(--border);
+  border-radius: 30px;
+  font-family: 'Nunito', sans-serif;
+  font-size: .92rem;
+  outline: none;
+  background: var(--surface);
+  color: var(--text);
+  transition: border-color .2s, box-shadow .2s;
+}
+#user-input::placeholder { color: var(--muted); }
+#user-input:focus {
+  border-color: var(--sky);
+  box-shadow: 0 0 0 3px rgba(56,189,248,.12);
+}
+
+#send-btn {
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  border: none;
+  background: linear-gradient(135deg, var(--sky), var(--sky-dark));
+  color: white;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 3px 14px rgba(56,189,248,.35);
+  flex-shrink: 0;
+}
+#send-btn:hover { transform: scale(1.08); box-shadow: 0 5px 20px rgba(56,189,248,.5); }
+#send-btn:disabled { opacity: .5; transform: none; }
+
+/* result modal */
+.result-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.7);
+  backdrop-filter: blur(6px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 100;
+  opacity: 0; pointer-events: none;
+  transition: opacity .3s;
+}
+.result-overlay.show { opacity: 1; pointer-events: all; }
+.result-card {
+  background: linear-gradient(135deg, #1e293b, #0f172a);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 36px 40px;
+  text-align: center;
+  max-width: 360px;
+  width: 90%;
+  box-shadow: 0 20px 60px rgba(0,0,0,.5);
+  transform: scale(.9);
+  transition: transform .3s cubic-bezier(.34,1.56,.64,1);
+}
+.result-overlay.show .result-card { transform: scale(1); }
+.result-emoji { font-size: 4rem; margin-bottom: 12px; display: block; }
+.result-title { font-family: 'Fredoka One', cursive; font-size: 1.8rem; margin-bottom: 6px; color: var(--sky); }
+.result-score { font-size: 3rem; font-weight: 900; margin: 10px 0; }
+.result-msg { color: var(--muted); font-size: .9rem; margin-bottom: 20px; }
+.result-btn {
+  background: linear-gradient(135deg, var(--sky), var(--sky-dark));
+  border: none;
+  border-radius: 30px;
+  padding: 12px 30px;
+  color: white;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+  box-shadow: 0 4px 16px rgba(56,189,248,.3);
+}
+.result-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(56,189,248,.5); }
+
+/* ── Notes Panel ─────────────────────────────────────────────── */
+.notes-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.75); backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 200; opacity: 0; pointer-events: none; transition: opacity .3s;
+}
+.notes-overlay.show { opacity: 1; pointer-events: all; }
+.notes-panel {
+  background: linear-gradient(160deg, #0f172a, #1e293b);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  width: 92%; max-width: 720px;
+  max-height: 88vh;
+  display: flex; flex-direction: column;
+  box-shadow: 0 24px 60px rgba(0,0,0,.6);
+  overflow: hidden;
+  transform: translateY(30px);
+  transition: transform .35s cubic-bezier(.34,1.2,.64,1);
+}
+.notes-overlay.show .notes-panel { transform: translateY(0); }
+.notes-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 22px;
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(135deg, #0c4a6e44, #31288444);
+}
+.notes-header h2 { font-family: 'Fredoka One', cursive; font-size: 1.3rem; color: var(--sky); }
+.notes-close {
+  width: 34px; height: 34px; border-radius: 50%;
+  border: 1.5px solid var(--border); background: var(--surface2);
+  color: var(--text); font-size: 1rem; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all .2s;
+}
+.notes-close:hover { background: var(--coral); border-color: var(--coral); }
+.notes-body { overflow-y: auto; padding: 20px 22px; flex: 1; }
+.notes-body::-webkit-scrollbar { width: 4px; }
+.notes-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+.notes-topic { margin-bottom: 28px; }
+.notes-topic-title {
+  font-family: 'Fredoka One', cursive; font-size: 1.05rem;
+  color: var(--sky); margin-bottom: 10px;
+  padding-bottom: 6px; border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 8px;
+}
+.notes-item {
+  display: flex; gap: 10px; align-items: flex-start;
+  padding: 7px 0; border-bottom: 1px solid rgba(255,255,255,.04);
+  font-size: .88rem; line-height: 1.55;
+}
+.notes-item:last-child { border-bottom: none; }
+.notes-term {
+  font-weight: 800; color: var(--amber); min-width: 160px;
+  flex-shrink: 0; font-size: .85rem;
+}
+.notes-def { color: #cbd5e1; }
+.notes-tabs {
+  display: flex; gap: 6px; padding: 12px 22px 0;
+  border-bottom: 1px solid var(--border);
+  overflow-x: auto;
+}
+.notes-tab {
+  padding: 7px 16px; border-radius: 12px 12px 0 0;
+  border: 1px solid var(--border); border-bottom: none;
+  background: transparent; color: var(--muted);
+  font-family: 'Nunito', sans-serif; font-size: .8rem; font-weight: 700;
+  cursor: pointer; transition: all .15s; white-space: nowrap;
+}
+.notes-tab.active { background: var(--surface); color: var(--sky); border-color: var(--sky); }
+.notes-tab:hover:not(.active) { color: var(--text); background: var(--surface2); }
+.notes-section { display: none; }
+.notes-section.active { display: block; }
+
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-icon">🔬</div>
+  <div>
+    <h1>Science Reviewer</h1>
+    <div class="sub">Motion & Forces · Sound · Light</div>
+  </div>
+  <div class="header-controls">
+    <div class="score-pill">⭐ <span id="score-val">0</span> / <span id="total-val">0</span></div>
+    <button class="audio-btn" id="notes-toggle" title="Study Notes" onclick="document.getElementById('notes-overlay').classList.add('show')">📖</button>
+    <button class="audio-btn active" id="audio-toggle" title="Toggle Audio">🔊</button>
+  </div>
+</header>
+
+<div class="chat-wrap">
+  <div id="chat-box"></div>
+</div>
+
+<div class="input-bar">
+  <input type="text" id="user-input" placeholder="Type your answer here…" autocomplete="off" />
+  <button id="send-btn">➤</button>
+</div>
+
+<div class="result-overlay" id="result-overlay">
+  <div class="result-card">
+    <span class="result-emoji" id="res-emoji">🏆</span>
+    <div class="result-title">Quiz Complete!</div>
+    <div class="result-score"><span id="res-score">0</span>/<span id="res-total">0</span></div>
+    <div class="result-msg" id="res-msg">Great job!</div>
+    <button class="result-btn" onclick="restartApp()">🔄 Play Again</button>
+  </div>
+</div>
+
+<script>
+// ─── DATA ──────────────────────────────────────────────────────────────────
+const topics = {
+  "MOTION AND FORCES": [
+    { q: "What is motion?", a: "change in position", hint: "Think about what happens when something moves from one place to another." },
+    { q: "What is a force?", a: "push or pull", hint: "It's two things combined — what you do when you open or close a door." },
+    { q: "What is wind?", a: "moving air", hint: "Think about what air does when it moves." },
+    { q: "What type of force is friction?", a: "force that resists the sliding or rolling", hint: "It's the reason things slow down when they move on surfaces." },
+    { q: "What is carrying as a type of motion?", a: "a motion that supports an object while it moves from one place to another", hint: "Think about what you do when you hold a bag and walk." },
+    { q: "What is rolling?", a: "type of movement which an object turns over and over", hint: "A ball does this on the floor." },
+    { q: "A push is a force that moves an object which direction from you?", a: "away", hint: "It sends the object in the opposite direction from you." },
+    { q: "Name two natural forces.", a: "wind and moving water", hint: "Think about forces found in nature, not made by humans." },
+    { q: "What is the original position in motion?", a: "the point where you start before moving", hint: "It's your starting location." },
+    { q: "Name two things that can affect motion.", a: "size, weight, shape, material, or texture", hint: "Think about properties of an object like how big or heavy it is." },
+  ],
+  "SOUND": [
+    { q: "Where do sounds come from?", a: "vibrations", hint: "When something shakes back and forth very quickly, it creates this." },
+    { q: "What is volume?", a: "loudness or softness of sound", hint: "When you turn up the TV, you're changing this." },
+    { q: "What is pitch?", a: "highness or lowness of sound", hint: "A mouse has a high one; a lion has a low one." },
+    { q: "What produces a high-pitched sound?", a: "fast vibration", hint: "Think about the speed of vibration." },
+    { q: "What is an echo?", a: "sound you hear coming back to you", hint: "You hear it when you shout in a cave or mountain." },
+    { q: "What is echolocation?", a: "ability to know the location and surroundings", hint: "Bats use this to navigate in the dark." },
+    { q: "What is timbre?", a: "the quality of sound", hint: "It's what makes a guitar sound different from a piano even at the same pitch." },
+    { q: "What is ultrasound?", a: "sound waves too high to be heard by humans", hint: "Dogs can hear this, but humans cannot." },
+    { q: "What can a 2D echo help doctors understand?", a: "how the heart of a patient is doing", hint: "It's a medical procedure using ultrasound on a specific organ." },
+    { q: "What can be the medium for sound waves? Name the three states.", a: "solid, liquid, or gas", hint: "Sound needs a material to travel through — name the three states of matter." },
+  ],
+  "LIGHT": [
+    { q: "What is the main natural source of light on Earth?", a: "sun", hint: "It rises every morning in the sky." },
+    { q: "What is bioluminescence?", a: "ability of animals to make light", hint: "Fireflies do this at night." },
+    { q: "What is a transparent object?", a: "allows light to pass through completely", hint: "You can see clearly through it, like a clean glass window." },
+    { q: "What is a translucent object?", a: "allows some light to pass through", hint: "It lets some light through but not all — like frosted glass." },
+    { q: "What is an opaque object?", a: "does not allow any light to pass through", hint: "It blocks all light and forms a shadow." },
+    { q: "What is a shadow?", a: "dark area or shape formed when an object blocks light", hint: "It forms on the opposite side of a light source." },
+    { q: "What is reflection?", a: "when light bounces back", hint: "A mirror does this to light." },
+    { q: "How does light travel?", a: "in a straight line", hint: "It doesn't curve on its own — it goes directly forward." },
+    { q: "Give one use of light.", a: "see things, decoration, or communicate", hint: "Think about daily uses of light beyond just brightness." },
+    { q: "What type of source are lamps, flashlights, and lightbulbs?", a: "artificial source of light", hint: "Humans created these — they are not natural." },
+  ],
+};
+
+const trueOrFalse = [
+  { q: "The Sun is an artificial source of light.", a: "false" },
+  { q: "Fireflies are natural sources of light.", a: "true" },
+  { q: "An opaque object forms a shadow when it blocks the light.", a: "true" },
+  { q: "Eyeglasses, drinking glasses, and plastic covers are examples of transparent objects.", a: "true" },
+  { q: "Light travels in a straight line.", a: "true" },
+  { q: "Light helps you hear objects.", a: "false" },
+  { q: "The sun is the main source of light on Earth.", a: "true" },
+  { q: "Light bouncing off after hitting a surface is called refraction.", a: "false" },
+  { q: "Light is a form of energy.", a: "true" },
+  { q: "Light can be used as decoration.", a: "true" },
+];
+
+// ─── STATE ──────────────────────────────────────────────────────────────────
+let state = {
+  awaiting: 'menu',
+  mode: null,
+  questions: [],
+  qIndex: 0,
+  score: 0,
+  total: 0,
+  hintUsed: false,
+  audioEnabled: true,
+};
+
+// ─── TTS ────────────────────────────────────────────────────────────────────
+let speaking = false;
+function speak(text) {
+  if (!state.audioEnabled) return;
+  window.speechSynthesis.cancel();
+  const clean = text.replace(/<[^>]+>/g, '').replace(/[🔬🌟✅❌💡⏭️🏆😊💪🔄🔲📚]/g, '');
+  const utt = new SpeechSynthesisUtterance(clean);
+  utt.rate = 1.0;
+  utt.pitch = 1.05;
+  utt.volume = 1;
+  // prefer a clear English voice
+  const voices = window.speechSynthesis.getVoices();
+  const preferred = voices.find(v => v.lang.startsWith('en') && v.name.includes('Female'))
+    || voices.find(v => v.lang.startsWith('en'))
+    || voices[0];
+  if (preferred) utt.voice = preferred;
+  utt.onstart = () => { speaking = true; showWave(true); };
+  utt.onend = utt.onerror = () => { speaking = false; showWave(false); };
+  window.speechSynthesis.speak(utt);
+}
+
+function showWave(on) {
+  document.querySelectorAll('.speaker-wave').forEach(w => {
+    w.style.display = on ? 'inline-flex' : 'none';
+  });
+}
+
+// ensure voices loaded
+window.speechSynthesis.onvoiceschanged = () => {};
+
+// ─── UI HELPERS ─────────────────────────────────────────────────────────────
+const chatBox = document.getElementById('chat-box');
+const input = document.getElementById('user-input');
+const sendBtn = document.getElementById('send-btn');
+const scoreVal = document.getElementById('score-val');
+const totalVal = document.getElementById('total-val');
+
+function scrollBottom() { chatBox.scrollTop = chatBox.scrollHeight; }
+
+function addMessage(role, html, speakText) {
+  const div = document.createElement('div');
+  div.className = `msg ${role}`;
+  const avatar = document.createElement('div');
+  avatar.className = 'avatar';
+  avatar.textContent = role === 'bot' ? '🤖' : '🧑';
+  const bubble = document.createElement('div');
+  bubble.className = 'bubble';
+
+  if (role === 'bot') {
+    bubble.innerHTML = html + '<span class="speaker-wave" style="display:none"><span></span><span></span><span></span><span></span><span></span></span>';
+  } else {
+    bubble.innerHTML = html;
+  }
+
+  div.appendChild(avatar);
+  div.appendChild(bubble);
+  chatBox.appendChild(div);
+  scrollBottom();
+  bindChips();
+
+  if (role === 'bot') {
+    const txt = speakText || html.replace(/<[^>]+>/g, ' ');
+    setTimeout(() => speak(txt), 300);
+  }
+}
+
+function addTyping() {
+  const d = document.createElement('div');
+  d.className = 'msg bot'; d.id = 'typing';
+  d.innerHTML = '<div class="avatar">🤖</div><div class="typing"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>';
+  chatBox.appendChild(d); scrollBottom();
+}
+function removeTyping() { const t = document.getElementById('typing'); if (t) t.remove(); }
+
+function bindChips() {
+  document.querySelectorAll('.chip:not([data-bound])').forEach(c => {
+    c.dataset.bound = '1';
+    c.addEventListener('click', () => handleUserMessage(c.dataset.val));
+  });
+}
+
+function updateScore() {
+  scoreVal.textContent = state.score;
+  totalVal.textContent = state.total;
+}
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function normalize(s) {
+  return s.toLowerCase().trim().replace(/\s+/g, ' ');
+}
+
+function checkAnswer(user, correct) {
+  const u = normalize(user);
+  const c = normalize(correct);
+  if (u === c) return true;
+  const parts = c.split(/[,;\/]/);
+  for (const p of parts) {
+    if (u.includes(p.trim()) && p.trim().length > 3) return true;
+  }
+  if (c.includes(u) && u.length > 4) return true;
+  return false;
+}
+
+function showResult() {
+  const pct = Math.round((state.score / state.total) * 100);
+  const emoji = pct >= 90 ? '🏆' : pct >= 70 ? '🌟' : pct >= 50 ? '😊' : '💪';
+  const msg = pct >= 90 ? 'Excellent work! You nailed it!' : pct >= 70 ? 'Great job! Keep it up!' : pct >= 50 ? 'Good effort! Review and try again!' : 'Keep studying — you can do it!';
+  document.getElementById('res-emoji').textContent = emoji;
+  document.getElementById('res-score').textContent = state.score;
+  document.getElementById('res-total').textContent = state.total;
+  document.getElementById('res-msg').textContent = msg;
+  document.getElementById('result-overlay').classList.add('show');
+  speak(`Quiz complete! Your score is ${state.score} out of ${state.total}. ${msg}`);
+}
+
+function restartApp() {
+  document.getElementById('result-overlay').classList.remove('show');
+  state = { awaiting: 'menu', mode: null, questions: [], allAnswers: [], qIndex: 0, score: 0, total: 0, hintUsed: false, audioEnabled: state.audioEnabled };
+  chatBox.innerHTML = '';
+  document.querySelector('.input-bar').style.display = 'flex';
+  updateScore();
+  showMenu();
+}
+
+// ─── GAME LOGIC ─────────────────────────────────────────────────────────────
+function showMenu() {
+  addMessage('bot',
+    `👋 <strong>Hello! I'm your Science Reviewer!</strong><br>I'll help you review <em>Motion & Forces</em>, <em>Sound</em>, and <em>Light</em>.<br><br>What would you like to do?<br>
+    <span class="chip" data-val="1">1️⃣ Study a Topic</span>
+    <span class="chip" data-val="2">2️⃣ True or False Quiz</span>
+    <span class="chip" data-val="3">3️⃣ Full Review — All Topics</span>`,
+    "Hello! I'm your Science Reviewer. What would you like to do? Study a topic, take a True or False quiz, or do a full review of all topics?"
+  );
+  state.awaiting = 'menu';
+}
+
+// ─── MULTIPLE CHOICE HELPERS ─────────────────────────────────────────────────
+function getAllAnswers() {
+  const answers = [];
+  for (const qs of Object.values(topics)) {
+    for (const q of qs) answers.push(q.a);
+  }
+  return answers;
+}
+
+function generateChoices(correctAnswer, allAnswers) {
+  const pool = allAnswers.filter(a => a !== correctAnswer);
+  const distractors = shuffle(pool).slice(0, 3);
+  return shuffle([correctAnswer, ...distractors]);
+}
+
+function buildMCHtml(q, num, choices) {
+  const tag = q.topic ? `<span class="topic-tag">${q.topic}</span><br>` : '';
+  const letters = ['A','B','C','D'];
+  const btns = choices.map((c, i) =>
+    `<button class="mc-btn" data-answer="${encodeURIComponent(c)}" onclick="handleMCClick(this)">
+      <span class="letter">${letters[i]}</span>${c}
+    </button>`
+  ).join('');
+  return `${tag}<strong>Q${num} of ${state.total}:</strong> ${q.q}<div class="mc-options">${btns}</div>`;
+}
+
+function handleMCClick(btn) {
+  const allBtns = btn.closest('.mc-options').querySelectorAll('.mc-btn');
+  allBtns.forEach(b => b.disabled = true);
+
+  const chosen = decodeURIComponent(btn.dataset.answer);
+  const q = state.questions[state.qIndex];
+  const correct = chosen === q.a;
+
+  allBtns.forEach(b => {
+    if (decodeURIComponent(b.dataset.answer) === q.a) b.classList.add('correct');
+  });
+  if (!correct) btn.classList.add('wrong');
+
+  setTimeout(() => {
+    if (correct) {
+      state.score++;
+      addMessage('bot', `✅ <strong>Correct!</strong> +1 point! The answer is: <strong>${q.a}</strong>`, `Correct! The answer is: ${q.a}`);
+    } else {
+      addMessage('bot', `❌ <strong>Not quite!</strong> You answered: <em>${chosen}</em><br>✏️ The correct answer is: <strong>${q.a}</strong>`, `Not quite! The correct answer is: ${q.a}`);
+    }
+    state.qIndex++;
+    updateScore();
+    if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+    else setTimeout(showResult, 900);
+  }, 650);
+}
+
+function nextQuestion() {
+  const qi = state.qIndex;
+  const q = state.questions[qi];
+  const num = qi + 1;
+  const isTF = state.mode === 'tf';
+  const isFull = state.mode === 'full';
+  const tag = q.topic ? `<span class="topic-tag">${q.topic}</span><br>` : '';
+
+  if (isFull) {
+    const choices = generateChoices(q.a, state.allAnswers);
+    const html = buildMCHtml(q, num, choices);
+    addMessage('bot', html, `Question ${num}. ${q.q}`);
+    return;
+  }
+
+  const chips = isTF
+    ? `<br><span class="chip" data-val="true">✅ True</span><span class="chip" data-val="false">❌ False</span>`
+    : `<br><small style="color:var(--muted)">Type your answer · type <em>hint</em> for a clue · type <em>skip</em> to skip</small>`;
+  const html = `${tag}<strong>Q${num} of ${state.total}:</strong> ${q.q}${chips}`;
+  addMessage('bot', html, `Question ${num}. ${q.q}`);
+}
+
+function handleUserMessage(msg) {
+  if (!msg.trim()) return;
+  window.speechSynthesis.cancel();
+  addMessage('user', msg.replace(/</g, '&lt;'));
+
+  input.disabled = true;
+  sendBtn.disabled = true;
+  addTyping();
+
+  setTimeout(() => {
+    removeTyping();
+    input.disabled = false;
+    sendBtn.disabled = false;
+    input.focus();
+    processMessage(msg);
+  }, 500);
+}
+
+function processMessage(msg) {
+  const aw = state.awaiting;
+
+  if (aw === 'menu') {
+    if (msg === '1') {
+      state.awaiting = 'topic';
+      const keys = Object.keys(topics);
+      let chips = keys.map((t, i) => `<span class="chip" data-val="${i+1}">${i+1}. ${t}</span>`).join(' ');
+      addMessage('bot', `📚 Which topic would you like to review?<br>${chips}`, 'Which topic would you like to review?');
+    } else if (msg === '2') {
+      document.querySelector('.input-bar').style.display = 'flex';
+      state.mode = 'tf';
+      state.questions = shuffle(trueOrFalse);
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'tf_answer';
+      updateScore();
+      addMessage('bot', `🔲 <strong>True or False Quiz!</strong> ${state.total} questions. Let's go!`, `True or False Quiz! ${state.total} questions. Let's go!`);
+      setTimeout(nextQuestion, 800);
+    } else if (msg === '3') {
+      state.mode = 'full';
+      const all = [];
+      for (const [topicName, qs] of Object.entries(topics)) {
+        qs.forEach(q => all.push({ ...q, topic: topicName }));
+      }
+      state.questions = shuffle(all);
+      state.allAnswers = getAllAnswers();
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'mc_answer';
+      updateScore();
+      document.querySelector('.input-bar').style.display = 'none';
+      addMessage('bot', `🌟 <strong>Full Review — Multiple Choice!</strong> ${state.total} questions across all topics. Click your answer!`, `Full Review! Multiple Choice! ${state.total} questions. Click your answer!`);
+      setTimeout(nextQuestion, 800);
+    } else {
+      addMessage('bot',
+        `Please choose an option:<br><span class="chip" data-val="1">1️⃣ Study a Topic</span><span class="chip" data-val="2">2️⃣ True or False Quiz</span><span class="chip" data-val="3">3️⃣ Full Review</span>`,
+        'Please choose an option: Study a Topic, True or False Quiz, or Full Review.'
+      );
+    }
+    return;
+  }
+
+  if (aw === 'topic') {
+    const keys = Object.keys(topics);
+    const idx = parseInt(msg) - 1;
+    if (keys[idx]) {
+      const topicName = keys[idx];
+      state.mode = 'topic';
+      state.questions = shuffle(topics[topicName]);
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'answer';
+      updateScore();
+      addMessage('bot', `📚 <strong>${topicName}</strong> — ${state.total} questions. Let's begin!`, `${topicName}. ${state.total} questions. Let's begin!`);
+      setTimeout(nextQuestion, 800);
+    } else {
+      const chips = keys.map((t, i) => `<span class="chip" data-val="${i+1}">${i+1}. ${t}</span>`).join(' ');
+      addMessage('bot', `Please pick a valid topic:<br>${chips}`, 'Please pick a valid topic.');
+    }
+    return;
+  }
+
+  if (aw === 'answer') {
+    const q = state.questions[state.qIndex];
+    const m = normalize(msg);
+
+    if (m === 'hint') {
+      state.hintUsed = true;
+      addMessage('bot', `💡 <strong>Hint:</strong> ${q.hint}`, `Hint: ${q.hint}`);
+      return;
+    }
+    if (m === 'skip') {
+      addMessage('bot', `⏭️ Skipped! The answer was: <strong>${q.a}</strong>`, `Skipped. The answer was: ${q.a}`);
+      state.qIndex++;
+      state.hintUsed = false;
+      if (state.qIndex < state.total) {
+        setTimeout(nextQuestion, 600);
+      } else { showResult(); }
+      return;
+    }
+
+    const correct = checkAnswer(msg, q.a);
+    if (correct) {
+      if (!state.hintUsed) state.score++;
+      const note = state.hintUsed ? ' (hint used — no point awarded)' : ' Plus one point!';
+      addMessage('bot', `✅ <strong>Correct!</strong>${state.hintUsed ? ' <em>(hint used — no point)</em>' : ' +1 point!'} The answer is: <strong>${q.a}</strong>`, `Correct!${note} The answer is: ${q.a}`);
+    } else {
+      addMessage('bot', `❌ <strong>Not quite!</strong> You answered: <em>${msg}</em><br>✏️ The correct answer is: <strong>${q.a}</strong>`, `Not quite! The correct answer is: ${q.a}`);
+    }
+    state.qIndex++;
+    state.hintUsed = false;
+    updateScore();
+
+    if (state.qIndex < state.total) {
+      setTimeout(nextQuestion, 900);
+    } else { setTimeout(showResult, 900); }
+    return;
+  }
+
+  if (aw === 'tf_answer') {
+    const q = state.questions[state.qIndex];
+    let ans = normalize(msg);
+    if (ans === 't') ans = 'true';
+    if (ans === 'f') ans = 'false';
+
+    if (ans === 'true' || ans === 'false') {
+      const correct = ans === q.a;
+      if (correct) {
+        state.score++;
+        addMessage('bot', `✅ <strong>Correct!</strong> It is <strong>${q.a.toUpperCase()}</strong>.`, `Correct! It is ${q.a}.`);
+      } else {
+        addMessage('bot', `❌ <strong>Wrong!</strong> You answered: <em>${ans === 'true' ? 'True' : 'False'}</em><br>✏️ The correct answer is: <strong>${q.a.toUpperCase()}</strong>`, `Wrong! The correct answer is ${q.a}.`);
+      }
+      state.qIndex++;
+      updateScore();
+
+      if (state.qIndex < state.total) {
+        setTimeout(nextQuestion, 900);
+      } else { setTimeout(showResult, 900); }
+    } else {
+      addMessage('bot',
+        `Please answer True or False:<br><span class="chip" data-val="true">✅ True</span><span class="chip" data-val="false">❌ False</span>`,
+        'Please answer True or False.'
+      );
+    }
+    return;
+  }
+}
+
+// ─── CONTROLS ────────────────────────────────────────────────────────────────
+sendBtn.addEventListener('click', () => {
+  handleUserMessage(input.value);
+  input.value = '';
+});
+input.addEventListener('keydown', e => {
+  if (e.key === 'Enter') {
+    handleUserMessage(input.value);
+    input.value = '';
+  }
+});
+
+document.getElementById('audio-toggle').addEventListener('click', function() {
+  state.audioEnabled = !state.audioEnabled;
+  this.textContent = state.audioEnabled ? '🔊' : '🔇';
+  this.classList.toggle('active', state.audioEnabled);
+  if (!state.audioEnabled) window.speechSynthesis.cancel();
+});
+
+// ─── INIT ────────────────────────────────────────────────────────────────────
+window.addEventListener('load', () => {
+  // warm up voices
+  window.speechSynthesis.getVoices();
+  showMenu();
+});
+
+function switchTab(tabId, btn) {
+  document.querySelectorAll('.notes-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.notes-tab').forEach(b => b.classList.remove('active'));
+  document.getElementById(tabId).classList.add('active');
+  btn.classList.add('active');
+}
+
+</script>
+
+<!-- ── Notes Panel ── -->
+<div class="notes-overlay" id="notes-overlay">
+  <div class="notes-panel">
+    <div class="notes-header">
+      <h2>📖 Science Study Notes</h2>
+      <button class="notes-close" onclick="document.getElementById('notes-overlay').classList.remove('show')">✕</button>
+    </div>
+    <div class="notes-tabs">
+      <button class="notes-tab active" onclick="switchTab('tab-motion', this)">⚡ Motion & Forces</button>
+      <button class="notes-tab" onclick="switchTab('tab-sound', this)">🔊 Sound</button>
+      <button class="notes-tab" onclick="switchTab('tab-light', this)">💡 Light</button>
+      <button class="notes-tab" onclick="switchTab('tab-tf', this)">✅ True or False</button>
+    </div>
+    <div class="notes-body">
+
+      <div class="notes-section active" id="tab-motion">
+        <div class="notes-topic">
+          <div class="notes-topic-title">⚡ Motion and Forces</div>
+          <div class="notes-item"><span class="notes-term">Motion</span><span class="notes-def">Change in position</span></div>
+          <div class="notes-item"><span class="notes-term">Force</span><span class="notes-def">A push or pull</span></div>
+          <div class="notes-item"><span class="notes-term">Wind</span><span class="notes-def">Moving air — a natural force</span></div>
+          <div class="notes-item"><span class="notes-term">Natural Forces</span><span class="notes-def">Include wind and moving water</span></div>
+          <div class="notes-item"><span class="notes-term">Push</span><span class="notes-def">A force that moves an object away from the source</span></div>
+          <div class="notes-item"><span class="notes-term">Pull</span><span class="notes-def">A force that makes an object move toward the source</span></div>
+          <div class="notes-item"><span class="notes-term">Rolling</span><span class="notes-def">Type of movement where an object turns over and over</span></div>
+          <div class="notes-item"><span class="notes-term">Friction</span><span class="notes-def">Force that resists sliding or rolling</span></div>
+          <div class="notes-item"><span class="notes-term">Carrying</span><span class="notes-def">Motion that supports an object while it moves from one place to another</span></div>
+          <div class="notes-item"><span class="notes-term">Original Position</span><span class="notes-def">The point where you start before moving</span></div>
+          <div class="notes-item"><span class="notes-term">Moving Farther</span><span class="notes-def">Moving away from an object, increasing your distance from it</span></div>
+          <div class="notes-item"><span class="notes-term">Moving Closer</span><span class="notes-def">Moving toward an object</span></div>
+          <div class="notes-item"><span class="notes-term">Things that Affect Motion</span><span class="notes-def">Size, weight, shape, material, texture of surface</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-sound">
+        <div class="notes-topic">
+          <div class="notes-topic-title">🔊 Sound</div>
+          <div class="notes-item"><span class="notes-term">Sound</span><span class="notes-def">Comes from vibrations</span></div>
+          <div class="notes-item"><span class="notes-term">Loud Sound</span><span class="notes-def">Created by strong vibrations</span></div>
+          <div class="notes-item"><span class="notes-term">Soft Sound</span><span class="notes-def">Created by weak vibrations</span></div>
+          <div class="notes-item"><span class="notes-term">Volume</span><span class="notes-def">Loudness or softness of sound</span></div>
+          <div class="notes-item"><span class="notes-term">Pitch</span><span class="notes-def">Highness or lowness of sound; depends on frequency</span></div>
+          <div class="notes-item"><span class="notes-term">High-pitched Sound</span><span class="notes-def">Produced by fast vibration</span></div>
+          <div class="notes-item"><span class="notes-term">Low-pitched Sound</span><span class="notes-def">Produced by slow vibration</span></div>
+          <div class="notes-item"><span class="notes-term">Tension</span><span class="notes-def">Pulling force that stretches an object</span></div>
+          <div class="notes-item"><span class="notes-term">Timbre</span><span class="notes-def">The quality of sound</span></div>
+          <div class="notes-item"><span class="notes-term">Pleasant Sound</span><span class="notes-def">Clear pattern of sound; also called harmonious sound</span></div>
+          <div class="notes-item"><span class="notes-term">Unpleasant Sound</span><span class="notes-def">Loud and difficult to listen to; also called noise</span></div>
+          <div class="notes-item"><span class="notes-term">Sound Waves</span><span class="notes-def">Vibrations that transmit sound through a medium to our ears</span></div>
+          <div class="notes-item"><span class="notes-term">Medium</span><span class="notes-def">Can be solid, liquid, or gas — needed for sound to travel</span></div>
+          <div class="notes-item"><span class="notes-term">Vacuum</span><span class="notes-def">Sound waves CANNOT travel through a vacuum</span></div>
+          <div class="notes-item"><span class="notes-term">Echo</span><span class="notes-def">Sound you hear coming back to you after bouncing off a surface</span></div>
+          <div class="notes-item"><span class="notes-term">Echolocation</span><span class="notes-def">Ability to know location and surroundings using sound (used by bats)</span></div>
+          <div class="notes-item"><span class="notes-term">Ultrasound</span><span class="notes-def">Sound waves too high to be heard by humans</span></div>
+          <div class="notes-item"><span class="notes-term">2D Echo</span><span class="notes-def">Ultrasound procedure that helps doctors understand how the heart is doing</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-light">
+        <div class="notes-topic">
+          <div class="notes-topic-title">💡 Light</div>
+          <div class="notes-item"><span class="notes-term">Sun</span><span class="notes-def">Natural source of light; main source on Earth</span></div>
+          <div class="notes-item"><span class="notes-term">Bioluminescence</span><span class="notes-def">Ability of animals to make their own light (e.g., fireflies)</span></div>
+          <div class="notes-item"><span class="notes-term">Artificial Source of Light</span><span class="notes-def">Light made by humans — lamps, flashlights, lightbulbs</span></div>
+          <div class="notes-item"><span class="notes-term">How Light Behaves</span><span class="notes-def">Travels in a straight line · bends · bounces back (reflects)</span></div>
+          <div class="notes-item"><span class="notes-term">Shadow</span><span class="notes-def">Dark area formed behind an object that blocks light</span></div>
+          <div class="notes-item"><span class="notes-term">Transparent Object</span><span class="notes-def">Allows light to pass through completely (e.g., clear glass)</span></div>
+          <div class="notes-item"><span class="notes-term">Translucent Object</span><span class="notes-def">Allows some light to pass through (e.g., frosted glass)</span></div>
+          <div class="notes-item"><span class="notes-term">Opaque Object</span><span class="notes-def">Does not allow any light to pass through; forms a shadow</span></div>
+          <div class="notes-item"><span class="notes-term">Reflection</span><span class="notes-def">When light bounces back after hitting a surface</span></div>
+          <div class="notes-item"><span class="notes-term">Uses of Light</span><span class="notes-def">Helps you see things · used as decoration · used to communicate</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-tf">
+        <div class="notes-topic">
+          <div class="notes-topic-title">✅ True or False Answers</div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">The Sun is an <em>artificial</em> source of light. → <strong>FALSE</strong> — The Sun is natural.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#22c55e">TRUE</span><span class="notes-def">Fireflies are natural sources of light.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#22c55e">TRUE</span><span class="notes-def">An opaque object forms a shadow when it blocks the light.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#22c55e">TRUE</span><span class="notes-def">Eyeglasses, drinking glasses, plastic covers are transparent objects.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#22c55e">TRUE</span><span class="notes-def">Light travels in a straight line.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">Light helps you <em>hear</em> objects. → <strong>FALSE</strong> — Light helps you SEE.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#22c55e">TRUE</span><span class="notes-def">The sun is the main source of light on Earth.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">Light bouncing off a surface is called <em>refraction</em>. → <strong>FALSE</strong> — It's called REFLECTION.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#22c55e">TRUE</span><span class="notes-def">Light is a form of energy.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#22c55e">TRUE</span><span class="notes-def">Light can be used as decoration.</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

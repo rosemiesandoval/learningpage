@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="tl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🇵🇭 Araling Panlipunan Reviewer</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --gold: #f59e0b;
+  --gold-dark: #b45309;
+  --blue: #3b82f6;
+  --blue-dark: #1d4ed8;
+  --red: #ef4444;
+  --green: #22c55e;
+  --bg: #0c1a0e;
+  --surface: #132015;
+  --surface2: #1a2e1d;
+  --text: #f0fdf4;
+  --muted: #86efac;
+  --border: #166534;
+}
+
+body {
+  font-family: 'Baloo 2', cursive;
+  background: var(--bg);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--text);
+  background-image:
+    radial-gradient(ellipse at 10% 30%, rgba(245,158,11,.06) 0%, transparent 55%),
+    radial-gradient(ellipse at 90% 70%, rgba(59,130,246,.06) 0%, transparent 55%);
+}
+
+header {
+  width: 100%;
+  background: linear-gradient(135deg, #14532d, #1e3a5f);
+  border-bottom: 2px solid var(--gold-dark);
+  padding: 13px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 4px 30px rgba(0,0,0,.5);
+}
+.header-icon { font-size: 2rem; animation: float 3s ease-in-out infinite; }
+@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
+
+header h1 {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.45rem;
+  background: linear-gradient(90deg, var(--gold), #fde68a, var(--gold));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+header .sub { font-size: .72rem; color: var(--muted); margin-top: 1px; }
+
+.header-controls { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+.score-pill {
+  background: rgba(245,158,11,.15);
+  border: 1px solid rgba(245,158,11,.4);
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-weight: 800;
+  font-size: .85rem;
+  color: var(--gold);
+}
+.audio-btn {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  background: var(--surface2);
+  color: var(--text);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all .2s;
+  display: flex; align-items: center; justify-content: center;
+}
+.audio-btn:hover, .audio-btn.active { background: #14532d; border-color: var(--gold); }
+
+.chat-wrap {
+  width: 100%; max-width: 700px; flex: 1;
+  display: flex; flex-direction: column;
+  padding: 16px 14px 0;
+}
+
+#chat-box {
+  flex: 1; overflow-y: auto;
+  display: flex; flex-direction: column;
+  gap: 14px; padding-bottom: 10px;
+  max-height: calc(100vh - 200px);
+  scroll-behavior: smooth;
+}
+#chat-box::-webkit-scrollbar { width: 4px; }
+#chat-box::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+.msg { display: flex; gap: 8px; }
+.msg.user { flex-direction: row-reverse; }
+
+.avatar {
+  width: 34px; height: 34px; border-radius: 50%;
+  font-size: 1rem; display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 2px;
+}
+.msg.bot .avatar { background: linear-gradient(135deg, #14532d, #1e3a5f); border: 1.5px solid rgba(245,158,11,.4); }
+.msg.user .avatar { background: linear-gradient(135deg, #1e3a5f, #14532d); border: 1.5px solid rgba(59,130,246,.3); }
+
+.bubble {
+  max-width: 80%;
+  padding: 11px 16px;
+  border-radius: 18px;
+  font-size: .9rem;
+  line-height: 1.65;
+  animation: pop .22s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes pop { from{transform:scale(.88) translateY(6px);opacity:0} to{transform:scale(1) translateY(0);opacity:1} }
+
+.msg.bot .bubble {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-bottom-left-radius: 5px;
+}
+.msg.user .bubble {
+  background: linear-gradient(135deg, #1e3a5f, var(--blue-dark));
+  border-bottom-right-radius: 5px;
+}
+
+/* chips */
+.chip {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: rgba(245,158,11,.12);
+  border: 1.5px solid rgba(245,158,11,.4);
+  color: var(--gold);
+  border-radius: 30px;
+  padding: 5px 13px; margin: 5px 4px 0 0;
+  font-size: .8rem; font-weight: 700;
+  cursor: pointer; transition: all .15s;
+  user-select: none; font-family: 'Baloo 2', cursive;
+}
+.chip:hover {
+  background: var(--gold-dark); color: white;
+  border-color: var(--gold);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(245,158,11,.3);
+}
+
+/* topic tag */
+.topic-tag {
+  display: inline-block;
+  background: linear-gradient(135deg, #14532d, #166534);
+  border: 1px solid var(--gold-dark);
+  color: var(--gold);
+  font-size: .68rem; font-weight: 800;
+  border-radius: 20px; padding: 2px 10px;
+  margin-bottom: 5px; letter-spacing: .5px;
+  text-transform: uppercase;
+}
+
+/* multiple choice */
+.mc-options { display: flex; flex-direction: column; gap: 7px; margin-top: 10px; width: 100%; }
+.mc-btn {
+  display: flex; align-items: center; gap: 10px;
+  background: rgba(255,255,255,.03);
+  border: 1.5px solid var(--border);
+  border-radius: 12px; padding: 9px 14px;
+  color: var(--text); font-family: 'Baloo 2', cursive;
+  font-size: .87rem; font-weight: 600;
+  cursor: pointer; transition: all .15s; text-align: left; width: 100%;
+}
+.mc-btn:hover:not(:disabled) {
+  background: rgba(245,158,11,.12); border-color: var(--gold);
+  color: var(--gold); transform: translateX(3px);
+}
+.mc-btn .letter {
+  display: flex; align-items: center; justify-content: center;
+  width: 26px; height: 26px; border-radius: 8px;
+  background: rgba(245,158,11,.15); border: 1px solid rgba(245,158,11,.35);
+  color: var(--gold); font-size: .78rem; font-weight: 800;
+  flex-shrink: 0; transition: all .15s;
+}
+.mc-btn:hover:not(:disabled) .letter { background: var(--gold-dark); color: white; border-color: var(--gold-dark); }
+.mc-btn.correct { background: rgba(34,197,94,.15)!important; border-color: #22c55e!important; color: #22c55e!important; cursor: default; }
+.mc-btn.correct .letter { background: #22c55e!important; color: white!important; border-color: #22c55e!important; }
+.mc-btn.wrong { background: rgba(239,68,68,.12)!important; border-color: #ef4444!important; color: #ef4444!important; cursor: default; }
+.mc-btn.wrong .letter { background: #ef4444!important; color: white!important; border-color: #ef4444!important; }
+.mc-btn:disabled { cursor: default; transform: none!important; }
+
+/* speaker wave */
+.speaker-wave {
+  display: inline-flex; align-items: flex-end;
+  gap: 2px; height: 14px; margin-left: 6px; vertical-align: middle;
+}
+.speaker-wave span {
+  display: block; width: 3px; border-radius: 2px;
+  background: var(--gold); animation: wave 1s ease-in-out infinite;
+}
+.speaker-wave span:nth-child(1){height:4px;animation-delay:0s}
+.speaker-wave span:nth-child(2){height:10px;animation-delay:.1s}
+.speaker-wave span:nth-child(3){height:6px;animation-delay:.2s}
+.speaker-wave span:nth-child(4){height:12px;animation-delay:.15s}
+.speaker-wave span:nth-child(5){height:4px;animation-delay:.05s}
+@keyframes wave{0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.8)}}
+
+/* typing */
+.typing {
+  display: flex; gap: 4px; padding: 12px 16px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 18px; border-bottom-left-radius: 5px; width: fit-content;
+}
+.dot { width: 7px; height: 7px; border-radius: 50%; background: var(--gold); animation: bounce .9s infinite; }
+.dot:nth-child(2){animation-delay:.15s} .dot:nth-child(3){animation-delay:.3s}
+@keyframes bounce{0%,80%,100%{transform:translateY(0);opacity:.6}40%{transform:translateY(-7px);opacity:1}}
+
+/* input bar */
+.input-bar {
+  width: 100%; max-width: 700px;
+  padding: 10px 14px 18px;
+  display: flex; gap: 8px;
+  background: var(--bg); position: sticky; bottom: 0;
+}
+#user-input {
+  flex: 1; padding: 12px 18px;
+  border: 2px solid var(--border); border-radius: 30px;
+  font-family: 'Baloo 2', cursive; font-size: .92rem;
+  outline: none; background: var(--surface); color: var(--text);
+  transition: border-color .2s, box-shadow .2s;
+}
+#user-input::placeholder { color: var(--muted); }
+#user-input:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(245,158,11,.12); }
+
+#send-btn {
+  width: 48px; height: 48px; border-radius: 50%; border: none;
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  color: white; font-size: 1.1rem; cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 3px 14px rgba(245,158,11,.4); flex-shrink: 0;
+}
+#send-btn:hover { transform: scale(1.08); box-shadow: 0 5px 20px rgba(245,158,11,.55); }
+#send-btn:disabled { opacity: .5; transform: none; }
+
+/* result modal */
+.result-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.75); backdrop-filter: blur(6px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 100; opacity: 0; pointer-events: none; transition: opacity .3s;
+}
+.result-overlay.show { opacity: 1; pointer-events: all; }
+.result-card {
+  background: linear-gradient(135deg, #132015, #0c1a0e);
+  border: 2px solid var(--gold-dark);
+  border-radius: 24px; padding: 36px 40px;
+  text-align: center; max-width: 380px; width: 90%;
+  box-shadow: 0 20px 60px rgba(0,0,0,.6);
+  transform: scale(.9); transition: transform .3s cubic-bezier(.34,1.56,.64,1);
+}
+.result-overlay.show .result-card { transform: scale(1); }
+.result-emoji { font-size: 4rem; margin-bottom: 12px; display: block; }
+.result-title {
+  font-family: 'Fredoka One', cursive; font-size: 1.7rem; margin-bottom: 6px;
+  background: linear-gradient(90deg, var(--gold), #fde68a);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.result-score { font-size: 3rem; font-weight: 900; margin: 10px 0; color: white; }
+.result-msg { color: var(--muted); font-size: .9rem; margin-bottom: 22px; }
+.result-btn {
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  border: none; border-radius: 30px; padding: 12px 30px;
+  color: white; font-family: 'Baloo 2', cursive; font-weight: 800;
+  font-size: 1rem; cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+  box-shadow: 0 4px 16px rgba(245,158,11,.35);
+}
+.result-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 22px rgba(245,158,11,.5); }
+
+/* scenario card for identify questions */
+.scenario-card {
+  background: rgba(245,158,11,.07);
+  border: 1px solid rgba(245,158,11,.25);
+  border-radius: 12px; padding: 10px 14px;
+  margin: 8px 0 6px; font-style: italic;
+  font-size: .87rem; color: #fde68a; line-height: 1.5;
+}
+
+/* ── Notes Panel ─────────────────────────────────────────────── */
+.notes-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.78); backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 200; opacity: 0; pointer-events: none; transition: opacity .3s;
+}
+.notes-overlay.show { opacity: 1; pointer-events: all; }
+.notes-panel {
+  background: linear-gradient(160deg, #0c1a0e, #132015);
+  border: 2px solid var(--gold-dark);
+  border-radius: 20px;
+  width: 92%; max-width: 720px;
+  max-height: 88vh;
+  display: flex; flex-direction: column;
+  box-shadow: 0 24px 60px rgba(0,0,0,.7);
+  overflow: hidden;
+  transform: translateY(30px);
+  transition: transform .35s cubic-bezier(.34,1.2,.64,1);
+}
+.notes-overlay.show .notes-panel { transform: translateY(0); }
+.notes-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 22px; border-bottom: 1px solid var(--border);
+  background: linear-gradient(135deg, #14532d44, #1e3a5f44);
+}
+.notes-header h2 { font-family: 'Fredoka One', cursive; font-size: 1.3rem; color: var(--gold); }
+.notes-close {
+  width: 34px; height: 34px; border-radius: 50%;
+  border: 1.5px solid var(--border); background: var(--surface2);
+  color: var(--text); font-size: 1rem; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; transition: all .2s;
+}
+.notes-close:hover { background: #b91c1c; border-color: #ef4444; }
+.notes-body { overflow-y: auto; padding: 20px 22px; flex: 1; }
+.notes-body::-webkit-scrollbar { width: 4px; }
+.notes-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+.notes-topic { margin-bottom: 28px; }
+.notes-topic-title {
+  font-family: 'Fredoka One', cursive; font-size: 1.05rem;
+  color: var(--gold); margin-bottom: 10px;
+  padding-bottom: 6px; border-bottom: 1px solid var(--border);
+}
+.notes-item {
+  display: flex; gap: 10px; align-items: flex-start;
+  padding: 7px 0; border-bottom: 1px solid rgba(255,255,255,.04);
+  font-size: .87rem; line-height: 1.55;
+}
+.notes-item:last-child { border-bottom: none; }
+.notes-term { font-weight: 800; color: var(--gold); min-width: 150px; flex-shrink: 0; font-size: .84rem; }
+.notes-def { color: #d1fae5; }
+.notes-tabs {
+  display: flex; flex-wrap: wrap; gap: 8px; padding: 14px 22px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(0,0,0,.15);
+}
+.notes-tab {
+  padding: 12px 20px; border-radius: 10px;
+  border: 1.5px solid var(--border); 
+  background: rgba(255,255,255,.04); color: var(--muted);
+  font-family: 'Baloo 2', cursive; font-size: .9rem; font-weight: 700;
+  cursor: pointer; transition: all .15s; white-space: nowrap;
+  min-height: 48px; display: flex; align-items: center;
+}
+.notes-tab.active { background: var(--surface); color: var(--gold); border-color: var(--gold-dark); }
+.notes-tab:hover:not(.active) { color: var(--text); background: var(--surface2); }
+.notes-section { display: none; }
+.notes-section.active { display: block; }
+.notes-panatang {
+  background: rgba(245,158,11,.06); border: 1px solid rgba(245,158,11,.2);
+  border-radius: 12px; padding: 14px 18px; font-size: .87rem;
+  line-height: 1.85; color: #fde68a; white-space: pre-line;
+}
+
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-icon">🇵🇭</div>
+  <div>
+    <h1>Araling Panlipunan Reviewer</h1>
+    <div class="sub">Karapatan · Tungkulin · Papel ng Pilipino · Panatang Makabayan</div>
+  </div>
+  <div class="header-controls">
+    <div class="score-pill">⭐ <span id="score-val">0</span> / <span id="total-val">0</span></div>
+    <button class="audio-btn" id="notes-toggle" title="Basahin ang mga Tala" onclick="document.getElementById('notes-overlay').classList.add('show')">📖</button>
+    <button class="audio-btn active" id="audio-toggle" title="I-toggle ang Audio">🔊</button>
+  </div>
+</header>
+
+<div class="chat-wrap">
+  <div id="chat-box"></div>
+</div>
+
+<div class="input-bar">
+  <input type="text" id="user-input" placeholder="Isulat ang iyong sagot dito…" autocomplete="off" />
+  <button id="send-btn">➤</button>
+</div>
+
+<div class="result-overlay" id="result-overlay">
+  <div class="result-card">
+    <span class="result-emoji" id="res-emoji">🏆</span>
+    <div class="result-title">Tapos na!</div>
+    <div class="result-score"><span id="res-score">0</span>/<span id="res-total">0</span></div>
+    <div class="result-msg" id="res-msg">Magaling!</div>
+    <button class="result-btn" onclick="restartApp()">🔄 Maglaro Ulit</button>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+// QUESTION BANK
+// ═══════════════════════════════════════════════════════════════
+const topics = {
+
+  "Karapatan ng Pilipino": [
+    { q: "Ano ang isa sa mga karapatan ng bawat Pilipino?", a: "Mabuhay nang malaya at magkaroon ng seguridad", hint: "Ito ang karapatang maging ligtas at malaya." },
+    { q: "Saan mababasa ang mga karapatan ng Pilipino?", a: "Artikulo III at Artikulo XIII ng Saligang Batas o 1987 Konstitusyon", hint: "Ito ay bahagi ng ating pinakamataas na batas ng bansa." },
+    { q: "Ano ang karapatang nagbibigay sa atin ng pagkakataong matuto at pumunta sa paaralan?", a: "Karapatang sa edukasyon", hint: "Ito ang karapatang mag-aral." },
+    { q: "Anong karapatan ang nagbibigay-daan sa atin na sabihin ang ating opinyon?", a: "Karapatang magsalita o magpahayag ng sariling opinyon", hint: "Ito ay tinatawag na kalayaan sa pananalita." },
+    { q: "Alin sa mga sumusunod ang karapatan ng isang Pilipino — pumili ng relihiyon, kumaon ng marami, o lumabas sa bansa anumang oras?", a: "Pumili ng relihiyon", hint: "Ito ay kalayaan sa pananampalataya." },
+    { q: "Anong karapatan ang nagpapanatili ng pagkakapantay-pantay ng lahat ng Pilipino?", a: "Pagkakapantay-pantay", hint: "Walang mas mataas o mas mababa — lahat ay pantay." },
+    { q: "Alin sa Artikulo ng Saligang Batas ang naglalaman ng karapatan ng Pilipino?", a: "Artikulo III at Artikulo XIII", hint: "May dalawang Artikulo na binanggit." },
+    { q: "Anong karapatan ang nagpoprotekta sa ating tahanan at mga ari-arian?", a: "Karapatang maging ligtas ang ating sarili, tahanan, at mga ari-arian", hint: "Ito ay nagpapanatili ng seguridad ng ating mga pag-aari." },
+  ],
+
+  "Tungkulin bilang Pilipino": [
+    { q: "Ano ang isa sa mga tungkulin ng isang Pilipino?", a: "Igalang ang karapatan ng ibang tao", hint: "Kinikilala natin ang karapatang ibinibigay sa bawat isa." },
+    { q: "Bakit mahalaga ang pagbabayad ng buwis?", a: "Ito ay tungkulin ng bawat Pilipino para mapanatili ang serbisyo ng gobyerno", hint: "Ang buwis ay ginagamitin para sa mga pangangailangan ng bansa." },
+    { q: "Kailan tayo bumoboto para sa mga lider?", a: "Tuwing eleksiyon", hint: "Ginagawa ito sa itinakdang panahon ng pagboto." },
+    { q: "Ano ang tungkulin ng Pilipino patungkol sa kapayapaan?", a: "Pagpapanatili ng kapayapaan", hint: "Hangarin natin ang harmonya at katahimikan." },
+    { q: "Alin ang isang tungkulin ng mabuting Pilipino — maging sunud-sunuran, sumunod sa batas, o umaangal sa lahat ng patakaran?", a: "Sumunod sa batas", hint: "Ang pagsunod sa batas ay susi ng mabuting pamumuhay." },
+    { q: "Ano ang dapat laging isipin ng isang Pilipino ayon sa kanyang mga tungkulin?", a: "Ang kabutihang panlahat", hint: "Hindi lang ang sarili — pati na rin ang kapakanan ng lahat." },
+    { q: "Ano ang ibig sabihin ng 'maging makabansa'?", a: "Tangkilikin ang mga bagay na sariling ating at mahalin ang Pilipinas", hint: "Suportahan natin ang mga produktong Pilipino." },
+    { q: "Ano ang tungkulin ng Pilipino sa kalikasan?", a: "Pagpapanatiling malinis ng kapaligiran at ng kalikasan", hint: "Aalagaan natin ang ating kalikasan para sa susunod na henerasyon." },
+  ],
+
+  "Papel sa Tahanan, Paaralan, at Komunidad": [
+    { q: "Ano ang papel mo bilang aktibong Pilipino sa tahanan?", a: "Maging mapagmahal at magalang na anak, kapatid, at kapamilya", hint: "Nagsisimula ang mabuting pagpapalaki sa tahanan." },
+    { q: "Ano ang papel mo bilang aktibong Pilipino sa paaralan?", a: "Mag-aral nang mabuti at igalang ang mga guro", hint: "Ang paaralan ay lugar ng pag-aaral at paggalang." },
+    { q: "Ano ang papel mo bilang aktibong Pilipino sa komunidad?", a: "Maging mabuti at magalang na kapitbahay", hint: "Ang komunidad ay nabubuo ng magkakasama nating pakikisama." },
+    { q: "Saan nangyayari ang ganitong gawain: 'Tumulong sa mga gawaing bahay'?", a: "Tahanan", hint: "Ginagawa ito sa loob ng ating tirahan." },
+    { q: "Saan nangyayari ang ganitong gawain: 'Maging aktibo sa mga gawain sa klase'?", a: "Paaralan", hint: "Ito ay ginagawa sa lugar ng pag-aaral." },
+    { q: "Saan nangyayari ang ganitong gawain: 'Bigyan ng respeto ang mga lider ng komunidad'?", a: "Komunidad", hint: "Ito ay ginagawa sa labas ng tahanan at paaralan." },
+    { q: "Ano ang benepisyo ng pagtuturo ng mga gawaing bahay sa mga bata?", a: "Nagiging matagumpay at masaya ang mga bata", hint: "Ang pananagutan mula sa kabataan ay nagbubunga ng tagumpay." },
+    { q: "Ano ang dapat gawin ng aktibong Pilipino sa mga hayop, halaman, at kalikasan?", a: "Maging mabuti at maging mapagmahal sa mga ito", hint: "Pag-arugain natin ang lahat ng nilalang." },
+  ],
+
+  "Panatang Makabayan": [
+    { q: "Ano ang Panatang Makabayan?", a: "Panata o pangako ng katapatan at pagmamahal sa Pilipinas", hint: "Ito ay isang pangako na binibigkas ng mga Pilipino." },
+    { q: "Paano binibigkas ang Panatang Makabayan?", a: "Nakatayo nang tuwid at nakataas ang kanang kamay", hint: "May tamang kilos na ginagawa habang binibigkas ito." },
+    { q: "Anong batas ang nag-aatas sa lahat ng paaralan na magsagawa ng flag ceremony?", a: "Republic Act Number 1265", hint: "Ito ay isang batas na may numero." },
+    { q: "Kailan ipinatupad ang Republic Act 1265?", a: "Hulyo 11, 1955", hint: "Ito ay ipinatupad noong kalagitnaan ng ika-20 siglo." },
+    { q: "Kailan unang isinalin ang original na Panatang Makabayan sa Filipino?", a: "Taong 1935", hint: "Isinalin ito mula sa bersiyong Ingles noong maagang bahagi ng ika-20 siglo." },
+    { q: "Kailan nagkaroon ng rebisyon ang Panatang Makabayan?", a: "2001 at 2023", hint: "May dalawang taon na binanggit." },
+    { q: "Ano ang mga bahagi ng Pampansang Panunumpa?", a: "Panatang Makabayan at Panunumpa sa Watawat", hint: "May dalawang bahagi ito." },
+    { q: "Sa anong wika unang naisulat ang Panatang Makabayan bago isinalin?", a: "Wikang Ingles", hint: "Ito ay banyagang wika." },
+    { q: "Ano ang simula ng Panatang Makabayan?", a: "Iniibig ko ang Pilipinas", hint: "Ito ang unang pangungusap ng panatang." },
+  ],
+
+};
+
+// ── TRUE OR FALSE ────────────────────────────────────────────────────────────
+const trueOrFalse = [
+  { q: "Alam ni Lanie ang karapatan niya sa edukasyon kaya natutuwa siya na nakapapasok siya sa paaralan para matuto.", a: "tama" },
+  { q: "Magdiriwang ng anibersaryo ng kanilang bayan ang komunidad ni Bea. Nakibahagi sila at buong pamilya niya sa pagdiriwang.", a: "tama" },
+  { q: "Nakita ni Teresa na nagwawalis ng bakuran ang nanay niya. Ipinagpatuloy niya lang ang paglalaro ng video games sa kanyang cell phone.", a: "mali" },
+  { q: "Malayo sa kinatatayuan ni Liyo ang tamang tawiran. Naisip niyang sa tapat na lang kung saan siya nakatayo tumawid para hindi na siya maglakad nang malayo.", a: "mali" },
+  { q: "Sumama si Fe sa pamimili ng nanay niya. Pinili nilang bilhin ang mga pagkain at gamit na gawa sa ating bansa.", a: "tama" },
+  { q: "Magsisimba si Helen at ang kanyang pamilya. Ang regular na pagsisimba ay nagpapalalim pa ng kanilang pananampalataya.", a: "tama" },
+  { q: "May mga taong pumasok sa bahay nina Loren para maghalughog pero wala silang dalang permiso mula sa korte.", a: "mali" },
+  { q: "May pagkakataon ang lahat na dumalo sa pulong ng barangay para magsabi ng kanilang opinyon sa paksa.", a: "tama" },
+  { q: "Tinitukso at pinagtatawanan ni Danny ang bagong kaklase nilang may naiibang kulay at paraan ng pagsasalita.", a: "mali" },
+  { q: "Ang magulang ni Teresa ay nagpunta sa paaralan para bumoto at pumili ng mga bagong lider ng kanilang komunidad.", a: "tama" },
+  { q: "Nakita ni Randy ang isang matandang pilay na gustong tumawid. Tinulungan niya ang matanda para makatawid nang ligtas.", a: "tama" },
+  { q: "Hatinggabi na pero malakas pa rin ang kantahan sa videoke nina Kaye. Naririnig ito hanggang sa ikaapat na kalye mula sa kanila.", a: "mali" },
+  { q: "Alam ng sambahayan nina Lena na ipinagbabawal ang pagsisiga ng basura kaya sa gabi sila nagsisiga para hindi mapansin ng mga tao.", a: "mali" },
+  { q: "Nagpunta sa bangko ang tatay ni Peter para magbayad ng buwis para sa negosyo niyang pagawaan ng sapatos.", a: "tama" },
+  { q: "Taon-taong ipinagdiriwang ng pamilya ni Nina ang kanyang kaarawan. Ipinagpapasalamat nila ang kanyang buhay at pagiging kasapi ng pamilya.", a: "tama" },
+];
+
+// ── IDENTIFY: TAHANAN / PAARALAN / KOMUNIDAD ─────────────────────────────────
+const identifyQuestions = [
+  { q: "Si Gino ay tumutulong magpakain ng mga alaga nilang hayop.", a: "Tahanan", choices: ["Tahanan","Paaralan","Komunidad"] },
+  { q: "Binabati ni Greg ang kapitbahay nilang si Aling Cely kapag nasasalubong niya.", a: "Komunidad", choices: ["Tahanan","Paaralan","Komunidad"] },
+  { q: "Nakikinig nang mabuti sina Rian sa paliwanag ng guro nila.", a: "Paaralan", choices: ["Tahanan","Paaralan","Komunidad"] },
+  { q: "Kapag may hindi nauunawaan ay nagtataas ng kamay at magalang na nagtatanong si Lito sa guro.", a: "Paaralan", choices: ["Tahanan","Paaralan","Komunidad"] },
+  { q: "Kapag dumarating ang magulang ay agad sumasalubong at nagmamano si Darius.", a: "Tahanan", choices: ["Tahanan","Paaralan","Komunidad"] },
+  { q: "Nagwawalis ng kalye si Mang Nardo kasama ang ibang mga residente.", a: "Komunidad", choices: ["Tahanan","Paaralan","Komunidad"] },
+  { q: "Tinutulungan ni Ana ang kapatid niyang gawin ang homework.", a: "Tahanan", choices: ["Tahanan","Paaralan","Komunidad"] },
+  { q: "Nakiisa si Carlo sa paglilinis ng kanilang classroom.", a: "Paaralan", choices: ["Tahanan","Paaralan","Komunidad"] },
+  { q: "Dumalo si Nena sa barangay assembly para makinig ng mga balita sa kanilang lugar.", a: "Komunidad", choices: ["Tahanan","Paaralan","Komunidad"] },
+  { q: "Nagluto si Inay para sa kanilang pamilya at tinulungan siya ng kanyang anak na mag-ayos ng mesa.", a: "Tahanan", choices: ["Tahanan","Paaralan","Komunidad"] },
+];
+
+// ═══════════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════════
+let state = {
+  awaiting: 'menu',
+  mode: null,
+  questions: [],
+  allAnswers: [],
+  qIndex: 0,
+  score: 0,
+  total: 0,
+  hintUsed: false,
+  audioEnabled: true,
+};
+
+// ═══════════════════════════════════════════════════════════════
+// TTS
+// ═══════════════════════════════════════════════════════════════
+function speak(text) {
+  if (!state.audioEnabled) return;
+  window.speechSynthesis.cancel();
+  const clean = text.replace(/<[^>]+>/g,'').replace(/[🇵🇭🌟✅❌💡⏭️🏆😊💪🔄🔲📚👋⭐]/g,'');
+  const utt = new SpeechSynthesisUtterance(clean);
+  utt.lang = 'fil-PH';
+  utt.rate = 0.95; utt.pitch = 1.05; utt.volume = 1;
+  const voices = window.speechSynthesis.getVoices();
+  const fil = voices.find(v => v.lang.startsWith('fil') || v.lang.startsWith('tl'));
+  const eng = voices.find(v => v.lang.startsWith('en') && v.name.toLowerCase().includes('female'))
+            || voices.find(v => v.lang.startsWith('en'));
+  if (fil) utt.voice = fil; else if (eng) { utt.voice = eng; utt.lang = 'en-US'; }
+  utt.onstart = () => showWave(true);
+  utt.onend = utt.onerror = () => showWave(false);
+  window.speechSynthesis.speak(utt);
+}
+
+function showWave(on) {
+  document.querySelectorAll('.speaker-wave').forEach(w => w.style.display = on ? 'inline-flex' : 'none');
+}
+window.speechSynthesis.onvoiceschanged = () => {};
+
+// ═══════════════════════════════════════════════════════════════
+// UI HELPERS
+// ═══════════════════════════════════════════════════════════════
+const chatBox = document.getElementById('chat-box');
+const input = document.getElementById('user-input');
+const sendBtn = document.getElementById('send-btn');
+
+function scrollBottom() { chatBox.scrollTop = chatBox.scrollHeight; }
+
+function addMessage(role, html, speakText) {
+  const div = document.createElement('div');
+  div.className = `msg ${role}`;
+  const av = document.createElement('div');
+  av.className = 'avatar';
+  av.textContent = role === 'bot' ? '🤖' : '🧑';
+  const bub = document.createElement('div');
+  bub.className = 'bubble';
+  bub.innerHTML = role === 'bot'
+    ? html + '<span class="speaker-wave" style="display:none"><span></span><span></span><span></span><span></span><span></span></span>'
+    : html;
+  div.appendChild(av); div.appendChild(bub);
+  chatBox.appendChild(div);
+  scrollBottom(); bindChips();
+  if (role === 'bot') {
+    const txt = speakText || html.replace(/<[^>]+>/g,' ');
+    setTimeout(() => speak(txt), 350);
+  }
+}
+
+function addTyping() {
+  const d = document.createElement('div');
+  d.className = 'msg bot'; d.id = 'typing';
+  d.innerHTML = '<div class="avatar">🤖</div><div class="typing"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>';
+  chatBox.appendChild(d); scrollBottom();
+}
+function removeTyping() { const t = document.getElementById('typing'); if(t) t.remove(); }
+
+function bindChips() {
+  document.querySelectorAll('.chip:not([data-bound])').forEach(c => {
+    c.dataset.bound = '1';
+    c.addEventListener('click', () => handleUserMessage(c.dataset.val));
+  });
+}
+
+function updateScore() {
+  document.getElementById('score-val').textContent = state.score;
+  document.getElementById('total-val').textContent = state.total;
+}
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length-1; i > 0; i--) {
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]] = [a[j],a[i]];
+  }
+  return a;
+}
+
+function normalize(s) { return s.toLowerCase().trim().replace(/\s+/g,' '); }
+
+function checkAnswer(user, correct) {
+  const u = normalize(user), c = normalize(correct);
+  if (u === c) return true;
+  if (c.includes(u) && u.length > 5) return true;
+  const parts = c.split(/[,;\/]/);
+  for (const p of parts) if (u.includes(p.trim()) && p.trim().length > 4) return true;
+  return false;
+}
+
+function showResult() {
+  const pct = Math.round((state.score/state.total)*100);
+  const emoji = pct>=90?'🏆':pct>=70?'🌟':pct>=50?'😊':'💪';
+  const msg = pct>=90?'Napakahusay! Alam mo ang lahat!':pct>=70?'Magaling! Patuloy ka lang!':pct>=50?'Mabuti! Pag-aralan pa nang kaunti!':'Huwag sumuko! Subukan ulit!';
+  document.getElementById('res-emoji').textContent = emoji;
+  document.getElementById('res-score').textContent = state.score;
+  document.getElementById('res-total').textContent = state.total;
+  document.getElementById('res-msg').textContent = msg;
+  document.getElementById('result-overlay').classList.add('show');
+  speak(`Tapos na! Ang iyong puntos ay ${state.score} sa ${state.total}. ${msg}`);
+}
+
+function restartApp() {
+  document.getElementById('result-overlay').classList.remove('show');
+  state = { awaiting:'menu', mode:null, questions:[], allAnswers:[], qIndex:0, score:0, total:0, hintUsed:false, audioEnabled:state.audioEnabled };
+  chatBox.innerHTML = '';
+  document.querySelector('.input-bar').style.display = 'flex';
+  updateScore();
+  showMenu();
+}
+
+// ═══════════════════════════════════════════════════════════════
+// MC HELPERS
+// ═══════════════════════════════════════════════════════════════
+function getAllAnswers() {
+  const ans = [];
+  for (const qs of Object.values(topics)) for (const q of qs) ans.push(q.a);
+  return ans;
+}
+
+function generateChoices(correct, pool) {
+  const distractors = shuffle(pool.filter(a => a !== correct)).slice(0,3);
+  return shuffle([correct, ...distractors]);
+}
+
+function buildMCBtns(choices, correctAnswer) {
+  const letters = ['A','B','C','D'];
+  return `<div class="mc-options">${choices.map((c,i)=>
+    `<button class="mc-btn" data-answer="${encodeURIComponent(c)}" data-correct="${encodeURIComponent(correctAnswer)}" onclick="handleMCClick(this)">
+      <span class="letter">${letters[i]}</span>${c}
+    </button>`
+  ).join('')}</div>`;
+}
+
+function handleMCClick(btn) {
+  const allBtns = btn.closest('.mc-options').querySelectorAll('.mc-btn');
+  allBtns.forEach(b => b.disabled = true);
+  const chosen = decodeURIComponent(btn.dataset.answer);
+  const correct = decodeURIComponent(btn.dataset.correct);
+  const isCorrect = chosen === correct;
+  allBtns.forEach(b => { if(decodeURIComponent(b.dataset.answer)===correct) b.classList.add('correct'); });
+  if (!isCorrect) btn.classList.add('wrong');
+  setTimeout(() => {
+    if (isCorrect) {
+      state.score++;
+      addMessage('bot', `✅ <strong>Tama!</strong> +1 puntos! Ang sagot ay: <strong>${correct}</strong>`, `Tama! Ang sagot ay: ${correct}`);
+    } else {
+      addMessage('bot', `❌ <strong>Hindi tama!</strong> Ang iyong sagot: <em>${chosen}</em><br>✏️ Ang tamang sagot ay: <strong>${correct}</strong>`, `Hindi tama! Ang tamang sagot ay: ${correct}`);
+    }
+    state.qIndex++; updateScore();
+    if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+    else setTimeout(showResult, 900);
+  }, 650);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// NEXT QUESTION
+// ═══════════════════════════════════════════════════════════════
+function nextQuestion() {
+  const qi = state.qIndex;
+  const q = state.questions[qi];
+  const num = qi + 1;
+
+  if (state.mode === 'full' || state.mode === 'topic_mc') {
+    const choices = generateChoices(q.a, state.allAnswers);
+    const tag = q.topic ? `<span class="topic-tag">${q.topic}</span><br>` : '';
+    const html = `${tag}<strong>T${num} sa ${state.total}:</strong> ${q.q}${buildMCBtns(choices, q.a)}`;
+    addMessage('bot', html, `Tanong ${num}. ${q.q}`);
+    return;
+  }
+
+  if (state.mode === 'tf') {
+    const html = `<strong>T${num} sa ${state.total}:</strong> <div class="scenario-card">${q.q}</div>
+      <span class="chip" data-val="tama">✅ Tama</span><span class="chip" data-val="mali">❌ Mali</span>`;
+    addMessage('bot', html, `Tanong ${num}. Tama o Mali: ${q.q}`);
+    return;
+  }
+
+  if (state.mode === 'identify') {
+    const btns = buildMCBtns(q.choices, q.a);
+    const html = `<strong>T${num} sa ${state.total}:</strong> Kilalanin kung saan nangyayari ito:<div class="scenario-card">${q.q}</div>${btns}`;
+    addMessage('bot', html, `Tanong ${num}. Kilalanin kung saan: ${q.q}`);
+    return;
+  }
+
+  // typed answer (study topic)
+  const tag = q.topic ? `<span class="topic-tag">${q.topic}</span><br>` : '';
+  const html = `${tag}<strong>T${num} sa ${state.total}:</strong> ${q.q}<br><small style="color:var(--muted)">Isulat ang sagot · i-type ang <em>hint</em> para sa tulong · <em>skip</em> para lumipat</small>`;
+  addMessage('bot', html, `Tanong ${num}. ${q.q}`);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// MENU
+// ═══════════════════════════════════════════════════════════════
+function showMenu() {
+  addMessage('bot',
+    `👋 <strong>Kumusta! Ako ang iyong AP Reviewer!</strong><br>Pag-aaralan natin ang <em>Karapatan</em>, <em>Tungkulin</em>, <em>Papel ng Pilipino</em>, at <em>Panatang Makabayan</em>.<br><br>Ano ang gusto mong gawin?<br>
+    <span class="chip" data-val="1">📚 Pag-aralan ang Paksa</span>
+    <span class="chip" data-val="2">✅ Tama o Mali</span>
+    <span class="chip" data-val="3">🏠 Kilalanin: Tahanan/Paaralan/Komunidad</span>
+    <span class="chip" data-val="4">🌟 Buong Review (Multiple Choice)</span>`,
+    "Kumusta! Ako ang iyong AP Reviewer. Ano ang gusto mong gawin? Pag-aralan ang paksa, Tama o Mali, Kilalanin ang lugar, o Buong Review na multiple choice?"
+  );
+  state.awaiting = 'menu';
+}
+
+// ═══════════════════════════════════════════════════════════════
+// PROCESS MESSAGE
+// ═══════════════════════════════════════════════════════════════
+function processMessage(msg) {
+  const aw = state.awaiting;
+
+  // ── MENU ──────────────────────────────────────────────────
+  if (aw === 'menu') {
+    if (msg === '1') {
+      state.awaiting = 'topic';
+      const keys = Object.keys(topics);
+      const chips = keys.map((t,i) => `<span class="chip" data-val="${i+1}">${i+1}. ${t}</span>`).join(' ');
+      addMessage('bot', `📚 Alin ang paksang gusto mong pag-aralan?<br>${chips}`, 'Alin ang paksang gusto mong pag-aralan?');
+
+    } else if (msg === '2') {
+      state.mode = 'tf';
+      state.questions = shuffle(trueOrFalse);
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'tf_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `✅ <strong>Tama o Mali!</strong> ${state.total} tanong. Simulan na!`, `Tama o Mali! ${state.total} tanong. Simulan na!`);
+      setTimeout(nextQuestion, 800);
+
+    } else if (msg === '3') {
+      state.mode = 'identify';
+      state.questions = shuffle(identifyQuestions);
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'mc_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `🏠 <strong>Kilalanin!</strong> Piliin kung Tahanan, Paaralan, o Komunidad ang eksena.`, 'Kilalanin! Piliin kung saan nangyayari ang eksena.');
+      setTimeout(nextQuestion, 800);
+
+    } else if (msg === '4') {
+      state.mode = 'full';
+      const all = [];
+      for (const [topicName, qs] of Object.entries(topics)) {
+        qs.forEach(q => all.push({...q, topic: topicName}));
+      }
+      state.questions = shuffle(all);
+      state.allAnswers = getAllAnswers();
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'mc_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `🌟 <strong>Buong Review — Multiple Choice!</strong> ${state.total} tanong. Pag-isipang mabuti!`, `Buong Review! Multiple Choice! ${state.total} tanong. Pag-isipang mabuti!`);
+      setTimeout(nextQuestion, 800);
+
+    } else {
+      addMessage('bot',
+        `Pumili ng opsyon:<br>
+        <span class="chip" data-val="1">📚 Pag-aralan ang Paksa</span>
+        <span class="chip" data-val="2">✅ Tama o Mali</span>
+        <span class="chip" data-val="3">🏠 Kilalanin</span>
+        <span class="chip" data-val="4">🌟 Buong Review</span>`,
+        'Pumili ng opsyon.'
+      );
+    }
+    return;
+  }
+
+  // ── TOPIC SELECT ──────────────────────────────────────────
+  if (aw === 'topic') {
+    const keys = Object.keys(topics);
+    const idx = parseInt(msg) - 1;
+    if (keys[idx]) {
+      const topicName = keys[idx];
+      state.mode = 'topic';
+      state.questions = shuffle(topics[topicName]);
+      state.allAnswers = getAllAnswers();
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'answer';
+      document.querySelector('.input-bar').style.display = 'flex';
+      updateScore();
+      addMessage('bot', `📚 <strong>${topicName}</strong> — ${state.total} tanong. Handa ka na ba?`, `${topicName}. ${state.total} tanong. Handa ka na ba?`);
+      setTimeout(nextQuestion, 800);
+    } else {
+      const chips = Object.keys(topics).map((t,i) => `<span class="chip" data-val="${i+1}">${i+1}. ${t}</span>`).join(' ');
+      addMessage('bot', `Pumili ng wastong paksa:<br>${chips}`, 'Pumili ng wastong paksa.');
+    }
+    return;
+  }
+
+  // ── TYPED ANSWER ──────────────────────────────────────────
+  if (aw === 'answer') {
+    const q = state.questions[state.qIndex];
+    const m = normalize(msg);
+
+    if (m === 'hint') {
+      state.hintUsed = true;
+      addMessage('bot', `💡 <strong>Hint:</strong> ${q.hint}`, `Hint: ${q.hint}`);
+      return;
+    }
+    if (m === 'skip') {
+      addMessage('bot', `⏭️ Nilaktawan! Ang tamang sagot ay: <strong>${q.a}</strong>`, `Nilaktawan. Ang tamang sagot ay: ${q.a}`);
+      state.qIndex++; state.hintUsed = false;
+      if (state.qIndex < state.total) setTimeout(nextQuestion, 700);
+      else showResult();
+      return;
+    }
+
+    const correct = checkAnswer(msg, q.a);
+    if (correct) {
+      if (!state.hintUsed) state.score++;
+      const note = state.hintUsed ? ' <em>(ginamit ang hint — walang puntos)</em>' : ' +1 puntos!';
+      addMessage('bot', `✅ <strong>Tama!</strong>${note} Sagot: <strong>${q.a}</strong>`, `Tama! Ang sagot ay: ${q.a}`);
+    } else {
+      addMessage('bot', `❌ <strong>Hindi tama!</strong> Ang iyong sagot: <em>${msg}</em><br>✏️ Ang tamang sagot ay: <strong>${q.a}</strong>`, `Hindi tama! Ang tamang sagot ay: ${q.a}`);
+    }
+    state.qIndex++; state.hintUsed = false; updateScore();
+    if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+    else setTimeout(showResult, 900);
+    return;
+  }
+
+  // ── TRUE OR FALSE ─────────────────────────────────────────
+  if (aw === 'tf_answer') {
+    const q = state.questions[state.qIndex];
+    const ans = normalize(msg);
+    const valid = ans === 'tama' || ans === 'mali' || ans === 'true' || ans === 'false';
+    const mapped = (ans === 'true') ? 'tama' : (ans === 'false') ? 'mali' : ans;
+
+    if (valid) {
+      const correct = mapped === q.a;
+      if (correct) {
+        state.score++;
+        addMessage('bot', `✅ <strong>Tama!</strong> Ang sagot ay <strong>${q.a.toUpperCase()}</strong>.`, `Tama! Ang sagot ay ${q.a}.`);
+      } else {
+        addMessage('bot', `❌ <strong>Mali!</strong> Ang iyong sagot: <em>${mapped.toUpperCase()}</em><br>✏️ Ang tamang sagot ay: <strong>${q.a.toUpperCase()}</strong>`, `Mali! Ang tamang sagot ay ${q.a}.`);
+      }
+      state.qIndex++; updateScore();
+      if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+      else setTimeout(showResult, 900);
+    } else {
+      addMessage('bot',
+        `Sagot: Tama o Mali?<br><span class="chip" data-val="tama">✅ Tama</span><span class="chip" data-val="mali">❌ Mali</span>`,
+        'Sagot: Tama o Mali?'
+      );
+    }
+    return;
+  }
+
+  // mc_answer is handled by handleMCClick directly — no text input needed
+}
+
+// ═══════════════════════════════════════════════════════════════
+// CONTROLS
+// ═══════════════════════════════════════════════════════════════
+function handleUserMessage(msg) {
+  if (!msg.trim()) return;
+  window.speechSynthesis.cancel();
+  addMessage('user', msg.replace(/</g,'&lt;'));
+  input.value = '';
+  input.disabled = true; sendBtn.disabled = true;
+  addTyping();
+  setTimeout(() => {
+    removeTyping();
+    input.disabled = false; sendBtn.disabled = false;
+    input.focus();
+    processMessage(msg);
+  }, 480);
+}
+
+sendBtn.addEventListener('click', () => { handleUserMessage(input.value); });
+input.addEventListener('keydown', e => { if(e.key==='Enter') handleUserMessage(input.value); });
+
+document.getElementById('audio-toggle').addEventListener('click', function() {
+  state.audioEnabled = !state.audioEnabled;
+  this.textContent = state.audioEnabled ? '🔊' : '🔇';
+  this.classList.toggle('active', state.audioEnabled);
+  if (!state.audioEnabled) window.speechSynthesis.cancel();
+});
+
+// ═══════════════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════════════
+window.addEventListener('load', () => {
+  window.speechSynthesis.getVoices();
+  showMenu();
+});
+
+function switchTab(tabId, btn) {
+  document.querySelectorAll('.notes-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.notes-tab').forEach(b => b.classList.remove('active'));
+  document.getElementById(tabId).classList.add('active');
+  btn.classList.add('active');
+}
+
+</script>
+
+<!-- ── Notes Panel ── -->
+<div class="notes-overlay" id="notes-overlay">
+  <div class="notes-panel">
+    <div class="notes-header">
+      <h2>📖 Araling Panlipunan — Mga Tala</h2>
+      <button class="notes-close" onclick="document.getElementById('notes-overlay').classList.remove('show')">✕</button>
+    </div>
+    <div class="notes-tabs">
+      <button class="notes-tab active" onclick="switchTab('tab-karapatan', this)">⚖️ Karapatan</button>
+      <button class="notes-tab" onclick="switchTab('tab-tungkulin', this)">🎯 Tungkulin</button>
+      <button class="notes-tab" onclick="switchTab('tab-papel', this)">🏠 Papel ng Pilipino</button>
+      <button class="notes-tab" onclick="switchTab('tab-panata', this)">🇵🇭 Panatang Makabayan</button>
+      <button class="notes-tab" onclick="switchTab('tab-tamomali', this)">✅ Tama o Mali</button>
+    </div>
+    <div class="notes-body">
+
+      <div class="notes-section active" id="tab-karapatan">
+        <div class="notes-topic">
+          <div class="notes-topic-title">⚖️ Karapatan ng bawat Pilipino</div>
+          <div class="notes-item"><span class="notes-term">Kalayaan at Seguridad</span><span class="notes-def">Mabuhay nang malaya at magkaroon ng seguridad</span></div>
+          <div class="notes-item"><span class="notes-term">Kaligtasan</span><span class="notes-def">Maging ligtas ang ating sarili, tahanan, at mga ari-arian</span></div>
+          <div class="notes-item"><span class="notes-term">Kalayaang Magsalita</span><span class="notes-def">Magsalita o magpahayag ng sariling opinyon</span></div>
+          <div class="notes-item"><span class="notes-term">Kalayaan sa Relihiyon</span><span class="notes-def">Pumili ng ating relihiyon</span></div>
+          <div class="notes-item"><span class="notes-term">Pagkakapantay-pantay</span><span class="notes-def">Lahat ng Pilipino ay may pantay na karapatan</span></div>
+          <div class="notes-item"><span class="notes-term">Edukasyon</span><span class="notes-def">Karapatang matuto at pumunta sa paaralan</span></div>
+          <div class="notes-item"><span class="notes-term">Saligang Batas</span><span class="notes-def">Mababasa sa Artikulo III at Artikulo XIII ng 1987 Konstitusyon ng Pilipinas</span></div>
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">🌱 Pagiging Aktibong Pilipino</div>
+          <div class="notes-item"><span class="notes-term"></span><span class="notes-def">Sumunod sa mga batas at alituntunin</span></div>
+          <div class="notes-item"><span class="notes-term"></span><span class="notes-def">Maging makabansa at tangkilikin ang mga sariling atin</span></div>
+          <div class="notes-item"><span class="notes-term"></span><span class="notes-def">Pagpapanatiling malinis ng kapaligiran at kalikasan</span></div>
+          <div class="notes-item"><span class="notes-term"></span><span class="notes-def">Pagtulong sa mga nangangailangan</span></div>
+          <div class="notes-item"><span class="notes-term"></span><span class="notes-def">Pakikilahok sa mga programa at gawain sa komunidad at paaralan</span></div>
+          <div class="notes-item"><span class="notes-term"></span><span class="notes-def">Pagkilala at pagtiyak na natatamasa ang karapatan ng bawat Pilipino</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-tungkulin">
+        <div class="notes-topic">
+          <div class="notes-topic-title">🎯 Tungkulin bilang Pilipino</div>
+          <div class="notes-item"><span class="notes-term"></span><span class="notes-def">Igalang ang karapatan ng ibang tao</span></div>
+          <div class="notes-item"><span class="notes-term"></span><span class="notes-def">Mahalagang magbayad ng buwis</span></div>
+          <div class="notes-item"><span class="notes-term"></span><span class="notes-def">Iboto ang mga tamang lider tuwing eleksiyon</span></div>
+          <div class="notes-item"><span class="notes-term"></span><span class="notes-def">Isipin lagi ang kabutihang panlahat</span></div>
+          <div class="notes-item"><span class="notes-term"></span><span class="notes-def">Pagpapanatili ng kapayapaan</span></div>
+          <div class="notes-item"><span class="notes-term"></span><span class="notes-def">Maging mabuting Pilipino na gumagalang at sumusunod sa batas</span></div>
+          <div class="notes-item"><span class="notes-term">Bagyong Carina</span><span class="notes-def">Nanalasa noong Hulyo 24, 2024</span></div>
+          <div class="notes-item"><span class="notes-term">Karahasan sa Bata</span><span class="notes-def">NASA 80% ng mga batang Pilipino ang nakakaranas ng iba't ibang uri ng karahasan — ayon sa Philippine National Baseline Study on Violence Against Children</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-papel">
+        <div class="notes-topic">
+          <div class="notes-topic-title">🏠 Sa Tahanan</div>
+          <div class="notes-item"><span class="notes-term"></span><span class="notes-def">Maging mapagmahal at magalang na anak, kapatid, at kapamilya</span></div>
+          <div class="notes-item"><span class="notes-term"></span><span class="notes-def">Maging responsable at sumunod sa mga payo at tuntunin sa tahanan</span></div>
+          <div class="notes-item"><span class="notes-term"></span><span class="notes-def">Tumulong sa mga gawaing bahay na kaya nating gawin</span></div>
+          <div class="notes-item"><span class="notes-term">💡 Paalala</span><span class="notes-def">Nagiging matagumpay at masaya ang mga batang tinuruan ng mga gawaing bahay at binigyan ng simpleng responsibilidad</span></div>
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">🏫 Sa Paaralan</div>
+          <div class="notes-item"><span class="notes-term"></span><span class="notes-def">Pagiging magalang sa mga guro at mga tao sa paaralan</span></div>
+          <div class="notes-item"><span class="notes-term"></span><span class="notes-def">Pag-aaral nang mabuti at pagpapaunlad ng sariling kakayahan at talento</span></div>
+          <div class="notes-item"><span class="notes-term"></span><span class="notes-def">Pagiging aktibo sa mga gawain sa klase at sa paaralan</span></div>
+          <div class="notes-item"><span class="notes-term"></span><span class="notes-def">Pag-iisip, pagsusuri, pagtatanong, at pangangatwiran nang may galang</span></div>
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">🏘️ Sa Komunidad</div>
+          <div class="notes-item"><span class="notes-term"></span><span class="notes-def">Pagiging mabuti at magalang na kapitbahay</span></div>
+          <div class="notes-item"><span class="notes-term"></span><span class="notes-def">Pagbibigay respeto sa mga lider ng komunidad at pagsunod ng mga tuntunin</span></div>
+          <div class="notes-item"><span class="notes-term"></span><span class="notes-def">Pagiging mabuti sa mga hayop, halaman, at sa kalikasan</span></div>
+          <div class="notes-item"><span class="notes-term"></span><span class="notes-def">Pakikipaglaro sa mga kapwa bata nang patas</span></div>
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">🎨 Mga Prinsipyo sa Disenyo</div>
+          <div class="notes-item"><span class="notes-term">Balanse</span><span class="notes-def">Pagtiyak na pantay ang pagkakaayos ng mga bagay sa disenyo o likhang-sining</span></div>
+          <div class="notes-item"><span class="notes-term">Emphasis / Diin</span><span class="notes-def">Pagbibigay-diin sa isang mahalagang bahagi ng disenyo o likhang-sining</span></div>
+          <div class="notes-item"><span class="notes-term">Variety / Pagkakaiba-iba</span><span class="notes-def">Paggamit ng iba't ibang hugis, laki, kulay</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-panata">
+        <div class="notes-topic">
+          <div class="notes-topic-title">🇵🇭 Panatang Makabayan</div>
+          <div class="notes-item"><span class="notes-term">Kahulugan</span><span class="notes-def">Panata o pangako ng katapatan at pagmamahal sa Pilipinas</span></div>
+          <div class="notes-item"><span class="notes-term">Pagbigkas</span><span class="notes-def">Binibigkas habang nakatayo nang tuwid at nakataas ang kanang kamay sa panunumpa</span></div>
+          <div class="notes-item"><span class="notes-term">RA 1265</span><span class="notes-def">Lahat ng paaralang pampubliko at pribado ay inatasang magsagawa ng flag ceremony — Ipinatupad: Hulyo 11, 1955</span></div>
+          <div class="notes-item"><span class="notes-term">Original na Salin</span><span class="notes-def">Taong 1935 — isinalin mula sa bersiyong nakasulat sa wikang Ingles</span></div>
+          <div class="notes-item"><span class="notes-term">Mga Rebisyon</span><span class="notes-def">2001 at 2023</span></div>
+          <div class="notes-item"><span class="notes-term">Pampansang Panunumpa</span><span class="notes-def">1. Panatang Makabayan &nbsp; 2. Panunumpa sa Watawat</span></div>
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">📜 Teksto ng Panatang Makabayan</div>
+          <div class="notes-panatang">Panatang Makabayan
+
+Iniibig ko ang Pilipinas
+Aking lupang sinilangan
+Tahanan ng aking lahi
+Kinukupkop ako at tinutulungan
+Maging malakas, masipag at marangal
+
+Dahil mahal ko ang Pilipinas
+Diringin ko ang payo ng aking mga magulang
+Susundin ko ang tuntunin ng paaralan
+Tutuparin ko ang tungkulin ng mamamayang makabayan
+Naglilingkod, nag-aaral at nananalangin ng buong katapatan
+Iaalay ko ang aking buhay, pangarap, pagsisikap
+sa bansang Pilipinas</div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-tamomali">
+        <div class="notes-topic">
+          <div class="notes-topic-title">✅ Tama o Mali — Mga Sagot</div>
+          <div class="notes-item"><span class="notes-term" style="color:#22c55e">TAMA</span><span class="notes-def">Alam ni Lanie ang karapatan niya sa edukasyon kaya natutuwa siyang nakapapasok sa paaralan.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#22c55e">TAMA</span><span class="notes-def">Nakibahagi si Bea at ang pamilya niya sa pagdiriwang ng anibersaryo ng kanilang bayan.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">MALI</span><span class="notes-def">Ipinagpatuloy ni Teresa ang paglalaro ng video games habang nagwawalis ang nanay niya. → Dapat tumulong siya.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">MALI</span><span class="notes-def">Tumawid si Liyo sa lugar na walang tawiran. → Dapat lumakad siya sa tamang tawiran.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#22c55e">TAMA</span><span class="notes-def">Pinili ni Fe at ng nanay niya ang mga pagkain at gamit na gawa sa Pilipinas. (Makabansa!)</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#22c55e">TAMA</span><span class="notes-def">Ang regular na pagsisimba ni Helen at ng pamilya ay nagpapalalim ng kanilang pananampalataya.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">MALI</span><span class="notes-def">Pumasok ang mga tao sa bahay nina Loren nang walang permiso mula sa korte. → Labag ito sa karapatan.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#22c55e">TAMA</span><span class="notes-def">May pagkakataon ang lahat na magsabi ng opinyon sa pulong ng barangay.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">MALI</span><span class="notes-def">Tinitukso ni Danny ang kaklase niya. → Hindi ito paggalang sa karapatan ng iba.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#22c55e">TAMA</span><span class="notes-def">Nagpunta ang magulang ni Teresa sa paaralan para bumoto ng mga bagong lider.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#22c55e">TAMA</span><span class="notes-def">Tinulungan ni Randy ang matandang pilay na tumawid nang ligtas.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">MALI</span><span class="notes-def">Hatinggabi pang malakas ang videoke nina Kaye — nakakaistorbo sa kapitbahay.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">MALI</span><span class="notes-def">Nagsisiga ang sambahayan ni Lena sa gabi para hindi mapansin. → Mali pa rin, ipinagbabawal ang pagsisiga ng basura.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#22c55e">TAMA</span><span class="notes-def">Nagbayad ang tatay ni Peter ng buwis para sa kanyang negosyo — tungkulin ng mamamayan.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#22c55e">TAMA</span><span class="notes-def">Ipinagdiriwang ng pamilya ni Nina ang kanyang kaarawan at ipinagpapasalamat ang kanyang buhay.</span></div>
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">🏠 Kilalanin: Tahanan / Paaralan / Komunidad</div>
+          <div class="notes-item"><span class="notes-term" style="color:var(--gold)">TAHANAN</span><span class="notes-def">Si Gino ay tumutulong magpakain ng mga alaga nilang hayop.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#38bdf8">KOMUNIDAD</span><span class="notes-def">Binabati ni Greg ang kapitbahay nilang si Aling Cely kapag nasasalubong niya.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#a78bfa">PAARALAN</span><span class="notes-def">Nakikinig nang mabuti sina Rian sa paliwanag ng guro nila.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#a78bfa">PAARALAN</span><span class="notes-def">Nagtataas ng kamay at magalang na nagtatanong si Lito sa guro.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:var(--gold)">TAHANAN</span><span class="notes-def">Kapag dumarating ang magulang ay agad sumasalubong at nagmamano si Darius.</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
