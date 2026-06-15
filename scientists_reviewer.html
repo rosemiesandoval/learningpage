@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🔬 Scientists Reviewer</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Fredoka+One&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --sky: #38bdf8;
+  --sky-dark: #0284c7;
+  --mint: #34d399;
+  --coral: #fb7185;
+  --amber: #fbbf24;
+  --purple: #a78bfa;
+  --bg: #0f172a;
+  --surface: #1e293b;
+  --surface2: #273548;
+  --text: #f1f5f9;
+  --muted: #94a3b8;
+  --border: #334155;
+}
+
+body {
+  font-family: 'Nunito', sans-serif;
+  background: var(--bg);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--text);
+  background-image: radial-gradient(ellipse at 20% 20%, rgba(56,189,248,.07) 0%, transparent 60%),
+                    radial-gradient(ellipse at 80% 80%, rgba(167,139,250,.07) 0%, transparent 60%);
+}
+
+header {
+  width: 100%;
+  background: linear-gradient(135deg, #0c4a6e, #1e1b4b);
+  border-bottom: 1px solid var(--border);
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 4px 30px rgba(0,0,0,.4);
+}
+
+.header-icon {
+  font-size: 2rem;
+  animation: float 3s ease-in-out infinite;
+}
+@keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+
+header h1 {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.5rem;
+  background: linear-gradient(90deg, var(--sky), var(--purple));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+header .sub { font-size: .75rem; color: var(--muted); margin-top: 1px; }
+
+.header-controls {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.score-pill {
+  background: rgba(56,189,248,.15);
+  border: 1px solid rgba(56,189,248,.3);
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-weight: 800;
+  font-size: .85rem;
+  color: var(--sky);
+}
+
+.audio-btn {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  background: var(--surface2);
+  color: var(--text);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all .2s;
+  display: flex; align-items: center; justify-content: center;
+}
+.audio-btn:hover { background: var(--sky-dark); border-color: var(--sky); }
+.audio-btn.active { background: var(--sky-dark); border-color: var(--sky); color: white; }
+
+.chat-wrap {
+  width: 100%;
+  max-width: 680px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 16px 14px 0;
+}
+
+#chat-box {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding-bottom: 10px;
+  max-height: calc(100vh - 200px);
+  scroll-behavior: smooth;
+}
+
+#chat-box::-webkit-scrollbar { width: 4px; }
+#chat-box::-webkit-scrollbar-track { background: transparent; }
+#chat-box::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+.msg { display: flex; gap: 8px; }
+.msg.user { flex-direction: row-reverse; }
+
+.avatar {
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  font-size: 1rem;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.msg.bot .avatar { background: linear-gradient(135deg, #0c4a6e, #312e81); border: 1.5px solid rgba(56,189,248,.3); }
+.msg.user .avatar { background: linear-gradient(135deg, #164e63, #0c4a6e); border: 1.5px solid rgba(56,189,248,.2); }
+
+.bubble {
+  max-width: 78%;
+  padding: 11px 16px;
+  border-radius: 18px;
+  font-size: .9rem;
+  line-height: 1.6;
+  animation: pop .2s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes pop { from { transform: scale(.88) translateY(6px); opacity:0; } to { transform: scale(1) translateY(0); opacity:1; } }
+
+.msg.bot .bubble {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-bottom-left-radius: 5px;
+  color: var(--text);
+}
+.msg.user .bubble {
+  background: linear-gradient(135deg, var(--sky-dark), #1d4ed8);
+  border-bottom-right-radius: 5px;
+  color: white;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(56,189,248,.12);
+  border: 1.5px solid rgba(56,189,248,.35);
+  color: var(--sky);
+  border-radius: 30px;
+  padding: 5px 13px;
+  margin: 5px 4px 0 0;
+  font-size: .8rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all .15s;
+  user-select: none;
+  font-family: 'Nunito', sans-serif;
+}
+.chip:hover {
+  background: var(--sky-dark);
+  color: white;
+  border-color: var(--sky);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(56,189,248,.3);
+}
+
+/* Multiple choice option buttons */
+.mc-options {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-top: 10px;
+  width: 100%;
+}
+.mc-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255,255,255,.04);
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  padding: 9px 14px;
+  color: var(--text);
+  font-family: 'Nunito', sans-serif;
+  font-size: .88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all .15s;
+  text-align: left;
+  width: 100%;
+}
+.mc-btn:hover:not(:disabled) {
+  background: rgba(56,189,248,.12);
+  border-color: var(--sky);
+  color: var(--sky);
+  transform: translateX(3px);
+}
+.mc-btn .letter {
+  display: flex; align-items: center; justify-content: center;
+  width: 26px; height: 26px;
+  border-radius: 8px;
+  background: rgba(56,189,248,.15);
+  border: 1px solid rgba(56,189,248,.3);
+  color: var(--sky);
+  font-size: .78rem;
+  font-weight: 800;
+  flex-shrink: 0;
+  transition: all .15s;
+}
+.mc-btn:hover:not(:disabled) .letter {
+  background: var(--sky-dark);
+  color: white;
+}
+.mc-btn.correct {
+  background: rgba(52,211,153,.15) !important;
+  border-color: #34d399 !important;
+  color: #34d399 !important;
+  cursor: default;
+}
+.mc-btn.correct .letter { background: #34d399 !important; color: white !important; border-color: #34d399 !important; }
+.mc-btn.wrong {
+  background: rgba(251,113,133,.12) !important;
+  border-color: #fb7185 !important;
+  color: #fb7185 !important;
+  cursor: default;
+}
+.mc-btn.wrong .letter { background: #fb7185 !important; color: white !important; border-color: #fb7185 !important; }
+.mc-btn:disabled { cursor: default; transform: none !important; }
+
+.topic-tag {
+  display: inline-block;
+  background: linear-gradient(135deg, var(--purple), #7c3aed);
+  color: white;
+  font-size: .68rem;
+  font-weight: 800;
+  border-radius: 20px;
+  padding: 2px 10px;
+  margin-bottom: 5px;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+}
+
+/* speaking animation */
+.speaker-wave {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 14px;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+.speaker-wave span {
+  display: block;
+  width: 3px;
+  border-radius: 2px;
+  background: var(--sky);
+  animation: wave 1s ease-in-out infinite;
+}
+.speaker-wave span:nth-child(1) { height: 4px; animation-delay: 0s; }
+.speaker-wave span:nth-child(2) { height: 10px; animation-delay: .1s; }
+.speaker-wave span:nth-child(3) { height: 6px; animation-delay: .2s; }
+.speaker-wave span:nth-child(4) { height: 12px; animation-delay: .15s; }
+.speaker-wave span:nth-child(5) { height: 4px; animation-delay: .05s; }
+@keyframes wave { 0%,100% { transform: scaleY(1); } 50% { transform: scaleY(1.8); } }
+
+.typing {
+  display: flex;
+  gap: 4px;
+  padding: 12px 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  border-bottom-left-radius: 5px;
+  width: fit-content;
+}
+.dot { width: 7px; height: 7px; border-radius: 50%; background: var(--sky); animation: bounce .9s infinite; }
+.dot:nth-child(2) { animation-delay: .15s; }
+.dot:nth-child(3) { animation-delay: .3s; }
+@keyframes bounce { 0%,80%,100% { transform: translateY(0); opacity:.6; } 40% { transform: translateY(-7px); opacity:1; } }
+
+.input-bar {
+  width: 100%;
+  max-width: 680px;
+  padding: 10px 14px 18px;
+  display: flex;
+  gap: 8px;
+  background: var(--bg);
+  position: sticky;
+  bottom: 0;
+}
+
+#user-input {
+  flex: 1;
+  padding: 12px 18px;
+  border: 2px solid var(--border);
+  border-radius: 30px;
+  font-family: 'Nunito', sans-serif;
+  font-size: .92rem;
+  outline: none;
+  background: var(--surface);
+  color: var(--text);
+  transition: border-color .2s, box-shadow .2s;
+}
+#user-input::placeholder { color: var(--muted); }
+#user-input:focus {
+  border-color: var(--sky);
+  box-shadow: 0 0 0 3px rgba(56,189,248,.12);
+}
+
+#send-btn {
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  border: none;
+  background: linear-gradient(135deg, var(--sky), var(--sky-dark));
+  color: white;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 3px 14px rgba(56,189,248,.35);
+  flex-shrink: 0;
+}
+#send-btn:hover { transform: scale(1.08); box-shadow: 0 5px 20px rgba(56,189,248,.5); }
+#send-btn:disabled { opacity: .5; transform: none; }
+
+/* result modal */
+.result-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.7);
+  backdrop-filter: blur(6px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 100;
+  opacity: 0; pointer-events: none;
+  transition: opacity .3s;
+}
+.result-overlay.show { opacity: 1; pointer-events: all; }
+.result-card {
+  background: linear-gradient(135deg, #1e293b, #0f172a);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 36px 40px;
+  text-align: center;
+  max-width: 360px;
+  width: 90%;
+  box-shadow: 0 20px 60px rgba(0,0,0,.5);
+  transform: scale(.9);
+  transition: transform .3s cubic-bezier(.34,1.56,.64,1);
+}
+.result-overlay.show .result-card { transform: scale(1); }
+.result-emoji { font-size: 4rem; margin-bottom: 12px; display: block; }
+.result-title { font-family: 'Fredoka One', cursive; font-size: 1.8rem; margin-bottom: 6px; color: var(--sky); }
+.result-score { font-size: 3rem; font-weight: 900; margin: 10px 0; }
+.result-msg { color: var(--muted); font-size: .9rem; margin-bottom: 20px; }
+.result-btn {
+  background: linear-gradient(135deg, var(--sky), var(--sky-dark));
+  border: none;
+  border-radius: 30px;
+  padding: 12px 30px;
+  color: white;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+  box-shadow: 0 4px 16px rgba(56,189,248,.3);
+}
+.result-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(56,189,248,.5); }
+
+/* ── Notes Panel ─────────────────────────────────────────────── */
+.notes-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.75); backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 200; opacity: 0; pointer-events: none; transition: opacity .3s;
+}
+.notes-overlay.show { opacity: 1; pointer-events: all; }
+.notes-panel {
+  background: linear-gradient(160deg, #0f172a, #1e293b);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  width: 92%; max-width: 720px;
+  max-height: 88vh;
+  display: flex; flex-direction: column;
+  box-shadow: 0 24px 60px rgba(0,0,0,.6);
+  overflow: hidden;
+  transform: translateY(30px);
+  transition: transform .35s cubic-bezier(.34,1.2,.64,1);
+}
+.notes-overlay.show .notes-panel { transform: translateY(0); }
+.notes-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 22px;
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(135deg, #0c4a6e44, #31288444);
+}
+.notes-header h2 { font-family: 'Fredoka One', cursive; font-size: 1.3rem; color: var(--sky); }
+.notes-close {
+  width: 34px; height: 34px; border-radius: 50%;
+  border: 1.5px solid var(--border); background: var(--surface2);
+  color: var(--text); font-size: 1rem; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all .2s;
+}
+.notes-close:hover { background: var(--coral); border-color: var(--coral); }
+.notes-body { overflow-y: auto; padding: 20px 22px; flex: 1; }
+.notes-body::-webkit-scrollbar { width: 4px; }
+.notes-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+.notes-topic { margin-bottom: 28px; }
+.notes-topic-title {
+  font-family: 'Fredoka One', cursive; font-size: 1.05rem;
+  color: var(--sky); margin-bottom: 10px;
+  padding-bottom: 6px; border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 8px;
+}
+.notes-item {
+  display: flex; gap: 10px; align-items: flex-start;
+  padding: 7px 0; border-bottom: 1px solid rgba(255,255,255,.04);
+  font-size: .88rem; line-height: 1.55;
+}
+.notes-item:last-child { border-bottom: none; }
+.notes-term {
+  font-weight: 800; color: var(--amber); min-width: 160px;
+  flex-shrink: 0; font-size: .85rem;
+}
+.notes-def { color: #cbd5e1; }
+.notes-tabs {
+  display: flex; gap: 6px; padding: 12px 22px 0;
+  border-bottom: 1px solid var(--border);
+  overflow-x: auto;
+}
+.notes-tab {
+  padding: 7px 16px; border-radius: 12px 12px 0 0;
+  border: 1px solid var(--border); border-bottom: none;
+  background: transparent; color: var(--muted);
+  font-family: 'Nunito', sans-serif; font-size: .8rem; font-weight: 700;
+  cursor: pointer; transition: all .15s; white-space: nowrap;
+}
+.notes-tab.active { background: var(--surface); color: var(--sky); border-color: var(--sky); }
+.notes-tab:hover:not(.active) { color: var(--text); background: var(--surface2); }
+.notes-section { display: none; }
+.notes-section.active { display: block; }
+
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-icon">🔬</div>
+  <div>
+    <h1>Scientists Reviewer</h1>
+    <div class="sub">Men & Women of Science · Inventions · Traits</div>
+  </div>
+  <div class="header-controls">
+    <div class="score-pill">⭐ <span id="score-val">0</span> / <span id="total-val">0</span></div>
+    <button class="audio-btn" id="notes-toggle" title="Study Notes" onclick="document.getElementById('notes-overlay').classList.add('show')">📖</button>
+    <button class="audio-btn active" id="audio-toggle" title="Toggle Audio">🔊</button>
+  </div>
+</header>
+
+<div class="chat-wrap">
+  <div id="chat-box"></div>
+</div>
+
+<div class="input-bar">
+  <input type="text" id="user-input" placeholder="Type your answer here…" autocomplete="off" />
+  <button id="send-btn">➤</button>
+</div>
+
+<div class="result-overlay" id="result-overlay">
+  <div class="result-card">
+    <span class="result-emoji" id="res-emoji">🏆</span>
+    <div class="result-title">Quiz Complete!</div>
+    <div class="result-score"><span id="res-score">0</span>/<span id="res-total">0</span></div>
+    <div class="result-msg" id="res-msg">Great job!</div>
+    <button class="result-btn" onclick="restartApp()">🔄 Play Again</button>
+  </div>
+</div>
+
+<script>
+// ─── DATA ──────────────────────────────────────────────────────────────────
+const topics = {
+  "FILIPINO SCIENTISTS": [
+    { q: "Who is known as the Father of Geothermal Energy Development in the Philippines?", a: "Arturo P. Alcaraz", hint: "He was a volcanologist who championed geothermal energy." },
+    { q: "What field of science did Arturo P. Alcaraz specialize in?", a: "volcanology", hint: "It's the study of volcanoes." },
+    { q: "What was Julian A. Banzon's profession?", a: "biochemist", hint: "He studied alternative fuels and coconut oil extraction." },
+    { q: "What two key areas did Julian A. Banzon focus his research on?", a: "alternative fuels and coconut", hint: "Think about fuel sources and a common tropical fruit." },
+    { q: "What award did Julian A. Banzon receive for his contributions?", a: "National Scientist Award", hint: "It's the highest scientific recognition in the Philippines." },
+    { q: "Who was the first Filipina National Scientist?", a: "Fe V. del Mundo", hint: "She founded the country's first pediatric hospital." },
+    { q: "What hospital did Dr. Fe V. del Mundo establish in 1957?", a: "The Children's Medical Center", hint: "It was the first pediatric hospital in the country." },
+    { q: "Who is known as the Father of Modern Philippine Ophthalmology?", a: "Geminiano T. de Ocampo", hint: "He focused on eye care for the underprivileged." },
+    { q: "What hospital did Geminiano T. de Ocampo establish?", a: "De Ocampo Eye Hospital", hint: "It's named after him and focuses on vision problems." },
+    { q: "What did Clara Y. Lim-Sylianco help us understand?", a: "mutagens", hint: "These are harmful substances that can damage DNA." },
+    { q: "Who is known as the Father of Videoconferencing?", a: "Gregorio Y. Zara", hint: "He invented the first two-way videophone in 1955." },
+    { q: "What did Aisa Mijeno invent?", a: "SALt lamp", hint: "It's a sustainable lantern that runs on saltwater." },
+    { q: "What does SALt stand for?", a: "sustainable alternative lighting", hint: "Think about what kind of light source it is and how it's eco-friendly." },
+    { q: "What field does Aletta T. Yñiguez specialize in?", a: "marine biology", hint: "She helps government agencies like BFAR and DENR with resource management." },
+  ],
+  "FOREIGN SCIENTISTS": [
+    { q: "What two radioactive elements did Marie Curie discover?", a: "radium and polonium", hint: "Both elements are named partly for their glowing, radioactive properties." },
+    { q: "What did Marie Curie develop during World War I to aid battlefield medics?", a: "mobile X-ray units", hint: "Think of portable machines that could see inside the body." },
+    { q: "Who is known as the Father of Evolution?", a: "Charles Darwin", hint: "He proposed the theory of evolution by natural selection." },
+    { q: "On what ship did Charles Darwin make his famous observations?", a: "the Beagle", hint: "It's the name of the voyage's ship." },
+    { q: "What process did Charles Darwin propose where traits suited to the environment are passed on?", a: "natural selection", hint: "It's the process that drives the diversity of life on Earth." },
+    { q: "What did Isaac Newton invent that unveiled the wonders of outer space?", a: "the reflecting telescope", hint: "It's a type of telescope that uses mirrors." },
+    { q: "What are Isaac Newton's three laws called?", a: "Three Laws of Motion", hint: "Along with the Law of Universal Gravitation, these laid the foundation for classical mechanics." },
+    { q: "What mathematical tool did Isaac Newton help develop?", a: "calculus", hint: "It's a branch of mathematics used in science and engineering." },
+    { q: "What theory is Albert Einstein most famous for?", a: "Theory of Relativity", hint: "It transformed our understanding of space, time, gravity, and the universe." },
+    { q: "Who is celebrated as the world's first computer programmer?", a: "Ada Lovelace", hint: "She worked on Charles Babbage's Analytical Engine." },
+    { q: "What invention did Ada Lovelace work on with Charles Babbage?", a: "the Analytical Engine", hint: "It's an early mechanical computer." },
+    { q: "What process did Louis Pasteur develop that involves heating liquids to eliminate bacteria?", a: "pasteurization", hint: "It's named after him and is used on milk and wine." },
+    { q: "What theory did Louis Pasteur champion that changed our understanding of disease?", a: "germ theory of disease", hint: "It states that diseases are caused by tiny living organisms." },
+    { q: "Name two diseases for which Louis Pasteur developed vaccines.", a: "anthrax and rabies", hint: "Think of two deadly illnesses affecting animals and humans." },
+    { q: "What project did Katie Bouman work on that produced the first image of a black hole?", a: "Event Horizon Telescope", hint: "Its abbreviation is EHT." },
+    { q: "What was Charles Kao awarded the Nobel Prize for in 2009?", a: "light transmission through optical fibers", hint: "His work laid the groundwork for fiber-optic communication." },
+  ],
+  "TRAITS OF A SCIENTIST": [
+    { q: "What process do scientists use involving observation, experimentation, and analysis?", a: "scientific method", hint: "It's a careful step-by-step process used to answer questions." },
+    { q: "What trait compels scientists to ask questions and seek knowledge?", a: "curiosity", hint: "It's the desire to learn and understand new things." },
+    { q: "What trait helps scientists focus on the intricacies of a task?", a: "attention to detail", hint: "It's about not overlooking small but important things." },
+    { q: "What trait is especially important when results take months or years to appear?", a: "patience", hint: "It means being able to wait calmly." },
+    { q: "What trait allows scientists to express ideas clearly to support their findings?", a: "good communication skills", hint: "It's about conveying information effectively." },
+    { q: "What trait allows scientists to analyze facts and reach reasoned judgments?", a: "critical thinking", hint: "It's the ability to think logically and objectively." },
+    { q: "What trait helps scientists continue refining their work even after research is complete?", a: "persistence", hint: "It's about working diligently toward a goal despite challenges." },
+    { q: "What trait gives scientists the strength to tackle important problems in society?", a: "courage", hint: "It's about being brave enough to face challenges." },
+  ],
+};
+
+const trueOrFalse = [
+  { q: "Arturo P. Alcaraz is known as the Father of Geothermal Energy Development in the Philippines.", a: "true" },
+  { q: "Julian A. Banzon's research focused on alternative fuels and coconuts.", a: "true" },
+  { q: "Fe V. del Mundo was the first Filipino National Scientist, but not the first Filipina.", a: "false" },
+  { q: "Geminiano T. de Ocampo is known as the Father of Modern Philippine Ophthalmology.", a: "true" },
+  { q: "Clara Y. Lim-Sylianco's research focused on mutagens and DNA repair.", a: "true" },
+  { q: "Gregorio Y. Zara invented the first two-way videophone in 1955.", a: "true" },
+  { q: "The SALt lamp invented by Aisa Mijeno runs on solar power.", a: "false" },
+  { q: "Aletta T. Yñiguez is a marine biologist.", a: "true" },
+  { q: "Marie Curie discovered radium and polonium.", a: "true" },
+  { q: "Charles Darwin is known as the Father of Evolution.", a: "true" },
+  { q: "Isaac Newton invented the reflecting telescope.", a: "true" },
+  { q: "Albert Einstein is most famous for the Theory of Relativity.", a: "true" },
+  { q: "Ada Lovelace is celebrated as the world's first computer programmer.", a: "true" },
+  { q: "Louis Pasteur developed vaccines for anthrax and rabies.", a: "true" },
+  { q: "Katie Bouman's work produced the first image of a black hole.", a: "true" },
+  { q: "Charles Kao won the Nobel Prize for his work on radioactivity.", a: "false" },
+  { q: "Curiosity is the desire to learn and understand new things.", a: "true" },
+  { q: "Patience is not an important trait for scientists.", a: "false" },
+  { q: "Persistence allows scientists to continue refining their work after research is complete.", a: "true" },
+  { q: "Critical thinking allows scientists to analyze facts and reach reasoned conclusions.", a: "true" },
+];
+
+// ─── STATE ──────────────────────────────────────────────────────────────────
+let state = {
+  awaiting: 'menu',
+  mode: null,
+  questions: [],
+  qIndex: 0,
+  score: 0,
+  total: 0,
+  hintUsed: false,
+  audioEnabled: true,
+};
+
+// ─── TTS ────────────────────────────────────────────────────────────────────
+let speaking = false;
+function speak(text) {
+  if (!state.audioEnabled) return;
+  window.speechSynthesis.cancel();
+  const clean = text.replace(/<[^>]+>/g, '').replace(/[🔬🌟✅❌💡⏭️🏆😊💪🔄🔲📚]/g, '');
+  const utt = new SpeechSynthesisUtterance(clean);
+  utt.rate = 1.0;
+  utt.pitch = 1.05;
+  utt.volume = 1;
+  // prefer a clear English voice
+  const voices = window.speechSynthesis.getVoices();
+  const preferred = voices.find(v => v.lang.startsWith('en') && v.name.includes('Female'))
+    || voices.find(v => v.lang.startsWith('en'))
+    || voices[0];
+  if (preferred) utt.voice = preferred;
+  utt.onstart = () => { speaking = true; showWave(true); };
+  utt.onend = utt.onerror = () => { speaking = false; showWave(false); };
+  window.speechSynthesis.speak(utt);
+}
+
+function showWave(on) {
+  document.querySelectorAll('.speaker-wave').forEach(w => {
+    w.style.display = on ? 'inline-flex' : 'none';
+  });
+}
+
+// ensure voices loaded
+window.speechSynthesis.onvoiceschanged = () => {};
+
+// ─── UI HELPERS ─────────────────────────────────────────────────────────────
+const chatBox = document.getElementById('chat-box');
+const input = document.getElementById('user-input');
+const sendBtn = document.getElementById('send-btn');
+const scoreVal = document.getElementById('score-val');
+const totalVal = document.getElementById('total-val');
+
+function scrollBottom() { chatBox.scrollTop = chatBox.scrollHeight; }
+
+function addMessage(role, html, speakText) {
+  const div = document.createElement('div');
+  div.className = `msg ${role}`;
+  const avatar = document.createElement('div');
+  avatar.className = 'avatar';
+  avatar.textContent = role === 'bot' ? '🤖' : '🧑';
+  const bubble = document.createElement('div');
+  bubble.className = 'bubble';
+
+  if (role === 'bot') {
+    bubble.innerHTML = html + '<span class="speaker-wave" style="display:none"><span></span><span></span><span></span><span></span><span></span></span>';
+  } else {
+    bubble.innerHTML = html;
+  }
+
+  div.appendChild(avatar);
+  div.appendChild(bubble);
+  chatBox.appendChild(div);
+  scrollBottom();
+  bindChips();
+
+  if (role === 'bot') {
+    const txt = speakText || html.replace(/<[^>]+>/g, ' ');
+    setTimeout(() => speak(txt), 300);
+  }
+}
+
+function addTyping() {
+  const d = document.createElement('div');
+  d.className = 'msg bot'; d.id = 'typing';
+  d.innerHTML = '<div class="avatar">🤖</div><div class="typing"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>';
+  chatBox.appendChild(d); scrollBottom();
+}
+function removeTyping() { const t = document.getElementById('typing'); if (t) t.remove(); }
+
+function bindChips() {
+  document.querySelectorAll('.chip:not([data-bound])').forEach(c => {
+    c.dataset.bound = '1';
+    c.addEventListener('click', () => handleUserMessage(c.dataset.val));
+  });
+}
+
+function updateScore() {
+  scoreVal.textContent = state.score;
+  totalVal.textContent = state.total;
+}
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function normalize(s) {
+  return s.toLowerCase().trim().replace(/\s+/g, ' ');
+}
+
+function checkAnswer(user, correct) {
+  const u = normalize(user);
+  const c = normalize(correct);
+  if (u === c) return true;
+  const parts = c.split(/[,;\/]/);
+  for (const p of parts) {
+    if (u.includes(p.trim()) && p.trim().length > 3) return true;
+  }
+  if (c.includes(u) && u.length > 4) return true;
+  return false;
+}
+
+function showResult() {
+  const pct = Math.round((state.score / state.total) * 100);
+  const emoji = pct >= 90 ? '🏆' : pct >= 70 ? '🌟' : pct >= 50 ? '😊' : '💪';
+  const msg = pct >= 90 ? 'Excellent work! You nailed it!' : pct >= 70 ? 'Great job! Keep it up!' : pct >= 50 ? 'Good effort! Review and try again!' : 'Keep studying — you can do it!';
+  document.getElementById('res-emoji').textContent = emoji;
+  document.getElementById('res-score').textContent = state.score;
+  document.getElementById('res-total').textContent = state.total;
+  document.getElementById('res-msg').textContent = msg;
+  document.getElementById('result-overlay').classList.add('show');
+  speak(`Quiz complete! Your score is ${state.score} out of ${state.total}. ${msg}`);
+}
+
+function restartApp() {
+  document.getElementById('result-overlay').classList.remove('show');
+  state = { awaiting: 'menu', mode: null, questions: [], allAnswers: [], qIndex: 0, score: 0, total: 0, hintUsed: false, audioEnabled: state.audioEnabled };
+  chatBox.innerHTML = '';
+  document.querySelector('.input-bar').style.display = 'flex';
+  updateScore();
+  showMenu();
+}
+
+// ─── GAME LOGIC ─────────────────────────────────────────────────────────────
+function showMenu() {
+  addMessage('bot',
+    `👋 <strong>Hello! I'm your Scientists Reviewer!</strong><br>I'll help you review <em>Filipino Scientists</em>, <em>Foreign Scientists</em>, and <em>Traits of a Scientist</em>.<br><br>What would you like to do?<br>
+    <span class="chip" data-val="1">1️⃣ Study a Topic</span>
+    <span class="chip" data-val="2">2️⃣ True or False Quiz</span>
+    <span class="chip" data-val="3">3️⃣ Full Review — All Topics</span>`,
+    "Hello! I'm your Scientists Reviewer. What would you like to do? Study a topic, take a True or False quiz, or do a full review of all topics?"
+  );
+  state.awaiting = 'menu';
+}
+
+// ─── MULTIPLE CHOICE HELPERS ─────────────────────────────────────────────────
+function getAllAnswers() {
+  const answers = [];
+  for (const qs of Object.values(topics)) {
+    for (const q of qs) answers.push(q.a);
+  }
+  return answers;
+}
+
+function generateChoices(correctAnswer, allAnswers) {
+  const pool = allAnswers.filter(a => a !== correctAnswer);
+  const distractors = shuffle(pool).slice(0, 3);
+  return shuffle([correctAnswer, ...distractors]);
+}
+
+function buildMCHtml(q, num, choices) {
+  const tag = q.topic ? `<span class="topic-tag">${q.topic}</span><br>` : '';
+  const letters = ['A','B','C','D'];
+  const btns = choices.map((c, i) =>
+    `<button class="mc-btn" data-answer="${encodeURIComponent(c)}" onclick="handleMCClick(this)">
+      <span class="letter">${letters[i]}</span>${c}
+    </button>`
+  ).join('');
+  return `${tag}<strong>Q${num} of ${state.total}:</strong> ${q.q}<div class="mc-options">${btns}</div>`;
+}
+
+function handleMCClick(btn) {
+  const allBtns = btn.closest('.mc-options').querySelectorAll('.mc-btn');
+  allBtns.forEach(b => b.disabled = true);
+
+  const chosen = decodeURIComponent(btn.dataset.answer);
+  const q = state.questions[state.qIndex];
+  const correct = chosen === q.a;
+
+  allBtns.forEach(b => {
+    if (decodeURIComponent(b.dataset.answer) === q.a) b.classList.add('correct');
+  });
+  if (!correct) btn.classList.add('wrong');
+
+  setTimeout(() => {
+    if (correct) {
+      state.score++;
+      addMessage('bot', `✅ <strong>Correct!</strong> +1 point! The answer is: <strong>${q.a}</strong>`, `Correct! The answer is: ${q.a}`);
+    } else {
+      addMessage('bot', `❌ <strong>Not quite!</strong> You answered: <em>${chosen}</em><br>✏️ The correct answer is: <strong>${q.a}</strong>`, `Not quite! The correct answer is: ${q.a}`);
+    }
+    state.qIndex++;
+    updateScore();
+    if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+    else setTimeout(showResult, 900);
+  }, 650);
+}
+
+function nextQuestion() {
+  const qi = state.qIndex;
+  const q = state.questions[qi];
+  const num = qi + 1;
+  const isTF = state.mode === 'tf';
+  const isFull = state.mode === 'full';
+  const tag = q.topic ? `<span class="topic-tag">${q.topic}</span><br>` : '';
+
+  if (isFull) {
+    const choices = generateChoices(q.a, state.allAnswers);
+    const html = buildMCHtml(q, num, choices);
+    addMessage('bot', html, `Question ${num}. ${q.q}`);
+    return;
+  }
+
+  const chips = isTF
+    ? `<br><span class="chip" data-val="true">✅ True</span><span class="chip" data-val="false">❌ False</span>`
+    : `<br><small style="color:var(--muted)">Type your answer · type <em>hint</em> for a clue · type <em>skip</em> to skip</small>`;
+  const html = `${tag}<strong>Q${num} of ${state.total}:</strong> ${q.q}${chips}`;
+  addMessage('bot', html, `Question ${num}. ${q.q}`);
+}
+
+function handleUserMessage(msg) {
+  if (!msg.trim()) return;
+  window.speechSynthesis.cancel();
+  addMessage('user', msg.replace(/</g, '&lt;'));
+
+  input.disabled = true;
+  sendBtn.disabled = true;
+  addTyping();
+
+  setTimeout(() => {
+    removeTyping();
+    input.disabled = false;
+    sendBtn.disabled = false;
+    input.focus();
+    processMessage(msg);
+  }, 500);
+}
+
+function processMessage(msg) {
+  const aw = state.awaiting;
+
+  if (aw === 'menu') {
+    if (msg === '1') {
+      state.awaiting = 'topic';
+      const keys = Object.keys(topics);
+      let chips = keys.map((t, i) => `<span class="chip" data-val="${i+1}">${i+1}. ${t}</span>`).join(' ');
+      addMessage('bot', `📚 Which topic would you like to review?<br>${chips}`, 'Which topic would you like to review?');
+    } else if (msg === '2') {
+      document.querySelector('.input-bar').style.display = 'flex';
+      state.mode = 'tf';
+      state.questions = shuffle(trueOrFalse);
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'tf_answer';
+      updateScore();
+      addMessage('bot', `🔲 <strong>True or False Quiz!</strong> ${state.total} questions. Let's go!`, `True or False Quiz! ${state.total} questions. Let's go!`);
+      setTimeout(nextQuestion, 800);
+    } else if (msg === '3') {
+      state.mode = 'full';
+      const all = [];
+      for (const [topicName, qs] of Object.entries(topics)) {
+        qs.forEach(q => all.push({ ...q, topic: topicName }));
+      }
+      state.questions = shuffle(all);
+      state.allAnswers = getAllAnswers();
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'mc_answer';
+      updateScore();
+      document.querySelector('.input-bar').style.display = 'none';
+      addMessage('bot', `🌟 <strong>Full Review — Multiple Choice!</strong> ${state.total} questions across all topics. Click your answer!`, `Full Review! Multiple Choice! ${state.total} questions. Click your answer!`);
+      setTimeout(nextQuestion, 800);
+    } else {
+      addMessage('bot',
+        `Please choose an option:<br><span class="chip" data-val="1">1️⃣ Study a Topic</span><span class="chip" data-val="2">2️⃣ True or False Quiz</span><span class="chip" data-val="3">3️⃣ Full Review</span>`,
+        'Please choose an option: Study a Topic, True or False Quiz, or Full Review.'
+      );
+    }
+    return;
+  }
+
+  if (aw === 'topic') {
+    const keys = Object.keys(topics);
+    const idx = parseInt(msg) - 1;
+    if (keys[idx]) {
+      const topicName = keys[idx];
+      state.mode = 'topic';
+      state.questions = shuffle(topics[topicName]);
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'answer';
+      updateScore();
+      addMessage('bot', `📚 <strong>${topicName}</strong> — ${state.total} questions. Let's begin!`, `${topicName}. ${state.total} questions. Let's begin!`);
+      setTimeout(nextQuestion, 800);
+    } else {
+      const chips = keys.map((t, i) => `<span class="chip" data-val="${i+1}">${i+1}. ${t}</span>`).join(' ');
+      addMessage('bot', `Please pick a valid topic:<br>${chips}`, 'Please pick a valid topic.');
+    }
+    return;
+  }
+
+  if (aw === 'answer') {
+    const q = state.questions[state.qIndex];
+    const m = normalize(msg);
+
+    if (m === 'hint') {
+      state.hintUsed = true;
+      addMessage('bot', `💡 <strong>Hint:</strong> ${q.hint}`, `Hint: ${q.hint}`);
+      return;
+    }
+    if (m === 'skip') {
+      addMessage('bot', `⏭️ Skipped! The answer was: <strong>${q.a}</strong>`, `Skipped. The answer was: ${q.a}`);
+      state.qIndex++;
+      state.hintUsed = false;
+      if (state.qIndex < state.total) {
+        setTimeout(nextQuestion, 600);
+      } else { showResult(); }
+      return;
+    }
+
+    const correct = checkAnswer(msg, q.a);
+    if (correct) {
+      if (!state.hintUsed) state.score++;
+      const note = state.hintUsed ? ' (hint used — no point awarded)' : ' Plus one point!';
+      addMessage('bot', `✅ <strong>Correct!</strong>${state.hintUsed ? ' <em>(hint used — no point)</em>' : ' +1 point!'} The answer is: <strong>${q.a}</strong>`, `Correct!${note} The answer is: ${q.a}`);
+    } else {
+      addMessage('bot', `❌ <strong>Not quite!</strong> You answered: <em>${msg}</em><br>✏️ The correct answer is: <strong>${q.a}</strong>`, `Not quite! The correct answer is: ${q.a}`);
+    }
+    state.qIndex++;
+    state.hintUsed = false;
+    updateScore();
+
+    if (state.qIndex < state.total) {
+      setTimeout(nextQuestion, 900);
+    } else { setTimeout(showResult, 900); }
+    return;
+  }
+
+  if (aw === 'tf_answer') {
+    const q = state.questions[state.qIndex];
+    let ans = normalize(msg);
+    if (ans === 't') ans = 'true';
+    if (ans === 'f') ans = 'false';
+
+    if (ans === 'true' || ans === 'false') {
+      const correct = ans === q.a;
+      if (correct) {
+        state.score++;
+        addMessage('bot', `✅ <strong>Correct!</strong> It is <strong>${q.a.toUpperCase()}</strong>.`, `Correct! It is ${q.a}.`);
+      } else {
+        addMessage('bot', `❌ <strong>Wrong!</strong> You answered: <em>${ans === 'true' ? 'True' : 'False'}</em><br>✏️ The correct answer is: <strong>${q.a.toUpperCase()}</strong>`, `Wrong! The correct answer is ${q.a}.`);
+      }
+      state.qIndex++;
+      updateScore();
+
+      if (state.qIndex < state.total) {
+        setTimeout(nextQuestion, 900);
+      } else { setTimeout(showResult, 900); }
+    } else {
+      addMessage('bot',
+        `Please answer True or False:<br><span class="chip" data-val="true">✅ True</span><span class="chip" data-val="false">❌ False</span>`,
+        'Please answer True or False.'
+      );
+    }
+    return;
+  }
+}
+
+// ─── CONTROLS ────────────────────────────────────────────────────────────────
+sendBtn.addEventListener('click', () => {
+  handleUserMessage(input.value);
+  input.value = '';
+});
+input.addEventListener('keydown', e => {
+  if (e.key === 'Enter') {
+    handleUserMessage(input.value);
+    input.value = '';
+  }
+});
+
+document.getElementById('audio-toggle').addEventListener('click', function() {
+  state.audioEnabled = !state.audioEnabled;
+  this.textContent = state.audioEnabled ? '🔊' : '🔇';
+  this.classList.toggle('active', state.audioEnabled);
+  if (!state.audioEnabled) window.speechSynthesis.cancel();
+});
+
+// ─── INIT ────────────────────────────────────────────────────────────────────
+window.addEventListener('load', () => {
+  // warm up voices
+  window.speechSynthesis.getVoices();
+  showMenu();
+});
+
+function switchTab(tabId, btn) {
+  document.querySelectorAll('.notes-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.notes-tab').forEach(b => b.classList.remove('active'));
+  document.getElementById(tabId).classList.add('active');
+  btn.classList.add('active');
+}
+
+</script>
+
+<!-- ── Notes Panel ── -->
+<div class="notes-overlay" id="notes-overlay">
+  <div class="notes-panel">
+    <div class="notes-header">
+      <h2>📖 Scientists Study Notes</h2>
+      <button class="notes-close" onclick="document.getElementById('notes-overlay').classList.remove('show')">✕</button>
+    </div>
+    <div class="notes-tabs">
+      <button class="notes-tab active" onclick="switchTab('tab-motion', this)">🇵🇭 Filipino Scientists</button>
+      <button class="notes-tab" onclick="switchTab('tab-sound', this)">🌍 Foreign Scientists</button>
+      <button class="notes-tab" onclick="switchTab('tab-light', this)">⭐ Traits</button>
+      <button class="notes-tab" onclick="switchTab('tab-tf', this)">✅ True or False</button>
+    </div>
+    <div class="notes-body">
+
+      <div class="notes-section active" id="tab-motion">
+        <div class="notes-topic">
+          <div class="notes-topic-title">🇵🇭 Filipino Scientists</div>
+          <div class="notes-item"><span class="notes-term">Arturo P. Alcaraz</span><span class="notes-def">Volcanologist; "Father of Geothermal Energy Development" in the Philippines</span></div>
+          <div class="notes-item"><span class="notes-term">Julian A. Banzon</span><span class="notes-def">Biochemist; researched alternative fuels (coconut/sugarcane ethyl esters) and coconut oil extraction; National Scientist Award</span></div>
+          <div class="notes-item"><span class="notes-term">Fe V. del Mundo</span><span class="notes-def">First Filipina National Scientist; founded The Children's Medical Center (1957), the first pediatric hospital in the country</span></div>
+          <div class="notes-item"><span class="notes-term">Geminiano T. de Ocampo</span><span class="notes-def">"Father of Modern Philippine Ophthalmology"; established the De Ocampo Eye Hospital</span></div>
+          <div class="notes-item"><span class="notes-term">Clara Y. Lim-Sylianco</span><span class="notes-def">Chemist who studied mutagens (harmful substances that damage DNA) and DNA repair mechanisms</span></div>
+          <div class="notes-item"><span class="notes-term">Gregorio Y. Zara</span><span class="notes-def">Engineer/physicist; "Father of Videoconferencing"; invented the first two-way videophone (1955)</span></div>
+          <div class="notes-item"><span class="notes-term">Aisa Mijeno</span><span class="notes-def">Engineer who invented the SALt (Sustainable Alternative Lighting) lamp, a saltwater-powered lantern</span></div>
+          <div class="notes-item"><span class="notes-term">Aletta T. Yñiguez</span><span class="notes-def">Marine biologist; develops tools/models for BFAR and DENR; advocates sustainable fishing</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-sound">
+        <div class="notes-topic">
+          <div class="notes-topic-title">🌍 Foreign Scientists</div>
+          <div class="notes-item"><span class="notes-term">Marie Curie</span><span class="notes-def">Discovered radium and polonium; pioneered radiation therapy; developed mobile X-ray units in WWI</span></div>
+          <div class="notes-item"><span class="notes-term">Charles Darwin</span><span class="notes-def">"Father of Evolution"; theory of evolution by natural selection (Beagle voyage)</span></div>
+          <div class="notes-item"><span class="notes-term">Isaac Newton</span><span class="notes-def">Invented the reflecting telescope; Three Laws of Motion, Law of Universal Gravitation; helped develop calculus</span></div>
+          <div class="notes-item"><span class="notes-term">Albert Einstein</span><span class="notes-def">Famous for the Theory of Relativity (space, time, gravity, universe)</span></div>
+          <div class="notes-item"><span class="notes-term">Ada Lovelace</span><span class="notes-def">World's first computer programmer; worked on Charles Babbage's Analytical Engine</span></div>
+          <div class="notes-item"><span class="notes-term">Louis Pasteur</span><span class="notes-def">Developed pasteurization, vaccines for anthrax and rabies, and the germ theory of disease</span></div>
+          <div class="notes-item"><span class="notes-term">Katie Bouman</span><span class="notes-def">Key member of the Event Horizon Telescope (EHT) project — first image of a black hole</span></div>
+          <div class="notes-item"><span class="notes-term">Charles Kao</span><span class="notes-def">Won 2009 Nobel Prize in Physics for light transmission through optical fibers (fiber-optic communication)</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-light">
+        <div class="notes-topic">
+          <div class="notes-topic-title">⭐ Traits of a Scientist</div>
+          <div class="notes-item"><span class="notes-term">Scientific Method</span><span class="notes-def">Careful process of observation, experimentation, and analysis</span></div>
+          <div class="notes-item"><span class="notes-term">Curiosity</span><span class="notes-def">Desire to learn and understand new things</span></div>
+          <div class="notes-item"><span class="notes-term">Attention to Detail</span><span class="notes-def">Ability to focus on often overlooked aspects of a task</span></div>
+          <div class="notes-item"><span class="notes-term">Patience</span><span class="notes-def">Important when results take months or years to materialize</span></div>
+          <div class="notes-item"><span class="notes-term">Good Communication Skills</span><span class="notes-def">Ability to convey ideas and findings clearly and concisely</span></div>
+          <div class="notes-item"><span class="notes-term">Critical Thinking</span><span class="notes-def">Ability to analyze facts and reach reasoned judgments and conclusions</span></div>
+          <div class="notes-item"><span class="notes-term">Courage</span><span class="notes-def">Willingness to tackle important problems in society and seek solutions</span></div>
+          <div class="notes-item"><span class="notes-term">Persistence</span><span class="notes-def">Working diligently toward a goal despite challenges; continuing to refine work after research is done</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-tf">
+        <div class="notes-topic">
+          <div class="notes-topic-title">✅ True or False Answers</div>
+          <div class="notes-item"><span class="notes-term" style="color:#22c55e">TRUE</span><span class="notes-def">Arturo P. Alcaraz is known as the Father of Geothermal Energy Development.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#22c55e">TRUE</span><span class="notes-def">Julian A. Banzon's research focused on alternative fuels and coconuts.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">Fe V. del Mundo was the first <em>Filipino</em> National Scientist, not the first Filipina. → <strong>FALSE</strong> — she was actually the first <em>Filipina</em> National Scientist.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#22c55e">TRUE</span><span class="notes-def">Geminiano T. de Ocampo is the Father of Modern Philippine Ophthalmology.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#22c55e">TRUE</span><span class="notes-def">Clara Y. Lim-Sylianco's research focused on mutagens and DNA repair.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#22c55e">TRUE</span><span class="notes-def">Gregorio Y. Zara invented the first two-way videophone in 1955.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">The SALt lamp runs on <em>solar power</em>. → <strong>FALSE</strong> — it runs on SALTWATER.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#22c55e">TRUE</span><span class="notes-def">Aletta T. Yñiguez is a marine biologist.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#22c55e">TRUE</span><span class="notes-def">Marie Curie discovered radium and polonium.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#22c55e">TRUE</span><span class="notes-def">Charles Darwin is known as the Father of Evolution.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#22c55e">TRUE</span><span class="notes-def">Isaac Newton invented the reflecting telescope.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#22c55e">TRUE</span><span class="notes-def">Albert Einstein is most famous for the Theory of Relativity.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#22c55e">TRUE</span><span class="notes-def">Ada Lovelace is celebrated as the world's first computer programmer.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#22c55e">TRUE</span><span class="notes-def">Louis Pasteur developed vaccines for anthrax and rabies.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#22c55e">TRUE</span><span class="notes-def">Katie Bouman's work produced the first image of a black hole.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">Charles Kao won the Nobel Prize for <em>radioactivity</em>. → <strong>FALSE</strong> — it was for light transmission through optical fibers.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#22c55e">TRUE</span><span class="notes-def">Curiosity is the desire to learn and understand new things.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">Patience <em>is not</em> an important trait for scientists. → <strong>FALSE</strong> — patience IS important.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#22c55e">TRUE</span><span class="notes-def">Persistence allows scientists to continue refining their work after research is complete.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#22c55e">TRUE</span><span class="notes-def">Critical thinking allows scientists to analyze facts and reach reasoned conclusions.</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
