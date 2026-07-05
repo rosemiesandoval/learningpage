@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="tl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🌏 Heograpiya Reviewer</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --gold: #f59e0b;
+  --gold-dark: #b45309;
+  --blue: #3b82f6;
+  --blue-dark: #1d4ed8;
+  --red: #ef4444;
+  --green: #22c55e;
+  --bg: #0c1a0e;
+  --surface: #132015;
+  --surface2: #1a2e1d;
+  --text: #f0fdf4;
+  --muted: #86efac;
+  --border: #166534;
+}
+
+body {
+  font-family: 'Baloo 2', cursive;
+  background: var(--bg);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--text);
+  background-image:
+    radial-gradient(ellipse at 10% 30%, rgba(245,158,11,.06) 0%, transparent 55%),
+    radial-gradient(ellipse at 90% 70%, rgba(59,130,246,.06) 0%, transparent 55%);
+}
+
+header {
+  width: 100%;
+  background: linear-gradient(135deg, #14532d, #1e3a5f);
+  border-bottom: 2px solid var(--gold-dark);
+  padding: 13px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 4px 30px rgba(0,0,0,.5);
+}
+.header-icon { font-size: 2rem; animation: float 3s ease-in-out infinite; }
+@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
+
+header h1 {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.45rem;
+  background: linear-gradient(90deg, var(--gold), #fde68a, var(--gold));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+header .sub { font-size: .72rem; color: var(--muted); margin-top: 1px; }
+
+.header-controls { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+.score-pill {
+  background: rgba(245,158,11,.15);
+  border: 1px solid rgba(245,158,11,.4);
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-weight: 800;
+  font-size: .85rem;
+  color: var(--gold);
+}
+.audio-btn {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  background: var(--surface2);
+  color: var(--text);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all .2s;
+  display: flex; align-items: center; justify-content: center;
+}
+.audio-btn:hover, .audio-btn.active { background: #14532d; border-color: var(--gold); }
+
+.chat-wrap {
+  width: 100%; max-width: 700px; flex: 1;
+  display: flex; flex-direction: column;
+  padding: 16px 14px 0;
+}
+
+#chat-box {
+  flex: 1; overflow-y: auto;
+  display: flex; flex-direction: column;
+  gap: 14px; padding-bottom: 10px;
+  max-height: calc(100vh - 200px);
+  scroll-behavior: smooth;
+}
+#chat-box::-webkit-scrollbar { width: 4px; }
+#chat-box::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+.msg { display: flex; gap: 8px; }
+.msg.user { flex-direction: row-reverse; }
+
+.avatar {
+  width: 34px; height: 34px; border-radius: 50%;
+  font-size: 1rem; display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 2px;
+}
+.msg.bot .avatar { background: linear-gradient(135deg, #14532d, #1e3a5f); border: 1.5px solid rgba(245,158,11,.4); }
+.msg.user .avatar { background: linear-gradient(135deg, #1e3a5f, #14532d); border: 1.5px solid rgba(59,130,246,.3); }
+
+.bubble {
+  max-width: 80%;
+  padding: 11px 16px;
+  border-radius: 18px;
+  font-size: .9rem;
+  line-height: 1.65;
+  animation: pop .22s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes pop { from{transform:scale(.88) translateY(6px);opacity:0} to{transform:scale(1) translateY(0);opacity:1} }
+
+.msg.bot .bubble {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-bottom-left-radius: 5px;
+}
+.msg.user .bubble {
+  background: linear-gradient(135deg, #1e3a5f, var(--blue-dark));
+  border-bottom-right-radius: 5px;
+}
+
+/* chips */
+.chip {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: rgba(245,158,11,.12);
+  border: 1.5px solid rgba(245,158,11,.4);
+  color: var(--gold);
+  border-radius: 30px;
+  padding: 5px 13px; margin: 5px 4px 0 0;
+  font-size: .8rem; font-weight: 700;
+  cursor: pointer; transition: all .15s;
+  user-select: none; font-family: 'Baloo 2', cursive;
+}
+.chip:hover {
+  background: var(--gold-dark); color: white;
+  border-color: var(--gold);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(245,158,11,.3);
+}
+
+/* topic tag */
+.topic-tag {
+  display: inline-block;
+  background: linear-gradient(135deg, #14532d, #166534);
+  border: 1px solid var(--gold-dark);
+  color: var(--gold);
+  font-size: .68rem; font-weight: 800;
+  border-radius: 20px; padding: 2px 10px;
+  margin-bottom: 5px; letter-spacing: .5px;
+  text-transform: uppercase;
+}
+
+/* multiple choice */
+.mc-options { display: flex; flex-direction: column; gap: 7px; margin-top: 10px; width: 100%; }
+.mc-btn {
+  display: flex; align-items: center; gap: 10px;
+  background: rgba(255,255,255,.03);
+  border: 1.5px solid var(--border);
+  border-radius: 12px; padding: 9px 14px;
+  color: var(--text); font-family: 'Baloo 2', cursive;
+  font-size: .87rem; font-weight: 600;
+  cursor: pointer; transition: all .15s; text-align: left; width: 100%;
+}
+.mc-btn:hover:not(:disabled) {
+  background: rgba(245,158,11,.12); border-color: var(--gold);
+  color: var(--gold); transform: translateX(3px);
+}
+.mc-btn .letter {
+  display: flex; align-items: center; justify-content: center;
+  width: 26px; height: 26px; border-radius: 8px;
+  background: rgba(245,158,11,.15); border: 1px solid rgba(245,158,11,.35);
+  color: var(--gold); font-size: .78rem; font-weight: 800;
+  flex-shrink: 0; transition: all .15s;
+}
+.mc-btn:hover:not(:disabled) .letter { background: var(--gold-dark); color: white; border-color: var(--gold-dark); }
+.mc-btn.correct { background: rgba(34,197,94,.15)!important; border-color: #22c55e!important; color: #22c55e!important; cursor: default; }
+.mc-btn.correct .letter { background: #22c55e!important; color: white!important; border-color: #22c55e!important; }
+.mc-btn.wrong { background: rgba(239,68,68,.12)!important; border-color: #ef4444!important; color: #ef4444!important; cursor: default; }
+.mc-btn.wrong .letter { background: #ef4444!important; color: white!important; border-color: #ef4444!important; }
+.mc-btn:disabled { cursor: default; transform: none!important; }
+
+/* speaker wave */
+.speaker-wave {
+  display: inline-flex; align-items: flex-end;
+  gap: 2px; height: 14px; margin-left: 6px; vertical-align: middle;
+}
+.speaker-wave span {
+  display: block; width: 3px; border-radius: 2px;
+  background: var(--gold); animation: wave 1s ease-in-out infinite;
+}
+.speaker-wave span:nth-child(1){height:4px;animation-delay:0s}
+.speaker-wave span:nth-child(2){height:10px;animation-delay:.1s}
+.speaker-wave span:nth-child(3){height:6px;animation-delay:.2s}
+.speaker-wave span:nth-child(4){height:12px;animation-delay:.15s}
+.speaker-wave span:nth-child(5){height:4px;animation-delay:.05s}
+@keyframes wave{0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.8)}}
+
+/* typing */
+.typing {
+  display: flex; gap: 4px; padding: 12px 16px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 18px; border-bottom-left-radius: 5px; width: fit-content;
+}
+.dot { width: 7px; height: 7px; border-radius: 50%; background: var(--gold); animation: bounce .9s infinite; }
+.dot:nth-child(2){animation-delay:.15s} .dot:nth-child(3){animation-delay:.3s}
+@keyframes bounce{0%,80%,100%{transform:translateY(0);opacity:.6}40%{transform:translateY(-7px);opacity:1}}
+
+/* input bar */
+.input-bar {
+  width: 100%; max-width: 700px;
+  padding: 10px 14px 18px;
+  display: flex; gap: 8px;
+  background: var(--bg); position: sticky; bottom: 0;
+}
+#user-input {
+  flex: 1; padding: 12px 18px;
+  border: 2px solid var(--border); border-radius: 30px;
+  font-family: 'Baloo 2', cursive; font-size: .92rem;
+  outline: none; background: var(--surface); color: var(--text);
+  transition: border-color .2s, box-shadow .2s;
+}
+#user-input::placeholder { color: var(--muted); }
+#user-input:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(245,158,11,.12); }
+
+#send-btn {
+  width: 48px; height: 48px; border-radius: 50%; border: none;
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  color: white; font-size: 1.1rem; cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 3px 14px rgba(245,158,11,.4); flex-shrink: 0;
+}
+#send-btn:hover { transform: scale(1.08); box-shadow: 0 5px 20px rgba(245,158,11,.55); }
+#send-btn:disabled { opacity: .5; transform: none; }
+
+/* result modal */
+.result-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.75); backdrop-filter: blur(6px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 100; opacity: 0; pointer-events: none; transition: opacity .3s;
+}
+.result-overlay.show { opacity: 1; pointer-events: all; }
+.result-card {
+  background: linear-gradient(135deg, #132015, #0c1a0e);
+  border: 2px solid var(--gold-dark);
+  border-radius: 24px; padding: 36px 40px;
+  text-align: center; max-width: 380px; width: 90%;
+  box-shadow: 0 20px 60px rgba(0,0,0,.6);
+  transform: scale(.9); transition: transform .3s cubic-bezier(.34,1.56,.64,1);
+}
+.result-overlay.show .result-card { transform: scale(1); }
+.result-emoji { font-size: 4rem; margin-bottom: 12px; display: block; }
+.result-title {
+  font-family: 'Fredoka One', cursive; font-size: 1.7rem; margin-bottom: 6px;
+  background: linear-gradient(90deg, var(--gold), #fde68a);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.result-score { font-size: 3rem; font-weight: 900; margin: 10px 0; color: white; }
+.result-msg { color: var(--muted); font-size: .9rem; margin-bottom: 22px; }
+.result-btn {
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  border: none; border-radius: 30px; padding: 12px 30px;
+  color: white; font-family: 'Baloo 2', cursive; font-weight: 800;
+  font-size: 1rem; cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+  box-shadow: 0 4px 16px rgba(245,158,11,.35);
+}
+.result-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 22px rgba(245,158,11,.5); }
+
+/* scenario card for identify questions */
+.scenario-card {
+  background: rgba(245,158,11,.07);
+  border: 1px solid rgba(245,158,11,.25);
+  border-radius: 12px; padding: 10px 14px;
+  margin: 8px 0 6px; font-style: italic;
+  font-size: .87rem; color: #fde68a; line-height: 1.5;
+}
+
+/* ── Notes Panel ─────────────────────────────────────────────── */
+.notes-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.78); backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 200; opacity: 0; pointer-events: none; transition: opacity .3s;
+}
+.notes-overlay.show { opacity: 1; pointer-events: all; }
+.notes-panel {
+  background: linear-gradient(160deg, #0c1a0e, #132015);
+  border: 2px solid var(--gold-dark);
+  border-radius: 20px;
+  width: 92%; max-width: 720px;
+  max-height: 88vh;
+  display: flex; flex-direction: column;
+  box-shadow: 0 24px 60px rgba(0,0,0,.7);
+  overflow: hidden;
+  transform: translateY(30px);
+  transition: transform .35s cubic-bezier(.34,1.2,.64,1);
+}
+.notes-overlay.show .notes-panel { transform: translateY(0); }
+.notes-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 22px; border-bottom: 1px solid var(--border);
+  background: linear-gradient(135deg, #14532d44, #1e3a5f44);
+}
+.notes-header h2 { font-family: 'Fredoka One', cursive; font-size: 1.3rem; color: var(--gold); }
+.notes-close {
+  width: 34px; height: 34px; border-radius: 50%;
+  border: 1.5px solid var(--border); background: var(--surface2);
+  color: var(--text); font-size: 1rem; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; transition: all .2s;
+}
+.notes-close:hover { background: #b91c1c; border-color: #ef4444; }
+.notes-body { overflow-y: auto; padding: 20px 22px; flex: 1; }
+.notes-body::-webkit-scrollbar { width: 4px; }
+.notes-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+.notes-topic { margin-bottom: 28px; }
+.notes-topic-title {
+  font-family: 'Fredoka One', cursive; font-size: 1.05rem;
+  color: var(--gold); margin-bottom: 10px;
+  padding-bottom: 6px; border-bottom: 1px solid var(--border);
+}
+.notes-item {
+  display: flex; gap: 10px; align-items: flex-start;
+  padding: 7px 0; border-bottom: 1px solid rgba(255,255,255,.04);
+  font-size: .87rem; line-height: 1.55;
+}
+.notes-item:last-child { border-bottom: none; }
+.notes-term { font-weight: 800; color: var(--gold); min-width: 150px; flex-shrink: 0; font-size: .84rem; }
+.notes-def { color: #d1fae5; }
+.notes-tabs {
+  display: flex; flex-wrap: wrap; gap: 8px; padding: 14px 22px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(0,0,0,.15);
+}
+.notes-tab {
+  padding: 12px 20px; border-radius: 10px;
+  border: 1.5px solid var(--border); 
+  background: rgba(255,255,255,.04); color: var(--muted);
+  font-family: 'Baloo 2', cursive; font-size: .9rem; font-weight: 700;
+  cursor: pointer; transition: all .15s; white-space: nowrap;
+  min-height: 48px; display: flex; align-items: center;
+}
+.notes-tab.active { background: var(--surface); color: var(--gold); border-color: var(--gold-dark); }
+.notes-tab:hover:not(.active) { color: var(--text); background: var(--surface2); }
+.notes-section { display: none; }
+.notes-section.active { display: block; }
+
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-icon">🌏</div>
+  <div>
+    <h1>Heograpiya Reviewer</h1>
+    <div class="sub">Globo &amp; Mapa · Meridian &amp; Longhitud · Parallel &amp; Latitud · Uri ng Mapa</div>
+  </div>
+  <div class="header-controls">
+    <div class="score-pill">⭐ <span id="score-val">0</span> / <span id="total-val">0</span></div>
+    <button class="audio-btn" id="notes-toggle" title="Basahin ang mga Tala" onclick="document.getElementById('notes-overlay').classList.add('show')">📖</button>
+    <button class="audio-btn active" id="audio-toggle" title="I-toggle ang Audio">🔊</button>
+  </div>
+</header>
+
+<div class="chat-wrap">
+  <div id="chat-box"></div>
+</div>
+
+<div class="input-bar">
+  <input type="text" id="user-input" placeholder="Isulat ang iyong sagot dito…" autocomplete="off" />
+  <button id="send-btn">➤</button>
+</div>
+
+<div class="result-overlay" id="result-overlay">
+  <div class="result-card">
+    <span class="result-emoji" id="res-emoji">🏆</span>
+    <div class="result-title">Tapos na!</div>
+    <div class="result-score"><span id="res-score">0</span>/<span id="res-total">0</span></div>
+    <div class="result-msg" id="res-msg">Magaling!</div>
+    <button class="result-btn" onclick="restartApp()">🔄 Maglaro Ulit</button>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+// QUESTION BANK
+// ═══════════════════════════════════════════════════════════════
+const topics = {
+
+  "Ang Globo at Mapa": [
+    { q: "Ano ang tawag sa pag-aaral sa mga katangian ng daigdig, ang paggamit sa mga espasyo nito, at ang interaksiyon ng mga tao sa kanilang kapaligiran?", a: "Heograpiya", hint: "Ito ang paksang ating pinag-aralan." },
+    { q: "Ano ang globo?", a: "Ang pabilog na modelo ng Daigdig", hint: "Bilog ang hugis nito, gaya ng totoong Daigdig." },
+    { q: "Bakit ang globo ang pinakamalapit na modelo sa wangis ng ating daigdig?", a: "Dahil sa hugis at pag-ikot nito, nakakabit ito sa axle na nagpapahintulot sa pag-ikot", hint: "Isipin ang hugis nito at ang pag-ikot nito sa axle." },
+    { q: "Ano ang mapa?", a: "Ang patag na representasyon ng Daigdig o ng mga bahagi nito", hint: "Patag ito, hindi bilog." },
+    { q: "Ano ang tawag sa paraan, istilo, sining, at agham ng paggawa ng mapa?", a: "Kartograpiya", hint: "Nagtatapos ito sa -grapiya, tulad ng heograpiya." },
+    { q: "Ano ang tawag sa taong gumagawa ng mapa?", a: "Kartograpo", hint: "Katulad ng kartograpiya, pero tumutukoy sa tao." },
+    { q: "Ano ang tawag sa koleksiyon ng mga mapa?", a: "Atlas", hint: "Ito ay isang libro ng mga mapa." },
+    { q: "Sino ang mga taong nakikinabang sa paggamit ng mapa at atlas?", a: "Mga manlalakbay, turista, at mag-aaral", hint: "Sila ang mga taong madalas naglalakbay o nag-aaral." },
+  ],
+
+  "Mga Meridian at Longhitud": [
+    { q: "Ano ang tawag sa mga linyang patayo na makikita sa globo at mapa?", a: "Meridian", hint: "Ito ang mga linyang patayo mula polo hanggang polo." },
+    { q: "Saan nagsisimula at saan tumatakbo pababa ang mga meridian?", a: "Nagsisimula sa Hilagang Polo at tumatakbo pababa sa Timog Polo", hint: "Mula sa itaas patungong ibaba ng Daigdig." },
+    { q: "Ano ang tawag sa distansiya sa pagitan ng dalawang meridian?", a: "Longhitud", hint: "Ito ang sukat sa pagitan ng mga linyang patayo." },
+    { q: "Ano ang Prime Meridian?", a: "Ang linyang patayo na matatagpuan sa 0 digri longhitud", hint: "0° ang digri nito." },
+    { q: "Ano ang naghahati sa Daigdig sa Kanluran at Silangang Hatingglobo?", a: "Ang Prime Meridian", hint: "Ito ay sa 0° longhitud." },
+    { q: "Saan dumadaan ang Prime Meridian?", a: "Sa Greenwich, isang pook sa London, England", hint: "Isa itong lungsod sa England." },
+    { q: "Ano ang International Date Line o IDL?", a: "Linya na ginagamit bilang batayan sa pagbabago ng araw o petsa", hint: "Ginagamit ito pagpalit ng petsa." },
+    { q: "Saan matatagpuan ang International Date Line?", a: "Sa 180 digri longhitud", hint: "Ito ay sa kabilang panig ng Prime Meridian." },
+  ],
+
+  "Mga Parallel at Latitud": [
+    { q: "Ano ang tawag sa mga linyang pahalang na makikita sa globo at mapa?", a: "Parallel", hint: "Ito ang mga linyang pahalang." },
+    { q: "Ano ang tawag sa distansiya sa pagitan ng mga parallel?", a: "Latitud", hint: "Ito ang sukat sa pagitan ng mga linyang pahalang." },
+    { q: "Ano ang Ekwador?", a: "Ang pahalang na linya na nakapalibot sa gitna ng globo, matatagpuan sa 0 digri latitud", hint: "Ito ay sa gitna ng globo, 0°." },
+    { q: "Ano ang hinahati ng Ekwador?", a: "Ang daigdig sa hilaga at timog na hatingglobo", hint: "Dalawang hatingglobo ang nabuo." },
+    { q: "Ano ang Tropiko ng Kanser?", a: "Ang linyang matatagpuan sa 23.5 digri sa hilaga ng Ekwador", hint: "Ito ay sa hilaga, hindi timog." },
+    { q: "Ano ang Tropiko ng Kaprikorn?", a: "Ang linyang matatagpuan sa 23.5 digri sa timog ng Ekwador", hint: "Ito ay sa timog, hindi hilaga." },
+    { q: "Ano ang tawag sa rehiyon sa pagitan ng Tropiko ng Kanser at Tropiko ng Kaprikorn?", a: "Mababang Latitud o Rehiyong Tropikal", hint: "Dito direktang tumatama ang sinag ng Araw." },
+    { q: "Ano ang Kabilugang Artiko?", a: "Ang linyang matatagpuan sa 66.5 digri sa hilaga ng Ekwador", hint: "Nasa itaas ng Tropiko ng Kanser." },
+    { q: "Ano ang Kabilugang Antartiko?", a: "Ang linyang matatagpuan sa 66.5 digri sa timog ng Ekwador", hint: "Nasa ibaba ng Tropiko ng Kaprikorn." },
+    { q: "Ano ang tawag sa rehiyon sa pagitan ng mga Tropiko at mga Kabilugang Circle?", a: "Gitnang Latitud o katamtamang rehiyon", hint: "May apat na uri ng panahon dito." },
+    { q: "Ilang uri ng panahon ang nararanasan ng mga bansa sa Gitnang Latitud?", a: "Apat — taglamig, tagsibol, tag-init, at taglagas", hint: "Bilangin ang mga panahon sa isang taon." },
+    { q: "Saan matatagpuan ang Hilagang Polo?", a: "Sa 90 digri Hilaga ng Ekwador", hint: "Ito ang pinakadulong hilaga." },
+    { q: "Saan matatagpuan ang Timog Polo?", a: "Sa 90 digri Timog ng Ekwador", hint: "Ito ang pinakadulong timog." },
+    { q: "Ano ang tawag sa rehiyon mula Kabilugang Circle hanggang sa Polo?", a: "Mataas na Latitud", hint: "Pinakamalamig ang klima dito." },
+    { q: "Ano ang bumubuo sa tinatawag na grid?", a: "Ang interseksiyon ng mga parallel at meridian", hint: "Dito nagsalubong ang linyang patayo and pahalang." },
+  ],
+
+  "Mga Uri ng Mapa": [
+    { q: "Ano ang ipinapakita ng mapang politikal?", a: "Ang nasasakupan o hanggahan ng isang lugar, rehiyon, lalawigan, lungsod, o bayan", hint: "Ito ay tungkol sa hanggahan at teritoryo." },
+    { q: "Ano ang ipinapakita ng mapang pang-ekonomiya?", a: "Ang mga produkto at kabuhayan sa isang lugar o rehiyon", hint: "Ito ay tungkol sa kabuhayan." },
+    { q: "Ano ang ipinapakita ng mapang pisikal?", a: "Ang katangiang heograpikal, anyong lupa, at anyong tubig ng isang lugar", hint: "Ito ay tungkol sa hugis at anyo ng lupain." },
+    { q: "Ano ang ipinapakita ng mapang pangklima?", a: "Ang uri ng klimang nararanasan sa isang bansa o rehiyon", hint: "Ito ay tungkol sa panahon." },
+    { q: "Ano ang ipinapakita ng mapang pampopulasyon?", a: "Ang bilangan ng mga taong naninirahan sa isang lugar o rehiyon", hint: "Ito ay tungkol sa dami ng tao." },
+  ],
+
+};
+
+// ── TRUE OR FALSE ────────────────────────────────────────────────────────────
+const trueOrFalse = [
+  { q: "Ang globo ang pinakamalapit na modelo sa tunay na hugis ng Daigdig dahil sa hugis at pag-ikot nito.", a: "tama" },
+  { q: "Ang mapa ay tinatawag na patag na representasyon ng Daigdig o ng mga bahagi nito.", a: "tama" },
+  { q: "Ang Prime Meridian ay matatagpuan sa 180 digri longhitud.", a: "mali" },
+  { q: "Ang Ekwador ay matatagpuan sa 0 digri latitud.", a: "tama" },
+  { q: "Ang Tropiko ng Kanser ay matatagpuan sa 23.5 digri sa timog ng Ekwador.", a: "mali" },
+  { q: "Kartograpo ang tawag sa taong gumagawa ng mapa.", a: "tama" },
+  { q: "Ang koleksiyon ng mga mapa ay tinatawag na atlas.", a: "tama" },
+  { q: "Ang mga meridian ay mga linyang pahalang na makikita sa globo at mapa.", a: "mali" },
+  { q: "Ang Kabilugang Artiko ay matatagpuan sa 66.5 digri sa hilaga ng Ekwador.", a: "tama" },
+  { q: "Apat na uri ng panahon ang nararanasan sa mga bansang matatagpuan sa Gitnang Latitud.", a: "tama" },
+  { q: "Ang mapang pisikal ay nagpapakita ng bilang ng mga taong naninirahan sa isang lugar.", a: "mali" },
+  { q: "Ipinapakita ng mapang pang-ekonomiya ang mga produkto at kabuhayan sa isang lugar.", a: "tama" },
+  { q: "Ang International Date Line ay matatagpuan sa 0 digri longhitud.", a: "mali" },
+  { q: "Ang interseksiyon ng mga parallel at meridian ay tinatawag na grid.", a: "tama" },
+  { q: "Ang Hilagang Polo ay matatagpuan sa 90 digri Timog ng Ekwador.", a: "mali" },
+];
+
+// ── IDENTIFY: GLOBO/MAPA · ESPESYAL NA PARALLEL · URI NG MAPA ───────────────
+const identifyQuestions = [
+  { q: "Ito ang hugis bilog na modelo ng Daigdig.", a: "Globo", choices: ["Globo","Mapa"] },
+  { q: "Ito ang patag na modelo ng Daigdig, bansa, o anumang pook.", a: "Mapa", choices: ["Globo","Mapa"] },
+  { q: "Ito ay modelo ng Daigdig na nakakabit sa isang axle na nagpapahintulot sa pag-ikot nito.", a: "Globo", choices: ["Globo","Mapa"] },
+  { q: "Ipinapakita ng instrumentong ito ang mas angkop na hugis at distansiya ng mga anyong lupa at anyong tubig sa daigdig.", a: "Globo", choices: ["Globo","Mapa"] },
+  { q: "Nagbibigay ito ng iba't ibang impormasyon sa isang pook tulad ng klima, populasyon, at kabuhayan ng mga tao rito.", a: "Mapa", choices: ["Globo","Mapa"] },
+  { q: "Espesyal na linyang pahalang na naghahati sa mundo sa hilaga at timog na hatingglobo.", a: "Ekwador", choices: ["Ekwador","Latitud","Parallel","Tropiko","Polo"] },
+  { q: "Mga linyang pahalang na nakatutulong sa pagtukoy ng klima sa iba't ibang bahagi ng daigdig.", a: "Parallel", choices: ["Ekwador","Latitud","Parallel","Tropiko","Polo"] },
+  { q: "Tumutukoy sa distansiya sa pagitan ng mga linyang pahalang.", a: "Latitud", choices: ["Ekwador","Latitud","Parallel","Tropiko","Polo"] },
+  { q: "Mga rehiyon sa mundo na nakatatanggap ng direktang sinag ng Araw. Kilala rin bilang Mababang Latitud.", a: "Tropiko", choices: ["Ekwador","Latitud","Parallel","Tropiko","Polo"] },
+  { q: "Mga rehiyon sa mundo na nakararanas ng pinakamalamig na klima at matatagpuan sa pinakahilaga at pinakatimog ng daigdig.", a: "Polo", choices: ["Ekwador","Latitud","Parallel","Tropiko","Polo"] },
+  { q: "Ipinapakita nito ang mga rehiyon, lalawigan, lungsod, at bayan, kasama ang hanggahan at teritoryo ng isang lugar.", a: "Politikal", choices: ["Politikal","Pang-ekonomiya","Pisikal","Pangklima","Pampopulasyon"] },
+  { q: "Ipinapakita nito ang mga produkto at kabuhayan sa isang lugar o rehiyon.", a: "Pang-ekonomiya", choices: ["Politikal","Pang-ekonomiya","Pisikal","Pangklima","Pampopulasyon"] },
+  { q: "Nagbibigay ito ng impormasyon tungkol sa mga anyong lupa at anyong tubig ng isang lugar.", a: "Pisikal", choices: ["Politikal","Pang-ekonomiya","Pisikal","Pangklima","Pampopulasyon"] },
+  { q: "Nagbibigay ito ng impormasyon tungkol sa uri ng klimang nararanasan sa isang bansa o rehiyon.", a: "Pangklima", choices: ["Politikal","Pang-ekonomiya","Pisikal","Pangklima","Pampopulasyon"] },
+  { q: "Ipinapakita nito ang bilangan ng mga taong naninirahan sa isang lugar o rehiyon.", a: "Pampopulasyon", choices: ["Politikal","Pang-ekonomiya","Pisikal","Pangklima","Pampopulasyon"] },
+];
+
+// ═══════════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════════
+let state = {
+  awaiting: 'menu',
+  mode: null,
+  questions: [],
+  allAnswers: [],
+  qIndex: 0,
+  score: 0,
+  total: 0,
+  hintUsed: false,
+  audioEnabled: true,
+};
+
+// ═══════════════════════════════════════════════════════════════
+// TTS (UPGRADED FOR TRUE FILIPINO ACCENT)
+// ═══════════════════════════════════════════════════════════════
+let currentAudioStream = null;
+
+function speak(text) {
+  if (!state.audioEnabled) return;
+  
+  // Linisin ang mga nakaraang audio task
+  window.speechSynthesis.cancel();
+  if (currentAudioStream) {
+    currentAudioStream.pause();
+    currentAudioStream = null;
+  }
+  
+  // Tanggalin ang HTML tags at emojis para hindi basahin nang paputol-putol
+  const clean = text.replace(/<[^>]+>/g,'').replace(/[🇵🇭🌟✅❌💡⏭️🏆😊💪🔄🔲📚👋⭐✕🧭📏🗺️]/g,'');
+  
+  // PRIMARY METHOD: Google Translation Engine cloud voice stream (May natural na Filipino accent)
+  const googleTtsUrl = `https://translate.google.com/translate_tts?ie=UTF-8&tl=tl&client=tw-ob&q=${encodeURIComponent(clean)}`;
+  
+  currentAudioStream = new Audio(googleTtsUrl);
+  currentAudioStream.onplaying = () => showWave(true);
+  currentAudioStream.onended = currentAudioStream.onerror = () => showWave(false);
+  
+  currentAudioStream.play().catch(err => {
+    // BACKUP METHOD: Web Speech API (Gagana kapag walang internet connection)
+    console.warn("Google TTS blocked or offline. Falling back to local system speech engine.");
+    
+    const streamFallback = new SpeechSynthesisUtterance(clean);
+    streamFallback.lang = 'fil-PH';
+    streamFallback.rate = 0.95; streamFallback.pitch = 1.05; streamFallback.volume = 1;
+    
+    const voices = window.speechSynthesis.getVoices();
+    const filVoice = voices.find(v => v.lang.startsWith('fil') || v.lang.startsWith('tl'));
+    const engVoice = voices.find(v => v.lang.startsWith('en') && v.name.toLowerCase().includes('female'))
+                   || voices.find(v => v.lang.startsWith('en'));
+              
+    if (filVoice) {
+      streamFallback.voice = filVoice;
+    } else if (engVoice) {
+      streamFallback.voice = engVoice; 
+      streamFallback.lang = 'en-US'; 
+    }
+    
+    streamFallback.onstart = () => showWave(true);
+    streamFallback.onend = streamFallback.onerror = () => showWave(false);
+    window.speechSynthesis.speak(streamFallback);
+  });
+}
+
+function showWave(on) {
+  document.querySelectorAll('.speaker-wave').forEach(w => w.style.display = on ? 'inline-flex' : 'none');
+}
+
+// I-initialize ang mga boses ng system
+let localSystemVoices = [];
+function lookupSystemVoices() {
+  localSystemVoices = window.speechSynthesis.getVoices();
+}
+lookupSystemVoices();
+if (window.speechSynthesis.onvoiceschanged !== undefined) {
+  window.speechSynthesis.onvoiceschanged = lookupSystemVoices;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// UI HELPERS
+// ═══════════════════════════════════════════════════════════════
+const chatBox = document.getElementById('chat-box');
+const input = document.getElementById('user-input');
+const sendBtn = document.getElementById('send-btn');
+
+function scrollBottom() { chatBox.scrollTop = chatBox.scrollHeight; }
+
+function addMessage(role, html, speakText) {
+  const div = document.createElement('div');
+  div.className = `msg ${role}`;
+  const av = document.createElement('div');
+  av.className = 'avatar';
+  av.textContent = role === 'bot' ? '🤖' : '🧑';
+  const bub = document.createElement('div');
+  bub.className = 'bubble';
+  bub.innerHTML = role === 'bot'
+    ? html + '<span class="speaker-wave" style="display:none"><span></span><span></span><span></span><span></span><span></span></span>'
+    : html;
+  div.appendChild(av); div.appendChild(bub);
+  chatBox.appendChild(div);
+  scrollBottom(); bindChips();
+  if (role === 'bot') {
+    const txt = speakText || html.replace(/<[^>]+>/g,' ');
+    setTimeout(() => speak(txt), 350);
+  }
+}
+
+function addTyping() {
+  const d = document.createElement('div');
+  d.className = 'msg bot'; d.id = 'typing';
+  d.innerHTML = '<div class="avatar">🤖</div><div class="typing"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>';
+  chatBox.appendChild(d); scrollBottom();
+}
+function removeTyping() { const t = document.getElementById('typing'); if(t) t.remove(); }
+
+function bindChips() {
+  document.querySelectorAll('.chip:not([data-bound])').forEach(c => {
+    c.dataset.bound = '1';
+    c.addEventListener('click', () => handleUserMessage(c.dataset.val));
+  });
+}
+
+function updateScore() {
+  document.getElementById('score-val').textContent = state.score;
+  document.getElementById('total-val').textContent = state.total;
+}
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length-1; i > 0; i--) {
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]] = [a[j],a[i]];
+  }
+  return a;
+}
+
+function normalize(s) { return s.toLowerCase().trim().replace(/\s+/g,' '); }
+
+function checkAnswer(user, correct) {
+  const u = normalize(user), c = normalize(correct);
+  if (u === c) return true;
+  if (c.includes(u) && u.length > 5) return true;
+  const parts = c.split(/[,;\/]/);
+  for (const p of parts) if (u.includes(p.trim()) && p.trim().length > 4) return true;
+  return false;
+}
+
+function showResult() {
+  const pct = Math.round((state.score/state.total)*100);
+  const emoji = pct>=90?'🏆':pct>=70?'🌟':pct>=50?'😊':'💪';
+  const msg = pct>=90?'Napakahusay! Alam mo ang lahat!':pct>=70?'Magaling! Patuloy ka lang!':pct>=50?'Mabuti! Pag-aralan pa nang kaunti!':'Huwag sumuko! Subukan ulit!';
+  document.getElementById('res-emoji').textContent = emoji;
+  document.getElementById('res-score').textContent = state.score;
+  document.getElementById('res-total').textContent = state.total;
+  document.getElementById('res-msg').textContent = msg;
+  document.getElementById('result-overlay').classList.add('show');
+  speak(`Tapos na! Ang iyong puntos ay ${state.score} sa ${state.total}. ${msg}`);
+}
+
+function restartApp() {
+  document.getElementById('result-overlay').classList.remove('show');
+  state = { awaiting:'menu', mode:null, questions:[], allAnswers:[], qIndex:0, score:0, total:0, hintUsed:false, audioEnabled:state.audioEnabled };
+  chatBox.innerHTML = '';
+  document.querySelector('.input-bar').style.display = 'flex';
+  updateScore();
+  showMenu();
+}
+
+// ═══════════════════════════════════════════════════════════════
+// MC HELPERS
+// ═══════════════════════════════════════════════════════════════
+function getAllAnswers() {
+  const ans = [];
+  for (const qs of Object.values(topics)) for (const q of qs) ans.push(q.a);
+  return ans;
+}
+
+function generateChoices(correct, pool) {
+  const distractors = shuffle(pool.filter(a => a !== correct)).slice(0,3);
+  return shuffle([correct, ...distractors]);
+}
+
+function buildMCBtns(choices, correctAnswer) {
+  const letters = ['A','B','C','D','E'];
+  return `<div class="mc-options">${choices.map((c,i)=>
+    `<button class="mc-btn" data-answer="${encodeURIComponent(c)}" data-correct="${encodeURIComponent(correctAnswer)}" onclick="handleMCClick(this)">
+      <span class="letter">${letters[i]}</span>${c}
+    </button>`
+  ).join('')}</div>`;
+}
+
+function handleMCClick(btn) {
+  const allBtns = btn.closest('.mc-options').querySelectorAll('.mc-btn');
+  allBtns.forEach(b => b.disabled = true);
+  const chosen = decodeURIComponent(btn.dataset.answer);
+  const correct = decodeURIComponent(btn.dataset.correct);
+  const isCorrect = chosen === correct;
+  allBtns.forEach(b => { if(decodeURIComponent(b.dataset.answer)===correct) b.classList.add('correct'); });
+  if (!isCorrect) btn.classList.add('wrong');
+  setTimeout(() => {
+    if (isCorrect) {
+      state.score++;
+      addMessage('bot', `✅ <strong>Tama!</strong> +1 puntos! Ang sagot ay: <strong>${correct}</strong>`, `Tama! Ang sagot ay: ${correct}`);
+    } else {
+      addMessage('bot', `❌ <strong>Hindi tama.</strong> Ang tamang sagot ay: <strong>${correct}</strong>`, `Hindi tama. Ang tamang sagot ay: ${correct}`);
+    }
+    state.qIndex++; updateScore();
+    if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+    else setTimeout(showResult, 900);
+  }, 650);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// NEXT QUESTION
+// ═══════════════════════════════════════════════════════════════
+function nextQuestion() {
+  const qi = state.qIndex;
+  const q = state.questions[qi];
+  const num = qi + 1;
+
+  if (state.mode === 'full' || state.mode === 'topic_mc') {
+    const choices = generateChoices(q.a, state.allAnswers);
+    const tag = q.topic ? `<span class="topic-tag">${q.topic}</span><br>` : '';
+    const html = `${tag}<strong>T${num} sa ${state.total}:</strong> ${q.q}${buildMCBtns(choices, q.a)}`;
+    addMessage('bot', html, `Tanong ${num}. ${q.q}`);
+    return;
+  }
+
+  if (state.mode === 'tf') {
+    const html = `<strong>T${num} sa ${state.total}:</strong> <div class="scenario-card">${q.q}</div>
+      <span class="chip" data-val="tama">✅ Tama</span><span class="chip" data-val="mali">❌ Mali</span>`;
+    addMessage('bot', html, `Tanong ${num}. Tama o Mali: ${q.q}`);
+    return;
+  }
+
+  if (state.mode === 'identify') {
+    const btns = buildMCBtns(q.choices, q.a);
+    const html = `<strong>T${num} sa ${state.total}:</strong> Kilalanin kung ano ang tinutukoy:<div class="scenario-card">${q.q}</div>${btns}`;
+    addMessage('bot', html, `Tanong ${num}. Kilalanin ang tinutukoy: ${q.q}`);
+    return;
+  }
+
+  // typed answer mode
+  const tag = q.topic ? `<span class="topic-tag">${q.topic}</span><br>` : '';
+  const html = `${tag}<strong>T${num} sa ${state.total}:</strong> ${q.q}<br><small style="color:var(--muted)">Isulat ang sagot · i-type ang <em>hint</em> para sa tulong · <em>skip</em> para lumipat</small>`;
+  addMessage('bot', html, `Tanong ${num}. ${q.q}`);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// MENU
+// ═══════════════════════════════════════════════════════════════
+function showMenu() {
+  addMessage('bot',
+    `👋 <strong>Kumusta! Ako ang iyong Heograpiya Reviewer!</strong><br>Pag-aaralan natin ang <em>Globo at Mapa</em>, <em>Meridian at Longhitud</em>, <em>Parallel at Latitud</em>, at <em>Uri ng Mapa</em>.<br><br>Ano ang gusto mong gawin?<br>
+    <span class="chip" data-val="1">📚 Pag-aralan ang Paksa</span>
+    <span class="chip" data-val="2">✅ Tama o Mali</span>
+    <span class="chip" data-val="3">🌐 Kilalanin: Globo, Linya, o Mapa</span>
+    <span class="chip" data-val="4">🌟 Buong Review (Multiple Choice)</span>`,
+    "Kumusta! Ako ang iyong Heograpiya Reviewer. Ano ang gusto mong gawin? Pag-aralan ang paksa, Tama o Mali, Kilalanin, o Buong Review na multiple choice?"
+  );
+  state.awaiting = 'menu';
+}
+
+// ═══════════════════════════════════════════════════════════════
+// PROCESS MESSAGE
+// ═══════════════════════════════════════════════════════════════
+function processMessage(msg) {
+  const aw = state.awaiting;
+
+  // ── MENU ──────────────────────────────────────────────────
+  if (aw === 'menu') {
+    if (msg === '1') {
+      state.awaiting = 'topic';
+      const keys = Object.keys(topics);
+      const chips = keys.map((t,i) => `<span class="chip" data-val="${i+1}">${i+1}. ${t}</span>`).join(' ');
+      addMessage('bot', `📚 Alin ang paksang gusto mong pag-aralan?<br>${chips}`, 'Alin ang paksang gusto mong pag-aralan?');
+
+    } else if (msg === '2') {
+      state.mode = 'tf';
+      state.questions = shuffle(trueOrFalse);
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'tf_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `✅ <strong>Tama o Mali!</strong> ${state.total} tanong. Simulan na!`, `Tama o Mali! ${state.total} tanong. Simulan na!`);
+      setTimeout(nextQuestion, 800);
+
+    } else if (msg === '3') {
+      state.mode = 'identify';
+      state.questions = shuffle(identifyQuestions);
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'mc_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `🌐 <strong>Kilalanin!</strong> Alamin kung Globo o Mapa, anong linya, o anong uri ng mapa ang tinutukoy.`, 'Kilalanin! Alamin kung ano ang tinutukoy sa bawat pahayag.');
+      setTimeout(nextQuestion, 800);
+
+    } else if (msg === '4') {
+      state.mode = 'full';
+      const all = [];
+      for (const [topicName, qs] of Object.entries(topics)) {
+        qs.forEach(q => all.push({...q, topic: topicName}));
+      }
+      state.questions = shuffle(all);
+      state.allAnswers = getAllAnswers();
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'mc_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `🌟 <strong>Buong Review — Multiple Choice!</strong> ${state.total} tanong. Pag-isipang mabuti!`, `Buong Review! Multiple Choice! ${state.total} tanong. Pag-isipang mabuti!`);
+      setTimeout(nextQuestion, 800);
+
+    } else {
+      addMessage('bot',
+        `Pumili ng opsyon:<br>
+        <span class="chip" data-val="1">📚 Pag-aralan ang Paksa</span>
+        <span class="chip" data-val="2">✅ Tama o Mali</span>
+        <span class="chip" data-val="3">🌐 Kilalanin</span>
+        <span class="chip" data-val="4">🌟 Buong Review</span>`,
+        'Pumili ng opsyon.'
+      );
+    }
+    return;
+  }
+
+  // ── TOPIC SELECT ──────────────────────────────────────────
+  if (aw === 'topic') {
+    const keys = Object.keys(topics);
+    const idx = parseInt(msg) - 1;
+    if (keys[idx]) {
+      const topicName = keys[idx];
+      state.mode = 'topic';
+      state.questions = shuffle(topics[topicName]);
+      state.allAnswers = getAllAnswers();
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'answer';
+      document.querySelector('.input-bar').style.display = 'flex';
+      updateScore();
+      addMessage('bot', `📚 <strong>${topicName}</strong> — ${state.total} tanong. Handa ka na ba?`, `${topicName}. ${state.total} tanong. Handa ka na ba?`);
+      setTimeout(nextQuestion, 800);
+    } else {
+      const chips = Object.keys(topics).map((t,i) => `<span class="chip" data-val="${i+1}">${i+1}. ${t}</span>`).join(' ');
+      addMessage('bot', `Pumili ng wastong paksa:<br>${chips}`, 'Pumili ng wastong paksa.');
+    }
+    return;
+  }
+
+  // ── TYPED ANSWER ──────────────────────────────────────────
+  if (aw === 'answer') {
+    const q = state.questions[state.qIndex];
+    const m = normalize(msg);
+
+    if (m === 'hint') {
+      state.hintUsed = true;
+      addMessage('bot', `💡 <strong>Hint:</strong> ${q.hint}`, `Hint: ${q.hint}`);
+      return;
+    }
+    if (m === 'skip') {
+      addMessage('bot', `⏭️ Nilaktawan! Ang tamang sagot ay: <strong>${q.a}</strong>`, `Nilaktawan. Ang tamang sagot ay: ${q.a}`);
+      state.qIndex++; state.hintUsed = false;
+      if (state.qIndex < state.total) setTimeout(nextQuestion, 700);
+      else showResult();
+      return;
+    }
+
+    const correct = checkAnswer(msg, q.a);
+    if (correct) {
+      if (!state.hintUsed) state.score++;
+      const note = state.hintUsed ? ' <em>(ginamit ang hint — walang puntos)</em>' : ' +1 puntos!';
+      addMessage('bot', `✅ <strong>Tama!</strong>${note} Sagot: <strong>${q.a}</strong>`, `Tama! Ang sagot ay: ${q.a}`);
+    } else {
+      addMessage('bot', `❌ <strong>Hindi tama.</strong> Ang tamang sagot ay: <strong>${q.a}</strong>`, `Hindi tama. Ang tamang sagot ay: ${q.a}`);
+    }
+    state.qIndex++; state.hintUsed = false; updateScore();
+    if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+    else setTimeout(showResult, 900);
+    return;
+  }
+
+  // ── TRUE OR FALSE ─────────────────────────────────────────
+  if (aw === 'tf_answer') {
+    const q = state.questions[state.qIndex];
+    const ans = normalize(msg);
+    const valid = ans === 'tama' || ans === 'mali' || ans === 'true' || ans === 'false';
+    const mapped = (ans === 'true') ? 'tama' : (ans === 'false') ? 'mali' : ans;
+
+    if (valid) {
+      const correct = mapped === q.a;
+      if (correct) {
+        state.score++;
+        addMessage('bot', `✅ <strong>Tama!</strong> Ang sagot ay <strong>${q.a.toUpperCase()}</strong>.`, `Tama! Ang sagot ay ${q.a}.`);
+      } else {
+        addMessage('bot', `❌ <strong>Mali.</strong> Ang tamang sagot ay <strong>${q.a.toUpperCase()}</strong>.`, `Mali. Ang tamang sagot ay ${q.a}.`);
+      }
+      state.qIndex++; updateScore();
+      if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+      else setTimeout(showResult, 900);
+    } else {
+      addMessage('bot',
+        `Sagot: Tama o Mali?<br><span class="chip" data-val="tama">✅ Tama</span><span class="chip" data-val="mali">❌ Mali</span>`,
+        'Sagot: Tama o Mali?'
+      );
+    }
+    return;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// CONTROLS
+// ═══════════════════════════════════════════════════════════════
+function handleUserMessage(msg) {
+  if (!msg.trim()) return;
+  
+  // Ihinto nang malinis ang nagsasalitang audio kapag sumagot ang user
+  window.speechSynthesis.cancel();
+  if (currentAudioStream) {
+    currentAudioStream.pause();
+    currentAudioStream = null;
+    showWave(false);
+  }
+  
+  addMessage('user', msg.replace(/</g,'&lt;'));
+  input.value = '';
+  input.disabled = true; sendBtn.disabled = true;
+  addTyping();
+  setTimeout(() => {
+    removeTyping();
+    input.disabled = false; sendBtn.disabled = false;
+    input.focus();
+    processMessage(msg);
+  }, 480);
+}
+
+sendBtn.addEventListener('click', () => { handleUserMessage(input.value); });
+input.addEventListener('keydown', e => { if(e.key==='Enter') handleUserMessage(input.value); });
+
+document.getElementById('audio-toggle').addEventListener('click', function() {
+  state.audioEnabled = !state.audioEnabled;
+  this.textContent = state.audioEnabled ? '🔊' : '🔇';
+  this.classList.toggle('active', state.audioEnabled);
+  if (!state.audioEnabled) {
+    window.speechSynthesis.cancel();
+    if (currentAudioStream) {
+      currentAudioStream.pause();
+      currentAudioStream = null;
+      showWave(false);
+    }
+  }
+});
+
+// ═══════════════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════════════
+window.addEventListener('load', () => {
+  lookupSystemVoices();
+  showMenu();
+});
+
+function switchTab(tabId, btn) {
+  document.querySelectorAll('.notes-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.notes-tab').forEach(b => b.classList.remove('active'));
+  document.getElementById(tabId).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+
+<!-- ── Notes Panel ── -->
+<div class="notes-overlay" id="notes-overlay">
+  <div class="notes-panel">
+    <div class="notes-header">
+      <h2>📖 Heograpiya — Mga Tala</h2>
+      <button class="notes-close" onclick="document.getElementById('notes-overlay').classList.remove('show')">✕</button>
+    </div>
+    <div class="notes-tabs">
+      <button class="notes-tab active" onclick="switchTab('tab-globomapa', this)">🌐 Globo at Mapa</button>
+      <button class="notes-tab" onclick="switchTab('tab-meridian', this)">📏 Meridian</button>
+      <button class="notes-tab" onclick="switchTab('tab-parallel', this)">🧭 Parallel</button>
+      <button class="notes-tab" onclick="switchTab('tab-uringmapa', this)">🗺️ Uri ng Mapa</button>
+      <button class="notes-tab" onclick="switchTab('tab-tamomali', this)">✅ Tama o Mali</button>
+    </div>
+    <div class="notes-body">
+
+      <div class="notes-section active" id="tab-globomapa">
+        <div class="notes-topic">
+          <div class="notes-topic-title">🌐 Ang Globo at ang Mapa</div>
+          <div class="notes-item"><span class="notes-term">Heograpiya</span><span class="notes-def">Pag-aaral sa mga katangian ng daigdig, ang paggamit sa mga espasyo nito, at ang interaksiyon ng mga tao at kanilang kapaligiran</span></div>
+          <div class="notes-item"><span class="notes-term">Lokasyon</span><span class="notes-def">Tumutukoy sa posisyon ng isang lugar o pook sa daigdig</span></div>
+          <div class="notes-item"><span class="notes-term">Globo</span><span class="notes-def">Pabilog na modelo ng Daigdig; nakakabit sa axle na nagpapahintulot sa pag-ikot nito gaya ng totoong rotasyon ng Daigdig</span></div>
+          <div class="notes-item"><span class="notes-term">Mapa</span><span class="notes-def">Patag na representasyon ng Daigdig o ng mga bahagi nito</span></div>
+          <div class="notes-item"><span class="notes-term">Kartograpiya</span><span class="notes-def">Ang paraan, istilo, sining, at agham ng paggawa ng mapa</span></div>
+          <div class="notes-item"><span class="notes-term">Kartograpo</span><span class="notes-def">Ang taong gumagawa ng mapa</span></div>
+          <div class="notes-item"><span class="notes-term">Atlas</span><span class="notes-def">Koleksiyon ng mga mapa; mahalaga sa mga manlalakbay, turista, at mag-aaral</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-meridian">
+        <div class="notes-topic">
+          <div class="notes-topic-title">📏 Mga Meridian at Longhitud</div>
+          <div class="notes-item"><span class="notes-term">Meridian</span><span class="notes-def">Mga linyang patayo sa globo at mapa; nagsisimula sa Hilagang Polo pababa sa Timog Polo</span></div>
+          <div class="notes-item"><span class="notes-term">Longhitud</span><span class="notes-def">Distansiya sa pagitan ng dalawang meridian</span></div>
+          <div class="notes-item"><span class="notes-term">Prime Meridian</span><span class="notes-def">Linyang patayo sa 0° longhitud; naghahati sa Daigdig sa Kanluran at Silangang Hatingglobo; dumadaan sa Greenwich, London, England</span></div>
+          <div class="notes-item"><span class="notes-term">International Date Line</span><span class="notes-def">Batayan sa pagbabago ng araw o petsa; matatagpuan sa 180° longhitud</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-parallel">
+        <div class="notes-topic">
+          <div class="notes-topic-title">🧭 Mga Parallel at Latitud</div>
+          <div class="notes-item"><span class="notes-term">Parallel</span><span class="notes-def">Mga linyang pahalang sa globo at mapa; gabay sa pagtukoy ng lokasyon at klima</span></div>
+          <div class="notes-item"><span class="notes-term">Latitud</span><span class="notes-def">Distansiya sa pagitan ng mga parallel</span></div>
+          <div class="notes-item"><span class="notes-term">Ekwador</span><span class="notes-def">Pahalang na linya sa gitna ng globo, 0° latitud; naghahati sa hilaga at timog na hatingglobo</span></div>
+          <div class="notes-item"><span class="notes-term">Tropiko ng Kanser</span><span class="notes-def">23.5° sa hilaga ng Ekwador; pinakahilagang hangganan ng direktang sinag ng Araw</span></div>
+          <div class="notes-item"><span class="notes-term">Tropiko ng Kaprikorn</span><span class="notes-def">23.5° sa timog ng Ekwador; pinakatimog na hangganan ng direktang sinag ng Araw</span></div>
+          <div class="notes-item"><span class="notes-term">Mababang Latitud</span><span class="notes-def">Rehiyong Tropikal; sa pagitan ng Tropiko ng Kanser at Tropiko ng Kaprikorn</span></div>
+          <div class="notes-item"><span class="notes-term">Kabilugang Artiko</span><span class="notes-def">66.5° sa hilaga ng Ekwador; pinakahilagang hangganan ng pahilis na sinag ng Araw</span></div>
+          <div class="notes-item"><span class="notes-term">Kabilugang Antartiko</span><span class="notes-def">66.5° sa timog ng Ekwador; pinakatimog na hangganan ng pahilis na sinag ng Araw</span></div>
+          <div class="notes-item"><span class="notes-term">Gitnang Latitud</span><span class="notes-def">Katamtamang rehiyon sa pagitan ng mga Tropiko at Kabilugang Circle; may apat na uri ng panahon (taglamig, tagsibol, tag-init, taglagas)</span></div>
+          <div class="notes-item"><span class="notes-term">Mataas na Latitud</span><span class="notes-def">Rehiyon mula sa Kabilugang Circle hanggang sa Polo; pinakamalamig na klima</span></div>
+          <div class="notes-item"><span class="notes-term">Hilagang Polo</span><span class="notes-def">90° Hilaga ng Ekwador</span></div>
+          <div class="notes-item"><span class="notes-term">Timog Polo</span><span class="notes-def">90° Timog ng Ekwador</span></div>
+          <div class="notes-item"><span class="notes-term">Grid</span><span class="notes-def">Nabubuo sa interseksiyon ng mga parallel at meridian; ginagamit upang matukoy ang tiyak na lokasyon</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-uringmapa">
+        <div class="notes-topic">
+          <div class="notes-topic-title">🗺️ Mga Uri ng Mapa</div>
+          <div class="notes-item"><span class="notes-term">Mapang Politikal</span><span class="notes-def">Ipinapakita ang nasasakupan o hanggahan ng lugar — rehiyon, lalawigan, lungsod, bayan</span></div>
+          <div class="notes-item"><span class="notes-term">Mapang Pang-ekonomiya</span><span class="notes-def">Ipinapakita ang mga produkto at kabuhayan sa isang lugar o rehiyon</span></div>
+          <div class="notes-item"><span class="notes-term">Mapang Pisikal</span><span class="notes-def">Nagbibigay ng impormasyon tungkol sa katangiang heograpikal, anyong lupa at anyong tubig</span></div>
+          <div class="notes-item"><span class="notes-term">Mapang Pangklima</span><span class="notes-def">Nagbibigay ng impormasyon tungkol sa uri ng klimang nararanasan</span></div>
+          <div class="notes-item"><span class="notes-term">Mapang Pampopulasyon</span><span class="notes-def">Ipinapakita ang bilangan ng mga taong naninirahan sa isang lugar o rehiyon</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-tamomali">
+        <div class="notes-topic">
+          <div class="notes-topic-title">✅ Tama o Mali — Mga Sagot</div>
+          <div class="notes-item"><span class="notes-term" style="color:#22c55e">TAMA</span><span class="notes-def">Ang globo ang pinakamalapit na modelo sa tunay na hugis ng Daigdig dahil sa hugis at pag-ikot nito.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#22c55e">TAMA</span><span class="notes-def">Ang mapa ay tinatawag na patag na representasyon ng Daigdig o ng mga bahagi nito.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">MALI</span><span class="notes-def">Ang Prime Meridian ay matatagpuan sa 180° longhitud. → Nasa 0° longhitud ito; ang IDL ang nasa 180°.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#22c55e">TAMA</span><span class="notes-def">Ang Ekwador ay matatagpuan sa 0° latitud.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">MALI</span><span class="notes-def">Ang Tropiko ng Kanser ay matatagpuan sa 23.5° sa timog ng Ekwador. → Nasa hilaga ito, hindi timog.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#22c55e">TAMA</span><span class="notes-def">Kartograpo ang tawag sa taong gumagawa ng mapa.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#22c55e">TAMA</span><span class="notes-def">Ang koleksiyon ng mga mapa ay tinatawag na atlas.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">MALI</span><span class="notes-def">Ang mga meridian ay mga linyang pahalang. → Ang mga meridian ay linyang patayo; ang parallel ang pahalang.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#22c55e">TAMA</span><span class="notes-def">Ang Kabilugang Artiko ay matatagpuan sa 66.5° sa hilaga ng Ekwador.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#22c55e">TAMA</span><span class="notes-def">Apat na uri ng panahon ang nararanasan sa mga bansang matatagpuan sa Gitnang Latitud.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">MALI</span><span class="notes-def">Ang mapang pisikal ay nagpapakita ng bilangan ng mga tao. → Ito ay ginagawa ng mapang pampopulasyon.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#22c55e">TAMA</span><span class="notes-def">Ipinapakita ng mapang pang-ekonomiya ang mga produkto at kabuhayan sa isang lugar.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">MALI</span><span class="notes-def">Ang International Date Line ay matatagpuan sa 0° longhitud. → Nasa 180° longhitud ito.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#22c55e">TAMA</span><span class="notes-def">Ang interseksiyon ng mga parallel at meridian ay tinatawag na grid.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">MALI</span><span class="notes-def">Ang Hilagang Polo ay matatagpuan sa 90° Timog ng Ekwador. → Nasa Hilaga ito, hindi Timog.</span></div>
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">🌐 Kilalanin: Globo, Linya, o Uri ng Mapa</div>
+          <div class="notes-item"><span class="notes-term" style="color:var(--gold)">GLOBO</span><span class="notes-def">Hugis bilog na modelo ng Daigdig; nakakabit sa axle at nakatutulong sa mas angkop na hugis at distansiya ng mga anyong lupa at tubig.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#38bdf8">MAPA</span><span class="notes-def">Patag na modelo ng Daigdig, bansa, o anumang pook; nagbibigay ng impormasyon tulad ng klima, populasyon, at kabuhayan.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#a78bfa">EKWADOR</span><span class="notes-def">Espesyal na linyang pahalang na naghahati sa mundo sa hilaga at timog na hatingglobo.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#a78bfa">PARALLEL</span><span class="notes-def">Mga linyang pahalang na nakatutulong sa pagtukoy ng klima sa iba't ibang bahagi ng daigdig.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#a78bfa">LATITUD</span><span class="notes-def">Tumutukoy sa distansiya sa pagitan ng mga linyang pahalang.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#a78bfa">TROPIKO</span><span class="notes-def">Mga rehiyon na nakatatanggap ng direktang sinag ng Araw; kilala rin bilang Mababang Latitud.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#a78bfa">POLO</span><span class="notes-def">Mga rehiyon na nakararanas ng pinakamalamig na klima, matatagpuan sa pinakahilaga at pinakatimog ng daigdig.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#f472b6">POLITIKAL</span><span class="notes-def">Ipinapakita ang mga rehiyon, lalawigan, lungsod, at bayan, kasama ang hanggahan at teritoryo.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#f472b6">PANG-EKONOMIYA</span><span class="notes-def">Ipinapakita ang mga produkto at kabuhayan sa isang lugar o rehiyon.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#f472b6">PISIKAL</span><span class="notes-def">Nagbibigay ng impormasyon tungkol sa mga anyong lupa at anyong tubig.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#f472b6">PANGKLIMA</span><span class="notes-def">Nagbibigay ng impormasyon tungkol sa uri ng klimang nararanasan.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#f472b6">PAMPOPULASYON</span><span class="notes-def">Ipinapakita ang bilangan ng mga taong naninirahan sa isang lugar o rehiyon.</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
