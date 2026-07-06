@@ -1,0 +1,1334 @@
+<!DOCTYPE html>
+<html lang="tl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🌸 EPP Reviewer — Pangangalaga sa Sarili</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --gold: #14b8a6;
+  --gold-dark: #0f766e;
+  --blue: #fb7185;
+  --blue-dark: #e11d48;
+  --red: #ef4444;
+  --green: #22c55e;
+  --bg: #0a1615;
+  --surface: #0f1f1e;
+  --surface2: #142c2a;
+  --text: #f0fdfa;
+  --muted: #5eead4;
+  --border: #134e4e;
+}
+
+body {
+  font-family: 'Baloo 2', cursive;
+  background: var(--bg);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--text);
+  background-image:
+    radial-gradient(ellipse at 10% 30%, rgba(20,184,166,.06) 0%, transparent 55%),
+    radial-gradient(ellipse at 90% 70%, rgba(251,113,133,.06) 0%, transparent 55%);
+}
+
+header {
+  width: 100%;
+  background: linear-gradient(135deg, #0f3d3d, #7f1d3d);
+  border-bottom: 2px solid var(--gold-dark);
+  padding: 13px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 4px 30px rgba(0,0,0,.5);
+}
+.header-icon { font-size: 2rem; animation: float 3s ease-in-out infinite; }
+@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
+
+header h1 {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.45rem;
+  background: linear-gradient(90deg, var(--gold), #99f6e4, var(--gold));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+header .sub { font-size: .72rem; color: var(--muted); margin-top: 1px; }
+
+.header-controls { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+.score-pill {
+  background: rgba(20,184,166,.15);
+  border: 1px solid rgba(20,184,166,.4);
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-weight: 800;
+  font-size: .85rem;
+  color: var(--gold);
+}
+.audio-btn {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  background: var(--surface2);
+  color: var(--text);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all .2s;
+  display: flex; align-items: center; justify-content: center;
+}
+.audio-btn:hover, .audio-btn.active { background: #0f3d3d; border-color: var(--gold); }
+
+.chat-wrap {
+  width: 100%; max-width: 700px; flex: 1;
+  display: flex; flex-direction: column;
+  padding: 16px 14px 0;
+}
+
+#chat-box {
+  flex: 1; overflow-y: auto;
+  display: flex; flex-direction: column;
+  gap: 14px; padding-bottom: 10px;
+  max-height: calc(100vh - 200px);
+  scroll-behavior: smooth;
+}
+#chat-box::-webkit-scrollbar { width: 4px; }
+#chat-box::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+.msg { display: flex; gap: 8px; }
+.msg.user { flex-direction: row-reverse; }
+
+.avatar {
+  width: 34px; height: 34px; border-radius: 50%;
+  font-size: 1rem; display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 2px;
+}
+.msg.bot .avatar { background: linear-gradient(135deg, #0f3d3d, #7f1d3d); border: 1.5px solid rgba(20,184,166,.4); }
+.msg.user .avatar { background: linear-gradient(135deg, #7f1d3d, #0f3d3d); border: 1.5px solid rgba(251,113,133,.3); }
+
+.bubble {
+  max-width: 80%;
+  padding: 11px 16px;
+  border-radius: 18px;
+  font-size: .9rem;
+  line-height: 1.65;
+  animation: pop .22s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes pop { from{transform:scale(.88) translateY(6px);opacity:0} to{transform:scale(1) translateY(0);opacity:1} }
+
+.msg.bot .bubble {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-bottom-left-radius: 5px;
+}
+.msg.user .bubble {
+  background: linear-gradient(135deg, #7f1d3d, var(--blue-dark));
+  border-bottom-right-radius: 5px;
+}
+
+/* chips */
+.chip {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: rgba(20,184,166,.12);
+  border: 1.5px solid rgba(20,184,166,.4);
+  color: var(--gold);
+  border-radius: 30px;
+  padding: 5px 13px; margin: 5px 4px 0 0;
+  font-size: .8rem; font-weight: 700;
+  cursor: pointer; transition: all .15s;
+  user-select: none; font-family: 'Baloo 2', cursive;
+}
+.chip:hover {
+  background: var(--gold-dark); color: white;
+  border-color: var(--gold);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(20,184,166,.3);
+}
+
+/* topic tag */
+.topic-tag {
+  display: inline-block;
+  background: linear-gradient(135deg, #0f3d3d, #166534);
+  border: 1px solid var(--gold-dark);
+  color: var(--gold);
+  font-size: .68rem; font-weight: 800;
+  border-radius: 20px; padding: 2px 10px;
+  margin-bottom: 5px; letter-spacing: .5px;
+  text-transform: uppercase;
+}
+
+/* multiple choice */
+.mc-options { display: flex; flex-direction: column; gap: 7px; margin-top: 10px; width: 100%; }
+.mc-btn {
+  display: flex; align-items: center; gap: 10px;
+  background: rgba(255,255,255,.03);
+  border: 1.5px solid var(--border);
+  border-radius: 12px; padding: 9px 14px;
+  color: var(--text); font-family: 'Baloo 2', cursive;
+  font-size: .87rem; font-weight: 600;
+  cursor: pointer; transition: all .15s; text-align: left; width: 100%;
+}
+.mc-btn:hover:not(:disabled) {
+  background: rgba(20,184,166,.12); border-color: var(--gold);
+  color: var(--gold); transform: translateX(3px);
+}
+.mc-btn .letter {
+  display: flex; align-items: center; justify-content: center;
+  width: 26px; height: 26px; border-radius: 8px;
+  background: rgba(20,184,166,.15); border: 1px solid rgba(20,184,166,.35);
+  color: var(--gold); font-size: .78rem; font-weight: 800;
+  flex-shrink: 0; transition: all .15s;
+}
+.mc-btn:hover:not(:disabled) .letter { background: var(--gold-dark); color: white; border-color: var(--gold-dark); }
+.mc-btn.correct { background: rgba(34,197,94,.15)!important; border-color: #22c55e!important; color: #22c55e!important; cursor: default; }
+.mc-btn.correct .letter { background: #22c55e!important; color: white!important; border-color: #22c55e!important; }
+.mc-btn.wrong { background: rgba(239,68,68,.12)!important; border-color: #ef4444!important; color: #ef4444!important; cursor: default; }
+.mc-btn.wrong .letter { background: #ef4444!important; color: white!important; border-color: #ef4444!important; }
+.mc-btn:disabled { cursor: default; transform: none!important; }
+
+/* speaker wave */
+.speaker-wave {
+  display: inline-flex; align-items: flex-end;
+  gap: 2px; height: 14px; margin-left: 6px; vertical-align: middle;
+}
+.speaker-wave span {
+  display: block; width: 3px; border-radius: 2px;
+  background: var(--gold); animation: wave 1s ease-in-out infinite;
+}
+.speaker-wave span:nth-child(1){height:4px;animation-delay:0s}
+.speaker-wave span:nth-child(2){height:10px;animation-delay:.1s}
+.speaker-wave span:nth-child(3){height:6px;animation-delay:.2s}
+.speaker-wave span:nth-child(4){height:12px;animation-delay:.15s}
+.speaker-wave span:nth-child(5){height:4px;animation-delay:.05s}
+@keyframes wave{0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.8)}}
+
+/* typing */
+.typing {
+  display: flex; gap: 4px; padding: 12px 16px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 18px; border-bottom-left-radius: 5px; width: fit-content;
+}
+.dot { width: 7px; height: 7px; border-radius: 50%; background: var(--gold); animation: bounce .9s infinite; }
+.dot:nth-child(2){animation-delay:.15s} .dot:nth-child(3){animation-delay:.3s}
+@keyframes bounce{0%,80%,100%{transform:translateY(0);opacity:.6}40%{transform:translateY(-7px);opacity:1}}
+
+/* input bar */
+.input-bar {
+  width: 100%; max-width: 700px;
+  padding: 10px 14px 18px;
+  display: flex; gap: 8px;
+  background: var(--bg); position: sticky; bottom: 0;
+}
+#user-input {
+  flex: 1; padding: 12px 18px;
+  border: 2px solid var(--border); border-radius: 30px;
+  font-family: 'Baloo 2', cursive; font-size: .92rem;
+  outline: none; background: var(--surface); color: var(--text);
+  transition: border-color .2s, box-shadow .2s;
+}
+#user-input::placeholder { color: var(--muted); }
+#user-input:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(20,184,166,.12); }
+
+#send-btn {
+  width: 48px; height: 48px; border-radius: 50%; border: none;
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  color: white; font-size: 1.1rem; cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 3px 14px rgba(20,184,166,.4); flex-shrink: 0;
+}
+#send-btn:hover { transform: scale(1.08); box-shadow: 0 5px 20px rgba(20,184,166,.55); }
+#send-btn:disabled { opacity: .5; transform: none; }
+
+/* result modal */
+.result-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.75); backdrop-filter: blur(6px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 100; opacity: 0; pointer-events: none; transition: opacity .3s;
+}
+.result-overlay.show { opacity: 1; pointer-events: all; }
+.result-card {
+  background: linear-gradient(135deg, #132015, #0c1a0e);
+  border: 2px solid var(--gold-dark);
+  border-radius: 24px; padding: 36px 40px;
+  text-align: center; max-width: 380px; width: 90%;
+  box-shadow: 0 20px 60px rgba(0,0,0,.6);
+  transform: scale(.9); transition: transform .3s cubic-bezier(.34,1.56,.64,1);
+}
+.result-overlay.show .result-card { transform: scale(1); }
+.result-emoji { font-size: 4rem; margin-bottom: 12px; display: block; }
+.result-title {
+  font-family: 'Fredoka One', cursive; font-size: 1.7rem; margin-bottom: 6px;
+  background: linear-gradient(90deg, var(--gold), #99f6e4);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.result-score { font-size: 3rem; font-weight: 900; margin: 10px 0; color: white; }
+.result-msg { color: var(--muted); font-size: .9rem; margin-bottom: 22px; }
+.result-btn {
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  border: none; border-radius: 30px; padding: 12px 30px;
+  color: white; font-family: 'Baloo 2', cursive; font-weight: 800;
+  font-size: 1rem; cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+  box-shadow: 0 4px 16px rgba(20,184,166,.35);
+}
+.result-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 22px rgba(20,184,166,.5); }
+
+/* scenario card for identify questions */
+.scenario-card {
+  background: rgba(20,184,166,.07);
+  border: 1px solid rgba(20,184,166,.25);
+  border-radius: 12px; padding: 10px 14px;
+  margin: 8px 0 6px; font-style: italic;
+  font-size: .87rem; color: #99f6e4; line-height: 1.5;
+}
+
+/* ── Notes Panel ─────────────────────────────────────────────── */
+.notes-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.78); backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 200; opacity: 0; pointer-events: none; transition: opacity .3s;
+}
+.notes-overlay.show { opacity: 1; pointer-events: all; }
+.notes-panel {
+  background: linear-gradient(160deg, #0c1a0e, #132015);
+  border: 2px solid var(--gold-dark);
+  border-radius: 20px;
+  width: 92%; max-width: 720px;
+  max-height: 88vh;
+  display: flex; flex-direction: column;
+  box-shadow: 0 24px 60px rgba(0,0,0,.7);
+  overflow: hidden;
+  transform: translateY(30px);
+  transition: transform .35s cubic-bezier(.34,1.2,.64,1);
+}
+.notes-overlay.show .notes-panel { transform: translateY(0); }
+.notes-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 22px; border-bottom: 1px solid var(--border);
+  background: linear-gradient(135deg, #0f3d3d44, #7f1d3d44);
+}
+.notes-header h2 { font-family: 'Fredoka One', cursive; font-size: 1.3rem; color: var(--gold); }
+.notes-close {
+  width: 34px; height: 34px; border-radius: 50%;
+  border: 1.5px solid var(--border); background: var(--surface2);
+  color: var(--text); font-size: 1rem; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; transition: all .2s;
+}
+.notes-close:hover { background: #b91c1c; border-color: #ef4444; }
+.notes-body { overflow-y: auto; padding: 20px 22px; flex: 1; }
+.notes-body::-webkit-scrollbar { width: 4px; }
+.notes-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+.notes-topic { margin-bottom: 28px; }
+.notes-topic-title {
+  font-family: 'Fredoka One', cursive; font-size: 1.05rem;
+  color: var(--gold); margin-bottom: 10px;
+  padding-bottom: 6px; border-bottom: 1px solid var(--border);
+}
+.notes-item {
+  display: flex; gap: 10px; align-items: flex-start;
+  padding: 7px 0; border-bottom: 1px solid rgba(255,255,255,.04);
+  font-size: .87rem; line-height: 1.55;
+}
+.notes-item:last-child { border-bottom: none; }
+.notes-term { font-weight: 800; color: var(--gold); min-width: 150px; flex-shrink: 0; font-size: .84rem; }
+.notes-def { color: #d1fae5; }
+.notes-tabs {
+  display: flex; flex-wrap: wrap; gap: 8px; padding: 14px 22px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(0,0,0,.15);
+}
+.notes-tab {
+  padding: 12px 20px; border-radius: 10px;
+  border: 1.5px solid var(--border); 
+  background: rgba(255,255,255,.04); color: var(--muted);
+  font-family: 'Baloo 2', cursive; font-size: .9rem; font-weight: 700;
+  cursor: pointer; transition: all .15s; white-space: nowrap;
+  min-height: 48px; display: flex; align-items: center;
+}
+.notes-tab.active { background: var(--surface); color: var(--gold); border-color: var(--gold-dark); }
+.notes-tab:hover:not(.active) { color: var(--text); background: var(--surface2); }
+.notes-section { display: none; }
+.notes-section.active { display: block; }
+
+/* ── Reviewer content additions ─────────────────────────────── */
+.chapter-summary {
+  background: rgba(251,113,133,.08);
+  border-left: 4px solid var(--blue);
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-bottom: 18px;
+  font-size: .88rem; line-height: 1.7; color: #ffe4e6;
+}
+.tandaan-box {
+  background: linear-gradient(135deg, rgba(20,184,166,.14), rgba(20,184,166,.05));
+  border: 1.5px dashed var(--gold);
+  border-radius: 12px;
+  padding: 12px 16px;
+  margin: 14px 0;
+  font-size: .86rem; line-height: 1.6;
+}
+.tandaan-box .tandaan-label {
+  font-family: 'Fredoka One', cursive;
+  color: var(--gold); font-size: .85rem;
+  display: block; margin-bottom: 5px;
+}
+.memory-box {
+  background: linear-gradient(135deg, rgba(167,139,250,.14), rgba(167,139,250,.04));
+  border: 1.5px solid #a78bfa;
+  border-radius: 12px;
+  padding: 12px 16px;
+  margin: 14px 0;
+  font-size: .86rem; line-height: 1.6; color: #ede9fe;
+}
+.memory-box .memory-label {
+  font-family: 'Fredoka One', cursive;
+  color: #a78bfa; font-size: .85rem;
+  display: block; margin-bottom: 5px;
+}
+.compare-table {
+  width: 100%; border-collapse: collapse;
+  margin: 14px 0 20px; font-size: .82rem;
+  border-radius: 10px; overflow: hidden;
+  border: 1px solid var(--border);
+}
+.compare-table th {
+  background: linear-gradient(135deg, #0f3d3d, #7f1d3d);
+  color: var(--gold); font-family: 'Fredoka One', cursive;
+  font-size: .78rem; padding: 8px 10px; text-align: left;
+}
+.compare-table td {
+  padding: 8px 10px; border-top: 1px solid rgba(255,255,255,.06);
+  color: #d1fae5; vertical-align: top;
+}
+.compare-table tr:nth-child(even) td { background: rgba(255,255,255,.02); }
+
+.ptest-part-title {
+  font-family: 'Fredoka One', cursive; color: var(--gold);
+  font-size: 1rem; margin: 22px 0 10px;
+  padding-bottom: 6px; border-bottom: 2px solid var(--gold-dark);
+}
+.ptest-part-title:first-child { margin-top: 0; }
+.ptest-item {
+  font-size: .87rem; line-height: 1.7; margin-bottom: 10px; color: #d1fae5;
+}
+.ptest-item .qnum { color: var(--gold); font-weight: 800; margin-right: 4px; }
+.ptest-blank { display: inline-block; min-width: 90px; border-bottom: 1.5px solid var(--muted); margin: 0 3px; }
+.ptest-choices { margin: 3px 0 0 22px; color: var(--muted); font-size: .83rem; }
+.match-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 0 18px; margin-bottom: 16px; }
+.match-cols h4 { font-family: 'Fredoka One', cursive; font-size: .82rem; color: var(--gold); margin-bottom: 8px; }
+.match-cols ol, .match-cols ul { padding-left: 20px; font-size: .84rem; line-height: 1.8; color: #d1fae5; }
+
+.key-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(150px,1fr));
+  gap: 8px; margin-bottom: 20px;
+}
+.key-pill {
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: 8px; padding: 6px 10px; font-size: .8rem;
+}
+.key-pill b { color: var(--gold); }
+
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-icon">🌸</div>
+  <div>
+    <h1>EPP Reviewer</h1>
+    <div class="sub">Pagbabagong Pisikal · Pangangalaga sa Sarili · Mga Kagamitan</div>
+  </div>
+  <div class="header-controls">
+    <div class="score-pill">⭐ <span id="score-val">0</span> / <span id="total-val">0</span></div>
+    <button class="audio-btn" id="notes-toggle" title="Buksan ang Reviewer" onclick="document.getElementById('notes-overlay').classList.add('show')">📖</button>
+    <button class="audio-btn active" id="audio-toggle" title="I-toggle ang Audio">🔊</button>
+  </div>
+</header>
+
+<div class="chat-wrap">
+  <div id="chat-box"></div>
+</div>
+
+<div class="input-bar">
+  <input type="text" id="user-input" placeholder="Isulat ang iyong sagot dito…" autocomplete="off" />
+  <button id="send-btn">➤</button>
+</div>
+
+<div class="result-overlay" id="result-overlay">
+  <div class="result-card">
+    <span class="result-emoji" id="res-emoji">🏆</span>
+    <div class="result-title">Tapos na!</div>
+    <div class="result-score"><span id="res-score">0</span>/<span id="res-total">0</span></div>
+    <div class="result-msg" id="res-msg">Magaling!</div>
+    <button class="result-btn" onclick="restartApp()">🔄 Maglaro Ulit</button>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+// QUESTION BANK
+// ═══════════════════════════════════════════════════════════════
+const topics = {
+
+  "Mga Pagbabagong Pisikal": [
+    { q: "Ano ang tawag sa bahagi ng buhay kung kailan nakararanas ng pagbabagong pisikal, mental, at emosyonal ang isang bata?", a: "Puberty o Pubertad", hint: "Tinatawag din itong pagdadalaga at pagbibinata." },
+    { q: "Sa karaniwan, sa anong edad nagsisimula ang puberty?", a: "9 hanggang 12 taong gulang", hint: "Nagtatapos ito sa edad na 19." },
+    { q: "Ano ang tawag sa pagbabago sa katawan ng babae kung saan lumalapad ang balakang at nagkakaroon ng hubog?", a: "Pagbabago sa hugis ng katawan", hint: "May kinalaman ito sa balakang." },
+    { q: "Ano ang nangyayari sa boses ng nagbibinata habang lumalaki ang kanyang larynx?", a: "Lumalalim at lumalakas ang boses; may pagpitik habang lumalaki ang larynx", hint: "May kinalaman ito sa larynx." },
+    { q: "Ano ang tawag sa maliit na umbok na lumilitaw sa leeg ng lalaki habang nagbibinata?", a: "Bukol sa lalamunan o Adam's apple", hint: "Makikita ito sa leeg." },
+    { q: "Bakit nagkakaroon ng amoy sa katawan at taghiyawat ang mga nagdadalaga at nagbibinata?", a: "Dahil nagiging aktibo ang glandula ng pawis (sweat glands) ng katawan", hint: "Kaugnay ito ng pawis at bakterya." },
+    { q: "Ano ang isa pang pagbabago sa ngipin na nararanasan sa panahon ng pubertad?", a: "Kompletong tubo ng mga permanenteng ngipin", hint: "Tungkol ito sa ngipin." },
+    { q: "Ano ang tawag sa paghanga o pag-akit sa ibang tao na nararanasan sa panahon ng pagdadalaga at pagbibinata?", a: "Crush o atraksyon sa iba", hint: "Emosyonal itong pagbabago." },
+  ],
+
+  "Ibang Pagbabagong Nararanasan": [
+    { q: "Bukod sa pisikal, anong uri ng pagbabago rin ang nararanasan sa panahon ng pubertad?", a: "Emosyonal na pagbabago", hint: "Kaugnay ito ng damdamin." },
+    { q: "Ano ang isa sa mga karaniwang nararamdaman ng mga bata sa panahon ng pubertad?", a: "Pagiging maramdamin at mahiyain", hint: "Tungkol ito sa damdamin." },
+    { q: "Sino ang dapat lapitan para sa gabay habang nagdadalaga o nagbibinata?", a: "Mga magulang, guro, kaibigan, at ibang taong nakapaligid", hint: "Sila ang tumutulong sa iyo." },
+    { q: "Bakit mahalaga ang komunikasyon sa mga taong nakapaligid sa iyo sa panahon ng pubertad?", a: "Upang mas maging madali ang pagtanggap sa mga pagbabago", hint: "Tulong ito sa pagharap sa mga hamon." },
+    { q: "Totoo bang lahat ng bata ay parehong oras nakararanas ng pubertad?", a: "Hindi; may maagang nakararanas at may nahuhuli", hint: "Iba-iba ang bawat tao." },
+  ],
+
+  "Pangangalaga sa Sarili": [
+    { q: "Ano ang layunin ng araw-araw na pagliligo?", a: "Nagbibigay ng kaginhawahan, tumutulong sa maayos na pagdaloy ng dugo, at nakatutulong sa resistensiya ng katawan", hint: "Kaugnay ito ng kalinisan ng katawan." },
+    { q: "Ilang beses inirekomendang gumamit ng shampoo sa isang linggo?", a: "Dalawa hanggang tatlong beses", hint: "Hindi ito kailangan araw-araw." },
+    { q: "Kailan dapat magsipilyo ng ngipin?", a: "Pagkatapos kumain, bago matulog sa gabi, at pagkagising sa umaga", hint: "Tatlong pagkakataon sa isang araw." },
+    { q: "Gaano kadalas dapat pumunta sa dentista?", a: "Dalawang beses sa isang taon", hint: "Kada anim na buwan." },
+    { q: "Ano ang maaaring gamitin sa paglilinis ng ilong?", a: "Bimpo o cotton swab", hint: "Panlinis ito ng ilong." },
+    { q: "Bakit inilalagay ang tawas o deodorant sa kilikili?", a: "Upang mapigil ang pamawis at ang pagdami ng bakteryang nagdudulot ng amoy", hint: "Laban ito sa amoy ng katawan." },
+    { q: "Bakit mahalagang gupitan ang mga kuko nang regular?", a: "Upang hindi pamahayan ng dumi at mikrobyo ang loob ng kuko", hint: "Nasa ilalim ng kuko ang mikrobyo." },
+    { q: "Bakit hindi dapat ipahiram ang mga personal na gamit tulad ng tuwalya at sepilyo?", a: "Dahil maaari itong magdulot ng pagkahawa ng sakit mula sa bakterya", hint: "Personal na gamit dapat hindi ipinagsasama." },
+  ],
+
+  "Pangangalaga Habang May Regla": [
+    { q: "Anong uri ng pagkain ang dapat kainin habang may regla?", a: "Masustansiyang pagkain gaya ng prutas, gulay, isda, at karne", hint: "Mayaman sa bitamina at protina." },
+    { q: "Ilang oras na tulog ang kailangan tuwing may regla?", a: "Hindi bababa sa walong oras", hint: "Sapat na pahinga ang kailangan." },
+    { q: "Ano ang ginagamit upang maiwasang matagusan o mamantsahan ng dugo ang damit?", a: "Pasador o sanitary napkin", hint: "Ito ang gamit sa panahon ng regla." },
+    { q: "Ipinagbabawal ba ang pag-eehersisyo habang may regla?", a: "Hindi; nakatutulong pa ito sa maayos na tindig at pakiramdam", hint: "Hindi ito bawal." },
+    { q: "Bakit kailangang maligo pa rin araw-araw kahit may regla?", a: "Upang maiwasan ang hindi kaaya-ayang amoy ng katawan", hint: "Kalinisan pa rin ang dahilan." },
+  ],
+
+  "Pangangalaga Pagkatapos Matuli": [
+    { q: "Anong uri ng damit ang dapat isuot pagkatapos matuli?", a: "Maluwag na palda, shorts, o padyama", hint: "Iwasan ang masikip na damit." },
+    { q: "Bakit dapat iwasan ang paghawak sa sugat pagkatapos matuli?", a: "Upang hindi ito maimpeksiyon", hint: "Kaugnay ito ng kalinisan ng sugat." },
+    { q: "Anong dahon ang maaaring ipanlanggas upang panatilihing malinis ang sugat?", a: "Pinakuluang dahon ng bayabas", hint: "Halamang gamot ito." },
+    { q: "Ano ang dapat gawin bago hawakan ang sugat kapag lilinisin ito?", a: "Tiyaking malinis ang kamay", hint: "Kalinisan ng kamay muna." },
+    { q: "Anong aktibidad ang dapat iwasan habang gumagaling ang sugat?", a: "Paglalarong may aktibong pagkilos tulad ng pagtakbo", hint: "Iwasan ang mabigat na galaw." },
+  ],
+
+  "Mga Kagamitan sa Pangangalaga sa Sarili": [
+    { q: "Ano ang gamit ng sabon panligo?", a: "Tinatanggal nito ang mga duming nakakapit sa balat", hint: "Panligo ito." },
+    { q: "Ano ang gamit ng shampoo?", a: "Nililinis nito ang buhok at anit, at pinapanatiling mabango at malambot ang buhok", hint: "Sa buhok ito ginagamit." },
+    { q: "Ano ang gamit ng tuwalyang panligo?", a: "Pinapatuyo nito ang katawan pagkatapos maligo", hint: "Panuyo ito pagkatapos maligo." },
+    { q: "Ano ang bimpo?", a: "Maliit na tuwalyang ginagamit pampunas ng pawis", hint: "Maliit na tuwalya ito." },
+    { q: "Ano ang gamit ng ear pick?", a: "Nililinis at tinatanggal nito ang tutuli sa tainga", hint: "Sa tainga ito ginagamit." },
+    { q: "Ano ang gamit ng nail cutter?", a: "Pamutol ito ng kuko", hint: "Panggupit ng kuko." },
+    { q: "Ano ang gamit ng lusyon?", a: "Ipinapahid ito sa balat upang mapanatili itong makinis at malambot", hint: "Sa balat ito ipinapahid." },
+    { q: "Ano ang gamit ng pasador?", a: "Ginagamit ito kung may regla ang babae upang maiwasan ang mantsa sa damit", hint: "Gamit ito sa panahon ng regla." },
+    { q: "Ano ang gamit ng suklay?", a: "Pinapanatili nitong maayos at makintab ang buhok", hint: "Panayos ng buhok." },
+    { q: "Ano ang gamit ng sepilyo?", a: "Pinapanatili nitong malinis ang mga ngipin", hint: "Sa ngipin ito ginagamit." },
+    { q: "Ano ang gamit ng deodorant?", a: "Inaalis nito ang hindi kaaya-ayang amoy dulot ng pagpapawis", hint: "Laban ito sa amoy ng katawan." },
+  ],
+
+};
+
+// ── TRUE OR FALSE ────────────────────────────────────────────────────────────
+const trueOrFalse = [
+  { q: "Ang puberty ay karaniwang nagsisimula sa edad na 9 hanggang 12.", a: "tama" },
+  { q: "Ang pubertad ay nagtatapos sa edad na 15.", a: "mali" },
+  { q: "Lumalapad ang balakang ng babae habang nagdadalaga.", a: "tama" },
+  { q: "Lumalapad din ang dibdib at balikat ng lalaki habang nagbibinata.", a: "tama" },
+  { q: "Ang bukol sa lalamunan o Adam's apple ay lumilitaw sa mga babae.", a: "mali" },
+  { q: "Dapat magsipilyo ng ngipin nang tatlong beses sa isang araw.", a: "tama" },
+  { q: "Kailangang pumunta lamang sa dentista nang isang beses sa isang taon.", a: "mali" },
+  { q: "Ang tawas o deodorant ay inilalagay sa kilikili.", a: "tama" },
+  { q: "Maaaring ipahiram ang tuwalya at sepilyo sa ibang tao.", a: "mali" },
+  { q: "Ang pasador ay ginagamit tuwing may regla ang babae.", a: "tama" },
+  { q: "Kailangan ng hindi bababa sa walong oras na tulog tuwing may regla.", a: "tama" },
+  { q: "Ipinagbabawal ang pag-eehersisyo habang may regla.", a: "mali" },
+  { q: "Dapat iwasan ang paghawak sa sugat pagkatapos matuli.", a: "tama" },
+  { q: "Maaaring gumamit ng pinakuluang dahon ng bayabas sa paglilinis ng sugat pagkatapos matuli.", a: "tama" },
+  { q: "Ang lusyon ay ginagamit upang linisin ang ngipin.", a: "mali" },
+];
+
+// ── IDENTIFY: KLASIPIKASYON (B/L/P) at KAGAMITAN ────────────────────────────
+const identifyQuestions = [
+  { q: "Pagsesepilyo ng ngipin pagkatapos kumain, bago matulog, at paggising sa umaga.", a: "Pareho (P)", choices: ["Babae (B)","Lalaki (L)","Pareho (P)"] },
+  { q: "Paglalanggas ng sugat mula sa pagtutuli gamit ang pinakuluang dahon ng bayabas.", a: "Lalaki (L)", choices: ["Babae (B)","Lalaki (L)","Pareho (P)"] },
+  { q: "Pagpapalit ng pasador sa tamang oras at pagtatapon nito sa basurahan.", a: "Babae (B)", choices: ["Babae (B)","Lalaki (L)","Pareho (P)"] },
+  { q: "Pag-eehersisyo araw-araw upang mapanatiling malakas ang katawan.", a: "Pareho (P)", choices: ["Babae (B)","Lalaki (L)","Pareho (P)"] },
+  { q: "Paglalagay ng deodorant sa kilikili.", a: "Pareho (P)", choices: ["Babae (B)","Lalaki (L)","Pareho (P)"] },
+  { q: "Paggamit ng pambatang bra upang hindi bumakat ang paglaki ng dibdib.", a: "Babae (B)", choices: ["Babae (B)","Lalaki (L)","Pareho (P)"] },
+  { q: "Pagpapatubo ng balbas at bigote.", a: "Lalaki (L)", choices: ["Babae (B)","Lalaki (L)","Pareho (P)"] },
+  { q: "Araw-araw na pagliligo upang mapanatiling malinis ang katawan.", a: "Pareho (P)", choices: ["Babae (B)","Lalaki (L)","Pareho (P)"] },
+  { q: "Pagsusuot ng maluwag na palda o shorts pagkatapos matuli.", a: "Lalaki (L)", choices: ["Babae (B)","Lalaki (L)","Pareho (P)"] },
+  { q: "Pagputol ng kuko sa paa at kamay.", a: "Pareho (P)", choices: ["Babae (B)","Lalaki (L)","Pareho (P)"] },
+  { q: "Ginagamit upang matanggal ang mga duming nakakapit sa balat.", a: "Sabon Panligo", choices: ["Sabon Panligo","Shampoo","Tuwalyang Panligo","Bimpo","Suklay"] },
+  { q: "Ginagamit upang linisin ang buhok at anit, at mapanatiling mabango at malambot ang buhok.", a: "Shampoo", choices: ["Sabon Panligo","Shampoo","Tuwalyang Panligo","Bimpo","Suklay"] },
+  { q: "Ginagamit upang patuyuin ang katawan pagkatapos maligo.", a: "Tuwalyang Panligo", choices: ["Sabon Panligo","Shampoo","Tuwalyang Panligo","Bimpo","Suklay"] },
+  { q: "Maliit na tuwalya na ginagamit pampunas ng pawis.", a: "Bimpo", choices: ["Sabon Panligo","Shampoo","Tuwalyang Panligo","Bimpo","Suklay"] },
+  { q: "Ginagamit upang mapanatiling maayos at makintab ang buhok.", a: "Suklay", choices: ["Sabon Panligo","Shampoo","Tuwalyang Panligo","Bimpo","Suklay"] },
+  { q: "Ginagamit upang linisin at tanggalin ang tutuli sa tainga.", a: "Ear Pick", choices: ["Ear Pick","Nail Cutter","Lusyon","Sepilyo","Deodorant"] },
+  { q: "Ginagamit sa pagputol ng kuko.", a: "Nail Cutter", choices: ["Ear Pick","Nail Cutter","Lusyon","Sepilyo","Deodorant"] },
+  { q: "Ipinapahid sa balat upang mapanatili itong makinis at malambot.", a: "Lusyon", choices: ["Ear Pick","Nail Cutter","Lusyon","Sepilyo","Deodorant"] },
+  { q: "Ginagamit upang mapanatiling malinis ang mga ngipin.", a: "Sepilyo", choices: ["Ear Pick","Nail Cutter","Lusyon","Sepilyo","Deodorant"] },
+  { q: "Ipinapahid sa kilikili upang alisin ang hindi kaaya-ayang amoy dulot ng pagpapawis.", a: "Deodorant", choices: ["Ear Pick","Nail Cutter","Lusyon","Sepilyo","Deodorant"] },
+  { q: "Gamit ng babae tuwing may regla upang hindi tumagos ang dugo sa damit.", a: "Pasador", choices: ["Pasador","Lusyon","Deodorant","Sepilyo","Suklay"] },
+];
+
+// ═══════════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════════
+let state = {
+  awaiting: 'menu',
+  mode: null,
+  questions: [],
+  allAnswers: [],
+  qIndex: 0,
+  score: 0,
+  total: 0,
+  hintUsed: false,
+  audioEnabled: true,
+};
+
+// ═══════════════════════════════════════════════════════════════
+// TTS (UPGRADED FOR TRUE FILIPINO ACCENT)
+// ═══════════════════════════════════════════════════════════════
+let currentAudioStream = null;
+
+function speak(text) {
+  if (!state.audioEnabled) return;
+  
+  // Linisin ang mga nakaraang audio task
+  window.speechSynthesis.cancel();
+  if (currentAudioStream) {
+    currentAudioStream.pause();
+    currentAudioStream = null;
+  }
+  
+  // Tanggalin ang HTML tags at emojis para hindi basahin nang paputol-putol
+  const clean = text.replace(/<[^>]+>/g,'').replace(/[🇵🇭🌟✅❌💡⏭️🏆😊💪🔄🔲📚👋⭐✕🧭📏🗺️]/g,'');
+  
+  // PRIMARY METHOD: Google Translation Engine cloud voice stream (May natural na Filipino accent)
+  const googleTtsUrl = `https://translate.google.com/translate_tts?ie=UTF-8&tl=tl&client=tw-ob&q=${encodeURIComponent(clean)}`;
+  
+  currentAudioStream = new Audio(googleTtsUrl);
+  currentAudioStream.onplaying = () => showWave(true);
+  currentAudioStream.onended = currentAudioStream.onerror = () => showWave(false);
+  
+  currentAudioStream.play().catch(err => {
+    // BACKUP METHOD: Web Speech API (Gagana kapag walang internet connection)
+    console.warn("Google TTS blocked or offline. Falling back to local system speech engine.");
+    
+    const streamFallback = new SpeechSynthesisUtterance(clean);
+    streamFallback.lang = 'fil-PH';
+    streamFallback.rate = 0.95; streamFallback.pitch = 1.05; streamFallback.volume = 1;
+    
+    const voices = window.speechSynthesis.getVoices();
+    const filVoice = voices.find(v => v.lang.startsWith('fil') || v.lang.startsWith('tl'));
+    const engVoice = voices.find(v => v.lang.startsWith('en') && v.name.toLowerCase().includes('female'))
+                   || voices.find(v => v.lang.startsWith('en'));
+              
+    if (filVoice) {
+      streamFallback.voice = filVoice;
+    } else if (engVoice) {
+      streamFallback.voice = engVoice; 
+      streamFallback.lang = 'en-US'; 
+    }
+    
+    streamFallback.onstart = () => showWave(true);
+    streamFallback.onend = streamFallback.onerror = () => showWave(false);
+    window.speechSynthesis.speak(streamFallback);
+  });
+}
+
+function showWave(on) {
+  document.querySelectorAll('.speaker-wave').forEach(w => w.style.display = on ? 'inline-flex' : 'none');
+}
+
+// I-initialize ang mga boses ng system
+let localSystemVoices = [];
+function lookupSystemVoices() {
+  localSystemVoices = window.speechSynthesis.getVoices();
+}
+lookupSystemVoices();
+if (window.speechSynthesis.onvoiceschanged !== undefined) {
+  window.speechSynthesis.onvoiceschanged = lookupSystemVoices;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// UI HELPERS
+// ═══════════════════════════════════════════════════════════════
+const chatBox = document.getElementById('chat-box');
+const input = document.getElementById('user-input');
+const sendBtn = document.getElementById('send-btn');
+
+function scrollBottom() { chatBox.scrollTop = chatBox.scrollHeight; }
+
+function addMessage(role, html, speakText) {
+  const div = document.createElement('div');
+  div.className = `msg ${role}`;
+  const av = document.createElement('div');
+  av.className = 'avatar';
+  av.textContent = role === 'bot' ? '🤖' : '🧑';
+  const bub = document.createElement('div');
+  bub.className = 'bubble';
+  bub.innerHTML = role === 'bot'
+    ? html + '<span class="speaker-wave" style="display:none"><span></span><span></span><span></span><span></span><span></span></span>'
+    : html;
+  div.appendChild(av); div.appendChild(bub);
+  chatBox.appendChild(div);
+  scrollBottom(); bindChips();
+  if (role === 'bot') {
+    const txt = speakText || html.replace(/<[^>]+>/g,' ');
+    setTimeout(() => speak(txt), 350);
+  }
+}
+
+function addTyping() {
+  const d = document.createElement('div');
+  d.className = 'msg bot'; d.id = 'typing';
+  d.innerHTML = '<div class="avatar">🤖</div><div class="typing"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>';
+  chatBox.appendChild(d); scrollBottom();
+}
+function removeTyping() { const t = document.getElementById('typing'); if(t) t.remove(); }
+
+function bindChips() {
+  document.querySelectorAll('.chip:not([data-bound])').forEach(c => {
+    c.dataset.bound = '1';
+    c.addEventListener('click', () => handleUserMessage(c.dataset.val));
+  });
+}
+
+function updateScore() {
+  document.getElementById('score-val').textContent = state.score;
+  document.getElementById('total-val').textContent = state.total;
+}
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length-1; i > 0; i--) {
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]] = [a[j],a[i]];
+  }
+  return a;
+}
+
+function normalize(s) { return s.toLowerCase().trim().replace(/\s+/g,' '); }
+
+function checkAnswer(user, correct) {
+  const u = normalize(user), c = normalize(correct);
+  if (u === c) return true;
+  if (c.includes(u) && u.length > 5) return true;
+  const parts = c.split(/[,;\/]/);
+  for (const p of parts) if (u.includes(p.trim()) && p.trim().length > 4) return true;
+  return false;
+}
+
+function showResult() {
+  const pct = Math.round((state.score/state.total)*100);
+  const emoji = pct>=90?'🏆':pct>=70?'🌟':pct>=50?'😊':'💪';
+  const msg = pct>=90?'Napakahusay! Alam mo ang lahat!':pct>=70?'Magaling! Patuloy ka lang!':pct>=50?'Mabuti! Pag-aralan pa nang kaunti!':'Huwag sumuko! Subukan ulit!';
+  document.getElementById('res-emoji').textContent = emoji;
+  document.getElementById('res-score').textContent = state.score;
+  document.getElementById('res-total').textContent = state.total;
+  document.getElementById('res-msg').textContent = msg;
+  document.getElementById('result-overlay').classList.add('show');
+  speak(`Tapos na! Ang iyong puntos ay ${state.score} sa ${state.total}. ${msg}`);
+}
+
+function restartApp() {
+  document.getElementById('result-overlay').classList.remove('show');
+  state = { awaiting:'menu', mode:null, questions:[], allAnswers:[], qIndex:0, score:0, total:0, hintUsed:false, audioEnabled:state.audioEnabled };
+  chatBox.innerHTML = '';
+  document.querySelector('.input-bar').style.display = 'flex';
+  updateScore();
+  showMenu();
+}
+
+// ═══════════════════════════════════════════════════════════════
+// MC HELPERS
+// ═══════════════════════════════════════════════════════════════
+function getAllAnswers() {
+  const ans = [];
+  for (const qs of Object.values(topics)) for (const q of qs) ans.push(q.a);
+  return ans;
+}
+
+function generateChoices(correct, pool) {
+  const distractors = shuffle(pool.filter(a => a !== correct)).slice(0,3);
+  return shuffle([correct, ...distractors]);
+}
+
+function buildMCBtns(choices, correctAnswer) {
+  const letters = ['A','B','C','D','E'];
+  return `<div class="mc-options">${choices.map((c,i)=>
+    `<button class="mc-btn" data-answer="${encodeURIComponent(c)}" data-correct="${encodeURIComponent(correctAnswer)}" onclick="handleMCClick(this)">
+      <span class="letter">${letters[i]}</span>${c}
+    </button>`
+  ).join('')}</div>`;
+}
+
+function handleMCClick(btn) {
+  const allBtns = btn.closest('.mc-options').querySelectorAll('.mc-btn');
+  allBtns.forEach(b => b.disabled = true);
+  const chosen = decodeURIComponent(btn.dataset.answer);
+  const correct = decodeURIComponent(btn.dataset.correct);
+  const isCorrect = chosen === correct;
+  allBtns.forEach(b => { if(decodeURIComponent(b.dataset.answer)===correct) b.classList.add('correct'); });
+  if (!isCorrect) btn.classList.add('wrong');
+  setTimeout(() => {
+    if (isCorrect) {
+      state.score++;
+      addMessage('bot', `✅ <strong>Tama!</strong> +1 puntos! Ang sagot ay: <strong>${correct}</strong>`, `Tama! Ang sagot ay: ${correct}`);
+    } else {
+      addMessage('bot', `❌ <strong>Hindi tama.</strong> Ang tamang sagot ay: <strong>${correct}</strong>`, `Hindi tama. Ang tamang sagot ay: ${correct}`);
+    }
+    state.qIndex++; updateScore();
+    if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+    else setTimeout(showResult, 900);
+  }, 650);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// NEXT QUESTION
+// ═══════════════════════════════════════════════════════════════
+function nextQuestion() {
+  const qi = state.qIndex;
+  const q = state.questions[qi];
+  const num = qi + 1;
+
+  if (state.mode === 'full' || state.mode === 'topic_mc') {
+    const choices = generateChoices(q.a, state.allAnswers);
+    const tag = q.topic ? `<span class="topic-tag">${q.topic}</span><br>` : '';
+    const html = `${tag}<strong>T${num} sa ${state.total}:</strong> ${q.q}${buildMCBtns(choices, q.a)}`;
+    addMessage('bot', html, `Tanong ${num}. ${q.q}`);
+    return;
+  }
+
+  if (state.mode === 'tf') {
+    const html = `<strong>T${num} sa ${state.total}:</strong> <div class="scenario-card">${q.q}</div>
+      <span class="chip" data-val="tama">✅ Tama</span><span class="chip" data-val="mali">❌ Mali</span>`;
+    addMessage('bot', html, `Tanong ${num}. Tama o Mali: ${q.q}`);
+    return;
+  }
+
+  if (state.mode === 'identify') {
+    const btns = buildMCBtns(q.choices, q.a);
+    const html = `<strong>T${num} sa ${state.total}:</strong> Kilalanin kung ano ang tinutukoy:<div class="scenario-card">${q.q}</div>${btns}`;
+    addMessage('bot', html, `Tanong ${num}. Kilalanin ang tinutukoy: ${q.q}`);
+    return;
+  }
+
+  // typed answer mode
+  const tag = q.topic ? `<span class="topic-tag">${q.topic}</span><br>` : '';
+  const html = `${tag}<strong>T${num} sa ${state.total}:</strong> ${q.q}<br><small style="color:var(--muted)">Isulat ang sagot · i-type ang <em>hint</em> para sa tulong · <em>skip</em> para lumipat</small>`;
+  addMessage('bot', html, `Tanong ${num}. ${q.q}`);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// MENU
+// ═══════════════════════════════════════════════════════════════
+function showMenu() {
+  addMessage('bot',
+    `👋 <strong>Kumusta! Ako ang iyong EPP Reviewer!</strong><br>Pag-aaralan natin ang <em>Mga Pagbabagong Pisikal</em>, <em>Pangangalaga sa Sarili</em>, <em>Pangangalaga Habang May Regla at Pagkatapos Matuli</em>, at <em>Mga Kagamitan sa Pangangalaga sa Sarili</em>.<br><br>Ano ang gusto mong gawin?<br>
+    <span class="chip" data-val="1">📚 Pag-aralan ang Paksa</span>
+    <span class="chip" data-val="2">✅ Tama o Mali</span>
+    <span class="chip" data-val="3">🧴 Kilalanin: Babae, Lalaki, o Kagamitan</span>
+    <span class="chip" data-val="4">🌟 Buong Review (Multiple Choice)</span>`,
+    "Kumusta! Ako ang iyong EPP Reviewer. Ano ang gusto mong gawin? Pag-aralan ang paksa, Tama o Mali, Kilalanin, o Buong Review na multiple choice?"
+  );
+  state.awaiting = 'menu';
+}
+
+// ═══════════════════════════════════════════════════════════════
+// PROCESS MESSAGE
+// ═══════════════════════════════════════════════════════════════
+function processMessage(msg) {
+  const aw = state.awaiting;
+
+  // ── MENU ──────────────────────────────────────────────────
+  if (aw === 'menu') {
+    if (msg === '1') {
+      state.awaiting = 'topic';
+      const keys = Object.keys(topics);
+      const chips = keys.map((t,i) => `<span class="chip" data-val="${i+1}">${i+1}. ${t}</span>`).join(' ');
+      addMessage('bot', `📚 Alin ang paksang gusto mong pag-aralan?<br>${chips}`, 'Alin ang paksang gusto mong pag-aralan?');
+
+    } else if (msg === '2') {
+      state.mode = 'tf';
+      state.questions = shuffle(trueOrFalse);
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'tf_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `✅ <strong>Tama o Mali!</strong> ${state.total} tanong. Simulan na!`, `Tama o Mali! ${state.total} tanong. Simulan na!`);
+      setTimeout(nextQuestion, 800);
+
+    } else if (msg === '3') {
+      state.mode = 'identify';
+      state.questions = shuffle(identifyQuestions);
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'mc_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `🧴 <strong>Kilalanin!</strong> Alamin kung ito ay pambabae, panlalaki, o pareho, o kaya kung anong kagamitan ang tinutukoy.`, 'Kilalanin! Alamin kung ano ang tinutukoy sa bawat pahayag.');
+      setTimeout(nextQuestion, 800);
+
+    } else if (msg === '4') {
+      state.mode = 'full';
+      const all = [];
+      for (const [topicName, qs] of Object.entries(topics)) {
+        qs.forEach(q => all.push({...q, topic: topicName}));
+      }
+      state.questions = shuffle(all);
+      state.allAnswers = getAllAnswers();
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'mc_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `🌟 <strong>Buong Review — Multiple Choice!</strong> ${state.total} tanong. Pag-isipang mabuti!`, `Buong Review! Multiple Choice! ${state.total} tanong. Pag-isipang mabuti!`);
+      setTimeout(nextQuestion, 800);
+
+    } else {
+      addMessage('bot',
+        `Pumili ng opsyon:<br>
+        <span class="chip" data-val="1">📚 Pag-aralan ang Paksa</span>
+        <span class="chip" data-val="2">✅ Tama o Mali</span>
+        <span class="chip" data-val="3">🧴 Kilalanin</span>
+        <span class="chip" data-val="4">🌟 Buong Review</span>`,
+        'Pumili ng opsyon.'
+      );
+    }
+    return;
+  }
+
+  // ── TOPIC SELECT ──────────────────────────────────────────
+  if (aw === 'topic') {
+    const keys = Object.keys(topics);
+    const idx = parseInt(msg) - 1;
+    if (keys[idx]) {
+      const topicName = keys[idx];
+      state.mode = 'topic';
+      state.questions = shuffle(topics[topicName]);
+      state.allAnswers = getAllAnswers();
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'answer';
+      document.querySelector('.input-bar').style.display = 'flex';
+      updateScore();
+      addMessage('bot', `📚 <strong>${topicName}</strong> — ${state.total} tanong. Handa ka na ba?`, `${topicName}. ${state.total} tanong. Handa ka na ba?`);
+      setTimeout(nextQuestion, 800);
+    } else {
+      const chips = Object.keys(topics).map((t,i) => `<span class="chip" data-val="${i+1}">${i+1}. ${t}</span>`).join(' ');
+      addMessage('bot', `Pumili ng wastong paksa:<br>${chips}`, 'Pumili ng wastong paksa.');
+    }
+    return;
+  }
+
+  // ── TYPED ANSWER ──────────────────────────────────────────
+  if (aw === 'answer') {
+    const q = state.questions[state.qIndex];
+    const m = normalize(msg);
+
+    if (m === 'hint') {
+      state.hintUsed = true;
+      addMessage('bot', `💡 <strong>Hint:</strong> ${q.hint}`, `Hint: ${q.hint}`);
+      return;
+    }
+    if (m === 'skip') {
+      addMessage('bot', `⏭️ Nilaktawan! Ang tamang sagot ay: <strong>${q.a}</strong>`, `Nilaktawan. Ang tamang sagot ay: ${q.a}`);
+      state.qIndex++; state.hintUsed = false;
+      if (state.qIndex < state.total) setTimeout(nextQuestion, 700);
+      else showResult();
+      return;
+    }
+
+    const correct = checkAnswer(msg, q.a);
+    if (correct) {
+      if (!state.hintUsed) state.score++;
+      const note = state.hintUsed ? ' <em>(ginamit ang hint — walang puntos)</em>' : ' +1 puntos!';
+      addMessage('bot', `✅ <strong>Tama!</strong>${note} Sagot: <strong>${q.a}</strong>`, `Tama! Ang sagot ay: ${q.a}`);
+    } else {
+      addMessage('bot', `❌ <strong>Hindi tama.</strong> Ang tamang sagot ay: <strong>${q.a}</strong>`, `Hindi tama. Ang tamang sagot ay: ${q.a}`);
+    }
+    state.qIndex++; state.hintUsed = false; updateScore();
+    if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+    else setTimeout(showResult, 900);
+    return;
+  }
+
+  // ── TRUE OR FALSE ─────────────────────────────────────────
+  if (aw === 'tf_answer') {
+    const q = state.questions[state.qIndex];
+    const ans = normalize(msg);
+    const valid = ans === 'tama' || ans === 'mali' || ans === 'true' || ans === 'false';
+    const mapped = (ans === 'true') ? 'tama' : (ans === 'false') ? 'mali' : ans;
+
+    if (valid) {
+      const correct = mapped === q.a;
+      if (correct) {
+        state.score++;
+        addMessage('bot', `✅ <strong>Tama!</strong> Ang sagot ay <strong>${q.a.toUpperCase()}</strong>.`, `Tama! Ang sagot ay ${q.a}.`);
+      } else {
+        addMessage('bot', `❌ <strong>Mali.</strong> Ang tamang sagot ay <strong>${q.a.toUpperCase()}</strong>.`, `Mali. Ang tamang sagot ay ${q.a}.`);
+      }
+      state.qIndex++; updateScore();
+      if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+      else setTimeout(showResult, 900);
+    } else {
+      addMessage('bot',
+        `Sagot: Tama o Mali?<br><span class="chip" data-val="tama">✅ Tama</span><span class="chip" data-val="mali">❌ Mali</span>`,
+        'Sagot: Tama o Mali?'
+      );
+    }
+    return;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// CONTROLS
+// ═══════════════════════════════════════════════════════════════
+function handleUserMessage(msg) {
+  if (!msg.trim()) return;
+  
+  // Ihinto nang malinis ang nagsasalitang audio kapag sumagot ang user
+  window.speechSynthesis.cancel();
+  if (currentAudioStream) {
+    currentAudioStream.pause();
+    currentAudioStream = null;
+    showWave(false);
+  }
+  
+  addMessage('user', msg.replace(/</g,'&lt;'));
+  input.value = '';
+  input.disabled = true; sendBtn.disabled = true;
+  addTyping();
+  setTimeout(() => {
+    removeTyping();
+    input.disabled = false; sendBtn.disabled = false;
+    input.focus();
+    processMessage(msg);
+  }, 480);
+}
+
+sendBtn.addEventListener('click', () => { handleUserMessage(input.value); });
+input.addEventListener('keydown', e => { if(e.key==='Enter') handleUserMessage(input.value); });
+
+document.getElementById('audio-toggle').addEventListener('click', function() {
+  state.audioEnabled = !state.audioEnabled;
+  this.textContent = state.audioEnabled ? '🔊' : '🔇';
+  this.classList.toggle('active', state.audioEnabled);
+  if (!state.audioEnabled) {
+    window.speechSynthesis.cancel();
+    if (currentAudioStream) {
+      currentAudioStream.pause();
+      currentAudioStream = null;
+      showWave(false);
+    }
+  }
+});
+
+// ═══════════════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════════════
+window.addEventListener('load', () => {
+  lookupSystemVoices();
+  showMenu();
+});
+
+function switchTab(tabId, btn) {
+  document.querySelectorAll('.notes-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.notes-tab').forEach(b => b.classList.remove('active'));
+  document.getElementById(tabId).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+
+
+<!-- ── Reviewer Panel ── -->
+<div class="notes-overlay" id="notes-overlay">
+  <div class="notes-panel">
+    <div class="notes-header">
+      <h2>📖 EPP — Propesyonal na Reviewer</h2>
+      <button class="notes-close" onclick="document.getElementById('notes-overlay').classList.remove('show')">✕</button>
+    </div>
+    <div class="notes-tabs">
+      <button class="notes-tab active" onclick="switchTab('tab-pisikal', this)">🌱 Kab. 1: Pagbabagong Pisikal</button>
+      <button class="notes-tab" onclick="switchTab('tab-pangangalaga', this)">🧼 Kab. 2: Pangangalaga sa Sarili</button>
+      <button class="notes-tab" onclick="switchTab('tab-regla-tuli', this)">🩹 Kab. 3: Regla &amp; Pagkatapos Matuli</button>
+      <button class="notes-tab" onclick="switchTab('tab-kagamitan', this)">🧴 Kab. 4: Mga Kagamitan</button>
+      <button class="notes-tab" onclick="switchTab('tab-ptest', this)">📝 Practice Test</button>
+      <button class="notes-tab" onclick="switchTab('tab-answerkey', this)">✅ Answer Key</button>
+    </div>
+    <div class="notes-body">
+
+      <!-- ══════════ KABANATA 1 ══════════ -->
+      <div class="notes-section active" id="tab-pisikal">
+        <div class="chapter-summary">
+          🌱 <strong>Buod ng Kabanata:</strong> Ang <strong>puberty</strong> o <strong>pubertad</strong> ay ang yugto ng buhay kung kailan nakararanas ng mga pagbabagong <em>pisikal, mental, at emosyonal</em> ang isang bata — tinatawag din itong <strong>pagdadalaga</strong> (babae) at <strong>pagbibinata</strong> (lalaki). Karaniwang nagsisimula ito sa edad na <strong>9–12</strong> at nagtatapos sa edad na <strong>19</strong>. Sa mga babae, lumalapad ang balakang at lumalaki ang dibdib; sa mga lalaki naman, lumalapad ang dibdib at balikat, lumalaki ang kalamnan, at lumalalim ang boses habang lumilitaw ang <em>Adam's apple</em>. Karaniwan sa dalawa ang paglaki ng buhok sa iba't ibang bahagi ng katawan, ang pagkakaroon ng amoy sa katawan at taghiyawat dahil sa pag-aktibo ng glandula ng pawis, at ang pagtubo ng kumpletong permanenteng ngipin. Kasabay ng mga pagbabagong ito ay ang mga <em>emosyonal na pagbabago</em> — pagiging maramdamin, mahiyain, at pag-crush sa iba.
+        </div>
+
+        <div class="notes-topic">
+          <div class="notes-topic-title">🌱 Mahahalagang Salita</div>
+          <div class="notes-item"><span class="notes-term">Puberty / Pubertad</span><span class="notes-def">Yugto ng buhay na may pagbabagong pisikal, mental, at emosyonal; 9–19 taong gulang</span></div>
+          <div class="notes-item"><span class="notes-term">Pagdadalaga</span><span class="notes-def">Tawag sa pagbabagong nararanasan ng babae sa panahon ng pubertad</span></div>
+          <div class="notes-item"><span class="notes-term">Pagbibinata</span><span class="notes-def">Tawag sa pagbabagong nararanasan ng lalaki sa panahon ng pubertad</span></div>
+          <div class="notes-item"><span class="notes-term">Larynx</span><span class="notes-def">Bahagi ng lalamunan na lumalaki sa lalaki, sanhi ng pagpitik at paglalim ng boses</span></div>
+          <div class="notes-item"><span class="notes-term">Adam's Apple</span><span class="notes-def">Bukol sa lalamunan ng lalaki na lumilitaw habang lumalaki ang larynx</span></div>
+          <div class="notes-item"><span class="notes-term">Glandula ng Pawis</span><span class="notes-def">Nagiging aktibo sa pubertad; sanhi ng amoy sa katawan kapag hindi malinis</span></div>
+        </div>
+
+        <table class="compare-table">
+          <tr><th>Pagbabago</th><th>👧 Nagdadalaga (Babae)</th><th>👦 Nagbibinata (Lalaki)</th></tr>
+          <tr><td>Hugis ng katawan</td><td>Lumalapad ang balakang, nagkakaroon ng hubog</td><td>Lumalapad ang dibdib at balikat, lumalaki ang kalamnan</td></tr>
+          <tr><td>Taas at timbang</td><td>Mabilis na tumatangkad pag may regla na</td><td>Mabilis na lumalaki ang kalamnan</td></tr>
+          <tr><td>Boses</td><td>Bahagyang pagbabago lamang</td><td>Lumalalim at lumalakas; may pagpitik; lumilitaw ang Adam's apple</td></tr>
+          <tr><td>Dibdib</td><td>Lumalaki, maaaring magsuot ng pambatang bra</td><td>—</td></tr>
+          <tr><td>Buhok</td><td>Tumutubo sa kilikili at pribadong bahagi</td><td>Tumutubo sa mukha (balbas/bigote), kilikili, hita, pribadong bahagi</td></tr>
+          <tr><td>Amoy &amp; taghiyawat</td><td>Karaniwan dahil sa aktibong pawis</td><td>Karaniwan dahil sa aktibong pawis</td></tr>
+        </table>
+
+        <div class="tandaan-box">
+          <span class="tandaan-label">📌 TANDAAN</span>
+          Normal lamang ang lahat ng pagbabagong ito. May mga batang maagang nakararanas at may nahuhuli — walang dapat ikahiya o ikabahala. Mahalaga ang suporta at komunikasyon sa mga magulang, guro, at kaibigan sa panahong ito.
+        </div>
+
+        <div class="memory-box">
+          <span class="memory-label">🧠 Memory Trick</span>
+          <strong>PAGDADALAGA</strong> may salitang "<strong>DALAGA</strong>" (babae); <strong>PAGBIBINATA</strong> may salitang "<strong>BINATA</strong>" (lalaki). Gamitin ang ugat ng salita para agad matandaan kung sino ang tinutukoy!
+        </div>
+      </div>
+
+      <!-- ══════════ KABANATA 2 ══════════ -->
+      <div class="notes-section" id="tab-pangangalaga">
+        <div class="chapter-summary">
+          🧼 <strong>Buod ng Kabanata:</strong> Ang pagpapanatili ng <strong>kalinisan at kaayusan ng katawan</strong> sa panahon ng pagdadalaga at pagbibinata ay nagpapakita ng pagiging responsable. Kabilang dito ang <em>araw-araw na pagliligo</em>, <em>regular na pagsesepilyo</em> (pagkatapos kumain, bago matulog, at pagkagising), <em>paglilinis ng ilong at tainga</em>, <em>paggamit ng tawas o deodorant</em>, <em>pagpuputol ng kuko</em>, <em>pagkain ng masustansiyang pagkain</em>, at <em>pang-araw-araw na pag-eehersisyo</em>. Mahalagang tandaan din na hindi dapat ipahiram o ipagsama ang mga personal na gamit tulad ng tuwalya, bimpo, at sepilyo, upang maiwasan ang paghawa ng sakit.
+        </div>
+
+        <div class="notes-topic">
+          <div class="notes-topic-title">🧼 Mahahalagang Gawain sa Pangangalaga sa Sarili</div>
+          <div class="notes-item"><span class="notes-term">Pagligo araw-araw</span><span class="notes-def">Nagdudulot ng kaginhawahan, tumutulong sa daloy ng dugo at resistensiya ng katawan</span></div>
+          <div class="notes-item"><span class="notes-term">Pagsesepilyo</span><span class="notes-def">Pagkatapos kumain, bago matulog, at paggising sa umaga; dentista 2x/taon</span></div>
+          <div class="notes-item"><span class="notes-term">Paglilinis ng ilong at tainga</span><span class="notes-def">Gumamit ng bimpo/cotton swab; ear pick na malinis bago gamitin</span></div>
+          <div class="notes-item"><span class="notes-term">Paggamit ng tawas o deodorant</span><span class="notes-def">Pagkatapos maligo, sa kilikili, laban sa amoy at bakterya</span></div>
+          <div class="notes-item"><span class="notes-term">Pagpuputol ng kuko</span><span class="notes-def">Panatilihing maikli at malinis upang hindi pamahayan ng mikrobyo</span></div>
+          <div class="notes-item"><span class="notes-term">Masustansiyang pagkain</span><span class="notes-def">Upang mapanatiling malusog ang katawan at makaiwas sa sakit</span></div>
+          <div class="notes-item"><span class="notes-term">Pag-eehersisyo</span><span class="notes-def">Palakas ng resistensiya, tamang postura, at maayos na daloy ng dugo</span></div>
+        </div>
+
+        <div class="tandaan-box">
+          <span class="tandaan-label">📌 TANDAAN</span>
+          Ang malinis at maayos na pangangatawan ay kaaya-ayang tingnan at tanda ng responsibilidad. Ang mga personal na gamit ay hindi dapat ipahiram — pag-iingat ito sa sariling kalusugan, hindi pagiging maramot.
+        </div>
+
+        <div class="memory-box">
+          <span class="memory-label">🧠 Memory Trick</span>
+          Tandaan ang <strong>"7 P's ng Pangangalaga sa Sarili"</strong>: <strong>P</strong>agligo, <strong>P</strong>agsesepilyo, <strong>P</strong>aglilinis ng ilong/tainga, <strong>P</strong>aggamit ng tawas, <strong>P</strong>agpuputol ng kuko, <strong>P</strong>agkain nang masustansya, <strong>P</strong>ag-eehersisyo — pitong gawaing pang-araw-araw!
+        </div>
+      </div>
+
+      <!-- ══════════ KABANATA 3 ══════════ -->
+      <div class="notes-section" id="tab-regla-tuli">
+        <div class="chapter-summary">
+          🩹 <strong>Buod ng Kabanata:</strong> May espesyal na pangangalaga na kailangan sa dalawang partikular na sandali: ang <strong>regla</strong> ng mga babae at ang <strong>pagtutuli</strong> ng mga lalaki. Habang may regla, kailangan ng masustansiyang pagkain, sapat na tulog (di bababa sa 8 oras), at regular na pagpapalit ng <em>pasador</em>. Hindi ipinagbabawal ang paglalakad o pag-uunat ng katawan — nakatutulong pa ito. Pagkatapos matuli naman, kailangang magsuot ng maluwag na damit, iwasan ang paghawak sa sugat, gumamit ng pinakuluang dahon ng bayabas sa paglilinis, at iwasan ang mabibigat na aktibidad habang gumagaling.
+        </div>
+
+        <div class="notes-topic">
+          <div class="notes-topic-title">🌸 Pangangalaga Habang May Regla</div>
+          <div class="notes-item"><span class="notes-term">Pagkain</span><span class="notes-def">Prutas, gulay, isda, at karne — mayaman sa bitamina at protina</span></div>
+          <div class="notes-item"><span class="notes-term">Pahinga</span><span class="notes-def">Hindi bababa sa 8 oras na tulog; iwasan ang pagpupuyat</span></div>
+          <div class="notes-item"><span class="notes-term">Pasador</span><span class="notes-def">Palitan sa tamang oras; itapon nang maayos</span></div>
+          <div class="notes-item"><span class="notes-term">Ehersisyo</span><span class="notes-def">Hindi bawal; nakatutulong sa tindig at pakiramdam</span></div>
+          <div class="notes-item"><span class="notes-term">Kalinisan</span><span class="notes-def">Maligo pa rin araw-araw</span></div>
+        </div>
+
+        <div class="notes-topic">
+          <div class="notes-topic-title">🩹 Pangangalaga Pagkatapos Matuli</div>
+          <div class="notes-item"><span class="notes-term">Damit</span><span class="notes-def">Maluwag na palda, shorts, o padyama upang hindi dumikit sa sugat</span></div>
+          <div class="notes-item"><span class="notes-term">Sugat</span><span class="notes-def">Iwasan ang paghawak upang hindi maimpeksiyon</span></div>
+          <div class="notes-item"><span class="notes-term">Paglilinis</span><span class="notes-def">Gamit ang pinakuluang dahon ng bayabas; malinis na kamay bago hawakan</span></div>
+          <div class="notes-item"><span class="notes-term">Pantakip</span><span class="notes-def">Bulak at gasa upang mapanatiling tuyo ang sugat</span></div>
+          <div class="notes-item"><span class="notes-term">Aktibidad</span><span class="notes-def">Iwasan ang paglalarong may aktibong pagkilos gaya ng pagtakbo</span></div>
+        </div>
+
+        <div class="tandaan-box">
+          <span class="tandaan-label">📌 TANDAAN</span>
+          Magkaiba man ang regla at pagtutuli, pareho itong nangangailangan ng <strong>kalinisan, sapat na pahinga, at pag-iwas sa mabigat na aktibidad</strong> habang nagpapagaling o nagbabago ang katawan.
+        </div>
+
+        <div class="memory-box">
+          <span class="memory-label">🧠 Memory Trick</span>
+          <strong>REGLA = 3P:</strong> <strong>P</strong>asador, <strong>P</strong>ahinga, <strong>P</strong>rutas/Protina.<br>
+          <strong>TULI = 3T:</strong> <strong>T</strong>uyo panatilihin ang sugat, <strong>T</strong>ahimik na aktibidad lamang, <strong>T</strong>amang (maluwag) na damit.
+        </div>
+      </div>
+
+      <!-- ══════════ KABANATA 4 ══════════ -->
+      <div class="notes-section" id="tab-kagamitan">
+        <div class="chapter-summary">
+          🧴 <strong>Buod ng Kabanata:</strong> May mga espesipikong kagamitan na ginagamit upang mapanatiling malinis at maayos ang sarili. Ang mga ito ay tinatawag na <strong>konsumible (consumable)</strong> dahil ginagamit ito nang nauubos o napapalitan paminsan-minsan. Kabilang dito ang sabon panligo, shampoo, tuwalyang panligo, bimpo, ear pick, nail cutter, lusyon, pasador, suklay, sepilyo, at deodorant.
+        </div>
+
+        <table class="compare-table">
+          <tr><th>Kagamitan</th><th>Gamit</th></tr>
+          <tr><td>🧼 Sabon Panligo</td><td>Tinatanggal ang mga duming nakakapit sa balat</td></tr>
+          <tr><td>🧴 Shampoo</td><td>Nililinis ang buhok at anit; nagpapabango at nagpapalambot ng buhok</td></tr>
+          <tr><td>🏖️ Tuwalyang Panligo</td><td>Pinapatuyo ang katawan pagkatapos maligo</td></tr>
+          <tr><td>🧣 Bimpo</td><td>Maliit na tuwalyang pampunas ng pawis</td></tr>
+          <tr><td>👂 Ear Pick</td><td>Naglilinis at nagtatanggal ng tutuli sa tainga</td></tr>
+          <tr><td>💅 Nail Cutter</td><td>Pamutol ng kuko</td></tr>
+          <tr><td>🧴 Lusyon</td><td>Ipinapahid sa balat upang mapanatili itong makinis at malambot</td></tr>
+          <tr><td>🌸 Pasador</td><td>Gamit ng babae tuwing may regla, laban sa mantsa ng dugo</td></tr>
+          <tr><td>💇 Suklay</td><td>Pinapanatiling maayos at makintab ang buhok</td></tr>
+          <tr><td>🦷 Sepilyo</td><td>Pinapanatiling malinis ang mga ngipin</td></tr>
+          <tr><td>🌿 Deodorant</td><td>Tinatanggal ang hindi kaaya-ayang amoy sa kilikili</td></tr>
+        </table>
+
+        <div class="tandaan-box">
+          <span class="tandaan-label">📌 TANDAAN</span>
+          Bawat kagamitan ay para sa <strong>sariling gamit lamang</strong>. Ang pagpapahiram ng personal na kagamitan tulad ng tuwalya, bimpo, at sepilyo ay maaaring magdulot ng paghawa ng sakit dahil sa bakterya.
+        </div>
+
+        <div class="memory-box">
+          <span class="memory-label">🧠 Memory Trick</span>
+          Ikategorya ang mga kagamitan ayon sa bahagi ng katawan: <strong>Buhok</strong> (Shampoo, Suklay) · <strong>Katawan</strong> (Sabon, Tuwalya, Bimpo, Lusyon, Deodorant) · <strong>Ngipin</strong> (Sepilyo) · <strong>Tainga/Kuko</strong> (Ear Pick, Nail Cutter) · <strong>Espesyal</strong> (Pasador). Mas madaling maalala kapag pinangkat!
+        </div>
+      </div>
+
+      <!-- ══════════ PRACTICE TEST ══════════ -->
+      <div class="notes-section" id="tab-ptest">
+        <p style="font-size:.82rem;color:var(--muted);margin-bottom:14px;">📝 Kumpletong pagsusulit na may <strong>50 tanong</strong> mula sa apat na kabanata. Sagutan muna nang buo bago tingnan ang Answer Key.</p>
+
+        <div class="ptest-part-title">Bahagi I — Pagtutugma (10 puntos)</div>
+        <p style="font-size:.8rem;color:var(--muted);margin-bottom:8px;">Panuto: Itugma ang Hanay A sa Hanay B. Isulat ang titik ng tamang sagot.</p>
+        <div class="match-cols">
+          <div>
+            <h4>Hanay A</h4>
+            <ol>
+              <li>___ Tawag sa bahagi ng buhay na may pagbabagong pisikal, mental, at emosyonal</li>
+              <li>___ Bukol sa lalamunan na lumilitaw sa lalaki</li>
+              <li>___ Gamit kung may regla ang babae</li>
+              <li>___ Ginagamit upang linisin ang buhok at anit</li>
+              <li>___ Ginagamit upang matanggal ang dumi sa balat</li>
+              <li>___ Ginagamit sa pagputol ng kuko</li>
+              <li>___ Ipinapahid sa balat upang mapanatili itong makinis</li>
+              <li>___ Ginagamit upang mapanatiling malinis ang ngipin</li>
+              <li>___ Ipinapahid sa kilikili laban sa amoy</li>
+              <li>___ Halamang maaaring ipanlanggas sa sugat pagkatapos matuli</li>
+            </ol>
+          </div>
+          <div>
+            <h4>Hanay B</h4>
+            <ul style="list-style:none;padding-left:0;">
+              <li>a. Sepilyo</li>
+              <li>b. Puberty/Pubertad</li>
+              <li>c. Dahon ng Bayabas</li>
+              <li>d. Adam's Apple</li>
+              <li>e. Deodorant</li>
+              <li>f. Pasador</li>
+              <li>g. Lusyon</li>
+              <li>h. Shampoo</li>
+              <li>i. Nail Cutter</li>
+              <li>j. Sabon Panligo</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="ptest-part-title">Bahagi II — Punan ang Patlang (15 puntos)</div>
+        <div class="ptest-item"><span class="qnum">11.</span> Ang puberty ay tinatawag ding <span class="ptest-blank"></span> (para sa babae) at <span class="ptest-blank"></span> (para sa lalaki).</div>
+        <div class="ptest-item"><span class="qnum">12.</span> Karaniwang nagsisimula ang puberty sa edad na <span class="ptest-blank"></span> hanggang <span class="ptest-blank"></span>.</div>
+        <div class="ptest-item"><span class="qnum">13.</span> Natatapos ang pubertad sa edad na <span class="ptest-blank"></span>.</div>
+        <div class="ptest-item"><span class="qnum">14.</span> Ang paglaki ng dibdib ay bahagi ng <span class="ptest-blank"></span>.</div>
+        <div class="ptest-item"><span class="qnum">15.</span> Ang paglapad ng dibdib at balikat ay bahagi ng <span class="ptest-blank"></span>.</div>
+        <div class="ptest-item"><span class="qnum">16.</span> Ang <span class="ptest-blank"></span> ang glandula na nagiging aktibo at nagdudulot ng amoy sa katawan.</div>
+        <div class="ptest-item"><span class="qnum">17.</span> Dapat magsipilyo nang <span class="ptest-blank"></span> beses sa isang araw.</div>
+        <div class="ptest-item"><span class="qnum">18.</span> Dapat pumunta sa dentista nang <span class="ptest-blank"></span> beses sa isang taon.</div>
+        <div class="ptest-item"><span class="qnum">19.</span> Ang <span class="ptest-blank"></span> ay inilalagay sa kilikili laban sa amoy.</div>
+        <div class="ptest-item"><span class="qnum">20.</span> Habang may regla, kailangan ng hindi bababa sa <span class="ptest-blank"></span> oras na tulog.</div>
+        <div class="ptest-item"><span class="qnum">21.</span> Ang <span class="ptest-blank"></span> ay ginagamit upang maiwasang tumagos ang dugo sa damit.</div>
+        <div class="ptest-item"><span class="qnum">22.</span> Pagkatapos matuli, dapat magsuot ng <span class="ptest-blank"></span> na damit.</div>
+        <div class="ptest-item"><span class="qnum">23.</span> Ang <span class="ptest-blank"></span> ay maaaring ipanlanggas sa sugat pagkatapos matuli.</div>
+        <div class="ptest-item"><span class="qnum">24.</span> Hindi dapat <span class="ptest-blank"></span> ang personal na gamit tulad ng tuwalya at sepilyo.</div>
+        <div class="ptest-item"><span class="qnum">25.</span> Ang mga kagamitan sa pangangalaga sa sarili ay tinatawag na <span class="ptest-blank"></span> dahil ginagamit ito nang nauubos.</div>
+
+        <div class="ptest-part-title">Bahagi III — Tama o Mali (10 puntos)</div>
+        <div class="ptest-item"><span class="qnum">26.</span> Ang puberty ay karaniwang nagsisimula sa edad na 9 hanggang 12.</div>
+        <div class="ptest-item"><span class="qnum">27.</span> Ang pubertad ay nagtatapos sa edad na 15.</div>
+        <div class="ptest-item"><span class="qnum">28.</span> Ang bukol sa lalamunan o Adam's apple ay lumilitaw sa mga lalaki.</div>
+        <div class="ptest-item"><span class="qnum">29.</span> Dapat magsipilyo ng ngipin nang tatlong beses sa isang araw.</div>
+        <div class="ptest-item"><span class="qnum">30.</span> Kailangang pumunta lamang sa dentista nang isang beses sa isang taon.</div>
+        <div class="ptest-item"><span class="qnum">31.</span> Maaaring ipahiram ang tuwalya at sepilyo sa ibang tao.</div>
+        <div class="ptest-item"><span class="qnum">32.</span> Ang pasador ay ginagamit tuwing may regla ang babae.</div>
+        <div class="ptest-item"><span class="qnum">33.</span> Ipinagbabawal ang pag-eehersisyo habang may regla.</div>
+        <div class="ptest-item"><span class="qnum">34.</span> Dapat iwasan ang paghawak sa sugat pagkatapos matuli.</div>
+        <div class="ptest-item"><span class="qnum">35.</span> Ang lusyon ay ginagamit upang linisin ang ngipin.</div>
+
+        <div class="ptest-part-title">Bahagi IV — Klasipikasyon at Multiple Choice (15 puntos)</div>
+        <p style="font-size:.8rem;color:var(--muted);margin-bottom:8px;">Panuto: Isulat ang B kung pambabae, L kung panlalaki, at P kung pareho.</p>
+        <div class="ptest-item"><span class="qnum">36.</span> Pagsesepilyo ng ngipin pagkatapos kumain, bago matulog, at paggising sa umaga.</div>
+        <div class="ptest-item"><span class="qnum">37.</span> Paglalanggas ng sugat mula sa pagtutuli gamit ang pinakuluang dahon ng bayabas.</div>
+        <div class="ptest-item"><span class="qnum">38.</span> Pagpapalit ng pasador sa tamang oras at pagtatapon nito sa basurahan.</div>
+        <div class="ptest-item"><span class="qnum">39.</span> Pag-eehersisyo araw-araw upang mapanatiling malakas ang katawan.</div>
+        <div class="ptest-item"><span class="qnum">40.</span> Paglalagay ng deodorant sa kilikili.</div>
+        <div class="ptest-item"><span class="qnum">41.</span> Paggamit ng pambatang bra upang hindi bumakat ang paglaki ng dibdib.</div>
+        <div class="ptest-item"><span class="qnum">42.</span> Pagpapatubo ng balbas at bigote.</div>
+        <div class="ptest-item"><span class="qnum">43.</span> Araw-araw na pagliligo upang mapanatiling malinis ang katawan.</div>
+        <div class="ptest-item"><span class="qnum">44.</span> Pagsusuot ng maluwag na palda o shorts pagkatapos matuli.</div>
+        <div class="ptest-item"><span class="qnum">45.</span> Pagputol ng kuko sa paa at kamay.</div>
+        <div class="ptest-item"><span class="qnum">46.</span> Ano ang ginagamit upang tanggalin ang tutuli sa tainga?<div class="ptest-choices">a. Ear Pick &nbsp; b. Nail Cutter &nbsp; c. Suklay &nbsp; d. Lusyon</div></div>
+        <div class="ptest-item"><span class="qnum">47.</span> Ano ang ginagamit upang linisin ang buhok at anit?<div class="ptest-choices">a. Sabon Panligo &nbsp; b. Shampoo &nbsp; c. Deodorant &nbsp; d. Bimpo</div></div>
+        <div class="ptest-item"><span class="qnum">48.</span> Ano ang ipinapahid sa kilikili laban sa amoy?<div class="ptest-choices">a. Lusyon &nbsp; b. Pasador &nbsp; c. Deodorant &nbsp; d. Suklay</div></div>
+        <div class="ptest-item"><span class="qnum">49.</span> Ano ang gamit kung may regla ang babae?<div class="ptest-choices">a. Pasador &nbsp; b. Sepilyo &nbsp; c. Ear Pick &nbsp; d. Nail Cutter</div></div>
+        <div class="ptest-item"><span class="qnum">50.</span> Ano ang tawag sa mga bagay na ginagamit nang nauubos o napapalitan?<div class="ptest-choices">a. Kagamitan &nbsp; b. Konsumible &nbsp; c. Kasangkapan &nbsp; d. Kailangan</div></div>
+      </div>
+
+      <!-- ══════════ ANSWER KEY ══════════ -->
+      <div class="notes-section" id="tab-answerkey">
+        <div class="notes-topic">
+          <div class="notes-topic-title">Bahagi I — Pagtutugma</div>
+          <div class="key-grid">
+            <div class="key-pill">1. <b>b</b></div><div class="key-pill">2. <b>d</b></div><div class="key-pill">3. <b>f</b></div><div class="key-pill">4. <b>h</b></div><div class="key-pill">5. <b>j</b></div>
+            <div class="key-pill">6. <b>i</b></div><div class="key-pill">7. <b>g</b></div><div class="key-pill">8. <b>a</b></div><div class="key-pill">9. <b>e</b></div><div class="key-pill">10. <b>c</b></div>
+          </div>
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">Bahagi II — Punan ang Patlang</div>
+          <div class="key-grid">
+            <div class="key-pill">11. <b>Pagdadalaga / Pagbibinata</b></div><div class="key-pill">12. <b>9 / 12</b></div><div class="key-pill">13. <b>19</b></div><div class="key-pill">14. <b>Pagdadalaga</b></div><div class="key-pill">15. <b>Pagbibinata</b></div>
+            <div class="key-pill">16. <b>Glandula ng Pawis</b></div><div class="key-pill">17. <b>Tatlo</b></div><div class="key-pill">18. <b>Dalawa</b></div><div class="key-pill">19. <b>Tawas/Deodorant</b></div><div class="key-pill">20. <b>Walo</b></div>
+            <div class="key-pill">21. <b>Pasador</b></div><div class="key-pill">22. <b>Maluwag</b></div><div class="key-pill">23. <b>Dahon ng Bayabas</b></div><div class="key-pill">24. <b>Ipahiram</b></div><div class="key-pill">25. <b>Konsumible</b></div>
+          </div>
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">Bahagi III — Tama o Mali</div>
+          <div class="key-grid">
+            <div class="key-pill">26. <b>Tama</b></div><div class="key-pill">27. <b>Mali</b></div><div class="key-pill">28. <b>Tama</b></div><div class="key-pill">29. <b>Tama</b></div><div class="key-pill">30. <b>Mali</b></div>
+            <div class="key-pill">31. <b>Mali</b></div><div class="key-pill">32. <b>Tama</b></div><div class="key-pill">33. <b>Mali</b></div><div class="key-pill">34. <b>Tama</b></div><div class="key-pill">35. <b>Mali</b></div>
+          </div>
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">Bahagi IV — Klasipikasyon at Multiple Choice</div>
+          <div class="key-grid">
+            <div class="key-pill">36. <b>P</b></div><div class="key-pill">37. <b>L</b></div><div class="key-pill">38. <b>B</b></div><div class="key-pill">39. <b>P</b></div><div class="key-pill">40. <b>P</b></div>
+            <div class="key-pill">41. <b>B</b></div><div class="key-pill">42. <b>L</b></div><div class="key-pill">43. <b>P</b></div><div class="key-pill">44. <b>L</b></div><div class="key-pill">45. <b>P</b></div>
+            <div class="key-pill">46. <b>a</b></div><div class="key-pill">47. <b>b</b></div><div class="key-pill">48. <b>c</b></div><div class="key-pill">49. <b>a</b></div><div class="key-pill">50. <b>b</b></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
