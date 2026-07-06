@@ -408,6 +408,22 @@ header .sub { font-size: .75rem; color: var(--muted); margin-top: 1px; }
   background: linear-gradient(135deg, #0c4a6e44, #31288444);
 }
 .notes-header h2 { font-family: 'Fredoka One', cursive; font-size: 1.3rem; color: var(--sky); }
+.notes-header-actions { display: flex; align-items: center; gap: 10px; }
+.print-btn {
+  display: flex; align-items: center; gap: 6px;
+  background: rgba(52,211,153,.12);
+  border: 1.5px solid rgba(52,211,153,.4);
+  color: var(--mint);
+  border-radius: 20px;
+  padding: 7px 14px;
+  font-family: 'Nunito', sans-serif;
+  font-size: .78rem;
+  font-weight: 800;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all .15s;
+}
+.print-btn:hover { background: #34d399; color: #0f172a; border-color: #34d399; }
 .notes-close {
   width: 34px; height: 34px; border-radius: 50%;
   border: 1.5px solid var(--border); background: var(--surface2);
@@ -454,6 +470,199 @@ header .sub { font-size: .75rem; color: var(--muted); margin-top: 1px; }
 .notes-section { display: none; }
 .notes-section.active { display: block; }
 
+/* ── Chapter Summary / Tandaan / Memory boxes ─────────────────── */
+.chapter-summary {
+  background: linear-gradient(135deg, rgba(56,189,248,.1), rgba(167,139,250,.08));
+  border: 1px solid rgba(56,189,248,.25);
+  border-left: 4px solid var(--sky);
+  border-radius: 12px;
+  padding: 14px 18px;
+  margin-bottom: 18px;
+  font-size: .88rem;
+  line-height: 1.65;
+  color: #e2e8f0;
+}
+.tandaan-box {
+  background: rgba(251,191,36,.08);
+  border: 1px solid rgba(251,191,36,.3);
+  border-left: 4px solid var(--amber);
+  border-radius: 12px;
+  padding: 12px 18px;
+  margin: 14px 0;
+  font-size: .86rem;
+  line-height: 1.6;
+  color: #fde68a;
+}
+.tandaan-label {
+  display: block;
+  font-family: 'Fredoka One', cursive;
+  font-size: .8rem;
+  color: var(--amber);
+  letter-spacing: .5px;
+  margin-bottom: 5px;
+}
+.memory-box {
+  background: rgba(52,211,153,.08);
+  border: 1px solid rgba(52,211,153,.3);
+  border-left: 4px solid var(--mint);
+  border-radius: 12px;
+  padding: 12px 18px;
+  margin: 14px 0 22px;
+  font-size: .86rem;
+  line-height: 1.6;
+  color: #a7f3d0;
+}
+.memory-label {
+  display: block;
+  font-family: 'Fredoka One', cursive;
+  font-size: .8rem;
+  color: var(--mint);
+  letter-spacing: .5px;
+  margin-bottom: 5px;
+}
+.compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0 20px;
+  font-size: .82rem;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.compare-table th {
+  background: linear-gradient(135deg, #0c4a6e, #1e1b4b);
+  color: var(--sky);
+  text-align: left;
+  padding: 9px 12px;
+  font-size: .78rem;
+  text-transform: uppercase;
+  letter-spacing: .4px;
+}
+.compare-table td {
+  padding: 9px 12px;
+  border-top: 1px solid var(--border);
+  color: #cbd5e1;
+  vertical-align: top;
+}
+.compare-table tr:nth-child(even) td { background: rgba(255,255,255,.02); }
+
+/* ── Practice test ─────────────────────────────────────────────── */
+.ptest-part-title {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1rem;
+  color: var(--purple);
+  margin: 22px 0 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+.ptest-part-title:first-child { margin-top: 0; }
+.ptest-q {
+  font-size: .87rem;
+  line-height: 1.6;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed rgba(255,255,255,.06);
+  color: #e2e8f0;
+}
+.ptest-q b { color: var(--sky); }
+.ptest-q .opt { display: block; margin: 2px 0 2px 18px; color: #cbd5e1; }
+.ptest-bank {
+  background: rgba(167,139,250,.08);
+  border: 1px solid rgba(167,139,250,.3);
+  border-radius: 10px;
+  padding: 10px 16px;
+  margin-bottom: 14px;
+  font-size: .82rem;
+  color: #ddd6fe;
+  line-height: 1.6;
+}
+
+/* ── Answer key ─────────────────────────────────────────────────── */
+.key-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.key-pill {
+  background: rgba(56,189,248,.1);
+  border: 1px solid rgba(56,189,248,.25);
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: .78rem;
+  color: #cbd5e1;
+}
+.key-pill b { color: #34d399; }
+
+/* ── Print / Save-as-PDF styles ──────────────────────────────────
+   By default everything is hidden from print. When body carries
+   .printing-test, only #print-area (a light-themed clone of the
+   Practice Test + Answer Key) is shown, laid out for paper. ──── */
+@media print {
+  body * { visibility: hidden; }
+  #print-area, #print-area * { visibility: visible; }
+  #print-area {
+    display: block !important;
+    position: absolute; top: 0; left: 0; width: 100%;
+    background: #fff; color: #1e293b;
+    font-family: 'Helvetica', Arial, sans-serif;
+    font-size: 10.5pt;
+    line-height: 1.5;
+  }
+  #print-area .p-cover { text-align: center; padding-top: 40px; }
+  #print-area .p-cover .p-icon { font-size: 34pt; }
+  #print-area .p-cover h1 { font-size: 19pt; color: #0369a1; margin: 8px 0 4px; }
+  #print-area .p-cover .p-sub { font-size: 10.5pt; color: #475569; margin-bottom: 20px; }
+  #print-area .p-info-box {
+    border: 1.5px solid #94a3b8; border-radius: 10px;
+    max-width: 460px; margin: 0 auto 20px; padding: 14px 20px;
+    text-align: left; font-size: 10pt;
+  }
+  #print-area .p-info-box div { margin: 6px 0; border-bottom: 1px dotted #cbd5e1; padding-bottom: 6px; }
+  #print-area .p-instructions {
+    max-width: 460px; margin: 0 auto; text-align: left;
+    background: #f0f9ff; border: 1px solid #7dd3fc; border-radius: 10px;
+    padding: 12px 18px; font-size: 9.5pt; color: #334155;
+  }
+  #print-area h2.p-part-title {
+    font-size: 12.5pt; color: #fff;
+    background: linear-gradient(135deg, #0369a1, #4338ca) !important;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    padding: 6px 12px; border-radius: 7px; margin: 18px 0 10px;
+    page-break-after: avoid;
+  }
+  #print-area .p-bank {
+    background: #f5f3ff !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    border: 1px solid #c4b5fd; border-radius: 8px; padding: 8px 14px;
+    margin-bottom: 12px; font-size: 9.5pt; color: #4c1d95;
+  }
+  #print-area .p-q {
+    margin-bottom: 8px; padding-bottom: 8px;
+    border-bottom: 1px dotted #e2e8f0; font-size: 10pt;
+    page-break-inside: avoid; color: #1e293b;
+  }
+  #print-area .p-q b { color: #0369a1; }
+  #print-area .p-q .p-blank { display: inline-block; min-width: 65px; border-bottom: 1px solid #64748b; }
+  #print-area .p-q .p-opt { display: block; margin: 2px 0 0 20px; color: #334155; }
+  #print-area .p-break { page-break-before: always; }
+  #print-area .p-key-part-title {
+    font-size: 11pt; color: #0369a1; font-weight: bold;
+    margin: 14px 0 8px; border-bottom: 2px solid #0369a1; padding-bottom: 4px;
+  }
+  #print-area .p-key-grid {
+    display: grid; grid-template-columns: repeat(5, 1fr);
+    gap: 5px 8px; margin-bottom: 14px;
+  }
+  #print-area .p-key-pill {
+    background: #ecfdf5 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    border: 1px solid #6ee7b7; border-radius: 6px;
+    padding: 4px 8px; font-size: 8.5pt; color: #065f46;
+  }
+  #print-area .p-key-pill b { color: #047857; }
+  @page { size: letter; margin: 1.5cm 1.8cm; }
+}
+#print-area { display: none; }
+
 </style>
 </head>
 <body>
@@ -466,7 +675,7 @@ header .sub { font-size: .75rem; color: var(--muted); margin-top: 1px; }
   </div>
   <div class="header-controls">
     <div class="score-pill">⭐ <span id="score-val">0</span> / <span id="total-val">0</span></div>
-    <button class="audio-btn" id="notes-toggle" title="Study Notes" onclick="document.getElementById('notes-overlay').classList.add('show')">📖</button>
+    <button class="audio-btn" id="notes-toggle" title="Open Reviewer" onclick="document.getElementById('notes-overlay').classList.add('show')">📖</button>
     <button class="audio-btn active" id="audio-toggle" title="Toggle Audio">🔊</button>
   </div>
 </header>
@@ -976,6 +1185,14 @@ window.addEventListener('load', () => {
   showMenu();
 });
 
+function printPracticeTest() {
+  document.body.classList.add('printing-test');
+  window.print();
+}
+window.addEventListener('afterprint', () => {
+  document.body.classList.remove('printing-test');
+});
+
 function switchTab(tabId, btn) {
   document.querySelectorAll('.notes-section').forEach(s => s.classList.remove('active'));
   document.querySelectorAll('.notes-tab').forEach(b => b.classList.remove('active'));
@@ -985,115 +1202,395 @@ function switchTab(tabId, btn) {
 
 </script>
 
-<!-- ── Notes Panel ── -->
+
+<!-- ── Reviewer Panel ── -->
 <div class="notes-overlay" id="notes-overlay">
   <div class="notes-panel">
     <div class="notes-header">
-      <h2>📖 Science Study Notes</h2>
-      <button class="notes-close" onclick="document.getElementById('notes-overlay').classList.remove('show')">✕</button>
+      <h2>📖 Science — Full Reviewer</h2>
+      <div class="notes-header-actions">
+        <button class="print-btn" onclick="printPracticeTest()" title="Print or Save the Practice Test &amp; Answer Key as PDF">🖨️ Print Test &amp; Key</button>
+        <button class="notes-close" onclick="document.getElementById('notes-overlay').classList.remove('show')">✕</button>
+      </div>
     </div>
     <div class="notes-tabs">
       <button class="notes-tab active" onclick="switchTab('tab-scientists', this)">🧑‍🔬 Scientists</button>
       <button class="notes-tab" onclick="switchTab('tab-inventions', this)">💡 Inventions</button>
       <button class="notes-tab" onclick="switchTab('tab-physical', this)">🧱 Physical Properties</button>
       <button class="notes-tab" onclick="switchTab('tab-chemical', this)">🔥 Chemical Properties</button>
-      <button class="notes-tab" onclick="switchTab('tab-tf', this)">✅ True or False</button>
+      <button class="notes-tab" onclick="switchTab('tab-ptest', this)">📝 Practice Test</button>
+      <button class="notes-tab" onclick="switchTab('tab-key', this)">✅ Answer Key</button>
     </div>
     <div class="notes-body">
 
+      <!-- ══════════ CHAPTER 1: SCIENTISTS ══════════ -->
       <div class="notes-section active" id="tab-scientists">
-        <div class="notes-topic">
-          <div class="notes-topic-title">🧑‍🔬 Men and Women of Science</div>
-          <div class="notes-item"><span class="notes-term">Arturo P. Alcaraz</span><span class="notes-def">Father of Geothermal Energy Development in the Philippines</span></div>
-          <div class="notes-item"><span class="notes-term">Julian A. Banzon</span><span class="notes-def">Biochemist; researched alternative fuels from coconut and sugarcane</span></div>
-          <div class="notes-item"><span class="notes-term">Fe V. del Mundo</span><span class="notes-def">First Filipina National Scientist; pioneer in pediatric medicine</span></div>
-          <div class="notes-item"><span class="notes-term">Geminiano T. de Ocampo</span><span class="notes-def">Father of Modern Philippine Ophthalmology (eye care)</span></div>
-          <div class="notes-item"><span class="notes-term">Clara Y. Lim-Sylianco</span><span class="notes-def">Chemist who studied mutagens and DNA repair</span></div>
-          <div class="notes-item"><span class="notes-term">Gregorio Y. Zara</span><span class="notes-def">Father of Videoconferencing; invented the two-way videophone</span></div>
-          <div class="notes-item"><span class="notes-term">Aisa Mijeno</span><span class="notes-def">Engineer who invented the SALt saltwater lamp</span></div>
-          <div class="notes-item"><span class="notes-term">Aletta T. Yñiguez</span><span class="notes-def">Marine biologist helping BFAR and DENR with resource management</span></div>
-          <div class="notes-item"><span class="notes-term">Marie Curie</span><span class="notes-def">Discovered radium and polonium; pioneer in radiation therapy</span></div>
-          <div class="notes-item"><span class="notes-term">Charles Darwin</span><span class="notes-def">Father of Evolution; theory of natural selection</span></div>
-          <div class="notes-item"><span class="notes-term">Isaac Newton</span><span class="notes-def">Three Laws of Motion, Law of Universal Gravitation, calculus</span></div>
-          <div class="notes-item"><span class="notes-term">Albert Einstein</span><span class="notes-def">Developed the Theory of Relativity</span></div>
-          <div class="notes-item"><span class="notes-term">Ada Lovelace</span><span class="notes-def">World's first computer programmer</span></div>
-          <div class="notes-item"><span class="notes-term">Louis Pasteur</span><span class="notes-def">Developed pasteurization and vaccines for rabies and anthrax</span></div>
-          <div class="notes-item"><span class="notes-term">Katie Bouman</span><span class="notes-def">Developed the algorithm for the first image of a black hole</span></div>
-          <div class="notes-item"><span class="notes-term">Charles Kao</span><span class="notes-def">Nobel Prize winner for work on fiber-optic light transmission</span></div>
-          <div class="notes-item"><span class="notes-term">Traits of a Scientist</span><span class="notes-def">Curiosity, attention to detail, patience, critical thinking, courage, persistence, good communication skills</span></div>
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> Many <strong>Filipino and world scientists</strong> have made important contributions in fields like medicine, energy, chemistry, and technology. Filipino scientists such as <strong>Arturo P. Alcaraz, Julian A. Banzon, Fe V. del Mundo, Geminiano T. de Ocampo, Clara Y. Lim-Sylianco, Gregorio Y. Zara, Aisa Mijeno,</strong> and <strong>Aletta T. Yñiguez</strong> are honored for their work at home and abroad, while world scientists like <strong>Marie Curie, Charles Darwin, Isaac Newton, Albert Einstein, Ada Lovelace, Louis Pasteur, Katie Bouman,</strong> and <strong>Charles Kao</strong> changed how we understand our world. A good scientist shows <strong>curiosity, attention to detail, patience, critical thinking, courage, persistence,</strong> and <strong>good communication skills</strong>.
+        </div>
+
+        <table class="compare-table">
+          <tr><th>Filipino Scientist</th><th>Known For</th></tr>
+          <tr><td>🌋 Arturo P. Alcaraz</td><td>Father of Geothermal Energy Development in the Philippines</td></tr>
+          <tr><td>🧪 Julian A. Banzon</td><td>Biochemist; alternative fuels from coconut and sugarcane</td></tr>
+          <tr><td>👶 Fe V. del Mundo</td><td>First Filipina National Scientist; pediatric medicine pioneer</td></tr>
+          <tr><td>👁️ Geminiano T. de Ocampo</td><td>Father of Modern Philippine Ophthalmology</td></tr>
+          <tr><td>🧬 Clara Y. Lim-Sylianco</td><td>Chemist; studied mutagens and DNA repair</td></tr>
+          <tr><td>📹 Gregorio Y. Zara</td><td>Father of Videoconferencing; two-way videophone</td></tr>
+          <tr><td>💡 Aisa Mijeno</td><td>Engineer; invented the SALt saltwater lamp</td></tr>
+          <tr><td>🌊 Aletta T. Yñiguez</td><td>Marine biologist; helps BFAR and DENR manage resources</td></tr>
+        </table>
+
+        <table class="compare-table">
+          <tr><th>World Scientist</th><th>Known For</th></tr>
+          <tr><td>☢️ Marie Curie</td><td>Discovered radium and polonium; radiation therapy pioneer</td></tr>
+          <tr><td>🐦 Charles Darwin</td><td>Father of Evolution; theory of natural selection</td></tr>
+          <tr><td>🍎 Isaac Newton</td><td>Three Laws of Motion, Universal Gravitation, calculus</td></tr>
+          <tr><td>🌌 Albert Einstein</td><td>Developed the Theory of Relativity</td></tr>
+          <tr><td>💻 Ada Lovelace</td><td>World's first computer programmer</td></tr>
+          <tr><td>💉 Louis Pasteur</td><td>Pasteurization; vaccines for rabies and anthrax</td></tr>
+          <tr><td>🕳️ Katie Bouman</td><td>Algorithm for the first image of a black hole</td></tr>
+          <tr><td>🔦 Charles Kao</td><td>Nobel Prize for fiber-optic light transmission</td></tr>
+        </table>
+
+        <div class="tandaan-box">
+          <span class="tandaan-label">📌 REMEMBER</span>
+          A scientist isn't just someone in a lab coat — it's anyone who studies problems with <strong>curiosity, patience,</strong> and <strong>critical thinking</strong>, then shares what they learn clearly with others.
+        </div>
+
+        <div class="memory-box">
+          <span class="memory-label">🧠 Memory Trick</span>
+          Group the scientists by <strong>field</strong> to remember them faster: <strong>Health</strong> (del Mundo, Pasteur), <strong>Energy</strong> (Alcaraz, Banzon), <strong>Technology</strong> (Zara, Lovelace, Bouman, Kao), <strong>Nature</strong> (Darwin, Yñiguez), and <strong>Physics</strong> (Newton, Einstein). Sorting by category beats memorizing a long list!
         </div>
       </div>
 
+      <!-- ══════════ CHAPTER 2: INVENTIONS ══════════ -->
       <div class="notes-section" id="tab-inventions">
-        <div class="notes-topic">
-          <div class="notes-topic-title">💡 Science Inventions</div>
-          <div class="notes-item"><span class="notes-term">Invention</span><span class="notes-def">A new device, method, or concept created to solve problems</span></div>
-          <div class="notes-item"><span class="notes-term">Patent</span><span class="notes-def">Government license that protects an inventor's creation</span></div>
-          <div class="notes-item"><span class="notes-term">Wheel</span><span class="notes-def">Circular object attached beneath vehicles to help them move</span></div>
-          <div class="notes-item"><span class="notes-term">Wright Brothers</span><span class="notes-def">Orville and Wilbur; invented the first self-powered aircraft</span></div>
-          <div class="notes-item"><span class="notes-term">Stethoscope</span><span class="notes-def">Instrument used to detect sounds from the human body</span></div>
-          <div class="notes-item"><span class="notes-term">Dr. Fe del Mundo</span><span class="notes-def">Invented a bamboo incubator for newborn babies</span></div>
-          <div class="notes-item"><span class="notes-term">Alexander Graham Bell</span><span class="notes-def">Invented the telephone</span></div>
-          <div class="notes-item"><span class="notes-term">Ramon Barba</span><span class="notes-def">Boosted mango production using potassium nitrate spray</span></div>
-          <div class="notes-item"><span class="notes-term">Carvey Ehren Maigue</span><span class="notes-def">Developed solar window panels made from food waste</span></div>
-          <div class="notes-item"><span class="notes-term">Diosdado Banatao</span><span class="notes-def">Developed the first 10-Mbit Ethernet CMOS chip</span></div>
-          <div class="notes-item"><span class="notes-term">Dr. Abelardo Aguilar</span><span class="notes-def">Discovered erythromycin, an antibiotic</span></div>
-          <div class="notes-item"><span class="notes-term">Alexander Fleming</span><span class="notes-def">Discovered penicillin, the first antibiotic (1928)</span></div>
-          <div class="notes-item"><span class="notes-term">Jonas Salk</span><span class="notes-def">Developed the first successful polio vaccine (1955)</span></div>
-          <div class="notes-item"><span class="notes-term">Propeller</span><span class="notes-def">Propels motorboats, yachts, and ships over water</span></div>
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> An <strong>invention</strong> is a new device, method, or concept created to solve a problem, and a <strong>patent</strong> is a government license that protects an inventor's work from being copied. Inventions have shaped transportation (wheel, propeller, aircraft), communication (telephone, videophone), medicine (stethoscope, incubator, antibiotics, vaccines), and modern technology (Ethernet chip, solar panels from food waste).
+        </div>
+
+        <table class="compare-table">
+          <tr><th>Invention</th><th>Inventor</th></tr>
+          <tr><td>🛞 Wheel</td><td>Ancient invention; helps vehicles move over the ground</td></tr>
+          <tr><td>✈️ First self-powered aircraft</td><td>Wright Brothers (Orville and Wilbur)</td></tr>
+          <tr><td>🩺 Stethoscope</td><td>Used by doctors to detect body sounds</td></tr>
+          <tr><td>🍼 Bamboo incubator</td><td>Dr. Fe del Mundo</td></tr>
+          <tr><td>☎️ Telephone</td><td>Alexander Graham Bell</td></tr>
+          <tr><td>🥭 Off-season mango induction</td><td>Ramon Barba</td></tr>
+          <tr><td>☀️ Solar window panels (food waste)</td><td>Carvey Ehren Maigue</td></tr>
+          <tr><td>💻 10-Mbit Ethernet CMOS chip</td><td>Diosdado Banatao</td></tr>
+          <tr><td>💊 Erythromycin (antibiotic)</td><td>Dr. Abelardo Aguilar</td></tr>
+          <tr><td>💊 Penicillin (1928)</td><td>Alexander Fleming</td></tr>
+          <tr><td>💉 Polio vaccine (1955)</td><td>Jonas Salk</td></tr>
+          <tr><td>⛴️ Propeller</td><td>Propels motorboats, yachts, and ships over water</td></tr>
+        </table>
+
+        <div class="tandaan-box">
+          <span class="tandaan-label">📌 REMEMBER</span>
+          A patent <strong>protects</strong> an invention — it does <strong>not</strong> allow other people to freely copy it. Getting a patent is how inventors keep credit and control over their own ideas.
+        </div>
+
+        <div class="memory-box">
+          <span class="memory-label">🧠 Memory Trick</span>
+          Sort inventions by what they do: <strong>Move</strong> (wheel, propeller, aircraft), <strong>Talk</strong> (telephone), <strong>Heal</strong> (stethoscope, incubator, penicillin, erythromycin, polio vaccine), and <strong>Power</strong> (solar panels, Ethernet chip). Picture the job first, then the name follows!
         </div>
       </div>
 
+      <!-- ══════════ CHAPTER 3: PHYSICAL PROPERTIES ══════════ -->
       <div class="notes-section" id="tab-physical">
-        <div class="notes-topic">
-          <div class="notes-topic-title">🧱 Physical Properties of Materials</div>
-          <div class="notes-item"><span class="notes-term">Physical Property</span><span class="notes-def">A characteristic that can be observed or measured</span></div>
-          <div class="notes-item"><span class="notes-term">Hardness</span><span class="notes-def">Ability of a material to resist scratching</span></div>
-          <div class="notes-item"><span class="notes-term">Brittleness</span><span class="notes-def">Tendency of a material to break, crack, or snap easily</span></div>
-          <div class="notes-item"><span class="notes-term">Malleability</span><span class="notes-def">Ease with which a material can be hammered or rolled into thin sheets</span></div>
-          <div class="notes-item"><span class="notes-term">Elasticity</span><span class="notes-def">Ability of a material to return to its original shape after being stretched or compressed</span></div>
-          <div class="notes-item"><span class="notes-term">Melting Point</span><span class="notes-def">Temperature at which a solid changes into a liquid (ice = 0°C)</span></div>
-          <div class="notes-item"><span class="notes-term">Boiling Point</span><span class="notes-def">Temperature at which a liquid turns into a gas (water = 100°C)</span></div>
-          <div class="notes-item"><span class="notes-term">Most Malleable Metal</span><span class="notes-def">Gold</span></div>
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> <strong>Physical properties</strong> are characteristics of a material that can be observed or measured <em>without</em> changing what the material is made of — things like hardness, brittleness, malleability, elasticity, melting point, and boiling point.
+        </div>
+
+        <table class="compare-table">
+          <tr><th>Property</th><th>Meaning</th><th>Example</th></tr>
+          <tr><td>💎 Hardness</td><td>Ability to resist scratching</td><td>Diamond</td></tr>
+          <tr><td>💥 Brittleness</td><td>Tendency to break, crack, or snap easily</td><td>Graphite (pencil lead), glass</td></tr>
+          <tr><td>🥇 Malleability</td><td>Ease of being hammered or rolled into thin sheets</td><td>Gold (most malleable metal)</td></tr>
+          <tr><td>🎗️ Elasticity</td><td>Returns to original shape after stretching or bending</td><td>Rubber band, spring</td></tr>
+          <tr><td>🧊 Melting Point</td><td>Temperature a solid turns into a liquid</td><td>Ice → 0°C</td></tr>
+          <tr><td>💨 Boiling Point</td><td>Temperature a liquid turns into a gas</td><td>Water → 100°C</td></tr>
+        </table>
+
+        <div class="tandaan-box">
+          <span class="tandaan-label">📌 REMEMBER</span>
+          Don't confuse <strong>brittleness</strong> (breaks easily) with <strong>elasticity</strong> (bounces back) — they describe opposite reactions to force! And always double-check: ice melts at <strong>0°C</strong>, water boils at <strong>100°C</strong>.
+        </div>
+
+        <div class="memory-box">
+          <span class="memory-label">🧠 Memory Trick</span>
+          "A <strong>H</strong>ard rock is <strong>B</strong>rittle, but <strong>M</strong>alleable gold bends and <strong>E</strong>lastic rubber snaps back — until it <strong>M</strong>elts or <strong>B</strong>oils away!" The bolded letters spell out <strong>H-B-M-E-M-B</strong>, the six physical properties in order.
         </div>
       </div>
 
+      <!-- ══════════ CHAPTER 4: CHEMICAL PROPERTIES ══════════ -->
       <div class="notes-section" id="tab-chemical">
-        <div class="notes-topic">
-          <div class="notes-topic-title">🔥 Chemical Properties of Materials</div>
-          <div class="notes-item"><span class="notes-term">Chemical Property</span><span class="notes-def">Characteristic observable when a material undergoes a chemical reaction</span></div>
-          <div class="notes-item"><span class="notes-term">Combustibility</span><span class="notes-def">A material's tendency to ignite and sustain burning</span></div>
-          <div class="notes-item"><span class="notes-term">Flammability</span><span class="notes-def">Ability of an object to burn in the presence of oxygen</span></div>
-          <div class="notes-item"><span class="notes-term">Reactivity</span><span class="notes-def">Ability of a material to react with another substance to form something new</span></div>
-          <div class="notes-item"><span class="notes-term">Corrosion</span><span class="notes-def">Process that produces rust when iron reacts with oxygen</span></div>
-          <div class="notes-item"><span class="notes-term">Toxicity</span><span class="notes-def">Degree to which a material can damage a living organism</span></div>
-          <div class="notes-item"><span class="notes-term">Biodegradability</span><span class="notes-def">Ability of an object to decompose due to microorganisms</span></div>
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> <strong>Chemical properties</strong> only become observable when a material <em>undergoes a chemical reaction</em> and turns into something new — unlike physical properties, you can't see a chemical property just by looking at or handling the material.
+        </div>
+
+        <table class="compare-table">
+          <tr><th>Property</th><th>Meaning</th><th>Example</th></tr>
+          <tr><td>🔥 Combustibility</td><td>Tendency to ignite and sustain burning</td><td>Wood, paper</td></tr>
+          <tr><td>⛽ Flammability</td><td>Ability to burn in the presence of oxygen</td><td>Gasoline, kerosene</td></tr>
+          <tr><td>⚗️ Reactivity</td><td>Reacts with another substance to form something new</td><td>Baking soda + vinegar</td></tr>
+          <tr><td>🦠 Corrosion</td><td>Happens when iron reacts with oxygen, producing rust</td><td>Rusty nail</td></tr>
+          <tr><td>☠️ Toxicity</td><td>Degree to which a material can harm a living organism</td><td>Pesticides, cleaners</td></tr>
+          <tr><td>🍂 Biodegradability</td><td>Decomposes due to microorganisms</td><td>Fruit peelings, dried leaves</td></tr>
+        </table>
+
+        <div class="tandaan-box">
+          <span class="tandaan-label">📌 REMEMBER</span>
+          If a material only changes when it <strong>reacts and becomes something new</strong> (like burning, rusting, or rotting), that's a <strong>chemical</strong> property. If you can observe it without any reaction (like color or shape), that's <strong>physical</strong>.
+        </div>
+
+        <div class="memory-box">
+          <span class="memory-label">🧠 Memory Trick</span>
+          Picture a trash can: things that <strong>burn</strong> (combustibility, flammability), things that <strong>rust or react</strong> (corrosion, reactivity), things that are <strong>dangerous</strong> (toxicity), and things that <strong>rot away naturally</strong> (biodegradability). Four buckets, six words — much easier to sort!
         </div>
       </div>
 
-      <div class="notes-section" id="tab-tf">
+      <!-- ══════════ PRACTICE TEST ══════════ -->
+      <div class="notes-section" id="tab-ptest">
+        <p style="font-size:.82rem;color:var(--muted);margin-bottom:14px;">📝 A complete practice test with <strong>60 items</strong> covering all four chapters.</p>
+
+        <div class="ptest-part-title">Part I — Matching Type (Scientists)</div>
+        <div class="ptest-bank">
+          <strong>Word Bank:</strong> (A) Ada Lovelace &nbsp; (B) Aisa Mijeno &nbsp; (C) Albert Einstein &nbsp; (D) Aletta T. Yñiguez &nbsp; (E) Arturo P. Alcaraz &nbsp; (F) Charles Darwin &nbsp; (G) Clara Y. Lim-Sylianco &nbsp; (H) Fe V. del Mundo &nbsp; (I) Geminiano T. de Ocampo &nbsp; (J) Gregorio Y. Zara &nbsp; (K) Isaac Newton &nbsp; (L) Julian A. Banzon &nbsp; (M) Katie Bouman &nbsp; (N) Louis Pasteur &nbsp; (O) Marie Curie
+        </div>
+        <div class="ptest-q"><b>1.</b> Known as the Philippines' Father of Geothermal Energy Development. ____</div>
+        <div class="ptest-q"><b>2.</b> Discovered radium and polonium, paving the way for radiation therapy. ____</div>
+        <div class="ptest-q"><b>3.</b> World's first computer programmer, who worked on the Analytical Engine. ____</div>
+        <div class="ptest-q"><b>4.</b> Filipino biochemist who researched alternative fuels from coconut and sugarcane. ____</div>
+        <div class="ptest-q"><b>5.</b> First Filipina National Scientist, known for pioneering work in pediatric medicine. ____</div>
+        <div class="ptest-q"><b>6.</b> Proposed the theory of evolution through natural selection. ____</div>
+        <div class="ptest-q"><b>7.</b> Formulated the Three Laws of Motion and the Law of Universal Gravitation. ____</div>
+        <div class="ptest-q"><b>8.</b> Filipino engineer who invented the SALt saltwater-powered lamp. ____</div>
+        <div class="ptest-q"><b>9.</b> Filipina chemist who studied mutagens and DNA repair. ____</div>
+        <div class="ptest-q"><b>10.</b> Father of Modern Philippine Ophthalmology, who founded an eye hospital. ____</div>
+        <div class="ptest-q"><b>11.</b> Developed the Theory of Relativity. ____</div>
+        <div class="ptest-q"><b>12.</b> Invented the two-way videophone and is called the Father of Videoconferencing. ____</div>
+        <div class="ptest-q"><b>13.</b> Developed pasteurization and vaccines for rabies and anthrax. ____</div>
+        <div class="ptest-q"><b>14.</b> Marine biologist who helps BFAR and DENR manage coastal resources. ____</div>
+        <div class="ptest-q"><b>15.</b> Developed the algorithm that produced the first-ever image of a black hole. ____</div>
+
+        <div class="ptest-part-title">Part II — Fill in the Blank (Inventions)</div>
+        <div class="ptest-q"><b>16.</b> A(n) __________ is a government license that protects an inventor's creation from being copied.</div>
+        <div class="ptest-q"><b>17.</b> The __________ is a circular object attached beneath vehicles to help them move.</div>
+        <div class="ptest-q"><b>18.</b> The __________ invented the first self-powered aircraft.</div>
+        <div class="ptest-q"><b>19.</b> Doctors use a __________ to detect sounds produced by the human body.</div>
+        <div class="ptest-q"><b>20.</b> Dr. Fe del Mundo invented a __________ to help regulate the body temperature of newborn babies.</div>
+        <div class="ptest-q"><b>21.</b> __________ invented the telephone.</div>
+        <div class="ptest-q"><b>22.</b> __________ developed a technique using potassium nitrate spray to boost mango production.</div>
+        <div class="ptest-q"><b>23.</b> __________ developed solar window panels made from food waste.</div>
+        <div class="ptest-q"><b>24.</b> __________ developed the first 10-Mbit Ethernet CMOS chip.</div>
+        <div class="ptest-q"><b>25.</b> Dr. Abelardo Aguilar discovered __________, an antibiotic.</div>
+        <div class="ptest-q"><b>26.</b> __________ discovered penicillin in 1928.</div>
+        <div class="ptest-q"><b>27.</b> __________ developed the first successful polio vaccine in 1955.</div>
+        <div class="ptest-q"><b>28.</b> The __________ propels motorboats, yachts, and ships over water.</div>
+        <div class="ptest-q"><b>29.</b> A(n) __________ is a new device, method, or concept created to solve a problem.</div>
+        <div class="ptest-q"><b>30.</b> Alexander Graham Bell's invention was inspired partly by his deaf wife and __________.</div>
+
+        <div class="ptest-part-title">Part III — True or False</div>
+        <div class="ptest-q"><b>31.</b> Arturo P. Alcaraz is known as the Philippines' Father of Geothermal Energy Development.</div>
+        <div class="ptest-q"><b>32.</b> Isaac Newton is celebrated as the world's first computer programmer.</div>
+        <div class="ptest-q"><b>33.</b> Gregorio Y. Zara invented the first two-way videophone.</div>
+        <div class="ptest-q"><b>34.</b> A patent allows anyone to freely copy an inventor's creation.</div>
+        <div class="ptest-q"><b>35.</b> Alexander Graham Bell invented the telephone.</div>
+        <div class="ptest-q"><b>36.</b> A stethoscope is used by doctors to detect sounds produced by the human body.</div>
+        <div class="ptest-q"><b>37.</b> Hardness is the ability of a material to return to its original shape after being stretched.</div>
+        <div class="ptest-q"><b>38.</b> Gold is the most malleable metal.</div>
+        <div class="ptest-q"><b>39.</b> The boiling point of water is 0°C.</div>
+        <div class="ptest-q"><b>40.</b> Elasticity is the ability of a material to return to its original size and shape after being stretched or compressed.</div>
+        <div class="ptest-q"><b>41.</b> Combustibility is a chemical property of materials.</div>
+        <div class="ptest-q"><b>42.</b> Rust is a product of corrosion.</div>
+        <div class="ptest-q"><b>43.</b> Toxicity refers to how easily a material can be hammered into thin sheets.</div>
+        <div class="ptest-q"><b>44.</b> Fruit peelings and dried leaves are biodegradable materials.</div>
+        <div class="ptest-q"><b>45.</b> Gasoline is an example of a flammable material.</div>
+
+        <div class="ptest-part-title">Part IV — Multiple Choice (Physical &amp; Chemical Properties)</div>
+        <div class="ptest-q"><b>46.</b> Which property describes a material's ability to resist scratching?<span class="opt">a) Elasticity &nbsp; b) Hardness &nbsp; c) Brittleness &nbsp; d) Toxicity</span></div>
+        <div class="ptest-q"><b>47.</b> Glass breaking easily when dropped shows which property?<span class="opt">a) Malleability &nbsp; b) Elasticity &nbsp; c) Brittleness &nbsp; d) Reactivity</span></div>
+        <div class="ptest-q"><b>48.</b> Which metal is known as the most malleable?<span class="opt">a) Iron &nbsp; b) Copper &nbsp; c) Gold &nbsp; d) Silver</span></div>
+        <div class="ptest-q"><b>49.</b> A rubber band returning to its original shape after stretching demonstrates:<span class="opt">a) Hardness &nbsp; b) Elasticity &nbsp; c) Brittleness &nbsp; d) Combustibility</span></div>
+        <div class="ptest-q"><b>50.</b> At what temperature does ice melt?<span class="opt">a) 100°C &nbsp; b) 50°C &nbsp; c) 0°C &nbsp; d) -10°C</span></div>
+        <div class="ptest-q"><b>51.</b> At what temperature does water boil?<span class="opt">a) 0°C &nbsp; b) 50°C &nbsp; c) 75°C &nbsp; d) 100°C</span></div>
+        <div class="ptest-q"><b>52.</b> Which of these is a physical property?<span class="opt">a) Flammability &nbsp; b) Reactivity &nbsp; c) Hardness &nbsp; d) Toxicity</span></div>
+        <div class="ptest-q"><b>53.</b> Which of these is a chemical property?<span class="opt">a) Malleability &nbsp; b) Combustibility &nbsp; c) Elasticity &nbsp; d) Brittleness</span></div>
+        <div class="ptest-q"><b>54.</b> Rust forming on iron is an example of:<span class="opt">a) Melting &nbsp; b) Corrosion &nbsp; c) Elasticity &nbsp; d) Hardness</span></div>
+        <div class="ptest-q"><b>55.</b> A material's tendency to ignite and sustain burning is called:<span class="opt">a) Toxicity &nbsp; b) Reactivity &nbsp; c) Combustibility &nbsp; d) Biodegradability</span></div>
+        <div class="ptest-q"><b>56.</b> Which best describes reactivity?<span class="opt">a) Ability to be hammered into sheets &nbsp; b) Ability to react with another substance to form something new &nbsp; c) Ability to resist scratching &nbsp; d) Ability to decompose</span></div>
+        <div class="ptest-q"><b>57.</b> Fruit peelings and dried leaves are examples of materials that are:<span class="opt">a) Flammable &nbsp; b) Toxic &nbsp; c) Biodegradable &nbsp; d) Malleable</span></div>
+        <div class="ptest-q"><b>58.</b> The degree to which a material can harm a living organism is called:<span class="opt">a) Toxicity &nbsp; b) Reactivity &nbsp; c) Corrosion &nbsp; d) Elasticity</span></div>
+        <div class="ptest-q"><b>59.</b> Gasoline catching fire easily shows that it is:<span class="opt">a) Biodegradable &nbsp; b) Flammable &nbsp; c) Malleable &nbsp; d) Elastic</span></div>
+        <div class="ptest-q"><b>60.</b> Which property can be observed or measured without changing the material into a new substance?<span class="opt">a) Chemical property &nbsp; b) Physical property &nbsp; c) Reactivity &nbsp; d) Combustibility</span></div>
+      </div>
+
+      <!-- ══════════ ANSWER KEY ══════════ -->
+      <div class="notes-section" id="tab-key">
         <div class="notes-topic">
-          <div class="notes-topic-title">✅ True or False Answers</div>
-          <div class="notes-item"><span class="notes-term" style="color:#22c55e">TRUE</span><span class="notes-def">Arturo P. Alcaraz is the Father of Geothermal Energy Development.</span></div>
-          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">Isaac Newton did not program computers. → Ada Lovelace is the first computer programmer.</span></div>
-          <div class="notes-item"><span class="notes-term" style="color:#22c55e">TRUE</span><span class="notes-def">Gregorio Y. Zara invented the first two-way videophone.</span></div>
-          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">A patent protects, it does not allow free copying, of an invention.</span></div>
-          <div class="notes-item"><span class="notes-term" style="color:#22c55e">TRUE</span><span class="notes-def">Alexander Graham Bell invented the telephone.</span></div>
-          <div class="notes-item"><span class="notes-term" style="color:#22c55e">TRUE</span><span class="notes-def">A stethoscope detects sounds from the human body.</span></div>
-          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">That description is elasticity, not hardness.</span></div>
-          <div class="notes-item"><span class="notes-term" style="color:#22c55e">TRUE</span><span class="notes-def">Gold is the most malleable metal.</span></div>
-          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">Water boils at 100°C, not 0°C.</span></div>
-          <div class="notes-item"><span class="notes-term" style="color:#22c55e">TRUE</span><span class="notes-def">Elasticity is returning to original shape after stretching.</span></div>
-          <div class="notes-item"><span class="notes-term" style="color:#22c55e">TRUE</span><span class="notes-def">Combustibility is a chemical property.</span></div>
-          <div class="notes-item"><span class="notes-term" style="color:#22c55e">TRUE</span><span class="notes-def">Rust is a product of corrosion.</span></div>
-          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">That description is malleability, not toxicity.</span></div>
-          <div class="notes-item"><span class="notes-term" style="color:#22c55e">TRUE</span><span class="notes-def">Fruit peelings and dried leaves are biodegradable.</span></div>
-          <div class="notes-item"><span class="notes-term" style="color:#22c55e">TRUE</span><span class="notes-def">Gasoline is flammable.</span></div>
+          <div class="notes-topic-title">Part I — Matching Type</div>
+          <div class="key-grid">
+            <div class="key-pill">1. <b>E</b></div><div class="key-pill">2. <b>O</b></div><div class="key-pill">3. <b>A</b></div><div class="key-pill">4. <b>L</b></div><div class="key-pill">5. <b>H</b></div>
+            <div class="key-pill">6. <b>F</b></div><div class="key-pill">7. <b>K</b></div><div class="key-pill">8. <b>B</b></div><div class="key-pill">9. <b>G</b></div><div class="key-pill">10. <b>I</b></div>
+            <div class="key-pill">11. <b>C</b></div><div class="key-pill">12. <b>J</b></div><div class="key-pill">13. <b>N</b></div><div class="key-pill">14. <b>D</b></div><div class="key-pill">15. <b>M</b></div>
+          </div>
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">Part II — Fill in the Blank</div>
+          <div class="key-grid">
+            <div class="key-pill">16. <b>patent</b></div><div class="key-pill">17. <b>wheel</b></div><div class="key-pill">18. <b>Wright Brothers</b></div><div class="key-pill">19. <b>stethoscope</b></div><div class="key-pill">20. <b>bamboo incubator</b></div>
+            <div class="key-pill">21. <b>A.G. Bell</b></div><div class="key-pill">22. <b>Ramon Barba</b></div><div class="key-pill">23. <b>Carvey Maigue</b></div><div class="key-pill">24. <b>D. Banatao</b></div><div class="key-pill">25. <b>erythromycin</b></div>
+            <div class="key-pill">26. <b>A. Fleming</b></div><div class="key-pill">27. <b>Jonas Salk</b></div><div class="key-pill">28. <b>propeller</b></div><div class="key-pill">29. <b>invention</b></div><div class="key-pill">30. <b>mother</b></div>
+          </div>
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">Part III — True or False</div>
+          <div class="key-grid">
+            <div class="key-pill">31. <b>True</b></div><div class="key-pill">32. <b>False</b></div><div class="key-pill">33. <b>True</b></div><div class="key-pill">34. <b>False</b></div><div class="key-pill">35. <b>True</b></div>
+            <div class="key-pill">36. <b>True</b></div><div class="key-pill">37. <b>False</b></div><div class="key-pill">38. <b>True</b></div><div class="key-pill">39. <b>False</b></div><div class="key-pill">40. <b>True</b></div>
+            <div class="key-pill">41. <b>True</b></div><div class="key-pill">42. <b>True</b></div><div class="key-pill">43. <b>False</b></div><div class="key-pill">44. <b>True</b></div><div class="key-pill">45. <b>True</b></div>
+          </div>
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">Part IV — Multiple Choice</div>
+          <div class="key-grid">
+            <div class="key-pill">46. <b>b</b></div><div class="key-pill">47. <b>c</b></div><div class="key-pill">48. <b>c</b></div><div class="key-pill">49. <b>b</b></div><div class="key-pill">50. <b>c</b></div>
+            <div class="key-pill">51. <b>d</b></div><div class="key-pill">52. <b>c</b></div><div class="key-pill">53. <b>b</b></div><div class="key-pill">54. <b>b</b></div><div class="key-pill">55. <b>c</b></div>
+            <div class="key-pill">56. <b>b</b></div><div class="key-pill">57. <b>c</b></div><div class="key-pill">58. <b>a</b></div><div class="key-pill">59. <b>b</b></div><div class="key-pill">60. <b>b</b></div>
+          </div>
         </div>
       </div>
 
     </div>
   </div>
+</div>
+
+<!-- ── Hidden Print Area (Practice Test + Answer Key) ── -->
+<div id="print-area">
+
+  <div class="p-cover">
+    <div class="p-icon">🔬</div>
+    <h1>Grade 4 Science — Practice Test</h1>
+    <div class="p-sub">Men and Women of Science · Inventions · Physical &amp; Chemical Properties</div>
+    <div class="p-info-box">
+      <div><strong>Name:</strong> _____________________________________</div>
+      <div><strong>Section:</strong> ___________________ &nbsp; <strong>Date:</strong> ___________________</div>
+      <div><strong>Score:</strong> _______ / 60</div>
+    </div>
+    <div class="p-instructions">
+      <strong>Instructions:</strong> Read each item carefully. Write your answer on the blank provided (Parts I–III), or write the letter of the correct answer (Part IV). Good luck!
+    </div>
+  </div>
+
+  <div class="p-break">
+  <h2 class="p-part-title">Part I — Matching Type (Scientists)</h2>
+  <div class="p-bank">
+    <strong>Word Bank:</strong> (A) Ada Lovelace &nbsp; (B) Aisa Mijeno &nbsp; (C) Albert Einstein &nbsp; (D) Aletta T. Yñiguez &nbsp; (E) Arturo P. Alcaraz &nbsp; (F) Charles Darwin &nbsp; (G) Clara Y. Lim-Sylianco &nbsp; (H) Fe V. del Mundo &nbsp; (I) Geminiano T. de Ocampo &nbsp; (J) Gregorio Y. Zara &nbsp; (K) Isaac Newton &nbsp; (L) Julian A. Banzon &nbsp; (M) Katie Bouman &nbsp; (N) Louis Pasteur &nbsp; (O) Marie Curie
+  </div>
+  <div class="p-q"><b>1.</b> Known as the Philippines' Father of Geothermal Energy Development. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>2.</b> Discovered radium and polonium, paving the way for radiation therapy. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>3.</b> World's first computer programmer, who worked on the Analytical Engine. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>4.</b> Filipino biochemist who researched alternative fuels from coconut and sugarcane. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>5.</b> First Filipina National Scientist, known for pioneering work in pediatric medicine. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>6.</b> Proposed the theory of evolution through natural selection. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>7.</b> Formulated the Three Laws of Motion and the Law of Universal Gravitation. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>8.</b> Filipino engineer who invented the SALt saltwater-powered lamp. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>9.</b> Filipina chemist who studied mutagens and DNA repair. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>10.</b> Father of Modern Philippine Ophthalmology, who founded an eye hospital. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>11.</b> Developed the Theory of Relativity. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>12.</b> Invented the two-way videophone and is called the Father of Videoconferencing. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>13.</b> Developed pasteurization and vaccines for rabies and anthrax. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>14.</b> Marine biologist who helps BFAR and DENR manage coastal resources. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>15.</b> Developed the algorithm that produced the first-ever image of a black hole. <span class="p-blank">&nbsp;</span></div>
+  </div>
+
+  <h2 class="p-part-title">Part II — Fill in the Blank (Inventions)</h2>
+  <div class="p-q"><b>16.</b> A(n) __________ is a government license that protects an inventor's creation from being copied.</div>
+  <div class="p-q"><b>17.</b> The __________ is a circular object attached beneath vehicles to help them move.</div>
+  <div class="p-q"><b>18.</b> The __________ invented the first self-powered aircraft.</div>
+  <div class="p-q"><b>19.</b> Doctors use a __________ to detect sounds produced by the human body.</div>
+  <div class="p-q"><b>20.</b> Dr. Fe del Mundo invented a __________ to help regulate the body temperature of newborn babies.</div>
+  <div class="p-q"><b>21.</b> __________ invented the telephone.</div>
+  <div class="p-q"><b>22.</b> __________ developed a technique using potassium nitrate spray to boost mango production.</div>
+  <div class="p-q"><b>23.</b> __________ developed solar window panels made from food waste.</div>
+  <div class="p-q"><b>24.</b> __________ developed the first 10-Mbit Ethernet CMOS chip.</div>
+  <div class="p-q"><b>25.</b> Dr. Abelardo Aguilar discovered __________, an antibiotic.</div>
+  <div class="p-q"><b>26.</b> __________ discovered penicillin in 1928.</div>
+  <div class="p-q"><b>27.</b> __________ developed the first successful polio vaccine in 1955.</div>
+  <div class="p-q"><b>28.</b> The __________ propels motorboats, yachts, and ships over water.</div>
+  <div class="p-q"><b>29.</b> A(n) __________ is a new device, method, or concept created to solve a problem.</div>
+  <div class="p-q"><b>30.</b> Alexander Graham Bell's invention was inspired partly by his deaf wife and __________.</div>
+
+  <h2 class="p-part-title">Part III — True or False</h2>
+  <div class="p-q"><b>31.</b> Arturo P. Alcaraz is known as the Philippines' Father of Geothermal Energy Development. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>32.</b> Isaac Newton is celebrated as the world's first computer programmer. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>33.</b> Gregorio Y. Zara invented the first two-way videophone. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>34.</b> A patent allows anyone to freely copy an inventor's creation. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>35.</b> Alexander Graham Bell invented the telephone. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>36.</b> A stethoscope is used by doctors to detect sounds produced by the human body. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>37.</b> Hardness is the ability of a material to return to its original shape after being stretched. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>38.</b> Gold is the most malleable metal. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>39.</b> The boiling point of water is 0°C. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>40.</b> Elasticity is the ability of a material to return to its original size and shape after being stretched or compressed. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>41.</b> Combustibility is a chemical property of materials. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>42.</b> Rust is a product of corrosion. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>43.</b> Toxicity refers to how easily a material can be hammered into thin sheets. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>44.</b> Fruit peelings and dried leaves are biodegradable materials. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>45.</b> Gasoline is an example of a flammable material. <span class="p-blank">&nbsp;</span></div>
+
+  <div class="p-break">
+  <h2 class="p-part-title">Part IV — Multiple Choice (Physical &amp; Chemical Properties)</h2>
+  <div class="p-q"><b>46.</b> Which property describes a material's ability to resist scratching?<span class="p-opt">a) Elasticity &nbsp; b) Hardness &nbsp; c) Brittleness &nbsp; d) Toxicity</span></div>
+  <div class="p-q"><b>47.</b> Glass breaking easily when dropped shows which property?<span class="p-opt">a) Malleability &nbsp; b) Elasticity &nbsp; c) Brittleness &nbsp; d) Reactivity</span></div>
+  <div class="p-q"><b>48.</b> Which metal is known as the most malleable?<span class="p-opt">a) Iron &nbsp; b) Copper &nbsp; c) Gold &nbsp; d) Silver</span></div>
+  <div class="p-q"><b>49.</b> A rubber band returning to its original shape after stretching demonstrates:<span class="p-opt">a) Hardness &nbsp; b) Elasticity &nbsp; c) Brittleness &nbsp; d) Combustibility</span></div>
+  <div class="p-q"><b>50.</b> At what temperature does ice melt?<span class="p-opt">a) 100°C &nbsp; b) 50°C &nbsp; c) 0°C &nbsp; d) -10°C</span></div>
+  <div class="p-q"><b>51.</b> At what temperature does water boil?<span class="p-opt">a) 0°C &nbsp; b) 50°C &nbsp; c) 75°C &nbsp; d) 100°C</span></div>
+  <div class="p-q"><b>52.</b> Which of these is a physical property?<span class="p-opt">a) Flammability &nbsp; b) Reactivity &nbsp; c) Hardness &nbsp; d) Toxicity</span></div>
+  <div class="p-q"><b>53.</b> Which of these is a chemical property?<span class="p-opt">a) Malleability &nbsp; b) Combustibility &nbsp; c) Elasticity &nbsp; d) Brittleness</span></div>
+  <div class="p-q"><b>54.</b> Rust forming on iron is an example of:<span class="p-opt">a) Melting &nbsp; b) Corrosion &nbsp; c) Elasticity &nbsp; d) Hardness</span></div>
+  <div class="p-q"><b>55.</b> A material's tendency to ignite and sustain burning is called:<span class="p-opt">a) Toxicity &nbsp; b) Reactivity &nbsp; c) Combustibility &nbsp; d) Biodegradability</span></div>
+  <div class="p-q"><b>56.</b> Which best describes reactivity?<span class="p-opt">a) Ability to be hammered into sheets &nbsp; b) Ability to react with another substance to form something new &nbsp; c) Ability to resist scratching &nbsp; d) Ability to decompose</span></div>
+  <div class="p-q"><b>57.</b> Fruit peelings and dried leaves are examples of materials that are:<span class="p-opt">a) Flammable &nbsp; b) Toxic &nbsp; c) Biodegradable &nbsp; d) Malleable</span></div>
+  <div class="p-q"><b>58.</b> The degree to which a material can harm a living organism is called:<span class="p-opt">a) Toxicity &nbsp; b) Reactivity &nbsp; c) Corrosion &nbsp; d) Elasticity</span></div>
+  <div class="p-q"><b>59.</b> Gasoline catching fire easily shows that it is:<span class="p-opt">a) Biodegradable &nbsp; b) Flammable &nbsp; c) Malleable &nbsp; d) Elastic</span></div>
+  <div class="p-q"><b>60.</b> Which property can be observed or measured without changing the material into a new substance?<span class="p-opt">a) Chemical property &nbsp; b) Physical property &nbsp; c) Reactivity &nbsp; d) Combustibility</span></div>
+  </div>
+
+  <div class="p-break">
+  <h2 class="p-part-title">✅ Complete Answer Key</h2>
+
+  <div class="p-key-part-title">Part I — Matching Type</div>
+  <div class="p-key-grid">
+    <div class="p-key-pill">1. <b>E</b></div><div class="p-key-pill">2. <b>O</b></div><div class="p-key-pill">3. <b>A</b></div><div class="p-key-pill">4. <b>L</b></div><div class="p-key-pill">5. <b>H</b></div>
+    <div class="p-key-pill">6. <b>F</b></div><div class="p-key-pill">7. <b>K</b></div><div class="p-key-pill">8. <b>B</b></div><div class="p-key-pill">9. <b>G</b></div><div class="p-key-pill">10. <b>I</b></div>
+    <div class="p-key-pill">11. <b>C</b></div><div class="p-key-pill">12. <b>J</b></div><div class="p-key-pill">13. <b>N</b></div><div class="p-key-pill">14. <b>D</b></div><div class="p-key-pill">15. <b>M</b></div>
+  </div>
+
+  <div class="p-key-part-title">Part II — Fill in the Blank</div>
+  <div class="p-key-grid">
+    <div class="p-key-pill">16. <b>patent</b></div><div class="p-key-pill">17. <b>wheel</b></div><div class="p-key-pill">18. <b>Wright Bros.</b></div><div class="p-key-pill">19. <b>stethoscope</b></div><div class="p-key-pill">20. <b>incubator</b></div>
+    <div class="p-key-pill">21. <b>A.G. Bell</b></div><div class="p-key-pill">22. <b>Ramon Barba</b></div><div class="p-key-pill">23. <b>C. Maigue</b></div><div class="p-key-pill">24. <b>D. Banatao</b></div><div class="p-key-pill">25. <b>erythromycin</b></div>
+    <div class="p-key-pill">26. <b>A. Fleming</b></div><div class="p-key-pill">27. <b>Jonas Salk</b></div><div class="p-key-pill">28. <b>propeller</b></div><div class="p-key-pill">29. <b>invention</b></div><div class="p-key-pill">30. <b>mother</b></div>
+  </div>
+
+  <div class="p-key-part-title">Part III — True or False</div>
+  <div class="p-key-grid">
+    <div class="p-key-pill">31. <b>True</b></div><div class="p-key-pill">32. <b>False</b></div><div class="p-key-pill">33. <b>True</b></div><div class="p-key-pill">34. <b>False</b></div><div class="p-key-pill">35. <b>True</b></div>
+    <div class="p-key-pill">36. <b>True</b></div><div class="p-key-pill">37. <b>False</b></div><div class="p-key-pill">38. <b>True</b></div><div class="p-key-pill">39. <b>False</b></div><div class="p-key-pill">40. <b>True</b></div>
+    <div class="p-key-pill">41. <b>True</b></div><div class="p-key-pill">42. <b>True</b></div><div class="p-key-pill">43. <b>False</b></div><div class="p-key-pill">44. <b>True</b></div><div class="p-key-pill">45. <b>True</b></div>
+  </div>
+
+  <div class="p-key-part-title">Part IV — Multiple Choice</div>
+  <div class="p-key-grid">
+    <div class="p-key-pill">46. <b>b</b></div><div class="p-key-pill">47. <b>c</b></div><div class="p-key-pill">48. <b>c</b></div><div class="p-key-pill">49. <b>b</b></div><div class="p-key-pill">50. <b>c</b></div>
+    <div class="p-key-pill">51. <b>d</b></div><div class="p-key-pill">52. <b>c</b></div><div class="p-key-pill">53. <b>b</b></div><div class="p-key-pill">54. <b>b</b></div><div class="p-key-pill">55. <b>c</b></div>
+    <div class="p-key-pill">56. <b>b</b></div><div class="p-key-pill">57. <b>c</b></div><div class="p-key-pill">58. <b>a</b></div><div class="p-key-pill">59. <b>b</b></div><div class="p-key-pill">60. <b>b</b></div>
+  </div>
+  </div>
+
 </div>
 
 </body>
