@@ -314,6 +314,22 @@ header .sub { font-size: .72rem; color: var(--muted); margin-top: 1px; }
   background: linear-gradient(135deg, #0f3d3d44, #7f1d3d44);
 }
 .notes-header h2 { font-family: 'Fredoka One', cursive; font-size: 1.3rem; color: var(--gold); }
+.notes-header-actions { display: flex; align-items: center; gap: 10px; }
+.print-btn {
+  display: flex; align-items: center; gap: 6px;
+  background: rgba(20,184,166,.14);
+  border: 1.5px solid rgba(20,184,166,.45);
+  color: var(--gold);
+  border-radius: 20px;
+  padding: 7px 14px;
+  font-family: 'Baloo 2', cursive;
+  font-size: .8rem;
+  font-weight: 800;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all .15s;
+}
+.print-btn:hover { background: var(--gold); color: #0a1615; border-color: var(--gold); }
 .notes-close {
   width: 34px; height: 34px; border-radius: 50%;
   border: 1.5px solid var(--border); background: var(--surface2);
@@ -433,6 +449,79 @@ header .sub { font-size: .72rem; color: var(--muted); margin-top: 1px; }
   border-radius: 8px; padding: 6px 10px; font-size: .8rem;
 }
 .key-pill b { color: var(--gold); }
+
+/* ── Print / Save-as-PDF styles ──────────────────────────────────
+   By default everything is hidden from print. Only #print-area
+   (a light-themed printable version of the Practice Test +
+   Answer Key) is shown, laid out for paper. ──────────────────── */
+@media print {
+  body * { visibility: hidden; }
+  #print-area, #print-area * { visibility: visible; }
+  #print-area {
+    display: block !important;
+    position: absolute; top: 0; left: 0; width: 100%;
+    background: #fff; color: #1e293b;
+    font-family: 'Helvetica', Arial, sans-serif;
+    font-size: 10.5pt;
+    line-height: 1.5;
+  }
+  #print-area .p-cover { text-align: center; padding-top: 40px; }
+  #print-area .p-icon { font-size: 34pt; }
+  #print-area h1 { font-size: 18pt; color: #0f766e; margin: 8px 0 4px; }
+  #print-area .p-sub { font-size: 10.5pt; color: #475569; margin-bottom: 20px; }
+  #print-area .p-info-box {
+    border: 1.5px solid #94a3b8; border-radius: 10px;
+    max-width: 460px; margin: 0 auto 20px; padding: 14px 20px;
+    text-align: left; font-size: 10pt;
+  }
+  #print-area .p-info-box div { margin: 6px 0; border-bottom: 1px dotted #cbd5e1; padding-bottom: 6px; }
+  #print-area .p-instructions {
+    max-width: 460px; margin: 0 auto; text-align: left;
+    background: #f0fdfa; border: 1px solid #5eead4; border-radius: 10px;
+    padding: 12px 18px; font-size: 9.5pt; color: #334155;
+  }
+  #print-area h2.p-part-title {
+    font-size: 12.5pt; color: #fff;
+    background: linear-gradient(135deg, #0f766e, #9f1239) !important;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    padding: 6px 12px; border-radius: 7px; margin: 18px 0 10px;
+    page-break-after: avoid;
+  }
+  #print-area .p-note {
+    font-size: 9.5pt; color: #475569; margin-bottom: 8px;
+  }
+  #print-area .p-match-cols {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 0 18px; margin-bottom: 14px;
+  }
+  #print-area .p-match-cols h4 { font-size: 10pt; color: #0f766e; margin-bottom: 6px; }
+  #print-area .p-match-cols ol, #print-area .p-match-cols ul {
+    padding-left: 18px; font-size: 9.5pt; line-height: 1.75; color: #1e293b;
+  }
+  #print-area .p-item {
+    font-size: 9.8pt; line-height: 1.7; margin-bottom: 7px;
+    color: #1e293b; page-break-inside: avoid;
+  }
+  #print-area .p-item .p-qnum { color: #0f766e; font-weight: 800; margin-right: 4px; }
+  #print-area .p-blank { display: inline-block; min-width: 75px; border-bottom: 1.3px solid #64748b; margin: 0 2px; }
+  #print-area .p-choices { margin: 3px 0 0 20px; color: #334155; font-size: 9.3pt; }
+  #print-area .p-break { page-break-before: always; }
+  #print-area .p-key-part-title {
+    font-size: 11pt; color: #0f766e; font-weight: bold;
+    margin: 14px 0 8px; border-bottom: 2px solid #0f766e; padding-bottom: 4px;
+  }
+  #print-area .p-key-grid {
+    display: grid; grid-template-columns: repeat(5, 1fr);
+    gap: 5px 8px; margin-bottom: 14px;
+  }
+  #print-area .p-key-pill {
+    background: #f0fdfa !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    border: 1px solid #5eead4; border-radius: 6px;
+    padding: 4px 8px; font-size: 8.5pt; color: #0f766e;
+  }
+  #print-area .p-key-pill b { color: #9f1239; }
+  @page { size: letter; margin: 1.5cm 1.8cm; }
+}
+#print-area { display: none; }
 
 </style>
 </head>
@@ -1046,6 +1135,10 @@ window.addEventListener('load', () => {
   showMenu();
 });
 
+function printPracticeTest() {
+  window.print();
+}
+
 function switchTab(tabId, btn) {
   document.querySelectorAll('.notes-section').forEach(s => s.classList.remove('active'));
   document.querySelectorAll('.notes-tab').forEach(b => b.classList.remove('active'));
@@ -1060,7 +1153,10 @@ function switchTab(tabId, btn) {
   <div class="notes-panel">
     <div class="notes-header">
       <h2>📖 EPP — Propesyonal na Reviewer</h2>
-      <button class="notes-close" onclick="document.getElementById('notes-overlay').classList.remove('show')">✕</button>
+      <div class="notes-header-actions">
+        <button class="print-btn" onclick="printPracticeTest()" title="I-print o i-save bilang PDF ang Practice Test at Answer Key">🖨️ I-print</button>
+        <button class="notes-close" onclick="document.getElementById('notes-overlay').classList.remove('show')">✕</button>
+      </div>
     </div>
     <div class="notes-tabs">
       <button class="notes-tab active" onclick="switchTab('tab-pisikal', this)">🌱 Kab. 1: Pagbabagong Pisikal</button>
@@ -1328,6 +1424,141 @@ function switchTab(tabId, btn) {
 
     </div>
   </div>
+</div>
+
+<!-- ── Hidden Print Area (Practice Test + Answer Key) ── -->
+<div id="print-area">
+
+  <div class="p-cover">
+    <div class="p-icon">🌸</div>
+    <h1>EPP — Practice Test</h1>
+    <div class="p-sub">Pagbabagong Pisikal · Pangangalaga sa Sarili · Regla &amp; Pagkatapos Matuli · Mga Kagamitan</div>
+    <div class="p-info-box">
+      <div><strong>Pangalan:</strong> _____________________________________</div>
+      <div><strong>Seksyon:</strong> ___________________ &nbsp; <strong>Petsa:</strong> ___________________</div>
+      <div><strong>Iskor:</strong> _______ / 50</div>
+    </div>
+    <div class="p-instructions">
+      <strong>Panuto:</strong> Basahin nang mabuti ang bawat tanong. Isulat ang sagot sa patlang na ibinigay (Bahagi I–III), o ang titik ng tamang sagot (Bahagi IV). Good luck!
+    </div>
+  </div>
+
+  <div class="p-break">
+  <h2 class="p-part-title">Bahagi I — Pagtutugma (10 puntos)</h2>
+  <p class="p-note">Panuto: Itugma ang Hanay A sa Hanay B. Isulat ang titik ng tamang sagot.</p>
+  <div class="p-match-cols">
+    <div>
+      <h4>Hanay A</h4>
+      <ol>
+        <li>___ Tawag sa bahagi ng buhay na may pagbabagong pisikal, mental, at emosyonal</li>
+        <li>___ Bukol sa lalamunan na lumilitaw sa lalaki</li>
+        <li>___ Gamit kung may regla ang babae</li>
+        <li>___ Ginagamit upang linisin ang buhok at anit</li>
+        <li>___ Ginagamit upang matanggal ang dumi sa balat</li>
+        <li>___ Ginagamit sa pagputol ng kuko</li>
+        <li>___ Ipinapahid sa balat upang mapanatili itong makinis</li>
+        <li>___ Ginagamit upang mapanatiling malinis ang ngipin</li>
+        <li>___ Ipinapahid sa kilikili laban sa amoy</li>
+        <li>___ Halamang maaaring ipanlanggas sa sugat pagkatapos matuli</li>
+      </ol>
+    </div>
+    <div>
+      <h4>Hanay B</h4>
+      <ul style="list-style:none;padding-left:0;">
+        <li>a. Sepilyo</li>
+        <li>b. Puberty/Pubertad</li>
+        <li>c. Dahon ng Bayabas</li>
+        <li>d. Adam's Apple</li>
+        <li>e. Deodorant</li>
+        <li>f. Pasador</li>
+        <li>g. Lusyon</li>
+        <li>h. Shampoo</li>
+        <li>i. Nail Cutter</li>
+        <li>j. Sabon Panligo</li>
+      </ul>
+    </div>
+  </div>
+  </div>
+
+  <h2 class="p-part-title">Bahagi II — Punan ang Patlang (15 puntos)</h2>
+  <div class="p-item"><span class="p-qnum">11.</span> Ang puberty ay tinatawag ding <span class="p-blank">&nbsp;</span> (para sa babae) at <span class="p-blank">&nbsp;</span> (para sa lalaki).</div>
+  <div class="p-item"><span class="p-qnum">12.</span> Karaniwang nagsisimula ang puberty sa edad na <span class="p-blank">&nbsp;</span> hanggang <span class="p-blank">&nbsp;</span>.</div>
+  <div class="p-item"><span class="p-qnum">13.</span> Natatapos ang pubertad sa edad na <span class="p-blank">&nbsp;</span>.</div>
+  <div class="p-item"><span class="p-qnum">14.</span> Ang paglaki ng dibdib ay bahagi ng <span class="p-blank">&nbsp;</span>.</div>
+  <div class="p-item"><span class="p-qnum">15.</span> Ang paglapad ng dibdib at balikat ay bahagi ng <span class="p-blank">&nbsp;</span>.</div>
+  <div class="p-item"><span class="p-qnum">16.</span> Ang <span class="p-blank">&nbsp;</span> ang glandula na nagiging aktibo at nagdudulot ng amoy sa katawan.</div>
+  <div class="p-item"><span class="p-qnum">17.</span> Dapat magsipilyo nang <span class="p-blank">&nbsp;</span> beses sa isang araw.</div>
+  <div class="p-item"><span class="p-qnum">18.</span> Dapat pumunta sa dentista nang <span class="p-blank">&nbsp;</span> beses sa isang taon.</div>
+  <div class="p-item"><span class="p-qnum">19.</span> Ang <span class="p-blank">&nbsp;</span> ay inilalagay sa kilikili laban sa amoy.</div>
+  <div class="p-item"><span class="p-qnum">20.</span> Habang may regla, kailangan ng hindi bababa sa <span class="p-blank">&nbsp;</span> oras na tulog.</div>
+  <div class="p-item"><span class="p-qnum">21.</span> Ang <span class="p-blank">&nbsp;</span> ay ginagamit upang maiwasang tumagos ang dugo sa damit.</div>
+  <div class="p-item"><span class="p-qnum">22.</span> Pagkatapos matuli, dapat magsuot ng <span class="p-blank">&nbsp;</span> na damit.</div>
+  <div class="p-item"><span class="p-qnum">23.</span> Ang <span class="p-blank">&nbsp;</span> ay maaaring ipanlanggas sa sugat pagkatapos matuli.</div>
+  <div class="p-item"><span class="p-qnum">24.</span> Hindi dapat <span class="p-blank">&nbsp;</span> ang personal na gamit tulad ng tuwalya at sepilyo.</div>
+  <div class="p-item"><span class="p-qnum">25.</span> Ang mga kagamitan sa pangangalaga sa sarili ay tinatawag na <span class="p-blank">&nbsp;</span> dahil ginagamit ito nang nauubos.</div>
+
+  <div class="p-break">
+  <h2 class="p-part-title">Bahagi III — Tama o Mali (10 puntos)</h2>
+  <div class="p-item"><span class="p-qnum">26.</span> Ang puberty ay karaniwang nagsisimula sa edad na 9 hanggang 12. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-item"><span class="p-qnum">27.</span> Ang pubertad ay nagtatapos sa edad na 15. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-item"><span class="p-qnum">28.</span> Ang bukol sa lalamunan o Adam's apple ay lumilitaw sa mga lalaki. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-item"><span class="p-qnum">29.</span> Dapat magsipilyo ng ngipin nang tatlong beses sa isang araw. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-item"><span class="p-qnum">30.</span> Kailangang pumunta lamang sa dentista nang isang beses sa isang taon. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-item"><span class="p-qnum">31.</span> Maaaring ipahiram ang tuwalya at sepilyo sa ibang tao. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-item"><span class="p-qnum">32.</span> Ang pasador ay ginagamit tuwing may regla ang babae. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-item"><span class="p-qnum">33.</span> Ipinagbabawal ang pag-eehersisyo habang may regla. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-item"><span class="p-qnum">34.</span> Dapat iwasan ang paghawak sa sugat pagkatapos matuli. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-item"><span class="p-qnum">35.</span> Ang lusyon ay ginagamit upang linisin ang ngipin. <span class="p-blank">&nbsp;</span></div>
+
+  <h2 class="p-part-title">Bahagi IV — Klasipikasyon at Multiple Choice (15 puntos)</h2>
+  <p class="p-note">Panuto: Isulat ang B kung pambabae, L kung panlalaki, at P kung pareho.</p>
+  <div class="p-item"><span class="p-qnum">36.</span> Pagsesepilyo ng ngipin pagkatapos kumain, bago matulog, at paggising sa umaga. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-item"><span class="p-qnum">37.</span> Paglalanggas ng sugat mula sa pagtutuli gamit ang pinakuluang dahon ng bayabas. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-item"><span class="p-qnum">38.</span> Pagpapalit ng pasador sa tamang oras at pagtatapon nito sa basurahan. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-item"><span class="p-qnum">39.</span> Pag-eehersisyo araw-araw upang mapanatiling malakas ang katawan. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-item"><span class="p-qnum">40.</span> Paglalagay ng deodorant sa kilikili. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-item"><span class="p-qnum">41.</span> Paggamit ng pambatang bra upang hindi bumakat ang paglaki ng dibdib. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-item"><span class="p-qnum">42.</span> Pagpapatubo ng balbas at bigote. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-item"><span class="p-qnum">43.</span> Araw-araw na pagliligo upang mapanatiling malinis ang katawan. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-item"><span class="p-qnum">44.</span> Pagsusuot ng maluwag na palda o shorts pagkatapos matuli. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-item"><span class="p-qnum">45.</span> Pagputol ng kuko sa paa at kamay. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-item"><span class="p-qnum">46.</span> Ano ang ginagamit upang tanggalin ang tutuli sa tainga?<span class="p-choices">a. Ear Pick &nbsp; b. Nail Cutter &nbsp; c. Suklay &nbsp; d. Lusyon</span></div>
+  <div class="p-item"><span class="p-qnum">47.</span> Ano ang ginagamit upang linisin ang buhok at anit?<span class="p-choices">a. Sabon Panligo &nbsp; b. Shampoo &nbsp; c. Deodorant &nbsp; d. Bimpo</span></div>
+  <div class="p-item"><span class="p-qnum">48.</span> Ano ang ipinapahid sa kilikili laban sa amoy?<span class="p-choices">a. Lusyon &nbsp; b. Pasador &nbsp; c. Deodorant &nbsp; d. Suklay</span></div>
+  <div class="p-item"><span class="p-qnum">49.</span> Ano ang gamit kung may regla ang babae?<span class="p-choices">a. Pasador &nbsp; b. Sepilyo &nbsp; c. Ear Pick &nbsp; d. Nail Cutter</span></div>
+  <div class="p-item"><span class="p-qnum">50.</span> Ano ang tawag sa mga bagay na ginagamit nang nauubos o napapalitan?<span class="p-choices">a. Kagamitan &nbsp; b. Konsumible &nbsp; c. Kasangkapan &nbsp; d. Kailangan</span></div>
+  </div>
+
+  <div class="p-break">
+  <h2 class="p-part-title">✅ Kumpletong Answer Key</h2>
+
+  <div class="p-key-part-title">Bahagi I — Pagtutugma</div>
+  <div class="p-key-grid">
+    <div class="p-key-pill">1. <b>b</b></div><div class="p-key-pill">2. <b>d</b></div><div class="p-key-pill">3. <b>f</b></div><div class="p-key-pill">4. <b>h</b></div><div class="p-key-pill">5. <b>j</b></div>
+    <div class="p-key-pill">6. <b>i</b></div><div class="p-key-pill">7. <b>g</b></div><div class="p-key-pill">8. <b>a</b></div><div class="p-key-pill">9. <b>e</b></div><div class="p-key-pill">10. <b>c</b></div>
+  </div>
+
+  <div class="p-key-part-title">Bahagi II — Punan ang Patlang</div>
+  <div class="p-key-grid">
+    <div class="p-key-pill">11. <b>Pagdadalaga / Pagbibinata</b></div><div class="p-key-pill">12. <b>9 / 12</b></div><div class="p-key-pill">13. <b>19</b></div><div class="p-key-pill">14. <b>Pagdadalaga</b></div><div class="p-key-pill">15. <b>Pagbibinata</b></div>
+    <div class="p-key-pill">16. <b>Glandula ng Pawis</b></div><div class="p-key-pill">17. <b>Tatlo</b></div><div class="p-key-pill">18. <b>Dalawa</b></div><div class="p-key-pill">19. <b>Tawas/Deodorant</b></div><div class="p-key-pill">20. <b>Walo</b></div>
+    <div class="p-key-pill">21. <b>Pasador</b></div><div class="p-key-pill">22. <b>Maluwag</b></div><div class="p-key-pill">23. <b>Dahon ng Bayabas</b></div><div class="p-key-pill">24. <b>Ipahiram</b></div><div class="p-key-pill">25. <b>Konsumible</b></div>
+  </div>
+
+  <div class="p-key-part-title">Bahagi III — Tama o Mali</div>
+  <div class="p-key-grid">
+    <div class="p-key-pill">26. <b>Tama</b></div><div class="p-key-pill">27. <b>Mali</b></div><div class="p-key-pill">28. <b>Tama</b></div><div class="p-key-pill">29. <b>Tama</b></div><div class="p-key-pill">30. <b>Mali</b></div>
+    <div class="p-key-pill">31. <b>Mali</b></div><div class="p-key-pill">32. <b>Tama</b></div><div class="p-key-pill">33. <b>Mali</b></div><div class="p-key-pill">34. <b>Tama</b></div><div class="p-key-pill">35. <b>Mali</b></div>
+  </div>
+
+  <div class="p-key-part-title">Bahagi IV — Klasipikasyon at Multiple Choice</div>
+  <div class="p-key-grid">
+    <div class="p-key-pill">36. <b>P</b></div><div class="p-key-pill">37. <b>L</b></div><div class="p-key-pill">38. <b>B</b></div><div class="p-key-pill">39. <b>P</b></div><div class="p-key-pill">40. <b>P</b></div>
+    <div class="p-key-pill">41. <b>B</b></div><div class="p-key-pill">42. <b>L</b></div><div class="p-key-pill">43. <b>P</b></div><div class="p-key-pill">44. <b>L</b></div><div class="p-key-pill">45. <b>P</b></div>
+    <div class="p-key-pill">46. <b>a</b></div><div class="p-key-pill">47. <b>b</b></div><div class="p-key-pill">48. <b>c</b></div><div class="p-key-pill">49. <b>a</b></div><div class="p-key-pill">50. <b>b</b></div>
+  </div>
+  </div>
+
 </div>
 
 </body>
