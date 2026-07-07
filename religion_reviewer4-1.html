@@ -1,0 +1,1568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>✝️ Grade 4 Religion Reviewer</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Fredoka+One&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --sky: #a78bfa;
+  --sky-dark: #7c3aed;
+  --mint: #34d399;
+  --coral: #fb7185;
+  --amber: #fbbf24;
+  --purple: #f472b6;
+  --bg: #1a0f2e;
+  --surface: #241640;
+  --surface2: #2f1d52;
+  --text: #f5f3ff;
+  --muted: #c4b5fd;
+  --border: #453072;
+}
+
+body {
+  font-family: 'Nunito', sans-serif;
+  background: var(--bg);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--text);
+  background-image: radial-gradient(ellipse at 20% 20%, rgba(167,139,250,.07) 0%, transparent 60%),
+                    radial-gradient(ellipse at 80% 80%, rgba(244,114,182,.07) 0%, transparent 60%);
+}
+
+header {
+  width: 100%;
+  background: linear-gradient(135deg, #2e1065, #581c87);
+  border-bottom: 1px solid var(--border);
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 4px 30px rgba(0,0,0,.4);
+}
+
+.header-icon {
+  font-size: 2rem;
+  animation: float 3s ease-in-out infinite;
+}
+@keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+
+header h1 {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.5rem;
+  background: linear-gradient(90deg, var(--sky), var(--purple));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+header .sub { font-size: .75rem; color: var(--muted); margin-top: 1px; }
+
+.header-controls {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.score-pill {
+  background: rgba(167,139,250,.15);
+  border: 1px solid rgba(167,139,250,.3);
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-weight: 800;
+  font-size: .85rem;
+  color: var(--sky);
+}
+
+.audio-btn {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  background: var(--surface2);
+  color: var(--text);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all .2s;
+  display: flex; align-items: center; justify-content: center;
+}
+.audio-btn:hover { background: var(--sky-dark); border-color: var(--sky); }
+.audio-btn.active { background: var(--sky-dark); border-color: var(--sky); color: white; }
+
+.chat-wrap {
+  width: 100%;
+  max-width: 680px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 16px 14px 0;
+}
+
+#chat-box {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding-bottom: 10px;
+  max-height: calc(100vh - 200px);
+  scroll-behavior: smooth;
+}
+
+#chat-box::-webkit-scrollbar { width: 4px; }
+#chat-box::-webkit-scrollbar-track { background: transparent; }
+#chat-box::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+.msg { display: flex; gap: 8px; }
+.msg.user { flex-direction: row-reverse; }
+
+.avatar {
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  font-size: 1rem;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.msg.bot .avatar { background: linear-gradient(135deg, #2e1065, #6d28d9); border: 1.5px solid rgba(167,139,250,.3); }
+.msg.user .avatar { background: linear-gradient(135deg, #6b21a8, #2e1065); border: 1.5px solid rgba(167,139,250,.2); }
+
+.bubble {
+  max-width: 78%;
+  padding: 11px 16px;
+  border-radius: 18px;
+  font-size: .9rem;
+  line-height: 1.6;
+  animation: pop .2s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes pop { from { transform: scale(.88) translateY(6px); opacity:0; } to { transform: scale(1) translateY(0); opacity:1; } }
+
+.msg.bot .bubble {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-bottom-left-radius: 5px;
+  color: var(--text);
+}
+.msg.user .bubble {
+  background: linear-gradient(135deg, var(--sky-dark), #1d4ed8);
+  border-bottom-right-radius: 5px;
+  color: white;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(167,139,250,.12);
+  border: 1.5px solid rgba(167,139,250,.35);
+  color: var(--sky);
+  border-radius: 30px;
+  padding: 5px 13px;
+  margin: 5px 4px 0 0;
+  font-size: .8rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all .15s;
+  user-select: none;
+  font-family: 'Nunito', sans-serif;
+}
+.chip:hover {
+  background: var(--sky-dark);
+  color: white;
+  border-color: var(--sky);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(167,139,250,.3);
+}
+
+/* Multiple choice option buttons */
+.mc-options {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-top: 10px;
+  width: 100%;
+}
+.mc-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255,255,255,.04);
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  padding: 9px 14px;
+  color: var(--text);
+  font-family: 'Nunito', sans-serif;
+  font-size: .88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all .15s;
+  text-align: left;
+  width: 100%;
+}
+.mc-btn:hover:not(:disabled) {
+  background: rgba(167,139,250,.12);
+  border-color: var(--sky);
+  color: var(--sky);
+  transform: translateX(3px);
+}
+.mc-btn .letter {
+  display: flex; align-items: center; justify-content: center;
+  width: 26px; height: 26px;
+  border-radius: 8px;
+  background: rgba(167,139,250,.15);
+  border: 1px solid rgba(167,139,250,.3);
+  color: var(--sky);
+  font-size: .78rem;
+  font-weight: 800;
+  flex-shrink: 0;
+  transition: all .15s;
+}
+.mc-btn:hover:not(:disabled) .letter {
+  background: var(--sky-dark);
+  color: white;
+}
+.mc-btn.correct {
+  background: rgba(52,211,153,.15) !important;
+  border-color: #34d399 !important;
+  color: #34d399 !important;
+  cursor: default;
+}
+.mc-btn.correct .letter { background: #34d399 !important; color: white !important; border-color: #34d399 !important; }
+.mc-btn.wrong {
+  background: rgba(251,113,133,.12) !important;
+  border-color: #fb7185 !important;
+  color: #fb7185 !important;
+  cursor: default;
+}
+.mc-btn.wrong .letter { background: #fb7185 !important; color: white !important; border-color: #fb7185 !important; }
+.mc-btn:disabled { cursor: default; transform: none !important; }
+
+.topic-tag {
+  display: inline-block;
+  background: linear-gradient(135deg, var(--purple), #7c3aed);
+  color: white;
+  font-size: .68rem;
+  font-weight: 800;
+  border-radius: 20px;
+  padding: 2px 10px;
+  margin-bottom: 5px;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+}
+
+/* speaking animation */
+.speaker-wave {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 14px;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+.speaker-wave span {
+  display: block;
+  width: 3px;
+  border-radius: 2px;
+  background: var(--sky);
+  animation: wave 1s ease-in-out infinite;
+}
+.speaker-wave span:nth-child(1) { height: 4px; animation-delay: 0s; }
+.speaker-wave span:nth-child(2) { height: 10px; animation-delay: .1s; }
+.speaker-wave span:nth-child(3) { height: 6px; animation-delay: .2s; }
+.speaker-wave span:nth-child(4) { height: 12px; animation-delay: .15s; }
+.speaker-wave span:nth-child(5) { height: 4px; animation-delay: .05s; }
+@keyframes wave { 0%,100% { transform: scaleY(1); } 50% { transform: scaleY(1.8); } }
+
+.typing {
+  display: flex;
+  gap: 4px;
+  padding: 12px 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  border-bottom-left-radius: 5px;
+  width: fit-content;
+}
+.dot { width: 7px; height: 7px; border-radius: 50%; background: var(--sky); animation: bounce .9s infinite; }
+.dot:nth-child(2) { animation-delay: .15s; }
+.dot:nth-child(3) { animation-delay: .3s; }
+@keyframes bounce { 0%,80%,100% { transform: translateY(0); opacity:.6; } 40% { transform: translateY(-7px); opacity:1; } }
+
+.input-bar {
+  width: 100%;
+  max-width: 680px;
+  padding: 10px 14px 18px;
+  display: flex;
+  gap: 8px;
+  background: var(--bg);
+  position: sticky;
+  bottom: 0;
+}
+
+#user-input {
+  flex: 1;
+  padding: 12px 18px;
+  border: 2px solid var(--border);
+  border-radius: 30px;
+  font-family: 'Nunito', sans-serif;
+  font-size: .92rem;
+  outline: none;
+  background: var(--surface);
+  color: var(--text);
+  transition: border-color .2s, box-shadow .2s;
+}
+#user-input::placeholder { color: var(--muted); }
+#user-input:focus {
+  border-color: var(--sky);
+  box-shadow: 0 0 0 3px rgba(167,139,250,.12);
+}
+
+#send-btn {
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  border: none;
+  background: linear-gradient(135deg, var(--sky), var(--sky-dark));
+  color: white;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 3px 14px rgba(167,139,250,.35);
+  flex-shrink: 0;
+}
+#send-btn:hover { transform: scale(1.08); box-shadow: 0 5px 20px rgba(167,139,250,.5); }
+#send-btn:disabled { opacity: .5; transform: none; }
+
+/* result modal */
+.result-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.7);
+  backdrop-filter: blur(6px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 100;
+  opacity: 0; pointer-events: none;
+  transition: opacity .3s;
+}
+.result-overlay.show { opacity: 1; pointer-events: all; }
+.result-card {
+  background: linear-gradient(135deg, #241640, #1a0f2e);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 36px 40px;
+  text-align: center;
+  max-width: 360px;
+  width: 90%;
+  box-shadow: 0 20px 60px rgba(0,0,0,.5);
+  transform: scale(.9);
+  transition: transform .3s cubic-bezier(.34,1.56,.64,1);
+}
+.result-overlay.show .result-card { transform: scale(1); }
+.result-emoji { font-size: 4rem; margin-bottom: 12px; display: block; }
+.result-title { font-family: 'Fredoka One', cursive; font-size: 1.8rem; margin-bottom: 6px; color: var(--sky); }
+.result-score { font-size: 3rem; font-weight: 900; margin: 10px 0; }
+.result-msg { color: var(--muted); font-size: .9rem; margin-bottom: 20px; }
+.result-btn {
+  background: linear-gradient(135deg, var(--sky), var(--sky-dark));
+  border: none;
+  border-radius: 30px;
+  padding: 12px 30px;
+  color: white;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+  box-shadow: 0 4px 16px rgba(167,139,250,.3);
+}
+.result-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(167,139,250,.5); }
+
+/* ── Notes Panel ─────────────────────────────────────────────── */
+.notes-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.75); backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 200; opacity: 0; pointer-events: none; transition: opacity .3s;
+}
+.notes-overlay.show { opacity: 1; pointer-events: all; }
+.notes-panel {
+  background: linear-gradient(160deg, #1a0f2e, #241640);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  width: 92%; max-width: 720px;
+  max-height: 88vh;
+  display: flex; flex-direction: column;
+  box-shadow: 0 24px 60px rgba(0,0,0,.6);
+  overflow: hidden;
+  transform: translateY(30px);
+  transition: transform .35s cubic-bezier(.34,1.2,.64,1);
+}
+.notes-overlay.show .notes-panel { transform: translateY(0); }
+.notes-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 22px;
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(135deg, #2e106544, #31288444);
+}
+.notes-header h2 { font-family: 'Fredoka One', cursive; font-size: 1.3rem; color: var(--sky); }
+.notes-header-actions { display: flex; align-items: center; gap: 10px; }
+.print-btn {
+  display: flex; align-items: center; gap: 6px;
+  background: rgba(52,211,153,.12);
+  border: 1.5px solid rgba(52,211,153,.4);
+  color: var(--mint);
+  border-radius: 20px;
+  padding: 7px 14px;
+  font-family: 'Nunito', sans-serif;
+  font-size: .78rem;
+  font-weight: 800;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all .15s;
+}
+.print-btn:hover { background: #34d399; color: #1a0f2e; border-color: #34d399; }
+.notes-close {
+  width: 34px; height: 34px; border-radius: 50%;
+  border: 1.5px solid var(--border); background: var(--surface2);
+  color: var(--text); font-size: 1rem; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all .2s;
+}
+.notes-close:hover { background: var(--coral); border-color: var(--coral); }
+.notes-body { overflow-y: auto; padding: 20px 22px; flex: 1; }
+.notes-body::-webkit-scrollbar { width: 4px; }
+.notes-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+.notes-topic { margin-bottom: 28px; }
+.notes-topic-title {
+  font-family: 'Fredoka One', cursive; font-size: 1.05rem;
+  color: var(--sky); margin-bottom: 10px;
+  padding-bottom: 6px; border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 8px;
+}
+.notes-item {
+  display: flex; gap: 10px; align-items: flex-start;
+  padding: 7px 0; border-bottom: 1px solid rgba(255,255,255,.04);
+  font-size: .88rem; line-height: 1.55;
+}
+.notes-item:last-child { border-bottom: none; }
+.notes-term {
+  font-weight: 800; color: var(--amber); min-width: 160px;
+  flex-shrink: 0; font-size: .85rem;
+}
+.notes-def { color: #e9d5ff; }
+.notes-tabs {
+  display: flex; gap: 6px; padding: 12px 22px 0;
+  border-bottom: 1px solid var(--border);
+  overflow-x: auto;
+}
+.notes-tab {
+  padding: 7px 16px; border-radius: 12px 12px 0 0;
+  border: 1px solid var(--border); border-bottom: none;
+  background: transparent; color: var(--muted);
+  font-family: 'Nunito', sans-serif; font-size: .8rem; font-weight: 700;
+  cursor: pointer; transition: all .15s; white-space: nowrap;
+}
+.notes-tab.active { background: var(--surface); color: var(--sky); border-color: var(--sky); }
+.notes-tab:hover:not(.active) { color: var(--text); background: var(--surface2); }
+.notes-section { display: none; }
+.notes-section.active { display: block; }
+
+/* ── Chapter Summary / Tandaan / Memory boxes ─────────────────── */
+.chapter-summary {
+  background: linear-gradient(135deg, rgba(167,139,250,.1), rgba(244,114,182,.08));
+  border: 1px solid rgba(167,139,250,.25);
+  border-left: 4px solid var(--sky);
+  border-radius: 12px;
+  padding: 14px 18px;
+  margin-bottom: 18px;
+  font-size: .88rem;
+  line-height: 1.65;
+  color: #ede9fe;
+}
+.tandaan-box {
+  background: rgba(251,191,36,.08);
+  border: 1px solid rgba(251,191,36,.3);
+  border-left: 4px solid var(--amber);
+  border-radius: 12px;
+  padding: 12px 18px;
+  margin: 14px 0;
+  font-size: .86rem;
+  line-height: 1.6;
+  color: #fde68a;
+}
+.tandaan-label {
+  display: block;
+  font-family: 'Fredoka One', cursive;
+  font-size: .8rem;
+  color: var(--amber);
+  letter-spacing: .5px;
+  margin-bottom: 5px;
+}
+.memory-box {
+  background: rgba(52,211,153,.08);
+  border: 1px solid rgba(52,211,153,.3);
+  border-left: 4px solid var(--mint);
+  border-radius: 12px;
+  padding: 12px 18px;
+  margin: 14px 0 22px;
+  font-size: .86rem;
+  line-height: 1.6;
+  color: #a7f3d0;
+}
+.memory-label {
+  display: block;
+  font-family: 'Fredoka One', cursive;
+  font-size: .8rem;
+  color: var(--mint);
+  letter-spacing: .5px;
+  margin-bottom: 5px;
+}
+.compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0 20px;
+  font-size: .82rem;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.compare-table th {
+  background: linear-gradient(135deg, #2e1065, #581c87);
+  color: var(--sky);
+  text-align: left;
+  padding: 9px 12px;
+  font-size: .78rem;
+  text-transform: uppercase;
+  letter-spacing: .4px;
+}
+.compare-table td {
+  padding: 9px 12px;
+  border-top: 1px solid var(--border);
+  color: #e9d5ff;
+  vertical-align: top;
+}
+.compare-table tr:nth-child(even) td { background: rgba(255,255,255,.02); }
+
+/* ── Practice test ─────────────────────────────────────────────── */
+.ptest-part-title {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1rem;
+  color: var(--purple);
+  margin: 22px 0 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+.ptest-part-title:first-child { margin-top: 0; }
+.ptest-q {
+  font-size: .87rem;
+  line-height: 1.6;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed rgba(255,255,255,.06);
+  color: #ede9fe;
+}
+.ptest-q b { color: var(--sky); }
+.ptest-q .opt { display: block; margin: 2px 0 2px 18px; color: #e9d5ff; }
+.ptest-bank {
+  background: rgba(244,114,182,.08);
+  border: 1px solid rgba(244,114,182,.3);
+  border-radius: 10px;
+  padding: 10px 16px;
+  margin-bottom: 14px;
+  font-size: .82rem;
+  color: #ddd6fe;
+  line-height: 1.6;
+}
+
+/* ── Answer key ─────────────────────────────────────────────────── */
+.key-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.key-pill {
+  background: rgba(167,139,250,.1);
+  border: 1px solid rgba(167,139,250,.25);
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: .78rem;
+  color: #e9d5ff;
+}
+.key-pill b { color: #34d399; }
+
+/* ── Print / Save-as-PDF styles ──────────────────────────────────
+   By default everything is hidden from print. When body carries
+   .printing-test, only #print-area (a light-themed clone of the
+   Practice Test + Answer Key) is shown, laid out for paper. ──── */
+@media print {
+  body * { visibility: hidden; }
+  #print-area, #print-area * { visibility: visible; }
+  #print-area {
+    display: block !important;
+    position: absolute; top: 0; left: 0; width: 100%;
+    background: #fff; color: #241640;
+    font-family: 'Helvetica', Arial, sans-serif;
+    font-size: 10.5pt;
+    line-height: 1.5;
+  }
+  #print-area .p-cover { text-align: center; padding-top: 40px; }
+  #print-area .p-cover .p-icon { font-size: 34pt; }
+  #print-area .p-cover h1 { font-size: 19pt; color: #6d28d9; margin: 8px 0 4px; }
+  #print-area .p-cover .p-sub { font-size: 10.5pt; color: #6b46c1; margin-bottom: 20px; }
+  #print-area .p-info-box {
+    border: 1.5px solid #c4b5fd; border-radius: 10px;
+    max-width: 460px; margin: 0 auto 20px; padding: 14px 20px;
+    text-align: left; font-size: 10pt;
+  }
+  #print-area .p-info-box div { margin: 6px 0; border-bottom: 1px dotted #e9d5ff; padding-bottom: 6px; }
+  #print-area .p-instructions {
+    max-width: 460px; margin: 0 auto; text-align: left;
+    background: #faf5ff; border: 1px solid #d8b4fe; border-radius: 10px;
+    padding: 12px 18px; font-size: 9.5pt; color: #453072;
+  }
+  #print-area h2.p-part-title {
+    font-size: 12.5pt; color: #fff;
+    background: linear-gradient(135deg, #6d28d9, #9d174d) !important;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    padding: 6px 12px; border-radius: 7px; margin: 18px 0 10px;
+    page-break-after: avoid;
+  }
+  #print-area .p-bank {
+    background: #f5f3ff !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    border: 1px solid #c4b5fd; border-radius: 8px; padding: 8px 14px;
+    margin-bottom: 12px; font-size: 9.5pt; color: #4c1d95;
+  }
+  #print-area .p-q {
+    margin-bottom: 8px; padding-bottom: 8px;
+    border-bottom: 1px dotted #ede9fe; font-size: 10pt;
+    page-break-inside: avoid; color: #241640;
+  }
+  #print-area .p-q b { color: #6d28d9; }
+  #print-area .p-q .p-blank { display: inline-block; min-width: 65px; border-bottom: 1px solid #64748b; }
+  #print-area .p-q .p-opt { display: block; margin: 2px 0 0 20px; color: #453072; }
+  #print-area .p-break { page-break-before: always; }
+  #print-area .p-key-part-title {
+    font-size: 11pt; color: #6d28d9; font-weight: bold;
+    margin: 14px 0 8px; border-bottom: 2px solid #6d28d9; padding-bottom: 4px;
+  }
+  #print-area .p-key-grid {
+    display: grid; grid-template-columns: repeat(5, 1fr);
+    gap: 5px 8px; margin-bottom: 14px;
+  }
+  #print-area .p-key-pill {
+    background: #fffbeb !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    border: 1px solid #fcd34d; border-radius: 6px;
+    padding: 4px 8px; font-size: 8.5pt; color: #92400e;
+  }
+  #print-area .p-key-pill b { color: #b45309; }
+  @page { size: letter; margin: 1.5cm 1.8cm; }
+}
+#print-area { display: none; }
+
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-icon">✝️</div>
+  <div>
+    <h1>Religion Reviewer</h1>
+    <div class="sub">Who is Jesus? · Symbols &amp; Creed · Filipino Heroes · Birth of Jesus</div>
+  </div>
+  <div class="header-controls">
+    <div class="score-pill">⭐ <span id="score-val">0</span> / <span id="total-val">0</span></div>
+    <button class="audio-btn" id="notes-toggle" title="Open Reviewer" onclick="document.getElementById('notes-overlay').classList.add('show')">📖</button>
+    <button class="audio-btn active" id="audio-toggle" title="Toggle Audio">🔊</button>
+  </div>
+</header>
+
+<div class="chat-wrap">
+  <div id="chat-box"></div>
+</div>
+
+<div class="input-bar">
+  <input type="text" id="user-input" placeholder="Type your answer here…" autocomplete="off" />
+  <button id="send-btn">➤</button>
+</div>
+
+<div class="result-overlay" id="result-overlay">
+  <div class="result-card">
+    <span class="result-emoji" id="res-emoji">🏆</span>
+    <div class="result-title">Quiz Complete!</div>
+    <div class="result-score"><span id="res-score">0</span>/<span id="res-total">0</span></div>
+    <div class="result-msg" id="res-msg">Great job!</div>
+    <button class="result-btn" onclick="restartApp()">🔄 Play Again</button>
+  </div>
+</div>
+
+<script>
+// ─── DATA ──────────────────────────────────────────────────────────────────
+const topics = {
+  "WHO IS JESUS?": [
+    { q: "In what region did Jesus ask His disciples, \"Who do people say the Son of Man is?\"", a: "Caesarea Philippi", hint: "This region is named at the start of Matthew 16:13." },
+    { q: "Who answered Jesus, \"You are the Messiah, the Son of the living God\"?", a: "Simon Peter", hint: "He was one of the Twelve Apostles and would later lead the Church." },
+    { q: "According to Jesus, who revealed this truth about Him to Peter?", a: "His heavenly Father", hint: "Jesus said flesh and blood did not reveal it — someone greater did." },
+    { q: "What is Revelation?", a: "God's personal loving communication of who He is and His plan to save us in His love", hint: "Think of God reaching out to us in friendship (CFC 101)." },
+    { q: "According to the Church, who is the perfect revelation of God's love?", a: "Jesus Christ", hint: "See CCC 519-520 — He is the ultimate sign of God's love." },
+    { q: "What Bible verse says, \"For God so loved the world that He gave His one and only Son\"?", a: "John 3:16", hint: "It's one of the most well-known verses in the whole Bible." },
+    { q: "For Christians, Jesus is the Revealer of God, the Image and Word of God, and the ______ of God's Revelation.", a: "Final Goal", hint: "This is also described as our ultimate destiny (CFC 104)." },
+    { q: "Jesus is both true God and true ______.", a: "Man", hint: "This is why we say Jesus is divine and human at the same time." },
+    { q: "Because Jesus is truly human, He becomes the ______ of God.", a: "Sacrament", hint: "It means through Him, God's loving presence is revealed to humankind." },
+    { q: "Name at least one way we can become like Jesus.", a: "kindness, generosity, care, compassion, mercy, or love", hint: "Think of how we treat our parents, family, teachers, and friends." },
+    { q: "Give one visible sign of love we can give to others.", a: "making poems and letters, studying well, being obedient, taking care of them, or being there for them", hint: "These are ways of expressing love mentioned in the reading." },
+  ],
+  "SYMBOLS & THE APOSTLES' CREED": [
+    { q: "What do the Greek letters Alpha and Omega symbolize about Christ?", a: "the beginning and the end", hint: "Alpha is the first letter and Omega the last letter of the Greek alphabet." },
+    { q: "What is the Chi-Rho symbol?", a: "the first two Greek letters of Christ's name", hint: "It looks like an X crossed with a P: ☧" },
+    { q: "What does the symbol IHS represent?", a: "the first three letters of Jesus' name in Greek", hint: "You'll often see this on altars and vestments." },
+    { q: "What creature does the Ichthus symbol represent?", a: "a fish", hint: "Its Greek letters spell ΙΧΘΥΣ." },
+    { q: "When were these symbols of Christ commonly used?", a: "during the period when Christians were being persecuted", hint: "Believers needed a way to quietly identify their faith." },
+    { q: "In the Apostles' Creed, who conceived Jesus?", a: "the Holy Spirit", hint: "This happened through God's power, not through a human father." },
+    { q: "In the Apostles' Creed, who was Jesus born of?", a: "the Virgin Mary", hint: "She is honored as the Mother of Jesus." },
+    { q: "Under whom did Jesus suffer, according to the Apostles' Creed?", a: "Pontius Pilate", hint: "He was the Roman governor at the time." },
+    { q: "On what day did Jesus rise again from the dead?", a: "the third day", hint: "This is the heart of the Easter celebration." },
+    { q: "Name one popular image or devotion of Jesus mentioned in the reading.", a: "Sto. Niño, Sto. Entierro, Black Nazarene, Sacred Heart, or Christ the King", hint: "These are titles Filipino Catholics often use in devotions." },
+  ],
+  "FILIPINO HEROES OF TODAY": [
+    { q: "When is National Heroes Day celebrated in the Philippines?", a: "every last Monday of August", hint: "It's a public holiday honoring both past and present heroes." },
+    { q: "Who was named 2009 CNN Hero of the Year?", a: "Efren Peñaflorida", hint: "He is known for a mobile classroom idea." },
+    { q: "What is the name of Efren Peñaflorida's mobile classroom?", a: "kariton klasrum", hint: "It's a pushcart turned into a classroom." },
+    { q: "What organization did Efren Peñaflorida form with friends in 1997?", a: "Dynamic Teen Company (DTC)", hint: "This group teaches basic education and hygiene to poor children." },
+    { q: "What corporation donated a two-storey school building to DTC in 2014?", a: "Universal Robina Corporation", hint: "It's a well-known Filipino food and beverage company." },
+    { q: "What award did Cris \"Kesz\" Valdez receive in 2012?", a: "the International Children's Peace Prize", hint: "It was given by the organization KidsRights." },
+    { q: "What organization did Kesz Valdez found to help street children?", a: "Championing Community Children (C3)", hint: "This group shares food, toys, and clothes with less fortunate children." },
+    { q: "What are C3's gift packages to children called?", a: "Gifts of Hope", hint: "These bring hope and happiness to children." },
+    { q: "Who was recognized in 2018 as one of the Outstanding Young Men and Women of the Philippines for agribusiness?", a: "Cherrie De Erit Atilano", hint: "She works to help farmers and fisherfolk." },
+    { q: "What organization did Cherrie Atilano found?", a: "AGREA Agricultural Systems International", hint: "Its model farm is in Boac, Marinduque." },
+  ],
+  "THE BIRTH OF JESUS": [
+    { q: "Who was Mary engaged to when she was found to be with child?", a: "Joseph", hint: "He is honored as the foster father of Jesus." },
+    { q: "What did Joseph plan to do quietly, before the angel appeared to him?", a: "divorce her", hint: "He was an upright man who didn't want to expose Mary to the law." },
+    { q: "Who appeared to Joseph in a dream?", a: "the angel of the Lord", hint: "This messenger delivered an important message from God." },
+    { q: "What name was Joseph told to give to Mary's Son?", a: "Jesus", hint: "This name has a special meaning related to saving people." },
+    { q: "What does the name \"Jesus\" mean?", a: "Savior, Redeemer, or Deliverer", hint: "Think about what Jesus came to do for us." },
+    { q: "What is a Redeemer?", a: "someone like a hero who frees us from sin through God's mercy, forgiveness, and love", hint: "Jesus's death on the Cross is a symbol of this saving love." },
+    { q: "Who said, \"Christ died for our sins according to the Scriptures\"?", a: "St. Paul", hint: "This quote is from 1 Corinthians 15:3." },
+    { q: "What is a symbol of Jesus's saving love, according to the reading?", a: "His death on the Cross", hint: "This act shows His self-giving love to the very end." },
+    { q: "We are saved by Jesus's perfect what, for His Father and for us?", a: "self-giving love", hint: "This love was \"lived out to the death\" (CFC 558)." },
+  ],
+};
+
+const trueOrFalse = [
+  { q: "Jesus asked His disciples \"Who do people say the Son of Man is?\" in Caesarea Philippi.", a: "true" },
+  { q: "Simon Peter answered, \"You are Elijah, the prophet.\"", a: "false" },
+  { q: "Jesus said that flesh and blood revealed the truth about Him to Peter.", a: "false" },
+  { q: "Revelation is God's personal loving communication of who He is and His plan to save us.", a: "true" },
+  { q: "The Church teaches that Jesus is the perfect revelation of God's love.", a: "true" },
+  { q: "The Chi-Rho symbol represents the first two Greek letters of Christ's name.", a: "true" },
+  { q: "The Ichthus symbol represents a bird.", a: "false" },
+  { q: "In the Apostles' Creed, Jesus was born of the Virgin Mary.", a: "true" },
+  { q: "Jesus suffered under Pontius Pilate, according to the Apostles' Creed.", a: "true" },
+  { q: "Efren Peñaflorida is known for the kariton klasrum.", a: "true" },
+  { q: "Cris \"Kesz\" Valdez received the International Children's Peace Prize at age 20.", a: "false" },
+  { q: "Cherrie Atilano founded AGREA Agricultural Systems International.", a: "true" },
+  { q: "National Heroes Day is celebrated every first Monday of January.", a: "false" },
+  { q: "An angel appeared to Joseph in a dream and told him to name Mary's Son Jesus.", a: "true" },
+  { q: "The name \"Jesus\" means \"carpenter.\"", a: "false" },
+];
+
+// ─── STATE ──────────────────────────────────────────────────────────────────
+let state = {
+  awaiting: 'menu',
+  mode: null,
+  questions: [],
+  qIndex: 0,
+  score: 0,
+  total: 0,
+  hintUsed: false,
+  audioEnabled: true,
+};
+
+// ─── TTS ────────────────────────────────────────────────────────────────────
+let speaking = false;
+function speak(text) {
+  if (!state.audioEnabled) return;
+  window.speechSynthesis.cancel();
+  const clean = text.replace(/<[^>]+>/g, '').replace(/[✝️🌟✅❌💡⏭️🏆😊💪🔄🔲📚🙏]/g, '');
+  const utt = new SpeechSynthesisUtterance(clean);
+  utt.rate = 1.0;
+  utt.pitch = 1.05;
+  utt.volume = 1;
+  // prefer a clear English voice
+  const voices = window.speechSynthesis.getVoices();
+  const preferred = voices.find(v => v.lang.startsWith('en') && v.name.includes('Female'))
+    || voices.find(v => v.lang.startsWith('en'))
+    || voices[0];
+  if (preferred) utt.voice = preferred;
+  utt.onstart = () => { speaking = true; showWave(true); };
+  utt.onend = utt.onerror = () => { speaking = false; showWave(false); };
+  window.speechSynthesis.speak(utt);
+}
+
+function showWave(on) {
+  document.querySelectorAll('.speaker-wave').forEach(w => {
+    w.style.display = on ? 'inline-flex' : 'none';
+  });
+}
+
+// ensure voices loaded
+window.speechSynthesis.onvoiceschanged = () => {};
+
+// ─── UI HELPERS ─────────────────────────────────────────────────────────────
+const chatBox = document.getElementById('chat-box');
+const input = document.getElementById('user-input');
+const sendBtn = document.getElementById('send-btn');
+const scoreVal = document.getElementById('score-val');
+const totalVal = document.getElementById('total-val');
+
+function scrollBottom() { chatBox.scrollTop = chatBox.scrollHeight; }
+
+function addMessage(role, html, speakText) {
+  const div = document.createElement('div');
+  div.className = `msg ${role}`;
+  const avatar = document.createElement('div');
+  avatar.className = 'avatar';
+  avatar.textContent = role === 'bot' ? '🤖' : '🧑';
+  const bubble = document.createElement('div');
+  bubble.className = 'bubble';
+
+  if (role === 'bot') {
+    bubble.innerHTML = html + '<span class="speaker-wave" style="display:none"><span></span><span></span><span></span><span></span><span></span></span>';
+  } else {
+    bubble.innerHTML = html;
+  }
+
+  div.appendChild(avatar);
+  div.appendChild(bubble);
+  chatBox.appendChild(div);
+  scrollBottom();
+  bindChips();
+
+  if (role === 'bot') {
+    const txt = speakText || html.replace(/<[^>]+>/g, ' ');
+    setTimeout(() => speak(txt), 300);
+  }
+}
+
+function addTyping() {
+  const d = document.createElement('div');
+  d.className = 'msg bot'; d.id = 'typing';
+  d.innerHTML = '<div class="avatar">🤖</div><div class="typing"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>';
+  chatBox.appendChild(d); scrollBottom();
+}
+function removeTyping() { const t = document.getElementById('typing'); if (t) t.remove(); }
+
+function bindChips() {
+  document.querySelectorAll('.chip:not([data-bound])').forEach(c => {
+    c.dataset.bound = '1';
+    c.addEventListener('click', () => handleUserMessage(c.dataset.val));
+  });
+}
+
+function updateScore() {
+  scoreVal.textContent = state.score;
+  totalVal.textContent = state.total;
+}
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function normalize(s) {
+  return s.toLowerCase().trim().replace(/\s+/g, ' ');
+}
+
+function checkAnswer(user, correct) {
+  const u = normalize(user);
+  const c = normalize(correct);
+  if (u === c) return true;
+  const parts = c.split(/[,;\/]/);
+  for (const p of parts) {
+    if (u.includes(p.trim()) && p.trim().length > 3) return true;
+  }
+  if (c.includes(u) && u.length > 4) return true;
+  return false;
+}
+
+function showResult() {
+  const pct = Math.round((state.score / state.total) * 100);
+  const emoji = pct >= 90 ? '🏆' : pct >= 70 ? '🌟' : pct >= 50 ? '😊' : '💪';
+  const msg = pct >= 90 ? 'Excellent work! You nailed it!' : pct >= 70 ? 'Great job! Keep it up!' : pct >= 50 ? 'Good effort! Review and try again!' : 'Keep studying — you can do it!';
+  document.getElementById('res-emoji').textContent = emoji;
+  document.getElementById('res-score').textContent = state.score;
+  document.getElementById('res-total').textContent = state.total;
+  document.getElementById('res-msg').textContent = msg;
+  document.getElementById('result-overlay').classList.add('show');
+  speak(`Quiz complete! Your score is ${state.score} out of ${state.total}. ${msg}`);
+}
+
+function restartApp() {
+  document.getElementById('result-overlay').classList.remove('show');
+  state = { awaiting: 'menu', mode: null, questions: [], allAnswers: [], qIndex: 0, score: 0, total: 0, hintUsed: false, audioEnabled: state.audioEnabled };
+  chatBox.innerHTML = '';
+  document.querySelector('.input-bar').style.display = 'flex';
+  updateScore();
+  showMenu();
+}
+
+// ─── GAME LOGIC ─────────────────────────────────────────────────────────────
+function showMenu() {
+  addMessage('bot',
+    `👋 <strong>Hello! I'm your Grade 4 Religion Reviewer!</strong><br>I'll help you review <em>Who is Jesus?</em>, <em>Symbols &amp; the Apostles' Creed</em>, <em>Filipino Heroes of Today</em>, and <em>The Birth of Jesus</em>.<br><br>What would you like to do?<br>
+    <span class="chip" data-val="1">1️⃣ Study a Topic</span>
+    <span class="chip" data-val="2">2️⃣ True or False Quiz</span>
+    <span class="chip" data-val="3">3️⃣ Full Review — All Topics</span>`,
+    "Hello! I'm your Grade 4 Religion Reviewer. What would you like to do? Study a topic, take a True or False quiz, or do a full review of all topics?"
+  );
+  state.awaiting = 'menu';
+}
+
+// ─── MULTIPLE CHOICE HELPERS ─────────────────────────────────────────────────
+function getAllAnswers() {
+  const answers = [];
+  for (const qs of Object.values(topics)) {
+    for (const q of qs) answers.push(q.a);
+  }
+  return answers;
+}
+
+function generateChoices(correctAnswer, allAnswers) {
+  const pool = allAnswers.filter(a => a !== correctAnswer);
+  const distractors = shuffle(pool).slice(0, 3);
+  return shuffle([correctAnswer, ...distractors]);
+}
+
+function buildMCHtml(q, num, choices) {
+  const tag = q.topic ? `<span class="topic-tag">${q.topic}</span><br>` : '';
+  const letters = ['A','B','C','D'];
+  const btns = choices.map((c, i) =>
+    `<button class="mc-btn" data-answer="${encodeURIComponent(c)}" onclick="handleMCClick(this)">
+      <span class="letter">${letters[i]}</span>${c}
+    </button>`
+  ).join('');
+  return `${tag}<strong>Q${num} of ${state.total}:</strong> ${q.q}<div class="mc-options">${btns}</div>`;
+}
+
+function handleMCClick(btn) {
+  const allBtns = btn.closest('.mc-options').querySelectorAll('.mc-btn');
+  allBtns.forEach(b => b.disabled = true);
+
+  const chosen = decodeURIComponent(btn.dataset.answer);
+  const q = state.questions[state.qIndex];
+  const correct = chosen === q.a;
+
+  allBtns.forEach(b => {
+    if (decodeURIComponent(b.dataset.answer) === q.a) b.classList.add('correct');
+  });
+  if (!correct) btn.classList.add('wrong');
+
+  setTimeout(() => {
+    if (correct) {
+      state.score++;
+      addMessage('bot', `✅ <strong>Correct!</strong> +1 point! The answer is: <strong>${q.a}</strong>`, `Correct! The answer is: ${q.a}`);
+    } else {
+      addMessage('bot', `❌ <strong>Not quite!</strong> You answered: <em>${chosen}</em><br>✏️ The correct answer is: <strong>${q.a}</strong>`, `Not quite! The correct answer is: ${q.a}`);
+    }
+    state.qIndex++;
+    updateScore();
+    if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+    else setTimeout(showResult, 900);
+  }, 650);
+}
+
+function nextQuestion() {
+  const qi = state.qIndex;
+  const q = state.questions[qi];
+  const num = qi + 1;
+  const isTF = state.mode === 'tf';
+  const isFull = state.mode === 'full';
+  const tag = q.topic ? `<span class="topic-tag">${q.topic}</span><br>` : '';
+
+  if (isFull) {
+    const choices = generateChoices(q.a, state.allAnswers);
+    const html = buildMCHtml(q, num, choices);
+    addMessage('bot', html, `Question ${num}. ${q.q}`);
+    return;
+  }
+
+  const chips = isTF
+    ? `<br><span class="chip" data-val="true">✅ True</span><span class="chip" data-val="false">❌ False</span>`
+    : `<br><small style="color:var(--muted)">Type your answer · type <em>hint</em> for a clue · type <em>skip</em> to skip</small>`;
+  const html = `${tag}<strong>Q${num} of ${state.total}:</strong> ${q.q}${chips}`;
+  addMessage('bot', html, `Question ${num}. ${q.q}`);
+}
+
+function handleUserMessage(msg) {
+  if (!msg.trim()) return;
+  window.speechSynthesis.cancel();
+  addMessage('user', msg.replace(/</g, '&lt;'));
+
+  input.disabled = true;
+  sendBtn.disabled = true;
+  addTyping();
+
+  setTimeout(() => {
+    removeTyping();
+    input.disabled = false;
+    sendBtn.disabled = false;
+    input.focus();
+    processMessage(msg);
+  }, 500);
+}
+
+function processMessage(msg) {
+  const aw = state.awaiting;
+
+  if (aw === 'menu') {
+    if (msg === '1') {
+      state.awaiting = 'topic';
+      const keys = Object.keys(topics);
+      let chips = keys.map((t, i) => `<span class="chip" data-val="${i+1}">${i+1}. ${t}</span>`).join(' ');
+      addMessage('bot', `📚 Which topic would you like to review?<br>${chips}`, 'Which topic would you like to review?');
+    } else if (msg === '2') {
+      document.querySelector('.input-bar').style.display = 'flex';
+      state.mode = 'tf';
+      state.questions = shuffle(trueOrFalse);
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'tf_answer';
+      updateScore();
+      addMessage('bot', `🔲 <strong>True or False Quiz!</strong> ${state.total} questions. Let's go!`, `True or False Quiz! ${state.total} questions. Let's go!`);
+      setTimeout(nextQuestion, 800);
+    } else if (msg === '3') {
+      state.mode = 'full';
+      const all = [];
+      for (const [topicName, qs] of Object.entries(topics)) {
+        qs.forEach(q => all.push({ ...q, topic: topicName }));
+      }
+      state.questions = shuffle(all);
+      state.allAnswers = getAllAnswers();
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'mc_answer';
+      updateScore();
+      document.querySelector('.input-bar').style.display = 'none';
+      addMessage('bot', `🌟 <strong>Full Review — Multiple Choice!</strong> ${state.total} questions across all topics. Click your answer!`, `Full Review! Multiple Choice! ${state.total} questions. Click your answer!`);
+      setTimeout(nextQuestion, 800);
+    } else {
+      addMessage('bot',
+        `Please choose an option:<br><span class="chip" data-val="1">1️⃣ Study a Topic</span><span class="chip" data-val="2">2️⃣ True or False Quiz</span><span class="chip" data-val="3">3️⃣ Full Review</span>`,
+        'Please choose an option: Study a Topic, True or False Quiz, or Full Review.'
+      );
+    }
+    return;
+  }
+
+  if (aw === 'topic') {
+    const keys = Object.keys(topics);
+    const idx = parseInt(msg) - 1;
+    if (keys[idx]) {
+      const topicName = keys[idx];
+      state.mode = 'topic';
+      state.questions = shuffle(topics[topicName]);
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'answer';
+      updateScore();
+      addMessage('bot', `📚 <strong>${topicName}</strong> — ${state.total} questions. Let's begin!`, `${topicName}. ${state.total} questions. Let's begin!`);
+      setTimeout(nextQuestion, 800);
+    } else {
+      const chips = keys.map((t, i) => `<span class="chip" data-val="${i+1}">${i+1}. ${t}</span>`).join(' ');
+      addMessage('bot', `Please pick a valid topic:<br>${chips}`, 'Please pick a valid topic.');
+    }
+    return;
+  }
+
+  if (aw === 'answer') {
+    const q = state.questions[state.qIndex];
+    const m = normalize(msg);
+
+    if (m === 'hint') {
+      state.hintUsed = true;
+      addMessage('bot', `💡 <strong>Hint:</strong> ${q.hint}`, `Hint: ${q.hint}`);
+      return;
+    }
+    if (m === 'skip') {
+      addMessage('bot', `⏭️ Skipped! The answer was: <strong>${q.a}</strong>`, `Skipped. The answer was: ${q.a}`);
+      state.qIndex++;
+      state.hintUsed = false;
+      if (state.qIndex < state.total) {
+        setTimeout(nextQuestion, 600);
+      } else { showResult(); }
+      return;
+    }
+
+    const correct = checkAnswer(msg, q.a);
+    if (correct) {
+      if (!state.hintUsed) state.score++;
+      const note = state.hintUsed ? ' (hint used — no point awarded)' : ' Plus one point!';
+      addMessage('bot', `✅ <strong>Correct!</strong>${state.hintUsed ? ' <em>(hint used — no point)</em>' : ' +1 point!'} The answer is: <strong>${q.a}</strong>`, `Correct!${note} The answer is: ${q.a}`);
+    } else {
+      addMessage('bot', `❌ <strong>Not quite!</strong> You answered: <em>${msg}</em><br>✏️ The correct answer is: <strong>${q.a}</strong>`, `Not quite! The correct answer is: ${q.a}`);
+    }
+    state.qIndex++;
+    state.hintUsed = false;
+    updateScore();
+
+    if (state.qIndex < state.total) {
+      setTimeout(nextQuestion, 900);
+    } else { setTimeout(showResult, 900); }
+    return;
+  }
+
+  if (aw === 'tf_answer') {
+    const q = state.questions[state.qIndex];
+    let ans = normalize(msg);
+    if (ans === 't') ans = 'true';
+    if (ans === 'f') ans = 'false';
+
+    if (ans === 'true' || ans === 'false') {
+      const correct = ans === q.a;
+      if (correct) {
+        state.score++;
+        addMessage('bot', `✅ <strong>Correct!</strong> It is <strong>${q.a.toUpperCase()}</strong>.`, `Correct! It is ${q.a}.`);
+      } else {
+        addMessage('bot', `❌ <strong>Wrong!</strong> You answered: <em>${ans === 'true' ? 'True' : 'False'}</em><br>✏️ The correct answer is: <strong>${q.a.toUpperCase()}</strong>`, `Wrong! The correct answer is ${q.a}.`);
+      }
+      state.qIndex++;
+      updateScore();
+
+      if (state.qIndex < state.total) {
+        setTimeout(nextQuestion, 900);
+      } else { setTimeout(showResult, 900); }
+    } else {
+      addMessage('bot',
+        `Please answer True or False:<br><span class="chip" data-val="true">✅ True</span><span class="chip" data-val="false">❌ False</span>`,
+        'Please answer True or False.'
+      );
+    }
+    return;
+  }
+}
+
+// ─── CONTROLS ────────────────────────────────────────────────────────────────
+sendBtn.addEventListener('click', () => {
+  handleUserMessage(input.value);
+  input.value = '';
+});
+input.addEventListener('keydown', e => {
+  if (e.key === 'Enter') {
+    handleUserMessage(input.value);
+    input.value = '';
+  }
+});
+
+document.getElementById('audio-toggle').addEventListener('click', function() {
+  state.audioEnabled = !state.audioEnabled;
+  this.textContent = state.audioEnabled ? '🔊' : '🔇';
+  this.classList.toggle('active', state.audioEnabled);
+  if (!state.audioEnabled) window.speechSynthesis.cancel();
+});
+
+// ─── INIT ────────────────────────────────────────────────────────────────────
+window.addEventListener('load', () => {
+  // warm up voices
+  window.speechSynthesis.getVoices();
+  showMenu();
+});
+
+function printPracticeTest() {
+  document.body.classList.add('printing-test');
+  window.print();
+}
+window.addEventListener('afterprint', () => {
+  document.body.classList.remove('printing-test');
+});
+
+function switchTab(tabId, btn) {
+  document.querySelectorAll('.notes-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.notes-tab').forEach(b => b.classList.remove('active'));
+  document.getElementById(tabId).classList.add('active');
+  btn.classList.add('active');
+}
+
+</script>
+
+
+<!-- ── Reviewer Panel ── -->
+<div class="notes-overlay" id="notes-overlay">
+  <div class="notes-panel">
+    <div class="notes-header">
+      <h2>📖 Religion — Full Reviewer</h2>
+      <div class="notes-header-actions">
+        <button class="print-btn" onclick="printPracticeTest()" title="Print or Save the Practice Test &amp; Answer Key as PDF">🖨️ Print Test &amp; Key</button>
+        <button class="notes-close" onclick="document.getElementById('notes-overlay').classList.remove('show')">✕</button>
+      </div>
+    </div>
+    <div class="notes-tabs">
+      <button class="notes-tab active" onclick="switchTab('tab-whoisjesus', this)">✝️ Who is Jesus?</button>
+      <button class="notes-tab" onclick="switchTab('tab-symbols', this)">☧ Symbols &amp; Creed</button>
+      <button class="notes-tab" onclick="switchTab('tab-heroes', this)">🇵🇭 Filipino Heroes</button>
+      <button class="notes-tab" onclick="switchTab('tab-birth', this)">👼 Birth of Jesus</button>
+      <button class="notes-tab" onclick="switchTab('tab-ptest', this)">📝 Practice Test</button>
+      <button class="notes-tab" onclick="switchTab('tab-key', this)">✅ Answer Key</button>
+    </div>
+    <div class="notes-body">
+
+      <!-- ══════════ CHAPTER 1: WHO IS JESUS? ══════════ -->
+      <div class="notes-section active" id="tab-whoisjesus">
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> At Caesarea Philippi, Jesus asked His disciples who people said He was, and <strong>Simon Peter</strong> proclaimed, "You are the <strong>Messiah, the Son of the living God</strong>." Jesus said this truth was revealed to Peter by <strong>His heavenly Father</strong>, not by flesh and blood. <strong>Revelation</strong> is God's personal loving communication of who He is and His plan to save us — and the Church teaches that <strong>Jesus is the perfect revelation</strong> of God's love. Jesus is both true God and true Man; because He is truly human, He becomes the <strong>Sacrament of God</strong>, meaning through Him God's loving presence is revealed to humankind.
+        </div>
+
+        <table class="compare-table">
+          <tr><th>Title of Jesus</th><th>What It Means</th></tr>
+          <tr><td>✝️ Messiah / Christ</td><td>The Anointed One promised and sent by God</td></tr>
+          <tr><td>👑 Son of the living God</td><td>Jesus is truly divine, the Son of God Himself</td></tr>
+          <tr><td>📖 Revealer of God our Father</td><td>Shows us who God is</td></tr>
+          <tr><td>🌟 Image and Word of God</td><td>Jesus perfectly reflects God to us</td></tr>
+          <tr><td>🎯 Final Goal of God's Revelation</td><td>Our ultimate destiny and hope</td></tr>
+        </table>
+
+        <div class="tandaan-box">
+          <span class="tandaan-label">📌 REMEMBER</span>
+          Jesus is both <strong>true God and true Man</strong> — this is why He is called the <strong>Sacrament of God</strong>: through His humanity, we can see and experience God's love up close.
+        </div>
+
+        <div class="memory-box">
+          <span class="memory-label">🧠 Memory Trick</span>
+          Jesus is the <strong>FACE</strong> we see when we ask, "What is God like?" Every title — Messiah, Son of God, Revealer, Image of God — answers the same question: Jesus shows us the Father.
+        </div>
+      </div>
+
+      <!-- ══════════ CHAPTER 2: SYMBOLS & THE APOSTLES' CREED ══════════ -->
+      <div class="notes-section" id="tab-symbols">
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> During times of persecution, early Christians used secret <strong>symbols</strong> to represent their faith in Jesus — symbols still found today in churches, altars, and vestments. The <strong>Apostles' Creed</strong> is a summary of the Church's core beliefs: that Jesus was <strong>conceived by the Holy Spirit</strong>, <strong>born of the Virgin Mary</strong>, <strong>suffered under Pontius Pilate</strong>, died, was buried, and <strong>rose on the third day</strong>.
+        </div>
+
+        <table class="compare-table">
+          <tr><th>Symbol</th><th>Meaning</th></tr>
+          <tr><td>ΑΩ Alpha and Omega</td><td>The beginning and the end</td></tr>
+          <tr><td>☧ Chi-Rho</td><td>First two Greek letters of "Christ"</td></tr>
+          <tr><td>IHS</td><td>First three Greek letters of "Jesus"</td></tr>
+          <tr><td>🐟 Ichthus (ΙΧΘΥΣ)</td><td>A fish — a secret sign used by persecuted Christians</td></tr>
+        </table>
+
+        <table class="compare-table">
+          <tr><th>Belief in the Apostles' Creed</th><th>What It Means</th></tr>
+          <tr><td>Conceived by the Holy Spirit</td><td>Jesus' conception was a miracle, not by ordinary means</td></tr>
+          <tr><td>Born of the Virgin Mary</td><td>Mary is honored as the Mother of Jesus</td></tr>
+          <tr><td>Suffered, died, was buried</td><td>Jesus truly suffered and died for our sins</td></tr>
+          <tr><td>Rose on the third day</td><td>Jesus conquered death, giving us hope of eternal life</td></tr>
+        </table>
+
+        <div class="tandaan-box">
+          <span class="tandaan-label">📌 REMEMBER</span>
+          These symbols weren't just decoration — they were a <strong>quiet, coded way</strong> for Christians to recognize each other and hold on to their faith during dangerous times.
+        </div>
+
+        <div class="memory-box">
+          <span class="memory-label">🧠 Memory Trick</span>
+          Christians hid their faith in symbols the way a <strong>fish hides in water</strong> — quiet, but always there. And remember: <strong>A</strong>lpha-<strong>O</strong>mega = <strong>A</strong>ll <strong>O</strong>ver (beginning to end)!
+        </div>
+      </div>
+
+      <!-- ══════════ CHAPTER 3: FILIPINO HEROES OF TODAY ══════════ -->
+      <div class="notes-section" id="tab-heroes">
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> <strong>National Heroes Day</strong> is celebrated every <strong>last Monday of August</strong>, honoring both heroes of the past and modern-day Filipinos who serve others. Three inspiring examples are <strong>Efren Peñaflorida</strong> (2009 CNN Hero of the Year, known for the <em>kariton klasrum</em>), <strong>Cris "Kesz" Valdez</strong> (received the International Children's Peace Prize for helping street children), and <strong>Cherrie De Erit Atilano</strong> (recognized for her work in agribusiness through AGREA).
+        </div>
+
+        <table class="compare-table">
+          <tr><th>Modern-Day Hero</th><th>Advocacy / Recognition</th></tr>
+          <tr><td>🛒 Efren Peñaflorida</td><td>Kariton klasrum; founded DTC (1997); 2009 CNN Hero of the Year</td></tr>
+          <tr><td>👦 Cris "Kesz" Valdez</td><td>International Children's Peace Prize (2012); founded C3 — Gifts of Hope</td></tr>
+          <tr><td>🌾 Cherrie De Erit Atilano</td><td>Outstanding Young Filipino for Agribusiness (2018); founded AGREA</td></tr>
+        </table>
+
+        <div class="tandaan-box">
+          <span class="tandaan-label">📌 REMEMBER</span>
+          A hero isn't only someone from history books — anyone who <strong>serves others selflessly today</strong>, like these three Filipinos, is a modern-day hero too.
+        </div>
+
+        <div class="memory-box">
+          <span class="memory-label">🧠 Memory Trick</span>
+          "<strong>Efren teaches, Kesz gives, Cherrie grows</strong>" — one simple line to remember each hero's cause: education, giving, and farming.
+        </div>
+      </div>
+
+      <!-- ══════════ CHAPTER 4: THE BIRTH OF JESUS ══════════ -->
+      <div class="notes-section" id="tab-birth">
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> When Mary was engaged to <strong>Joseph</strong> and found to be with child through the Holy Spirit, Joseph planned to quietly divorce her — until <strong>the angel of the Lord</strong> appeared to him in a dream, telling him to name the Child <strong>Jesus</strong>, "because He will save His people from their sins." The name Jesus means <strong>Savior, Redeemer, or Deliverer</strong>. Jesus was proclaimed <strong>Redeemer</strong> even before His birth — His death on the Cross later became the ultimate symbol of His saving love.
+        </div>
+
+        <table class="compare-table">
+          <tr><th>Term</th><th>Meaning</th></tr>
+          <tr><td>✝️ Redeemer</td><td>One who frees us from sin, like a hero</td></tr>
+          <tr><td>🙏 Savior</td><td>One who saves us</td></tr>
+          <tr><td>🕊️ Deliverer</td><td>One who rescues or frees us</td></tr>
+        </table>
+
+        <div class="tandaan-box">
+          <span class="tandaan-label">📌 REMEMBER</span>
+          Jesus was proclaimed Redeemer <strong>even before His birth</strong> — the angel's message to Joseph already revealed His saving mission.
+        </div>
+
+        <div class="memory-box">
+          <span class="memory-label">🧠 Memory Trick</span>
+          <strong>JESUS = Savior, Redeemer, Deliverer</strong> — three words, one mission: to save us from sin.
+        </div>
+      </div>
+
+      <!-- ══════════ PRACTICE TEST ══════════ -->
+      <div class="notes-section" id="tab-ptest">
+        <p style="font-size:.82rem;color:var(--muted);margin-bottom:14px;">📝 A complete practice test with <strong>60 items</strong> covering all four chapters.</p>
+
+        <div class="ptest-part-title">Part I — Matching Type (People &amp; Symbols)</div>
+        <div class="ptest-bank">
+          <strong>Word Bank:</strong> (A) Efren Peñaflorida &nbsp; (B) Cris "Kesz" Valdez &nbsp; (C) Cherrie De Erit Atilano &nbsp; (D) Simon Peter &nbsp; (E) Joseph &nbsp; (F) Alpha and Omega &nbsp; (G) Chi-Rho &nbsp; (H) IHS &nbsp; (I) Ichthus &nbsp; (J) St. Paul &nbsp; (K) Pontius Pilate &nbsp; (L) Virgin Mary &nbsp; (M) Holy Spirit &nbsp; (N) John 3:16 &nbsp; (O) Universal Robina Corporation
+        </div>
+        <div class="ptest-q"><b>1.</b> Answered Jesus, "You are the Messiah, the Son of the living God." ____</div>
+        <div class="ptest-q"><b>2.</b> Symbol representing the beginning and the end. ____</div>
+        <div class="ptest-q"><b>3.</b> Symbol representing the first two Greek letters of Christ's name. ____</div>
+        <div class="ptest-q"><b>4.</b> Symbol representing the first three letters of Jesus' name in Greek. ____</div>
+        <div class="ptest-q"><b>5.</b> Symbol of a fish used by early persecuted Christians. ____</div>
+        <div class="ptest-q"><b>6.</b> Conceived Jesus by the power of God, according to the Apostles' Creed. ____</div>
+        <div class="ptest-q"><b>7.</b> Mother of Jesus, the Virgin who bore Him. ____</div>
+        <div class="ptest-q"><b>8.</b> Roman governor under whom Jesus suffered. ____</div>
+        <div class="ptest-q"><b>9.</b> Said, "Christ died for our sins according to the Scriptures." ____</div>
+        <div class="ptest-q"><b>10.</b> Bible verse that says, "For God so loved the world..." ____</div>
+        <div class="ptest-q"><b>11.</b> 2009 CNN Hero of the Year, known for the kariton klasrum. ____</div>
+        <div class="ptest-q"><b>12.</b> Received the International Children's Peace Prize in 2012. ____</div>
+        <div class="ptest-q"><b>13.</b> Founded AGREA Agricultural Systems International. ____</div>
+        <div class="ptest-q"><b>14.</b> To whom the angel of the Lord appeared in a dream. ____</div>
+        <div class="ptest-q"><b>15.</b> Donated a two-storey school building to DTC in 2014. ____</div>
+
+        <div class="ptest-part-title">Part II — Fill in the Blank</div>
+        <div class="ptest-q"><b>16.</b> Jesus asked His disciples this question while in the region of __________.</div>
+        <div class="ptest-q"><b>17.</b> According to CFC 101, __________ is God's personal loving communication of who He is.</div>
+        <div class="ptest-q"><b>18.</b> Because Jesus is truly human, He becomes the __________ of God.</div>
+        <div class="ptest-q"><b>19.</b> Efren Peñaflorida's mobile classroom is called the __________.</div>
+        <div class="ptest-q"><b>20.</b> The organization Efren formed with friends in 1997 is called __________.</div>
+        <div class="ptest-q"><b>21.</b> Kesz's organization that shares food, toys, and clothes with children is called __________.</div>
+        <div class="ptest-q"><b>22.</b> C3's gift packages to children are called __________.</div>
+        <div class="ptest-q"><b>23.</b> Cherrie Atilano's model farm for agri-technology is located in __________.</div>
+        <div class="ptest-q"><b>24.</b> National Heroes Day is celebrated every __________.</div>
+        <div class="ptest-q"><b>25.</b> The angel told Joseph to name Mary's Son __________.</div>
+        <div class="ptest-q"><b>26.</b> The name "Jesus" means __________, __________, or __________ (give one).</div>
+        <div class="ptest-q"><b>27.</b> A __________ is like a hero who frees us from sin through God's mercy and love.</div>
+        <div class="ptest-q"><b>28.</b> Jesus's death on the __________ is a symbol of His saving love.</div>
+        <div class="ptest-q"><b>29.</b> We are saved by Jesus's perfect __________ for His Father and for us.</div>
+        <div class="ptest-q"><b>30.</b> Popular images of Jesus mentioned in the reading include Sto. Niño, Sto. Entierro, and the __________.</div>
+
+        <div class="ptest-part-title">Part III — True or False</div>
+        <div class="ptest-q"><b>31.</b> Jesus asked His disciples "Who do people say the Son of Man is?" in Caesarea Philippi.</div>
+        <div class="ptest-q"><b>32.</b> Simon Peter answered, "You are Elijah, the prophet."</div>
+        <div class="ptest-q"><b>33.</b> Jesus said that flesh and blood revealed the truth about Him to Peter.</div>
+        <div class="ptest-q"><b>34.</b> Revelation is God's personal loving communication of who He is and His plan to save us.</div>
+        <div class="ptest-q"><b>35.</b> The Church teaches that Jesus is the perfect revelation of God's love.</div>
+        <div class="ptest-q"><b>36.</b> The Chi-Rho symbol represents the first two Greek letters of Christ's name.</div>
+        <div class="ptest-q"><b>37.</b> The Ichthus symbol represents a bird.</div>
+        <div class="ptest-q"><b>38.</b> In the Apostles' Creed, Jesus was born of the Virgin Mary.</div>
+        <div class="ptest-q"><b>39.</b> Jesus suffered under Pontius Pilate, according to the Apostles' Creed.</div>
+        <div class="ptest-q"><b>40.</b> Efren Peñaflorida is known for the kariton klasrum.</div>
+        <div class="ptest-q"><b>41.</b> Cris "Kesz" Valdez received the International Children's Peace Prize at age 20.</div>
+        <div class="ptest-q"><b>42.</b> Cherrie Atilano founded AGREA Agricultural Systems International.</div>
+        <div class="ptest-q"><b>43.</b> National Heroes Day is celebrated every first Monday of January.</div>
+        <div class="ptest-q"><b>44.</b> An angel appeared to Joseph in a dream and told him to name Mary's Son Jesus.</div>
+        <div class="ptest-q"><b>45.</b> The name "Jesus" means "carpenter."</div>
+
+        <div class="ptest-part-title">Part IV — Multiple Choice</div>
+        <div class="ptest-q"><b>46.</b> Where was Jesus when He asked, "Who do people say the Son of Man is?"<span class="opt">a) Nazareth &nbsp; b) Bethlehem &nbsp; c) Caesarea Philippi &nbsp; d) Jerusalem</span></div>
+        <div class="ptest-q"><b>47.</b> Who said, "You are the Messiah, the Son of the living God"?<span class="opt">a) Andrew &nbsp; b) Simon Peter &nbsp; c) John &nbsp; d) Thomas</span></div>
+        <div class="ptest-q"><b>48.</b> What does the Chi-Rho symbol represent?<span class="opt">a) The Holy Trinity &nbsp; b) The first two Greek letters of Christ's name &nbsp; c) The twelve Apostles &nbsp; d) The Holy Spirit</span></div>
+        <div class="ptest-q"><b>49.</b> What does IHS represent?<span class="opt">a) A prayer book &nbsp; b) The first three letters of Jesus' name in Greek &nbsp; c) A type of cross &nbsp; d) The Ten Commandments</span></div>
+        <div class="ptest-q"><b>50.</b> What creature does the Ichthus symbol depict?<span class="opt">a) Dove &nbsp; b) Lamb &nbsp; c) Fish &nbsp; d) Lion</span></div>
+        <div class="ptest-q"><b>51.</b> In the Apostles' Creed, under whom did Jesus suffer?<span class="opt">a) Herod &nbsp; b) Caesar &nbsp; c) Pontius Pilate &nbsp; d) Pilate's father</span></div>
+        <div class="ptest-q"><b>52.</b> Who was named the 2009 CNN Hero of the Year?<span class="opt">a) Cris Kesz Valdez &nbsp; b) Efren Peñaflorida &nbsp; c) Cherrie Atilano &nbsp; d) Joseph</span></div>
+        <div class="ptest-q"><b>53.</b> What organization did Cherrie Atilano found?<span class="opt">a) DTC &nbsp; b) C3 &nbsp; c) AGREA Agricultural Systems International &nbsp; d) KidsRights</span></div>
+        <div class="ptest-q"><b>54.</b> What award did Kesz Valdez receive in 2012?<span class="opt">a) CNN Hero of the Year &nbsp; b) International Children's Peace Prize &nbsp; c) Nobel Peace Prize &nbsp; d) National Heroes Award</span></div>
+        <div class="ptest-q"><b>55.</b> Who appeared to Joseph in a dream?<span class="opt">a) Moses &nbsp; b) the angel of the Lord &nbsp; c) Elijah &nbsp; d) St. Paul</span></div>
+        <div class="ptest-q"><b>56.</b> What does the name "Jesus" mean?<span class="opt">a) Teacher &nbsp; b) Savior, Redeemer, or Deliverer &nbsp; c) Carpenter &nbsp; d) Shepherd</span></div>
+        <div class="ptest-q"><b>57.</b> Who said, "Christ died for our sins according to the Scriptures"?<span class="opt">a) St. Peter &nbsp; b) St. Paul &nbsp; c) St. John &nbsp; d) St. Joseph</span></div>
+        <div class="ptest-q"><b>58.</b> What is a symbol of Jesus's saving love mentioned in the reading?<span class="opt">a) His baptism &nbsp; b) His death on the Cross &nbsp; c) His birth &nbsp; d) His miracles</span></div>
+        <div class="ptest-q"><b>59.</b> When is National Heroes Day celebrated?<span class="opt">a) Last Monday of August &nbsp; b) First Monday of June &nbsp; c) December 30 &nbsp; d) June 12</span></div>
+        <div class="ptest-q"><b>60.</b> What corporation donated a school building to DTC?<span class="opt">a) Jollibee Foods Corporation &nbsp; b) Universal Robina Corporation &nbsp; c) San Miguel Corporation &nbsp; d) SM Foundation</span></div>
+      </div>
+
+      <!-- ══════════ ANSWER KEY ══════════ -->
+      <div class="notes-section" id="tab-key">
+        <div class="notes-topic">
+          <div class="notes-topic-title">Part I — Matching Type</div>
+          <div class="key-grid">
+            <div class="key-pill">1. <b>D</b></div><div class="key-pill">2. <b>F</b></div><div class="key-pill">3. <b>G</b></div><div class="key-pill">4. <b>H</b></div><div class="key-pill">5. <b>I</b></div>
+            <div class="key-pill">6. <b>M</b></div><div class="key-pill">7. <b>L</b></div><div class="key-pill">8. <b>K</b></div><div class="key-pill">9. <b>J</b></div><div class="key-pill">10. <b>N</b></div>
+            <div class="key-pill">11. <b>A</b></div><div class="key-pill">12. <b>B</b></div><div class="key-pill">13. <b>C</b></div><div class="key-pill">14. <b>E</b></div><div class="key-pill">15. <b>O</b></div>
+          </div>
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">Part II — Fill in the Blank</div>
+          <div class="key-grid">
+            <div class="key-pill">16. <b>Caesarea Philippi</b></div><div class="key-pill">17. <b>Revelation</b></div><div class="key-pill">18. <b>Sacrament</b></div><div class="key-pill">19. <b>kariton klasrum</b></div><div class="key-pill">20. <b>DTC</b></div>
+            <div class="key-pill">21. <b>C3</b></div><div class="key-pill">22. <b>Gifts of Hope</b></div><div class="key-pill">23. <b>Boac, Marinduque</b></div><div class="key-pill">24. <b>last Mon. of Aug.</b></div><div class="key-pill">25. <b>Jesus</b></div>
+            <div class="key-pill">26. <b>Savior</b></div><div class="key-pill">27. <b>Redeemer</b></div><div class="key-pill">28. <b>Cross</b></div><div class="key-pill">29. <b>self-giving love</b></div><div class="key-pill">30. <b>Black Nazarene</b></div>
+          </div>
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">Part III — True or False</div>
+          <div class="key-grid">
+            <div class="key-pill">31. <b>True</b></div><div class="key-pill">32. <b>False</b></div><div class="key-pill">33. <b>False</b></div><div class="key-pill">34. <b>True</b></div><div class="key-pill">35. <b>True</b></div>
+            <div class="key-pill">36. <b>True</b></div><div class="key-pill">37. <b>False</b></div><div class="key-pill">38. <b>True</b></div><div class="key-pill">39. <b>True</b></div><div class="key-pill">40. <b>True</b></div>
+            <div class="key-pill">41. <b>False</b></div><div class="key-pill">42. <b>True</b></div><div class="key-pill">43. <b>False</b></div><div class="key-pill">44. <b>True</b></div><div class="key-pill">45. <b>False</b></div>
+          </div>
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">Part IV — Multiple Choice</div>
+          <div class="key-grid">
+            <div class="key-pill">46. <b>c</b></div><div class="key-pill">47. <b>b</b></div><div class="key-pill">48. <b>b</b></div><div class="key-pill">49. <b>b</b></div><div class="key-pill">50. <b>c</b></div>
+            <div class="key-pill">51. <b>c</b></div><div class="key-pill">52. <b>b</b></div><div class="key-pill">53. <b>c</b></div><div class="key-pill">54. <b>b</b></div><div class="key-pill">55. <b>b</b></div>
+            <div class="key-pill">56. <b>b</b></div><div class="key-pill">57. <b>b</b></div><div class="key-pill">58. <b>b</b></div><div class="key-pill">59. <b>a</b></div><div class="key-pill">60. <b>b</b></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ── Hidden Print Area (Practice Test + Answer Key) ── -->
+<div id="print-area">
+
+  <div class="p-cover">
+    <div class="p-icon">✝️</div>
+    <h1>Grade 4 Religion — Practice Test</h1>
+    <div class="p-sub">Who is Jesus? · Symbols &amp; the Apostles' Creed · Filipino Heroes of Today · The Birth of Jesus</div>
+    <div class="p-info-box">
+      <div><strong>Name:</strong> _____________________________________</div>
+      <div><strong>Section:</strong> ___________________ &nbsp; <strong>Date:</strong> ___________________</div>
+      <div><strong>Score:</strong> _______ / 60</div>
+    </div>
+    <div class="p-instructions">
+      <strong>Instructions:</strong> Read each item carefully. Write your answer on the blank provided (Parts I–III), or write the letter of the correct answer (Part IV). Good luck!
+    </div>
+  </div>
+
+  <div class="p-break">
+  <h2 class="p-part-title">Part I — Matching Type (People &amp; Symbols)</h2>
+  <div class="p-bank">
+    <strong>Word Bank:</strong> (A) Efren Peñaflorida &nbsp; (B) Cris "Kesz" Valdez &nbsp; (C) Cherrie De Erit Atilano &nbsp; (D) Simon Peter &nbsp; (E) Joseph &nbsp; (F) Alpha and Omega &nbsp; (G) Chi-Rho &nbsp; (H) IHS &nbsp; (I) Ichthus &nbsp; (J) St. Paul &nbsp; (K) Pontius Pilate &nbsp; (L) Virgin Mary &nbsp; (M) Holy Spirit &nbsp; (N) John 3:16 &nbsp; (O) Universal Robina Corporation
+  </div>
+  <div class="p-q"><b>1.</b> Answered Jesus, "You are the Messiah, the Son of the living God." <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>2.</b> Symbol representing the beginning and the end. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>3.</b> Symbol representing the first two Greek letters of Christ's name. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>4.</b> Symbol representing the first three letters of Jesus' name in Greek. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>5.</b> Symbol of a fish used by early persecuted Christians. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>6.</b> Conceived Jesus by the power of God, according to the Apostles' Creed. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>7.</b> Mother of Jesus, the Virgin who bore Him. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>8.</b> Roman governor under whom Jesus suffered. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>9.</b> Said, "Christ died for our sins according to the Scriptures." <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>10.</b> Bible verse that says, "For God so loved the world..." <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>11.</b> 2009 CNN Hero of the Year, known for the kariton klasrum. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>12.</b> Received the International Children's Peace Prize in 2012. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>13.</b> Founded AGREA Agricultural Systems International. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>14.</b> To whom the angel of the Lord appeared in a dream. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>15.</b> Donated a two-storey school building to DTC in 2014. <span class="p-blank">&nbsp;</span></div>
+  </div>
+
+  <h2 class="p-part-title">Part II — Fill in the Blank</h2>
+  <div class="p-q"><b>16.</b> Jesus asked His disciples this question while in the region of __________.</div>
+  <div class="p-q"><b>17.</b> According to CFC 101, __________ is God's personal loving communication of who He is.</div>
+  <div class="p-q"><b>18.</b> Because Jesus is truly human, He becomes the __________ of God.</div>
+  <div class="p-q"><b>19.</b> Efren Peñaflorida's mobile classroom is called the __________.</div>
+  <div class="p-q"><b>20.</b> The organization Efren formed with friends in 1997 is called __________.</div>
+  <div class="p-q"><b>21.</b> Kesz's organization that shares food, toys, and clothes with children is called __________.</div>
+  <div class="p-q"><b>22.</b> C3's gift packages to children are called __________.</div>
+  <div class="p-q"><b>23.</b> Cherrie Atilano's model farm for agri-technology is located in __________.</div>
+  <div class="p-q"><b>24.</b> National Heroes Day is celebrated every __________.</div>
+  <div class="p-q"><b>25.</b> The angel told Joseph to name Mary's Son __________.</div>
+  <div class="p-q"><b>26.</b> The name "Jesus" means __________, __________, or __________ (give one).</div>
+  <div class="p-q"><b>27.</b> A __________ is like a hero who frees us from sin through God's mercy and love.</div>
+  <div class="p-q"><b>28.</b> Jesus's death on the __________ is a symbol of His saving love.</div>
+  <div class="p-q"><b>29.</b> We are saved by Jesus's perfect __________ for His Father and for us.</div>
+  <div class="p-q"><b>30.</b> Popular images of Jesus mentioned in the reading include Sto. Niño, Sto. Entierro, and the __________.</div>
+
+  <div class="p-break">
+  <h2 class="p-part-title">Part III — True or False</h2>
+  <div class="p-q"><b>31.</b> Jesus asked His disciples "Who do people say the Son of Man is?" in Caesarea Philippi. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>32.</b> Simon Peter answered, "You are Elijah, the prophet." <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>33.</b> Jesus said that flesh and blood revealed the truth about Him to Peter. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>34.</b> Revelation is God's personal loving communication of who He is and His plan to save us. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>35.</b> The Church teaches that Jesus is the perfect revelation of God's love. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>36.</b> The Chi-Rho symbol represents the first two Greek letters of Christ's name. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>37.</b> The Ichthus symbol represents a bird. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>38.</b> In the Apostles' Creed, Jesus was born of the Virgin Mary. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>39.</b> Jesus suffered under Pontius Pilate, according to the Apostles' Creed. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>40.</b> Efren Peñaflorida is known for the kariton klasrum. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>41.</b> Cris "Kesz" Valdez received the International Children's Peace Prize at age 20. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>42.</b> Cherrie Atilano founded AGREA Agricultural Systems International. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>43.</b> National Heroes Day is celebrated every first Monday of January. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>44.</b> An angel appeared to Joseph in a dream and told him to name Mary's Son Jesus. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>45.</b> The name "Jesus" means "carpenter." <span class="p-blank">&nbsp;</span></div>
+  </div>
+
+  <div class="p-break">
+  <h2 class="p-part-title">Part IV — Multiple Choice</h2>
+  <div class="p-q"><b>46.</b> Where was Jesus when He asked, "Who do people say the Son of Man is?"<span class="p-opt">a) Nazareth &nbsp; b) Bethlehem &nbsp; c) Caesarea Philippi &nbsp; d) Jerusalem</span></div>
+  <div class="p-q"><b>47.</b> Who said, "You are the Messiah, the Son of the living God"?<span class="p-opt">a) Andrew &nbsp; b) Simon Peter &nbsp; c) John &nbsp; d) Thomas</span></div>
+  <div class="p-q"><b>48.</b> What does the Chi-Rho symbol represent?<span class="p-opt">a) The Holy Trinity &nbsp; b) The first two Greek letters of Christ's name &nbsp; c) The twelve Apostles &nbsp; d) The Holy Spirit</span></div>
+  <div class="p-q"><b>49.</b> What does IHS represent?<span class="p-opt">a) A prayer book &nbsp; b) The first three letters of Jesus' name in Greek &nbsp; c) A type of cross &nbsp; d) The Ten Commandments</span></div>
+  <div class="p-q"><b>50.</b> What creature does the Ichthus symbol depict?<span class="p-opt">a) Dove &nbsp; b) Lamb &nbsp; c) Fish &nbsp; d) Lion</span></div>
+  <div class="p-q"><b>51.</b> In the Apostles' Creed, under whom did Jesus suffer?<span class="p-opt">a) Herod &nbsp; b) Caesar &nbsp; c) Pontius Pilate &nbsp; d) Pilate's father</span></div>
+  <div class="p-q"><b>52.</b> Who was named the 2009 CNN Hero of the Year?<span class="p-opt">a) Cris Kesz Valdez &nbsp; b) Efren Peñaflorida &nbsp; c) Cherrie Atilano &nbsp; d) Joseph</span></div>
+  <div class="p-q"><b>53.</b> What organization did Cherrie Atilano found?<span class="p-opt">a) DTC &nbsp; b) C3 &nbsp; c) AGREA Agricultural Systems International &nbsp; d) KidsRights</span></div>
+  <div class="p-q"><b>54.</b> What award did Kesz Valdez receive in 2012?<span class="p-opt">a) CNN Hero of the Year &nbsp; b) International Children's Peace Prize &nbsp; c) Nobel Peace Prize &nbsp; d) National Heroes Award</span></div>
+  <div class="p-q"><b>55.</b> Who appeared to Joseph in a dream?<span class="p-opt">a) Moses &nbsp; b) the angel of the Lord &nbsp; c) Elijah &nbsp; d) St. Paul</span></div>
+  <div class="p-q"><b>56.</b> What does the name "Jesus" mean?<span class="p-opt">a) Teacher &nbsp; b) Savior, Redeemer, or Deliverer &nbsp; c) Carpenter &nbsp; d) Shepherd</span></div>
+  <div class="p-q"><b>57.</b> Who said, "Christ died for our sins according to the Scriptures"?<span class="p-opt">a) St. Peter &nbsp; b) St. Paul &nbsp; c) St. John &nbsp; d) St. Joseph</span></div>
+  <div class="p-q"><b>58.</b> What is a symbol of Jesus's saving love mentioned in the reading?<span class="p-opt">a) His baptism &nbsp; b) His death on the Cross &nbsp; c) His birth &nbsp; d) His miracles</span></div>
+  <div class="p-q"><b>59.</b> When is National Heroes Day celebrated?<span class="p-opt">a) Last Monday of August &nbsp; b) First Monday of June &nbsp; c) December 30 &nbsp; d) June 12</span></div>
+  <div class="p-q"><b>60.</b> What corporation donated a school building to DTC?<span class="p-opt">a) Jollibee Foods Corporation &nbsp; b) Universal Robina Corporation &nbsp; c) San Miguel Corporation &nbsp; d) SM Foundation</span></div>
+  </div>
+
+  <div class="p-break">
+  <h2 class="p-part-title">✅ Complete Answer Key</h2>
+
+  <div class="p-key-part-title">Part I — Matching Type</div>
+  <div class="p-key-grid">
+    <div class="p-key-pill">1. <b>D</b></div><div class="p-key-pill">2. <b>F</b></div><div class="p-key-pill">3. <b>G</b></div><div class="p-key-pill">4. <b>H</b></div><div class="p-key-pill">5. <b>I</b></div>
+    <div class="p-key-pill">6. <b>M</b></div><div class="p-key-pill">7. <b>L</b></div><div class="p-key-pill">8. <b>K</b></div><div class="p-key-pill">9. <b>J</b></div><div class="p-key-pill">10. <b>N</b></div>
+    <div class="p-key-pill">11. <b>A</b></div><div class="p-key-pill">12. <b>B</b></div><div class="p-key-pill">13. <b>C</b></div><div class="p-key-pill">14. <b>E</b></div><div class="p-key-pill">15. <b>O</b></div>
+  </div>
+
+  <div class="p-key-part-title">Part II — Fill in the Blank</div>
+  <div class="p-key-grid">
+    <div class="p-key-pill">16. <b>Caesarea Philippi</b></div><div class="p-key-pill">17. <b>Revelation</b></div><div class="p-key-pill">18. <b>Sacrament</b></div><div class="p-key-pill">19. <b>kariton klasrum</b></div><div class="p-key-pill">20. <b>DTC</b></div>
+    <div class="p-key-pill">21. <b>C3</b></div><div class="p-key-pill">22. <b>Gifts of Hope</b></div><div class="p-key-pill">23. <b>Boac, Marinduque</b></div><div class="p-key-pill">24. <b>last Mon. of Aug.</b></div><div class="p-key-pill">25. <b>Jesus</b></div>
+    <div class="p-key-pill">26. <b>Savior</b></div><div class="p-key-pill">27. <b>Redeemer</b></div><div class="p-key-pill">28. <b>Cross</b></div><div class="p-key-pill">29. <b>self-giving love</b></div><div class="p-key-pill">30. <b>Black Nazarene</b></div>
+  </div>
+
+  <div class="p-key-part-title">Part III — True or False</div>
+  <div class="p-key-grid">
+    <div class="p-key-pill">31. <b>True</b></div><div class="p-key-pill">32. <b>False</b></div><div class="p-key-pill">33. <b>False</b></div><div class="p-key-pill">34. <b>True</b></div><div class="p-key-pill">35. <b>True</b></div>
+    <div class="p-key-pill">36. <b>True</b></div><div class="p-key-pill">37. <b>False</b></div><div class="p-key-pill">38. <b>True</b></div><div class="p-key-pill">39. <b>True</b></div><div class="p-key-pill">40. <b>True</b></div>
+    <div class="p-key-pill">41. <b>False</b></div><div class="p-key-pill">42. <b>True</b></div><div class="p-key-pill">43. <b>False</b></div><div class="p-key-pill">44. <b>True</b></div><div class="p-key-pill">45. <b>False</b></div>
+  </div>
+
+  <div class="p-key-part-title">Part IV — Multiple Choice</div>
+  <div class="p-key-grid">
+    <div class="p-key-pill">46. <b>c</b></div><div class="p-key-pill">47. <b>b</b></div><div class="p-key-pill">48. <b>b</b></div><div class="p-key-pill">49. <b>b</b></div><div class="p-key-pill">50. <b>c</b></div>
+    <div class="p-key-pill">51. <b>c</b></div><div class="p-key-pill">52. <b>b</b></div><div class="p-key-pill">53. <b>c</b></div><div class="p-key-pill">54. <b>b</b></div><div class="p-key-pill">55. <b>b</b></div>
+    <div class="p-key-pill">56. <b>b</b></div><div class="p-key-pill">57. <b>b</b></div><div class="p-key-pill">58. <b>b</b></div><div class="p-key-pill">59. <b>a</b></div><div class="p-key-pill">60. <b>b</b></div>
+  </div>
+  </div>
+
+</div>
+
+</body>
+</html>
