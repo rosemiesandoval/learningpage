@@ -454,15 +454,14 @@ header .sub { font-size: .75rem; color: var(--muted); margin-top: 1px; }
 }
 .notes-def { color: #e9d5ff; }
 .notes-tabs {
-  display: flex; gap: 6px; padding: 12px 22px 0;
+  display: flex; flex-wrap: wrap; gap: 6px 6px; padding: 12px 22px 10px;
   border-bottom: 1px solid var(--border);
-  overflow-x: auto;
 }
 .notes-tab {
-  padding: 7px 16px; border-radius: 12px 12px 0 0;
-  border: 1px solid var(--border); border-bottom: none;
+  padding: 7px 14px; border-radius: 10px;
+  border: 1px solid var(--border);
   background: transparent; color: var(--muted);
-  font-family: 'Nunito', sans-serif; font-size: .8rem; font-weight: 700;
+  font-family: 'Nunito', sans-serif; font-size: .78rem; font-weight: 700;
   cursor: pointer; transition: all .15s; white-space: nowrap;
 }
 .notes-tab.active { background: var(--surface); color: var(--sky); border-color: var(--sky); }
