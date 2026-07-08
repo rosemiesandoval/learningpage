@@ -1,0 +1,1521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🇵🇭 Grade 4 Filipino Reviewer</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Fredoka+One&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --sky: #3b82f6;
+  --sky-dark: #1d4ed8;
+  --mint: #22c55e;
+  --coral: #ef4444;
+  --amber: #fbbf24;
+  --purple: #ef4444;
+  --bg: #0b1220;
+  --surface: #151f38;
+  --surface2: #1b2a4a;
+  --text: #f8fafc;
+  --muted: #94a3b8;
+  --border: #2c3e5c;
+}
+
+body {
+  font-family: 'Nunito', sans-serif;
+  background: var(--bg);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--text);
+  background-image: radial-gradient(ellipse at 20% 20%, rgba(59,130,246,.08) 0%, transparent 60%),
+                    radial-gradient(ellipse at 80% 80%, rgba(239,68,68,.07) 0%, transparent 60%);
+}
+
+header {
+  width: 100%;
+  background: linear-gradient(135deg, #0c1e42, #1d3a6e);
+  border-bottom: 1px solid var(--border);
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 4px 30px rgba(0,0,0,.4);
+}
+
+.header-icon {
+  font-size: 2rem;
+  animation: float 3s ease-in-out infinite;
+}
+@keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+
+header h1 {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.5rem;
+  background: linear-gradient(90deg, var(--sky), var(--purple));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+header .sub { font-size: .75rem; color: var(--muted); margin-top: 1px; }
+
+.header-controls {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.score-pill {
+  background: rgba(167,139,250,.15);
+  border: 1px solid rgba(167,139,250,.3);
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-weight: 800;
+  font-size: .85rem;
+  color: var(--sky);
+}
+
+.audio-btn {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  background: var(--surface2);
+  color: var(--text);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all .2s;
+  display: flex; align-items: center; justify-content: center;
+}
+.audio-btn:hover { background: var(--sky-dark); border-color: var(--sky); }
+.audio-btn.active { background: var(--sky-dark); border-color: var(--sky); color: white; }
+
+.chat-wrap {
+  width: 100%;
+  max-width: 680px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 16px 14px 0;
+}
+
+#chat-box {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding-bottom: 10px;
+  max-height: calc(100vh - 200px);
+  scroll-behavior: smooth;
+}
+
+#chat-box::-webkit-scrollbar { width: 4px; }
+#chat-box::-webkit-scrollbar-track { background: transparent; }
+#chat-box::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+.msg { display: flex; gap: 8px; }
+.msg.user { flex-direction: row-reverse; }
+
+.avatar {
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  font-size: 1rem;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.msg.bot .avatar { background: linear-gradient(135deg, #2e1065, #6d28d9); border: 1.5px solid rgba(167,139,250,.3); }
+.msg.user .avatar { background: linear-gradient(135deg, #6b21a8, #2e1065); border: 1.5px solid rgba(167,139,250,.2); }
+
+.bubble {
+  max-width: 78%;
+  padding: 11px 16px;
+  border-radius: 18px;
+  font-size: .9rem;
+  line-height: 1.6;
+  animation: pop .2s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes pop { from { transform: scale(.88) translateY(6px); opacity:0; } to { transform: scale(1) translateY(0); opacity:1; } }
+
+.msg.bot .bubble {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-bottom-left-radius: 5px;
+  color: var(--text);
+}
+.msg.user .bubble {
+  background: linear-gradient(135deg, var(--sky-dark), #1d4ed8);
+  border-bottom-right-radius: 5px;
+  color: white;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(167,139,250,.12);
+  border: 1.5px solid rgba(167,139,250,.35);
+  color: var(--sky);
+  border-radius: 30px;
+  padding: 5px 13px;
+  margin: 5px 4px 0 0;
+  font-size: .8rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all .15s;
+  user-select: none;
+  font-family: 'Nunito', sans-serif;
+}
+.chip:hover {
+  background: var(--sky-dark);
+  color: white;
+  border-color: var(--sky);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(167,139,250,.3);
+}
+
+/* Multiple choice option buttons */
+.mc-options {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-top: 10px;
+  width: 100%;
+}
+.mc-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255,255,255,.04);
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  padding: 9px 14px;
+  color: var(--text);
+  font-family: 'Nunito', sans-serif;
+  font-size: .88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all .15s;
+  text-align: left;
+  width: 100%;
+}
+.mc-btn:hover:not(:disabled) {
+  background: rgba(167,139,250,.12);
+  border-color: var(--sky);
+  color: var(--sky);
+  transform: translateX(3px);
+}
+.mc-btn .letter {
+  display: flex; align-items: center; justify-content: center;
+  width: 26px; height: 26px;
+  border-radius: 8px;
+  background: rgba(167,139,250,.15);
+  border: 1px solid rgba(167,139,250,.3);
+  color: var(--sky);
+  font-size: .78rem;
+  font-weight: 800;
+  flex-shrink: 0;
+  transition: all .15s;
+}
+.mc-btn:hover:not(:disabled) .letter {
+  background: var(--sky-dark);
+  color: white;
+}
+.mc-btn.correct {
+  background: rgba(52,211,153,.15) !important;
+  border-color: #34d399 !important;
+  color: #34d399 !important;
+  cursor: default;
+}
+.mc-btn.correct .letter { background: #34d399 !important; color: white !important; border-color: #34d399 !important; }
+.mc-btn.wrong {
+  background: rgba(251,113,133,.12) !important;
+  border-color: #fb7185 !important;
+  color: #fb7185 !important;
+  cursor: default;
+}
+.mc-btn.wrong .letter { background: #fb7185 !important; color: white !important; border-color: #fb7185 !important; }
+.mc-btn:disabled { cursor: default; transform: none !important; }
+
+.topic-tag {
+  display: inline-block;
+  background: linear-gradient(135deg, var(--purple), #7c3aed);
+  color: white;
+  font-size: .68rem;
+  font-weight: 800;
+  border-radius: 20px;
+  padding: 2px 10px;
+  margin-bottom: 5px;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+}
+
+/* speaking animation */
+.speaker-wave {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 14px;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+.speaker-wave span {
+  display: block;
+  width: 3px;
+  border-radius: 2px;
+  background: var(--sky);
+  animation: wave 1s ease-in-out infinite;
+}
+.speaker-wave span:nth-child(1) { height: 4px; animation-delay: 0s; }
+.speaker-wave span:nth-child(2) { height: 10px; animation-delay: .1s; }
+.speaker-wave span:nth-child(3) { height: 6px; animation-delay: .2s; }
+.speaker-wave span:nth-child(4) { height: 12px; animation-delay: .15s; }
+.speaker-wave span:nth-child(5) { height: 4px; animation-delay: .05s; }
+@keyframes wave { 0%,100% { transform: scaleY(1); } 50% { transform: scaleY(1.8); } }
+
+.typing {
+  display: flex;
+  gap: 4px;
+  padding: 12px 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  border-bottom-left-radius: 5px;
+  width: fit-content;
+}
+.dot { width: 7px; height: 7px; border-radius: 50%; background: var(--sky); animation: bounce .9s infinite; }
+.dot:nth-child(2) { animation-delay: .15s; }
+.dot:nth-child(3) { animation-delay: .3s; }
+@keyframes bounce { 0%,80%,100% { transform: translateY(0); opacity:.6; } 40% { transform: translateY(-7px); opacity:1; } }
+
+.input-bar {
+  width: 100%;
+  max-width: 680px;
+  padding: 10px 14px 18px;
+  display: flex;
+  gap: 8px;
+  background: var(--bg);
+  position: sticky;
+  bottom: 0;
+}
+
+#user-input {
+  flex: 1;
+  padding: 12px 18px;
+  border: 2px solid var(--border);
+  border-radius: 30px;
+  font-family: 'Nunito', sans-serif;
+  font-size: .92rem;
+  outline: none;
+  background: var(--surface);
+  color: var(--text);
+  transition: border-color .2s, box-shadow .2s;
+}
+#user-input::placeholder { color: var(--muted); }
+#user-input:focus {
+  border-color: var(--sky);
+  box-shadow: 0 0 0 3px rgba(167,139,250,.12);
+}
+
+#send-btn {
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  border: none;
+  background: linear-gradient(135deg, var(--sky), var(--sky-dark));
+  color: white;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 3px 14px rgba(167,139,250,.35);
+  flex-shrink: 0;
+}
+#send-btn:hover { transform: scale(1.08); box-shadow: 0 5px 20px rgba(167,139,250,.5); }
+#send-btn:disabled { opacity: .5; transform: none; }
+
+/* result modal */
+.result-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.7);
+  backdrop-filter: blur(6px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 100;
+  opacity: 0; pointer-events: none;
+  transition: opacity .3s;
+}
+.result-overlay.show { opacity: 1; pointer-events: all; }
+.result-card {
+  background: linear-gradient(135deg, #241640, #1a0f2e);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 36px 40px;
+  text-align: center;
+  max-width: 360px;
+  width: 90%;
+  box-shadow: 0 20px 60px rgba(0,0,0,.5);
+  transform: scale(.9);
+  transition: transform .3s cubic-bezier(.34,1.56,.64,1);
+}
+.result-overlay.show .result-card { transform: scale(1); }
+.result-emoji { font-size: 4rem; margin-bottom: 12px; display: block; }
+.result-title { font-family: 'Fredoka One', cursive; font-size: 1.8rem; margin-bottom: 6px; color: var(--sky); }
+.result-score { font-size: 3rem; font-weight: 900; margin: 10px 0; }
+.result-msg { color: var(--muted); font-size: .9rem; margin-bottom: 20px; }
+.result-btn {
+  background: linear-gradient(135deg, var(--sky), var(--sky-dark));
+  border: none;
+  border-radius: 30px;
+  padding: 12px 30px;
+  color: white;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+  box-shadow: 0 4px 16px rgba(167,139,250,.3);
+}
+.result-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(167,139,250,.5); }
+
+/* ── Notes Panel ─────────────────────────────────────────────── */
+.notes-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.75); backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 200; opacity: 0; pointer-events: none; transition: opacity .3s;
+}
+.notes-overlay.show { opacity: 1; pointer-events: all; }
+.notes-panel {
+  background: linear-gradient(160deg, #1a0f2e, #241640);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  width: 92%; max-width: 720px;
+  max-height: 88vh;
+  display: flex; flex-direction: column;
+  box-shadow: 0 24px 60px rgba(0,0,0,.6);
+  overflow: hidden;
+  transform: translateY(30px);
+  transition: transform .35s cubic-bezier(.34,1.2,.64,1);
+}
+.notes-overlay.show .notes-panel { transform: translateY(0); }
+.notes-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 22px;
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(135deg, #2e106544, #31288444);
+}
+.notes-header h2 { font-family: 'Fredoka One', cursive; font-size: 1.3rem; color: var(--sky); }
+.notes-header-actions { display: flex; align-items: center; gap: 10px; }
+.print-btn {
+  display: flex; align-items: center; gap: 6px;
+  background: rgba(52,211,153,.12);
+  border: 1.5px solid rgba(52,211,153,.4);
+  color: var(--mint);
+  border-radius: 20px;
+  padding: 7px 14px;
+  font-family: 'Nunito', sans-serif;
+  font-size: .78rem;
+  font-weight: 800;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all .15s;
+}
+.print-btn:hover { background: #34d399; color: #1a0f2e; border-color: #34d399; }
+.notes-close {
+  width: 34px; height: 34px; border-radius: 50%;
+  border: 1.5px solid var(--border); background: var(--surface2);
+  color: var(--text); font-size: 1rem; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all .2s;
+}
+.notes-close:hover { background: var(--coral); border-color: var(--coral); }
+.notes-body { overflow-y: auto; padding: 20px 22px; flex: 1; }
+.notes-body::-webkit-scrollbar { width: 4px; }
+.notes-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+.notes-topic { margin-bottom: 28px; }
+.notes-topic-title {
+  font-family: 'Fredoka One', cursive; font-size: 1.05rem;
+  color: var(--sky); margin-bottom: 10px;
+  padding-bottom: 6px; border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 8px;
+}
+.notes-item {
+  display: flex; gap: 10px; align-items: flex-start;
+  padding: 7px 0; border-bottom: 1px solid rgba(255,255,255,.04);
+  font-size: .88rem; line-height: 1.55;
+}
+.notes-item:last-child { border-bottom: none; }
+.notes-term {
+  font-weight: 800; color: var(--amber); min-width: 160px;
+  flex-shrink: 0; font-size: .85rem;
+}
+.notes-def { color: #e9d5ff; }
+.notes-tabs {
+  display: flex; flex-wrap: wrap; gap: 6px 6px; padding: 12px 22px 10px;
+  border-bottom: 1px solid var(--border);
+}
+.notes-tab {
+  padding: 7px 14px; border-radius: 10px;
+  border: 1px solid var(--border);
+  background: transparent; color: var(--muted);
+  font-family: 'Nunito', sans-serif; font-size: .78rem; font-weight: 700;
+  cursor: pointer; transition: all .15s; white-space: nowrap;
+}
+.notes-tab.active { background: var(--surface); color: var(--sky); border-color: var(--sky); }
+.notes-tab:hover:not(.active) { color: var(--text); background: var(--surface2); }
+.notes-section { display: none; }
+.notes-section.active { display: block; }
+
+/* ── Chapter Summary / Tandaan / Memory boxes ─────────────────── */
+.chapter-summary {
+  background: linear-gradient(135deg, rgba(167,139,250,.1), rgba(244,114,182,.08));
+  border: 1px solid rgba(167,139,250,.25);
+  border-left: 4px solid var(--sky);
+  border-radius: 12px;
+  padding: 14px 18px;
+  margin-bottom: 18px;
+  font-size: .88rem;
+  line-height: 1.65;
+  color: #ede9fe;
+}
+.tandaan-box {
+  background: rgba(251,191,36,.08);
+  border: 1px solid rgba(251,191,36,.3);
+  border-left: 4px solid var(--amber);
+  border-radius: 12px;
+  padding: 12px 18px;
+  margin: 14px 0;
+  font-size: .86rem;
+  line-height: 1.6;
+  color: #fde68a;
+}
+.tandaan-label {
+  display: block;
+  font-family: 'Fredoka One', cursive;
+  font-size: .8rem;
+  color: var(--amber);
+  letter-spacing: .5px;
+  margin-bottom: 5px;
+}
+.memory-box {
+  background: rgba(52,211,153,.08);
+  border: 1px solid rgba(52,211,153,.3);
+  border-left: 4px solid var(--mint);
+  border-radius: 12px;
+  padding: 12px 18px;
+  margin: 14px 0 22px;
+  font-size: .86rem;
+  line-height: 1.6;
+  color: #a7f3d0;
+}
+.memory-label {
+  display: block;
+  font-family: 'Fredoka One', cursive;
+  font-size: .8rem;
+  color: var(--mint);
+  letter-spacing: .5px;
+  margin-bottom: 5px;
+}
+.compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0 20px;
+  font-size: .82rem;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.compare-table th {
+  background: linear-gradient(135deg, #2e1065, #581c87);
+  color: var(--sky);
+  text-align: left;
+  padding: 9px 12px;
+  font-size: .78rem;
+  text-transform: uppercase;
+  letter-spacing: .4px;
+}
+.compare-table td {
+  padding: 9px 12px;
+  border-top: 1px solid var(--border);
+  color: #e9d5ff;
+  vertical-align: top;
+}
+.compare-table tr:nth-child(even) td { background: rgba(255,255,255,.02); }
+
+/* ── Practice test ─────────────────────────────────────────────── */
+.ptest-part-title {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1rem;
+  color: var(--purple);
+  margin: 22px 0 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+.ptest-part-title:first-child { margin-top: 0; }
+.ptest-q {
+  font-size: .87rem;
+  line-height: 1.6;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed rgba(255,255,255,.06);
+  color: #ede9fe;
+}
+.ptest-q b { color: var(--sky); }
+.ptest-q .opt { display: block; margin: 2px 0 2px 18px; color: #e9d5ff; }
+.ptest-bank {
+  background: rgba(244,114,182,.08);
+  border: 1px solid rgba(244,114,182,.3);
+  border-radius: 10px;
+  padding: 10px 16px;
+  margin-bottom: 14px;
+  font-size: .82rem;
+  color: #ddd6fe;
+  line-height: 1.6;
+}
+
+/* ── Answer key ─────────────────────────────────────────────────── */
+.key-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.key-pill {
+  background: rgba(167,139,250,.1);
+  border: 1px solid rgba(167,139,250,.25);
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: .78rem;
+  color: #e9d5ff;
+}
+.key-pill b { color: #34d399; }
+
+/* ── Print / Save-as-PDF styles ──────────────────────────────────
+   By default everything is hidden from print. When body carries
+   .printing-test, only #print-area (a light-themed clone of the
+   Practice Test + Answer Key) is shown, laid out for paper. ──── */
+@media print {
+  body * { visibility: hidden; }
+  #print-area, #print-area * { visibility: visible; }
+  #print-area {
+    display: block !important;
+    position: absolute; top: 0; left: 0; width: 100%;
+    background: #fff; color: #241640;
+    font-family: 'Helvetica', Arial, sans-serif;
+    font-size: 10.5pt;
+    line-height: 1.5;
+  }
+  #print-area .p-cover { text-align: center; padding-top: 40px; }
+  #print-area .p-cover .p-icon { font-size: 34pt; }
+  #print-area .p-cover h1 { font-size: 19pt; color: #1d4ed8; margin: 8px 0 4px; }
+  #print-area .p-cover .p-sub { font-size: 10.5pt; color: #b91c1c; margin-bottom: 20px; }
+  #print-area .p-info-box {
+    border: 1.5px solid #c4b5fd; border-radius: 10px;
+    max-width: 460px; margin: 0 auto 20px; padding: 14px 20px;
+    text-align: left; font-size: 10pt;
+  }
+  #print-area .p-info-box div { margin: 6px 0; border-bottom: 1px dotted #e9d5ff; padding-bottom: 6px; }
+  #print-area .p-instructions {
+    max-width: 460px; margin: 0 auto; text-align: left;
+    background: #faf5ff; border: 1px solid #d8b4fe; border-radius: 10px;
+    padding: 12px 18px; font-size: 9.5pt; color: #453072;
+  }
+  #print-area h2.p-part-title {
+    font-size: 12.5pt; color: #fff;
+    background: linear-gradient(135deg, #1d4ed8, #b91c1c) !important;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    padding: 6px 12px; border-radius: 7px; margin: 18px 0 10px;
+    page-break-after: avoid;
+  }
+  #print-area .p-bank {
+    background: #f5f3ff !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    border: 1px solid #c4b5fd; border-radius: 8px; padding: 8px 14px;
+    margin-bottom: 12px; font-size: 9.5pt; color: #4c1d95;
+  }
+  #print-area .p-q {
+    margin-bottom: 8px; padding-bottom: 8px;
+    border-bottom: 1px dotted #ede9fe; font-size: 10pt;
+    page-break-inside: avoid; color: #241640;
+  }
+  #print-area .p-q b { color: #6d28d9; }
+  #print-area .p-q .p-blank { display: inline-block; min-width: 65px; border-bottom: 1px solid #64748b; }
+  #print-area .p-q .p-opt { display: block; margin: 2px 0 0 20px; color: #453072; }
+  #print-area .p-break { page-break-before: always; }
+  #print-area .p-key-part-title {
+    font-size: 11pt; color: #6d28d9; font-weight: bold;
+    margin: 14px 0 8px; border-bottom: 2px solid #6d28d9; padding-bottom: 4px;
+  }
+  #print-area .p-key-grid {
+    display: grid; grid-template-columns: repeat(5, 1fr);
+    gap: 5px 8px; margin-bottom: 14px;
+  }
+  #print-area .p-key-pill {
+    background: #fffbeb !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    border: 1px solid #fcd34d; border-radius: 6px;
+    padding: 4px 8px; font-size: 8.5pt; color: #92400e;
+  }
+  #print-area .p-key-pill b { color: #b45309; }
+  @page { size: letter; margin: 1.5cm 1.8cm; }
+}
+#print-area { display: none; }
+
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-icon">🇵🇭</div>
+  <div>
+    <h1>Filipino Reviewer</h1>
+    <div class="sub">Ang Pangngalan · Konotasyon at Denotasyon · Panghalip Panao</div>
+  </div>
+  <div class="header-controls">
+    <div class="score-pill">⭐ <span id="score-val">0</span> / <span id="total-val">0</span></div>
+    <button class="audio-btn" id="notes-toggle" title="Open Reviewer" onclick="document.getElementById('notes-overlay').classList.add('show')">📖</button>
+    <button class="audio-btn active" id="audio-toggle" title="Toggle Audio">🔊</button>
+  </div>
+</header>
+
+<div class="chat-wrap">
+  <div id="chat-box"></div>
+</div>
+
+<div class="input-bar">
+  <input type="text" id="user-input" placeholder="I-type ang sagot mo dito…" autocomplete="off" />
+  <button id="send-btn">➤</button>
+</div>
+
+<div class="result-overlay" id="result-overlay">
+  <div class="result-card">
+    <span class="result-emoji" id="res-emoji">🏆</span>
+    <div class="result-title">Tapos na ang Quiz!</div>
+    <div class="result-score"><span id="res-score">0</span>/<span id="res-total">0</span></div>
+    <div class="result-msg" id="res-msg">Magaling!</div>
+    <button class="result-btn" onclick="restartApp()">🔄 Ulitin Muli</button>
+  </div>
+</div>
+
+<script>
+// ─── DATA ──────────────────────────────────────────────────────────────────
+const topics = {
+  "ANG PANGNGALAN": [
+    { q: "Ano ang tawag sa bahagi ng pananalita na tumutukoy sa ngalan ng tao, hayop, bagay, lugar, at pangyayari?", a: "pangngalan", hint: "Ito ang paksa ng buong araling ito." },
+    { q: "Ano ang tawag sa pangngalang tumutukoy sa tiyak na ngalan ng tao, hayop, bagay, lugar, at pangyayari?", a: "pangngalang pantangi", hint: "Halimbawa nito ay Marikina at Poland." },
+    { q: "Magbigay ng isang halimbawa ng pangngalang pantangi.", a: "Miel, Poland, Marikina, Poppy, Pauleen, o French Bulldog", hint: "Ito ay laging nagsisimula sa malaking titik." },
+    { q: "Ano ang tawag sa pangngalang tumutukoy sa di-tiyak na ngalan ng tao, bagay, hayop, lugar, at pangyayari?", a: "pangngalang pambalana", hint: "Halimbawa nito ay ama, ina, at lungsod." },
+    { q: "Magbigay ng isang halimbawa ng pangngalang pambalana.", a: "ama, ina, lapis, lungsod, paligsahan, kapistahan, aso, o pusa", hint: "Hindi ito nagsisimula sa malaking titik." },
+    { q: "Ano ang tawag sa pangngalang tumutukoy sa mga bagay na maaaring makita o mahawakan?", a: "kongkretong pangngalan", hint: "Tinatawag din itong tahas na pangngalan." },
+    { q: "Magbigay ng isang halimbawa ng kongkretong pangngalan.", a: "tao, luha, lamok, ngiti, bundok, bantayog, elepante, o gusali", hint: "Isipin ang mga bagay na kaya mong hawakan o makita." },
+    { q: "Ano ang tawag sa pangngalang hindi nakikita at hindi nahahawakan, gaya ng damdamin at kaisipan?", a: "di-kongkretong pangngalan", hint: "Tinatawag din itong basal na pangngalan." },
+    { q: "Magbigay ng isang halimbawa ng di-kongkretong pangngalan.", a: "pag-ibig, diwa, damdamin, sakripisyo, nasyonalismo, o kalayaan", hint: "Isipin ang mga bagay na hindi mo kayang hawakan." },
+    { q: "Anong batas sa Pilipinas ang naglalayong itaguyod ang kapakanan at proteksiyon ng mga hayop?", a: "Senate Bill 2458", hint: "Ito ang binagong batas para sa kapakanan ng mga hayop." },
+  ],
+  "KONOTASYON AT DENOTASYON": [
+    { q: "Ano ang tawag sa literal na kahulugan ng salita na matatagpuan sa diksiyonaryo?", a: "denotasyon", hint: "Ito ang tuwiran o eksaktong kahulugan." },
+    { q: "Ano ang tawag sa personal o pinalawak na pagpapakahulugan sa isang salita na nauugnay sa emosyonal, sosyal, o kultural na konsepto?", a: "konotasyon", hint: "Ito ang di-tuwirang o damdaming kahulugan ng salita." },
+    { q: "Ano ang denotasyon ng salitang \"bato\"?", a: "matigas na bagay na makikita sa kalupaan", hint: "Isipin ang literal na bagay na ito sa lupa." },
+    { q: "Ano ang konotasyon ng salitang \"bato\" kapag ginamit sa pariralang \"pusong bato\"?", a: "pagiging matigas ang loob o walang awa", hint: "Isipin ang damdamin, hindi ang literal na bagay." },
+    { q: "Ano ang konotasyon ng salitang \"sakit\"?", a: "pagdurusa", hint: "Isipin ang emosyonal na kahulugan nito." },
+    { q: "Ano ang denotasyon ng salitang \"sakit\"?", a: "isang kondisyon ng katawan", hint: "Isipin ang literal na kahulugan sa diksiyonaryo." },
+    { q: "Ano ang konotasyon ng pariralang \"gintong kutsara\"?", a: "mayaman", hint: "Isipin ang kahulugan nito kapag inilalarawan ang isang tao." },
+    { q: "Sa pangungusap na \"Si Gelo ay tinamaan ng bato sa ulo,\" ginamit ba ang salitang \"bato\" bilang denotasyon o konotasyon?", a: "denotasyon", hint: "Literal na bato ang tinutukoy dito." },
+    { q: "Sa pangungusap na \"May pusong bato siya sa pagtulong sa iba,\" ginamit ba ang salitang \"bato\" bilang denotasyon o konotasyon?", a: "konotasyon", hint: "Hindi ito literal na bato — damdamin ang tinutukoy." },
+    { q: "Ano ang nagpapaiba sa kahulugan ng isang salita, kung ito ba ay denotasyon o konotasyon?", a: "ang konteksto o paraan ng paggamit nito sa pangungusap", hint: "Tingnan kung paano ginamit ang salita." },
+  ],
+  "PANGHALIP PANAO: PANAUHAN AT KAILANAN": [
+    { q: "Ano ang tawag sa taong nagsasalita, kinakausap, o tinutukoy sa pangungusap?", a: "panauhan", hint: "May tatlong uri nito: una, ikalawa, at ikatlo." },
+    { q: "Ano ang tawag sa bilang ng mga taong nagsasalita, kinakausap, o pinag-uusapan?", a: "kailanan", hint: "May tatlong uri nito: isahan, dalawahan, at maramihan." },
+    { q: "Anong uri ng panauhan ang tumutukoy sa taong nagsasalita o kasama ang nagsasalita?", a: "unang panauhan", hint: "Ito ang panauhan ni \"ako\" at \"kami/tayo.\"" },
+    { q: "Anong uri ng panauhan ang tumutukoy sa tao o mga taong kinakausap?", a: "ikalawang panauhan", hint: "Ito ang panauhan ni \"ikaw\" at \"kayo.\"" },
+    { q: "Anong uri ng panauhan ang tumutukoy sa tao o mga taong pinag-uusapan?", a: "ikatlong panauhan", hint: "Ito ang panauhan ni \"siya\" at \"sila.\"" },
+    { q: "Anong kailanan ang ginagamit kapag nauukol lamang sa isang tao?", a: "isahan", hint: "Tulad ng \"ako\" o \"ikaw.\"" },
+    { q: "Anong kailanan ang ginagamit kapag nauukol sa dalawang tao — ang nagsasalita at ang kausap?", a: "dalawahan", hint: "Tulad ng \"tayo\" kapag \"ikaw at ako\" ang tinutukoy." },
+    { q: "Anong kailanan ang ginagamit kapag nauukol sa marami o higit sa dalawang tao?", a: "maramihan", hint: "Tulad ng \"kami,\" \"kayo,\" o \"sila.\"" },
+    { q: "Magbigay ng isang halimbawang panghalip sa unang panauhan, isahan.", a: "ako, akin, o ko", hint: "Tumutukoy ito sa nagsasalita lamang." },
+    { q: "Magbigay ng isang halimbawang panghalip sa ikatlong panauhan, maramihan.", a: "sila, kanila, o nila", hint: "Tumutukoy ito sa maraming taong pinag-uusapan." },
+    { q: "Sa pangungusap na \"Kayo ba ang mag-aayos ng inyong gamit?\" anong panauhan at kailanan ang \"kayo\"?", a: "ikalawang panauhan, maramihan", hint: "Tumutukoy ito sa mga taong kinakausap." },
+  ],
+};
+
+const trueOrFalse = [
+  { q: "Ang pangngalang pantangi ay tumutukoy sa tiyak na ngalan ng tao, hayop, bagay, lugar, at pangyayari.", a: "true" },
+  { q: "Ang \"Marikina\" ay halimbawa ng pangngalang pambalana.", a: "false" },
+  { q: "Ang \"aso\" at \"pusa\" ay mga halimbawa ng pangngalang pantangi.", a: "false" },
+  { q: "Ang kongkretong pangngalan ay tinatawag ding tahas na pangngalan.", a: "true" },
+  { q: "Ang \"pag-ibig\" at \"kalayaan\" ay mga halimbawa ng kongkretong pangngalan.", a: "false" },
+  { q: "Ang di-kongkretong pangngalan ay tinatawag ding basal na pangngalan.", a: "true" },
+  { q: "Ang denotasyon ay ang literal na kahulugan ng salita sa diksiyonaryo.", a: "true" },
+  { q: "Ang konotasyon ay palaging katulad ng literal na kahulugan sa diksiyonaryo.", a: "false" },
+  { q: "Ang \"mayaman\" ay konotasyon ng \"gintong kutsara.\"", a: "true" },
+  { q: "May tatlong uri ng panauhan: una, ikalawa, at ikatlo.", a: "true" },
+  { q: "Ang \"isahan\" ay ginagamit kapag tumutukoy sa dalawang tao.", a: "false" },
+  { q: "Ang \"kami\" ay halimbawa ng panghalip sa unang panauhan.", a: "true" },
+  { q: "Ang \"sila\" ay halimbawa ng panghalip sa ikatlong panauhan, maramihan.", a: "true" },
+  { q: "Ang \"ikaw\" ay panghalip sa unang panauhan.", a: "false" },
+  { q: "Ang Senate Bill 2458 ay tungkol sa kapakanan ng mga hayop sa Pilipinas.", a: "true" },
+];
+
+// ─── STATE ──────────────────────────────────────────────────────────────────
+let state = {
+  awaiting: 'menu',
+  mode: null,
+  questions: [],
+  qIndex: 0,
+  score: 0,
+  total: 0,
+  hintUsed: false,
+  audioEnabled: true,
+};
+
+// ─── TTS ────────────────────────────────────────────────────────────────────
+let speaking = false;
+function speak(text) {
+  if (!state.audioEnabled) return;
+  window.speechSynthesis.cancel();
+  const clean = text.replace(/<[^>]+>/g, '').replace(/[✝️🌟✅❌💡⏭️🏆😊💪🔄🔲📚🙏]/g, '');
+  const utt = new SpeechSynthesisUtterance(clean);
+  utt.rate = 1.0;
+  utt.pitch = 1.05;
+  utt.volume = 1;
+  // prefer a clear English voice
+  const voices = window.speechSynthesis.getVoices();
+  const preferred = voices.find(v => v.lang.startsWith('en') && v.name.includes('Female'))
+    || voices.find(v => v.lang.startsWith('en'))
+    || voices[0];
+  if (preferred) utt.voice = preferred;
+  utt.onstart = () => { speaking = true; showWave(true); };
+  utt.onend = utt.onerror = () => { speaking = false; showWave(false); };
+  window.speechSynthesis.speak(utt);
+}
+
+function showWave(on) {
+  document.querySelectorAll('.speaker-wave').forEach(w => {
+    w.style.display = on ? 'inline-flex' : 'none';
+  });
+}
+
+// ensure voices loaded
+window.speechSynthesis.onvoiceschanged = () => {};
+
+// ─── UI HELPERS ─────────────────────────────────────────────────────────────
+const chatBox = document.getElementById('chat-box');
+const input = document.getElementById('user-input');
+const sendBtn = document.getElementById('send-btn');
+const scoreVal = document.getElementById('score-val');
+const totalVal = document.getElementById('total-val');
+
+function scrollBottom() { chatBox.scrollTop = chatBox.scrollHeight; }
+
+function addMessage(role, html, speakText) {
+  const div = document.createElement('div');
+  div.className = `msg ${role}`;
+  const avatar = document.createElement('div');
+  avatar.className = 'avatar';
+  avatar.textContent = role === 'bot' ? '🤖' : '🧑';
+  const bubble = document.createElement('div');
+  bubble.className = 'bubble';
+
+  if (role === 'bot') {
+    bubble.innerHTML = html + '<span class="speaker-wave" style="display:none"><span></span><span></span><span></span><span></span><span></span></span>';
+  } else {
+    bubble.innerHTML = html;
+  }
+
+  div.appendChild(avatar);
+  div.appendChild(bubble);
+  chatBox.appendChild(div);
+  scrollBottom();
+  bindChips();
+
+  if (role === 'bot') {
+    const txt = speakText || html.replace(/<[^>]+>/g, ' ');
+    setTimeout(() => speak(txt), 300);
+  }
+}
+
+function addTyping() {
+  const d = document.createElement('div');
+  d.className = 'msg bot'; d.id = 'typing';
+  d.innerHTML = '<div class="avatar">🤖</div><div class="typing"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>';
+  chatBox.appendChild(d); scrollBottom();
+}
+function removeTyping() { const t = document.getElementById('typing'); if (t) t.remove(); }
+
+function bindChips() {
+  document.querySelectorAll('.chip:not([data-bound])').forEach(c => {
+    c.dataset.bound = '1';
+    c.addEventListener('click', () => handleUserMessage(c.dataset.val));
+  });
+}
+
+function updateScore() {
+  scoreVal.textContent = state.score;
+  totalVal.textContent = state.total;
+}
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function normalize(s) {
+  return s.toLowerCase().trim().replace(/\s+/g, ' ');
+}
+
+function checkAnswer(user, correct) {
+  const u = normalize(user);
+  const c = normalize(correct);
+  if (u === c) return true;
+  const parts = c.split(/[,;\/]/);
+  for (const p of parts) {
+    if (u.includes(p.trim()) && p.trim().length > 3) return true;
+  }
+  if (c.includes(u) && u.length > 4) return true;
+  return false;
+}
+
+function showResult() {
+  const pct = Math.round((state.score / state.total) * 100);
+  const emoji = pct >= 90 ? '🏆' : pct >= 70 ? '🌟' : pct >= 50 ? '😊' : '💪';
+  const msg = pct >= 90 ? 'Napakagaling! Perpekto ka halos!' : pct >= 70 ? 'Magaling! Ituloy mo lang!' : pct >= 50 ? 'Magandang simula! I-review at subukan ulit!' : 'Magpatuloy sa pag-aaral — kaya mo yan!';
+  document.getElementById('res-emoji').textContent = emoji;
+  document.getElementById('res-score').textContent = state.score;
+  document.getElementById('res-total').textContent = state.total;
+  document.getElementById('res-msg').textContent = msg;
+  document.getElementById('result-overlay').classList.add('show');
+  speak(`Quiz complete! Your score is ${state.score} out of ${state.total}. ${msg}`);
+}
+
+function restartApp() {
+  document.getElementById('result-overlay').classList.remove('show');
+  state = { awaiting: 'menu', mode: null, questions: [], allAnswers: [], qIndex: 0, score: 0, total: 0, hintUsed: false, audioEnabled: state.audioEnabled };
+  chatBox.innerHTML = '';
+  document.querySelector('.input-bar').style.display = 'flex';
+  updateScore();
+  showMenu();
+}
+
+// ─── GAME LOGIC ─────────────────────────────────────────────────────────────
+function showMenu() {
+  addMessage('bot',
+    `👋 <strong>Kumusta! Ako ang iyong Filipino Reviewer para sa Grade 4!</strong><br>Tutulungan kita sa pagrepaso ng <em>Ang Pangngalan</em>, <em>Konotasyon at Denotasyon</em>, at <em>Panghalip Panao: Panauhan at Kailanan</em>.<br><br>Ano ang gusto mong gawin?<br>
+    <span class="chip" data-val="1">1️⃣ Pag-aralan ang Isang Paksa</span>
+    <span class="chip" data-val="2">2️⃣ True or False Quiz</span>
+    <span class="chip" data-val="3">3️⃣ Buong Pagrepaso — Lahat ng Paksa</span>`,
+    "Kumusta! Ako ang iyong Grade 4 Filipino Reviewer. Ano ang gusto mong gawin? Pag-aralan ang isang paksa, sagutin ang True or False quiz, o gawin ang buong pagrepaso ng lahat ng paksa?"
+  );
+  state.awaiting = 'menu';
+}
+
+// ─── MULTIPLE CHOICE HELPERS ─────────────────────────────────────────────────
+function getAllAnswers() {
+  const answers = [];
+  for (const qs of Object.values(topics)) {
+    for (const q of qs) answers.push(q.a);
+  }
+  return answers;
+}
+
+function generateChoices(correctAnswer, allAnswers) {
+  const pool = allAnswers.filter(a => a !== correctAnswer);
+  const distractors = shuffle(pool).slice(0, 3);
+  return shuffle([correctAnswer, ...distractors]);
+}
+
+function buildMCHtml(q, num, choices) {
+  const tag = q.topic ? `<span class="topic-tag">${q.topic}</span><br>` : '';
+  const letters = ['A','B','C','D'];
+  const btns = choices.map((c, i) =>
+    `<button class="mc-btn" data-answer="${encodeURIComponent(c)}" onclick="handleMCClick(this)">
+      <span class="letter">${letters[i]}</span>${c}
+    </button>`
+  ).join('');
+  return `${tag}<strong>Q${num} of ${state.total}:</strong> ${q.q}<div class="mc-options">${btns}</div>`;
+}
+
+function handleMCClick(btn) {
+  const allBtns = btn.closest('.mc-options').querySelectorAll('.mc-btn');
+  allBtns.forEach(b => b.disabled = true);
+
+  const chosen = decodeURIComponent(btn.dataset.answer);
+  const q = state.questions[state.qIndex];
+  const correct = chosen === q.a;
+
+  allBtns.forEach(b => {
+    if (decodeURIComponent(b.dataset.answer) === q.a) b.classList.add('correct');
+  });
+  if (!correct) btn.classList.add('wrong');
+
+  setTimeout(() => {
+    if (correct) {
+      state.score++;
+      addMessage('bot', `✅ <strong>Tama!</strong> +1 point! Ang sagot ay: <strong>${q.a}</strong>`, `Correct! The answer is: ${q.a}`);
+    } else {
+      addMessage('bot', `❌ <strong>Hindi tama!</strong> Ang sagot mo: <em>${chosen}</em><br>✏️ Ang tamang sagot ay: <strong>${q.a}</strong>`, `Not quite! The correct answer is: ${q.a}`);
+    }
+    state.qIndex++;
+    updateScore();
+    if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+    else setTimeout(showResult, 900);
+  }, 650);
+}
+
+function nextQuestion() {
+  const qi = state.qIndex;
+  const q = state.questions[qi];
+  const num = qi + 1;
+  const isTF = state.mode === 'tf';
+  const isFull = state.mode === 'full';
+  const tag = q.topic ? `<span class="topic-tag">${q.topic}</span><br>` : '';
+
+  if (isFull) {
+    const choices = generateChoices(q.a, state.allAnswers);
+    const html = buildMCHtml(q, num, choices);
+    addMessage('bot', html, `Question ${num}. ${q.q}`);
+    return;
+  }
+
+  const chips = isTF
+    ? `<br><span class="chip" data-val="true">✅ True</span><span class="chip" data-val="false">❌ False</span>`
+    : `<br><small style="color:var(--muted)">I-type ang iyong sagot · i-type ang <em>hint</em> para sa clue · i-type ang <em>skip</em> para lumaktaw</small>`;
+  const html = `${tag}<strong>Q${num} of ${state.total}:</strong> ${q.q}${chips}`;
+  addMessage('bot', html, `Question ${num}. ${q.q}`);
+}
+
+function handleUserMessage(msg) {
+  if (!msg.trim()) return;
+  window.speechSynthesis.cancel();
+  addMessage('user', msg.replace(/</g, '&lt;'));
+
+  input.disabled = true;
+  sendBtn.disabled = true;
+  addTyping();
+
+  setTimeout(() => {
+    removeTyping();
+    input.disabled = false;
+    sendBtn.disabled = false;
+    input.focus();
+    processMessage(msg);
+  }, 500);
+}
+
+function processMessage(msg) {
+  const aw = state.awaiting;
+
+  if (aw === 'menu') {
+    if (msg === '1') {
+      state.awaiting = 'topic';
+      const keys = Object.keys(topics);
+      let chips = keys.map((t, i) => `<span class="chip" data-val="${i+1}">${i+1}. ${t}</span>`).join(' ');
+      addMessage('bot', `📚 Which topic would you like to review?<br>${chips}`, 'Which topic would you like to review?');
+    } else if (msg === '2') {
+      document.querySelector('.input-bar').style.display = 'flex';
+      state.mode = 'tf';
+      state.questions = shuffle(trueOrFalse);
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'tf_answer';
+      updateScore();
+      addMessage('bot', `🔲 <strong>True or False Quiz!</strong> ${state.total} tanong. Simulan na natin!`, `True or False Quiz! ${state.total} questions. Let's go!`);
+      setTimeout(nextQuestion, 800);
+    } else if (msg === '3') {
+      state.mode = 'full';
+      const all = [];
+      for (const [topicName, qs] of Object.entries(topics)) {
+        qs.forEach(q => all.push({ ...q, topic: topicName }));
+      }
+      state.questions = shuffle(all);
+      state.allAnswers = getAllAnswers();
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'mc_answer';
+      updateScore();
+      document.querySelector('.input-bar').style.display = 'none';
+      addMessage('bot', `🌟 <strong>Buong Pagrepaso — Multiple Choice!</strong> ${state.total} tanong mula sa lahat ng paksa. I-click ang sagot mo!`, `Full Review! Multiple Choice! ${state.total} questions. Click your answer!`);
+      setTimeout(nextQuestion, 800);
+    } else {
+      addMessage('bot',
+        `Mangyaring pumili ng opsyon:<br><span class="chip" data-val="1">1️⃣ Pag-aralan ang Isang Paksa</span><span class="chip" data-val="2">2️⃣ True or False Quiz</span><span class="chip" data-val="3">3️⃣ Buong Pagrepaso</span>`,
+        'Please choose an option: Study a Topic, True or False Quiz, or Full Review.'
+      );
+    }
+    return;
+  }
+
+  if (aw === 'topic') {
+    const keys = Object.keys(topics);
+    const idx = parseInt(msg) - 1;
+    if (keys[idx]) {
+      const topicName = keys[idx];
+      state.mode = 'topic';
+      state.questions = shuffle(topics[topicName]);
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'answer';
+      updateScore();
+      addMessage('bot', `📚 <strong>${topicName}</strong> — ${state.total} questions. Let's begin!`, `${topicName}. ${state.total} questions. Let's begin!`);
+      setTimeout(nextQuestion, 800);
+    } else {
+      const chips = keys.map((t, i) => `<span class="chip" data-val="${i+1}">${i+1}. ${t}</span>`).join(' ');
+      addMessage('bot', `Please pick a valid topic:<br>${chips}`, 'Please pick a valid topic.');
+    }
+    return;
+  }
+
+  if (aw === 'answer') {
+    const q = state.questions[state.qIndex];
+    const m = normalize(msg);
+
+    if (m === 'hint') {
+      state.hintUsed = true;
+      addMessage('bot', `💡 <strong>Hint:</strong> ${q.hint}`, `Hint: ${q.hint}`);
+      return;
+    }
+    if (m === 'skip') {
+      addMessage('bot', `⏭️ Nilaktawan! Ang sagot ay: <strong>${q.a}</strong>`, `Skipped. The answer was: ${q.a}`);
+      state.qIndex++;
+      state.hintUsed = false;
+      if (state.qIndex < state.total) {
+        setTimeout(nextQuestion, 600);
+      } else { showResult(); }
+      return;
+    }
+
+    const correct = checkAnswer(msg, q.a);
+    if (correct) {
+      if (!state.hintUsed) state.score++;
+      const note = state.hintUsed ? ' (hint used — no point awarded)' : ' Plus one point!';
+      addMessage('bot', `✅ <strong>Tama!</strong>${state.hintUsed ? ' <em>(gumamit ng hint — walang point)</em>' : ' +1 point!'} Ang sagot ay: <strong>${q.a}</strong>`, `Correct!${note} The answer is: ${q.a}`);
+    } else {
+      addMessage('bot', `❌ <strong>Hindi tama!</strong> Ang sagot mo: <em>${msg}</em><br>✏️ Ang tamang sagot ay: <strong>${q.a}</strong>`, `Not quite! The correct answer is: ${q.a}`);
+    }
+    state.qIndex++;
+    state.hintUsed = false;
+    updateScore();
+
+    if (state.qIndex < state.total) {
+      setTimeout(nextQuestion, 900);
+    } else { setTimeout(showResult, 900); }
+    return;
+  }
+
+  if (aw === 'tf_answer') {
+    const q = state.questions[state.qIndex];
+    let ans = normalize(msg);
+    if (ans === 't') ans = 'true';
+    if (ans === 'f') ans = 'false';
+
+    if (ans === 'true' || ans === 'false') {
+      const correct = ans === q.a;
+      if (correct) {
+        state.score++;
+        addMessage('bot', `✅ <strong>Tama!</strong> Ito ay <strong>${q.a.toUpperCase()}</strong>.`, `Correct! It is ${q.a}.`);
+      } else {
+        addMessage('bot', `❌ <strong>Mali!</strong> Ang sagot mo: <em>${ans === 'true' ? 'True' : 'False'}</em><br>✏️ Ang tamang sagot ay: <strong>${q.a.toUpperCase()}</strong>`, `Wrong! The correct answer is ${q.a}.`);
+      }
+      state.qIndex++;
+      updateScore();
+
+      if (state.qIndex < state.total) {
+        setTimeout(nextQuestion, 900);
+      } else { setTimeout(showResult, 900); }
+    } else {
+      addMessage('bot',
+        `Please answer True or False:<br><span class="chip" data-val="true">✅ True</span><span class="chip" data-val="false">❌ False</span>`,
+        'Please answer True or False.'
+      );
+    }
+    return;
+  }
+}
+
+// ─── CONTROLS ────────────────────────────────────────────────────────────────
+sendBtn.addEventListener('click', () => {
+  handleUserMessage(input.value);
+  input.value = '';
+});
+input.addEventListener('keydown', e => {
+  if (e.key === 'Enter') {
+    handleUserMessage(input.value);
+    input.value = '';
+  }
+});
+
+document.getElementById('audio-toggle').addEventListener('click', function() {
+  state.audioEnabled = !state.audioEnabled;
+  this.textContent = state.audioEnabled ? '🔊' : '🔇';
+  this.classList.toggle('active', state.audioEnabled);
+  if (!state.audioEnabled) window.speechSynthesis.cancel();
+});
+
+// ─── INIT ────────────────────────────────────────────────────────────────────
+window.addEventListener('load', () => {
+  // warm up voices
+  window.speechSynthesis.getVoices();
+  showMenu();
+});
+
+function printPracticeTest() {
+  document.body.classList.add('printing-test');
+  window.print();
+}
+window.addEventListener('afterprint', () => {
+  document.body.classList.remove('printing-test');
+});
+
+function switchTab(tabId, btn) {
+  document.querySelectorAll('.notes-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.notes-tab').forEach(b => b.classList.remove('active'));
+  document.getElementById(tabId).classList.add('active');
+  btn.classList.add('active');
+}
+
+</script>
+
+
+<!-- ── Reviewer Panel ── -->
+<div class="notes-overlay" id="notes-overlay">
+  <div class="notes-panel">
+    <div class="notes-header">
+      <h2>📖 Filipino — Buong Reviewer</h2>
+      <div class="notes-header-actions">
+        <button class="print-btn" onclick="printPracticeTest()" title="Print or Save the Practice Test &amp; Answer Key as PDF">🖨️ Print Test &amp; Key</button>
+        <button class="notes-close" onclick="document.getElementById('notes-overlay').classList.remove('show')">✕</button>
+      </div>
+    </div>
+    <div class="notes-tabs">
+      <button class="notes-tab active" onclick="switchTab('tab-regular', this)">🏷️ Ang Pangngalan</button>
+      <button class="notes-tab" onclick="switchTab('tab-irregular', this)">🎭 Konotasyon/Denotasyon</button>
+      <button class="notes-tab" onclick="switchTab('tab-countmass', this)">🗣️ Panghalip Panao</button>
+      <button class="notes-tab" onclick="switchTab('tab-ptest', this)">📝 Practice Test</button>
+      <button class="notes-tab" onclick="switchTab('tab-key', this)">✅ Answer Key</button>
+    </div>
+    <div class="notes-body">
+
+      <!-- ══════════ CHAPTER 1: ANG PANGNGALAN ══════════ -->
+      <div class="notes-section active" id="tab-regular">
+        <div class="chapter-summary">
+          📚 <strong>Buod ng Aralin:</strong> Ang <strong>pangngalan</strong> ay bahagi ng pananalita na tumutukoy sa ngalan ng tao, hayop, bagay, lugar, at pangyayari. May dalawang uri ito ayon sa katiyakan: ang <strong>pangngalang pantangi</strong> na tumutukoy sa tiyak na ngalan (Marikina, Poppy), at ang <strong>pangngalang pambalana</strong> na tumutukoy sa di-tiyak na ngalan (lungsod, aso). May dalawa ring kategorya ayon sa pagiging nakikita: ang <strong>kongkretong pangngalan</strong> na maaaring makita o mahawakan (bundok, elepante), at ang <strong>di-kongkretong pangngalan</strong> o <strong>basal na pangngalan</strong> na hindi nakikita o nahahawakan gaya ng damdamin at kaisipan (pag-ibig, kalayaan).
+        </div>
+
+        <table class="compare-table">
+          <tr><th>Uri ng Pangngalan</th><th>Halimbawa</th></tr>
+          <tr><td>🏷️ Pangngalang Pantangi — tiyak na ngalan</td><td>Miel, Poland, Marikina, Poppy, Pauleen, French Bulldog</td></tr>
+          <tr><td>📛 Pangngalang Pambalana — di-tiyak na ngalan</td><td>ama, ina, lapis, lungsod, paligsahan, kapistahan, aso, pusa</td></tr>
+          <tr><td>👁️ Kongkretong Pangngalan — nakikita/nahahawakan</td><td>tao, luha, lamok, ngiti, bundok, bantayog, elepante, gusali</td></tr>
+          <tr><td>💭 Di-kongkretong Pangngalan (Basal) — hindi nakikita</td><td>pag-ibig, diwa, damdamin, sakripisyo, nasyonalismo, kalayaan</td></tr>
+        </table>
+
+        <div class="tandaan-box">
+          <span class="tandaan-label">📌 TANDAAN</span>
+          Ang pangngalang pantangi ay <strong>laging nagsisimula sa malaking titik</strong> dahil tiyak na ngalan ito, tulad ng "Marikina" o "Pauleen." Ang pangngalang pambalana naman ay hindi.
+        </div>
+
+        <div class="memory-box">
+          <span class="memory-label">🧠 Memory Trick</span>
+          <strong>"Malaki ang Pantangi, maliit ang Pambalana"</strong> — kung may malaking titik sa simula, tiyak na ito'y pantangi! Para sa kongkreto at di-kongkreto naman: <strong>Nahahawakan mo? = Kongkreto. Nadarama mo lang? = Di-kongkreto.</strong>
+        </div>
+      </div>
+
+      <!-- ══════════ CHAPTER 2: KONOTASYON AT DENOTASYON ══════════ -->
+      <div class="notes-section" id="tab-irregular">
+        <div class="chapter-summary">
+          📚 <strong>Buod ng Aralin:</strong> Ang <strong>denotasyon</strong> at <strong>konotasyon</strong> ay dalawang uri ng pagpapakahulugan ng isang salita. Ang <strong>denotasyon</strong> ay ang <strong>literal na kahulugan</strong> ng salita na matatagpuan sa diksiyonaryo. Samantala, ang <strong>konotasyon</strong> ay ang <strong>personal o pinalawak na pagpapakahulugan</strong> sa isang salita na nauugnay sa emosyonal, sosyal, o kultural na konsepto. Nagbabago ang kahulugan ng isang salita depende sa <strong>konteksto</strong> o sa paraan ng paggamit nito sa pangungusap.
+        </div>
+
+        <table class="compare-table">
+          <tr><th>Salita</th><th>Denotasyon</th><th>Konotasyon</th></tr>
+          <tr><td>bato</td><td>matigas na bagay na makikita sa kalupaan</td><td>pagiging matigas (ang loob)</td></tr>
+          <tr><td>sakit</td><td>isang kondisyon ng katawan</td><td>pagdurusa</td></tr>
+          <tr><td>gintong kutsara</td><td>kutsara na gawa sa ginto</td><td>mayaman</td></tr>
+        </table>
+
+        <div class="tandaan-box">
+          <span class="tandaan-label">📌 TANDAAN</span>
+          Halimbawa: "Si Gelo ay tinamaan ng <strong>bato</strong> sa ulo" — <em>denotasyon</em> ito. Pero "May pusong <strong>bato</strong> siya sa pagtulong sa iba" — <em>konotasyon</em> na ito, dahil damdamin na ang tinutukoy, hindi literal na bato.
+        </div>
+
+        <div class="memory-box">
+          <span class="memory-label">🧠 Memory Trick</span>
+          <strong>Denotasyon = Diksiyonaryo. Konotasyon = Kahulugang Konektado sa Damdamin.</strong> Parehong nagsisimula sa "D" at "K" — Diksiyonaryo at Konektado!
+        </div>
+      </div>
+
+      <!-- ══════════ CHAPTER 3: PANGHALIP PANAO — PANAUHAN AT KAILANAN ══════════ -->
+      <div class="notes-section" id="tab-countmass">
+        <div class="chapter-summary">
+          📚 <strong>Buod ng Aralin:</strong> Ang mga <strong>panghalip panao</strong> ay ginagamit na panghalili o pamalit sa ngalan ng tao. May <strong>panauhan</strong> ito — ang taong nagsasalita (una), kinakausap (ikalawa), o tinutukoy (ikatlo) — at may <strong>kailanan</strong> — ang bilang ng mga taong tinutukoy: <strong>isahan</strong> (isang tao), <strong>dalawahan</strong> (nagsasalita at kausap), o <strong>maramihan</strong> (higit sa dalawa).
+        </div>
+
+        <table class="compare-table">
+          <tr><th>Panauhan</th><th>Isahan</th><th>Dalawahan/Maramihan</th></tr>
+          <tr><td>Una (Nagsasalita)</td><td>ako, akin, ko</td><td>tayo, kami, natin, namin, atin, amin</td></tr>
+          <tr><td>Ikalawa (Kausap)</td><td>ikaw, ka, mo, iyo</td><td>kayo, inyo, ninyo</td></tr>
+          <tr><td>Ikatlo (Pinag-uusapan)</td><td>siya, niya, kaniya</td><td>sila, kanila, nila</td></tr>
+        </table>
+
+        <div class="tandaan-box">
+          <span class="tandaan-label">📌 TANDAAN</span>
+          Ang <strong>"tayo"</strong> ay dalawahan kapag ang tinutukoy ay <em>"ikaw at ako"</em> — kaya ibang-iba ito sa <strong>"kami,"</strong> na hindi kasama ang kausap.
+        </div>
+
+        <div class="memory-box">
+          <span class="memory-label">🧠 Memory Trick</span>
+          <strong>Ako = Nagsasalita. Ikaw = Kausap. Siya = Pinag-uusapan.</strong> Isip mo na lang: sino ang "aktor" sa pangungusap — ikaw mismo, ang katabi mo, o ang wala rito?
+        </div>
+      </div>
+
+      <!-- ══════════ PRACTICE TEST ══════════ -->
+      <div class="notes-section" id="tab-ptest">
+        <p style="font-size:.82rem;color:var(--muted);margin-bottom:14px;">📝 Isang kompletong practice test na may <strong>60 aytem</strong> na sumasaklaw sa tatlong kabanata.</p>
+
+        <div class="ptest-part-title">Part I — Matching Type (Pagtutugma)</div>
+        <div class="ptest-bank">
+          <strong>Word Bank:</strong> (A) Pangngalang Pantangi &nbsp; (B) Pangngalang Pambalana &nbsp; (C) Kongkretong Pangngalan &nbsp; (D) Di-kongkretong Pangngalan
+        </div>
+        <div class="ptest-q"><b>1.</b> Poland ____</div>
+        <div class="ptest-q"><b>2.</b> lapis ____</div>
+        <div class="ptest-q"><b>3.</b> bundok ____</div>
+        <div class="ptest-q"><b>4.</b> nasyonalismo ____</div>
+        <div class="ptest-q"><b>5.</b> Pauleen ____</div>
+        <div class="ptest-q"><b>6.</b> kapistahan ____</div>
+        <div class="ptest-q"><b>7.</b> gusali ____</div>
+        <div class="ptest-q"><b>8.</b> kalayaan ____</div>
+        <div class="ptest-q"><b>9.</b> French Bulldog ____</div>
+        <div class="ptest-q"><b>10.</b> lungsod ____</div>
+        <div class="ptest-q"><b>11.</b> elepante ____</div>
+        <div class="ptest-q"><b>12.</b> sakripisyo ____</div>
+        <div class="ptest-q"><b>13.</b> Marikina ____</div>
+        <div class="ptest-q"><b>14.</b> paligsahan ____</div>
+        <div class="ptest-q"><b>15.</b> bantayog ____</div>
+
+        <div class="ptest-part-title">Part II — Fill in the Blank (PANTANGI, PAMBALANA, KONGKRETO, o DI-KONGKRETO)</div>
+        <div class="ptest-q"><b>16.</b> Miel __________</div>
+        <div class="ptest-q"><b>17.</b> ina __________</div>
+        <div class="ptest-q"><b>18.</b> luha __________</div>
+        <div class="ptest-q"><b>19.</b> diwa __________</div>
+        <div class="ptest-q"><b>20.</b> Poppy __________</div>
+        <div class="ptest-q"><b>21.</b> lapis __________</div>
+        <div class="ptest-q"><b>22.</b> bantayog __________</div>
+        <div class="ptest-q"><b>23.</b> nasyonalismo __________</div>
+        <div class="ptest-q"><b>24.</b> Poland __________</div>
+        <div class="ptest-q"><b>25.</b> paligsahan __________</div>
+        <div class="ptest-q"><b>26.</b> elepante __________</div>
+        <div class="ptest-q"><b>27.</b> sakripisyo __________</div>
+        <div class="ptest-q"><b>28.</b> Pauleen __________</div>
+        <div class="ptest-q"><b>29.</b> kapistahan __________</div>
+        <div class="ptest-q"><b>30.</b> pag-ibig __________</div>
+
+        <div class="ptest-part-title">Part III — True or False</div>
+        <div class="ptest-q"><b>31.</b> Ang pangngalang pantangi ay tumutukoy sa tiyak na ngalan ng tao, hayop, bagay, lugar, at pangyayari.</div>
+        <div class="ptest-q"><b>32.</b> Ang "Marikina" ay halimbawa ng pangngalang pambalana.</div>
+        <div class="ptest-q"><b>33.</b> Ang "aso" at "pusa" ay mga halimbawa ng pangngalang pantangi.</div>
+        <div class="ptest-q"><b>34.</b> Ang kongkretong pangngalan ay tinatawag ding tahas na pangngalan.</div>
+        <div class="ptest-q"><b>35.</b> Ang "pag-ibig" at "kalayaan" ay mga halimbawa ng kongkretong pangngalan.</div>
+        <div class="ptest-q"><b>36.</b> Ang di-kongkretong pangngalan ay tinatawag ding basal na pangngalan.</div>
+        <div class="ptest-q"><b>37.</b> Ang denotasyon ay ang literal na kahulugan ng salita sa diksiyonaryo.</div>
+        <div class="ptest-q"><b>38.</b> Ang konotasyon ay palaging katulad ng literal na kahulugan sa diksiyonaryo.</div>
+        <div class="ptest-q"><b>39.</b> Ang "mayaman" ay konotasyon ng "gintong kutsara."</div>
+        <div class="ptest-q"><b>40.</b> May tatlong uri ng panauhan: una, ikalawa, at ikatlo.</div>
+        <div class="ptest-q"><b>41.</b> Ang "isahan" ay ginagamit kapag tumutukoy sa dalawang tao.</div>
+        <div class="ptest-q"><b>42.</b> Ang "kami" ay halimbawa ng panghalip sa unang panauhan.</div>
+        <div class="ptest-q"><b>43.</b> Ang "sila" ay halimbawa ng panghalip sa ikatlong panauhan, maramihan.</div>
+        <div class="ptest-q"><b>44.</b> Ang "ikaw" ay panghalip sa unang panauhan.</div>
+        <div class="ptest-q"><b>45.</b> Ang Senate Bill 2458 ay tungkol sa kapakanan ng mga hayop sa Pilipinas.</div>
+
+        <div class="ptest-part-title">Part IV — Multiple Choice</div>
+        <div class="ptest-q"><b>46.</b> Alin sa mga sumusunod ang halimbawa ng pangngalang pantangi?<span class="opt">a) bansa &nbsp; b) Pilipinas &nbsp; c) lungsod &nbsp; d) bayan</span></div>
+        <div class="ptest-q"><b>47.</b> Alin sa mga sumusunod ang halimbawa ng pangngalang pambalana?<span class="opt">a) Marikina &nbsp; b) Poppy &nbsp; c) aso &nbsp; d) French Bulldog</span></div>
+        <div class="ptest-q"><b>48.</b> Alin sa mga sumusunod ang kongkretong pangngalan?<span class="opt">a) kalayaan &nbsp; b) bundok &nbsp; c) pag-ibig &nbsp; d) diwa</span></div>
+        <div class="ptest-q"><b>49.</b> Alin sa mga sumusunod ang di-kongkretong pangngalan?<span class="opt">a) gusali &nbsp; b) elepante &nbsp; c) sakripisyo &nbsp; d) luha</span></div>
+        <div class="ptest-q"><b>50.</b> Ano ang tawag sa literal na kahulugan ng salita?<span class="opt">a) konotasyon &nbsp; b) denotasyon &nbsp; c) idyoma &nbsp; d) simili</span></div>
+        <div class="ptest-q"><b>51.</b> Ano ang tawag sa personal o emosyonal na kahulugan ng salita?<span class="opt">a) denotasyon &nbsp; b) konotasyon &nbsp; c) pangngalan &nbsp; d) pandiwa</span></div>
+        <div class="ptest-q"><b>52.</b> Sa pangungusap na "May pusong bato siya," ang salitang "bato" ay ginamit bilang:<span class="opt">a) denotasyon &nbsp; b) konotasyon &nbsp; c) pangngalang pantangi &nbsp; d) pang-uri</span></div>
+        <div class="ptest-q"><b>53.</b> Ilang uri ng panauhan mayroon ang panghalip panao?<span class="opt">a) isa &nbsp; b) dalawa &nbsp; c) tatlo &nbsp; d) apat</span></div>
+        <div class="ptest-q"><b>54.</b> Alin ang panghalip sa ikalawang panauhan, maramihan?<span class="opt">a) kami &nbsp; b) kayo &nbsp; c) sila &nbsp; d) tayo</span></div>
+        <div class="ptest-q"><b>55.</b> Alin ang panghalip sa unang panauhan, isahan?<span class="opt">a) ako &nbsp; b) ikaw &nbsp; c) siya &nbsp; d) kayo</span></div>
+        <div class="ptest-q"><b>56.</b> Alin ang panghalip sa ikatlong panauhan, isahan?<span class="opt">a) tayo &nbsp; b) kami &nbsp; c) siya &nbsp; d) kayo</span></div>
+        <div class="ptest-q"><b>57.</b> "Kaniyang" ay panghalip sa:<span class="opt">a) unang panauhan &nbsp; b) ikalawang panauhan &nbsp; c) ikatlong panauhan &nbsp; d) wala sa nabanggit</span></div>
+        <div class="ptest-q"><b>58.</b> Anong batas ang naglalayong protektahan ang mga hayop sa Pilipinas?<span class="opt">a) Republic Act 386 &nbsp; b) Senate Bill 2458 &nbsp; c) Batas Militar &nbsp; d) Magna Carta</span></div>
+        <div class="ptest-q"><b>59.</b> Ano ang tawag sa paraan ng pagsasaayos ng impormasyon gamit ang mga larawan o grapikong pantulong?<span class="opt">a) pangngalan &nbsp; b) nakalarawang balangkas &nbsp; c) panghalip &nbsp; d) denotasyon</span></div>
+        <div class="ptest-q"><b>60.</b> Alin sa mga sumusunod ang tamang kailanan kapag tumutukoy sa "ikaw at ako"?<span class="opt">a) isahan &nbsp; b) dalawahan &nbsp; c) maramihan &nbsp; d) wala sa nabanggit</span></div>
+      </div>
+
+      <!-- ══════════ ANSWER KEY ══════════ -->
+      <div class="notes-section" id="tab-key">
+        <div class="notes-topic">
+          <div class="notes-topic-title">Part I — Matching Type</div>
+          <div class="key-grid">
+            <div class="key-pill">1. <b>A</b></div><div class="key-pill">2. <b>B</b></div><div class="key-pill">3. <b>C</b></div><div class="key-pill">4. <b>D</b></div><div class="key-pill">5. <b>A</b></div>
+            <div class="key-pill">6. <b>B</b></div><div class="key-pill">7. <b>C</b></div><div class="key-pill">8. <b>D</b></div><div class="key-pill">9. <b>A</b></div><div class="key-pill">10. <b>B</b></div>
+            <div class="key-pill">11. <b>C</b></div><div class="key-pill">12. <b>D</b></div><div class="key-pill">13. <b>A</b></div><div class="key-pill">14. <b>B</b></div><div class="key-pill">15. <b>C</b></div>
+          </div>
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">Part II — Fill in the Blank</div>
+          <div class="key-grid">
+            <div class="key-pill">16. <b>Pantangi</b></div><div class="key-pill">17. <b>Pambalana</b></div><div class="key-pill">18. <b>Kongkreto</b></div><div class="key-pill">19. <b>Di-kongkreto</b></div><div class="key-pill">20. <b>Pantangi</b></div>
+            <div class="key-pill">21. <b>Pambalana</b></div><div class="key-pill">22. <b>Kongkreto</b></div><div class="key-pill">23. <b>Di-kongkreto</b></div><div class="key-pill">24. <b>Pantangi</b></div><div class="key-pill">25. <b>Pambalana</b></div>
+            <div class="key-pill">26. <b>Kongkreto</b></div><div class="key-pill">27. <b>Di-kongkreto</b></div><div class="key-pill">28. <b>Pantangi</b></div><div class="key-pill">29. <b>Pambalana</b></div><div class="key-pill">30. <b>Di-kongkreto</b></div>
+          </div>
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">Part III — True or False</div>
+          <div class="key-grid">
+            <div class="key-pill">31. <b>True</b></div><div class="key-pill">32. <b>False</b></div><div class="key-pill">33. <b>False</b></div><div class="key-pill">34. <b>True</b></div><div class="key-pill">35. <b>False</b></div>
+            <div class="key-pill">36. <b>True</b></div><div class="key-pill">37. <b>True</b></div><div class="key-pill">38. <b>False</b></div><div class="key-pill">39. <b>True</b></div><div class="key-pill">40. <b>True</b></div>
+            <div class="key-pill">41. <b>False</b></div><div class="key-pill">42. <b>True</b></div><div class="key-pill">43. <b>True</b></div><div class="key-pill">44. <b>False</b></div><div class="key-pill">45. <b>True</b></div>
+          </div>
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">Part IV — Multiple Choice</div>
+          <div class="key-grid">
+            <div class="key-pill">46. <b>b</b></div><div class="key-pill">47. <b>c</b></div><div class="key-pill">48. <b>b</b></div><div class="key-pill">49. <b>c</b></div><div class="key-pill">50. <b>b</b></div>
+            <div class="key-pill">51. <b>b</b></div><div class="key-pill">52. <b>b</b></div><div class="key-pill">53. <b>c</b></div><div class="key-pill">54. <b>b</b></div><div class="key-pill">55. <b>a</b></div>
+            <div class="key-pill">56. <b>c</b></div><div class="key-pill">57. <b>c</b></div><div class="key-pill">58. <b>b</b></div><div class="key-pill">59. <b>b</b></div><div class="key-pill">60. <b>b</b></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ── Hidden Print Area (Practice Test + Answer Key) ── -->
+<div id="print-area">
+
+  <div class="p-cover">
+    <div class="p-icon">🇵🇭</div>
+    <h1>Grade 4 Filipino — Practice Test</h1>
+    <div class="p-sub">Ang Pangngalan · Konotasyon at Denotasyon · Panghalip Panao: Panauhan at Kailanan</div>
+    <div class="p-info-box">
+      <div><strong>Pangalan:</strong> _____________________________________</div>
+      <div><strong>Seksiyon:</strong> ___________________ &nbsp; <strong>Petsa:</strong> ___________________</div>
+      <div><strong>Iskor:</strong> _______ / 60</div>
+    </div>
+    <div class="p-instructions">
+      <strong>Panuto:</strong> Basahing mabuti ang bawat aytem. Isulat ang sagot sa patlang na ibinigay (Parte I–III), o isulat ang titik ng tamang sagot (Parte IV). Good luck!
+    </div>
+  </div>
+
+  <div class="p-break">
+  <h2 class="p-part-title">Part I — Matching Type (Pagtutugma)</h2>
+  <div class="p-bank">
+    <strong>Word Bank:</strong> (A) Pangngalang Pantangi &nbsp; (B) Pangngalang Pambalana &nbsp; (C) Kongkretong Pangngalan &nbsp; (D) Di-kongkretong Pangngalan
+  </div>
+  <div class="p-q"><b>1.</b> Poland <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>2.</b> lapis <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>3.</b> bundok <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>4.</b> nasyonalismo <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>5.</b> Pauleen <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>6.</b> kapistahan <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>7.</b> gusali <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>8.</b> kalayaan <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>9.</b> French Bulldog <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>10.</b> lungsod <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>11.</b> elepante <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>12.</b> sakripisyo <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>13.</b> Marikina <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>14.</b> paligsahan <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>15.</b> bantayog <span class="p-blank">&nbsp;</span></div>
+  </div>
+
+  <h2 class="p-part-title">Part II — Fill in the Blank (PANTANGI, PAMBALANA, KONGKRETO, o DI-KONGKRETO)</h2>
+  <div class="p-q"><b>16.</b> Miel <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>17.</b> ina <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>18.</b> luha <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>19.</b> diwa <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>20.</b> Poppy <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>21.</b> lapis <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>22.</b> bantayog <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>23.</b> nasyonalismo <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>24.</b> Poland <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>25.</b> paligsahan <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>26.</b> elepante <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>27.</b> sakripisyo <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>28.</b> Pauleen <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>29.</b> kapistahan <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>30.</b> pag-ibig <span class="p-blank">&nbsp;</span></div>
+
+  <div class="p-break">
+  <h2 class="p-part-title">Part III — True or False</h2>
+  <div class="p-q"><b>31.</b> Ang pangngalang pantangi ay tumutukoy sa tiyak na ngalan ng tao, hayop, bagay, lugar, at pangyayari. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>32.</b> Ang "Marikina" ay halimbawa ng pangngalang pambalana. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>33.</b> Ang "aso" at "pusa" ay mga halimbawa ng pangngalang pantangi. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>34.</b> Ang kongkretong pangngalan ay tinatawag ding tahas na pangngalan. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>35.</b> Ang "pag-ibig" at "kalayaan" ay mga halimbawa ng kongkretong pangngalan. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>36.</b> Ang di-kongkretong pangngalan ay tinatawag ding basal na pangngalan. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>37.</b> Ang denotasyon ay ang literal na kahulugan ng salita sa diksiyonaryo. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>38.</b> Ang konotasyon ay palaging katulad ng literal na kahulugan sa diksiyonaryo. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>39.</b> Ang "mayaman" ay konotasyon ng "gintong kutsara." <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>40.</b> May tatlong uri ng panauhan: una, ikalawa, at ikatlo. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>41.</b> Ang "isahan" ay ginagamit kapag tumutukoy sa dalawang tao. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>42.</b> Ang "kami" ay halimbawa ng panghalip sa unang panauhan. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>43.</b> Ang "sila" ay halimbawa ng panghalip sa ikatlong panauhan, maramihan. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>44.</b> Ang "ikaw" ay panghalip sa unang panauhan. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>45.</b> Ang Senate Bill 2458 ay tungkol sa kapakanan ng mga hayop sa Pilipinas. <span class="p-blank">&nbsp;</span></div>
+  </div>
+
+  <div class="p-break">
+  <h2 class="p-part-title">Part IV — Multiple Choice</h2>
+  <div class="p-q"><b>46.</b> Alin sa mga sumusunod ang halimbawa ng pangngalang pantangi?<span class="p-opt">a) bansa &nbsp; b) Pilipinas &nbsp; c) lungsod &nbsp; d) bayan</span></div>
+  <div class="p-q"><b>47.</b> Alin sa mga sumusunod ang halimbawa ng pangngalang pambalana?<span class="p-opt">a) Marikina &nbsp; b) Poppy &nbsp; c) aso &nbsp; d) French Bulldog</span></div>
+  <div class="p-q"><b>48.</b> Alin sa mga sumusunod ang kongkretong pangngalan?<span class="p-opt">a) kalayaan &nbsp; b) bundok &nbsp; c) pag-ibig &nbsp; d) diwa</span></div>
+  <div class="p-q"><b>49.</b> Alin sa mga sumusunod ang di-kongkretong pangngalan?<span class="p-opt">a) gusali &nbsp; b) elepante &nbsp; c) sakripisyo &nbsp; d) luha</span></div>
+  <div class="p-q"><b>50.</b> Ano ang tawag sa literal na kahulugan ng salita?<span class="p-opt">a) konotasyon &nbsp; b) denotasyon &nbsp; c) idyoma &nbsp; d) simili</span></div>
+  <div class="p-q"><b>51.</b> Ano ang tawag sa personal o emosyonal na kahulugan ng salita?<span class="p-opt">a) denotasyon &nbsp; b) konotasyon &nbsp; c) pangngalan &nbsp; d) pandiwa</span></div>
+  <div class="p-q"><b>52.</b> Sa pangungusap na "May pusong bato siya," ang salitang "bato" ay ginamit bilang:<span class="p-opt">a) denotasyon &nbsp; b) konotasyon &nbsp; c) pangngalang pantangi &nbsp; d) pang-uri</span></div>
+  <div class="p-q"><b>53.</b> Ilang uri ng panauhan mayroon ang panghalip panao?<span class="p-opt">a) isa &nbsp; b) dalawa &nbsp; c) tatlo &nbsp; d) apat</span></div>
+  <div class="p-q"><b>54.</b> Alin ang panghalip sa ikalawang panauhan, maramihan?<span class="p-opt">a) kami &nbsp; b) kayo &nbsp; c) sila &nbsp; d) tayo</span></div>
+  <div class="p-q"><b>55.</b> Alin ang panghalip sa unang panauhan, isahan?<span class="p-opt">a) ako &nbsp; b) ikaw &nbsp; c) siya &nbsp; d) kayo</span></div>
+  <div class="p-q"><b>56.</b> Alin ang panghalip sa ikatlong panauhan, isahan?<span class="p-opt">a) tayo &nbsp; b) kami &nbsp; c) siya &nbsp; d) kayo</span></div>
+  <div class="p-q"><b>57.</b> "Kaniyang" ay panghalip sa:<span class="p-opt">a) unang panauhan &nbsp; b) ikalawang panauhan &nbsp; c) ikatlong panauhan &nbsp; d) wala sa nabanggit</span></div>
+  <div class="p-q"><b>58.</b> Anong batas ang naglalayong protektahan ang mga hayop sa Pilipinas?<span class="p-opt">a) Republic Act 386 &nbsp; b) Senate Bill 2458 &nbsp; c) Batas Militar &nbsp; d) Magna Carta</span></div>
+  <div class="p-q"><b>59.</b> Ano ang tawag sa paraan ng pagsasaayos ng impormasyon gamit ang mga larawan o grapikong pantulong?<span class="p-opt">a) pangngalan &nbsp; b) nakalarawang balangkas &nbsp; c) panghalip &nbsp; d) denotasyon</span></div>
+  <div class="p-q"><b>60.</b> Alin sa mga sumusunod ang tamang kailanan kapag tumutukoy sa "ikaw at ako"?<span class="p-opt">a) isahan &nbsp; b) dalawahan &nbsp; c) maramihan &nbsp; d) wala sa nabanggit</span></div>
+  </div>
+
+  <div class="p-break">
+  <h2 class="p-part-title">✅ Kompletong Answer Key</h2>
+
+  <div class="p-key-part-title">Part I — Matching Type</div>
+  <div class="p-key-grid">
+    <div class="p-key-pill">1. <b>A</b></div><div class="p-key-pill">2. <b>B</b></div><div class="p-key-pill">3. <b>C</b></div><div class="p-key-pill">4. <b>D</b></div><div class="p-key-pill">5. <b>A</b></div>
+    <div class="p-key-pill">6. <b>B</b></div><div class="p-key-pill">7. <b>C</b></div><div class="p-key-pill">8. <b>D</b></div><div class="p-key-pill">9. <b>A</b></div><div class="p-key-pill">10. <b>B</b></div>
+    <div class="p-key-pill">11. <b>C</b></div><div class="p-key-pill">12. <b>D</b></div><div class="p-key-pill">13. <b>A</b></div><div class="p-key-pill">14. <b>B</b></div><div class="p-key-pill">15. <b>C</b></div>
+  </div>
+
+  <div class="p-key-part-title">Part II — Fill in the Blank</div>
+  <div class="p-key-grid">
+    <div class="p-key-pill">16. <b>Pantangi</b></div><div class="p-key-pill">17. <b>Pambalana</b></div><div class="p-key-pill">18. <b>Kongkreto</b></div><div class="p-key-pill">19. <b>Di-kongkreto</b></div><div class="p-key-pill">20. <b>Pantangi</b></div>
+    <div class="p-key-pill">21. <b>Pambalana</b></div><div class="p-key-pill">22. <b>Kongkreto</b></div><div class="p-key-pill">23. <b>Di-kongkreto</b></div><div class="p-key-pill">24. <b>Pantangi</b></div><div class="p-key-pill">25. <b>Pambalana</b></div>
+    <div class="p-key-pill">26. <b>Kongkreto</b></div><div class="p-key-pill">27. <b>Di-kongkreto</b></div><div class="p-key-pill">28. <b>Pantangi</b></div><div class="p-key-pill">29. <b>Pambalana</b></div><div class="p-key-pill">30. <b>Di-kongkreto</b></div>
+  </div>
+
+  <div class="p-key-part-title">Part III — True or False</div>
+  <div class="p-key-grid">
+    <div class="p-key-pill">31. <b>True</b></div><div class="p-key-pill">32. <b>False</b></div><div class="p-key-pill">33. <b>False</b></div><div class="p-key-pill">34. <b>True</b></div><div class="p-key-pill">35. <b>False</b></div>
+    <div class="p-key-pill">36. <b>True</b></div><div class="p-key-pill">37. <b>True</b></div><div class="p-key-pill">38. <b>False</b></div><div class="p-key-pill">39. <b>True</b></div><div class="p-key-pill">40. <b>True</b></div>
+    <div class="p-key-pill">41. <b>False</b></div><div class="p-key-pill">42. <b>True</b></div><div class="p-key-pill">43. <b>True</b></div><div class="p-key-pill">44. <b>False</b></div><div class="p-key-pill">45. <b>True</b></div>
+  </div>
+
+  <div class="p-key-part-title">Part IV — Multiple Choice</div>
+  <div class="p-key-grid">
+    <div class="p-key-pill">46. <b>b</b></div><div class="p-key-pill">47. <b>c</b></div><div class="p-key-pill">48. <b>b</b></div><div class="p-key-pill">49. <b>c</b></div><div class="p-key-pill">50. <b>b</b></div>
+    <div class="p-key-pill">51. <b>b</b></div><div class="p-key-pill">52. <b>b</b></div><div class="p-key-pill">53. <b>c</b></div><div class="p-key-pill">54. <b>b</b></div><div class="p-key-pill">55. <b>a</b></div>
+    <div class="p-key-pill">56. <b>c</b></div><div class="p-key-pill">57. <b>c</b></div><div class="p-key-pill">58. <b>b</b></div><div class="p-key-pill">59. <b>b</b></div><div class="p-key-pill">60. <b>b</b></div>
+  </div>
+  </div>
+
+</div>
+
+</body>
+</html>
