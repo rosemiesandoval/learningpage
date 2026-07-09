@@ -1,0 +1,1525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>📐 Grade 4 Math Reviewer</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Fredoka+One&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --sky: #38bdf8;
+  --sky-dark: #0284c7;
+  --mint: #34d399;
+  --coral: #fb7185;
+  --amber: #fbbf24;
+  --purple: #818cf8;
+  --bg: #0b1526;
+  --surface: #142238;
+  --surface2: #1b2c48;
+  --text: #f0f9ff;
+  --muted: #93b4d1;
+  --border: #274162;
+}
+
+body {
+  font-family: 'Nunito', sans-serif;
+  background: var(--bg);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--text);
+  background-image: radial-gradient(ellipse at 20% 20%, rgba(56,189,248,.07) 0%, transparent 60%),
+                    radial-gradient(ellipse at 80% 80%, rgba(129,140,248,.07) 0%, transparent 60%);
+}
+
+header {
+  width: 100%;
+  background: linear-gradient(135deg, #0c1f3d, #1e3a63);
+  border-bottom: 1px solid var(--border);
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 4px 30px rgba(0,0,0,.4);
+}
+
+.header-icon {
+  font-size: 2rem;
+  animation: float 3s ease-in-out infinite;
+}
+@keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+
+header h1 {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.5rem;
+  background: linear-gradient(90deg, var(--sky), var(--purple));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+header .sub { font-size: .75rem; color: var(--muted); margin-top: 1px; }
+
+.header-controls {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.score-pill {
+  background: rgba(167,139,250,.15);
+  border: 1px solid rgba(167,139,250,.3);
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-weight: 800;
+  font-size: .85rem;
+  color: var(--sky);
+}
+
+.audio-btn {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  background: var(--surface2);
+  color: var(--text);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all .2s;
+  display: flex; align-items: center; justify-content: center;
+}
+.audio-btn:hover { background: var(--sky-dark); border-color: var(--sky); }
+.audio-btn.active { background: var(--sky-dark); border-color: var(--sky); color: white; }
+
+.chat-wrap {
+  width: 100%;
+  max-width: 680px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 16px 14px 0;
+}
+
+#chat-box {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding-bottom: 10px;
+  max-height: calc(100vh - 200px);
+  scroll-behavior: smooth;
+}
+
+#chat-box::-webkit-scrollbar { width: 4px; }
+#chat-box::-webkit-scrollbar-track { background: transparent; }
+#chat-box::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+.msg { display: flex; gap: 8px; }
+.msg.user { flex-direction: row-reverse; }
+
+.avatar {
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  font-size: 1rem;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.msg.bot .avatar { background: linear-gradient(135deg, #2e1065, #6d28d9); border: 1.5px solid rgba(167,139,250,.3); }
+.msg.user .avatar { background: linear-gradient(135deg, #6b21a8, #2e1065); border: 1.5px solid rgba(167,139,250,.2); }
+
+.bubble {
+  max-width: 78%;
+  padding: 11px 16px;
+  border-radius: 18px;
+  font-size: .9rem;
+  line-height: 1.6;
+  animation: pop .2s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes pop { from { transform: scale(.88) translateY(6px); opacity:0; } to { transform: scale(1) translateY(0); opacity:1; } }
+
+.msg.bot .bubble {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-bottom-left-radius: 5px;
+  color: var(--text);
+}
+.msg.user .bubble {
+  background: linear-gradient(135deg, var(--sky-dark), #1d4ed8);
+  border-bottom-right-radius: 5px;
+  color: white;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(167,139,250,.12);
+  border: 1.5px solid rgba(167,139,250,.35);
+  color: var(--sky);
+  border-radius: 30px;
+  padding: 5px 13px;
+  margin: 5px 4px 0 0;
+  font-size: .8rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all .15s;
+  user-select: none;
+  font-family: 'Nunito', sans-serif;
+}
+.chip:hover {
+  background: var(--sky-dark);
+  color: white;
+  border-color: var(--sky);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(167,139,250,.3);
+}
+
+/* Multiple choice option buttons */
+.mc-options {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-top: 10px;
+  width: 100%;
+}
+.mc-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255,255,255,.04);
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  padding: 9px 14px;
+  color: var(--text);
+  font-family: 'Nunito', sans-serif;
+  font-size: .88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all .15s;
+  text-align: left;
+  width: 100%;
+}
+.mc-btn:hover:not(:disabled) {
+  background: rgba(167,139,250,.12);
+  border-color: var(--sky);
+  color: var(--sky);
+  transform: translateX(3px);
+}
+.mc-btn .letter {
+  display: flex; align-items: center; justify-content: center;
+  width: 26px; height: 26px;
+  border-radius: 8px;
+  background: rgba(167,139,250,.15);
+  border: 1px solid rgba(167,139,250,.3);
+  color: var(--sky);
+  font-size: .78rem;
+  font-weight: 800;
+  flex-shrink: 0;
+  transition: all .15s;
+}
+.mc-btn:hover:not(:disabled) .letter {
+  background: var(--sky-dark);
+  color: white;
+}
+.mc-btn.correct {
+  background: rgba(52,211,153,.15) !important;
+  border-color: #34d399 !important;
+  color: #34d399 !important;
+  cursor: default;
+}
+.mc-btn.correct .letter { background: #34d399 !important; color: white !important; border-color: #34d399 !important; }
+.mc-btn.wrong {
+  background: rgba(251,113,133,.12) !important;
+  border-color: #fb7185 !important;
+  color: #fb7185 !important;
+  cursor: default;
+}
+.mc-btn.wrong .letter { background: #fb7185 !important; color: white !important; border-color: #fb7185 !important; }
+.mc-btn:disabled { cursor: default; transform: none !important; }
+
+.topic-tag {
+  display: inline-block;
+  background: linear-gradient(135deg, var(--purple), #7c3aed);
+  color: white;
+  font-size: .68rem;
+  font-weight: 800;
+  border-radius: 20px;
+  padding: 2px 10px;
+  margin-bottom: 5px;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+}
+
+/* speaking animation */
+.speaker-wave {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 14px;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+.speaker-wave span {
+  display: block;
+  width: 3px;
+  border-radius: 2px;
+  background: var(--sky);
+  animation: wave 1s ease-in-out infinite;
+}
+.speaker-wave span:nth-child(1) { height: 4px; animation-delay: 0s; }
+.speaker-wave span:nth-child(2) { height: 10px; animation-delay: .1s; }
+.speaker-wave span:nth-child(3) { height: 6px; animation-delay: .2s; }
+.speaker-wave span:nth-child(4) { height: 12px; animation-delay: .15s; }
+.speaker-wave span:nth-child(5) { height: 4px; animation-delay: .05s; }
+@keyframes wave { 0%,100% { transform: scaleY(1); } 50% { transform: scaleY(1.8); } }
+
+.typing {
+  display: flex;
+  gap: 4px;
+  padding: 12px 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  border-bottom-left-radius: 5px;
+  width: fit-content;
+}
+.dot { width: 7px; height: 7px; border-radius: 50%; background: var(--sky); animation: bounce .9s infinite; }
+.dot:nth-child(2) { animation-delay: .15s; }
+.dot:nth-child(3) { animation-delay: .3s; }
+@keyframes bounce { 0%,80%,100% { transform: translateY(0); opacity:.6; } 40% { transform: translateY(-7px); opacity:1; } }
+
+.input-bar {
+  width: 100%;
+  max-width: 680px;
+  padding: 10px 14px 18px;
+  display: flex;
+  gap: 8px;
+  background: var(--bg);
+  position: sticky;
+  bottom: 0;
+}
+
+#user-input {
+  flex: 1;
+  padding: 12px 18px;
+  border: 2px solid var(--border);
+  border-radius: 30px;
+  font-family: 'Nunito', sans-serif;
+  font-size: .92rem;
+  outline: none;
+  background: var(--surface);
+  color: var(--text);
+  transition: border-color .2s, box-shadow .2s;
+}
+#user-input::placeholder { color: var(--muted); }
+#user-input:focus {
+  border-color: var(--sky);
+  box-shadow: 0 0 0 3px rgba(167,139,250,.12);
+}
+
+#send-btn {
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  border: none;
+  background: linear-gradient(135deg, var(--sky), var(--sky-dark));
+  color: white;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 3px 14px rgba(167,139,250,.35);
+  flex-shrink: 0;
+}
+#send-btn:hover { transform: scale(1.08); box-shadow: 0 5px 20px rgba(167,139,250,.5); }
+#send-btn:disabled { opacity: .5; transform: none; }
+
+/* result modal */
+.result-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.7);
+  backdrop-filter: blur(6px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 100;
+  opacity: 0; pointer-events: none;
+  transition: opacity .3s;
+}
+.result-overlay.show { opacity: 1; pointer-events: all; }
+.result-card {
+  background: linear-gradient(135deg, #241640, #1a0f2e);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 36px 40px;
+  text-align: center;
+  max-width: 360px;
+  width: 90%;
+  box-shadow: 0 20px 60px rgba(0,0,0,.5);
+  transform: scale(.9);
+  transition: transform .3s cubic-bezier(.34,1.56,.64,1);
+}
+.result-overlay.show .result-card { transform: scale(1); }
+.result-emoji { font-size: 4rem; margin-bottom: 12px; display: block; }
+.result-title { font-family: 'Fredoka One', cursive; font-size: 1.8rem; margin-bottom: 6px; color: var(--sky); }
+.result-score { font-size: 3rem; font-weight: 900; margin: 10px 0; }
+.result-msg { color: var(--muted); font-size: .9rem; margin-bottom: 20px; }
+.result-btn {
+  background: linear-gradient(135deg, var(--sky), var(--sky-dark));
+  border: none;
+  border-radius: 30px;
+  padding: 12px 30px;
+  color: white;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+  box-shadow: 0 4px 16px rgba(167,139,250,.3);
+}
+.result-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(167,139,250,.5); }
+
+/* ── Notes Panel ─────────────────────────────────────────────── */
+.notes-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.75); backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 200; opacity: 0; pointer-events: none; transition: opacity .3s;
+}
+.notes-overlay.show { opacity: 1; pointer-events: all; }
+.notes-panel {
+  background: linear-gradient(160deg, #1a0f2e, #241640);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  width: 92%; max-width: 720px;
+  max-height: 88vh;
+  display: flex; flex-direction: column;
+  box-shadow: 0 24px 60px rgba(0,0,0,.6);
+  overflow: hidden;
+  transform: translateY(30px);
+  transition: transform .35s cubic-bezier(.34,1.2,.64,1);
+}
+.notes-overlay.show .notes-panel { transform: translateY(0); }
+.notes-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 22px;
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(135deg, #2e106544, #31288444);
+}
+.notes-header h2 { font-family: 'Fredoka One', cursive; font-size: 1.3rem; color: var(--sky); }
+.notes-header-actions { display: flex; align-items: center; gap: 10px; }
+.print-btn {
+  display: flex; align-items: center; gap: 6px;
+  background: rgba(52,211,153,.12);
+  border: 1.5px solid rgba(52,211,153,.4);
+  color: var(--mint);
+  border-radius: 20px;
+  padding: 7px 14px;
+  font-family: 'Nunito', sans-serif;
+  font-size: .78rem;
+  font-weight: 800;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all .15s;
+}
+.print-btn:hover { background: #34d399; color: #1a0f2e; border-color: #34d399; }
+.notes-close {
+  width: 34px; height: 34px; border-radius: 50%;
+  border: 1.5px solid var(--border); background: var(--surface2);
+  color: var(--text); font-size: 1rem; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all .2s;
+}
+.notes-close:hover { background: var(--coral); border-color: var(--coral); }
+.notes-body { overflow-y: auto; padding: 20px 22px; flex: 1; }
+.notes-body::-webkit-scrollbar { width: 4px; }
+.notes-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+.notes-topic { margin-bottom: 28px; }
+.notes-topic-title {
+  font-family: 'Fredoka One', cursive; font-size: 1.05rem;
+  color: var(--sky); margin-bottom: 10px;
+  padding-bottom: 6px; border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 8px;
+}
+.notes-item {
+  display: flex; gap: 10px; align-items: flex-start;
+  padding: 7px 0; border-bottom: 1px solid rgba(255,255,255,.04);
+  font-size: .88rem; line-height: 1.55;
+}
+.notes-item:last-child { border-bottom: none; }
+.notes-term {
+  font-weight: 800; color: var(--amber); min-width: 160px;
+  flex-shrink: 0; font-size: .85rem;
+}
+.notes-def { color: #e9d5ff; }
+.notes-tabs {
+  display: flex; flex-wrap: wrap; gap: 6px 6px; padding: 12px 22px 10px;
+  border-bottom: 1px solid var(--border);
+}
+.notes-tab {
+  padding: 7px 14px; border-radius: 10px;
+  border: 1px solid var(--border);
+  background: transparent; color: var(--muted);
+  font-family: 'Nunito', sans-serif; font-size: .78rem; font-weight: 700;
+  cursor: pointer; transition: all .15s; white-space: nowrap;
+}
+.notes-tab.active { background: var(--surface); color: var(--sky); border-color: var(--sky); }
+.notes-tab:hover:not(.active) { color: var(--text); background: var(--surface2); }
+.notes-section { display: none; }
+.notes-section.active { display: block; }
+
+/* ── Chapter Summary / Tandaan / Memory boxes ─────────────────── */
+.chapter-summary {
+  background: linear-gradient(135deg, rgba(167,139,250,.1), rgba(244,114,182,.08));
+  border: 1px solid rgba(167,139,250,.25);
+  border-left: 4px solid var(--sky);
+  border-radius: 12px;
+  padding: 14px 18px;
+  margin-bottom: 18px;
+  font-size: .88rem;
+  line-height: 1.65;
+  color: #ede9fe;
+}
+.tandaan-box {
+  background: rgba(251,191,36,.08);
+  border: 1px solid rgba(251,191,36,.3);
+  border-left: 4px solid var(--amber);
+  border-radius: 12px;
+  padding: 12px 18px;
+  margin: 14px 0;
+  font-size: .86rem;
+  line-height: 1.6;
+  color: #fde68a;
+}
+.tandaan-label {
+  display: block;
+  font-family: 'Fredoka One', cursive;
+  font-size: .8rem;
+  color: var(--amber);
+  letter-spacing: .5px;
+  margin-bottom: 5px;
+}
+.memory-box {
+  background: rgba(52,211,153,.08);
+  border: 1px solid rgba(52,211,153,.3);
+  border-left: 4px solid var(--mint);
+  border-radius: 12px;
+  padding: 12px 18px;
+  margin: 14px 0 22px;
+  font-size: .86rem;
+  line-height: 1.6;
+  color: #a7f3d0;
+}
+.memory-label {
+  display: block;
+  font-family: 'Fredoka One', cursive;
+  font-size: .8rem;
+  color: var(--mint);
+  letter-spacing: .5px;
+  margin-bottom: 5px;
+}
+.compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0 20px;
+  font-size: .82rem;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.compare-table th {
+  background: linear-gradient(135deg, #2e1065, #581c87);
+  color: var(--sky);
+  text-align: left;
+  padding: 9px 12px;
+  font-size: .78rem;
+  text-transform: uppercase;
+  letter-spacing: .4px;
+}
+.compare-table td {
+  padding: 9px 12px;
+  border-top: 1px solid var(--border);
+  color: #e9d5ff;
+  vertical-align: top;
+}
+.compare-table tr:nth-child(even) td { background: rgba(255,255,255,.02); }
+
+/* ── Practice test ─────────────────────────────────────────────── */
+.ptest-part-title {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1rem;
+  color: var(--purple);
+  margin: 22px 0 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+.ptest-part-title:first-child { margin-top: 0; }
+.ptest-q {
+  font-size: .87rem;
+  line-height: 1.6;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed rgba(255,255,255,.06);
+  color: #ede9fe;
+}
+.ptest-q b { color: var(--sky); }
+.ptest-q .opt { display: block; margin: 2px 0 2px 18px; color: #e9d5ff; }
+.ptest-bank {
+  background: rgba(244,114,182,.08);
+  border: 1px solid rgba(244,114,182,.3);
+  border-radius: 10px;
+  padding: 10px 16px;
+  margin-bottom: 14px;
+  font-size: .82rem;
+  color: #ddd6fe;
+  line-height: 1.6;
+}
+
+/* ── Answer key ─────────────────────────────────────────────────── */
+.key-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.key-pill {
+  background: rgba(167,139,250,.1);
+  border: 1px solid rgba(167,139,250,.25);
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: .78rem;
+  color: #e9d5ff;
+}
+.key-pill b { color: #34d399; }
+
+/* ── Print / Save-as-PDF styles ──────────────────────────────────
+   By default everything is hidden from print. When body carries
+   .printing-test, only #print-area (a light-themed clone of the
+   Practice Test + Answer Key) is shown, laid out for paper. ──── */
+@media print {
+  body * { visibility: hidden; }
+  #print-area, #print-area * { visibility: visible; }
+  #print-area {
+    display: block !important;
+    position: absolute; top: 0; left: 0; width: 100%;
+    background: #fff; color: #241640;
+    font-family: 'Helvetica', Arial, sans-serif;
+    font-size: 10.5pt;
+    line-height: 1.5;
+  }
+  #print-area .p-cover { text-align: center; padding-top: 40px; }
+  #print-area .p-cover .p-icon { font-size: 34pt; }
+  #print-area .p-cover h1 { font-size: 19pt; color: #0369a1; margin: 8px 0 4px; }
+  #print-area .p-cover .p-sub { font-size: 10.5pt; color: #0e7490; margin-bottom: 20px; }
+  #print-area .p-info-box {
+    border: 1.5px solid #c4b5fd; border-radius: 10px;
+    max-width: 460px; margin: 0 auto 20px; padding: 14px 20px;
+    text-align: left; font-size: 10pt;
+  }
+  #print-area .p-info-box div { margin: 6px 0; border-bottom: 1px dotted #e9d5ff; padding-bottom: 6px; }
+  #print-area .p-instructions {
+    max-width: 460px; margin: 0 auto; text-align: left;
+    background: #faf5ff; border: 1px solid #d8b4fe; border-radius: 10px;
+    padding: 12px 18px; font-size: 9.5pt; color: #453072;
+  }
+  #print-area h2.p-part-title {
+    font-size: 12.5pt; color: #fff;
+    background: linear-gradient(135deg, #0369a1, #1e3a8a) !important;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    padding: 6px 12px; border-radius: 7px; margin: 18px 0 10px;
+    page-break-after: avoid;
+  }
+  #print-area .p-bank {
+    background: #f5f3ff !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    border: 1px solid #c4b5fd; border-radius: 8px; padding: 8px 14px;
+    margin-bottom: 12px; font-size: 9.5pt; color: #4c1d95;
+  }
+  #print-area .p-q {
+    margin-bottom: 8px; padding-bottom: 8px;
+    border-bottom: 1px dotted #ede9fe; font-size: 10pt;
+    page-break-inside: avoid; color: #241640;
+  }
+  #print-area .p-q b { color: #6d28d9; }
+  #print-area .p-q .p-blank { display: inline-block; min-width: 65px; border-bottom: 1px solid #64748b; }
+  #print-area .p-q .p-opt { display: block; margin: 2px 0 0 20px; color: #453072; }
+  #print-area .p-break { page-break-before: always; }
+  #print-area .p-key-part-title {
+    font-size: 11pt; color: #6d28d9; font-weight: bold;
+    margin: 14px 0 8px; border-bottom: 2px solid #6d28d9; padding-bottom: 4px;
+  }
+  #print-area .p-key-grid {
+    display: grid; grid-template-columns: repeat(5, 1fr);
+    gap: 5px 8px; margin-bottom: 14px;
+  }
+  #print-area .p-key-pill {
+    background: #fffbeb !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    border: 1px solid #fcd34d; border-radius: 6px;
+    padding: 4px 8px; font-size: 8.5pt; color: #92400e;
+  }
+  #print-area .p-key-pill b { color: #b45309; }
+  @page { size: letter; margin: 1.5cm 1.8cm; }
+}
+#print-area { display: none; }
+
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-icon">📐</div>
+  <div>
+    <h1>Math Reviewer</h1>
+    <div class="sub">Points, Lines &amp; Rays · Pairs of Lines · Angles</div>
+  </div>
+  <div class="header-controls">
+    <div class="score-pill">⭐ <span id="score-val">0</span> / <span id="total-val">0</span></div>
+    <button class="audio-btn" id="notes-toggle" title="Open Reviewer" onclick="document.getElementById('notes-overlay').classList.add('show')">📖</button>
+    <button class="audio-btn active" id="audio-toggle" title="Toggle Audio">🔊</button>
+  </div>
+</header>
+
+<div class="chat-wrap">
+  <div id="chat-box"></div>
+</div>
+
+<div class="input-bar">
+  <input type="text" id="user-input" placeholder="Type your answer here…" autocomplete="off" />
+  <button id="send-btn">➤</button>
+</div>
+
+<div class="result-overlay" id="result-overlay">
+  <div class="result-card">
+    <span class="result-emoji" id="res-emoji">🏆</span>
+    <div class="result-title">Quiz Complete!</div>
+    <div class="result-score"><span id="res-score">0</span>/<span id="res-total">0</span></div>
+    <div class="result-msg" id="res-msg">Great job!</div>
+    <button class="result-btn" onclick="restartApp()">🔄 Play Again</button>
+  </div>
+</div>
+
+<script>
+// ─── DATA ──────────────────────────────────────────────────────────────────
+const topics = {
+  "POINTS, LINES, SEGMENTS & RAYS": [
+    { q: "What is a point?", a: "an exact location in space or a flat surface", hint: "It has no size at all — just a location, like a dot." },
+    { q: "What is a line?", a: "a collection of points that continues forever in both directions", hint: "Think of an endless straight path with no beginning or end." },
+    { q: "What is a line segment?", a: "a part of a line with two endpoints", hint: "It has a definite start and a definite end." },
+    { q: "What is a ray?", a: "a part of a line that starts from one point and extends in one direction forever", hint: "It has one endpoint and goes on forever in only one direction." },
+    { q: "What is an angle?", a: "a plane figure formed when two rays meet at a common endpoint", hint: "Think of two rays sharing a starting point." },
+    { q: "How do you name a point?", a: "using a capital letter", hint: "For example, point A or point S." },
+    { q: "How do you name a line?", a: "using the two capital letters of the points it connects, with a double arrow on top", hint: "Example: line AB or line BA." },
+    { q: "How do you name a line segment?", a: "using the two capital letters of its endpoints, with a bar on top", hint: "Example: segment AB or segment BA." },
+    { q: "How do you name a ray, and which letter is always the endpoint?", a: "using the endpoint and direction letters with a single arrow on top; the first letter is always the endpoint", hint: "Example: ray AB, where A is the endpoint." },
+    { q: "What do you call the common endpoint of an angle?", a: "vertex", hint: "It's the point where the two rays meet." },
+    { q: "What do you call the two rays that form an angle?", a: "the sides of the angle", hint: "They are the two rays meeting at the vertex." },
+    { q: "When naming an angle with three letters, where should the vertex always be placed?", a: "in the middle", hint: "Example: angle BNC, where N (the vertex) is in the middle." },
+  ],
+  "PAIRS OF LINES": [
+    { q: "What are parallel lines?", a: "lines that never intersect or meet each other", hint: "Think of railroad tracks — they never cross." },
+    { q: "What are intersecting lines?", a: "lines that cross each other at one single point", hint: "They meet or cross at exactly one point." },
+    { q: "What do you call the point where two lines intersect?", a: "the point of intersection", hint: "It's the exact spot where the lines cross." },
+    { q: "What are perpendicular lines?", a: "two lines that intersect each other at right angles", hint: "They form a perfect L or plus shape, like a + sign." },
+    { q: "What angle do perpendicular lines form?", a: "right angles, which measure 90 degrees", hint: "Think of the corner of a square." },
+    { q: "Are perpendicular lines also a type of intersecting lines?", a: "yes", hint: "They meet at a point, so they are a special kind of intersecting lines." },
+    { q: "Can parallel lines ever cross each other?", a: "no", hint: "By definition, they always stay the same distance apart." },
+    { q: "Give a real-life example of parallel lines.", a: "railroad tracks or the opposite sides of a ruler", hint: "Think of two straight paths side by side that never meet." },
+  ],
+  "ANGLES & THEIR MEASURES": [
+    { q: "What tool is used to measure an angle?", a: "protractor", hint: "It's a device marked with degrees from 0 to 180." },
+    { q: "What is the unit used for measuring an angle?", a: "degree", hint: "It's written with the symbol °." },
+    { q: "Where should the vertex of the angle be placed when measuring with a protractor?", a: "at the 0-point, or center, of the protractor", hint: "Line up the vertex with the center mark of the protractor." },
+    { q: "What is an acute angle?", a: "an angle that measures greater than 0 degrees but less than 90 degrees", hint: "It looks smaller and narrower than a right angle." },
+    { q: "What is a right angle?", a: "an angle that measures exactly 90 degrees", hint: "It looks like the corner of a square." },
+    { q: "What is an obtuse angle?", a: "an angle that measures greater than 90 degrees but less than 180 degrees", hint: "It looks wider and more open than a right angle." },
+    { q: "What two tools are used to draw an angle?", a: "a protractor and a ruler", hint: "The ruler draws the straight lines; the protractor measures the degrees." },
+    { q: "In drawing an angle, what point becomes the vertex?", a: "the point where the center of the protractor is placed on the line", hint: "It's placed at one end of the straight line you drew first." },
+    { q: "What is the measure of an angle?", a: "the amount of opening between the two sides, or rays, of the angle", hint: "It tells you how wide the angle is opened." },
+    { q: "An angle measuring exactly 90° is what kind of angle?", a: "right angle", hint: "This is one of the three main kinds of angles." },
+    { q: "An angle measuring 45° is what kind of angle?", a: "acute angle", hint: "It's less than 90°." },
+    { q: "An angle measuring 120° is what kind of angle?", a: "obtuse angle", hint: "It's more than 90° but less than 180°." },
+  ],
+};
+
+const trueOrFalse = [
+  { q: "A point has length and thickness.", a: "false" },
+  { q: "A line extends forever in both directions.", a: "true" },
+  { q: "A line segment has two endpoints.", a: "true" },
+  { q: "A ray extends forever in both directions.", a: "false" },
+  { q: "An angle is formed when two rays share a common endpoint.", a: "true" },
+  { q: "The common endpoint of an angle is called the vertex.", a: "true" },
+  { q: "Parallel lines intersect at one point.", a: "false" },
+  { q: "Intersecting lines cross each other at one single point.", a: "true" },
+  { q: "Perpendicular lines intersect at right angles.", a: "true" },
+  { q: "A protractor is used to measure angles.", a: "true" },
+  { q: "The unit for measuring angles is meters.", a: "false" },
+  { q: "An acute angle measures greater than 90 degrees.", a: "false" },
+  { q: "A right angle measures exactly 90 degrees.", a: "true" },
+  { q: "An obtuse angle measures less than 90 degrees.", a: "false" },
+  { q: "When naming an angle with three letters, the vertex must always be in the middle.", a: "true" },
+];
+
+// ─── STATE ──────────────────────────────────────────────────────────────────
+let state = {
+  awaiting: 'menu',
+  mode: null,
+  questions: [],
+  qIndex: 0,
+  score: 0,
+  total: 0,
+  hintUsed: false,
+  audioEnabled: true,
+};
+
+// ─── TTS ────────────────────────────────────────────────────────────────────
+let speaking = false;
+function speak(text) {
+  if (!state.audioEnabled) return;
+  window.speechSynthesis.cancel();
+  const clean = text.replace(/<[^>]+>/g, '').replace(/[✝️🌟✅❌💡⏭️🏆😊💪🔄🔲📚🙏]/g, '');
+  const utt = new SpeechSynthesisUtterance(clean);
+  utt.rate = 1.0;
+  utt.pitch = 1.05;
+  utt.volume = 1;
+  // prefer a clear English voice
+  const voices = window.speechSynthesis.getVoices();
+  const preferred = voices.find(v => v.lang.startsWith('en') && v.name.includes('Female'))
+    || voices.find(v => v.lang.startsWith('en'))
+    || voices[0];
+  if (preferred) utt.voice = preferred;
+  utt.onstart = () => { speaking = true; showWave(true); };
+  utt.onend = utt.onerror = () => { speaking = false; showWave(false); };
+  window.speechSynthesis.speak(utt);
+}
+
+function showWave(on) {
+  document.querySelectorAll('.speaker-wave').forEach(w => {
+    w.style.display = on ? 'inline-flex' : 'none';
+  });
+}
+
+// ensure voices loaded
+window.speechSynthesis.onvoiceschanged = () => {};
+
+// ─── UI HELPERS ─────────────────────────────────────────────────────────────
+const chatBox = document.getElementById('chat-box');
+const input = document.getElementById('user-input');
+const sendBtn = document.getElementById('send-btn');
+const scoreVal = document.getElementById('score-val');
+const totalVal = document.getElementById('total-val');
+
+function scrollBottom() { chatBox.scrollTop = chatBox.scrollHeight; }
+
+function addMessage(role, html, speakText) {
+  const div = document.createElement('div');
+  div.className = `msg ${role}`;
+  const avatar = document.createElement('div');
+  avatar.className = 'avatar';
+  avatar.textContent = role === 'bot' ? '🤖' : '🧑';
+  const bubble = document.createElement('div');
+  bubble.className = 'bubble';
+
+  if (role === 'bot') {
+    bubble.innerHTML = html + '<span class="speaker-wave" style="display:none"><span></span><span></span><span></span><span></span><span></span></span>';
+  } else {
+    bubble.innerHTML = html;
+  }
+
+  div.appendChild(avatar);
+  div.appendChild(bubble);
+  chatBox.appendChild(div);
+  scrollBottom();
+  bindChips();
+
+  if (role === 'bot') {
+    const txt = speakText || html.replace(/<[^>]+>/g, ' ');
+    setTimeout(() => speak(txt), 300);
+  }
+}
+
+function addTyping() {
+  const d = document.createElement('div');
+  d.className = 'msg bot'; d.id = 'typing';
+  d.innerHTML = '<div class="avatar">🤖</div><div class="typing"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>';
+  chatBox.appendChild(d); scrollBottom();
+}
+function removeTyping() { const t = document.getElementById('typing'); if (t) t.remove(); }
+
+function bindChips() {
+  document.querySelectorAll('.chip:not([data-bound])').forEach(c => {
+    c.dataset.bound = '1';
+    c.addEventListener('click', () => handleUserMessage(c.dataset.val));
+  });
+}
+
+function updateScore() {
+  scoreVal.textContent = state.score;
+  totalVal.textContent = state.total;
+}
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function normalize(s) {
+  return s.toLowerCase().trim().replace(/\s+/g, ' ');
+}
+
+function checkAnswer(user, correct) {
+  const u = normalize(user);
+  const c = normalize(correct);
+  if (u === c) return true;
+  const parts = c.split(/[,;\/]/);
+  for (const p of parts) {
+    if (u.includes(p.trim()) && p.trim().length > 3) return true;
+  }
+  if (c.includes(u) && u.length > 4) return true;
+  return false;
+}
+
+function showResult() {
+  const pct = Math.round((state.score / state.total) * 100);
+  const emoji = pct >= 90 ? '🏆' : pct >= 70 ? '🌟' : pct >= 50 ? '😊' : '💪';
+  const msg = pct >= 90 ? 'Excellent work! You nailed it!' : pct >= 70 ? 'Great job! Keep it up!' : pct >= 50 ? 'Good effort! Review and try again!' : 'Keep studying — you can do it!';
+  document.getElementById('res-emoji').textContent = emoji;
+  document.getElementById('res-score').textContent = state.score;
+  document.getElementById('res-total').textContent = state.total;
+  document.getElementById('res-msg').textContent = msg;
+  document.getElementById('result-overlay').classList.add('show');
+  speak(`Quiz complete! Your score is ${state.score} out of ${state.total}. ${msg}`);
+}
+
+function restartApp() {
+  document.getElementById('result-overlay').classList.remove('show');
+  state = { awaiting: 'menu', mode: null, questions: [], allAnswers: [], qIndex: 0, score: 0, total: 0, hintUsed: false, audioEnabled: state.audioEnabled };
+  chatBox.innerHTML = '';
+  document.querySelector('.input-bar').style.display = 'flex';
+  updateScore();
+  showMenu();
+}
+
+// ─── GAME LOGIC ─────────────────────────────────────────────────────────────
+function showMenu() {
+  addMessage('bot',
+    `👋 <strong>Hello! I'm your Grade 4 Math Reviewer!</strong><br>I'll help you review <em>Points, Lines, Segments &amp; Rays</em>, <em>Pairs of Lines</em>, and <em>Angles &amp; Their Measures</em>.<br><br>What would you like to do?<br>
+    <span class="chip" data-val="1">1️⃣ Study a Topic</span>
+    <span class="chip" data-val="2">2️⃣ True or False Quiz</span>
+    <span class="chip" data-val="3">3️⃣ Full Review — All Topics</span>`,
+    "Hello! I'm your Grade 4 Math Reviewer. What would you like to do? Study a topic, take a True or False quiz, or do a full review of all topics?"
+  );
+  state.awaiting = 'menu';
+}
+
+// ─── MULTIPLE CHOICE HELPERS ─────────────────────────────────────────────────
+function getAllAnswers() {
+  const answers = [];
+  for (const qs of Object.values(topics)) {
+    for (const q of qs) answers.push(q.a);
+  }
+  return answers;
+}
+
+function generateChoices(correctAnswer, allAnswers) {
+  const pool = allAnswers.filter(a => a !== correctAnswer);
+  const distractors = shuffle(pool).slice(0, 3);
+  return shuffle([correctAnswer, ...distractors]);
+}
+
+function buildMCHtml(q, num, choices) {
+  const tag = q.topic ? `<span class="topic-tag">${q.topic}</span><br>` : '';
+  const letters = ['A','B','C','D'];
+  const btns = choices.map((c, i) =>
+    `<button class="mc-btn" data-answer="${encodeURIComponent(c)}" onclick="handleMCClick(this)">
+      <span class="letter">${letters[i]}</span>${c}
+    </button>`
+  ).join('');
+  return `${tag}<strong>Q${num} of ${state.total}:</strong> ${q.q}<div class="mc-options">${btns}</div>`;
+}
+
+function handleMCClick(btn) {
+  const allBtns = btn.closest('.mc-options').querySelectorAll('.mc-btn');
+  allBtns.forEach(b => b.disabled = true);
+
+  const chosen = decodeURIComponent(btn.dataset.answer);
+  const q = state.questions[state.qIndex];
+  const correct = chosen === q.a;
+
+  allBtns.forEach(b => {
+    if (decodeURIComponent(b.dataset.answer) === q.a) b.classList.add('correct');
+  });
+  if (!correct) btn.classList.add('wrong');
+
+  setTimeout(() => {
+    if (correct) {
+      state.score++;
+      addMessage('bot', `✅ <strong>Correct!</strong> +1 point! The answer is: <strong>${q.a}</strong>`, `Correct! The answer is: ${q.a}`);
+    } else {
+      addMessage('bot', `❌ <strong>Not quite!</strong> You answered: <em>${chosen}</em><br>✏️ The correct answer is: <strong>${q.a}</strong>`, `Not quite! The correct answer is: ${q.a}`);
+    }
+    state.qIndex++;
+    updateScore();
+    if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+    else setTimeout(showResult, 900);
+  }, 650);
+}
+
+function nextQuestion() {
+  const qi = state.qIndex;
+  const q = state.questions[qi];
+  const num = qi + 1;
+  const isTF = state.mode === 'tf';
+  const isFull = state.mode === 'full';
+  const tag = q.topic ? `<span class="topic-tag">${q.topic}</span><br>` : '';
+
+  if (isFull) {
+    const choices = generateChoices(q.a, state.allAnswers);
+    const html = buildMCHtml(q, num, choices);
+    addMessage('bot', html, `Question ${num}. ${q.q}`);
+    return;
+  }
+
+  const chips = isTF
+    ? `<br><span class="chip" data-val="true">✅ True</span><span class="chip" data-val="false">❌ False</span>`
+    : `<br><small style="color:var(--muted)">Type your answer · type <em>hint</em> for a clue · type <em>skip</em> to skip</small>`;
+  const html = `${tag}<strong>Q${num} of ${state.total}:</strong> ${q.q}${chips}`;
+  addMessage('bot', html, `Question ${num}. ${q.q}`);
+}
+
+function handleUserMessage(msg) {
+  if (!msg.trim()) return;
+  window.speechSynthesis.cancel();
+  addMessage('user', msg.replace(/</g, '&lt;'));
+
+  input.disabled = true;
+  sendBtn.disabled = true;
+  addTyping();
+
+  setTimeout(() => {
+    removeTyping();
+    input.disabled = false;
+    sendBtn.disabled = false;
+    input.focus();
+    processMessage(msg);
+  }, 500);
+}
+
+function processMessage(msg) {
+  const aw = state.awaiting;
+
+  if (aw === 'menu') {
+    if (msg === '1') {
+      state.awaiting = 'topic';
+      const keys = Object.keys(topics);
+      let chips = keys.map((t, i) => `<span class="chip" data-val="${i+1}">${i+1}. ${t}</span>`).join(' ');
+      addMessage('bot', `📚 Which topic would you like to review?<br>${chips}`, 'Which topic would you like to review?');
+    } else if (msg === '2') {
+      document.querySelector('.input-bar').style.display = 'flex';
+      state.mode = 'tf';
+      state.questions = shuffle(trueOrFalse);
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'tf_answer';
+      updateScore();
+      addMessage('bot', `🔲 <strong>True or False Quiz!</strong> ${state.total} questions. Let's go!`, `True or False Quiz! ${state.total} questions. Let's go!`);
+      setTimeout(nextQuestion, 800);
+    } else if (msg === '3') {
+      state.mode = 'full';
+      const all = [];
+      for (const [topicName, qs] of Object.entries(topics)) {
+        qs.forEach(q => all.push({ ...q, topic: topicName }));
+      }
+      state.questions = shuffle(all);
+      state.allAnswers = getAllAnswers();
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'mc_answer';
+      updateScore();
+      document.querySelector('.input-bar').style.display = 'none';
+      addMessage('bot', `🌟 <strong>Full Review — Multiple Choice!</strong> ${state.total} questions across all topics. Click your answer!`, `Full Review! Multiple Choice! ${state.total} questions. Click your answer!`);
+      setTimeout(nextQuestion, 800);
+    } else {
+      addMessage('bot',
+        `Please choose an option:<br><span class="chip" data-val="1">1️⃣ Study a Topic</span><span class="chip" data-val="2">2️⃣ True or False Quiz</span><span class="chip" data-val="3">3️⃣ Full Review</span>`,
+        'Please choose an option: Study a Topic, True or False Quiz, or Full Review.'
+      );
+    }
+    return;
+  }
+
+  if (aw === 'topic') {
+    const keys = Object.keys(topics);
+    const idx = parseInt(msg) - 1;
+    if (keys[idx]) {
+      const topicName = keys[idx];
+      state.mode = 'topic';
+      state.questions = shuffle(topics[topicName]);
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'answer';
+      updateScore();
+      addMessage('bot', `📚 <strong>${topicName}</strong> — ${state.total} questions. Let's begin!`, `${topicName}. ${state.total} questions. Let's begin!`);
+      setTimeout(nextQuestion, 800);
+    } else {
+      const chips = keys.map((t, i) => `<span class="chip" data-val="${i+1}">${i+1}. ${t}</span>`).join(' ');
+      addMessage('bot', `Please pick a valid topic:<br>${chips}`, 'Please pick a valid topic.');
+    }
+    return;
+  }
+
+  if (aw === 'answer') {
+    const q = state.questions[state.qIndex];
+    const m = normalize(msg);
+
+    if (m === 'hint') {
+      state.hintUsed = true;
+      addMessage('bot', `💡 <strong>Hint:</strong> ${q.hint}`, `Hint: ${q.hint}`);
+      return;
+    }
+    if (m === 'skip') {
+      addMessage('bot', `⏭️ Skipped! The answer was: <strong>${q.a}</strong>`, `Skipped. The answer was: ${q.a}`);
+      state.qIndex++;
+      state.hintUsed = false;
+      if (state.qIndex < state.total) {
+        setTimeout(nextQuestion, 600);
+      } else { showResult(); }
+      return;
+    }
+
+    const correct = checkAnswer(msg, q.a);
+    if (correct) {
+      if (!state.hintUsed) state.score++;
+      const note = state.hintUsed ? ' (hint used — no point awarded)' : ' Plus one point!';
+      addMessage('bot', `✅ <strong>Correct!</strong>${state.hintUsed ? ' <em>(hint used — no point)</em>' : ' +1 point!'} The answer is: <strong>${q.a}</strong>`, `Correct!${note} The answer is: ${q.a}`);
+    } else {
+      addMessage('bot', `❌ <strong>Not quite!</strong> You answered: <em>${msg}</em><br>✏️ The correct answer is: <strong>${q.a}</strong>`, `Not quite! The correct answer is: ${q.a}`);
+    }
+    state.qIndex++;
+    state.hintUsed = false;
+    updateScore();
+
+    if (state.qIndex < state.total) {
+      setTimeout(nextQuestion, 900);
+    } else { setTimeout(showResult, 900); }
+    return;
+  }
+
+  if (aw === 'tf_answer') {
+    const q = state.questions[state.qIndex];
+    let ans = normalize(msg);
+    if (ans === 't') ans = 'true';
+    if (ans === 'f') ans = 'false';
+
+    if (ans === 'true' || ans === 'false') {
+      const correct = ans === q.a;
+      if (correct) {
+        state.score++;
+        addMessage('bot', `✅ <strong>Correct!</strong> It is <strong>${q.a.toUpperCase()}</strong>.`, `Correct! It is ${q.a}.`);
+      } else {
+        addMessage('bot', `❌ <strong>Wrong!</strong> You answered: <em>${ans === 'true' ? 'True' : 'False'}</em><br>✏️ The correct answer is: <strong>${q.a.toUpperCase()}</strong>`, `Wrong! The correct answer is ${q.a}.`);
+      }
+      state.qIndex++;
+      updateScore();
+
+      if (state.qIndex < state.total) {
+        setTimeout(nextQuestion, 900);
+      } else { setTimeout(showResult, 900); }
+    } else {
+      addMessage('bot',
+        `Please answer True or False:<br><span class="chip" data-val="true">✅ True</span><span class="chip" data-val="false">❌ False</span>`,
+        'Please answer True or False.'
+      );
+    }
+    return;
+  }
+}
+
+// ─── CONTROLS ────────────────────────────────────────────────────────────────
+sendBtn.addEventListener('click', () => {
+  handleUserMessage(input.value);
+  input.value = '';
+});
+input.addEventListener('keydown', e => {
+  if (e.key === 'Enter') {
+    handleUserMessage(input.value);
+    input.value = '';
+  }
+});
+
+document.getElementById('audio-toggle').addEventListener('click', function() {
+  state.audioEnabled = !state.audioEnabled;
+  this.textContent = state.audioEnabled ? '🔊' : '🔇';
+  this.classList.toggle('active', state.audioEnabled);
+  if (!state.audioEnabled) window.speechSynthesis.cancel();
+});
+
+// ─── INIT ────────────────────────────────────────────────────────────────────
+window.addEventListener('load', () => {
+  // warm up voices
+  window.speechSynthesis.getVoices();
+  showMenu();
+});
+
+function printPracticeTest() {
+  document.body.classList.add('printing-test');
+  window.print();
+}
+window.addEventListener('afterprint', () => {
+  document.body.classList.remove('printing-test');
+});
+
+function switchTab(tabId, btn) {
+  document.querySelectorAll('.notes-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.notes-tab').forEach(b => b.classList.remove('active'));
+  document.getElementById(tabId).classList.add('active');
+  btn.classList.add('active');
+}
+
+</script>
+
+
+<!-- ── Reviewer Panel ── -->
+<div class="notes-overlay" id="notes-overlay">
+  <div class="notes-panel">
+    <div class="notes-header">
+      <h2>📖 Math — Full Reviewer</h2>
+      <div class="notes-header-actions">
+        <button class="print-btn" onclick="printPracticeTest()" title="Print or Save the Practice Test &amp; Answer Key as PDF">🖨️ Print Test &amp; Key</button>
+        <button class="notes-close" onclick="document.getElementById('notes-overlay').classList.remove('show')">✕</button>
+      </div>
+    </div>
+    <div class="notes-tabs">
+      <button class="notes-tab active" onclick="switchTab('tab-points', this)">📍 Points, Lines &amp; Rays</button>
+      <button class="notes-tab" onclick="switchTab('tab-pairs', this)">✂️ Pairs of Lines</button>
+      <button class="notes-tab" onclick="switchTab('tab-angles', this)">📐 Angles</button>
+      <button class="notes-tab" onclick="switchTab('tab-ptest', this)">📝 Practice Test</button>
+      <button class="notes-tab" onclick="switchTab('tab-key', this)">✅ Answer Key</button>
+    </div>
+    <div class="notes-body">
+
+      <!-- ══════════ CHAPTER 1: POINTS, LINES, SEGMENTS & RAYS ══════════ -->
+      <div class="notes-section active" id="tab-points">
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> A <strong>point</strong> is an exact location in space — it has no length or thickness. A <strong>line</strong> is made up of an infinite number of points and extends forever in both directions. A <strong>line segment</strong> is part of a line with two definite endpoints. A <strong>ray</strong> is part of a line that starts at one point (its endpoint) and extends in only one direction forever. An <strong>angle</strong> is formed when two rays share a common endpoint, called the <strong>vertex</strong>; the two rays are called the <strong>sides</strong> of the angle.
+        </div>
+
+        <table class="compare-table">
+          <tr><th>Term</th><th>How to Name It</th></tr>
+          <tr><td>📍 Point</td><td>A capital letter — e.g., point A</td></tr>
+          <tr><td>↔️ Line</td><td>Double arrow over two capital letters — line AB or line BA</td></tr>
+          <tr><td>📏 Line Segment</td><td>A bar over two capital letters — segment AB or BA</td></tr>
+          <tr><td>➡️ Ray</td><td>Single arrow over two letters; the first letter is always the endpoint — ray AB</td></tr>
+          <tr><td>📐 Angle</td><td>∠ symbol with the vertex, or three letters with vertex in the middle — ∠N or ∠BNC</td></tr>
+        </table>
+
+        <div class="tandaan-box">
+          <span class="tandaan-label">📌 REMEMBER</span>
+          When naming an angle with three letters, the <strong>vertex must always be in the middle</strong> — for example, ∠BNC, where N is the vertex, not ∠NBC or ∠CBN.
+        </div>
+
+        <div class="memory-box">
+          <span class="memory-label">🧠 Memory Trick</span>
+          <strong>"Point has no Length, Line goes both ways, Segment has 2 Ends, Ray goes 1 way."</strong> Say it out loud to remember the four basic figures!
+        </div>
+      </div>
+
+      <!-- ══════════ CHAPTER 2: PAIRS OF LINES ══════════ -->
+      <div class="notes-section" id="tab-pairs">
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> <strong>Parallel lines</strong> are lines that do not intersect or meet each other — they always stay the same distance apart. <strong>Intersecting lines</strong> are lines or line segments that cross each other at one single point, called the <strong>point of intersection</strong>. <strong>Perpendicular lines</strong> are a special kind of intersecting lines that meet or cross each other at <strong>right angles (90°)</strong>.
+        </div>
+
+        <table class="compare-table">
+          <tr><th>Type of Lines</th><th>Description</th><th>Example</th></tr>
+          <tr><td>🚂 Parallel Lines</td><td>Never intersect or meet</td><td>Railroad tracks, opposite sides of a ruler</td></tr>
+          <tr><td>✖️ Intersecting Lines</td><td>Cross each other at one point</td><td>The letter X, two roads meeting at a crossing</td></tr>
+          <tr><td>➕ Perpendicular Lines</td><td>Intersect at right angles (90°)</td><td>The corner of a book, a plus (+) sign</td></tr>
+        </table>
+
+        <div class="tandaan-box">
+          <span class="tandaan-label">📌 REMEMBER</span>
+          All <strong>perpendicular lines</strong> are also <strong>intersecting lines</strong>, because they cross at a point — but not all intersecting lines are perpendicular, since they don't always cross at a right angle.
+        </div>
+
+        <div class="memory-box">
+          <span class="memory-label">🧠 Memory Trick</span>
+          <strong>"Parallel — Never Meet. Intersecting — Cross Once. Perpendicular — Cross at a Perfect Corner."</strong>
+        </div>
+      </div>
+
+      <!-- ══════════ CHAPTER 3: ANGLES & THEIR MEASURES ══════════ -->
+      <div class="notes-section" id="tab-angles">
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> The <strong>measure of an angle</strong> is the amount of opening between its two sides. A <strong>protractor</strong> is the tool used to measure angles, and the unit of measurement is the <strong>degree (°)</strong>. To measure an angle, place the vertex at the 0-point (center) of the protractor and follow the markings from 0° to the other side of the angle. To <strong>draw</strong> an angle, use a ruler to draw a straight line, place the protractor's center at one end (the vertex), mark the desired degree, then connect the mark to the vertex with the ruler. Angles are classified as <strong>acute, right,</strong> or <strong>obtuse</strong> according to their measure.
+        </div>
+
+        <table class="compare-table">
+          <tr><th>Kind of Angle</th><th>Measure</th></tr>
+          <tr><td>🔺 Acute Angle</td><td>Greater than 0° but less than 90°</td></tr>
+          <tr><td>⬛ Right Angle</td><td>Exactly 90°</td></tr>
+          <tr><td>📐 Obtuse Angle</td><td>Greater than 90° but less than 180°</td></tr>
+        </table>
+
+        <div class="tandaan-box">
+          <span class="tandaan-label">📌 REMEMBER</span>
+          A <strong>protractor</strong> is used to measure angles, and its unit is the <strong>degree (°)</strong>. Always line up the <strong>vertex</strong> with the <strong>0-point (center)</strong> of the protractor before reading the measurement.
+        </div>
+
+        <div class="memory-box">
+          <span class="memory-label">🧠 Memory Trick</span>
+          <strong>"Acute is cute and small (under 90°), Right stands tall like a square corner (exactly 90°), Obtuse is huge and wide (over 90°)."</strong>
+        </div>
+      </div>
+
+      <!-- ══════════ PRACTICE TEST ══════════ -->
+
+      <div class="notes-section" id="tab-ptest">
+        <p style="font-size:.82rem;color:var(--muted);margin-bottom:14px;">📝 A complete practice test with <strong>60 items</strong> covering all three chapters.</p>
+
+        <div class="ptest-part-title">Part I — Matching Type (Term → Description)</div>
+        <div class="ptest-bank">
+          <strong>Word Bank:</strong> (A) Point &nbsp; (B) Line &nbsp; (C) Line Segment &nbsp; (D) Ray &nbsp; (E) Angle &nbsp; (F) Vertex &nbsp; (G) Parallel Lines &nbsp; (H) Intersecting Lines &nbsp; (I) Perpendicular Lines &nbsp; (J) Point of Intersection &nbsp; (K) Protractor &nbsp; (L) Degree &nbsp; (M) Acute Angle &nbsp; (N) Right Angle &nbsp; (O) Obtuse Angle
+        </div>
+        <div class="ptest-q"><b>1.</b> An exact location in space ____</div>
+        <div class="ptest-q"><b>2.</b> Continues forever in both directions ____</div>
+        <div class="ptest-q"><b>3.</b> A part of a line with two endpoints ____</div>
+        <div class="ptest-q"><b>4.</b> Starts at one point and extends in one direction forever ____</div>
+        <div class="ptest-q"><b>5.</b> Formed when two rays share a common endpoint ____</div>
+        <div class="ptest-q"><b>6.</b> The common endpoint of two rays that form an angle ____</div>
+        <div class="ptest-q"><b>7.</b> Lines that never intersect ____</div>
+        <div class="ptest-q"><b>8.</b> Lines that cross each other at one point ____</div>
+        <div class="ptest-q"><b>9.</b> Lines that intersect at right angles ____</div>
+        <div class="ptest-q"><b>10.</b> The exact point where two lines cross ____</div>
+        <div class="ptest-q"><b>11.</b> A tool used to measure angles ____</div>
+        <div class="ptest-q"><b>12.</b> The unit used to measure angles ____</div>
+        <div class="ptest-q"><b>13.</b> An angle greater than 0° but less than 90° ____</div>
+        <div class="ptest-q"><b>14.</b> An angle that measures exactly 90° ____</div>
+        <div class="ptest-q"><b>15.</b> An angle greater than 90° but less than 180° ____</div>
+
+        <div class="ptest-part-title">Part II — Fill in the Blank</div>
+        <div class="ptest-q"><b>16.</b> Two rays that meet at a vertex form a(n) __________.</div>
+        <div class="ptest-q"><b>17.</b> The symbol placed on top of two letters to name a line is a __________ arrow.</div>
+        <div class="ptest-q"><b>18.</b> The symbol placed on top of two letters to name a line segment is a __________.</div>
+        <div class="ptest-q"><b>19.</b> The symbol placed on top of two letters to name a ray is a __________ arrow.</div>
+        <div class="ptest-q"><b>20.</b> In naming a ray, the first letter written is always the __________.</div>
+        <div class="ptest-q"><b>21.</b> In naming an angle with three letters, the __________ must always be in the middle.</div>
+        <div class="ptest-q"><b>22.</b> A device used to measure the opening of an angle is called a __________.</div>
+        <div class="ptest-q"><b>23.</b> Angles are measured using the unit called __________.</div>
+        <div class="ptest-q"><b>24.</b> An angle that measures 90° is called a __________ angle.</div>
+        <div class="ptest-q"><b>25.</b> An angle that measures less than 90° is called a(n) __________ angle.</div>
+        <div class="ptest-q"><b>26.</b> An angle that measures more than 90° but less than 180° is called a(n) __________ angle.</div>
+        <div class="ptest-q"><b>27.</b> Lines that never meet or cross are called __________ lines.</div>
+        <div class="ptest-q"><b>28.</b> Lines that cross each other at one point are called __________ lines.</div>
+        <div class="ptest-q"><b>29.</b> Lines that intersect at right angles are called __________ lines.</div>
+        <div class="ptest-q"><b>30.</b> The point where two lines cross is called the __________.</div>
+
+        <div class="ptest-part-title">Part III — True or False</div>
+        <div class="ptest-q"><b>31.</b> A point has length and thickness.</div>
+        <div class="ptest-q"><b>32.</b> A line extends forever in both directions.</div>
+        <div class="ptest-q"><b>33.</b> A line segment has two endpoints.</div>
+        <div class="ptest-q"><b>34.</b> A ray extends forever in both directions.</div>
+        <div class="ptest-q"><b>35.</b> An angle is formed when two rays share a common endpoint.</div>
+        <div class="ptest-q"><b>36.</b> The common endpoint of an angle is called the vertex.</div>
+        <div class="ptest-q"><b>37.</b> Parallel lines intersect at one point.</div>
+        <div class="ptest-q"><b>38.</b> Intersecting lines cross each other at one single point.</div>
+        <div class="ptest-q"><b>39.</b> Perpendicular lines intersect at right angles.</div>
+        <div class="ptest-q"><b>40.</b> A protractor is used to measure angles.</div>
+        <div class="ptest-q"><b>41.</b> The unit for measuring angles is meters.</div>
+        <div class="ptest-q"><b>42.</b> An acute angle measures greater than 90 degrees.</div>
+        <div class="ptest-q"><b>43.</b> A right angle measures exactly 90 degrees.</div>
+        <div class="ptest-q"><b>44.</b> An obtuse angle measures less than 90 degrees.</div>
+        <div class="ptest-q"><b>45.</b> When naming an angle with three letters, the vertex must always be in the middle.</div>
+
+        <div class="ptest-part-title">Part IV — Multiple Choice</div>
+        <div class="ptest-q"><b>46.</b> What do you call an exact location in space?<span class="opt">a) line &nbsp; b) point &nbsp; c) ray &nbsp; d) segment</span></div>
+        <div class="ptest-q"><b>47.</b> Which of these extends forever in both directions?<span class="opt">a) ray &nbsp; b) line segment &nbsp; c) line &nbsp; d) angle</span></div>
+        <div class="ptest-q"><b>48.</b> What do you call a part of a line with two endpoints?<span class="opt">a) ray &nbsp; b) line segment &nbsp; c) point &nbsp; d) vertex</span></div>
+        <div class="ptest-q"><b>49.</b> Which of these has only one endpoint and extends forever in one direction?<span class="opt">a) line &nbsp; b) line segment &nbsp; c) ray &nbsp; d) angle</span></div>
+        <div class="ptest-q"><b>50.</b> What is formed when two rays share a common endpoint?<span class="opt">a) triangle &nbsp; b) angle &nbsp; c) line &nbsp; d) segment</span></div>
+        <div class="ptest-q"><b>51.</b> What is the common endpoint of an angle called?<span class="opt">a) side &nbsp; b) ray &nbsp; c) vertex &nbsp; d) arc</span></div>
+        <div class="ptest-q"><b>52.</b> Which pair of lines never intersects?<span class="opt">a) intersecting lines &nbsp; b) perpendicular lines &nbsp; c) parallel lines &nbsp; d) angled lines</span></div>
+        <div class="ptest-q"><b>53.</b> Which pair of lines crosses at right angles?<span class="opt">a) parallel lines &nbsp; b) perpendicular lines &nbsp; c) curved lines &nbsp; d) rays</span></div>
+        <div class="ptest-q"><b>54.</b> What tool is used to measure the size of an angle?<span class="opt">a) ruler &nbsp; b) compass &nbsp; c) protractor &nbsp; d) meter stick</span></div>
+        <div class="ptest-q"><b>55.</b> What is the unit for measuring angles?<span class="opt">a) meter &nbsp; b) degree &nbsp; c) liter &nbsp; d) gram</span></div>
+        <div class="ptest-q"><b>56.</b> An angle measuring 30° is what kind of angle?<span class="opt">a) obtuse &nbsp; b) right &nbsp; c) acute &nbsp; d) straight</span></div>
+        <div class="ptest-q"><b>57.</b> An angle measuring 90° is what kind of angle?<span class="opt">a) acute &nbsp; b) right &nbsp; c) obtuse &nbsp; d) reflex</span></div>
+        <div class="ptest-q"><b>58.</b> An angle measuring 150° is what kind of angle?<span class="opt">a) acute &nbsp; b) right &nbsp; c) obtuse &nbsp; d) straight</span></div>
+        <div class="ptest-q"><b>59.</b> Rays NB and NC meet at point N, forming an angle. What is the vertex?<span class="opt">a) B &nbsp; b) C &nbsp; c) N &nbsp; d) BC</span></div>
+        <div class="ptest-q"><b>60.</b> Which is the correct way to name a ray with endpoint A extending toward B?<span class="opt">a) ray BA &nbsp; b) line AB &nbsp; c) ray AB &nbsp; d) segment AB</span></div>
+      </div>
+
+      <!-- ══════════ ANSWER KEY ══════════ -->
+      <div class="notes-section" id="tab-key">
+        <div class="notes-topic">
+          <div class="notes-topic-title">Part I — Matching Type</div>
+          <div class="key-grid">
+            <div class="key-pill">1. <b>A</b></div><div class="key-pill">2. <b>B</b></div><div class="key-pill">3. <b>C</b></div><div class="key-pill">4. <b>D</b></div><div class="key-pill">5. <b>E</b></div>
+            <div class="key-pill">6. <b>F</b></div><div class="key-pill">7. <b>G</b></div><div class="key-pill">8. <b>H</b></div><div class="key-pill">9. <b>I</b></div><div class="key-pill">10. <b>J</b></div>
+            <div class="key-pill">11. <b>K</b></div><div class="key-pill">12. <b>L</b></div><div class="key-pill">13. <b>M</b></div><div class="key-pill">14. <b>N</b></div><div class="key-pill">15. <b>O</b></div>
+          </div>
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">Part II — Fill in the Blank</div>
+          <div class="key-grid">
+            <div class="key-pill">16. <b>angle</b></div><div class="key-pill">17. <b>double</b></div><div class="key-pill">18. <b>bar</b></div><div class="key-pill">19. <b>single</b></div><div class="key-pill">20. <b>endpoint</b></div>
+            <div class="key-pill">21. <b>vertex</b></div><div class="key-pill">22. <b>protractor</b></div><div class="key-pill">23. <b>degree</b></div><div class="key-pill">24. <b>right</b></div><div class="key-pill">25. <b>acute</b></div>
+            <div class="key-pill">26. <b>obtuse</b></div><div class="key-pill">27. <b>parallel</b></div><div class="key-pill">28. <b>intersecting</b></div><div class="key-pill">29. <b>perpendicular</b></div><div class="key-pill">30. <b>point of intersection</b></div>
+          </div>
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">Part III — True or False</div>
+          <div class="key-grid">
+            <div class="key-pill">31. <b>False</b></div><div class="key-pill">32. <b>True</b></div><div class="key-pill">33. <b>True</b></div><div class="key-pill">34. <b>False</b></div><div class="key-pill">35. <b>True</b></div>
+            <div class="key-pill">36. <b>True</b></div><div class="key-pill">37. <b>False</b></div><div class="key-pill">38. <b>True</b></div><div class="key-pill">39. <b>True</b></div><div class="key-pill">40. <b>True</b></div>
+            <div class="key-pill">41. <b>False</b></div><div class="key-pill">42. <b>False</b></div><div class="key-pill">43. <b>True</b></div><div class="key-pill">44. <b>False</b></div><div class="key-pill">45. <b>True</b></div>
+          </div>
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">Part IV — Multiple Choice</div>
+          <div class="key-grid">
+            <div class="key-pill">46. <b>b</b></div><div class="key-pill">47. <b>c</b></div><div class="key-pill">48. <b>b</b></div><div class="key-pill">49. <b>c</b></div><div class="key-pill">50. <b>b</b></div>
+            <div class="key-pill">51. <b>c</b></div><div class="key-pill">52. <b>c</b></div><div class="key-pill">53. <b>b</b></div><div class="key-pill">54. <b>c</b></div><div class="key-pill">55. <b>b</b></div>
+            <div class="key-pill">56. <b>c</b></div><div class="key-pill">57. <b>b</b></div><div class="key-pill">58. <b>c</b></div><div class="key-pill">59. <b>c</b></div><div class="key-pill">60. <b>c</b></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ── Hidden Print Area (Practice Test + Answer Key) ── -->
+
+<div id="print-area">
+
+  <div class="p-cover">
+    <div class="p-icon">📐</div>
+    <h1>Grade 4 Math — Practice Test</h1>
+    <div class="p-sub">Points, Lines &amp; Rays · Pairs of Lines · Angles &amp; Their Measures</div>
+    <div class="p-info-box">
+      <div><strong>Name:</strong> _____________________________________</div>
+      <div><strong>Section:</strong> ___________________ &nbsp; <strong>Date:</strong> ___________________</div>
+      <div><strong>Score:</strong> _______ / 60</div>
+    </div>
+    <div class="p-instructions">
+      <strong>Instructions:</strong> Read each item carefully. Write your answer on the blank provided (Parts I–III), or write the letter of the correct answer (Part IV). Good luck!
+    </div>
+  </div>
+
+  <div class="p-break">
+  <h2 class="p-part-title">Part I — Matching Type (Term → Description)</h2>
+  <div class="p-bank">
+    <strong>Word Bank:</strong> (A) Point &nbsp; (B) Line &nbsp; (C) Line Segment &nbsp; (D) Ray &nbsp; (E) Angle &nbsp; (F) Vertex &nbsp; (G) Parallel Lines &nbsp; (H) Intersecting Lines &nbsp; (I) Perpendicular Lines &nbsp; (J) Point of Intersection &nbsp; (K) Protractor &nbsp; (L) Degree &nbsp; (M) Acute Angle &nbsp; (N) Right Angle &nbsp; (O) Obtuse Angle
+  </div>
+  <div class="p-q"><b>1.</b> An exact location in space <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>2.</b> Continues forever in both directions <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>3.</b> A part of a line with two endpoints <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>4.</b> Starts at one point and extends in one direction forever <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>5.</b> Formed when two rays share a common endpoint <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>6.</b> The common endpoint of two rays that form an angle <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>7.</b> Lines that never intersect <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>8.</b> Lines that cross each other at one point <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>9.</b> Lines that intersect at right angles <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>10.</b> The exact point where two lines cross <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>11.</b> A tool used to measure angles <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>12.</b> The unit used to measure angles <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>13.</b> An angle greater than 0° but less than 90° <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>14.</b> An angle that measures exactly 90° <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>15.</b> An angle greater than 90° but less than 180° <span class="p-blank">&nbsp;</span></div>
+  </div>
+
+  <h2 class="p-part-title">Part II — Fill in the Blank</h2>
+  <div class="p-q"><b>16.</b> Two rays that meet at a vertex form a(n) __________.</div>
+  <div class="p-q"><b>17.</b> The symbol placed on top of two letters to name a line is a __________ arrow.</div>
+  <div class="p-q"><b>18.</b> The symbol placed on top of two letters to name a line segment is a __________.</div>
+  <div class="p-q"><b>19.</b> The symbol placed on top of two letters to name a ray is a __________ arrow.</div>
+  <div class="p-q"><b>20.</b> In naming a ray, the first letter written is always the __________.</div>
+  <div class="p-q"><b>21.</b> In naming an angle with three letters, the __________ must always be in the middle.</div>
+  <div class="p-q"><b>22.</b> A device used to measure the opening of an angle is called a __________.</div>
+  <div class="p-q"><b>23.</b> Angles are measured using the unit called __________.</div>
+  <div class="p-q"><b>24.</b> An angle that measures 90° is called a __________ angle.</div>
+  <div class="p-q"><b>25.</b> An angle that measures less than 90° is called a(n) __________ angle.</div>
+  <div class="p-q"><b>26.</b> An angle that measures more than 90° but less than 180° is called a(n) __________ angle.</div>
+  <div class="p-q"><b>27.</b> Lines that never meet or cross are called __________ lines.</div>
+  <div class="p-q"><b>28.</b> Lines that cross each other at one point are called __________ lines.</div>
+  <div class="p-q"><b>29.</b> Lines that intersect at right angles are called __________ lines.</div>
+  <div class="p-q"><b>30.</b> The point where two lines cross is called the __________.</div>
+
+  <div class="p-break">
+  <h2 class="p-part-title">Part III — True or False</h2>
+  <div class="p-q"><b>31.</b> A point has length and thickness. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>32.</b> A line extends forever in both directions. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>33.</b> A line segment has two endpoints. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>34.</b> A ray extends forever in both directions. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>35.</b> An angle is formed when two rays share a common endpoint. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>36.</b> The common endpoint of an angle is called the vertex. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>37.</b> Parallel lines intersect at one point. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>38.</b> Intersecting lines cross each other at one single point. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>39.</b> Perpendicular lines intersect at right angles. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>40.</b> A protractor is used to measure angles. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>41.</b> The unit for measuring angles is meters. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>42.</b> An acute angle measures greater than 90 degrees. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>43.</b> A right angle measures exactly 90 degrees. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>44.</b> An obtuse angle measures less than 90 degrees. <span class="p-blank">&nbsp;</span></div>
+  <div class="p-q"><b>45.</b> When naming an angle with three letters, the vertex must always be in the middle. <span class="p-blank">&nbsp;</span></div>
+  </div>
+
+  <div class="p-break">
+  <h2 class="p-part-title">Part IV — Multiple Choice</h2>
+  <div class="p-q"><b>46.</b> What do you call an exact location in space?<span class="p-opt">a) line &nbsp; b) point &nbsp; c) ray &nbsp; d) segment</span></div>
+  <div class="p-q"><b>47.</b> Which of these extends forever in both directions?<span class="p-opt">a) ray &nbsp; b) line segment &nbsp; c) line &nbsp; d) angle</span></div>
+  <div class="p-q"><b>48.</b> What do you call a part of a line with two endpoints?<span class="p-opt">a) ray &nbsp; b) line segment &nbsp; c) point &nbsp; d) vertex</span></div>
+  <div class="p-q"><b>49.</b> Which of these has only one endpoint and extends forever in one direction?<span class="p-opt">a) line &nbsp; b) line segment &nbsp; c) ray &nbsp; d) angle</span></div>
+  <div class="p-q"><b>50.</b> What is formed when two rays share a common endpoint?<span class="p-opt">a) triangle &nbsp; b) angle &nbsp; c) line &nbsp; d) segment</span></div>
+  <div class="p-q"><b>51.</b> What is the common endpoint of an angle called?<span class="p-opt">a) side &nbsp; b) ray &nbsp; c) vertex &nbsp; d) arc</span></div>
+  <div class="p-q"><b>52.</b> Which pair of lines never intersects?<span class="p-opt">a) intersecting lines &nbsp; b) perpendicular lines &nbsp; c) parallel lines &nbsp; d) angled lines</span></div>
+  <div class="p-q"><b>53.</b> Which pair of lines crosses at right angles?<span class="p-opt">a) parallel lines &nbsp; b) perpendicular lines &nbsp; c) curved lines &nbsp; d) rays</span></div>
+  <div class="p-q"><b>54.</b> What tool is used to measure the size of an angle?<span class="p-opt">a) ruler &nbsp; b) compass &nbsp; c) protractor &nbsp; d) meter stick</span></div>
+  <div class="p-q"><b>55.</b> What is the unit for measuring angles?<span class="p-opt">a) meter &nbsp; b) degree &nbsp; c) liter &nbsp; d) gram</span></div>
+  <div class="p-q"><b>56.</b> An angle measuring 30° is what kind of angle?<span class="p-opt">a) obtuse &nbsp; b) right &nbsp; c) acute &nbsp; d) straight</span></div>
+  <div class="p-q"><b>57.</b> An angle measuring 90° is what kind of angle?<span class="p-opt">a) acute &nbsp; b) right &nbsp; c) obtuse &nbsp; d) reflex</span></div>
+  <div class="p-q"><b>58.</b> An angle measuring 150° is what kind of angle?<span class="p-opt">a) acute &nbsp; b) right &nbsp; c) obtuse &nbsp; d) straight</span></div>
+  <div class="p-q"><b>59.</b> Rays NB and NC meet at point N, forming an angle. What is the vertex?<span class="p-opt">a) B &nbsp; b) C &nbsp; c) N &nbsp; d) BC</span></div>
+  <div class="p-q"><b>60.</b> Which is the correct way to name a ray with endpoint A extending toward B?<span class="p-opt">a) ray BA &nbsp; b) line AB &nbsp; c) ray AB &nbsp; d) segment AB</span></div>
+  </div>
+
+  <div class="p-break">
+  <h2 class="p-part-title">✅ Complete Answer Key</h2>
+
+  <div class="p-key-part-title">Part I — Matching Type</div>
+  <div class="p-key-grid">
+    <div class="p-key-pill">1. <b>A</b></div><div class="p-key-pill">2. <b>B</b></div><div class="p-key-pill">3. <b>C</b></div><div class="p-key-pill">4. <b>D</b></div><div class="p-key-pill">5. <b>E</b></div>
+    <div class="p-key-pill">6. <b>F</b></div><div class="p-key-pill">7. <b>G</b></div><div class="p-key-pill">8. <b>H</b></div><div class="p-key-pill">9. <b>I</b></div><div class="p-key-pill">10. <b>J</b></div>
+    <div class="p-key-pill">11. <b>K</b></div><div class="p-key-pill">12. <b>L</b></div><div class="p-key-pill">13. <b>M</b></div><div class="p-key-pill">14. <b>N</b></div><div class="p-key-pill">15. <b>O</b></div>
+  </div>
+
+  <div class="p-key-part-title">Part II — Fill in the Blank</div>
+  <div class="p-key-grid">
+    <div class="p-key-pill">16. <b>angle</b></div><div class="p-key-pill">17. <b>double</b></div><div class="p-key-pill">18. <b>bar</b></div><div class="p-key-pill">19. <b>single</b></div><div class="p-key-pill">20. <b>endpoint</b></div>
+    <div class="p-key-pill">21. <b>vertex</b></div><div class="p-key-pill">22. <b>protractor</b></div><div class="p-key-pill">23. <b>degree</b></div><div class="p-key-pill">24. <b>right</b></div><div class="p-key-pill">25. <b>acute</b></div>
+    <div class="p-key-pill">26. <b>obtuse</b></div><div class="p-key-pill">27. <b>parallel</b></div><div class="p-key-pill">28. <b>intersecting</b></div><div class="p-key-pill">29. <b>perpendicular</b></div><div class="p-key-pill">30. <b>point of intersection</b></div>
+  </div>
+
+  <div class="p-key-part-title">Part III — True or False</div>
+  <div class="p-key-grid">
+    <div class="p-key-pill">31. <b>False</b></div><div class="p-key-pill">32. <b>True</b></div><div class="p-key-pill">33. <b>True</b></div><div class="p-key-pill">34. <b>False</b></div><div class="p-key-pill">35. <b>True</b></div>
+    <div class="p-key-pill">36. <b>True</b></div><div class="p-key-pill">37. <b>False</b></div><div class="p-key-pill">38. <b>True</b></div><div class="p-key-pill">39. <b>True</b></div><div class="p-key-pill">40. <b>True</b></div>
+    <div class="p-key-pill">41. <b>False</b></div><div class="p-key-pill">42. <b>False</b></div><div class="p-key-pill">43. <b>True</b></div><div class="p-key-pill">44. <b>False</b></div><div class="p-key-pill">45. <b>True</b></div>
+  </div>
+
+  <div class="p-key-part-title">Part IV — Multiple Choice</div>
+  <div class="p-key-grid">
+    <div class="p-key-pill">46. <b>b</b></div><div class="p-key-pill">47. <b>c</b></div><div class="p-key-pill">48. <b>b</b></div><div class="p-key-pill">49. <b>c</b></div><div class="p-key-pill">50. <b>b</b></div>
+    <div class="p-key-pill">51. <b>c</b></div><div class="p-key-pill">52. <b>c</b></div><div class="p-key-pill">53. <b>b</b></div><div class="p-key-pill">54. <b>c</b></div><div class="p-key-pill">55. <b>b</b></div>
+    <div class="p-key-pill">56. <b>c</b></div><div class="p-key-pill">57. <b>b</b></div><div class="p-key-pill">58. <b>c</b></div><div class="p-key-pill">59. <b>c</b></div><div class="p-key-pill">60. <b>c</b></div>
+  </div>
+  </div>
+
+</div>
+
+</body>
+</html>
