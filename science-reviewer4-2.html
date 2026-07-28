@@ -1,0 +1,1157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🧪 Changes in Materials Reviewer 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --gold: #f59e0b;
+  --gold-dark: #b45309;
+  --blue: #3b82f6;
+  --blue-dark: #1d4ed8;
+  --red: #ef4444;
+  --green: #22c55e;
+  --bg: #0c1a0e;
+  --surface: #132015;
+  --surface2: #1a2e1d;
+  --text: #f0fdf4;
+  --muted: #86efac;
+  --border: #166534;
+}
+
+body {
+  font-family: 'Baloo 2', cursive;
+  background: var(--bg);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--text);
+  background-image:
+    radial-gradient(ellipse at 10% 30%, rgba(245,158,11,.06) 0%, transparent 55%),
+    radial-gradient(ellipse at 90% 70%, rgba(59,130,246,.06) 0%, transparent 55%);
+}
+
+header {
+  width: 100%;
+  background: linear-gradient(135deg, #14532d, #1e3a5f);
+  border-bottom: 2px solid var(--gold-dark);
+  padding: 13px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 4px 30px rgba(0,0,0,.5);
+}
+.header-icon { font-size: 2rem; animation: float 3s ease-in-out infinite; }
+@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
+
+header h1 {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.45rem;
+  background: linear-gradient(90deg, var(--gold), #fde68a, var(--gold));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+header .sub { font-size: .72rem; color: var(--muted); margin-top: 1px; }
+
+.header-controls { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+.score-pill {
+  background: rgba(245,158,11,.15);
+  border: 1px solid rgba(245,158,11,.4);
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-weight: 800;
+  font-size: .85rem;
+  color: var(--gold);
+}
+.audio-btn {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  background: var(--surface2);
+  color: var(--text);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all .2s;
+  display: flex; align-items: center; justify-content: center;
+}
+.audio-btn:hover, .audio-btn.active { background: #14532d; border-color: var(--gold); }
+
+.chat-wrap {
+  width: 100%; max-width: 700px; flex: 1;
+  display: flex; flex-direction: column;
+  padding: 16px 14px 0;
+}
+
+#chat-box {
+  flex: 1; overflow-y: auto;
+  display: flex; flex-direction: column;
+  gap: 14px; padding-bottom: 10px;
+  max-height: calc(100vh - 200px);
+  scroll-behavior: smooth;
+}
+#chat-box::-webkit-scrollbar { width: 4px; }
+#chat-box::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+.msg { display: flex; gap: 8px; }
+.msg.user { flex-direction: row-reverse; }
+
+.avatar {
+  width: 34px; height: 34px; border-radius: 50%;
+  font-size: 1rem; display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 2px;
+}
+.msg.bot .avatar { background: linear-gradient(135deg, #14532d, #1e3a5f); border: 1.5px solid rgba(245,158,11,.4); }
+.msg.user .avatar { background: linear-gradient(135deg, #1e3a5f, #14532d); border: 1.5px solid rgba(59,130,246,.3); }
+
+.bubble {
+  max-width: 80%;
+  padding: 11px 16px;
+  border-radius: 18px;
+  font-size: .9rem;
+  line-height: 1.65;
+  animation: pop .22s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes pop { from{transform:scale(.88) translateY(6px);opacity:0} to{transform:scale(1) translateY(0);opacity:1} }
+
+.msg.bot .bubble {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-bottom-left-radius: 5px;
+}
+.msg.user .bubble {
+  background: linear-gradient(135deg, #1e3a5f, var(--blue-dark));
+  border-bottom-right-radius: 5px;
+}
+
+/* chips */
+.chip {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: rgba(245,158,11,.12);
+  border: 1.5px solid rgba(245,158,11,.4);
+  color: var(--gold);
+  border-radius: 30px;
+  padding: 5px 13px; margin: 5px 4px 0 0;
+  font-size: .8rem; font-weight: 700;
+  cursor: pointer; transition: all .15s;
+  user-select: none; font-family: 'Baloo 2', cursive;
+}
+.chip:hover {
+  background: var(--gold-dark); color: white;
+  border-color: var(--gold);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(245,158,11,.3);
+}
+
+/* topic tag */
+.topic-tag {
+  display: inline-block;
+  background: linear-gradient(135deg, #14532d, #166534);
+  border: 1px solid var(--gold-dark);
+  color: var(--gold);
+  font-size: .68rem; font-weight: 800;
+  border-radius: 20px; padding: 2px 10px;
+  margin-bottom: 5px; letter-spacing: .5px;
+  text-transform: uppercase;
+}
+
+/* multiple choice */
+.mc-options { display: flex; flex-direction: column; gap: 7px; margin-top: 10px; width: 100%; }
+.mc-btn {
+  display: flex; align-items: center; gap: 10px;
+  background: rgba(255,255,255,.03);
+  border: 1.5px solid var(--border);
+  border-radius: 12px; padding: 9px 14px;
+  color: var(--text); font-family: 'Baloo 2', cursive;
+  font-size: .87rem; font-weight: 600;
+  cursor: pointer; transition: all .15s; text-align: left; width: 100%;
+}
+.mc-btn:hover:not(:disabled) {
+  background: rgba(245,158,11,.12); border-color: var(--gold);
+  color: var(--gold); transform: translateX(3px);
+}
+.mc-btn .letter {
+  display: flex; align-items: center; justify-content: center;
+  width: 26px; height: 26px; border-radius: 8px;
+  background: rgba(245,158,11,.15); border: 1px solid rgba(245,158,11,.35);
+  color: var(--gold); font-size: .78rem; font-weight: 800;
+  flex-shrink: 0; transition: all .15s;
+}
+.mc-btn:hover:not(:disabled) .letter { background: var(--gold-dark); color: white; border-color: var(--gold-dark); }
+.mc-btn.correct { background: rgba(34,197,94,.15)!important; border-color: #22c55e!important; color: #22c55e!important; cursor: default; }
+.mc-btn.correct .letter { background: #22c55e!important; color: white!important; border-color: #22c55e!important; }
+.mc-btn.wrong { background: rgba(239,68,68,.12)!important; border-color: #ef4444!important; color: #ef4444!important; cursor: default; }
+.mc-btn.wrong .letter { background: #ef4444!important; color: white!important; border-color: #ef4444!important; }
+.mc-btn:disabled { cursor: default; transform: none!important; }
+
+/* speaker wave */
+.speaker-wave {
+  display: inline-flex; align-items: flex-end;
+  gap: 2px; height: 14px; margin-left: 6px; vertical-align: middle;
+}
+.speaker-wave span {
+  display: block; width: 3px; border-radius: 2px;
+  background: var(--gold); animation: wave 1s ease-in-out infinite;
+}
+.speaker-wave span:nth-child(1){height:4px;animation-delay:0s}
+.speaker-wave span:nth-child(2){height:10px;animation-delay:.1s}
+.speaker-wave span:nth-child(3){height:6px;animation-delay:.2s}
+.speaker-wave span:nth-child(4){height:12px;animation-delay:.15s}
+.speaker-wave span:nth-child(5){height:4px;animation-delay:.05s}
+@keyframes wave{0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.8)}}
+
+/* typing */
+.typing {
+  display: flex; gap: 4px; padding: 12px 16px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 18px; border-bottom-left-radius: 5px; width: fit-content;
+}
+.dot { width: 7px; height: 7px; border-radius: 50%; background: var(--gold); animation: bounce .9s infinite; }
+.dot:nth-child(2){animation-delay:.15s} .dot:nth-child(3){animation-delay:.3s}
+@keyframes bounce{0%,80%,100%{transform:translateY(0);opacity:.6}40%{transform:translateY(-7px);opacity:1}}
+
+/* input bar */
+.input-bar {
+  width: 100%; max-width: 700px;
+  padding: 10px 14px 18px;
+  display: flex; gap: 8px;
+  background: var(--bg); position: sticky; bottom: 0;
+}
+#user-input {
+  flex: 1; padding: 12px 18px;
+  border: 2px solid var(--border); border-radius: 30px;
+  font-family: 'Baloo 2', cursive; font-size: .92rem;
+  outline: none; background: var(--surface); color: var(--text);
+  transition: border-color .2s, box-shadow .2s;
+}
+#user-input::placeholder { color: var(--muted); }
+#user-input:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(245,158,11,.12); }
+
+#send-btn {
+  width: 48px; height: 48px; border-radius: 50%; border: none;
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  color: white; font-size: 1.1rem; cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 3px 14px rgba(245,158,11,.4); flex-shrink: 0;
+}
+#send-btn:hover { transform: scale(1.08); box-shadow: 0 5px 20px rgba(245,158,11,.55); }
+#send-btn:disabled { opacity: .5; transform: none; }
+
+/* result modal */
+.result-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.75); backdrop-filter: blur(6px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 100; opacity: 0; pointer-events: none; transition: opacity .3s;
+}
+.result-overlay.show { opacity: 1; pointer-events: all; }
+.result-card {
+  background: linear-gradient(135deg, #132015, #0c1a0e);
+  border: 2px solid var(--gold-dark);
+  border-radius: 24px; padding: 36px 40px;
+  text-align: center; max-width: 380px; width: 90%;
+  box-shadow: 0 20px 60px rgba(0,0,0,.6);
+  transform: scale(.9); transition: transform .3s cubic-bezier(.34,1.56,.64,1);
+}
+.result-overlay.show .result-card { transform: scale(1); }
+.result-emoji { font-size: 4rem; margin-bottom: 12px; display: block; }
+.result-title {
+  font-family: 'Fredoka One', cursive; font-size: 1.7rem; margin-bottom: 6px;
+  background: linear-gradient(90deg, var(--gold), #fde68a);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.result-score { font-size: 3rem; font-weight: 900; margin: 10px 0; color: white; }
+.result-msg { color: var(--muted); font-size: .9rem; margin-bottom: 22px; }
+.result-btn {
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  border: none; border-radius: 30px; padding: 12px 30px;
+  color: white; font-family: 'Baloo 2', cursive; font-weight: 800;
+  font-size: 1rem; cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+  box-shadow: 0 4px 16px rgba(245,158,11,.35);
+}
+.result-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 22px rgba(245,158,11,.5); }
+
+/* scenario card for identify questions */
+.scenario-card {
+  background: rgba(245,158,11,.07);
+  border: 1px solid rgba(245,158,11,.25);
+  border-radius: 12px; padding: 10px 14px;
+  margin: 8px 0 6px; font-style: italic;
+  font-size: .87rem; color: #fde68a; line-height: 1.5;
+}
+
+/* ── Notes Panel ─────────────────────────────────────────────── */
+.notes-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.78); backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 200; opacity: 0; pointer-events: none; transition: opacity .3s;
+}
+.notes-overlay.show { opacity: 1; pointer-events: all; }
+.notes-panel {
+  background: linear-gradient(160deg, #0c1a0e, #132015);
+  border: 2px solid var(--gold-dark);
+  border-radius: 20px;
+  width: 92%; max-width: 720px;
+  max-height: 88vh;
+  display: flex; flex-direction: column;
+  box-shadow: 0 24px 60px rgba(0,0,0,.7);
+  overflow: hidden;
+  transform: translateY(30px);
+  transition: transform .35s cubic-bezier(.34,1.2,.64,1);
+}
+.notes-overlay.show .notes-panel { transform: translateY(0); }
+.notes-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 22px; border-bottom: 1px solid var(--border);
+  background: linear-gradient(135deg, #14532d44, #1e3a5f44);
+}
+.notes-header h2 { font-family: 'Fredoka One', cursive; font-size: 1.3rem; color: var(--gold); }
+.notes-close {
+  width: 34px; height: 34px; border-radius: 50%;
+  border: 1.5px solid var(--border); background: var(--surface2);
+  color: var(--text); font-size: 1rem; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; transition: all .2s;
+}
+.notes-close:hover { background: #b91c1c; border-color: #ef4444; }
+.notes-body { overflow-y: auto; padding: 20px 22px; flex: 1; }
+.notes-body::-webkit-scrollbar { width: 4px; }
+.notes-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+.notes-topic { margin-bottom: 28px; }
+.notes-topic-title {
+  font-family: 'Fredoka One', cursive; font-size: 1.05rem;
+  color: var(--gold); margin-bottom: 10px;
+  padding-bottom: 6px; border-bottom: 1px solid var(--border);
+}
+.notes-item {
+  display: flex; gap: 10px; align-items: flex-start;
+  padding: 7px 0; border-bottom: 1px solid rgba(255,255,255,.04);
+  font-size: .87rem; line-height: 1.55;
+}
+.notes-item:last-child { border-bottom: none; }
+.notes-term { font-weight: 800; color: var(--gold); min-width: 150px; flex-shrink: 0; font-size: .84rem; }
+.notes-def { color: #d1fae5; }
+.notes-tabs {
+  display: flex; flex-wrap: wrap; gap: 8px; padding: 14px 22px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(0,0,0,.15);
+}
+.notes-tab {
+  padding: 12px 20px; border-radius: 10px;
+  border: 1.5px solid var(--border); 
+  background: rgba(255,255,255,.04); color: var(--muted);
+  font-family: 'Baloo 2', cursive; font-size: .9rem; font-weight: 700;
+  cursor: pointer; transition: all .15s; white-space: nowrap;
+  min-height: 48px; display: flex; align-items: center;
+}
+.notes-tab.active { background: var(--surface); color: var(--gold); border-color: var(--gold-dark); }
+.notes-tab:hover:not(.active) { color: var(--text); background: var(--surface2); }
+.notes-section { display: none; }
+.notes-section.active { display: block; }
+
+</style>
+<body>
+
+<header>
+  <div class="header-icon">🧪</div>
+  <div>
+    <h1>Changes in Materials</h1>
+    <div class="sub">Physical &amp; Chemical Change · Decomposition · Pollution · Waste Management</div>
+  </div>
+  <div class="header-controls">
+    <div class="score-pill">⭐ <span id="score-val">0</span> / <span id="total-val">0</span></div>
+    <button class="audio-btn" id="notes-toggle" title="Read the Notes" onclick="document.getElementById('notes-overlay').classList.add('show')">📖</button>
+    <button class="audio-btn active" id="audio-toggle" title="Toggle Audio">🔊</button>
+  </div>
+</header>
+
+<div class="chat-wrap">
+  <div id="chat-box"></div>
+</div>
+
+<div class="input-bar">
+  <input type="text" id="user-input" placeholder="Type your answer here…" autocomplete="off" />
+  <button id="send-btn">➤</button>
+</div>
+
+<div class="result-overlay" id="result-overlay">
+  <div class="result-card">
+    <span class="result-emoji" id="res-emoji">🏆</span>
+    <div class="result-title">All Done!</div>
+    <div class="result-score"><span id="res-score">0</span>/<span id="res-total">0</span></div>
+    <div class="result-msg" id="res-msg">Great job!</div>
+    <button class="result-btn" onclick="restartApp()">🔄 Play Again</button>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+// QUESTION BANK
+// ═══════════════════════════════════════════════════════════════
+const topics = {
+
+  "Physical and Chemical Changes": [
+    { q: "What are the two types of changes that materials undergo?", a: "Physical change and chemical change", hint: "One keeps the same identity, the other forms something new." },
+    { q: "What happens to a material's composition when it undergoes physical change?", a: "It retains its composition and identity", hint: "Nothing new is formed." },
+    { q: "What kinds of changes are included in physical change?", a: "Changes in size, volume, shape, or phase of matter", hint: "Think about cutting, melting, or bending." },
+    { q: "What is a chemical change?", a: "A change where one substance changes into another form that is completely different from the original substance", hint: "A brand new substance is formed." },
+    { q: "What new substance forms on the surface of a rusting metal bar?", a: "Rust", hint: "It's reddish-brown." },
+    { q: "What gas is produced when vinegar is added to baking soda?", a: "Carbon dioxide", hint: "This is the same gas we breathe out." },
+    { q: "What is one evidence of chemical change that involves gas?", a: "The formation of bubbles", hint: "Think of fizzing." },
+    { q: "What is another evidence of chemical change that involves energy?", a: "The release of energy, such as heat and light", hint: "Think of fire." },
+    { q: "Give an example of a chemical change that gives off energy and heat.", a: "A burning log", hint: "Think of a campfire." },
+  ],
+
+  "Decomposition": [
+    { q: "What is decomposition?", a: "The process by which substances are broken down into simpler forms", hint: "Think of decay." },
+    { q: "What factors affect the rate of decomposition?", a: "Temperature, humidity, exposure to elements, and access by detritivores and decomposers", hint: "Four factors, starting with temperature." },
+    { q: "What are organic materials?", a: "Materials that come from organisms that were once alive", hint: "Think of leaves and meat." },
+    { q: "Give two examples of organic materials.", a: "Fallen leaves and rotten meat", hint: "One comes from plants, the other from animals." },
+    { q: "What happens to the soil when organic materials decompose?", a: "They make the soil fertile", hint: "Good for plants." },
+    { q: "Which materials decompose fast?", a: "Paper and food", hint: "These break down within days or weeks." },
+    { q: "Which materials can take hundreds or thousands of years to decompose?", a: "Plastics and glass", hint: "These barely break down at all." },
+    { q: "What are decomposers? Give an example.", a: "Organisms like bacteria that break down organic material through chemical processes", hint: "They're too small to see." },
+    { q: "What are detritivores? Give an example.", a: "Organisms like earthworms that directly feed on decaying matter", hint: "Think of a garden helper that eats dead leaves." },
+    { q: "Why do people keep leftover food inside the refrigerator?", a: "Low temperature slows down the growth of bacteria, preventing food from spoiling", hint: "Cold slows things down." },
+    { q: "How do higher temperatures generally affect decomposition?", a: "They accelerate decomposition by increasing the activity of microorganisms", hint: "Warmth speeds up bacteria." },
+    { q: "Why is boiling water from unknown sources important?", a: "Boiling eliminates harmful bacteria and other microorganisms, making the water safe for drinking", hint: "Heat kills germs." },
+    { q: "What role do earthworms play in decomposition?", a: "They consume organic materials and break them down into smaller pieces", hint: "They chew up dead matter." },
+    { q: "What happens during the final stage of decomposition?", a: "Nutrients are returned to the soil", hint: "This is the end result of decay." },
+  ],
+
+  "Decay, Health, and Safety": [
+    { q: "What is a landfill?", a: "A place where tons of garbage from surrounding areas are dumped", hint: "It's a garbage dumping site." },
+    { q: "Why is garbage dangerous to people's health?", a: "It contains bacteria that can cause infections and diseases", hint: "Bacteria are the culprits." },
+    { q: "How can people be infected by bacteria from decaying garbage?", a: "By inhaling dirty air that contains airborne bacteria", hint: "Think about breathing in polluted air." },
+    { q: "What are hospital wastes, and why are they dangerous?", a: "Contaminated syringes, bandages, and medical equipment; they are infectious and can spread diseases like flu, hepatitis, and tuberculosis", hint: "These have been used on sick patients." },
+  ],
+
+  "Useful Effects of Changes": [
+    { q: "What is evaporation?", a: "The process by which water changes from liquid to gas (water vapor) due to heat", hint: "This happens to ocean water under the Sun." },
+    { q: "What is condensation?", a: "The process by which water vapor changes into small liquid droplets at cooler altitudes", hint: "Clouds form this way." },
+    { q: "What is precipitation?", a: "The process by which clouds release water back to the ground as rain, snow, or hail", hint: "This is how water falls back to Earth." },
+    { q: "What are wooden furniture like tables and chairs products of?", a: "Physical change", hint: "The wood is cut and polished, but it's still wood." },
+    { q: "What are home appliances like refrigerators and electric fans products of?", a: "Changes in materials during the manufacturing process", hint: "They're built from raw materials." },
+    { q: "What types of change happen throughout the cooking process?", a: "Both physical and chemical changes", hint: "Two kinds of change happen at once." },
+  ],
+
+  "Effects on Health, Comfort, and Transportation": [
+    { q: "Who discovered penicillin, and in what year?", a: "Alexander Fleming, in 1928", hint: "A British scientist." },
+    { q: "What is penicillin?", a: "A bacteria-killing substance produced by a kind of mold, named after the Penicillium mold", hint: "It came from a mold." },
+    { q: "What are antibiotics?", a: "Medicines that kill bacteria", hint: "Penicillin was the first of these." },
+    { q: "In what year did a German chemist discover a process to produce ammonia from nitrogen in the air?", a: "1909", hint: "Early 20th century." },
+    { q: "What is ammonia used for in farming?", a: "As fertilizer", hint: "It helps plants grow." },
+    { q: "Who discovered nylon, and when?", a: "Dr. Wallace Carothers, in the 1930s", hint: "A silk-like fabric." },
+    { q: "What was nylon initially used for?", a: "Making stockings", hint: "A clothing item worn on legs." },
+    { q: "Why did scientists invent synthetic rubber?", a: "Because untreated natural rubber is brittle and easily cracks in cold weather", hint: "Natural rubber has a weakness in cold weather." },
+    { q: "What is petroleum a mixture of?", a: "Different chemicals such as gasoline, kerosene, diesel oil, and lubricating substances", hint: "It's also called crude oil." },
+  ],
+
+  "Harmful Effects and Chemical Safety": [
+    { q: "What chemical do scientists use to kill germs in drinking water?", a: "Chlorine", hint: "Also used in swimming pools." },
+    { q: "What cleaning supplies should be handled with care?", a: "Bleach, detergents, and ammonia", hint: "Common household cleaners." },
+    { q: "Why should you avoid mixing certain chemicals?", a: "Some chemicals are safe separately but may produce toxic fumes, fire, or explosions when combined", hint: "Combining chemicals can be dangerous." },
+    { q: "What should you always read before using chemical products?", a: "Warning labels and instructions or directions", hint: "This is printed on the container." },
+  ],
+
+  "Water, Air, and Soil Contamination": [
+    { q: "What has heavily polluted the Pasig River in Metro Manila?", a: "Factories and other business establishments near it", hint: "Industries near the river are the cause." },
+    { q: "What are the main sources of water pollutants?", a: "Sewage and industries", hint: "Human waste and factory waste." },
+    { q: "What is groundwater?", a: "Water that flows under the ground, used as a source of domestic water including drinking water", hint: "It's found beneath the surface." },
+    { q: "What diseases can contaminated water cause?", a: "Diarrhea and cholera", hint: "Two waterborne diseases." },
+    { q: "How does oil spilled on water affect birds?", a: "It sticks to their feathers, making it difficult for them to fly and exposing them to cold weather", hint: "Their feathers get coated in oil." },
+    { q: "What is carbon monoxide, and why is it dangerous?", a: "A tasteless, odorless, colorless gas that stops blood from carrying oxygen from the lungs to the body", hint: "You can't see, smell, or taste it." },
+    { q: "Name sources of indoor air pollution.", a: "By-products of combustion, biological contaminants, pesticides, evaporating chemical products, and airborne dust particles", hint: "Think of faulty heaters, mold, and paints." },
+    { q: "What is acid rain?", a: "Very acidic precipitation formed when nitrogen oxides and sulfur oxides from burning fuel react with water vapor", hint: "Comes from burning oil and coal." },
+    { q: "What effect does acid rain have on metal and marble structures?", a: "It damages them and causes rusting to set in quickly", hint: "It corrodes structures faster." },
+    { q: "How do commercial fertilizers and insecticides affect soil over time?", a: "They can make the soil infertile and unproductive", hint: "Overuse harms the soil." },
+  ],
+
+  "The Five Rs of Waste Management": [
+    { q: "What are the Five Rs of waste management?", a: "Reduce, Reuse, Recycle, Rethink, and Recover", hint: "All start with the letter R." },
+    { q: "What does 'Reduce' mean?", a: "Reduce the amount of goods and services that you use", hint: "Use less of everything." },
+    { q: "Give one way to practice 'Reduce.'", a: "Refuse to buy items you do not need, buy in bulk, or walk/bike/carpool", hint: "Think about buying less." },
+    { q: "What does 'Reuse' mean?", a: "Using items again instead of throwing them away", hint: "Give items a second life." },
+    { q: "Give one way to practice 'Reuse.'", a: "Donate secondhand clothing, repair broken items, or use recycled materials for projects", hint: "Think about giving things away or fixing them." },
+    { q: "What does 'Recycle' mean?", a: "Recycle anything that you cannot reuse", hint: "Turn old materials into something new." },
+    { q: "What does 'Rethink' mean?", a: "Think twice before using something and reflect on its environmental impact", hint: "Pause and consider before buying or using." },
+    { q: "Give one way to practice 'Rethink.'", a: "Use rechargeable batteries, use biodegradable materials, or buy fewer single-use items", hint: "Choose eco-friendly options." },
+    { q: "What does 'Recover' mean?", a: "Finding ways to make use of materials that seem useless, such as making compost", hint: "Give value to things that seem like trash." },
+    { q: "What can compost be used for?", a: "To fertilize plants, or as a source of energy when generated in large amounts", hint: "It's great for gardens." },
+  ],
+
+  "Waste Segregation and Recycling": [
+    { q: "What is waste segregation?", a: "The process of sorting garbage and waste products in order to reduce, reuse, and recycle materials", hint: "Sorting your trash." },
+    { q: "What are biodegradable materials?", a: "Materials that can decompose or decay, such as food scraps and garden waste", hint: "These break down naturally." },
+    { q: "What are nonbiodegradable materials?", a: "Materials that do not easily decay, such as plastics, glass, and metal", hint: "These stay around for a very long time." },
+    { q: "What law makes burning of domestic waste illegal in the Philippines?", a: "The Ecological Solid Waste Management Act of 2000", hint: "It's a Philippine law about waste." },
+    { q: "What are reactive wastes?", a: "Toxic and hazardous wastes that can cause explosions and release toxic fumes when compressed, heated, or mixed with water", hint: "These are dangerous chemicals." },
+    { q: "Give two examples of reactive wastes.", a: "Lithium batteries, sodium metals, or aerosol cans", hint: "Think of batteries and spray cans." },
+    { q: "What is recycling?", a: "The process of converting used materials into new, useful products", hint: "Old materials become new products." },
+    { q: "What are the benefits of recycling?", a: "It saves energy, reduces the need for raw materials, and controls air, water, and land pollution", hint: "Three big benefits." },
+    { q: "What is a Materials Recovery Facility (MRF)?", a: "A facility designed to collect and segregate waste materials before they are processed", hint: "Waste materials are sorted here." },
+    { q: "Why are recycled materials often cheaper to produce?", a: "Because less energy is used in manufacturing them compared to producing items from raw materials", hint: "Less energy means lower cost." },
+    { q: "What are some health problems linked to burning toxic wastes?", a: "Cancer, heart ailments, fetal abnormalities, depressed immune system, and respiratory infections", hint: "Serious illnesses can result." },
+  ],
+
+  "Physical and Chemical Properties of Materials": [
+    { q: "What are physical properties?", a: "Characteristics that can be observed or measured", hint: "You can see or measure these directly." },
+    { q: "Give examples of physical properties of materials.", a: "Color, shape, size, texture, melting and boiling points, hardness, elasticity, malleability, ductility, and brittleness", hint: "Think of things you can observe without a reaction." },
+    { q: "What are chemical properties?", a: "Characteristics that are observable when a material undergoes a chemical reaction", hint: "You need a reaction to see these." },
+    { q: "What is combustibility?", a: "The ability of a material to catch fire and continue burning strongly", hint: "Think of materials that keep burning." },
+    { q: "What is flammability?", a: "The ability of an object to burn in the presence of oxygen", hint: "Think of how easily something catches fire." },
+    { q: "What is reactivity with other substances?", a: "The ability of a material to undergo a chemical reaction when exposed to another material, forming a new substance", hint: "How a material behaves when mixed with something else." },
+    { q: "What is toxicity?", a: "The degree to which a material or mixture can damage a living organism", hint: "How poisonous something is." },
+    { q: "What is biodegradability?", a: "The ability of an object to decompose or decay due to microorganisms", hint: "How easily something breaks down naturally." },
+  ],
+
+};
+
+// ── TRUE OR FALSE ────────────────────────────────────────────────────────────
+const trueOrFalse = [
+  { q: "Physical change alters a material's composition.", a: "false" },
+  { q: "Chemical change produces a new substance that is different from the original.", a: "true" },
+  { q: "Rust is a new substance formed when iron undergoes a chemical change.", a: "true" },
+  { q: "Adding vinegar to baking soda is an example of a physical change.", a: "false" },
+  { q: "Decomposition is the process by which substances are broken down into simpler forms.", a: "true" },
+  { q: "Plastics and glass decompose faster than paper and food.", a: "false" },
+  { q: "Bacteria are decomposers that can be seen with the unaided eye.", a: "false" },
+  { q: "Earthworms are examples of detritivores.", a: "true" },
+  { q: "Low temperature speeds up the growth of bacteria in food.", a: "false" },
+  { q: "Boiling water kills harmful bacteria and other microorganisms.", a: "true" },
+  { q: "Evaporation is the process by which water vapor changes into liquid droplets.", a: "false" },
+  { q: "Precipitation includes rain, snow, and hail.", a: "true" },
+  { q: "Alexander Fleming discovered penicillin in 1928.", a: "true" },
+  { q: "Nylon was discovered by Dr. Wallace Carothers as a substitute for silk.", a: "true" },
+  { q: "Chlorine is used to kill germs in drinking water.", a: "true" },
+  { q: "Mixing different chemicals together is always safe.", a: "false" },
+  { q: "Carbon monoxide has a strong smell and a bright color.", a: "false" },
+  { q: "Acid rain can damage metal and marble structures.", a: "true" },
+  { q: "Burning domestic waste is legal and encouraged in the Philippines.", a: "false" },
+  { q: "Recycling helps save energy and reduce pollution.", a: "true" },
+  { q: "Biodegradable materials like twigs and paper undergo decomposition.", a: "true" },
+  { q: "Kitchen wastes should be mixed with other garbage instead of being segregated.", a: "false" },
+  { q: "Decaying animal and plant materials are good fertilizers.", a: "true" },
+  { q: "Nonbiodegradable materials such as plastic and metal undergo decay easily.", a: "false" },
+  { q: "Proper waste disposal helps in saving the environment.", a: "true" },
+  { q: "Combustibility is the ability of a material to catch fire and continue burning strongly.", a: "true" },
+  { q: "Toxicity refers to how easily an object can decompose.", a: "false" },
+];
+
+// ── IDENTIFY: BIODEGRADABLE/NONBIODEGRADABLE · PHYSICAL/CHEMICAL · UNIT TEST ─
+const identifyQuestions = [
+  { q: "chicken dung", a: "Biodegradable", choices: ["Biodegradable","Nonbiodegradable"] },
+  { q: "milk carton", a: "Nonbiodegradable", choices: ["Biodegradable","Nonbiodegradable"] },
+  { q: "empty bottle", a: "Nonbiodegradable", choices: ["Biodegradable","Nonbiodegradable"] },
+  { q: "banana peeling", a: "Biodegradable", choices: ["Biodegradable","Nonbiodegradable"] },
+  { q: "seeds", a: "Biodegradable", choices: ["Biodegradable","Nonbiodegradable"] },
+  { q: "aluminum can", a: "Nonbiodegradable", choices: ["Biodegradable","Nonbiodegradable"] },
+  { q: "empty plastic bottle", a: "Nonbiodegradable", choices: ["Biodegradable","Nonbiodegradable"] },
+  { q: "broken glass", a: "Nonbiodegradable", choices: ["Biodegradable","Nonbiodegradable"] },
+  { q: "used paper box", a: "Biodegradable", choices: ["Biodegradable","Nonbiodegradable"] },
+  { q: "dried leaves and twigs", a: "Biodegradable", choices: ["Biodegradable","Nonbiodegradable"] },
+  { q: "breaking a piece of glass", a: "Physical Change", choices: ["Physical Change","Chemical Change"] },
+  { q: "cutting a piece of paper", a: "Physical Change", choices: ["Physical Change","Chemical Change"] },
+  { q: "boiling water", a: "Physical Change", choices: ["Physical Change","Chemical Change"] },
+  { q: "soaking pieces of nail in vinegar (rusting)", a: "Chemical Change", choices: ["Physical Change","Chemical Change"] },
+  { q: "burning of a log", a: "Chemical Change", choices: ["Physical Change","Chemical Change"] },
+  { q: "Which of the following is an evidence of chemical change?", a: "A new material is produced.", choices: ["The material changed in size or amount.","The material's properties or characteristics remain the same.","A new material is produced.","The composition of the material remains the same."] },
+  { q: "Which of the following does NOT indicate that a chemical change is taking place?", a: "The material changes in state.", choices: ["The material changes in state.","There is a change in color or odor.","Heat or light is produced.","Bubbles are produced."] },
+  { q: "Which of the following activities shows a chemical change?", a: "soaking pieces of nail in vinegar", choices: ["breaking a piece of glass","soaking pieces of nail in vinegar","cutting a piece of paper","boiling water"] },
+  { q: "How are fireworks examples of chemical reactions?", a: "Fireworks produce flickering lights and cracking sounds.", choices: ["Fireworks are made of chemicals.","Fireworks produce flickering lights and cracking sounds.","Fireworks explode even without heat.","Fireworks are only used for special occasions like New Year."] },
+  { q: "Which refers to the degree to which a material or mixture can damage a living organism?", a: "toxicity", choices: ["flammability","biodegradability","toxicity","combustibility"] },
+  { q: "Which of the following shows that chemical changes can be useful to people?", a: "People enjoy cooked food.", choices: ["The taste of bread is bitter when it turns black while toasting it.","Molds grow on the surface of sliced bread.","People enjoy cooked food.","Fresh milk, when not refrigerated, turns sour."] },
+  { q: "When is a material considered biodegradable?", a: "when the material easily undergoes decay", choices: ["when the material is made of synthetic material","when the material is produced through natural gas","when the material easily undergoes decay","when the material can be disposed of in a landfill"] },
+  { q: "Why is rubber used in making tires?", a: "Rubber is durable yet flexible such that it can be bent easily.", choices: ["Rubber is durable yet flexible such that it can be bent easily.","Rubber easily cracks when not treated properly.","Rubber is cheap.","Rubber is abundant in the Philippines."] },
+  { q: "Why is chlorine used in water treatment?", a: "Chlorine is a chemical that kills germs in water.", choices: ["Chlorine is a chemical that kills germs in water.","Chlorine helps in maintaining the crystal clear form of drinking water.","Chlorine may not be considered a chemical.","Chlorine is odorless but tastes sweet."] },
+  { q: "When can a change in matter be harmful?", a: "when the environment becomes polluted", choices: ["when it results in the production of fertilizers","when food becomes palatable","when the environment becomes polluted","when transportation becomes available"] },
+];
+
+// ═══════════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════════
+let state = {
+  awaiting: 'menu',
+  mode: null,
+  questions: [],
+  allAnswers: [],
+  qIndex: 0,
+  score: 0,
+  total: 0,
+  hintUsed: false,
+  audioEnabled: true,
+};
+
+// ═══════════════════════════════════════════════════════════════
+// TTS
+// ═══════════════════════════════════════════════════════════════
+let currentAudioStream = null;
+
+function speak(text) {
+  if (!state.audioEnabled) return;
+
+  window.speechSynthesis.cancel();
+  if (currentAudioStream) {
+    currentAudioStream.pause();
+    currentAudioStream = null;
+  }
+
+  const clean = text.replace(/<[^>]+>/g,'').replace(/[🧪🌟✅❌💡⏭️🏆😊💪🔄🔲📚👋⭐✕📖]/g,'');
+
+  // PRIMARY METHOD: Google Translation Engine cloud voice stream
+  const googleTtsUrl = `https://translate.google.com/translate_tts?ie=UTF-8&tl=en&client=tw-ob&q=${encodeURIComponent(clean)}`;
+
+  currentAudioStream = new Audio(googleTtsUrl);
+  currentAudioStream.onplaying = () => showWave(true);
+  currentAudioStream.onended = currentAudioStream.onerror = () => showWave(false);
+
+  currentAudioStream.play().catch(err => {
+    // BACKUP METHOD: Web Speech API
+    console.warn("Google TTS blocked or offline. Falling back to local system speech engine.");
+
+    const streamFallback = new SpeechSynthesisUtterance(clean);
+    streamFallback.lang = 'en-US';
+    streamFallback.rate = 0.95; streamFallback.pitch = 1.05; streamFallback.volume = 1;
+
+    const voices = window.speechSynthesis.getVoices();
+    const engVoice = voices.find(v => v.lang.startsWith('en') && v.name.toLowerCase().includes('female'))
+                   || voices.find(v => v.lang.startsWith('en'));
+
+    if (engVoice) streamFallback.voice = engVoice;
+
+    streamFallback.onstart = () => showWave(true);
+    streamFallback.onend = streamFallback.onerror = () => showWave(false);
+    window.speechSynthesis.speak(streamFallback);
+  });
+}
+
+function showWave(on) {
+  document.querySelectorAll('.speaker-wave').forEach(w => w.style.display = on ? 'inline-flex' : 'none');
+}
+
+let localSystemVoices = [];
+function lookupSystemVoices() {
+  localSystemVoices = window.speechSynthesis.getVoices();
+}
+lookupSystemVoices();
+if (window.speechSynthesis.onvoiceschanged !== undefined) {
+  window.speechSynthesis.onvoiceschanged = lookupSystemVoices;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// UI HELPERS
+// ═══════════════════════════════════════════════════════════════
+const chatBox = document.getElementById('chat-box');
+const input = document.getElementById('user-input');
+const sendBtn = document.getElementById('send-btn');
+
+function scrollBottom() { chatBox.scrollTop = chatBox.scrollHeight; }
+
+function addMessage(role, html, speakText) {
+  const div = document.createElement('div');
+  div.className = `msg ${role}`;
+  const av = document.createElement('div');
+  av.className = 'avatar';
+  av.textContent = role === 'bot' ? '🤖' : '🧑';
+  const bub = document.createElement('div');
+  bub.className = 'bubble';
+  bub.innerHTML = role === 'bot'
+    ? html + '<span class="speaker-wave" style="display:none"><span></span><span></span><span></span><span></span><span></span></span>'
+    : html;
+  div.appendChild(av); div.appendChild(bub);
+  chatBox.appendChild(div);
+  scrollBottom(); bindChips();
+  if (role === 'bot') {
+    const txt = speakText || html.replace(/<[^>]+>/g,' ');
+    setTimeout(() => speak(txt), 350);
+  }
+}
+
+function addTyping() {
+  const d = document.createElement('div');
+  d.className = 'msg bot'; d.id = 'typing';
+  d.innerHTML = '<div class="avatar">🤖</div><div class="typing"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>';
+  chatBox.appendChild(d); scrollBottom();
+}
+function removeTyping() { const t = document.getElementById('typing'); if(t) t.remove(); }
+
+function bindChips() {
+  document.querySelectorAll('.chip:not([data-bound])').forEach(c => {
+    c.dataset.bound = '1';
+    c.addEventListener('click', () => handleUserMessage(c.dataset.val));
+  });
+}
+
+function updateScore() {
+  document.getElementById('score-val').textContent = state.score;
+  document.getElementById('total-val').textContent = state.total;
+}
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length-1; i > 0; i--) {
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]] = [a[j],a[i]];
+  }
+  return a;
+}
+
+function normalize(s) { return s.toLowerCase().trim().replace(/\s+/g,' '); }
+
+function checkAnswer(user, correct) {
+  const u = normalize(user), c = normalize(correct);
+  if (u === c) return true;
+  if (c.includes(u) && u.length > 5) return true;
+  const parts = c.split(/[,;\/]/);
+  for (const p of parts) if (u.includes(p.trim()) && p.trim().length > 4) return true;
+  return false;
+}
+
+function showResult() {
+  const pct = Math.round((state.score/state.total)*100);
+  const emoji = pct>=90?'🏆':pct>=70?'🌟':pct>=50?'😊':'💪';
+  const msg = pct>=90?'Excellent! You know it all!':pct>=70?'Great job! Keep it up!':pct>=50?'Good! Study a little more!':'Don\'t give up! Try again!';
+  document.getElementById('res-emoji').textContent = emoji;
+  document.getElementById('res-score').textContent = state.score;
+  document.getElementById('res-total').textContent = state.total;
+  document.getElementById('res-msg').textContent = msg;
+  document.getElementById('result-overlay').classList.add('show');
+  speak(`All done! Your score is ${state.score} out of ${state.total}. ${msg}`);
+}
+
+function restartApp() {
+  document.getElementById('result-overlay').classList.remove('show');
+  state = { awaiting:'menu', mode:null, questions:[], allAnswers:[], qIndex:0, score:0, total:0, hintUsed:false, audioEnabled:state.audioEnabled };
+  chatBox.innerHTML = '';
+  document.querySelector('.input-bar').style.display = 'flex';
+  updateScore();
+  showMenu();
+}
+
+// ═══════════════════════════════════════════════════════════════
+// MC HELPERS
+// ═══════════════════════════════════════════════════════════════
+function getAllAnswers() {
+  const ans = [];
+  for (const qs of Object.values(topics)) for (const q of qs) ans.push(q.a);
+  return ans;
+}
+
+function generateChoices(correct, pool) {
+  const distractors = shuffle(pool.filter(a => a !== correct)).slice(0,3);
+  return shuffle([correct, ...distractors]);
+}
+
+function buildMCBtns(choices, correctAnswer) {
+  const letters = ['A','B','C','D','E'];
+  return `<div class="mc-options">${choices.map((c,i)=>
+    `<button class="mc-btn" data-answer="${encodeURIComponent(c)}" data-correct="${encodeURIComponent(correctAnswer)}" onclick="handleMCClick(this)">
+      <span class="letter">${letters[i]}</span>${c}
+    </button>`
+  ).join('')}</div>`;
+}
+
+function handleMCClick(btn) {
+  const allBtns = btn.closest('.mc-options').querySelectorAll('.mc-btn');
+  allBtns.forEach(b => b.disabled = true);
+  const chosen = decodeURIComponent(btn.dataset.answer);
+  const correct = decodeURIComponent(btn.dataset.correct);
+  const isCorrect = chosen === correct;
+  allBtns.forEach(b => { if(decodeURIComponent(b.dataset.answer)===correct) b.classList.add('correct'); });
+  if (!isCorrect) btn.classList.add('wrong');
+  setTimeout(() => {
+    if (isCorrect) {
+      state.score++;
+      addMessage('bot', `✅ <strong>Correct!</strong> +1 point! The answer is: <strong>${correct}</strong>`, `Correct! The answer is: ${correct}`);
+    } else {
+      addMessage('bot', `❌ <strong>Not quite.</strong> The correct answer is: <strong>${correct}</strong>`, `Not quite. The correct answer is: ${correct}`);
+    }
+    state.qIndex++; updateScore();
+    if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+    else setTimeout(showResult, 900);
+  }, 650);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// NEXT QUESTION
+// ═══════════════════════════════════════════════════════════════
+function nextQuestion() {
+  const qi = state.qIndex;
+  const q = state.questions[qi];
+  const num = qi + 1;
+
+  if (state.mode === 'full' || state.mode === 'topic_mc') {
+    const choices = generateChoices(q.a, state.allAnswers);
+    const tag = q.topic ? `<span class="topic-tag">${q.topic}</span><br>` : '';
+    const html = `${tag}<strong>Q${num} of ${state.total}:</strong> ${q.q}${buildMCBtns(choices, q.a)}`;
+    addMessage('bot', html, `Question ${num}. ${q.q}`);
+    return;
+  }
+
+  if (state.mode === 'tf') {
+    const html = `<strong>Q${num} of ${state.total}:</strong> <div class="scenario-card">${q.q}</div>
+      <span class="chip" data-val="true">✅ True</span><span class="chip" data-val="false">❌ False</span>`;
+    addMessage('bot', html, `Question ${num}. True or False: ${q.q}`);
+    return;
+  }
+
+  if (state.mode === 'identify') {
+    const btns = buildMCBtns(q.choices, q.a);
+    const html = `<strong>Q${num} of ${state.total}:</strong> Identify the following:<div class="scenario-card">${q.q}</div>${btns}`;
+    addMessage('bot', html, `Question ${num}. Identify: ${q.q}`);
+    return;
+  }
+
+  // typed answer mode
+  const tag = q.topic ? `<span class="topic-tag">${q.topic}</span><br>` : '';
+  const html = `${tag}<strong>Q${num} of ${state.total}:</strong> ${q.q}<br><small style="color:var(--muted)">Type your answer · type <em>hint</em> for help · <em>skip</em> to move on</small>`;
+  addMessage('bot', html, `Question ${num}. ${q.q}`);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// MENU
+// ═══════════════════════════════════════════════════════════════
+function showMenu() {
+  addMessage('bot',
+    `👋 <strong>Hi! I'm your Science Reviewer!</strong><br>Let's study <em>Physical &amp; Chemical Change</em>, <em>Decomposition</em>, <em>Pollution</em>, and <em>Waste Management</em>.<br><br>What would you like to do?<br>
+    <span class="chip" data-val="1">📚 Study by Topic</span>
+    <span class="chip" data-val="2">✅ True or False</span>
+    <span class="chip" data-val="3">🔬 Identify</span>
+    <span class="chip" data-val="4">🌟 Full Review (Multiple Choice)</span>`,
+    "Hi! I'm your Science Reviewer. What would you like to do? Study by Topic, True or False, Identify, or a Full Review with multiple choice?"
+  );
+  state.awaiting = 'menu';
+}
+
+function processMessage(msg) {
+  const aw = state.awaiting;
+
+  // ── MENU ──────────────────────────────────────────────────
+  if (aw === 'menu') {
+    if (msg === '1') {
+      state.awaiting = 'topic';
+      const keys = Object.keys(topics);
+      const chips = keys.map((t,i) => `<span class="chip" data-val="${i+1}">${i+1}. ${t}</span>`).join(' ');
+      addMessage('bot', `📚 Which topic would you like to study?<br>${chips}`, 'Which topic would you like to study?');
+
+    } else if (msg === '2') {
+      state.mode = 'tf';
+      state.questions = shuffle(trueOrFalse);
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'tf_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `✅ <strong>True or False!</strong> ${state.total} questions. Let's start!`, `True or False! ${state.total} questions. Let's start!`);
+      setTimeout(nextQuestion, 800);
+
+    } else if (msg === '3') {
+      state.mode = 'identify';
+      state.questions = shuffle(identifyQuestions);
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'mc_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `🔬 <strong>Identify!</strong> Figure out if it's biodegradable or not, a physical or chemical change, or answer the unit test items.`, "Identify! Figure out what's being described in each item.");
+      setTimeout(nextQuestion, 800);
+
+    } else if (msg === '4') {
+      state.mode = 'full';
+      const all = [];
+      for (const [topicName, qs] of Object.entries(topics)) {
+        qs.forEach(q => all.push({...q, topic: topicName}));
+      }
+      state.questions = shuffle(all);
+      state.allAnswers = getAllAnswers();
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'mc_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `🌟 <strong>Full Review — Multiple Choice!</strong> ${state.total} questions. Think carefully!`, `Full Review! Multiple Choice! ${state.total} questions. Think carefully!`);
+      setTimeout(nextQuestion, 800);
+
+    } else {
+      addMessage('bot',
+        `Choose an option:<br>
+        <span class="chip" data-val="1">📚 Study by Topic</span>
+        <span class="chip" data-val="2">✅ True or False</span>
+        <span class="chip" data-val="3">🔬 Identify</span>
+        <span class="chip" data-val="4">🌟 Full Review</span>`,
+        'Choose an option.'
+      );
+    }
+    return;
+  }
+
+  // ── TOPIC SELECT ──────────────────────────────────────────
+  if (aw === 'topic') {
+    const keys = Object.keys(topics);
+    const idx = parseInt(msg) - 1;
+    if (keys[idx]) {
+      const topicName = keys[idx];
+      state.mode = 'topic';
+      state.questions = shuffle(topics[topicName]);
+      state.allAnswers = getAllAnswers();
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'answer';
+      document.querySelector('.input-bar').style.display = 'flex';
+      updateScore();
+      addMessage('bot', `📚 <strong>${topicName}</strong> — ${state.total} questions. Ready?`, `${topicName}. ${state.total} questions. Ready?`);
+      setTimeout(nextQuestion, 800);
+    } else {
+      const chips = Object.keys(topics).map((t,i) => `<span class="chip" data-val="${i+1}">${i+1}. ${t}</span>`).join(' ');
+      addMessage('bot', `Please choose a valid topic:<br>${chips}`, 'Please choose a valid topic.');
+    }
+    return;
+  }
+
+  // ── TYPED ANSWER ──────────────────────────────────────────
+  if (aw === 'answer') {
+    const q = state.questions[state.qIndex];
+    const m = normalize(msg);
+
+    if (m === 'hint') {
+      state.hintUsed = true;
+      addMessage('bot', `💡 <strong>Hint:</strong> ${q.hint}`, `Hint: ${q.hint}`);
+      return;
+    }
+    if (m === 'skip') {
+      addMessage('bot', `⏭️ Skipped! The correct answer is: <strong>${q.a}</strong>`, `Skipped. The correct answer is: ${q.a}`);
+      state.qIndex++; state.hintUsed = false;
+      if (state.qIndex < state.total) setTimeout(nextQuestion, 700);
+      else showResult();
+      return;
+    }
+
+    const correct = checkAnswer(msg, q.a);
+    if (correct) {
+      if (!state.hintUsed) state.score++;
+      const note = state.hintUsed ? ' <em>(hint used — no point)</em>' : ' +1 point!';
+      addMessage('bot', `✅ <strong>Correct!</strong>${note} Answer: <strong>${q.a}</strong>`, `Correct! The answer is: ${q.a}`);
+    } else {
+      addMessage('bot', `❌ <strong>Not quite.</strong> The correct answer is: <strong>${q.a}</strong>`, `Not quite. The correct answer is: ${q.a}`);
+    }
+    state.qIndex++; state.hintUsed = false; updateScore();
+    if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+    else setTimeout(showResult, 900);
+    return;
+  }
+
+  // ── TRUE OR FALSE ─────────────────────────────────────────
+  if (aw === 'tf_answer') {
+    const q = state.questions[state.qIndex];
+    const ans = normalize(msg);
+    const valid = ans === 'true' || ans === 'false';
+
+    if (valid) {
+      const correct = ans === q.a;
+      if (correct) {
+        state.score++;
+        addMessage('bot', `✅ <strong>Correct!</strong> The answer is <strong>${q.a.toUpperCase()}</strong>.`, `Correct! The answer is ${q.a}.`);
+      } else {
+        addMessage('bot', `❌ <strong>Incorrect.</strong> The correct answer is <strong>${q.a.toUpperCase()}</strong>.`, `Incorrect. The correct answer is ${q.a}.`);
+      }
+      state.qIndex++; updateScore();
+      if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+      else setTimeout(showResult, 900);
+    } else {
+      addMessage('bot',
+        `Answer: True or False?<br><span class="chip" data-val="true">✅ True</span><span class="chip" data-val="false">❌ False</span>`,
+        'Answer: True or False?'
+      );
+    }
+    return;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// CONTROLS
+// ═══════════════════════════════════════════════════════════════
+function handleUserMessage(msg) {
+  if (!msg.trim()) return;
+
+  window.speechSynthesis.cancel();
+  if (currentAudioStream) {
+    currentAudioStream.pause();
+    currentAudioStream = null;
+    showWave(false);
+  }
+
+  addMessage('user', msg.replace(/</g,'&lt;'));
+  input.value = '';
+  input.disabled = true; sendBtn.disabled = true;
+  addTyping();
+  setTimeout(() => {
+    removeTyping();
+    input.disabled = false; sendBtn.disabled = false;
+    input.focus();
+    processMessage(msg);
+  }, 480);
+}
+
+sendBtn.addEventListener('click', () => { handleUserMessage(input.value); });
+input.addEventListener('keydown', e => { if(e.key==='Enter') handleUserMessage(input.value); });
+
+document.getElementById('audio-toggle').addEventListener('click', function() {
+  state.audioEnabled = !state.audioEnabled;
+  this.textContent = state.audioEnabled ? '🔊' : '🔇';
+  this.classList.toggle('active', state.audioEnabled);
+  if (!state.audioEnabled) {
+    window.speechSynthesis.cancel();
+    if (currentAudioStream) {
+      currentAudioStream.pause();
+      currentAudioStream = null;
+      showWave(false);
+    }
+  }
+});
+
+// ═══════════════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════════════
+window.addEventListener('load', () => {
+  lookupSystemVoices();
+  showMenu();
+});
+
+function switchTab(tabId, btn) {
+  document.querySelectorAll('.notes-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.notes-tab').forEach(b => b.classList.remove('active'));
+  document.getElementById(tabId).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+
+<!-- ── Notes Panel ── -->
+<div class="notes-overlay" id="notes-overlay">
+  <div class="notes-panel">
+    <div class="notes-header">
+      <h2>📖 Changes in Materials — Notes</h2>
+      <button class="notes-close" onclick="document.getElementById('notes-overlay').classList.remove('show')">✕</button>
+    </div>
+    <div class="notes-tabs">
+      <button class="notes-tab active" onclick="switchTab('tab-change', this)">🧪 Physical &amp; Chemical Change</button>
+      <button class="notes-tab" onclick="switchTab('tab-decomp', this)">🍂 Decomposition</button>
+      <button class="notes-tab" onclick="switchTab('tab-useful', this)">💡 Useful Effects</button>
+      <button class="notes-tab" onclick="switchTab('tab-harmful', this)">⚠️ Harmful Effects &amp; Pollution</button>
+      <button class="notes-tab" onclick="switchTab('tab-waste', this)">♻️ Waste Management</button>
+      <button class="notes-tab" onclick="switchTab('tab-properties', this)">🔍 Properties of Materials</button>
+      <button class="notes-tab" onclick="switchTab('tab-tf', this)">✅ True or False</button>
+    </div>
+    <div class="notes-body">
+
+      <div class="notes-section active" id="tab-change">
+        <div class="notes-topic">
+          <div class="notes-topic-title">🧪 Physical and Chemical Change</div>
+          <div class="notes-item"><span class="notes-term">Physical Change</span><span class="notes-def">Retains composition and identity; changes in size, volume, shape, or phase of matter</span></div>
+          <div class="notes-item"><span class="notes-term">Chemical Change</span><span class="notes-def">One substance changes into a completely different form; e.g. rust forming on iron</span></div>
+          <div class="notes-item"><span class="notes-term">Evidence of Chemical Change</span><span class="notes-def">Color change, bubble/gas formation (e.g. vinegar + baking soda = CO₂), and release of energy (heat/light)</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-decomp">
+        <div class="notes-topic">
+          <div class="notes-topic-title">🍂 Decomposition</div>
+          <div class="notes-item"><span class="notes-term">Decomposition</span><span class="notes-def">Process by which substances are broken down into simpler forms</span></div>
+          <div class="notes-item"><span class="notes-term">Factors</span><span class="notes-def">Temperature, humidity, exposure to elements, and access by detritivores and decomposers</span></div>
+          <div class="notes-item"><span class="notes-term">Organic Materials</span><span class="notes-def">Come from once-living organisms (e.g. fallen leaves, rotten meat); make soil fertile when decomposed</span></div>
+          <div class="notes-item"><span class="notes-term">Decomposers</span><span class="notes-def">Bacteria — break down organic material through chemical processes</span></div>
+          <div class="notes-item"><span class="notes-term">Detritivores</span><span class="notes-def">Earthworms — directly feed on decaying matter</span></div>
+          <div class="notes-item"><span class="notes-term">Temperature Effect</span><span class="notes-def">Low temp slows bacterial growth (refrigeration); high temp speeds decomposition, extreme heat kills decomposers (boiling)</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-useful">
+        <div class="notes-topic">
+          <div class="notes-topic-title">💡 Useful Effects of Changes</div>
+          <div class="notes-item"><span class="notes-term">Evaporation</span><span class="notes-def">Liquid water changes to water vapor due to heat</span></div>
+          <div class="notes-item"><span class="notes-term">Condensation</span><span class="notes-def">Water vapor changes into liquid droplets at cooler altitudes, forming clouds</span></div>
+          <div class="notes-item"><span class="notes-term">Precipitation</span><span class="notes-def">Water released back to the ground as rain, snow, or hail</span></div>
+          <div class="notes-item"><span class="notes-term">Penicillin</span><span class="notes-def">Discovered by Alexander Fleming in 1928; bacteria-killing substance from Penicillium mold</span></div>
+          <div class="notes-item"><span class="notes-term">Ammonia/Fertilizer</span><span class="notes-def">Discovered by a German chemist in 1909, made from nitrogen; used as fertilizer</span></div>
+          <div class="notes-item"><span class="notes-term">Nylon</span><span class="notes-def">Discovered by Dr. Wallace Carothers in the 1930s as a silk substitute; first used for stockings</span></div>
+          <div class="notes-item"><span class="notes-term">Synthetic Rubber</span><span class="notes-def">Invented because natural rubber cracks in cold weather; flexible and waterproof</span></div>
+          <div class="notes-item"><span class="notes-term">Petroleum</span><span class="notes-def">Mixture of chemicals: gasoline, kerosene, diesel oil, lubricating substances</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-harmful">
+        <div class="notes-topic">
+          <div class="notes-topic-title">⚠️ Harmful Effects and Contamination</div>
+          <div class="notes-item"><span class="notes-term">Chlorine</span><span class="notes-def">Used to kill germs in drinking water; must be used correctly to avoid harm</span></div>
+          <div class="notes-item"><span class="notes-term">Water Pollution</span><span class="notes-def">Caused mainly by sewage and industries; leads to diarrhea, cholera; oil spills harm birds, fish, and plants</span></div>
+          <div class="notes-item"><span class="notes-term">Carbon Monoxide</span><span class="notes-def">Tasteless, odorless, colorless gas; stops blood from carrying oxygen; deadly indoors</span></div>
+          <div class="notes-item"><span class="notes-term">Indoor Air Pollution</span><span class="notes-def">From combustion by-products, biological contaminants, pesticides, evaporating chemicals, airborne dust</span></div>
+          <div class="notes-item"><span class="notes-term">Acid Rain</span><span class="notes-def">Formed when nitrogen/sulfur oxides from burning fuel react with water vapor; damages metal, marble, water life</span></div>
+          <div class="notes-item"><span class="notes-term">Soil Contamination</span><span class="notes-def">Overuse of fertilizers/insecticides makes soil infertile; chemicals can seep into groundwater</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-waste">
+        <div class="notes-topic">
+          <div class="notes-topic-title">♻️ The Five Rs</div>
+          <div class="notes-item"><span class="notes-term">Reduce</span><span class="notes-def">Use less; refuse unneeded items, buy in bulk, walk/bike/carpool</span></div>
+          <div class="notes-item"><span class="notes-term">Reuse</span><span class="notes-def">Donate, repair, or reuse items in projects instead of throwing them away</span></div>
+          <div class="notes-item"><span class="notes-term">Recycle</span><span class="notes-def">Bring recyclables to collection companies or junk shops</span></div>
+          <div class="notes-item"><span class="notes-term">Rethink</span><span class="notes-def">Choose eco-friendly, biodegradable, or rechargeable options</span></div>
+          <div class="notes-item"><span class="notes-term">Recover</span><span class="notes-def">Make compost from biodegradable scraps; can even be a source of energy</span></div>
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">🗑️ Waste Segregation &amp; Recycling</div>
+          <div class="notes-item"><span class="notes-term">Waste Segregation</span><span class="notes-def">Sorting garbage to reduce, reuse, and recycle</span></div>
+          <div class="notes-item"><span class="notes-term">Biodegradable</span><span class="notes-def">Food, garden, animal, and human waste; paper — decomposes naturally</span></div>
+          <div class="notes-item"><span class="notes-term">Nonbiodegradable</span><span class="notes-def">Cans, bottles, plastics, rubber, glass, metal — do not easily decay</span></div>
+          <div class="notes-item"><span class="notes-term">Ecological Solid Waste Management Act (2000)</span><span class="notes-def">Philippine law that prohibits burning of garbage</span></div>
+          <div class="notes-item"><span class="notes-term">Reactive Wastes</span><span class="notes-def">Toxic/hazardous, e.g. lithium batteries, sodium metals, aerosol cans</span></div>
+          <div class="notes-item"><span class="notes-term">Recycling</span><span class="notes-def">Converts used materials into new products; saves energy and reduces pollution</span></div>
+          <div class="notes-item"><span class="notes-term">MRF</span><span class="notes-def">Materials Recovery Facility — collects and segregates waste materials</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-properties">
+        <div class="notes-topic">
+          <div class="notes-topic-title">🔍 Physical and Chemical Properties</div>
+          <div class="notes-item"><span class="notes-term">Physical Properties</span><span class="notes-def">Observed/measured directly: color, shape, size, texture, melting/boiling points, hardness, elasticity, malleability, ductility, brittleness</span></div>
+          <div class="notes-item"><span class="notes-term">Chemical Properties</span><span class="notes-def">Observable only during a chemical reaction</span></div>
+          <div class="notes-item"><span class="notes-term">Combustibility</span><span class="notes-def">Ability to catch fire and keep burning strongly</span></div>
+          <div class="notes-item"><span class="notes-term">Flammability</span><span class="notes-def">Ability to burn easily in the presence of oxygen</span></div>
+          <div class="notes-item"><span class="notes-term">Reactivity</span><span class="notes-def">Ability to react chemically with another substance, forming something new</span></div>
+          <div class="notes-item"><span class="notes-term">Toxicity</span><span class="notes-def">Degree to which a material can damage a living organism</span></div>
+          <div class="notes-item"><span class="notes-term">Biodegradability</span><span class="notes-def">Ability to decompose due to microorganisms</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-tf">
+        <div class="notes-topic">
+          <div class="notes-topic-title">✅ True or False — Key Reminders</div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">Physical change alters composition → it actually retains composition and identity.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">Vinegar + baking soda is a physical change → it's a chemical change (produces CO₂ gas).</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">Plastics/glass decompose faster than paper/food → the opposite is true.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">Bacteria can be seen with the unaided eye → they are microscopic.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">Low temperature speeds up bacterial growth → it actually slows it down.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">Evaporation turns vapor into droplets → that describes condensation instead.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">Mixing chemicals is always safe → some combinations produce toxic fumes, fire, or explosions.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">Carbon monoxide has a strong smell and bright color → it is tasteless, odorless, and colorless.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">Burning domestic waste is legal in the Philippines → it violates the Ecological Solid Waste Management Act of 2000.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">Kitchen wastes should be mixed with other garbage → they should be segregated instead.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">Nonbiodegradable materials undergo decay easily → they do not easily decay.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">Toxicity refers to how easily something decomposes → that's biodegradability; toxicity is about harm to organisms.</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
