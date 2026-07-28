@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html lang="tl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🇵🇭 Teritoryo at Heograpiyang Pisikal Reviewer 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --gold: #f59e0b;
+  --gold-dark: #b45309;
+  --blue: #3b82f6;
+  --blue-dark: #1d4ed8;
+  --red: #ef4444;
+  --green: #22c55e;
+  --bg: #0c1a0e;
+  --surface: #132015;
+  --surface2: #1a2e1d;
+  --text: #f0fdf4;
+  --muted: #86efac;
+  --border: #166534;
+}
+
+body {
+  font-family: 'Baloo 2', cursive;
+  background: var(--bg);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--text);
+  background-image:
+    radial-gradient(ellipse at 10% 30%, rgba(245,158,11,.06) 0%, transparent 55%),
+    radial-gradient(ellipse at 90% 70%, rgba(59,130,246,.06) 0%, transparent 55%);
+}
+
+header {
+  width: 100%;
+  background: linear-gradient(135deg, #14532d, #1e3a5f);
+  border-bottom: 2px solid var(--gold-dark);
+  padding: 13px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 4px 30px rgba(0,0,0,.5);
+}
+.header-icon { font-size: 2rem; animation: float 3s ease-in-out infinite; }
+@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
+
+header h1 {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.45rem;
+  background: linear-gradient(90deg, var(--gold), #fde68a, var(--gold));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+header .sub { font-size: .72rem; color: var(--muted); margin-top: 1px; }
+
+.header-controls { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+.score-pill {
+  background: rgba(245,158,11,.15);
+  border: 1px solid rgba(245,158,11,.4);
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-weight: 800;
+  font-size: .85rem;
+  color: var(--gold);
+}
+.audio-btn {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  background: var(--surface2);
+  color: var(--text);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all .2s;
+  display: flex; align-items: center; justify-content: center;
+}
+.audio-btn:hover, .audio-btn.active { background: #14532d; border-color: var(--gold); }
+
+.chat-wrap {
+  width: 100%; max-width: 700px; flex: 1;
+  display: flex; flex-direction: column;
+  padding: 16px 14px 0;
+}
+
+#chat-box {
+  flex: 1; overflow-y: auto;
+  display: flex; flex-direction: column;
+  gap: 14px; padding-bottom: 10px;
+  max-height: calc(100vh - 200px);
+  scroll-behavior: smooth;
+}
+#chat-box::-webkit-scrollbar { width: 4px; }
+#chat-box::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+.msg { display: flex; gap: 8px; }
+.msg.user { flex-direction: row-reverse; }
+
+.avatar {
+  width: 34px; height: 34px; border-radius: 50%;
+  font-size: 1rem; display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 2px;
+}
+.msg.bot .avatar { background: linear-gradient(135deg, #14532d, #1e3a5f); border: 1.5px solid rgba(245,158,11,.4); }
+.msg.user .avatar { background: linear-gradient(135deg, #1e3a5f, #14532d); border: 1.5px solid rgba(59,130,246,.3); }
+
+.bubble {
+  max-width: 80%;
+  padding: 11px 16px;
+  border-radius: 18px;
+  font-size: .9rem;
+  line-height: 1.65;
+  animation: pop .22s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes pop { from{transform:scale(.88) translateY(6px);opacity:0} to{transform:scale(1) translateY(0);opacity:1} }
+
+.msg.bot .bubble {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-bottom-left-radius: 5px;
+}
+.msg.user .bubble {
+  background: linear-gradient(135deg, #1e3a5f, var(--blue-dark));
+  border-bottom-right-radius: 5px;
+}
+
+/* chips */
+.chip {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: rgba(245,158,11,.12);
+  border: 1.5px solid rgba(245,158,11,.4);
+  color: var(--gold);
+  border-radius: 30px;
+  padding: 5px 13px; margin: 5px 4px 0 0;
+  font-size: .8rem; font-weight: 700;
+  cursor: pointer; transition: all .15s;
+  user-select: none; font-family: 'Baloo 2', cursive;
+}
+.chip:hover {
+  background: var(--gold-dark); color: white;
+  border-color: var(--gold);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(245,158,11,.3);
+}
+
+/* topic tag */
+.topic-tag {
+  display: inline-block;
+  background: linear-gradient(135deg, #14532d, #166534);
+  border: 1px solid var(--gold-dark);
+  color: var(--gold);
+  font-size: .68rem; font-weight: 800;
+  border-radius: 20px; padding: 2px 10px;
+  margin-bottom: 5px; letter-spacing: .5px;
+  text-transform: uppercase;
+}
+
+/* multiple choice */
+.mc-options { display: flex; flex-direction: column; gap: 7px; margin-top: 10px; width: 100%; }
+.mc-btn {
+  display: flex; align-items: center; gap: 10px;
+  background: rgba(255,255,255,.03);
+  border: 1.5px solid var(--border);
+  border-radius: 12px; padding: 9px 14px;
+  color: var(--text); font-family: 'Baloo 2', cursive;
+  font-size: .87rem; font-weight: 600;
+  cursor: pointer; transition: all .15s; text-align: left; width: 100%;
+}
+.mc-btn:hover:not(:disabled) {
+  background: rgba(245,158,11,.12); border-color: var(--gold);
+  color: var(--gold); transform: translateX(3px);
+}
+.mc-btn .letter {
+  display: flex; align-items: center; justify-content: center;
+  width: 26px; height: 26px; border-radius: 8px;
+  background: rgba(245,158,11,.15); border: 1px solid rgba(245,158,11,.35);
+  color: var(--gold); font-size: .78rem; font-weight: 800;
+  flex-shrink: 0; transition: all .15s;
+}
+.mc-btn:hover:not(:disabled) .letter { background: var(--gold-dark); color: white; border-color: var(--gold-dark); }
+.mc-btn.correct { background: rgba(34,197,94,.15)!important; border-color: #22c55e!important; color: #22c55e!important; cursor: default; }
+.mc-btn.correct .letter { background: #22c55e!important; color: white!important; border-color: #22c55e!important; }
+.mc-btn.wrong { background: rgba(239,68,68,.12)!important; border-color: #ef4444!important; color: #ef4444!important; cursor: default; }
+.mc-btn.wrong .letter { background: #ef4444!important; color: white!important; border-color: #ef4444!important; }
+.mc-btn:disabled { cursor: default; transform: none!important; }
+
+/* speaker wave */
+.speaker-wave {
+  display: inline-flex; align-items: flex-end;
+  gap: 2px; height: 14px; margin-left: 6px; vertical-align: middle;
+}
+.speaker-wave span {
+  display: block; width: 3px; border-radius: 2px;
+  background: var(--gold); animation: wave 1s ease-in-out infinite;
+}
+.speaker-wave span:nth-child(1){height:4px;animation-delay:0s}
+.speaker-wave span:nth-child(2){height:10px;animation-delay:.1s}
+.speaker-wave span:nth-child(3){height:6px;animation-delay:.2s}
+.speaker-wave span:nth-child(4){height:12px;animation-delay:.15s}
+.speaker-wave span:nth-child(5){height:4px;animation-delay:.05s}
+@keyframes wave{0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.8)}}
+
+/* typing */
+.typing {
+  display: flex; gap: 4px; padding: 12px 16px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 18px; border-bottom-left-radius: 5px; width: fit-content;
+}
+.dot { width: 7px; height: 7px; border-radius: 50%; background: var(--gold); animation: bounce .9s infinite; }
+.dot:nth-child(2){animation-delay:.15s} .dot:nth-child(3){animation-delay:.3s}
+@keyframes bounce{0%,80%,100%{transform:translateY(0);opacity:.6}40%{transform:translateY(-7px);opacity:1}}
+
+/* input bar */
+.input-bar {
+  width: 100%; max-width: 700px;
+  padding: 10px 14px 18px;
+  display: flex; gap: 8px;
+  background: var(--bg); position: sticky; bottom: 0;
+}
+#user-input {
+  flex: 1; padding: 12px 18px;
+  border: 2px solid var(--border); border-radius: 30px;
+  font-family: 'Baloo 2', cursive; font-size: .92rem;
+  outline: none; background: var(--surface); color: var(--text);
+  transition: border-color .2s, box-shadow .2s;
+}
+#user-input::placeholder { color: var(--muted); }
+#user-input:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(245,158,11,.12); }
+
+#send-btn {
+  width: 48px; height: 48px; border-radius: 50%; border: none;
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  color: white; font-size: 1.1rem; cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 3px 14px rgba(245,158,11,.4); flex-shrink: 0;
+}
+#send-btn:hover { transform: scale(1.08); box-shadow: 0 5px 20px rgba(245,158,11,.55); }
+#send-btn:disabled { opacity: .5; transform: none; }
+
+/* result modal */
+.result-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.75); backdrop-filter: blur(6px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 100; opacity: 0; pointer-events: none; transition: opacity .3s;
+}
+.result-overlay.show { opacity: 1; pointer-events: all; }
+.result-card {
+  background: linear-gradient(135deg, #132015, #0c1a0e);
+  border: 2px solid var(--gold-dark);
+  border-radius: 24px; padding: 36px 40px;
+  text-align: center; max-width: 380px; width: 90%;
+  box-shadow: 0 20px 60px rgba(0,0,0,.6);
+  transform: scale(.9); transition: transform .3s cubic-bezier(.34,1.56,.64,1);
+}
+.result-overlay.show .result-card { transform: scale(1); }
+.result-emoji { font-size: 4rem; margin-bottom: 12px; display: block; }
+.result-title {
+  font-family: 'Fredoka One', cursive; font-size: 1.7rem; margin-bottom: 6px;
+  background: linear-gradient(90deg, var(--gold), #fde68a);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.result-score { font-size: 3rem; font-weight: 900; margin: 10px 0; color: white; }
+.result-msg { color: var(--muted); font-size: .9rem; margin-bottom: 22px; }
+.result-btn {
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  border: none; border-radius: 30px; padding: 12px 30px;
+  color: white; font-family: 'Baloo 2', cursive; font-weight: 800;
+  font-size: 1rem; cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+  box-shadow: 0 4px 16px rgba(245,158,11,.35);
+}
+.result-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 22px rgba(245,158,11,.5); }
+
+/* scenario card for identify questions */
+.scenario-card {
+  background: rgba(245,158,11,.07);
+  border: 1px solid rgba(245,158,11,.25);
+  border-radius: 12px; padding: 10px 14px;
+  margin: 8px 0 6px; font-style: italic;
+  font-size: .87rem; color: #fde68a; line-height: 1.5;
+}
+
+/* ── Notes Panel ─────────────────────────────────────────────── */
+.notes-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.78); backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 200; opacity: 0; pointer-events: none; transition: opacity .3s;
+}
+.notes-overlay.show { opacity: 1; pointer-events: all; }
+.notes-panel {
+  background: linear-gradient(160deg, #0c1a0e, #132015);
+  border: 2px solid var(--gold-dark);
+  border-radius: 20px;
+  width: 92%; max-width: 720px;
+  max-height: 88vh;
+  display: flex; flex-direction: column;
+  box-shadow: 0 24px 60px rgba(0,0,0,.7);
+  overflow: hidden;
+  transform: translateY(30px);
+  transition: transform .35s cubic-bezier(.34,1.2,.64,1);
+}
+.notes-overlay.show .notes-panel { transform: translateY(0); }
+.notes-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 22px; border-bottom: 1px solid var(--border);
+  background: linear-gradient(135deg, #14532d44, #1e3a5f44);
+}
+.notes-header h2 { font-family: 'Fredoka One', cursive; font-size: 1.3rem; color: var(--gold); }
+.notes-close {
+  width: 34px; height: 34px; border-radius: 50%;
+  border: 1.5px solid var(--border); background: var(--surface2);
+  color: var(--text); font-size: 1rem; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; transition: all .2s;
+}
+.notes-close:hover { background: #b91c1c; border-color: #ef4444; }
+.notes-body { overflow-y: auto; padding: 20px 22px; flex: 1; }
+.notes-body::-webkit-scrollbar { width: 4px; }
+.notes-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+.notes-topic { margin-bottom: 28px; }
+.notes-topic-title {
+  font-family: 'Fredoka One', cursive; font-size: 1.05rem;
+  color: var(--gold); margin-bottom: 10px;
+  padding-bottom: 6px; border-bottom: 1px solid var(--border);
+}
+.notes-item {
+  display: flex; gap: 10px; align-items: flex-start;
+  padding: 7px 0; border-bottom: 1px solid rgba(255,255,255,.04);
+  font-size: .87rem; line-height: 1.55;
+}
+.notes-item:last-child { border-bottom: none; }
+.notes-term { font-weight: 800; color: var(--gold); min-width: 150px; flex-shrink: 0; font-size: .84rem; }
+.notes-def { color: #d1fae5; }
+.notes-tabs {
+  display: flex; flex-wrap: wrap; gap: 8px; padding: 14px 22px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(0,0,0,.15);
+}
+.notes-tab {
+  padding: 12px 20px; border-radius: 10px;
+  border: 1.5px solid var(--border); 
+  background: rgba(255,255,255,.04); color: var(--muted);
+  font-family: 'Baloo 2', cursive; font-size: .9rem; font-weight: 700;
+  cursor: pointer; transition: all .15s; white-space: nowrap;
+  min-height: 48px; display: flex; align-items: center;
+}
+.notes-tab.active { background: var(--surface); color: var(--gold); border-color: var(--gold-dark); }
+.notes-tab:hover:not(.active) { color: var(--text); background: var(--surface2); }
+.notes-section { display: none; }
+.notes-section.active { display: block; }
+
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-icon">🇵🇭</div>
+  <div>
+    <h1>Teritoryo &amp; Heograpiyang Pisikal</h1>
+    <div class="sub">Teritoryo ng Pilipinas · Sigalot sa Teritoryo · Anyong Lupa &amp; Tubig</div>
+  </div>
+  <div class="header-controls">
+    <div class="score-pill">⭐ <span id="score-val">0</span> / <span id="total-val">0</span></div>
+    <button class="audio-btn" id="notes-toggle" title="Basahin ang mga Tala" onclick="document.getElementById('notes-overlay').classList.add('show')">📖</button>
+    <button class="audio-btn active" id="audio-toggle" title="I-toggle ang Audio">🔊</button>
+  </div>
+</header>
+
+<div class="chat-wrap">
+  <div id="chat-box"></div>
+</div>
+
+<div class="input-bar">
+  <input type="text" id="user-input" placeholder="Isulat ang iyong sagot dito…" autocomplete="off" />
+  <button id="send-btn">➤</button>
+</div>
+
+<div class="result-overlay" id="result-overlay">
+  <div class="result-card">
+    <span class="result-emoji" id="res-emoji">🏆</span>
+    <div class="result-title">Tapos na!</div>
+    <div class="result-score"><span id="res-score">0</span>/<span id="res-total">0</span></div>
+    <div class="result-msg" id="res-msg">Magaling!</div>
+    <button class="result-btn" onclick="restartApp()">🔄 Maglaro Ulit</button>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+// QUESTION BANK
+// ═══════════════════════════════════════════════════════════════
+const topics = {
+
+  "Bansa, Estado, at Nasyon": [
+    { q: "Ano ang apat na elemento ng estado?", a: "Teritoryo, populasyon, pamahalaan, at soberanya", hint: "Apat itong salita, unahan mo sa Teritoryo." },
+    { q: "Ano ang tawag sa heograpikal na espasyong nasa ilalim ng soberanya ng isang estado?", a: "Teritoryo", hint: "Ito ang lupain, katubigan, at himpapawid ng isang bansa." },
+    { q: "Ano ang tumutukoy sa bilang ng mga taong naninirahan sa isang teritoryo?", a: "Populasyon", hint: "Bilang ito ng mga mamamayan." },
+    { q: "Higit sa ilang milyong katao ang populasyon ng Pilipinas?", a: "Higit sa 110 milyong katao", hint: "Mahigit isang daang milyon." },
+    { q: "Ano ang tawag sa institusyong gumagawa at nagpapatupad ng mga batas ng isang estado?", a: "Pamahalaan", hint: "Sila ang namumuno at nagpapatupad ng batas." },
+    { q: "Ano ang tawag sa kalayaan ng isang estado na gamitin ang kapangyarihan nito nang walang pakikialam ng ibang estado?", a: "Soberanya", hint: "Ito ang kalayaang pampulitika ng isang bansa." },
+    { q: "Ano ang tawag sa pangkat ng tao na kinikilala ang kanilang kultural at historikal na pinagmulan at pagkakakilanlan?", a: "Nasyon", hint: "Kultura ang batayan nito, hindi hanggahan." },
+    { q: "Anong estado ang binubuo ng mga bansang England, Northern Ireland, Scotland, at Wales?", a: "United Kingdom", hint: "Isang estado itong binubuo ng maraming maliliit na bansa." },
+    { q: "Ilang nasyong Pilipino ang laganap sa iba't ibang bansa sa Asya, Europa, at Hilagang Amerika?", a: "Mga Pilipino", hint: "Tayo mismo ang halimbawa nito." },
+    { q: "Anong katawagan ang ibinigay ni Ruy Lopez de Villalobos sa Samar at Leyte bilang parangal kay Prinsipe Felipe?", a: "Las Islas Filipinas", hint: "Dito nagmula ang pangalang 'Filipinas'." },
+    { q: "Anong pangalan ang ginamit ng mga Tsino noong unang panahon sa lugar na kasalukuyang Mindoro?", a: "Ma-i", hint: "Maikling pangalan, dalawang pantig." },
+  ],
+
+  "Sukat at Bilang ng Teritoryo ng Pilipinas": [
+    { q: "Ilang kilometro kuwadrado ang kabuuang lawak ng teritoryo ng Pilipinas?", a: "300,000 kilometro kuwadrado", hint: "Tatlong daang libong kilometro kuwadrado." },
+    { q: "Ika-ilan ang Pilipinas sa pinakamalalaking bansa sa buong Asya?", a: "Ika-22", hint: "Dalawampu't dalawa." },
+    { q: "Ika-ilan ang Pilipinas sa pinakamalalaking bansa sa Timog-Silangang Asya?", a: "Pang-anim", hint: "Anim." },
+    { q: "Ilang kilometro ang haba ng Pilipinas mula hilaga patungong timog?", a: "1,854 kilometro", hint: "Higit isang libo walong daan." },
+    { q: "Ilang kilometro ang lapad ng Pilipinas mula silangan patungong kanluran?", a: "1,107 kilometro", hint: "Higit isang libo isang daan." },
+    { q: "Ilang kilometro ang haba ng baybayin ng Pilipinas?", a: "36,289 kilometro", hint: "Tatlumpu't anim na libo." },
+    { q: "Ika-ilan ang Pilipinas sa mga bansang may pinakamahabang baybayin sa mundo?", a: "Ikalima", hint: "Lima." },
+    { q: "Anong mga bansa ang nangunguna sa Pilipinas sa haba ng baybayin?", a: "Canada, Indonesia, Greenland, at Russia", hint: "Una si Canada, sinusundan ng tatlo pa." },
+    { q: "Ilang malalaki at maliliit na pulo ang bumubuo sa Pilipinas?", a: "7,641 na pulo", hint: "Pitong libo, anim na raan apatnapu't isa." },
+    { q: "Ano ang tatlong pangunahing pangkat ng mga pulo sa Pilipinas?", a: "Luzon, Visayas, at Mindanao", hint: "Ito ang tatlong bahagi ng bansa natin." },
+    { q: "Ano ang pinakamalaking pulo sa Pilipinas ayon sa lawak ng lupain?", a: "Luzon (104,688 km²)", hint: "Ito rin ang tirahan ng Kamaynilaan." },
+    { q: "Ano ang pangalawang pinakamalaking pulo sa Pilipinas?", a: "Mindanao (94,630 km²)", hint: "Nasa katimugan ito ng bansa." },
+    { q: "Sino ang gumuhit ng kilalang Mapa ni Velarde?", a: "Padre Pedro Murillo Velarde", hint: "Pari ang gumuhit nito." },
+    { q: "Anong taon inilathala ang Mapa ni Velarde sa Maynila?", a: "1734", hint: "Ika-labingwalong siglo." },
+    { q: "Ano ang tinuturing na pinakaunang siyentipikong mapa ng kapuluan ng Pilipinas?", a: "Mapa ni Velarde", hint: "Pinangalanan ito sa gumuhit nito." },
+  ],
+
+  "Saligan ng Teritoryo Ayon sa Kasaysayan": [
+    { q: "Anong kasunduan noong 1898 ang naglipat ng pangangasiwa sa Pilipinas mula Espanya patungong Estados Unidos?", a: "Kasunduan ng Paris", hint: "Pinangalanan ito sa isang lungsod sa Europa." },
+    { q: "Magkano ang ibinayad ng Estados Unidos sa Espanya sa Kasunduan ng Paris?", a: "$20,000,000 (20 milyong dolyar)", hint: "Dalawampung milyong dolyar." },
+    { q: "Bukod sa Pilipinas, anong mga teritoryo pa ang naisuko ng Espanya sa Kasunduan ng Paris?", a: "Cuba, Guam, at Puerto Rico", hint: "Tatlo pang lugar na napunta sa Estados Unidos." },
+    { q: "Anong dalawang isla ang hindi naisama sa Kasunduan ng Paris ngunit idinagdag sa Cession Treaty of 1900?", a: "Sibutu at Cagayan de Sulu", hint: "Ito rin ang tawag sa Kasunduan ng Washington." },
+    { q: "Magkano ang ibinayad ng Estados Unidos sa Espanya sa ilalim ng Cession Treaty of 1900?", a: "$100,000 (100,000 dolyar)", hint: "Sandaang libong dolyar." },
+    { q: "Anong kasunduan ang naglinaw sa hanggahan ng Pilipinas at Hilagang Borneo noong 1930?", a: "Boundaries Treaty of 1930", hint: "Nasa pangalan ng kasunduan ang 'Boundaries'." },
+    { q: "Anong mga isla ang isinuko ng Britanya sa Estados Unidos sa ilalim ng Boundaries Treaty?", a: "Mangee at Turtle", hint: "Dalawang maliit na isla." },
+    { q: "Anong tatlong kasunduan ang kinilala sa Unang Artikulo ng Saligang Batas ng 1935 bilang batayan ng teritoryo ng Pilipinas?", a: "Treaty of Paris, Cession Treaty, at Boundaries Treaty", hint: "Ito ang tatlong kasunduang pangkasaysayan." },
+    { q: "Anong taon itinatag ang Pamahalaang Komonwelt ng Pilipinas?", a: "1935", hint: "Bago pa ang Ikalawang Digmaang Pandaigdig." },
+  ],
+
+  "Pambansang Teritoryo Ayon sa Saligang Batas 1987": [
+    { q: "Saan nakasaad ang teritoryong saklaw ng Pilipinas ayon sa Saligang Batas ng 1987?", a: "Sa Unang Artikulo ng Saligang Batas ng 1987", hint: "Unang bahagi ng saligang batas." },
+    { q: "Gaano kalayo mula sa baybayin ang teritoryong pangkaragatan (territorial sea) ng Pilipinas?", a: "12 milyang nautical (22 kilometro)", hint: "Labindalawang milya ang layo." },
+    { q: "Gaano kalawak ang Exclusive Economic Zone (EEZ) ng Pilipinas?", a: "200 milyang nautical (370.4 kilometro)", hint: "Dalawang daang milya ang layo." },
+    { q: "Ano ang karapatan ng Pilipinas sa loob ng kanyang EEZ?", a: "Paggamit at konserbasyon ng mga likas na yamang matatagpuan dito", hint: "May karapatan tayong gamitin at pangalagaan ang yaman dito." },
+    { q: "Ano ang tawag sa salansan ng lupa na nasa ilalim ng ating bansa?", a: "Subsoil", hint: "Nasa ilalim ito ng lupa." },
+    { q: "Ano ang tawag sa sahig ng katubigang nasasakop ng Pilipinas?", a: "Seabed", hint: "Sahig ito ng dagat." },
+    { q: "Ano ang tawag sa mga underwater plateau na sakop ng mga katubigan ng Pilipinas?", a: "Insular shelf", hint: "Talampas ito sa ilalim ng dagat." },
+    { q: "Ano ang tinatawag na panloob na katubigan ng Pilipinas?", a: "Lahat ng anyong tubig sa loob ng demarkasyong teritoryal ng bansa", hint: "Nasa loob ito ng hanggahan ng ating bansa." },
+    { q: "Ano ang tatlong pangunahing bahagi ng pambansang teritoryo ng Pilipinas?", a: "Kalupaan, katubigan, at himpapawid", hint: "Lupa, tubig, at ere." },
+  ],
+
+  "Doktrinang Pangkapuluan at UNCLOS": [
+    { q: "Ano ang buong katawagan ng UNCLOS?", a: "United Nations Convention on the Law of the Sea", hint: "Kasunduan ito ng UN tungkol sa batas ng dagat." },
+    { q: "Ano ang layunin ng UNCLOS?", a: "Ilatag ang mga prinsipyo at batas na paiiralin sa paggamit sa mga karagatan at yamang-tubig", hint: "Batas ito tungkol sa dagat." },
+    { q: "Ano ang isinulong ng Pilipinas at ng mga bansang Indonesia, Fiji, at Mauritius sa UNCLOS?", a: "Doktrinang Pangkapuluan o Archipelagic Doctrine", hint: "Ito ang prinsipyong pagkilala sa kapuluan bilang isang buong yunit." },
+    { q: "Sino ang namuno sa delegasyon ng Pilipinas na nagsulong sa Doktrinang Pangkapuluan?", a: "Arturo Tolentino", hint: "Pangalan ng isang diplomatikong Pilipino." },
+    { q: "Anong taon pinagtibay ang Doktrinang Pangkapuluan?", a: "1982", hint: "Dekada '80." },
+    { q: "Anong taon sinimulang ipatupad ang Doktrinang Pangkapuluan?", a: "1994", hint: "Dekada '90." },
+    { q: "Ano ang itinataguyod ng Doktrinang Pangkapuluan?", a: "Prinsipyo ng kaisahan ng kalupaan at katubigan sa saklaw ng pambansang teritoryo ng isang bansang arkipelago", hint: "Iisang buong yunit ang arkipelago." },
+    { q: "Ano ang tawag sa mga tuwid na linyang idinurugtong sa mga pinakadulong bahagi ng isang bansang arkipelago?", a: "Straight baselines", hint: "Tuwid na linya ito na gumuguhit ng hanggahan." },
+    { q: "Ano ang tawag sa katubigan sa pagitan ng mga isla dahil sa straight baselines?", a: "Internal waters", hint: "Nasa loob ito ng baseline." },
+    { q: "Ano ang apat na sona maritima na itinatakda ng UNCLOS?", a: "Internal waters, territorial waters, contiguous zone, at EEZ", hint: "Apat na sona mula sa baybayin patungong karagatan." },
+  ],
+
+  "Batas at Atas ng Pangulo": [
+    { q: "Sino ang naglabas ng Atas ng Pangulo Blg. 1596 noong 1978?", a: "Dating Pangulong Ferdinand Marcos, Sr.", hint: "Isang dating Pangulo ng Pilipinas." },
+    { q: "Ano ang idineklara sa ilalim ng Atas ng Pangulo Blg. 1596?", a: "Ang Kapuluan ng Kalayaan bilang bahagi ng teritoryo ng Pilipinas", hint: "May kaugnayan sa Kanlurang Dagat Pilipinas." },
+    { q: "Bilang bahagi ng anong lalawigan itinatag ang Kapuluan ng Kalayaan sa ilalim ng PD 1596?", a: "Munisipyo ng Palawan", hint: "Lalawigan sa Kanlurang Pilipinas." },
+    { q: "Ano ang pinagtibay ng Atas ng Pangulo Blg. 1599 noong 1978?", a: "Exclusive Economic Zone (EEZ) ng Pilipinas", hint: "Tungkol ito sa saklaw ng dagat natin." },
+    { q: "Anong kapuluan ang halos 1/3 nito ay kabilang sa EEZ ng Pilipinas ayon sa Atas ng Pangulo Blg. 1599?", a: "Kapuluan ng Spratly", hint: "Ito rin ay kilala bilang Kapuluan ng Kalayaan." },
+    { q: "Ano rin ang tawag sa Batas Republika Blg. 9522 ng 2009?", a: "Philippine Baselines Law", hint: "Batas tungkol sa mga baseline ng bansa." },
+    { q: "Ilang base point ang binigyang-linaw ng Batas Republika Blg. 9522?", a: "101 base point", hint: "Higit isang daan." },
+    { q: "Sino ang nag-utos ng Atas Tagapagpaganap Blg. 25 noong 2017?", a: "Dating Pangulong Rodrigo Duterte", hint: "Isa pang dating Pangulo ng Pilipinas." },
+    { q: "Anong bagong pangalan ang ibinigay sa Benham Rise sa ilalim ng Atas Tagapagpaganap Blg. 25?", a: "Philippine Rise", hint: "Pinalitan ang lumang pangalan nito." },
+    { q: "Gaano kalalim ang Philippine Rise sa ilalim ng dagat?", a: "48 metro hanggang 70 metro", hint: "Hindi masyadong malalim." },
+    { q: "Bahagi ito ng anong pisikal na tampok sa ilalim ng dagat ng Pilipinas?", a: "Continental shelf", hint: "Talampas ito na nasa dulo ng lupain." },
+    { q: "Anong likas na yaman ang pinaniniwalaang matatagpuan sa Philippine Rise?", a: "Natural gas", hint: "Isang uri ng enerhiya." },
+  ],
+
+  "Mga Sigalot sa Teritoryo": [
+    { q: "Anong mga bansang Asyano ang matatagpuan sa kanluran ng Pilipinas na tinaguriang coastal states?", a: "Vietnam, Malaysia, at Tsina", hint: "Tatlong bansa sa Asya." },
+    { q: "Ano ang tawag sa dagat sa kanluran ng Pilipinas na pinagtatalunan ng ilang bansa?", a: "Kanlurang Dagat Pilipinas o West Philippine Sea", hint: "Nasa kanluran ito ng ating bansa." },
+    { q: "Ano ang dalawang lugar sa Kanlurang Dagat Pilipinas na pinag-aagawan ng ilang bansa?", a: "Kapuluan ng Kalayaan at Panatag Shoal (Scarborough Shoal)", hint: "Dalawang lugar na mayaman sa yamang-dagat." },
+    { q: "Saan nagsampa ang Pilipinas ng kaso laban sa Tsina noong 2013?", a: "Permanent Court of Arbitration (PCA) sa The Hague, Netherlands", hint: "Internasyonal na hukuman ito." },
+    { q: "Anong taon naglabas ng desisyon ang PCA na kinikilala ang karapatan ng Pilipinas?", a: "2016", hint: "Tatlong taon matapos isampa ang kaso." },
+    { q: "Ano ang tinutukoy ng Tsina bilang batayan ng kanilang pag-angkin sa Kanlurang Dagat Pilipinas?", a: "Nine-dash line", hint: "May siyam na guhit ito sa mapa ng Tsina." },
+    { q: "Kailan unang lumabas ang nine-dash line sa mga mapang inilimbag ng Tsina?", a: "Dekada 1947", hint: "Bago pa ang UNCLOS." },
+    { q: "Saan nanghihimasok ang Tsina sa eksplorasyon ng petrolyo ng Pilipinas?", a: "Reed Bank", hint: "Lugar itong mayaman sa langis." },
+    { q: "Simula kailan hinaharang ng Tsina ang mga mangingisdang Pilipino malapit sa Scarborough Shoal?", a: "2012", hint: "Higit isang dekada na ang nakalipas." },
+    { q: "Saan gumawa ang Tsina ng mga artipisyal na isla at pasilidad nang walang pahintulot ng Pilipinas?", a: "Mischief Reef", hint: "Isa itong bahagi ng EEZ ng Pilipinas." },
+    { q: "Anong bahagi ng dagat ang lumalabag sa EEZ ng Pilipinas dahil sinasaklaw ito ng nine-dash line?", a: "Ang kabuuan ng Kanlurang Dagat Pilipinas", hint: "Buong Kanlurang Dagat Pilipinas ang saklaw nito." },
+    { q: "Anong hayop na nanganganib maubos ang ilegal na kinukuha ng mga mangingisdang Tsino?", a: "Giant clam, coral, at sea turtle", hint: "Tatlong uri ng nilalang-dagat." },
+  ],
+
+  "Heograpiyang Pisikal: Topograpiya": [
+    { q: "Ano ang tawag sa sangay ng heograpiya na nakatuon sa mga natural na prosesong nagaganap sa pisikal na daigdig?", a: "Heograpiyang pisikal", hint: "Dito nakapaloob ang anyong lupa, tubig, at klima." },
+    { q: "Ano ang tawag sa pag-aaral o pagmamapa ng mga anyong lupa at anyong tubig ng isang lugar?", a: "Topograpiya", hint: "Kaugnay ito ng elebasyon ng isang lugar." },
+    { q: "Ano ang ipinapakita ng mga contour lines sa mapang topograpikal?", a: "Ang mga pook na magkakapareho ng elebasyon", hint: "Tungkol ito sa taas ng lupa." },
+    { q: "Halos ilang pulo lamang sa 7,641 pulo ng Pilipinas ang natitirahan ng tao?", a: "Halos 1,000 pulo", hint: "Isang libo lamang." },
+    { q: "Anong anyong tubig ang matatagpuan sa gawing hilaga ng Pilipinas?", a: "Lagusan ng Bashi", hint: "Nasa itaas ito ng Luzon." },
+    { q: "Anong karagatan ang matatagpuan sa silangan ng Pilipinas?", a: "Karagatang Pasipiko", hint: "Ito ang pinakamalawak na karagatan sa mundo." },
+    { q: "Anong dagat ang matatagpuan sa kanluran ng Pilipinas?", a: "Kanlurang Dagat Pilipinas", hint: "Tinatawag din itong West Philippine Sea." },
+    { q: "Anong dagat ang matatagpuan sa timog ng Pilipinas?", a: "Dagat Celebes", hint: "Nasa ibaba ito ng Mindanao." },
+    { q: "Ano ang ginagampanan ng mga bulubundukin sa kahabaan ng baybayin ng Pilipinas?", a: "Nagsisilbing harang sa malalakas na hangin at bagyo mula sa Karagatang Pasipiko", hint: "Proteksyon sila laban sa bagyo." },
+  ],
+
+  "Mga Anyong Lupa": [
+    { q: "Ano ang tawag sa malaking anyong lupa na may taas na 300 metro o higit pa?", a: "Bundok", hint: "Ito ang pangkalahatang termino para sa mataas na lupa." },
+    { q: "Ano ang pinakamataas na bundok sa Pilipinas?", a: "Bundok Apo (2,954 metro)", hint: "Matatagpuan sa Mindanao." },
+    { q: "Saan matatagpuan ang Bundok Apo?", a: "Davao del Sur at Hilagang Cotabato", hint: "Dalawang lalawigan sa Mindanao." },
+    { q: "Ano ang tawag sa serye ng magkakalapit o magkakabit na mga bundok?", a: "Bulubundukin", hint: "Grupo ito ng maraming bundok." },
+    { q: "Anong bulubundukin ang matatagpuan sa silangang bahagi ng Luzon, mula Cagayan hanggang Quezon?", a: "Sierra Madre", hint: "Pinakamahabang bulubundukin sa Pilipinas." },
+    { q: "Anong bulubundukin ang matatagpuan sa hilagang bahagi ng Luzon, sakop ang CAR, Ilocos, at Cagayan Valley?", a: "Cordillera", hint: "Matatagpuan dito ang Baguio." },
+    { q: "Ano ang tawag sa anyong lupang mas mataas sa lupa ngunit ang kapatagang nakapaligid ay hindi hihigit sa 300 metro?", a: "Burol", hint: "Mas mababa ito kaysa bundok." },
+    { q: "Ano ang pinakakilalang halimbawa ng burol sa Pilipinas?", a: "Chocolate Hills sa Bohol", hint: "Marami itong maliliit na burol na kahugis-tsokolate." },
+    { q: "Ano ang tawag sa anyong lupang may bunganga kung saan lumalabas ang tunaw na bato, abo, at iba pang materyal?", a: "Bulkan", hint: "Karaniwang hugis kono ito." },
+    { q: "Anong dalawang kilalang bulkan sa Luzon ang binanggit sa aralin?", a: "Bulkang Mayon at Bulkang Taal", hint: "Isa sa Albay, isa sa Batangas." },
+    { q: "Ano ang tawag sa malawak at patag na anyong lupa na sentro ng mga gawaing agrikultural?", a: "Kapatagan", hint: "Dito karaniwang nagtatanim ang mga magsasaka." },
+    { q: "Anong rehiyon ang may malalawak na kapatagan?", a: "Gitnang Luzon", hint: "Rehiyong bukid ng bansa." },
+    { q: "Ano ang tawag sa patag na anyong lupa na nasa mataas na lugar?", a: "Talampas", hint: "Patag ngunit matayog." },
+    { q: "Anong dalawang lungsod ang halimbawa ng talampas sa Benguet at Cavite?", a: "Lungsod ng Baguio at Lungsod ng Tagaytay", hint: "Parehong malamig ang klima." },
+    { q: "Ano ang tawag sa patag na anyong lupa na napapagitnaan ng dalawang bundok o bulubundukin?", a: "Lambak", hint: "Nasa pagitan ito ng dalawang bulubundukin." },
+    { q: "Ano ang halimbawa ng lambak na nasa pagitan ng Sierra Madre at Cordillera?", a: "Lambak ng Cagayan", hint: "Pinangalanan sa lalawigan sa hilagang Luzon." },
+    { q: "Ano ang tawag sa anyong lupang nakausli at napapaligiran ng tubig maliban sa bahaging nakakabit sa mas malaking anyong lupa?", a: "Tangway", hint: "Halos napapaligiran ng tubig, may kaunting kabit lang sa lupa." },
+    { q: "Anong lalawigan ang halimbawa ng tangway sa kanlurang bahagi ng Luzon?", a: "Bataan", hint: "Lalawigan na may hugis nakausli." },
+    { q: "Ano ang tawag sa anyong lupang matatagpuan sa tabi ng dagat?", a: "Dalampasigan o baybayin", hint: "Dito naglalaro ang mga bata sa buhangin." },
+    { q: "Ano ang tawag sa anyong lupang napaliligiran ng tubig?", a: "Isla o pulo", hint: "Nag-iisang bahagi ng lupa na napapaligiran ng tubig." },
+    { q: "Ano ang pinakamalaking isla sa Pilipinas?", a: "Luzon", hint: "Ito rin ang bahagi kung saan matatagpuan ang Kamaynilaan." },
+    { q: "Ano ang tawag sa isang pangkat ng mga isla?", a: "Arkipelago", hint: "Ito rin ang Pilipinas." },
+  ],
+
+  "Mga Anyong Tubig": [
+    { q: "Ilang porsiyento ng daigdig ang katubigan?", a: "71%", hint: "Halos tatlong-kapat ng mundo." },
+    { q: "Ano ang pinakamalaking anyong tubig na hindi nahahati ng anyong lupa?", a: "Karagatan", hint: "Ito ang pinakamalawak na uri ng tubig." },
+    { q: "Ilang porsiyento ng katubigan sa daigdig ang matatagpuan sa mga karagatan?", a: "96%", hint: "Halos lahat ng tubig sa mundo." },
+    { q: "Ano ang pinakamalawak na karagatan sa mundo, matatagpuan sa silangan ng Pilipinas?", a: "Karagatang Pasipiko", hint: "Ito ang pinakamalaking karagatan sa buong daigdig." },
+    { q: "Ano ang tawag sa malaking anyong tubig na may bahaging napaliligiran ng lupa at nakakonekta sa karagatan?", a: "Dagat", hint: "Mas maliit ito kaysa karagatan." },
+    { q: "Anong mga dagat ang nakapalibot sa kapuluan ng Pilipinas?", a: "Dagat ng Bohol, Visayas, Sulu, at Samar", hint: "Apat na dagat na nasa loob ng Pilipinas." },
+    { q: "Ano ang tawag sa anyong tubig na nagmumula sa kabundukan patungong kapatagan at palabas sa dagat?", a: "Ilog", hint: "Umaagos ito mula bundok hanggang dagat." },
+    { q: "Ano ang pinakamahabang ilog sa Pilipinas?", a: "Ilog Cagayan", hint: "Matatagpuan sa hilagang Luzon." },
+    { q: "Anong dalawang ilog ang sumusunod sa Ilog Cagayan sa haba?", a: "Ilog Mindanao at Ilog Agusan", hint: "Parehong nasa Mindanao." },
+    { q: "Ano ang tawag sa anyong tubig na napaliligiran ng lupa?", a: "Lawa", hint: "Baligtad ito ng isla — tubig na napapaligiran ng lupa." },
+    { q: "Ano ang pinakamalaking lawa sa Pilipinas?", a: "Laguna de Bay", hint: "Nasa tabi ito ng Kalakhang Maynila." },
+    { q: "Anong mga lalawigan ang nakapalibot sa Laguna de Bay?", a: "Laguna, Rizal, at Cavite", hint: "Tatlong lalawigan malapit sa Metro Manila." },
+    { q: "Ano ang tawag sa anyong tubig na karugtong ng karagatan ngunit napaliligiran ng kalupaan, kadalasang ginagamit bilang daungan?", a: "Golpo", hint: "Malalim ang tubig kahit maliit ang bukana." },
+    { q: "Ano ang halimbawa ng golpo sa lalawigan ng Pangasinan?", a: "Golpo ng Lingayen", hint: "Pinangalanan sa isang bayan sa Pangasinan." },
+    { q: "Ano ang tawag sa anyong tubig na nagdurugtong sa dalawang malalaking anyong tubig?", a: "Kipot", hint: "Ito ang tulay na tubig sa dalawang malaking karagatan o dagat." },
+    { q: "Ano ang kipot na nagdurugtong sa Dagat Pilipinas at Dagat Luzon?", a: "Kipot ng Luzon", hint: "Pinangalanan sa pinakamalaking isla ng Pilipinas." },
+    { q: "Ano ang tawag sa anyong tubig na bahagyang napaliligiran ng lupa, may mas maliit na bukana kaysa golpo?", a: "Look", hint: "Mas maliit ang bukana nito kaysa golpo." },
+    { q: "Ano ang halimbawang look na kilala sa magandang tanawin tuwing paglubog ng araw?", a: "Look ng Maynila", hint: "Nasa harapan ito ng Kalakhang Maynila." },
+    { q: "Ano ang tawag sa maliit na anyong tubig na umaagos patungo sa lawa, ilog, o dagat?", a: "Batis", hint: "Mas maliit ito kaysa ilog." },
+    { q: "Ano ang tawag sa anyong tubig na bumabagsak mula sa mataas na bundok o lugar?", a: "Talon", hint: "Bumabagsak ang tubig mula sa itaas patungong ibaba." },
+    { q: "Anong dalawang kilalang talon sa Pilipinas ang binanggit sa aralin?", a: "Talon ng Maria Christina at Talon ng Pagsanjan", hint: "Isa sa Lanao del Norte, isa sa Laguna." },
+  ],
+
+};
+
+// ── TRUE OR FALSE ────────────────────────────────────────────────────────────
+const trueOrFalse = [
+  { q: "Ang Cession Treaty, Boundaries Treaty, at Saligang Batas ng 1935 ang mga pangunahing batayan na nagtakda sa kasalukuyang saklaw at limitasyon ng teritoryo ng Pilipinas.", a: "mali" },
+  { q: "Isinasaad sa Unang Artikulo ng Saligang Batas ng 1987 ang teritoryong saklaw ng Pilipinas.", a: "tama" },
+  { q: "Binigyang-linaw ng UNCLOS ang karapatan ng bansa na tuklasin at gamitin ang kanilang teritoryong pangkatubigan at ang pagbabawal ng kalayaan sa paglalayag dito.", a: "mali" },
+  { q: "Ang Doktrinang Pangkapuluan ay tumutukoy sa prinsipyong pagkilala sa isang arkipelago bilang isang buong yunit.", a: "tama" },
+  { q: "Ang internal waters ang mga tubig na linyang nagdurugtong sa mga pinakalabas na bahagi ng isang bansang arkipelago.", a: "mali" },
+  { q: "Ang Philippine Rise ay bahagi ng teritoryo ng Pilipinas.", a: "tama" },
+  { q: "Ang Golpo ng Tonkin ay bahagi ng teritoryo ng Pilipinas.", a: "mali" },
+  { q: "Ang Lungsod ng Beijing ay bahagi ng teritoryo ng Pilipinas.", a: "mali" },
+  { q: "Ang lugar na nasa loob ng 200 milyang nautical mula sa baybayin ng Pilipinas ay bahagi ng teritoryo nito bilang EEZ.", a: "tama" },
+  { q: "Ang Kipot ng Malacca ay bahagi ng teritoryo ng Pilipinas.", a: "mali" },
+  { q: "Ang Kapuluan ng Kalayaan ay bahagi ng teritoryo ng Pilipinas.", a: "tama" },
+  { q: "Ang nine-dash line ng Tsina ay naaayon sa mga prinsipyo ng UNCLOS.", a: "mali" },
+  { q: "Tanging ang Pilipinas at Tsina lamang ang nag-aagawan sa Kapuluan ng Kalayaan.", a: "mali" },
+  { q: "Nagtayo ang Tsina ng mga artipisyal na isla at pasilidad sa Mischief Reef nang walang pahintulot ng Pilipinas.", a: "tama" },
+  { q: "Ang Pilipinas ay kabilang sa Pacific Ring of Fire.", a: "tama" },
+  { q: "Ang Pilipinas ay matatagpuan sa rehiyong tropikal.", a: "tama" },
+  { q: "Ang Pilipinas ay isang arkipelago.", a: "tama" },
+  { q: "Ang Pilipinas ay hindi nakararanas ng bagyo o lindol.", a: "mali" },
+  { q: "Binubuo ang Pilipinas ng 7,641 na malalaki at maliliit na pulo.", a: "tama" },
+  { q: "Ang Luzon, Visayas, at Mindanao ang tatlong pangunahing pangkat ng mga pulo sa Pilipinas.", a: "tama" },
+  { q: "Ikalima ang Pilipinas sa mga bansang may pinakamahabang baybayin sa buong mundo.", a: "tama" },
+  { q: "Ang amihan, habagat, at balaklaot ang tatlong sistema ng hangin na nakaaapekto sa panahon ng Pilipinas.", a: "tama" },
+  { q: "Ang Pilipinas ay matatagpuan sa Timog-Silangang Asya.", a: "tama" },
+  { q: "Ang Pilipinas ay napaliligiran ng malalaking anyong tubig.", a: "tama" },
+  { q: "May apat na uri ng klima ang Pilipinas batay sa distribusyon ng ulan.", a: "tama" },
+  { q: "Ang Pilipinas ay nakararanas ng tagsibol at taglamig.", a: "mali" },
+  { q: "Ang kabuuang sukat ng teritoryo ng Pilipinas ay 500,000 kilometro kuwadrado.", a: "mali" },
+  { q: "Ang Kapuluan ng Kalayaan ang pinakahilagang dulo ng Pilipinas.", a: "mali" },
+];
+
+// ── IDENTIFY: TERITORYO · ANYONG LUPA · ANYONG TUBIG ────────────────────────
+const identifyQuestions = [
+  { q: "Nakasaad dito ang pagsuko ng Espanya sa Pilipinas sa Estados Unidos sa halagang 20 milyong dolyar.", a: "Kasunduan sa Paris", choices: ["Kasunduan sa Paris","Boundaries Treaty","UNCLOS","Nine-dash line"] },
+  { q: "Ito ang kapangyarihan ng isang bansa na malayang magdesisyon sa nasasakupan nito.", a: "Soberanya", choices: ["Soberanya","Teritoryo","EEZ","Internal water"] },
+  { q: "Ito ang linyang ginagamit ng Tsina bilang basehan ng kanilang teritoryo sa Kanlurang Dagat Pilipinas.", a: "Nine-dash line", choices: ["Nine-dash line","Baseline","Doktrinang Pangkapuluan","Territorial water"] },
+  { q: "Ito ang karapatan ng mga bansa na siyasatin at gamitin ang mga katubigan at yamang-dagat hanggang sa 200 milyang nautical mula sa kanilang baseline.", a: "EEZ", choices: ["EEZ","Internal water","Territorial water","Teritoryo"] },
+  { q: "Ito ang grupo ng mga isla sa Kanlurang Dagat Pilipinas na pinag-aagawan ng mga bansang Tsina, Taiwan, Malaysia, Vietnam, at Brunei.", a: "Kapuluan ng Kalayaan", choices: ["Kapuluan ng Kalayaan","Mischief Reef","Reed Bank","Philippine Rise"] },
+  { q: "Itinuturing ng prinsipyong ito ang arkipelago bilang isang buong yunit.", a: "Doktrinang Pangkapuluan", choices: ["Doktrinang Pangkapuluan","UNCLOS","Baseline","Soberanya"] },
+  { q: "Ito ang kasunduang nagtadhana sa hanggahan ng Pilipinas at Hilagang Borneo.", a: "Boundaries Treaty", choices: ["Boundaries Treaty","Kasunduan sa Paris","Cession Treaty","UNCLOS"] },
+  { q: "Ito ang kasunduan sa pagitan ng mga kasapi ng United Nations hinggil sa pagtatakda ng mga teritoryong maritima at paggamit ng mga tubig at karagatan.", a: "UNCLOS", choices: ["UNCLOS","Doktrinang Pangkapuluan","Boundaries Treaty","Nine-dash line"] },
+  { q: "Ito ang mga katubigang nasa loob ng baseline hanggang sa mga dalampasigan pati na rin ang mga ilog at lawa sa isang bansa.", a: "Internal water", choices: ["Internal water","Territorial water","EEZ","Baseline"] },
+  { q: "Lugar na nasasaklawan ng kapangyarihan ng isang bansa.", a: "Teritoryo", choices: ["Teritoryo","Soberanya","Nasyon","Estado"] },
+  { q: "Anyong lupang may taas na 300 metro o higit pa.", a: "Bundok", choices: ["Bundok","Burol","Talampas","Bulubundukin"] },
+  { q: "Anyong lupang mas mataas sa lupa ngunit ang kapatagang nakapaligid ay hindi hihigit sa 300 metro.", a: "Burol", choices: ["Burol","Bundok","Lambak","Talampas"] },
+  { q: "Anyong lupang may bunganga kung saan lumalabas ang tunaw na bato, abo, at iba pang materyal.", a: "Bulkan", choices: ["Bulkan","Bundok","Burol","Talampas"] },
+  { q: "Malawak at patag na anyong lupa, karaniwang sentro ng mga gawaing agrikultural.", a: "Kapatagan", choices: ["Kapatagan","Talampas","Lambak","Tangway"] },
+  { q: "Patag na anyong lupa na nasa mataas na lugar.", a: "Talampas", choices: ["Talampas","Kapatagan","Lambak","Burol"] },
+  { q: "Patag na anyong lupa na napapagitnaan ng dalawang bundok o bulubundukin.", a: "Lambak", choices: ["Lambak","Talampas","Kapatagan","Tangway"] },
+  { q: "Anyong lupang nakausli at napapaligiran ng tubig maliban sa bahaging nakakabit sa mas malaking anyong lupa.", a: "Tangway", choices: ["Tangway","Isla","Dalampasigan","Arkipelago"] },
+  { q: "Anyong lupang napaliligiran ng tubig.", a: "Isla", choices: ["Isla","Tangway","Dalampasigan","Arkipelago"] },
+  { q: "Pangkat ng mga isla.", a: "Arkipelago", choices: ["Arkipelago","Isla","Tangway","Kapatagan"] },
+  { q: "Pinakamalaking anyong tubig na hindi nahahati ng anyong lupa.", a: "Karagatan", choices: ["Karagatan","Dagat","Golpo","Look"] },
+  { q: "Malaking anyong tubig na may bahaging napaliligiran ng lupa at nakakonekta sa karagatan.", a: "Dagat", choices: ["Dagat","Karagatan","Lawa","Kipot"] },
+  { q: "Anyong tubig na nagmumula sa kabundukan patungong kapatagan at palabas sa dagat.", a: "Ilog", choices: ["Ilog","Batis","Talon","Lawa"] },
+  { q: "Anyong tubig na napaliligiran ng lupa.", a: "Lawa", choices: ["Lawa","Golpo","Look","Kipot"] },
+  { q: "Anyong tubig na karugtong ng karagatan ngunit napaliligiran ng kalupaan, kadalasang ginagamit bilang daungan.", a: "Golpo", choices: ["Golpo","Look","Kipot","Batis"] },
+  { q: "Anyong tubig na nagdurugtong sa dalawang malalaking anyong tubig.", a: "Kipot", choices: ["Kipot","Golpo","Look","Talon"] },
+  { q: "Anyong tubig na bahagyang napaliligiran ng lupa, may mas maliit na bukana kaysa golpo.", a: "Look", choices: ["Look","Golpo","Kipot","Dagat"] },
+  { q: "Maliit na anyong tubig na umaagos patungo sa mga lawa, ilog, o dagat.", a: "Batis", choices: ["Batis","Talon","Ilog","Look"] },
+  { q: "Anyong tubig na bumabagsak mula sa mataas na bundok o lugar.", a: "Talon", choices: ["Talon","Batis","Ilog","Kipot"] },
+];
+
+// ═══════════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════════
+let state = {
+  awaiting: 'menu',
+  mode: null,
+  questions: [],
+  allAnswers: [],
+  qIndex: 0,
+  score: 0,
+  total: 0,
+  hintUsed: false,
+  audioEnabled: true,
+};
+
+// ═══════════════════════════════════════════════════════════════
+// TTS (UPGRADED FOR TRUE FILIPINO ACCENT)
+// ═══════════════════════════════════════════════════════════════
+let currentAudioStream = null;
+
+function speak(text) {
+  if (!state.audioEnabled) return;
+  
+  // Linisin ang mga nakaraang audio task
+  window.speechSynthesis.cancel();
+  if (currentAudioStream) {
+    currentAudioStream.pause();
+    currentAudioStream = null;
+  }
+  
+  // Tanggalin ang HTML tags at emojis para hindi basahin nang paputol-putol
+  const clean = text.replace(/<[^>]+>/g,'').replace(/[🇵🇭🌟✅❌💡⏭️🏆😊💪🔄🔲📚👋⭐✕🧭📏🗺️]/g,'');
+  
+  // PRIMARY METHOD: Google Translation Engine cloud voice stream (May natural na Filipino accent)
+  const googleTtsUrl = `https://translate.google.com/translate_tts?ie=UTF-8&tl=tl&client=tw-ob&q=${encodeURIComponent(clean)}`;
+  
+  currentAudioStream = new Audio(googleTtsUrl);
+  currentAudioStream.onplaying = () => showWave(true);
+  currentAudioStream.onended = currentAudioStream.onerror = () => showWave(false);
+  
+  currentAudioStream.play().catch(err => {
+    // BACKUP METHOD: Web Speech API (Gagana kapag walang internet connection)
+    console.warn("Google TTS blocked or offline. Falling back to local system speech engine.");
+    
+    const streamFallback = new SpeechSynthesisUtterance(clean);
+    streamFallback.lang = 'fil-PH';
+    streamFallback.rate = 0.95; streamFallback.pitch = 1.05; streamFallback.volume = 1;
+    
+    const voices = window.speechSynthesis.getVoices();
+    const filVoice = voices.find(v => v.lang.startsWith('fil') || v.lang.startsWith('tl'));
+    const engVoice = voices.find(v => v.lang.startsWith('en') && v.name.toLowerCase().includes('female'))
+                   || voices.find(v => v.lang.startsWith('en'));
+              
+    if (filVoice) {
+      streamFallback.voice = filVoice;
+    } else if (engVoice) {
+      streamFallback.voice = engVoice; 
+      streamFallback.lang = 'en-US'; 
+    }
+    
+    streamFallback.onstart = () => showWave(true);
+    streamFallback.onend = streamFallback.onerror = () => showWave(false);
+    window.speechSynthesis.speak(streamFallback);
+  });
+}
+
+function showWave(on) {
+  document.querySelectorAll('.speaker-wave').forEach(w => w.style.display = on ? 'inline-flex' : 'none');
+}
+
+// I-initialize ang mga boses ng system
+let localSystemVoices = [];
+function lookupSystemVoices() {
+  localSystemVoices = window.speechSynthesis.getVoices();
+}
+lookupSystemVoices();
+if (window.speechSynthesis.onvoiceschanged !== undefined) {
+  window.speechSynthesis.onvoiceschanged = lookupSystemVoices;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// UI HELPERS
+// ═══════════════════════════════════════════════════════════════
+const chatBox = document.getElementById('chat-box');
+const input = document.getElementById('user-input');
+const sendBtn = document.getElementById('send-btn');
+
+function scrollBottom() { chatBox.scrollTop = chatBox.scrollHeight; }
+
+function addMessage(role, html, speakText) {
+  const div = document.createElement('div');
+  div.className = `msg ${role}`;
+  const av = document.createElement('div');
+  av.className = 'avatar';
+  av.textContent = role === 'bot' ? '🤖' : '🧑';
+  const bub = document.createElement('div');
+  bub.className = 'bubble';
+  bub.innerHTML = role === 'bot'
+    ? html + '<span class="speaker-wave" style="display:none"><span></span><span></span><span></span><span></span><span></span></span>'
+    : html;
+  div.appendChild(av); div.appendChild(bub);
+  chatBox.appendChild(div);
+  scrollBottom(); bindChips();
+  if (role === 'bot') {
+    const txt = speakText || html.replace(/<[^>]+>/g,' ');
+    setTimeout(() => speak(txt), 350);
+  }
+}
+
+function addTyping() {
+  const d = document.createElement('div');
+  d.className = 'msg bot'; d.id = 'typing';
+  d.innerHTML = '<div class="avatar">🤖</div><div class="typing"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>';
+  chatBox.appendChild(d); scrollBottom();
+}
+function removeTyping() { const t = document.getElementById('typing'); if(t) t.remove(); }
+
+function bindChips() {
+  document.querySelectorAll('.chip:not([data-bound])').forEach(c => {
+    c.dataset.bound = '1';
+    c.addEventListener('click', () => handleUserMessage(c.dataset.val));
+  });
+}
+
+function updateScore() {
+  document.getElementById('score-val').textContent = state.score;
+  document.getElementById('total-val').textContent = state.total;
+}
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length-1; i > 0; i--) {
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]] = [a[j],a[i]];
+  }
+  return a;
+}
+
+function normalize(s) { return s.toLowerCase().trim().replace(/\s+/g,' '); }
+
+function checkAnswer(user, correct) {
+  const u = normalize(user), c = normalize(correct);
+  if (u === c) return true;
+  if (c.includes(u) && u.length > 5) return true;
+  const parts = c.split(/[,;\/]/);
+  for (const p of parts) if (u.includes(p.trim()) && p.trim().length > 4) return true;
+  return false;
+}
+
+function showResult() {
+  const pct = Math.round((state.score/state.total)*100);
+  const emoji = pct>=90?'🏆':pct>=70?'🌟':pct>=50?'😊':'💪';
+  const msg = pct>=90?'Napakahusay! Alam mo ang lahat!':pct>=70?'Magaling! Patuloy ka lang!':pct>=50?'Mabuti! Pag-aralan pa nang kaunti!':'Huwag sumuko! Subukan ulit!';
+  document.getElementById('res-emoji').textContent = emoji;
+  document.getElementById('res-score').textContent = state.score;
+  document.getElementById('res-total').textContent = state.total;
+  document.getElementById('res-msg').textContent = msg;
+  document.getElementById('result-overlay').classList.add('show');
+  speak(`Tapos na! Ang iyong puntos ay ${state.score} sa ${state.total}. ${msg}`);
+}
+
+function restartApp() {
+  document.getElementById('result-overlay').classList.remove('show');
+  state = { awaiting:'menu', mode:null, questions:[], allAnswers:[], qIndex:0, score:0, total:0, hintUsed:false, audioEnabled:state.audioEnabled };
+  chatBox.innerHTML = '';
+  document.querySelector('.input-bar').style.display = 'flex';
+  updateScore();
+  showMenu();
+}
+
+// ═══════════════════════════════════════════════════════════════
+// MC HELPERS
+// ═══════════════════════════════════════════════════════════════
+function getAllAnswers() {
+  const ans = [];
+  for (const qs of Object.values(topics)) for (const q of qs) ans.push(q.a);
+  return ans;
+}
+
+function generateChoices(correct, pool) {
+  const distractors = shuffle(pool.filter(a => a !== correct)).slice(0,3);
+  return shuffle([correct, ...distractors]);
+}
+
+function buildMCBtns(choices, correctAnswer) {
+  const letters = ['A','B','C','D','E'];
+  return `<div class="mc-options">${choices.map((c,i)=>
+    `<button class="mc-btn" data-answer="${encodeURIComponent(c)}" data-correct="${encodeURIComponent(correctAnswer)}" onclick="handleMCClick(this)">
+      <span class="letter">${letters[i]}</span>${c}
+    </button>`
+  ).join('')}</div>`;
+}
+
+function handleMCClick(btn) {
+  const allBtns = btn.closest('.mc-options').querySelectorAll('.mc-btn');
+  allBtns.forEach(b => b.disabled = true);
+  const chosen = decodeURIComponent(btn.dataset.answer);
+  const correct = decodeURIComponent(btn.dataset.correct);
+  const isCorrect = chosen === correct;
+  allBtns.forEach(b => { if(decodeURIComponent(b.dataset.answer)===correct) b.classList.add('correct'); });
+  if (!isCorrect) btn.classList.add('wrong');
+  setTimeout(() => {
+    if (isCorrect) {
+      state.score++;
+      addMessage('bot', `✅ <strong>Tama!</strong> +1 puntos! Ang sagot ay: <strong>${correct}</strong>`, `Tama! Ang sagot ay: ${correct}`);
+    } else {
+      addMessage('bot', `❌ <strong>Hindi tama.</strong> Ang tamang sagot ay: <strong>${correct}</strong>`, `Hindi tama. Ang tamang sagot ay: ${correct}`);
+    }
+    state.qIndex++; updateScore();
+    if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+    else setTimeout(showResult, 900);
+  }, 650);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// NEXT QUESTION
+// ═══════════════════════════════════════════════════════════════
+function nextQuestion() {
+  const qi = state.qIndex;
+  const q = state.questions[qi];
+  const num = qi + 1;
+
+  if (state.mode === 'full' || state.mode === 'topic_mc') {
+    const choices = generateChoices(q.a, state.allAnswers);
+    const tag = q.topic ? `<span class="topic-tag">${q.topic}</span><br>` : '';
+    const html = `${tag}<strong>T${num} sa ${state.total}:</strong> ${q.q}${buildMCBtns(choices, q.a)}`;
+    addMessage('bot', html, `Tanong ${num}. ${q.q}`);
+    return;
+  }
+
+  if (state.mode === 'tf') {
+    const html = `<strong>T${num} sa ${state.total}:</strong> <div class="scenario-card">${q.q}</div>
+      <span class="chip" data-val="tama">✅ Tama</span><span class="chip" data-val="mali">❌ Mali</span>`;
+    addMessage('bot', html, `Tanong ${num}. Tama o Mali: ${q.q}`);
+    return;
+  }
+
+  if (state.mode === 'identify') {
+    const btns = buildMCBtns(q.choices, q.a);
+    const html = `<strong>T${num} sa ${state.total}:</strong> Kilalanin kung ano ang tinutukoy:<div class="scenario-card">${q.q}</div>${btns}`;
+    addMessage('bot', html, `Tanong ${num}. Kilalanin ang tinutukoy: ${q.q}`);
+    return;
+  }
+
+  // typed answer mode
+  const tag = q.topic ? `<span class="topic-tag">${q.topic}</span><br>` : '';
+  const html = `${tag}<strong>T${num} sa ${state.total}:</strong> ${q.q}<br><small style="color:var(--muted)">Isulat ang sagot · i-type ang <em>hint</em> para sa tulong · <em>skip</em> para lumipat</small>`;
+  addMessage('bot', html, `Tanong ${num}. ${q.q}`);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// MENU
+// ═══════════════════════════════════════════════════════════════
+function showMenu() {
+  addMessage('bot',
+    `👋 <strong>Kumusta! Ako ang iyong AP Reviewer!</strong><br>Pag-aaralan natin ang <em>Teritoryo ng Pilipinas</em>, ang <em>Doktrinang Pangkapuluan</em>, ang <em>Mga Sigalot sa Teritoryo</em>, at ang <em>Heograpiyang Pisikal ng Pilipinas</em> (anyong lupa at anyong tubig).<br><br>Ano ang gusto mong gawin?<br>
+    <span class="chip" data-val="1">📚 Pag-aralan ang Paksa</span>
+    <span class="chip" data-val="2">✅ Tama o Mali</span>
+    <span class="chip" data-val="3">🌐 Kilalanin: Teritoryo, Lupa, o Tubig</span>
+    <span class="chip" data-val="4">🌟 Buong Review (Multiple Choice)</span>`,
+    "Kumusta! Ako ang iyong AP Reviewer tungkol sa Teritoryo at Heograpiyang Pisikal ng Pilipinas. Ano ang gusto mong gawin? Pag-aralan ang paksa, Tama o Mali, Kilalanin, o Buong Review na multiple choice?"
+  );
+  state.awaiting = 'menu';
+}
+
+// ═══════════════════════════════════════════════════════════════
+// PROCESS MESSAGE
+// ═══════════════════════════════════════════════════════════════
+function processMessage(msg) {
+  const aw = state.awaiting;
+
+  // ── MENU ──────────────────────────────────────────────────
+  if (aw === 'menu') {
+    if (msg === '1') {
+      state.awaiting = 'topic';
+      const keys = Object.keys(topics);
+      const chips = keys.map((t,i) => `<span class="chip" data-val="${i+1}">${i+1}. ${t}</span>`).join(' ');
+      addMessage('bot', `📚 Alin ang paksang gusto mong pag-aralan?<br>${chips}`, 'Alin ang paksang gusto mong pag-aralan?');
+
+    } else if (msg === '2') {
+      state.mode = 'tf';
+      state.questions = shuffle(trueOrFalse);
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'tf_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `✅ <strong>Tama o Mali!</strong> ${state.total} tanong. Simulan na!`, `Tama o Mali! ${state.total} tanong. Simulan na!`);
+      setTimeout(nextQuestion, 800);
+
+    } else if (msg === '3') {
+      state.mode = 'identify';
+      state.questions = shuffle(identifyQuestions);
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'mc_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `🌐 <strong>Kilalanin!</strong> Alamin kung anong konsepto sa teritoryo, anyong lupa, o anyong tubig ang tinutukoy.`, 'Kilalanin! Alamin kung ano ang tinutukoy sa bawat pahayag.');
+      setTimeout(nextQuestion, 800);
+
+    } else if (msg === '4') {
+      state.mode = 'full';
+      const all = [];
+      for (const [topicName, qs] of Object.entries(topics)) {
+        qs.forEach(q => all.push({...q, topic: topicName}));
+      }
+      state.questions = shuffle(all);
+      state.allAnswers = getAllAnswers();
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'mc_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `🌟 <strong>Buong Review — Multiple Choice!</strong> ${state.total} tanong. Pag-isipang mabuti!`, `Buong Review! Multiple Choice! ${state.total} tanong. Pag-isipang mabuti!`);
+      setTimeout(nextQuestion, 800);
+
+    } else {
+      addMessage('bot',
+        `Pumili ng opsyon:<br>
+        <span class="chip" data-val="1">📚 Pag-aralan ang Paksa</span>
+        <span class="chip" data-val="2">✅ Tama o Mali</span>
+        <span class="chip" data-val="3">🌐 Kilalanin</span>
+        <span class="chip" data-val="4">🌟 Buong Review</span>`,
+        'Pumili ng opsyon.'
+      );
+    }
+    return;
+  }
+
+  // ── TOPIC SELECT ──────────────────────────────────────────
+  if (aw === 'topic') {
+    const keys = Object.keys(topics);
+    const idx = parseInt(msg) - 1;
+    if (keys[idx]) {
+      const topicName = keys[idx];
+      state.mode = 'topic';
+      state.questions = shuffle(topics[topicName]);
+      state.allAnswers = getAllAnswers();
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'answer';
+      document.querySelector('.input-bar').style.display = 'flex';
+      updateScore();
+      addMessage('bot', `📚 <strong>${topicName}</strong> — ${state.total} tanong. Handa ka na ba?`, `${topicName}. ${state.total} tanong. Handa ka na ba?`);
+      setTimeout(nextQuestion, 800);
+    } else {
+      const chips = Object.keys(topics).map((t,i) => `<span class="chip" data-val="${i+1}">${i+1}. ${t}</span>`).join(' ');
+      addMessage('bot', `Pumili ng wastong paksa:<br>${chips}`, 'Pumili ng wastong paksa.');
+    }
+    return;
+  }
+
+  // ── TYPED ANSWER ──────────────────────────────────────────
+  if (aw === 'answer') {
+    const q = state.questions[state.qIndex];
+    const m = normalize(msg);
+
+    if (m === 'hint') {
+      state.hintUsed = true;
+      addMessage('bot', `💡 <strong>Hint:</strong> ${q.hint}`, `Hint: ${q.hint}`);
+      return;
+    }
+    if (m === 'skip') {
+      addMessage('bot', `⏭️ Nilaktawan! Ang tamang sagot ay: <strong>${q.a}</strong>`, `Nilaktawan. Ang tamang sagot ay: ${q.a}`);
+      state.qIndex++; state.hintUsed = false;
+      if (state.qIndex < state.total) setTimeout(nextQuestion, 700);
+      else showResult();
+      return;
+    }
+
+    const correct = checkAnswer(msg, q.a);
+    if (correct) {
+      if (!state.hintUsed) state.score++;
+      const note = state.hintUsed ? ' <em>(ginamit ang hint — walang puntos)</em>' : ' +1 puntos!';
+      addMessage('bot', `✅ <strong>Tama!</strong>${note} Sagot: <strong>${q.a}</strong>`, `Tama! Ang sagot ay: ${q.a}`);
+    } else {
+      addMessage('bot', `❌ <strong>Hindi tama.</strong> Ang tamang sagot ay: <strong>${q.a}</strong>`, `Hindi tama. Ang tamang sagot ay: ${q.a}`);
+    }
+    state.qIndex++; state.hintUsed = false; updateScore();
+    if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+    else setTimeout(showResult, 900);
+    return;
+  }
+
+  // ── TRUE OR FALSE ─────────────────────────────────────────
+  if (aw === 'tf_answer') {
+    const q = state.questions[state.qIndex];
+    const ans = normalize(msg);
+    const valid = ans === 'tama' || ans === 'mali' || ans === 'true' || ans === 'false';
+    const mapped = (ans === 'true') ? 'tama' : (ans === 'false') ? 'mali' : ans;
+
+    if (valid) {
+      const correct = mapped === q.a;
+      if (correct) {
+        state.score++;
+        addMessage('bot', `✅ <strong>Tama!</strong> Ang sagot ay <strong>${q.a.toUpperCase()}</strong>.`, `Tama! Ang sagot ay ${q.a}.`);
+      } else {
+        addMessage('bot', `❌ <strong>Mali.</strong> Ang tamang sagot ay <strong>${q.a.toUpperCase()}</strong>.`, `Mali. Ang tamang sagot ay ${q.a}.`);
+      }
+      state.qIndex++; updateScore();
+      if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+      else setTimeout(showResult, 900);
+    } else {
+      addMessage('bot',
+        `Sagot: Tama o Mali?<br><span class="chip" data-val="tama">✅ Tama</span><span class="chip" data-val="mali">❌ Mali</span>`,
+        'Sagot: Tama o Mali?'
+      );
+    }
+    return;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// CONTROLS
+// ═══════════════════════════════════════════════════════════════
+function handleUserMessage(msg) {
+  if (!msg.trim()) return;
+  
+  // Ihinto nang malinis ang nagsasalitang audio kapag sumagot ang user
+  window.speechSynthesis.cancel();
+  if (currentAudioStream) {
+    currentAudioStream.pause();
+    currentAudioStream = null;
+    showWave(false);
+  }
+  
+  addMessage('user', msg.replace(/</g,'&lt;'));
+  input.value = '';
+  input.disabled = true; sendBtn.disabled = true;
+  addTyping();
+  setTimeout(() => {
+    removeTyping();
+    input.disabled = false; sendBtn.disabled = false;
+    input.focus();
+    processMessage(msg);
+  }, 480);
+}
+
+sendBtn.addEventListener('click', () => { handleUserMessage(input.value); });
+input.addEventListener('keydown', e => { if(e.key==='Enter') handleUserMessage(input.value); });
+
+document.getElementById('audio-toggle').addEventListener('click', function() {
+  state.audioEnabled = !state.audioEnabled;
+  this.textContent = state.audioEnabled ? '🔊' : '🔇';
+  this.classList.toggle('active', state.audioEnabled);
+  if (!state.audioEnabled) {
+    window.speechSynthesis.cancel();
+    if (currentAudioStream) {
+      currentAudioStream.pause();
+      currentAudioStream = null;
+      showWave(false);
+    }
+  }
+});
+
+// ═══════════════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════════════
+window.addEventListener('load', () => {
+  lookupSystemVoices();
+  showMenu();
+});
+
+function switchTab(tabId, btn) {
+  document.querySelectorAll('.notes-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.notes-tab').forEach(b => b.classList.remove('active'));
+  document.getElementById(tabId).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+
+<!-- ── Notes Panel ── -->
+<div class="notes-overlay" id="notes-overlay">
+  <div class="notes-panel">
+    <div class="notes-header">
+      <h2>📖 Teritoryo &amp; Heograpiyang Pisikal — Mga Tala</h2>
+      <button class="notes-close" onclick="document.getElementById('notes-overlay').classList.remove('show')">✕</button>
+    </div>
+    <div class="notes-tabs">
+      <button class="notes-tab active" onclick="switchTab('tab-bansa', this)">🏛️ Bansa &amp; Estado</button>
+      <button class="notes-tab" onclick="switchTab('tab-teritoryo', this)">🗺️ Teritoryo</button>
+      <button class="notes-tab" onclick="switchTab('tab-unclos', this)">🌊 UNCLOS</button>
+      <button class="notes-tab" onclick="switchTab('tab-atas', this)">📜 Batas &amp; Atas</button>
+      <button class="notes-tab" onclick="switchTab('tab-sigalot', this)">⚔️ Sigalot</button>
+      <button class="notes-tab" onclick="switchTab('tab-anyonglupa', this)">⛰️ Anyong Lupa</button>
+      <button class="notes-tab" onclick="switchTab('tab-anyongtubig', this)">💧 Anyong Tubig</button>
+      <button class="notes-tab" onclick="switchTab('tab-tamomali', this)">✅ Tama o Mali</button>
+    </div>
+    <div class="notes-body">
+
+      <div class="notes-section active" id="tab-bansa">
+        <div class="notes-topic">
+          <div class="notes-topic-title">🏛️ Bansa, Estado, at Nasyon</div>
+          <div class="notes-item"><span class="notes-term">Estado</span><span class="notes-def">May apat na elemento: teritoryo, populasyon, pamahalaan, at soberanya</span></div>
+          <div class="notes-item"><span class="notes-term">Teritoryo</span><span class="notes-def">Heograpikal na espasyo (lupa, tubig, himpapawid) na nasa ilalim ng soberanya ng estado</span></div>
+          <div class="notes-item"><span class="notes-term">Populasyon</span><span class="notes-def">Bilang ng mga mamamayang naninirahan sa teritoryo; higit 110 milyon sa Pilipinas</span></div>
+          <div class="notes-item"><span class="notes-term">Pamahalaan</span><span class="notes-def">Gumagawa at nagpapatupad ng batas, tinitiyak ang kaayusan ng estado</span></div>
+          <div class="notes-item"><span class="notes-term">Soberanya</span><span class="notes-def">Kalayaan ng estado na gamitin ang kapangyarihan nito nang walang panghihimasok ng ibang bansa</span></div>
+          <div class="notes-item"><span class="notes-term">Nasyon</span><span class="notes-def">Pangkat ng tao na may kaparehong kultural at historikal na pagkakakilanlan (hal. mga Pilipino)</span></div>
+          <div class="notes-item"><span class="notes-term">Las Islas Filipinas</span><span class="notes-def">Katawagang ibinigay ni Ruy Lopez de Villalobos sa Samar at Leyte, parangal kay Prinsipe Felipe</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-teritoryo">
+        <div class="notes-topic">
+          <div class="notes-topic-title">🗺️ Sukat ng Teritoryo ng Pilipinas</div>
+          <div class="notes-item"><span class="notes-term">Kabuuang Lawak</span><span class="notes-def">300,000 km² — ika-22 sa Asya, pang-6 sa Timog-Silangang Asya</span></div>
+          <div class="notes-item"><span class="notes-term">Haba/Lapad</span><span class="notes-def">1,854 km mula hilaga-timog; 1,107 km mula silangan-kanluran</span></div>
+          <div class="notes-item"><span class="notes-term">Baybayin</span><span class="notes-def">36,289 km — ikalima sa mundo (una: Canada, Indonesia, Greenland, Russia)</span></div>
+          <div class="notes-item"><span class="notes-term">Mga Pulo</span><span class="notes-def">7,641 malalaki't maliliit na pulo; Luzon, Visayas, Mindanao ang 3 pangkat</span></div>
+          <div class="notes-item"><span class="notes-term">Mapa ni Velarde</span><span class="notes-def">Ginuhit ni Padre Pedro Murillo Velarde noong 1734; pinakaunang siyentipikong mapa ng kapuluan</span></div>
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">📜 Saligan Ayon sa Kasaysayan</div>
+          <div class="notes-item"><span class="notes-term">Kasunduan sa Paris (1898)</span><span class="notes-def">Isinuko ng Espanya ang Pilipinas sa US kapalit ng $20M; naisama rin Cuba, Guam, Puerto Rico</span></div>
+          <div class="notes-item"><span class="notes-term">Cession Treaty (1900)</span><span class="notes-def">Idinagdag ang Sibutu at Cagayan de Sulu; nagbayad ang US ng $100,000</span></div>
+          <div class="notes-item"><span class="notes-term">Boundaries Treaty (1930)</span><span class="notes-def">Isinuko ng Britanya ang Mangee at Turtle Island; naglinaw ng hanggahan sa Hilagang Borneo</span></div>
+          <div class="notes-item"><span class="notes-term">Saligang Batas 1935</span><span class="notes-def">Kinilala sa Unang Artikulo ang teritoryong bunga ng tatlong kasunduan sa itaas</span></div>
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">🇵🇭 Pambansang Teritoryo (Saligang Batas 1987)</div>
+          <div class="notes-item"><span class="notes-term">Territorial Sea</span><span class="notes-def">12 milyang nautical (22 km) mula sa baybayin</span></div>
+          <div class="notes-item"><span class="notes-term">EEZ</span><span class="notes-def">200 milyang nautical (370.4 km); karapatan sa paggamit at konserbasyon ng yaman</span></div>
+          <div class="notes-item"><span class="notes-term">Subsoil</span><span class="notes-def">Salansan ng lupa sa ilalim ng bansa</span></div>
+          <div class="notes-item"><span class="notes-term">Seabed</span><span class="notes-def">Sahig ng katubigang sakop ng Pilipinas</span></div>
+          <div class="notes-item"><span class="notes-term">Insular Shelf</span><span class="notes-def">Mga underwater plateau na sakop ng ating katubigan</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-unclos">
+        <div class="notes-topic">
+          <div class="notes-topic-title">🌊 UNCLOS at Doktrinang Pangkapuluan</div>
+          <div class="notes-item"><span class="notes-term">UNCLOS</span><span class="notes-def">United Nations Convention on the Law of the Sea — batas sa paggamit ng karagatan at yaman nito</span></div>
+          <div class="notes-item"><span class="notes-term">Doktrinang Pangkapuluan</span><span class="notes-def">Isinulong ng Pilipinas, Indonesia, Fiji, Mauritius; pangunahi ni Arturo Tolentino; pinagtibay 1982, ipinatupad 1994</span></div>
+          <div class="notes-item"><span class="notes-term">Straight Baselines</span><span class="notes-def">Tuwid na linyang idinurugtong sa pinakadulong bahagi ng arkipelago</span></div>
+          <div class="notes-item"><span class="notes-term">Internal Waters</span><span class="notes-def">Katubigan sa pagitan ng mga isla dahil sa straight baselines</span></div>
+          <div class="notes-item"><span class="notes-term">Mga Sona Maritima</span><span class="notes-def">Internal waters, territorial waters, contiguous zone, at EEZ</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-atas">
+        <div class="notes-topic">
+          <div class="notes-topic-title">📜 Batas at Atas ng Pangulo</div>
+          <div class="notes-item"><span class="notes-term">PD 1596 (1978)</span><span class="notes-def">Marcos Sr.; idineklara ang Kapuluan ng Kalayaan bilang bahagi ng teritoryo, munisipyo ng Palawan</span></div>
+          <div class="notes-item"><span class="notes-term">PD 1599 (1978)</span><span class="notes-def">Pinagtibay ang EEZ (200 nautical miles), kabilang ang ⅓ ng Kapuluan ng Spratly</span></div>
+          <div class="notes-item"><span class="notes-term">RA 9522 (2009)</span><span class="notes-def">Philippine Baselines Law; nilinaw ang 101 base point</span></div>
+          <div class="notes-item"><span class="notes-term">EO 25 (2017)</span><span class="notes-def">Duterte; pinalitan ang Benham Rise ng Philippine Rise; 48–70m ang lalim, bahagi ng continental shelf, may natural gas</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-sigalot">
+        <div class="notes-topic">
+          <div class="notes-topic-title">⚔️ Mga Sigalot sa Teritoryo</div>
+          <div class="notes-item"><span class="notes-term">Kanlurang Dagat Pilipinas</span><span class="notes-def">Pinag-aagawan ng Pilipinas, Tsina, Vietnam, Malaysia, Taiwan; mayaman sa mineral at yamang-dagat</span></div>
+          <div class="notes-item"><span class="notes-term">Nine-Dash Line</span><span class="notes-def">Batayan ng Tsina; unang lumabas 1947; sakop ang buong Kanlurang Dagat Pilipinas, lumalabag sa EEZ natin</span></div>
+          <div class="notes-item"><span class="notes-term">PCA Ruling (2016)</span><span class="notes-def">Idinulog ng Pilipinas noong 2013 sa The Hague; nanalo ang Pilipinas, kinilala ang karapatan nito</span></div>
+          <div class="notes-item"><span class="notes-term">Reed Bank</span><span class="notes-def">Pinanghihimasukan ng Tsina sa eksplorasyon ng petrolyo ng Pilipinas</span></div>
+          <div class="notes-item"><span class="notes-term">Scarborough Shoal</span><span class="notes-def">Hinaharang ng Tsina ang mangingisdang Pilipino simula 2012</span></div>
+          <div class="notes-item"><span class="notes-term">Mischief Reef</span><span class="notes-def">Pinagtayuan ng Tsina ng artipisyal na isla nang walang pahintulot</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-anyonglupa">
+        <div class="notes-topic">
+          <div class="notes-topic-title">⛰️ Mga Anyong Lupa</div>
+          <div class="notes-item"><span class="notes-term">Bundok</span><span class="notes-def">300m pataas; Bundok Apo (2,954m) ang pinakamataas, Davao del Sur/Cotabato</span></div>
+          <div class="notes-item"><span class="notes-term">Bulubundukin</span><span class="notes-def">Serye ng mga bundok; Sierra Madre (silangang Luzon), Cordillera (hilagang Luzon)</span></div>
+          <div class="notes-item"><span class="notes-term">Burol</span><span class="notes-def">Mas mataas sa lupa pero kapatagan sa paligid ay hindi lalagpas 300m; Chocolate Hills sa Bohol</span></div>
+          <div class="notes-item"><span class="notes-term">Bulkan</span><span class="notes-def">May bunganga; Bulkang Mayon at Bulkang Taal, parehong nasa Luzon</span></div>
+          <div class="notes-item"><span class="notes-term">Kapatagan</span><span class="notes-def">Malawak, patag; sentro ng agrikultura; Gitnang Luzon</span></div>
+          <div class="notes-item"><span class="notes-term">Talampas</span><span class="notes-def">Patag, matayog; Lungsod ng Baguio at Tagaytay</span></div>
+          <div class="notes-item"><span class="notes-term">Lambak</span><span class="notes-def">Patag, nasa pagitan ng dalawang bundok/bulubundukin; Lambak ng Cagayan</span></div>
+          <div class="notes-item"><span class="notes-term">Tangway</span><span class="notes-def">Nakausli, halos napaligiran ng tubig; Bataan</span></div>
+          <div class="notes-item"><span class="notes-term">Dalampasigan</span><span class="notes-def">Anyong lupa sa tabi ng dagat</span></div>
+          <div class="notes-item"><span class="notes-term">Isla/Arkipelago</span><span class="notes-def">Isla — napaligiran ng tubig (Luzon ang pinakamalaki); Arkipelago — pangkat ng mga isla</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-anyongtubig">
+        <div class="notes-topic">
+          <div class="notes-topic-title">💧 Mga Anyong Tubig</div>
+          <div class="notes-item"><span class="notes-term">Karagatan</span><span class="notes-def">Pinakamalaking anyong tubig; Karagatang Pasipiko ang pinakamalawak sa mundo, 96% ng katubigan</span></div>
+          <div class="notes-item"><span class="notes-term">Dagat</span><span class="notes-def">Bahaging napaliligiran ng lupa, konektado sa karagatan; Dagat ng Bohol, Visayas, Sulu, Samar</span></div>
+          <div class="notes-item"><span class="notes-term">Ilog</span><span class="notes-def">Mula bundok papuntang dagat; Ilog Cagayan ang pinakamahaba, sinusundan ng Mindanao at Agusan</span></div>
+          <div class="notes-item"><span class="notes-term">Lawa</span><span class="notes-def">Napaliligiran ng lupa; Laguna de Bay ang pinakamalaki (Laguna, Rizal, Cavite)</span></div>
+          <div class="notes-item"><span class="notes-term">Golpo</span><span class="notes-def">Karugtong ng karagatan, napaliligiran ng lupa, malalim; Golpo ng Lingayen sa Pangasinan</span></div>
+          <div class="notes-item"><span class="notes-term">Kipot</span><span class="notes-def">Nagdurugtong sa dalawang malaking anyong tubig; Kipot ng Luzon</span></div>
+          <div class="notes-item"><span class="notes-term">Look</span><span class="notes-def">Bahagyang napaliligiran ng lupa, maliit na bukana; Look ng Maynila</span></div>
+          <div class="notes-item"><span class="notes-term">Batis/Talon</span><span class="notes-def">Batis — maliit, umaagos patungo sa ilog/lawa/dagat; Talon — bumabagsak mula sa mataas (Maria Christina, Pagsanjan)</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-tamomali">
+        <div class="notes-topic">
+          <div class="notes-topic-title">✅ Tama o Mali — Mga Paalala</div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">MALI</span><span class="notes-def">Ang Cession Treaty, Boundaries Treaty, at Saligang Batas 1935 → ang tatlong kasunduan ay Kasunduan sa Paris, Cession Treaty, at Boundaries Treaty (hindi Saligang Batas).</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">MALI</span><span class="notes-def">UNCLOS ay nagbabawal ng kalayaan sa paglalayag → sa katunayan pinapanatili ng UNCLOS ang kalayaan sa paglalayag.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">MALI</span><span class="notes-def">Internal waters ay ang straight baseline mismo → ang baseline ang linya; ang internal waters ang tubig sa loob nito.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">MALI</span><span class="notes-def">Golpo ng Tonkin, Lungsod ng Beijing, Kipot ng Malacca → HINDI bahagi ng teritoryo ng Pilipinas.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#22c55e">TAMA</span><span class="notes-def">Philippine Rise, ang lugar sa loob ng 200 nautical miles (EEZ), at Kapuluan ng Kalayaan → bahagi ng teritoryo ng Pilipinas.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">MALI</span><span class="notes-def">Nine-dash line ng Tsina ay naaayon sa UNCLOS → salungat ito sa UNCLOS ayon sa desisyon ng PCA noong 2016.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">MALI</span><span class="notes-def">Kapuluan ng Kalayaan ay pinagtatalunan lamang ng Pilipinas at Tsina → kasama rin ang Taiwan, Malaysia, Vietnam, at Brunei.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">MALI</span><span class="notes-def">Hindi nakararanas ang Pilipinas ng bagyo o lindol → kabilang tayo sa Pacific Ring of Fire kaya nakararanas nito.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">MALI</span><span class="notes-def">Nakararanas ang Pilipinas ng tagsibol at taglamig → dalawa lamang ang panahon dito: tag-ulan at tagtuyo.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">MALI</span><span class="notes-def">500,000 km² ang sukat ng Pilipinas → 300,000 km² ang tamang sukat.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">MALI</span><span class="notes-def">Kapuluan ng Kalayaan ang pinakahilagang dulo ng Pilipinas → nasa Kanlurang Dagat Pilipinas ito, hindi ito ang pinakahilagang punto ng bansa.</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
