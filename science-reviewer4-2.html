@@ -356,7 +356,142 @@ header .sub { font-size: .72rem; color: var(--muted); margin-top: 1px; }
 .notes-section { display: none; }
 .notes-section.active { display: block; }
 
+
+/* ── Print button in notes header ─────────────────────────────── */
+.notes-header-actions { display: flex; align-items: center; gap: 10px; }
+.print-btn {
+  display: flex; align-items: center; gap: 6px;
+  background: rgba(245,158,11,.12);
+  border: 1.5px solid rgba(245,158,11,.4);
+  color: var(--gold);
+  border-radius: 20px;
+  padding: 7px 14px;
+  font-family: 'Baloo 2', cursive;
+  font-size: .78rem;
+  font-weight: 800;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all .15s;
+}
+.print-btn:hover { background: var(--gold); color: #0c1a0e; border-color: var(--gold); }
+
+/* ── On-screen Practice Test / Answer Key ─────────────────────── */
+.ptest-part-title {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1rem;
+  color: var(--gold);
+  margin: 22px 0 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+.ptest-part-title:first-child { margin-top: 0; }
+.ptest-q {
+  font-size: .87rem;
+  line-height: 1.6;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed rgba(255,255,255,.06);
+  color: #d1fae5;
+}
+.ptest-q b { color: var(--gold); }
+.ptest-q .opt { display: block; margin: 2px 0 2px 18px; color: #d1fae5; }
+.ptest-bank {
+  background: rgba(59,130,246,.08);
+  border: 1px solid rgba(59,130,246,.3);
+  border-radius: 10px;
+  padding: 10px 16px;
+  margin-bottom: 14px;
+  font-size: .82rem;
+  color: #dbeafe;
+  line-height: 1.6;
+}
+.key-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.key-pill {
+  background: rgba(245,158,11,.1);
+  border: 1px solid rgba(245,158,11,.25);
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: .78rem;
+  color: #fde68a;
+}
+.key-pill b { color: #34d399; }
+
+/* ── Print / Save-as-PDF styles ──────────────────────────────────
+   By default everything is hidden from print. When body carries
+   .printing-test, only #print-area (a light-themed clone of the
+   Practice Test + Answer Key) is shown, laid out for paper. ──── */
+@media print {
+  body * { visibility: hidden; }
+  #print-area, #print-area * { visibility: visible; }
+  #print-area {
+    display: block !important;
+    position: absolute; top: 0; left: 0; width: 100%;
+    background: #fff; color: #14290f;
+    font-family: 'Helvetica', Arial, sans-serif;
+    font-size: 10.5pt;
+    line-height: 1.5;
+  }
+  #print-area .p-cover { text-align: center; padding-top: 40px; }
+  #print-area .p-cover .p-icon { font-size: 34pt; }
+  #print-area .p-cover h1 { font-size: 19pt; color: #b45309; margin: 8px 0 4px; }
+  #print-area .p-cover .p-sub { font-size: 10.5pt; color: #1d4ed8; margin-bottom: 20px; }
+  #print-area .p-info-box {
+    border: 1.5px solid #fcd34d; border-radius: 10px;
+    max-width: 460px; margin: 0 auto 20px; padding: 14px 20px;
+    text-align: left; font-size: 10pt;
+  }
+  #print-area .p-info-box div { margin: 6px 0; border-bottom: 1px dotted #fde68a; padding-bottom: 6px; }
+  #print-area .p-instructions {
+    max-width: 460px; margin: 0 auto; text-align: left;
+    background: #fffbeb; border: 1px solid #fcd34d; border-radius: 10px;
+    padding: 12px 18px; font-size: 9.5pt; color: #78350f;
+  }
+  #print-area h2.p-part-title {
+    font-size: 12.5pt; color: #fff;
+    background: linear-gradient(135deg, #b45309, #1e3a8a) !important;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    padding: 6px 12px; border-radius: 7px; margin: 18px 0 10px;
+    page-break-after: avoid;
+  }
+  #print-area .p-bank {
+    background: #eff6ff !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    border: 1px solid #93c5fd; border-radius: 8px; padding: 8px 14px;
+    margin-bottom: 12px; font-size: 9.5pt; color: #1e3a8a;
+  }
+  #print-area .p-q {
+    margin-bottom: 8px; padding-bottom: 8px;
+    border-bottom: 1px dotted #fde68a; font-size: 10pt;
+    page-break-inside: avoid; color: #14290f;
+  }
+  #print-area .p-q b { color: #b45309; }
+  #print-area .p-q .p-blank { display: inline-block; min-width: 65px; border-bottom: 1px solid #64748b; }
+  #print-area .p-q .p-opt { display: block; margin: 2px 0 0 20px; color: #1e3a8a; }
+  #print-area .p-break { page-break-before: always; }
+  #print-area .p-key-part-title {
+    font-size: 11pt; color: #b45309; font-weight: bold;
+    margin: 14px 0 8px; border-bottom: 2px solid #b45309; padding-bottom: 4px;
+  }
+  #print-area .p-key-grid {
+    display: grid; grid-template-columns: repeat(5, 1fr);
+    gap: 5px 8px; margin-bottom: 14px;
+  }
+  #print-area .p-key-pill {
+    background: #eff6ff !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    border: 1px solid #93c5fd; border-radius: 6px;
+    padding: 4px 8px; font-size: 8.5pt; color: #1d4ed8;
+  }
+  #print-area .p-key-pill b { color: #b45309; }
+  @page { size: letter; margin: 1.5cm 1.8cm; }
+}
+#print-area { display: none; }
+
 </style>
+</head>
 <body>
 
 <header>
@@ -1024,6 +1159,14 @@ window.addEventListener('load', () => {
   showMenu();
 });
 
+function printPracticeTest() {
+  document.body.classList.add('printing-test');
+  window.print();
+}
+window.addEventListener('afterprint', () => {
+  document.body.classList.remove('printing-test');
+});
+
 function switchTab(tabId, btn) {
   document.querySelectorAll('.notes-section').forEach(s => s.classList.remove('active'));
   document.querySelectorAll('.notes-tab').forEach(b => b.classList.remove('active'));
@@ -1037,7 +1180,10 @@ function switchTab(tabId, btn) {
   <div class="notes-panel">
     <div class="notes-header">
       <h2>📖 Changes in Materials — Notes</h2>
-      <button class="notes-close" onclick="document.getElementById('notes-overlay').classList.remove('show')">✕</button>
+      <div class="notes-header-actions">
+        <button class="print-btn" onclick="printPracticeTest()" title="Print or save the Practice Test &amp; Answer Key as PDF">🖨️ Print Test &amp; Key</button>
+        <button class="notes-close" onclick="document.getElementById('notes-overlay').classList.remove('show')">✕</button>
+      </div>
     </div>
     <div class="notes-tabs">
       <button class="notes-tab active" onclick="switchTab('tab-change', this)">🧪 Physical &amp; Chemical Change</button>
@@ -1047,6 +1193,8 @@ function switchTab(tabId, btn) {
       <button class="notes-tab" onclick="switchTab('tab-waste', this)">♻️ Waste Management</button>
       <button class="notes-tab" onclick="switchTab('tab-properties', this)">🔍 Properties of Materials</button>
       <button class="notes-tab" onclick="switchTab('tab-tf', this)">✅ True or False</button>
+      <button class="notes-tab" onclick="switchTab('tab-ptest', this)">📝 Practice Test</button>
+      <button class="notes-tab" onclick="switchTab('tab-key', this)">🔑 Answer Key</button>
     </div>
     <div class="notes-body">
 
@@ -1149,8 +1297,41 @@ function switchTab(tabId, btn) {
         </div>
       </div>
 
+      <div class="notes-section" id="tab-ptest">
+        <div class="notes-topic">
+          <div class="notes-topic-title">📝 Practice Test</div>
+<div class="ptest-part-title">Part I — Fill in the Blanks</div><div class="ptest-q"><b>1.</b> __________ change involves changes in size, shape, or phase of matter. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>2.</b> If a material loses its original identity, the change is __________. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>3.</b> __________ is a man-made material that was developed as a substitute to silk in the production of stockings. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>4.</b> __________ is an example of a substance that can kill bacteria. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>5.</b> __________ can kill germs in drinking water. <span class="opt">Answer: ______________________</span></div><div class="ptest-part-title">Part II — Biodegradable (B) or Nonbiodegradable (NB)</div><div class="ptest-q"><b>6.</b> chicken dung <span class="opt">Answer: ______</span></div><div class="ptest-q"><b>7.</b> milk carton <span class="opt">Answer: ______</span></div><div class="ptest-q"><b>8.</b> empty bottle <span class="opt">Answer: ______</span></div><div class="ptest-q"><b>9.</b> banana peeling <span class="opt">Answer: ______</span></div><div class="ptest-q"><b>10.</b> seeds <span class="opt">Answer: ______</span></div><div class="ptest-q"><b>11.</b> aluminum can <span class="opt">Answer: ______</span></div><div class="ptest-q"><b>12.</b> empty plastic bottle <span class="opt">Answer: ______</span></div><div class="ptest-q"><b>13.</b> broken glass <span class="opt">Answer: ______</span></div><div class="ptest-q"><b>14.</b> used paper box <span class="opt">Answer: ______</span></div><div class="ptest-q"><b>15.</b> dried leaves and twigs <span class="opt">Answer: ______</span></div><div class="ptest-part-title">Part III — True or False</div><div class="ptest-q"><b>16.</b> Physical change alters a material's composition. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>17.</b> Chemical change produces a new substance that is different from the original. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>18.</b> Rust is a new substance formed when iron undergoes a chemical change. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>19.</b> Adding vinegar to baking soda is an example of a physical change. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>20.</b> Decomposition is the process by which substances are broken down into simpler forms. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>21.</b> Plastics and glass decompose faster than paper and food. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>22.</b> Bacteria are decomposers that can be seen with the unaided eye. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>23.</b> Earthworms are examples of detritivores. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>24.</b> Low temperature speeds up the growth of bacteria in food. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>25.</b> Boiling water kills harmful bacteria and other microorganisms. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>26.</b> Evaporation is the process by which water vapor changes into liquid droplets. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>27.</b> Precipitation includes rain, snow, and hail. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>28.</b> Alexander Fleming discovered penicillin in 1928. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>29.</b> Nylon was discovered by Dr. Wallace Carothers as a substitute for silk. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>30.</b> Chlorine is used to kill germs in drinking water. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>31.</b> Mixing different chemicals together is always safe. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>32.</b> Carbon monoxide has a strong smell and a bright color. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>33.</b> Acid rain can damage metal and marble structures. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>34.</b> Burning domestic waste is legal and encouraged in the Philippines. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>35.</b> Recycling helps save energy and reduce pollution. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>36.</b> Biodegradable materials like twigs and paper undergo decomposition. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>37.</b> Kitchen wastes should be mixed with other garbage instead of being segregated. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>38.</b> Decaying animal and plant materials are good fertilizers. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>39.</b> Nonbiodegradable materials such as plastic and metal undergo decay easily. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>40.</b> Proper waste disposal helps in saving the environment. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>41.</b> Combustibility is the ability of a material to catch fire and continue burning strongly. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>42.</b> Toxicity refers to how easily an object can decompose. <span class="opt">Answer: ______________________</span></div><div class="ptest-part-title">Part IV — Multiple Choice</div><div class="ptest-q"><b>43.</b> Which of the following is an evidence of chemical change?<br><span class="opt">a) The material changed in size or amount.</span><span class="opt">b) The material's properties or characteristics remain the same.</span><span class="opt">c) A new material is produced.</span><span class="opt">d) The composition of the material remains the same.</span></div><div class="ptest-q"><b>44.</b> Which of the following does NOT indicate that a chemical change is taking place?<br><span class="opt">a) The material changes in state.</span><span class="opt">b) There is a change in color or odor.</span><span class="opt">c) Heat or light is produced.</span><span class="opt">d) Bubbles are produced.</span></div><div class="ptest-q"><b>45.</b> Which of the following activities shows a chemical change?<br><span class="opt">a) breaking a piece of glass</span><span class="opt">b) soaking pieces of nail in vinegar</span><span class="opt">c) cutting a piece of paper</span><span class="opt">d) boiling water</span></div><div class="ptest-q"><b>46.</b> How are fireworks examples of chemical reactions?<br><span class="opt">a) Fireworks are made of chemicals.</span><span class="opt">b) Fireworks produce flickering lights and cracking sounds.</span><span class="opt">c) Fireworks explode even without heat.</span><span class="opt">d) Fireworks are only used for special occasions like New Year.</span></div><div class="ptest-q"><b>47.</b> Which refers to the degree to which a material or mixture can damage a living organism?<br><span class="opt">a) flammability</span><span class="opt">b) biodegradability</span><span class="opt">c) toxicity</span><span class="opt">d) combustibility</span></div><div class="ptest-q"><b>48.</b> Which of the following shows that chemical changes can be useful to people?<br><span class="opt">a) The taste of bread is bitter when it turns black while toasting it.</span><span class="opt">b) Molds grow on the surface of sliced bread.</span><span class="opt">c) People enjoy cooked food.</span><span class="opt">d) Fresh milk, when not refrigerated, turns sour.</span></div><div class="ptest-q"><b>49.</b> When is a material considered biodegradable?<br><span class="opt">a) when the material is made of synthetic material</span><span class="opt">b) when the material is produced through natural gas</span><span class="opt">c) when the material easily undergoes decay</span><span class="opt">d) when the material can be disposed of in a landfill</span></div><div class="ptest-q"><b>50.</b> Why is rubber used in making tires?<br><span class="opt">a) Rubber is durable yet flexible such that it can be bent easily.</span><span class="opt">b) Rubber easily cracks when not treated properly.</span><span class="opt">c) Rubber is cheap.</span><span class="opt">d) Rubber is abundant in the Philippines.</span></div><div class="ptest-q"><b>51.</b> Why is chlorine used in water treatment?<br><span class="opt">a) Chlorine is a chemical that kills germs in water.</span><span class="opt">b) Chlorine helps in maintaining the crystal clear form of drinking water.</span><span class="opt">c) Chlorine may not be considered a chemical.</span><span class="opt">d) Chlorine is odorless but tastes sweet.</span></div><div class="ptest-q"><b>52.</b> When can a change in matter be harmful?<br><span class="opt">a) when it results in the production of fertilizers</span><span class="opt">b) when food becomes palatable</span><span class="opt">c) when the environment becomes polluted</span><span class="opt">d) when transportation becomes available</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-key">
+        <div class="notes-topic">
+<div class="notes-topic-title">Part I — Fill in the Blanks</div><div class="key-grid"><div class="key-pill">1. <b>Physical</b></div><div class="key-pill">2. <b>Chemical</b></div><div class="key-pill">3. <b>Nylon</b></div><div class="key-pill">4. <b>Penicillin (Antibiotics)</b></div><div class="key-pill">5. <b>Chlorine</b></div></div><div class="notes-topic-title">Part II — Biodegradable/Nonbiodegradable</div><div class="key-grid"><div class="key-pill">6. <b>B</b></div><div class="key-pill">7. <b>NB</b></div><div class="key-pill">8. <b>NB</b></div><div class="key-pill">9. <b>B</b></div><div class="key-pill">10. <b>B</b></div><div class="key-pill">11. <b>NB</b></div><div class="key-pill">12. <b>NB</b></div><div class="key-pill">13. <b>NB</b></div><div class="key-pill">14. <b>B</b></div><div class="key-pill">15. <b>B</b></div></div><div class="notes-topic-title">Part III — True or False</div><div class="key-grid"><div class="key-pill">16. <b>FALSE</b></div><div class="key-pill">17. <b>TRUE</b></div><div class="key-pill">18. <b>TRUE</b></div><div class="key-pill">19. <b>FALSE</b></div><div class="key-pill">20. <b>TRUE</b></div><div class="key-pill">21. <b>FALSE</b></div><div class="key-pill">22. <b>FALSE</b></div><div class="key-pill">23. <b>TRUE</b></div><div class="key-pill">24. <b>FALSE</b></div><div class="key-pill">25. <b>TRUE</b></div><div class="key-pill">26. <b>FALSE</b></div><div class="key-pill">27. <b>TRUE</b></div><div class="key-pill">28. <b>TRUE</b></div><div class="key-pill">29. <b>TRUE</b></div><div class="key-pill">30. <b>TRUE</b></div><div class="key-pill">31. <b>FALSE</b></div><div class="key-pill">32. <b>FALSE</b></div><div class="key-pill">33. <b>TRUE</b></div><div class="key-pill">34. <b>FALSE</b></div><div class="key-pill">35. <b>TRUE</b></div><div class="key-pill">36. <b>TRUE</b></div><div class="key-pill">37. <b>FALSE</b></div><div class="key-pill">38. <b>TRUE</b></div><div class="key-pill">39. <b>FALSE</b></div><div class="key-pill">40. <b>TRUE</b></div><div class="key-pill">41. <b>TRUE</b></div><div class="key-pill">42. <b>FALSE</b></div></div><div class="notes-topic-title">Part IV — Multiple Choice</div><div class="key-grid"><div class="key-pill">43. <b>A new material is produced.</b></div><div class="key-pill">44. <b>The material changes in state.</b></div><div class="key-pill">45. <b>soaking pieces of nail in vinegar</b></div><div class="key-pill">46. <b>Fireworks produce flickering lights and cracking sounds.</b></div><div class="key-pill">47. <b>toxicity</b></div><div class="key-pill">48. <b>People enjoy cooked food.</b></div><div class="key-pill">49. <b>when the material easily undergoes decay</b></div><div class="key-pill">50. <b>Rubber is durable yet flexible such that it can be bent easily.</b></div><div class="key-pill">51. <b>Chlorine is a chemical that kills germs in water.</b></div><div class="key-pill">52. <b>when the environment becomes polluted</b></div></div>
+        </div>
+      </div>
+
     </div>
   </div>
+</div>
+
+<!-- ── Hidden Print Area (Practice Test + Answer Key) ── -->
+<div id="print-area">
+<div class="p-cover">
+    <div class="p-icon">🧪</div>
+    <h1>Science 6 — Changes in Materials Practice Test</h1>
+    <div class="p-sub">Physical &amp; Chemical Change · Decomposition · Pollution · Waste Management</div>
+    <div class="p-info-box">
+      <div><strong>Name:</strong> _____________________________________</div>
+      <div><strong>Section:</strong> ___________________ &nbsp; <strong>Date:</strong> ___________________</div>
+      <div><strong>Score:</strong> _______ / 52</div>
+    </div>
+    <div class="p-instructions">
+      <strong>Instructions:</strong> Read each item carefully. Write your answer on the blank provided (Parts I–III), or write the letter of the correct answer (Part IV). Good luck!
+    </div>
+  </div>
+
+  <h2 class="p-part-title">Part I — Fill in the Blanks</h2><div class="p-q"><b>1.</b> __________ change involves changes in size, shape, or phase of matter. <span class="p-blank"></span></div><div class="p-q"><b>2.</b> If a material loses its original identity, the change is __________. <span class="p-blank"></span></div><div class="p-q"><b>3.</b> __________ is a man-made material that was developed as a substitute to silk in the production of stockings. <span class="p-blank"></span></div><div class="p-q"><b>4.</b> __________ is an example of a substance that can kill bacteria. <span class="p-blank"></span></div><div class="p-q"><b>5.</b> __________ can kill germs in drinking water. <span class="p-blank"></span></div><h2 class="p-part-title">Part II — Biodegradable (B) or Nonbiodegradable (NB)</h2><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>6.</b> chicken dung</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>7.</b> milk carton</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>8.</b> empty bottle</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>9.</b> banana peeling</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>10.</b> seeds</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>11.</b> aluminum can</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>12.</b> empty plastic bottle</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>13.</b> broken glass</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>14.</b> used paper box</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>15.</b> dried leaves and twigs</div><div class="p-break"></div><h2 class="p-part-title">Part III — True or False</h2><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>16.</b> Physical change alters a material's composition.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>17.</b> Chemical change produces a new substance that is different from the original.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>18.</b> Rust is a new substance formed when iron undergoes a chemical change.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>19.</b> Adding vinegar to baking soda is an example of a physical change.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>20.</b> Decomposition is the process by which substances are broken down into simpler forms.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>21.</b> Plastics and glass decompose faster than paper and food.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>22.</b> Bacteria are decomposers that can be seen with the unaided eye.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>23.</b> Earthworms are examples of detritivores.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>24.</b> Low temperature speeds up the growth of bacteria in food.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>25.</b> Boiling water kills harmful bacteria and other microorganisms.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>26.</b> Evaporation is the process by which water vapor changes into liquid droplets.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>27.</b> Precipitation includes rain, snow, and hail.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>28.</b> Alexander Fleming discovered penicillin in 1928.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>29.</b> Nylon was discovered by Dr. Wallace Carothers as a substitute for silk.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>30.</b> Chlorine is used to kill germs in drinking water.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>31.</b> Mixing different chemicals together is always safe.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>32.</b> Carbon monoxide has a strong smell and a bright color.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>33.</b> Acid rain can damage metal and marble structures.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>34.</b> Burning domestic waste is legal and encouraged in the Philippines.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>35.</b> Recycling helps save energy and reduce pollution.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>36.</b> Biodegradable materials like twigs and paper undergo decomposition.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>37.</b> Kitchen wastes should be mixed with other garbage instead of being segregated.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>38.</b> Decaying animal and plant materials are good fertilizers.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>39.</b> Nonbiodegradable materials such as plastic and metal undergo decay easily.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>40.</b> Proper waste disposal helps in saving the environment.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>41.</b> Combustibility is the ability of a material to catch fire and continue burning strongly.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>42.</b> Toxicity refers to how easily an object can decompose.</div><div class="p-break"></div><h2 class="p-part-title">Part IV — Multiple Choice</h2><div class="p-q"><b>43.</b> Which of the following is an evidence of chemical change?<br><span class="p-opt">a) The material changed in size or amount.</span><span class="p-opt">b) The material's properties or characteristics remain the same.</span><span class="p-opt">c) A new material is produced.</span><span class="p-opt">d) The composition of the material remains the same.</span></div><div class="p-q"><b>44.</b> Which of the following does NOT indicate that a chemical change is taking place?<br><span class="p-opt">a) The material changes in state.</span><span class="p-opt">b) There is a change in color or odor.</span><span class="p-opt">c) Heat or light is produced.</span><span class="p-opt">d) Bubbles are produced.</span></div><div class="p-q"><b>45.</b> Which of the following activities shows a chemical change?<br><span class="p-opt">a) breaking a piece of glass</span><span class="p-opt">b) soaking pieces of nail in vinegar</span><span class="p-opt">c) cutting a piece of paper</span><span class="p-opt">d) boiling water</span></div><div class="p-q"><b>46.</b> How are fireworks examples of chemical reactions?<br><span class="p-opt">a) Fireworks are made of chemicals.</span><span class="p-opt">b) Fireworks produce flickering lights and cracking sounds.</span><span class="p-opt">c) Fireworks explode even without heat.</span><span class="p-opt">d) Fireworks are only used for special occasions like New Year.</span></div><div class="p-q"><b>47.</b> Which refers to the degree to which a material or mixture can damage a living organism?<br><span class="p-opt">a) flammability</span><span class="p-opt">b) biodegradability</span><span class="p-opt">c) toxicity</span><span class="p-opt">d) combustibility</span></div><div class="p-q"><b>48.</b> Which of the following shows that chemical changes can be useful to people?<br><span class="p-opt">a) The taste of bread is bitter when it turns black while toasting it.</span><span class="p-opt">b) Molds grow on the surface of sliced bread.</span><span class="p-opt">c) People enjoy cooked food.</span><span class="p-opt">d) Fresh milk, when not refrigerated, turns sour.</span></div><div class="p-q"><b>49.</b> When is a material considered biodegradable?<br><span class="p-opt">a) when the material is made of synthetic material</span><span class="p-opt">b) when the material is produced through natural gas</span><span class="p-opt">c) when the material easily undergoes decay</span><span class="p-opt">d) when the material can be disposed of in a landfill</span></div><div class="p-q"><b>50.</b> Why is rubber used in making tires?<br><span class="p-opt">a) Rubber is durable yet flexible such that it can be bent easily.</span><span class="p-opt">b) Rubber easily cracks when not treated properly.</span><span class="p-opt">c) Rubber is cheap.</span><span class="p-opt">d) Rubber is abundant in the Philippines.</span></div><div class="p-q"><b>51.</b> Why is chlorine used in water treatment?<br><span class="p-opt">a) Chlorine is a chemical that kills germs in water.</span><span class="p-opt">b) Chlorine helps in maintaining the crystal clear form of drinking water.</span><span class="p-opt">c) Chlorine may not be considered a chemical.</span><span class="p-opt">d) Chlorine is odorless but tastes sweet.</span></div><div class="p-q"><b>52.</b> When can a change in matter be harmful?<br><span class="p-opt">a) when it results in the production of fertilizers</span><span class="p-opt">b) when food becomes palatable</span><span class="p-opt">c) when the environment becomes polluted</span><span class="p-opt">d) when transportation becomes available</span></div><div class="p-break"></div><h2 class="p-part-title">✅ Complete Answer Key</h2>
+  <div class="p-key-part-title">Part I — Fill in the Blanks</div><div class="p-key-grid"><div class="p-key-pill">1. <b>Physical</b></div><div class="p-key-pill">2. <b>Chemical</b></div><div class="p-key-pill">3. <b>Nylon</b></div><div class="p-key-pill">4. <b>Penicillin (Antibiotics)</b></div><div class="p-key-pill">5. <b>Chlorine</b></div></div><div class="p-key-part-title">Part II — Biodegradable/Nonbiodegradable</div><div class="p-key-grid"><div class="p-key-pill">6. <b>B</b></div><div class="p-key-pill">7. <b>NB</b></div><div class="p-key-pill">8. <b>NB</b></div><div class="p-key-pill">9. <b>B</b></div><div class="p-key-pill">10. <b>B</b></div><div class="p-key-pill">11. <b>NB</b></div><div class="p-key-pill">12. <b>NB</b></div><div class="p-key-pill">13. <b>NB</b></div><div class="p-key-pill">14. <b>B</b></div><div class="p-key-pill">15. <b>B</b></div></div><div class="p-key-part-title">Part III — True or False</div><div class="p-key-grid"><div class="p-key-pill">16. <b>FALSE</b></div><div class="p-key-pill">17. <b>TRUE</b></div><div class="p-key-pill">18. <b>TRUE</b></div><div class="p-key-pill">19. <b>FALSE</b></div><div class="p-key-pill">20. <b>TRUE</b></div><div class="p-key-pill">21. <b>FALSE</b></div><div class="p-key-pill">22. <b>FALSE</b></div><div class="p-key-pill">23. <b>TRUE</b></div><div class="p-key-pill">24. <b>FALSE</b></div><div class="p-key-pill">25. <b>TRUE</b></div><div class="p-key-pill">26. <b>FALSE</b></div><div class="p-key-pill">27. <b>TRUE</b></div><div class="p-key-pill">28. <b>TRUE</b></div><div class="p-key-pill">29. <b>TRUE</b></div><div class="p-key-pill">30. <b>TRUE</b></div><div class="p-key-pill">31. <b>FALSE</b></div><div class="p-key-pill">32. <b>FALSE</b></div><div class="p-key-pill">33. <b>TRUE</b></div><div class="p-key-pill">34. <b>FALSE</b></div><div class="p-key-pill">35. <b>TRUE</b></div><div class="p-key-pill">36. <b>TRUE</b></div><div class="p-key-pill">37. <b>FALSE</b></div><div class="p-key-pill">38. <b>TRUE</b></div><div class="p-key-pill">39. <b>FALSE</b></div><div class="p-key-pill">40. <b>TRUE</b></div><div class="p-key-pill">41. <b>TRUE</b></div><div class="p-key-pill">42. <b>FALSE</b></div></div><div class="p-key-part-title">Part IV — Multiple Choice</div><div class="p-key-grid"><div class="p-key-pill">43. <b>A new material is produced.</b></div><div class="p-key-pill">44. <b>The material changes in state.</b></div><div class="p-key-pill">45. <b>soaking pieces of nail in vinegar</b></div><div class="p-key-pill">46. <b>Fireworks produce flickering lights and cracking sounds.</b></div><div class="p-key-pill">47. <b>toxicity</b></div><div class="p-key-pill">48. <b>People enjoy cooked food.</b></div><div class="p-key-pill">49. <b>when the material easily undergoes decay</b></div><div class="p-key-pill">50. <b>Rubber is durable yet flexible such that it can be bent easily.</b></div><div class="p-key-pill">51. <b>Chlorine is a chemical that kills germs in water.</b></div><div class="p-key-pill">52. <b>when the environment becomes polluted</b></div></div>
 </div>
 
 </body>
