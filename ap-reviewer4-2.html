@@ -356,6 +356,140 @@ header .sub { font-size: .72rem; color: var(--muted); margin-top: 1px; }
 .notes-section { display: none; }
 .notes-section.active { display: block; }
 
+
+/* ── Print button in notes header ─────────────────────────────── */
+.notes-header-actions { display: flex; align-items: center; gap: 10px; }
+.print-btn {
+  display: flex; align-items: center; gap: 6px;
+  background: rgba(245,158,11,.12);
+  border: 1.5px solid rgba(245,158,11,.4);
+  color: var(--gold);
+  border-radius: 20px;
+  padding: 7px 14px;
+  font-family: 'Baloo 2', cursive;
+  font-size: .78rem;
+  font-weight: 800;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all .15s;
+}
+.print-btn:hover { background: var(--gold); color: #0c1a0e; border-color: var(--gold); }
+
+/* ── On-screen Practice Test / Answer Key ─────────────────────── */
+.ptest-part-title {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1rem;
+  color: var(--gold);
+  margin: 22px 0 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+.ptest-part-title:first-child { margin-top: 0; }
+.ptest-q {
+  font-size: .87rem;
+  line-height: 1.6;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed rgba(255,255,255,.06);
+  color: #d1fae5;
+}
+.ptest-q b { color: var(--gold); }
+.ptest-q .opt { display: block; margin: 2px 0 2px 18px; color: #d1fae5; }
+.ptest-bank {
+  background: rgba(59,130,246,.08);
+  border: 1px solid rgba(59,130,246,.3);
+  border-radius: 10px;
+  padding: 10px 16px;
+  margin-bottom: 14px;
+  font-size: .82rem;
+  color: #dbeafe;
+  line-height: 1.6;
+}
+.key-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.key-pill {
+  background: rgba(245,158,11,.1);
+  border: 1px solid rgba(245,158,11,.25);
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: .78rem;
+  color: #fde68a;
+}
+.key-pill b { color: #34d399; }
+
+/* ── Print / Save-as-PDF styles ──────────────────────────────────
+   By default everything is hidden from print. When body carries
+   .printing-test, only #print-area (a light-themed clone of the
+   Practice Test + Answer Key) is shown, laid out for paper. ──── */
+@media print {
+  body * { visibility: hidden; }
+  #print-area, #print-area * { visibility: visible; }
+  #print-area {
+    display: block !important;
+    position: absolute; top: 0; left: 0; width: 100%;
+    background: #fff; color: #14290f;
+    font-family: 'Helvetica', Arial, sans-serif;
+    font-size: 10.5pt;
+    line-height: 1.5;
+  }
+  #print-area .p-cover { text-align: center; padding-top: 40px; }
+  #print-area .p-cover .p-icon { font-size: 34pt; }
+  #print-area .p-cover h1 { font-size: 19pt; color: #b45309; margin: 8px 0 4px; }
+  #print-area .p-cover .p-sub { font-size: 10.5pt; color: #166534; margin-bottom: 20px; }
+  #print-area .p-info-box {
+    border: 1.5px solid #fcd34d; border-radius: 10px;
+    max-width: 460px; margin: 0 auto 20px; padding: 14px 20px;
+    text-align: left; font-size: 10pt;
+  }
+  #print-area .p-info-box div { margin: 6px 0; border-bottom: 1px dotted #fde68a; padding-bottom: 6px; }
+  #print-area .p-instructions {
+    max-width: 460px; margin: 0 auto; text-align: left;
+    background: #fffbeb; border: 1px solid #fcd34d; border-radius: 10px;
+    padding: 12px 18px; font-size: 9.5pt; color: #78350f;
+  }
+  #print-area h2.p-part-title {
+    font-size: 12.5pt; color: #fff;
+    background: linear-gradient(135deg, #b45309, #14532d) !important;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    padding: 6px 12px; border-radius: 7px; margin: 18px 0 10px;
+    page-break-after: avoid;
+  }
+  #print-area .p-bank {
+    background: #f0fdf4 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    border: 1px solid #86efac; border-radius: 8px; padding: 8px 14px;
+    margin-bottom: 12px; font-size: 9.5pt; color: #14532d;
+  }
+  #print-area .p-q {
+    margin-bottom: 8px; padding-bottom: 8px;
+    border-bottom: 1px dotted #fde68a; font-size: 10pt;
+    page-break-inside: avoid; color: #14290f;
+  }
+  #print-area .p-q b { color: #b45309; }
+  #print-area .p-q .p-blank { display: inline-block; min-width: 65px; border-bottom: 1px solid #64748b; }
+  #print-area .p-q .p-opt { display: block; margin: 2px 0 0 20px; color: #365314; }
+  #print-area .p-break { page-break-before: always; }
+  #print-area .p-key-part-title {
+    font-size: 11pt; color: #b45309; font-weight: bold;
+    margin: 14px 0 8px; border-bottom: 2px solid #b45309; padding-bottom: 4px;
+  }
+  #print-area .p-key-grid {
+    display: grid; grid-template-columns: repeat(5, 1fr);
+    gap: 5px 8px; margin-bottom: 14px;
+  }
+  #print-area .p-key-pill {
+    background: #f0fdf4 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    border: 1px solid #86efac; border-radius: 6px;
+    padding: 4px 8px; font-size: 8.5pt; color: #166534;
+  }
+  #print-area .p-key-pill b { color: #b45309; }
+  @page { size: letter; margin: 1.5cm 1.8cm; }
+}
+#print-area { display: none; }
+
 </style>
 </head>
 <body>
@@ -1088,6 +1222,14 @@ window.addEventListener('load', () => {
   showMenu();
 });
 
+function printPracticeTest() {
+  document.body.classList.add('printing-test');
+  window.print();
+}
+window.addEventListener('afterprint', () => {
+  document.body.classList.remove('printing-test');
+});
+
 function switchTab(tabId, btn) {
   document.querySelectorAll('.notes-section').forEach(s => s.classList.remove('active'));
   document.querySelectorAll('.notes-tab').forEach(b => b.classList.remove('active'));
@@ -1101,7 +1243,10 @@ function switchTab(tabId, btn) {
   <div class="notes-panel">
     <div class="notes-header">
       <h2>📖 Teritoryo &amp; Heograpiyang Pisikal — Mga Tala</h2>
-      <button class="notes-close" onclick="document.getElementById('notes-overlay').classList.remove('show')">✕</button>
+      <div class="notes-header-actions">
+        <button class="print-btn" onclick="printPracticeTest()" title="I-print o i-save bilang PDF ang Practice Test at Answer Key">🖨️ I-print ang Test &amp; Key</button>
+        <button class="notes-close" onclick="document.getElementById('notes-overlay').classList.remove('show')">✕</button>
+      </div>
     </div>
     <div class="notes-tabs">
       <button class="notes-tab active" onclick="switchTab('tab-bansa', this)">🏛️ Bansa &amp; Estado</button>
@@ -1112,6 +1257,8 @@ function switchTab(tabId, btn) {
       <button class="notes-tab" onclick="switchTab('tab-anyonglupa', this)">⛰️ Anyong Lupa</button>
       <button class="notes-tab" onclick="switchTab('tab-anyongtubig', this)">💧 Anyong Tubig</button>
       <button class="notes-tab" onclick="switchTab('tab-tamomali', this)">✅ Tama o Mali</button>
+      <button class="notes-tab" onclick="switchTab('tab-ptest', this)">📝 Practice Test</button>
+      <button class="notes-tab" onclick="switchTab('tab-key', this)">🔑 Answer Key</button>
     </div>
     <div class="notes-body">
 
@@ -1234,8 +1381,43 @@ function switchTab(tabId, btn) {
         </div>
       </div>
 
+      <div class="notes-section" id="tab-ptest">
+        <div class="notes-topic">
+          <div class="notes-topic-title">📝 Practice Test</div>
+<div class="ptest-part-title">Part I — Matching Type</div>
+<div class="ptest-bank"><strong>Word Bank:</strong> UNCLOS &middot; Teritoryo &middot; EEZ &middot; Baseline &middot; Doktrinang Pangkapuluan &middot; Soberanya &middot; Internal Water &middot; Kapuluan ng Kalayaan &middot; Kasunduan sa Paris &middot; Territorial Water &middot; Nine-dash Line &middot; Boundaries Treaty</div><div class="ptest-q"><b>1.</b> Nakasaad dito ang pagsuko ng Espanya sa Pilipinas sa Estados Unidos sa halagang 20 milyong dolyar. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>2.</b> Ito ang kapangyarihan ng isang bansa na malayang magdesisyon sa nasasakupan nito. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>3.</b> Ito ang linyang ginagamit ng Tsina bilang basehan ng kanilang teritoryo sa Kanlurang Dagat Pilipinas. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>4.</b> Ito ang karapatan ng mga bansa na siyasatin at gamitin ang mga katubigan at yamang-dagat hanggang sa 200 milyang nautical mula sa kanilang baseline. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>5.</b> Ito ang grupo ng mga isla sa Kanlurang Dagat Pilipinas na pinag-aagawan ng mga bansang Tsina, Taiwan, Malaysia, Vietnam, at Brunei. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>6.</b> Itinuturing ng prinsipyong ito ang arkipelago bilang isang buong yunit. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>7.</b> Ito ang kasunduang nagtadhana sa hanggahan ng Pilipinas at Hilagang Borneo. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>8.</b> Ito ang kasunduan sa pagitan ng mga kasapi ng United Nations hinggil sa pagtatakda ng mga teritoryong maritima at paggamit ng mga tubig at karagatan. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>9.</b> Ito ang mga katubigang nasa loob ng baseline hanggang sa mga dalampasigan pati na rin ang mga ilog at lawa sa isang bansa. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>10.</b> Lugar na nasasaklawan ng kapangyarihan ng isang bansa. <span class="opt">Sagot: ______________________</span></div><div class="ptest-part-title">Part II — Tama o Mali (True or False)</div><div class="ptest-q"><b>11.</b> Ang Cession Treaty, Boundaries Treaty, at Saligang Batas ng 1935 ang mga pangunahing batayan na nagtakda sa kasalukuyang saklaw at limitasyon ng teritoryo ng Pilipinas. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>12.</b> Isinasaad sa Unang Artikulo ng Saligang Batas ng 1987 ang teritoryong saklaw ng Pilipinas. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>13.</b> Binigyang-linaw ng UNCLOS ang karapatan ng bansa na tuklasin at gamitin ang kanilang teritoryong pangkatubigan at ang pagbabawal ng kalayaan sa paglalayag dito. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>14.</b> Ang Doktrinang Pangkapuluan ay tumutukoy sa prinsipyong pagkilala sa isang arkipelago bilang isang buong yunit. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>15.</b> Ang internal waters ang mga tubig na linyang nagdurugtong sa mga pinakalabas na bahagi ng isang bansang arkipelago. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>16.</b> Ang Philippine Rise ay bahagi ng teritoryo ng Pilipinas. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>17.</b> Ang Golpo ng Tonkin ay bahagi ng teritoryo ng Pilipinas. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>18.</b> Ang Lungsod ng Beijing ay bahagi ng teritoryo ng Pilipinas. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>19.</b> Ang lugar na nasa loob ng 200 milyang nautical mula sa baybayin ng Pilipinas ay bahagi ng teritoryo nito bilang EEZ. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>20.</b> Ang Kipot ng Malacca ay bahagi ng teritoryo ng Pilipinas. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>21.</b> Ang Kapuluan ng Kalayaan ay bahagi ng teritoryo ng Pilipinas. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>22.</b> Ang nine-dash line ng Tsina ay naaayon sa mga prinsipyo ng UNCLOS. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>23.</b> Tanging ang Pilipinas at Tsina lamang ang nag-aagawan sa Kapuluan ng Kalayaan. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>24.</b> Nagtayo ang Tsina ng mga artipisyal na isla at pasilidad sa Mischief Reef nang walang pahintulot ng Pilipinas. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>25.</b> Ang Pilipinas ay kabilang sa Pacific Ring of Fire. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>26.</b> Ang Pilipinas ay matatagpuan sa rehiyong tropikal. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>27.</b> Ang Pilipinas ay isang arkipelago. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>28.</b> Ang Pilipinas ay hindi nakararanas ng bagyo o lindol. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>29.</b> Binubuo ang Pilipinas ng 7,641 na malalaki at maliliit na pulo. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>30.</b> Ang Luzon, Visayas, at Mindanao ang tatlong pangunahing pangkat ng mga pulo sa Pilipinas. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>31.</b> Ikalima ang Pilipinas sa mga bansang may pinakamahabang baybayin sa buong mundo. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>32.</b> Ang amihan, habagat, at balaklaot ang tatlong sistema ng hangin na nakaaapekto sa panahon ng Pilipinas. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>33.</b> Ang Pilipinas ay matatagpuan sa Timog-Silangang Asya. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>34.</b> Ang Pilipinas ay napaliligiran ng malalaking anyong tubig. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>35.</b> May apat na uri ng klima ang Pilipinas batay sa distribusyon ng ulan. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>36.</b> Ang Pilipinas ay nakararanas ng tagsibol at taglamig. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>37.</b> Ang kabuuang sukat ng teritoryo ng Pilipinas ay 500,000 kilometro kuwadrado. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>38.</b> Ang Kapuluan ng Kalayaan ang pinakahilagang dulo ng Pilipinas. <span class="opt">Sagot: ______________________</span></div><div class="ptest-part-title">Part III — Multiple Choice</div><div class="ptest-q"><b>39.</b> Anyong lupang may taas na 300 metro o higit pa.<br><span class="opt">a) Bundok</span><span class="opt">b) Burol</span><span class="opt">c) Talampas</span><span class="opt">d) Bulubundukin</span></div><div class="ptest-q"><b>40.</b> Anyong lupang mas mataas sa lupa ngunit ang kapatagang nakapaligid ay hindi hihigit sa 300 metro.<br><span class="opt">a) Burol</span><span class="opt">b) Bundok</span><span class="opt">c) Lambak</span><span class="opt">d) Talampas</span></div><div class="ptest-q"><b>41.</b> Anyong lupang may bunganga kung saan lumalabas ang tunaw na bato, abo, at iba pang materyal.<br><span class="opt">a) Bulkan</span><span class="opt">b) Bundok</span><span class="opt">c) Burol</span><span class="opt">d) Talampas</span></div><div class="ptest-q"><b>42.</b> Malawak at patag na anyong lupa, karaniwang sentro ng mga gawaing agrikultural.<br><span class="opt">a) Kapatagan</span><span class="opt">b) Talampas</span><span class="opt">c) Lambak</span><span class="opt">d) Tangway</span></div><div class="ptest-q"><b>43.</b> Patag na anyong lupa na nasa mataas na lugar.<br><span class="opt">a) Talampas</span><span class="opt">b) Kapatagan</span><span class="opt">c) Lambak</span><span class="opt">d) Burol</span></div><div class="ptest-q"><b>44.</b> Patag na anyong lupa na napapagitnaan ng dalawang bundok o bulubundukin.<br><span class="opt">a) Lambak</span><span class="opt">b) Talampas</span><span class="opt">c) Kapatagan</span><span class="opt">d) Tangway</span></div><div class="ptest-q"><b>45.</b> Anyong lupang nakausli at napapaligiran ng tubig maliban sa bahaging nakakabit sa mas malaking anyong lupa.<br><span class="opt">a) Tangway</span><span class="opt">b) Isla</span><span class="opt">c) Dalampasigan</span><span class="opt">d) Arkipelago</span></div><div class="ptest-q"><b>46.</b> Anyong lupang napaliligiran ng tubig.<br><span class="opt">a) Isla</span><span class="opt">b) Tangway</span><span class="opt">c) Dalampasigan</span><span class="opt">d) Arkipelago</span></div><div class="ptest-q"><b>47.</b> Pangkat ng mga isla.<br><span class="opt">a) Arkipelago</span><span class="opt">b) Isla</span><span class="opt">c) Tangway</span><span class="opt">d) Kapatagan</span></div><div class="ptest-q"><b>48.</b> Pinakamalaking anyong tubig na hindi nahahati ng anyong lupa.<br><span class="opt">a) Karagatan</span><span class="opt">b) Dagat</span><span class="opt">c) Golpo</span><span class="opt">d) Look</span></div><div class="ptest-q"><b>49.</b> Malaking anyong tubig na may bahaging napaliligiran ng lupa at nakakonekta sa karagatan.<br><span class="opt">a) Dagat</span><span class="opt">b) Karagatan</span><span class="opt">c) Lawa</span><span class="opt">d) Kipot</span></div><div class="ptest-q"><b>50.</b> Anyong tubig na nagmumula sa kabundukan patungong kapatagan at palabas sa dagat.<br><span class="opt">a) Ilog</span><span class="opt">b) Batis</span><span class="opt">c) Talon</span><span class="opt">d) Lawa</span></div><div class="ptest-q"><b>51.</b> Anyong tubig na napaliligiran ng lupa.<br><span class="opt">a) Lawa</span><span class="opt">b) Golpo</span><span class="opt">c) Look</span><span class="opt">d) Kipot</span></div><div class="ptest-q"><b>52.</b> Anyong tubig na karugtong ng karagatan ngunit napaliligiran ng kalupaan, kadalasang ginagamit bilang daungan.<br><span class="opt">a) Golpo</span><span class="opt">b) Look</span><span class="opt">c) Kipot</span><span class="opt">d) Batis</span></div><div class="ptest-q"><b>53.</b> Anyong tubig na nagdurugtong sa dalawang malalaking anyong tubig.<br><span class="opt">a) Kipot</span><span class="opt">b) Golpo</span><span class="opt">c) Look</span><span class="opt">d) Talon</span></div><div class="ptest-q"><b>54.</b> Anyong tubig na bahagyang napaliligiran ng lupa, may mas maliit na bukana kaysa golpo.<br><span class="opt">a) Look</span><span class="opt">b) Golpo</span><span class="opt">c) Kipot</span><span class="opt">d) Dagat</span></div><div class="ptest-q"><b>55.</b> Maliit na anyong tubig na umaagos patungo sa mga lawa, ilog, o dagat.<br><span class="opt">a) Batis</span><span class="opt">b) Talon</span><span class="opt">c) Ilog</span><span class="opt">d) Look</span></div><div class="ptest-q"><b>56.</b> Anyong tubig na bumabagsak mula sa mataas na bundok o lugar.<br><span class="opt">a) Talon</span><span class="opt">b) Batis</span><span class="opt">c) Ilog</span><span class="opt">d) Kipot</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-key">
+        <div class="notes-topic">
+<div class="notes-topic-title">Part I — Matching Type</div><div class="key-grid"><div class="key-pill">1. <b>Kasunduan sa Paris</b></div><div class="key-pill">2. <b>Soberanya</b></div><div class="key-pill">3. <b>Nine-dash line</b></div><div class="key-pill">4. <b>EEZ</b></div><div class="key-pill">5. <b>Kapuluan ng Kalayaan</b></div><div class="key-pill">6. <b>Doktrinang Pangkapuluan</b></div><div class="key-pill">7. <b>Boundaries Treaty</b></div><div class="key-pill">8. <b>UNCLOS</b></div><div class="key-pill">9. <b>Internal water</b></div><div class="key-pill">10. <b>Teritoryo</b></div></div><div class="notes-topic-title">Part II — True or False</div><div class="key-grid"><div class="key-pill">11. <b>MALI</b></div><div class="key-pill">12. <b>TAMA</b></div><div class="key-pill">13. <b>MALI</b></div><div class="key-pill">14. <b>TAMA</b></div><div class="key-pill">15. <b>MALI</b></div><div class="key-pill">16. <b>TAMA</b></div><div class="key-pill">17. <b>MALI</b></div><div class="key-pill">18. <b>MALI</b></div><div class="key-pill">19. <b>TAMA</b></div><div class="key-pill">20. <b>MALI</b></div><div class="key-pill">21. <b>TAMA</b></div><div class="key-pill">22. <b>MALI</b></div><div class="key-pill">23. <b>MALI</b></div><div class="key-pill">24. <b>TAMA</b></div><div class="key-pill">25. <b>TAMA</b></div><div class="key-pill">26. <b>TAMA</b></div><div class="key-pill">27. <b>TAMA</b></div><div class="key-pill">28. <b>MALI</b></div><div class="key-pill">29. <b>TAMA</b></div><div class="key-pill">30. <b>TAMA</b></div><div class="key-pill">31. <b>TAMA</b></div><div class="key-pill">32. <b>TAMA</b></div><div class="key-pill">33. <b>TAMA</b></div><div class="key-pill">34. <b>TAMA</b></div><div class="key-pill">35. <b>TAMA</b></div><div class="key-pill">36. <b>MALI</b></div><div class="key-pill">37. <b>MALI</b></div><div class="key-pill">38. <b>MALI</b></div></div><div class="notes-topic-title">Part III — Multiple Choice</div><div class="key-grid"><div class="key-pill">39. <b>Bundok</b></div><div class="key-pill">40. <b>Burol</b></div><div class="key-pill">41. <b>Bulkan</b></div><div class="key-pill">42. <b>Kapatagan</b></div><div class="key-pill">43. <b>Talampas</b></div><div class="key-pill">44. <b>Lambak</b></div><div class="key-pill">45. <b>Tangway</b></div><div class="key-pill">46. <b>Isla</b></div><div class="key-pill">47. <b>Arkipelago</b></div><div class="key-pill">48. <b>Karagatan</b></div><div class="key-pill">49. <b>Dagat</b></div><div class="key-pill">50. <b>Ilog</b></div><div class="key-pill">51. <b>Lawa</b></div><div class="key-pill">52. <b>Golpo</b></div><div class="key-pill">53. <b>Kipot</b></div><div class="key-pill">54. <b>Look</b></div><div class="key-pill">55. <b>Batis</b></div><div class="key-pill">56. <b>Talon</b></div></div>
+        </div>
+      </div>
+
     </div>
   </div>
+</div>
+
+<!-- ── Hidden Print Area (Practice Test + Answer Key) ── -->
+<div id="print-area">
+<div class="p-cover">
+    <div class="p-icon">🇵🇭</div>
+    <h1>AP 4 — Teritoryo at Heograpiyang Pisikal Practice Test</h1>
+    <div class="p-sub">Teritoryo ng Pilipinas · Doktrinang Pangkapuluan · Sigalot sa Teritoryo · Anyong Lupa at Tubig</div>
+    <div class="p-info-box">
+      <div><strong>Pangalan:</strong> _____________________________________</div>
+      <div><strong>Baitang/Pangkat:</strong> ___________________ &nbsp; <strong>Petsa:</strong> ___________________</div>
+      <div><strong>Iskor:</strong> _______ / 56</div>
+    </div>
+    <div class="p-instructions">
+      <strong>Panuto:</strong> Basahing mabuti ang bawat aytem. Isulat ang sagot sa patlang na inilaan (Bahagi I-II), o piliin ang tamang letra (Bahagi III). Good luck!
+    </div>
+  </div>
+
+  <h2 class="p-part-title">Bahagi I — Matching Type</h2>
+  <div class="p-bank"><strong>Word Bank:</strong> UNCLOS &middot; Teritoryo &middot; EEZ &middot; Baseline &middot; Doktrinang Pangkapuluan &middot; Soberanya &middot; Internal Water &middot; Kapuluan ng Kalayaan &middot; Kasunduan sa Paris &middot; Territorial Water &middot; Nine-dash Line &middot; Boundaries Treaty</div><div class="p-q"><b>1.</b> Nakasaad dito ang pagsuko ng Espanya sa Pilipinas sa Estados Unidos sa halagang 20 milyong dolyar. <span class="p-blank"></span></div><div class="p-q"><b>2.</b> Ito ang kapangyarihan ng isang bansa na malayang magdesisyon sa nasasakupan nito. <span class="p-blank"></span></div><div class="p-q"><b>3.</b> Ito ang linyang ginagamit ng Tsina bilang basehan ng kanilang teritoryo sa Kanlurang Dagat Pilipinas. <span class="p-blank"></span></div><div class="p-q"><b>4.</b> Ito ang karapatan ng mga bansa na siyasatin at gamitin ang mga katubigan at yamang-dagat hanggang sa 200 milyang nautical mula sa kanilang baseline. <span class="p-blank"></span></div><div class="p-q"><b>5.</b> Ito ang grupo ng mga isla sa Kanlurang Dagat Pilipinas na pinag-aagawan ng mga bansang Tsina, Taiwan, Malaysia, Vietnam, at Brunei. <span class="p-blank"></span></div><div class="p-q"><b>6.</b> Itinuturing ng prinsipyong ito ang arkipelago bilang isang buong yunit. <span class="p-blank"></span></div><div class="p-q"><b>7.</b> Ito ang kasunduang nagtadhana sa hanggahan ng Pilipinas at Hilagang Borneo. <span class="p-blank"></span></div><div class="p-q"><b>8.</b> Ito ang kasunduan sa pagitan ng mga kasapi ng United Nations hinggil sa pagtatakda ng mga teritoryong maritima at paggamit ng mga tubig at karagatan. <span class="p-blank"></span></div><div class="p-q"><b>9.</b> Ito ang mga katubigang nasa loob ng baseline hanggang sa mga dalampasigan pati na rin ang mga ilog at lawa sa isang bansa. <span class="p-blank"></span></div><div class="p-q"><b>10.</b> Lugar na nasasaklawan ng kapangyarihan ng isang bansa. <span class="p-blank"></span></div><h2 class="p-part-title">Bahagi II — Tama o Mali</h2><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>11.</b> Ang Cession Treaty, Boundaries Treaty, at Saligang Batas ng 1935 ang mga pangunahing batayan na nagtakda sa kasalukuyang saklaw at limitasyon ng teritoryo ng Pilipinas.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>12.</b> Isinasaad sa Unang Artikulo ng Saligang Batas ng 1987 ang teritoryong saklaw ng Pilipinas.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>13.</b> Binigyang-linaw ng UNCLOS ang karapatan ng bansa na tuklasin at gamitin ang kanilang teritoryong pangkatubigan at ang pagbabawal ng kalayaan sa paglalayag dito.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>14.</b> Ang Doktrinang Pangkapuluan ay tumutukoy sa prinsipyong pagkilala sa isang arkipelago bilang isang buong yunit.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>15.</b> Ang internal waters ang mga tubig na linyang nagdurugtong sa mga pinakalabas na bahagi ng isang bansang arkipelago.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>16.</b> Ang Philippine Rise ay bahagi ng teritoryo ng Pilipinas.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>17.</b> Ang Golpo ng Tonkin ay bahagi ng teritoryo ng Pilipinas.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>18.</b> Ang Lungsod ng Beijing ay bahagi ng teritoryo ng Pilipinas.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>19.</b> Ang lugar na nasa loob ng 200 milyang nautical mula sa baybayin ng Pilipinas ay bahagi ng teritoryo nito bilang EEZ.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>20.</b> Ang Kipot ng Malacca ay bahagi ng teritoryo ng Pilipinas.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>21.</b> Ang Kapuluan ng Kalayaan ay bahagi ng teritoryo ng Pilipinas.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>22.</b> Ang nine-dash line ng Tsina ay naaayon sa mga prinsipyo ng UNCLOS.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>23.</b> Tanging ang Pilipinas at Tsina lamang ang nag-aagawan sa Kapuluan ng Kalayaan.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>24.</b> Nagtayo ang Tsina ng mga artipisyal na isla at pasilidad sa Mischief Reef nang walang pahintulot ng Pilipinas.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>25.</b> Ang Pilipinas ay kabilang sa Pacific Ring of Fire.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>26.</b> Ang Pilipinas ay matatagpuan sa rehiyong tropikal.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>27.</b> Ang Pilipinas ay isang arkipelago.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>28.</b> Ang Pilipinas ay hindi nakararanas ng bagyo o lindol.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>29.</b> Binubuo ang Pilipinas ng 7,641 na malalaki at maliliit na pulo.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>30.</b> Ang Luzon, Visayas, at Mindanao ang tatlong pangunahing pangkat ng mga pulo sa Pilipinas.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>31.</b> Ikalima ang Pilipinas sa mga bansang may pinakamahabang baybayin sa buong mundo.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>32.</b> Ang amihan, habagat, at balaklaot ang tatlong sistema ng hangin na nakaaapekto sa panahon ng Pilipinas.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>33.</b> Ang Pilipinas ay matatagpuan sa Timog-Silangang Asya.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>34.</b> Ang Pilipinas ay napaliligiran ng malalaking anyong tubig.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>35.</b> May apat na uri ng klima ang Pilipinas batay sa distribusyon ng ulan.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>36.</b> Ang Pilipinas ay nakararanas ng tagsibol at taglamig.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>37.</b> Ang kabuuang sukat ng teritoryo ng Pilipinas ay 500,000 kilometro kuwadrado.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>38.</b> Ang Kapuluan ng Kalayaan ang pinakahilagang dulo ng Pilipinas.</div><div class="p-break"></div><h2 class="p-part-title">Bahagi III — Multiple Choice</h2><div class="p-q"><b>39.</b> Anyong lupang may taas na 300 metro o higit pa.<br><span class="p-opt">a) Bundok</span><span class="p-opt">b) Burol</span><span class="p-opt">c) Talampas</span><span class="p-opt">d) Bulubundukin</span></div><div class="p-q"><b>40.</b> Anyong lupang mas mataas sa lupa ngunit ang kapatagang nakapaligid ay hindi hihigit sa 300 metro.<br><span class="p-opt">a) Burol</span><span class="p-opt">b) Bundok</span><span class="p-opt">c) Lambak</span><span class="p-opt">d) Talampas</span></div><div class="p-q"><b>41.</b> Anyong lupang may bunganga kung saan lumalabas ang tunaw na bato, abo, at iba pang materyal.<br><span class="p-opt">a) Bulkan</span><span class="p-opt">b) Bundok</span><span class="p-opt">c) Burol</span><span class="p-opt">d) Talampas</span></div><div class="p-q"><b>42.</b> Malawak at patag na anyong lupa, karaniwang sentro ng mga gawaing agrikultural.<br><span class="p-opt">a) Kapatagan</span><span class="p-opt">b) Talampas</span><span class="p-opt">c) Lambak</span><span class="p-opt">d) Tangway</span></div><div class="p-q"><b>43.</b> Patag na anyong lupa na nasa mataas na lugar.<br><span class="p-opt">a) Talampas</span><span class="p-opt">b) Kapatagan</span><span class="p-opt">c) Lambak</span><span class="p-opt">d) Burol</span></div><div class="p-q"><b>44.</b> Patag na anyong lupa na napapagitnaan ng dalawang bundok o bulubundukin.<br><span class="p-opt">a) Lambak</span><span class="p-opt">b) Talampas</span><span class="p-opt">c) Kapatagan</span><span class="p-opt">d) Tangway</span></div><div class="p-q"><b>45.</b> Anyong lupang nakausli at napapaligiran ng tubig maliban sa bahaging nakakabit sa mas malaking anyong lupa.<br><span class="p-opt">a) Tangway</span><span class="p-opt">b) Isla</span><span class="p-opt">c) Dalampasigan</span><span class="p-opt">d) Arkipelago</span></div><div class="p-q"><b>46.</b> Anyong lupang napaliligiran ng tubig.<br><span class="p-opt">a) Isla</span><span class="p-opt">b) Tangway</span><span class="p-opt">c) Dalampasigan</span><span class="p-opt">d) Arkipelago</span></div><div class="p-q"><b>47.</b> Pangkat ng mga isla.<br><span class="p-opt">a) Arkipelago</span><span class="p-opt">b) Isla</span><span class="p-opt">c) Tangway</span><span class="p-opt">d) Kapatagan</span></div><div class="p-q"><b>48.</b> Pinakamalaking anyong tubig na hindi nahahati ng anyong lupa.<br><span class="p-opt">a) Karagatan</span><span class="p-opt">b) Dagat</span><span class="p-opt">c) Golpo</span><span class="p-opt">d) Look</span></div><div class="p-q"><b>49.</b> Malaking anyong tubig na may bahaging napaliligiran ng lupa at nakakonekta sa karagatan.<br><span class="p-opt">a) Dagat</span><span class="p-opt">b) Karagatan</span><span class="p-opt">c) Lawa</span><span class="p-opt">d) Kipot</span></div><div class="p-q"><b>50.</b> Anyong tubig na nagmumula sa kabundukan patungong kapatagan at palabas sa dagat.<br><span class="p-opt">a) Ilog</span><span class="p-opt">b) Batis</span><span class="p-opt">c) Talon</span><span class="p-opt">d) Lawa</span></div><div class="p-q"><b>51.</b> Anyong tubig na napaliligiran ng lupa.<br><span class="p-opt">a) Lawa</span><span class="p-opt">b) Golpo</span><span class="p-opt">c) Look</span><span class="p-opt">d) Kipot</span></div><div class="p-q"><b>52.</b> Anyong tubig na karugtong ng karagatan ngunit napaliligiran ng kalupaan, kadalasang ginagamit bilang daungan.<br><span class="p-opt">a) Golpo</span><span class="p-opt">b) Look</span><span class="p-opt">c) Kipot</span><span class="p-opt">d) Batis</span></div><div class="p-q"><b>53.</b> Anyong tubig na nagdurugtong sa dalawang malalaking anyong tubig.<br><span class="p-opt">a) Kipot</span><span class="p-opt">b) Golpo</span><span class="p-opt">c) Look</span><span class="p-opt">d) Talon</span></div><div class="p-q"><b>54.</b> Anyong tubig na bahagyang napaliligiran ng lupa, may mas maliit na bukana kaysa golpo.<br><span class="p-opt">a) Look</span><span class="p-opt">b) Golpo</span><span class="p-opt">c) Kipot</span><span class="p-opt">d) Dagat</span></div><div class="p-q"><b>55.</b> Maliit na anyong tubig na umaagos patungo sa mga lawa, ilog, o dagat.<br><span class="p-opt">a) Batis</span><span class="p-opt">b) Talon</span><span class="p-opt">c) Ilog</span><span class="p-opt">d) Look</span></div><div class="p-q"><b>56.</b> Anyong tubig na bumabagsak mula sa mataas na bundok o lugar.<br><span class="p-opt">a) Talon</span><span class="p-opt">b) Batis</span><span class="p-opt">c) Ilog</span><span class="p-opt">d) Kipot</span></div><div class="p-break"></div><h2 class="p-part-title">✅ Complete Answer Key</h2>
+  <div class="p-key-part-title">Part I — Matching Type</div><div class="p-key-grid"><div class="p-key-pill">1. <b>Kasunduan sa Paris</b></div><div class="p-key-pill">2. <b>Soberanya</b></div><div class="p-key-pill">3. <b>Nine-dash line</b></div><div class="p-key-pill">4. <b>EEZ</b></div><div class="p-key-pill">5. <b>Kapuluan ng Kalayaan</b></div><div class="p-key-pill">6. <b>Doktrinang Pangkapuluan</b></div><div class="p-key-pill">7. <b>Boundaries Treaty</b></div><div class="p-key-pill">8. <b>UNCLOS</b></div><div class="p-key-pill">9. <b>Internal water</b></div><div class="p-key-pill">10. <b>Teritoryo</b></div></div><div class="p-key-part-title">Part II — True or False</div><div class="p-key-grid"><div class="p-key-pill">11. <b>MALI</b></div><div class="p-key-pill">12. <b>TAMA</b></div><div class="p-key-pill">13. <b>MALI</b></div><div class="p-key-pill">14. <b>TAMA</b></div><div class="p-key-pill">15. <b>MALI</b></div><div class="p-key-pill">16. <b>TAMA</b></div><div class="p-key-pill">17. <b>MALI</b></div><div class="p-key-pill">18. <b>MALI</b></div><div class="p-key-pill">19. <b>TAMA</b></div><div class="p-key-pill">20. <b>MALI</b></div><div class="p-key-pill">21. <b>TAMA</b></div><div class="p-key-pill">22. <b>MALI</b></div><div class="p-key-pill">23. <b>MALI</b></div><div class="p-key-pill">24. <b>TAMA</b></div><div class="p-key-pill">25. <b>TAMA</b></div><div class="p-key-pill">26. <b>TAMA</b></div><div class="p-key-pill">27. <b>TAMA</b></div><div class="p-key-pill">28. <b>MALI</b></div><div class="p-key-pill">29. <b>TAMA</b></div><div class="p-key-pill">30. <b>TAMA</b></div><div class="p-key-pill">31. <b>TAMA</b></div><div class="p-key-pill">32. <b>TAMA</b></div><div class="p-key-pill">33. <b>TAMA</b></div><div class="p-key-pill">34. <b>TAMA</b></div><div class="p-key-pill">35. <b>TAMA</b></div><div class="p-key-pill">36. <b>MALI</b></div><div class="p-key-pill">37. <b>MALI</b></div><div class="p-key-pill">38. <b>MALI</b></div></div><div class="p-key-part-title">Part III — Multiple Choice</div><div class="p-key-grid"><div class="p-key-pill">39. <b>Bundok</b></div><div class="p-key-pill">40. <b>Burol</b></div><div class="p-key-pill">41. <b>Bulkan</b></div><div class="p-key-pill">42. <b>Kapatagan</b></div><div class="p-key-pill">43. <b>Talampas</b></div><div class="p-key-pill">44. <b>Lambak</b></div><div class="p-key-pill">45. <b>Tangway</b></div><div class="p-key-pill">46. <b>Isla</b></div><div class="p-key-pill">47. <b>Arkipelago</b></div><div class="p-key-pill">48. <b>Karagatan</b></div><div class="p-key-pill">49. <b>Dagat</b></div><div class="p-key-pill">50. <b>Ilog</b></div><div class="p-key-pill">51. <b>Lawa</b></div><div class="p-key-pill">52. <b>Golpo</b></div><div class="p-key-pill">53. <b>Kipot</b></div><div class="p-key-pill">54. <b>Look</b></div><div class="p-key-pill">55. <b>Batis</b></div><div class="p-key-pill">56. <b>Talon</b></div></div>
 </div>
 
 </body>
