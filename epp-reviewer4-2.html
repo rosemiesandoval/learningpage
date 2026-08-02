@@ -1,0 +1,1313 @@
+<!DOCTYPE html>
+<html lang="tl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🧍 EPP: Tamang Pagkilos at Kasuotan Reviewer 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --gold: #f59e0b;
+  --gold-dark: #b45309;
+  --blue: #3b82f6;
+  --blue-dark: #1d4ed8;
+  --red: #ef4444;
+  --green: #22c55e;
+  --bg: #0c1a0e;
+  --surface: #132015;
+  --surface2: #1a2e1d;
+  --text: #f0fdf4;
+  --muted: #86efac;
+  --border: #166534;
+}
+
+body {
+  font-family: 'Baloo 2', cursive;
+  background: var(--bg);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--text);
+  background-image:
+    radial-gradient(ellipse at 10% 30%, rgba(245,158,11,.06) 0%, transparent 55%),
+    radial-gradient(ellipse at 90% 70%, rgba(59,130,246,.06) 0%, transparent 55%);
+}
+
+header {
+  width: 100%;
+  background: linear-gradient(135deg, #14532d, #1e3a5f);
+  border-bottom: 2px solid var(--gold-dark);
+  padding: 13px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 4px 30px rgba(0,0,0,.5);
+}
+.header-icon { font-size: 2rem; animation: float 3s ease-in-out infinite; }
+@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
+
+header h1 {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.45rem;
+  background: linear-gradient(90deg, var(--gold), #fde68a, var(--gold));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+header .sub { font-size: .72rem; color: var(--muted); margin-top: 1px; }
+
+.header-controls { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+.score-pill {
+  background: rgba(245,158,11,.15);
+  border: 1px solid rgba(245,158,11,.4);
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-weight: 800;
+  font-size: .85rem;
+  color: var(--gold);
+}
+.audio-btn {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  background: var(--surface2);
+  color: var(--text);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all .2s;
+  display: flex; align-items: center; justify-content: center;
+}
+.audio-btn:hover, .audio-btn.active { background: #14532d; border-color: var(--gold); }
+
+.chat-wrap {
+  width: 100%; max-width: 700px; flex: 1;
+  display: flex; flex-direction: column;
+  padding: 16px 14px 0;
+}
+
+#chat-box {
+  flex: 1; overflow-y: auto;
+  display: flex; flex-direction: column;
+  gap: 14px; padding-bottom: 10px;
+  max-height: calc(100vh - 200px);
+  scroll-behavior: smooth;
+}
+#chat-box::-webkit-scrollbar { width: 4px; }
+#chat-box::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+.msg { display: flex; gap: 8px; }
+.msg.user { flex-direction: row-reverse; }
+
+.avatar {
+  width: 34px; height: 34px; border-radius: 50%;
+  font-size: 1rem; display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 2px;
+}
+.msg.bot .avatar { background: linear-gradient(135deg, #14532d, #1e3a5f); border: 1.5px solid rgba(245,158,11,.4); }
+.msg.user .avatar { background: linear-gradient(135deg, #1e3a5f, #14532d); border: 1.5px solid rgba(59,130,246,.3); }
+
+.bubble {
+  max-width: 80%;
+  padding: 11px 16px;
+  border-radius: 18px;
+  font-size: .9rem;
+  line-height: 1.65;
+  animation: pop .22s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes pop { from{transform:scale(.88) translateY(6px);opacity:0} to{transform:scale(1) translateY(0);opacity:1} }
+
+.msg.bot .bubble {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-bottom-left-radius: 5px;
+}
+.msg.user .bubble {
+  background: linear-gradient(135deg, #1e3a5f, var(--blue-dark));
+  border-bottom-right-radius: 5px;
+}
+
+/* chips */
+.chip {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: rgba(245,158,11,.12);
+  border: 1.5px solid rgba(245,158,11,.4);
+  color: var(--gold);
+  border-radius: 30px;
+  padding: 5px 13px; margin: 5px 4px 0 0;
+  font-size: .8rem; font-weight: 700;
+  cursor: pointer; transition: all .15s;
+  user-select: none; font-family: 'Baloo 2', cursive;
+}
+.chip:hover {
+  background: var(--gold-dark); color: white;
+  border-color: var(--gold);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(245,158,11,.3);
+}
+
+/* topic tag */
+.topic-tag {
+  display: inline-block;
+  background: linear-gradient(135deg, #14532d, #166534);
+  border: 1px solid var(--gold-dark);
+  color: var(--gold);
+  font-size: .68rem; font-weight: 800;
+  border-radius: 20px; padding: 2px 10px;
+  margin-bottom: 5px; letter-spacing: .5px;
+  text-transform: uppercase;
+}
+
+/* multiple choice */
+.mc-options { display: flex; flex-direction: column; gap: 7px; margin-top: 10px; width: 100%; }
+.mc-btn {
+  display: flex; align-items: center; gap: 10px;
+  background: rgba(255,255,255,.03);
+  border: 1.5px solid var(--border);
+  border-radius: 12px; padding: 9px 14px;
+  color: var(--text); font-family: 'Baloo 2', cursive;
+  font-size: .87rem; font-weight: 600;
+  cursor: pointer; transition: all .15s; text-align: left; width: 100%;
+}
+.mc-btn:hover:not(:disabled) {
+  background: rgba(245,158,11,.12); border-color: var(--gold);
+  color: var(--gold); transform: translateX(3px);
+}
+.mc-btn .letter {
+  display: flex; align-items: center; justify-content: center;
+  width: 26px; height: 26px; border-radius: 8px;
+  background: rgba(245,158,11,.15); border: 1px solid rgba(245,158,11,.35);
+  color: var(--gold); font-size: .78rem; font-weight: 800;
+  flex-shrink: 0; transition: all .15s;
+}
+.mc-btn:hover:not(:disabled) .letter { background: var(--gold-dark); color: white; border-color: var(--gold-dark); }
+.mc-btn.correct { background: rgba(34,197,94,.15)!important; border-color: #22c55e!important; color: #22c55e!important; cursor: default; }
+.mc-btn.correct .letter { background: #22c55e!important; color: white!important; border-color: #22c55e!important; }
+.mc-btn.wrong { background: rgba(239,68,68,.12)!important; border-color: #ef4444!important; color: #ef4444!important; cursor: default; }
+.mc-btn.wrong .letter { background: #ef4444!important; color: white!important; border-color: #ef4444!important; }
+.mc-btn:disabled { cursor: default; transform: none!important; }
+
+/* speaker wave */
+.speaker-wave {
+  display: inline-flex; align-items: flex-end;
+  gap: 2px; height: 14px; margin-left: 6px; vertical-align: middle;
+}
+.speaker-wave span {
+  display: block; width: 3px; border-radius: 2px;
+  background: var(--gold); animation: wave 1s ease-in-out infinite;
+}
+.speaker-wave span:nth-child(1){height:4px;animation-delay:0s}
+.speaker-wave span:nth-child(2){height:10px;animation-delay:.1s}
+.speaker-wave span:nth-child(3){height:6px;animation-delay:.2s}
+.speaker-wave span:nth-child(4){height:12px;animation-delay:.15s}
+.speaker-wave span:nth-child(5){height:4px;animation-delay:.05s}
+@keyframes wave{0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.8)}}
+
+/* typing */
+.typing {
+  display: flex; gap: 4px; padding: 12px 16px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 18px; border-bottom-left-radius: 5px; width: fit-content;
+}
+.dot { width: 7px; height: 7px; border-radius: 50%; background: var(--gold); animation: bounce .9s infinite; }
+.dot:nth-child(2){animation-delay:.15s} .dot:nth-child(3){animation-delay:.3s}
+@keyframes bounce{0%,80%,100%{transform:translateY(0);opacity:.6}40%{transform:translateY(-7px);opacity:1}}
+
+/* input bar */
+.input-bar {
+  width: 100%; max-width: 700px;
+  padding: 10px 14px 18px;
+  display: flex; gap: 8px;
+  background: var(--bg); position: sticky; bottom: 0;
+}
+#user-input {
+  flex: 1; padding: 12px 18px;
+  border: 2px solid var(--border); border-radius: 30px;
+  font-family: 'Baloo 2', cursive; font-size: .92rem;
+  outline: none; background: var(--surface); color: var(--text);
+  transition: border-color .2s, box-shadow .2s;
+}
+#user-input::placeholder { color: var(--muted); }
+#user-input:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(245,158,11,.12); }
+
+#send-btn {
+  width: 48px; height: 48px; border-radius: 50%; border: none;
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  color: white; font-size: 1.1rem; cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 3px 14px rgba(245,158,11,.4); flex-shrink: 0;
+}
+#send-btn:hover { transform: scale(1.08); box-shadow: 0 5px 20px rgba(245,158,11,.55); }
+#send-btn:disabled { opacity: .5; transform: none; }
+
+/* result modal */
+.result-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.75); backdrop-filter: blur(6px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 100; opacity: 0; pointer-events: none; transition: opacity .3s;
+}
+.result-overlay.show { opacity: 1; pointer-events: all; }
+.result-card {
+  background: linear-gradient(135deg, #132015, #0c1a0e);
+  border: 2px solid var(--gold-dark);
+  border-radius: 24px; padding: 36px 40px;
+  text-align: center; max-width: 380px; width: 90%;
+  box-shadow: 0 20px 60px rgba(0,0,0,.6);
+  transform: scale(.9); transition: transform .3s cubic-bezier(.34,1.56,.64,1);
+}
+.result-overlay.show .result-card { transform: scale(1); }
+.result-emoji { font-size: 4rem; margin-bottom: 12px; display: block; }
+.result-title {
+  font-family: 'Fredoka One', cursive; font-size: 1.7rem; margin-bottom: 6px;
+  background: linear-gradient(90deg, var(--gold), #fde68a);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.result-score { font-size: 3rem; font-weight: 900; margin: 10px 0; color: white; }
+.result-msg { color: var(--muted); font-size: .9rem; margin-bottom: 22px; }
+.result-btn {
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  border: none; border-radius: 30px; padding: 12px 30px;
+  color: white; font-family: 'Baloo 2', cursive; font-weight: 800;
+  font-size: 1rem; cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+  box-shadow: 0 4px 16px rgba(245,158,11,.35);
+}
+.result-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 22px rgba(245,158,11,.5); }
+
+/* scenario card for identify questions */
+.scenario-card {
+  background: rgba(245,158,11,.07);
+  border: 1px solid rgba(245,158,11,.25);
+  border-radius: 12px; padding: 10px 14px;
+  margin: 8px 0 6px; font-style: italic;
+  font-size: .87rem; color: #fde68a; line-height: 1.5;
+}
+
+/* ── Notes Panel ─────────────────────────────────────────────── */
+.notes-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.78); backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 200; opacity: 0; pointer-events: none; transition: opacity .3s;
+}
+.notes-overlay.show { opacity: 1; pointer-events: all; }
+.notes-panel {
+  background: linear-gradient(160deg, #0c1a0e, #132015);
+  border: 2px solid var(--gold-dark);
+  border-radius: 20px;
+  width: 92%; max-width: 720px;
+  max-height: 88vh;
+  display: flex; flex-direction: column;
+  box-shadow: 0 24px 60px rgba(0,0,0,.7);
+  overflow: hidden;
+  transform: translateY(30px);
+  transition: transform .35s cubic-bezier(.34,1.2,.64,1);
+}
+.notes-overlay.show .notes-panel { transform: translateY(0); }
+.notes-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 22px; border-bottom: 1px solid var(--border);
+  background: linear-gradient(135deg, #14532d44, #1e3a5f44);
+}
+.notes-header h2 { font-family: 'Fredoka One', cursive; font-size: 1.3rem; color: var(--gold); }
+.notes-close {
+  width: 34px; height: 34px; border-radius: 50%;
+  border: 1.5px solid var(--border); background: var(--surface2);
+  color: var(--text); font-size: 1rem; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; transition: all .2s;
+}
+.notes-close:hover { background: #b91c1c; border-color: #ef4444; }
+.notes-body { overflow-y: auto; padding: 20px 22px; flex: 1; }
+.notes-body::-webkit-scrollbar { width: 4px; }
+.notes-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+.notes-topic { margin-bottom: 28px; }
+.notes-topic-title {
+  font-family: 'Fredoka One', cursive; font-size: 1.05rem;
+  color: var(--gold); margin-bottom: 10px;
+  padding-bottom: 6px; border-bottom: 1px solid var(--border);
+}
+.notes-item {
+  display: flex; gap: 10px; align-items: flex-start;
+  padding: 7px 0; border-bottom: 1px solid rgba(255,255,255,.04);
+  font-size: .87rem; line-height: 1.55;
+}
+.notes-item:last-child { border-bottom: none; }
+.notes-term { font-weight: 800; color: var(--gold); min-width: 150px; flex-shrink: 0; font-size: .84rem; }
+.notes-def { color: #d1fae5; }
+.notes-tabs {
+  display: flex; flex-wrap: wrap; gap: 8px; padding: 14px 22px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(0,0,0,.15);
+}
+.notes-tab {
+  padding: 12px 20px; border-radius: 10px;
+  border: 1.5px solid var(--border); 
+  background: rgba(255,255,255,.04); color: var(--muted);
+  font-family: 'Baloo 2', cursive; font-size: .9rem; font-weight: 700;
+  cursor: pointer; transition: all .15s; white-space: nowrap;
+  min-height: 48px; display: flex; align-items: center;
+}
+.notes-tab.active { background: var(--surface); color: var(--gold); border-color: var(--gold-dark); }
+.notes-tab:hover:not(.active) { color: var(--text); background: var(--surface2); }
+.notes-section { display: none; }
+.notes-section.active { display: block; }
+
+
+/* ── Print button in notes header ─────────────────────────────── */
+.notes-header-actions { display: flex; align-items: center; gap: 10px; }
+.print-btn {
+  display: flex; align-items: center; gap: 6px;
+  background: rgba(245,158,11,.12);
+  border: 1.5px solid rgba(245,158,11,.4);
+  color: var(--gold);
+  border-radius: 20px;
+  padding: 7px 14px;
+  font-family: 'Baloo 2', cursive;
+  font-size: .78rem;
+  font-weight: 800;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all .15s;
+}
+.print-btn:hover { background: var(--gold); color: #0c1a0e; border-color: var(--gold); }
+
+/* ── On-screen Practice Test / Answer Key ─────────────────────── */
+.ptest-part-title {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1rem;
+  color: var(--gold);
+  margin: 22px 0 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+.ptest-part-title:first-child { margin-top: 0; }
+.ptest-q {
+  font-size: .87rem;
+  line-height: 1.6;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed rgba(255,255,255,.06);
+  color: #d1fae5;
+}
+.ptest-q b { color: var(--gold); }
+.ptest-q .opt { display: block; margin: 2px 0 2px 18px; color: #d1fae5; }
+.ptest-bank {
+  background: rgba(59,130,246,.08);
+  border: 1px solid rgba(59,130,246,.3);
+  border-radius: 10px;
+  padding: 10px 16px;
+  margin-bottom: 14px;
+  font-size: .82rem;
+  color: #dbeafe;
+  line-height: 1.6;
+}
+.key-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.key-pill {
+  background: rgba(245,158,11,.1);
+  border: 1px solid rgba(245,158,11,.25);
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: .78rem;
+  color: #fde68a;
+}
+.key-pill b { color: #34d399; }
+
+/* ── Print / Save-as-PDF styles ──────────────────────────────────
+   By default everything is hidden from print. When body carries
+   .printing-test, only #print-area (a light-themed clone of the
+   Practice Test + Answer Key) is shown, laid out for paper. ──── */
+@media print {
+  body * { visibility: hidden; }
+  #print-area, #print-area * { visibility: visible; }
+  #print-area {
+    display: block !important;
+    position: absolute; top: 0; left: 0; width: 100%;
+    background: #fff; color: #14290f;
+    font-family: 'Helvetica', Arial, sans-serif;
+    font-size: 10.5pt;
+    line-height: 1.5;
+  }
+  #print-area .p-cover { text-align: center; padding-top: 40px; }
+  #print-area .p-cover .p-icon { font-size: 34pt; }
+  #print-area .p-cover h1 { font-size: 19pt; color: #b45309; margin: 8px 0 4px; }
+  #print-area .p-cover .p-sub { font-size: 10.5pt; color: #166534; margin-bottom: 20px; }
+  #print-area .p-info-box {
+    border: 1.5px solid #fcd34d; border-radius: 10px;
+    max-width: 460px; margin: 0 auto 20px; padding: 14px 20px;
+    text-align: left; font-size: 10pt;
+  }
+  #print-area .p-info-box div { margin: 6px 0; border-bottom: 1px dotted #fde68a; padding-bottom: 6px; }
+  #print-area .p-instructions {
+    max-width: 460px; margin: 0 auto; text-align: left;
+    background: #fffbeb; border: 1px solid #fcd34d; border-radius: 10px;
+    padding: 12px 18px; font-size: 9.5pt; color: #78350f;
+  }
+  #print-area h2.p-part-title {
+    font-size: 12.5pt; color: #fff;
+    background: linear-gradient(135deg, #b45309, #14532d) !important;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    padding: 6px 12px; border-radius: 7px; margin: 18px 0 10px;
+    page-break-after: avoid;
+  }
+  #print-area .p-bank {
+    background: #f0fdf4 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    border: 1px solid #86efac; border-radius: 8px; padding: 8px 14px;
+    margin-bottom: 12px; font-size: 9.5pt; color: #14532d;
+  }
+  #print-area .p-q {
+    margin-bottom: 8px; padding-bottom: 8px;
+    border-bottom: 1px dotted #fde68a; font-size: 10pt;
+    page-break-inside: avoid; color: #14290f;
+  }
+  #print-area .p-q b { color: #b45309; }
+  #print-area .p-q .p-blank { display: inline-block; min-width: 65px; border-bottom: 1px solid #64748b; }
+  #print-area .p-q .p-opt { display: block; margin: 2px 0 0 20px; color: #365314; }
+  #print-area .p-break { page-break-before: always; }
+  #print-area .p-key-part-title {
+    font-size: 11pt; color: #b45309; font-weight: bold;
+    margin: 14px 0 8px; border-bottom: 2px solid #b45309; padding-bottom: 4px;
+  }
+  #print-area .p-key-grid {
+    display: grid; grid-template-columns: repeat(5, 1fr);
+    gap: 5px 8px; margin-bottom: 14px;
+  }
+  #print-area .p-key-pill {
+    background: #f0fdf4 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    border: 1px solid #86efac; border-radius: 6px;
+    padding: 4px 8px; font-size: 8.5pt; color: #166534;
+  }
+  #print-area .p-key-pill b { color: #b45309; }
+  @page { size: letter; margin: 1.5cm 1.8cm; }
+}
+#print-area { display: none; }
+
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-icon">🧍</div>
+  <div>
+    <h1>Tamang Pagkilos at Kasuotan</h1>
+    <div class="sub">Pagtayo, Paglakad, at Pag-upo · Pakikipag-usap · Uri ng Kasuotan · Pag-iingat sa Damit</div>
+  </div>
+  <div class="header-controls">
+    <div class="score-pill">⭐ <span id="score-val">0</span> / <span id="total-val">0</span></div>
+    <button class="audio-btn" id="notes-toggle" title="Basahin ang mga Tala" onclick="document.getElementById('notes-overlay').classList.add('show')">📖</button>
+    <button class="audio-btn active" id="audio-toggle" title="I-toggle ang Audio">🔊</button>
+  </div>
+</header>
+
+<div class="chat-wrap">
+  <div id="chat-box"></div>
+</div>
+
+<div class="input-bar">
+  <input type="text" id="user-input" placeholder="Isulat ang iyong sagot dito…" autocomplete="off" />
+  <button id="send-btn">➤</button>
+</div>
+
+<div class="result-overlay" id="result-overlay">
+  <div class="result-card">
+    <span class="result-emoji" id="res-emoji">🏆</span>
+    <div class="result-title">Tapos na!</div>
+    <div class="result-score"><span id="res-score">0</span>/<span id="res-total">0</span></div>
+    <div class="result-msg" id="res-msg">Magaling!</div>
+    <button class="result-btn" onclick="restartApp()">🔄 Maglaro Ulit</button>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+// QUESTION BANK
+// ═══════════════════════════════════════════════════════════════
+const topics = {
+
+  "Tamang Pagkilos sa Pagtayo": [
+    { q: "Ano ang dapat gawin sa mga paa kapag tumatayo nang tama?", a: "Ilagay ang isang paa sa unahan, habang ang isa naman ay nakaanggulong palikod", hint: "Hindi magkatabi ang mga paa." },
+    { q: "Saan dapat ilagay ang braso at kamay kapag tumatayo nang wasto?", a: "Sa tagiliran", hint: "Sa gilid ng katawan." },
+    { q: "Ano ang dapat gawin sa dibdib at tiyan kapag tumatayo nang tama?", a: "Ilabas ang dibdib at ipasok ang tiyan", hint: "Baligtad sa karaniwang iniisip." },
+    { q: "Ano ang dapat panatilihing tuwid bukod sa ulo at katawan kapag tumatayo?", a: "Ang balikat", hint: "Bahagi ito sa itaas ng braso." },
+    { q: "Paano dapat itaas ang baba kapag tumatayo nang wasto?", a: "Itaas nang katamtaman", hint: "Hindi masyadong mataas." },
+    { q: "Ano pang dapat panatilihing tuwid bukod sa balikat?", a: "Ang ulo at katawan", hint: "Buong katawan dapat tuwid." },
+  ],
+
+  "Tamang Pagkilos sa Paglakad": [
+    { q: "Saan dapat nakatutok ang mga paa habang naglalakad?", a: "Sa unahan", hint: "Direksyon ng paglakad." },
+    { q: "Anong klaseng hakbang ang dapat gawin habang naglalakad?", a: "Katamtamang distansiya at bilis", hint: "Hindi mabilis, hindi rin mabagal." },
+    { q: "Ano ang dapat iharap habang naglalakad?", a: "Ang dibdib, habang ipinaloob ang tiyan", hint: "Katulad din ito sa tamang pagtayo." },
+    { q: "Saan dapat nakatuon ang mata habang naglalakad?", a: "Sa daan sa harap", hint: "Hindi sa paa." },
+    { q: "Ano ang dapat mangyari sa braso at kamay habang naglalakad?", a: "Hayaang likas na gumalaw ayon sa paggalaw ng katawan", hint: "Hindi dapat pilit itong pigilan." },
+  ],
+
+  "Tamang Pagkilos sa Pag-upo": [
+    { q: "Ano ang unang dapat gawin bago umupo?", a: "Suriin ang upuan kung nasa tamang puwesto ito", hint: "Tingnan muna bago umupo." },
+    { q: "Paano dapat umupo nang wasto?", a: "Nang dahan-dahan", hint: "Hindi biglaan." },
+    { q: "Paano dapat iharap ang likod sa sandalan ng upuan?", a: "Nang tuwid", hint: "Hindi nakayuko." },
+    { q: "Ano ang dapat gawin sa mga paa kapag nakaupo na?", a: "Ilapat nang pantay sa sahig", hint: "Parehong paa sa sahig." },
+    { q: "Saan dapat ilagay ang dalawang kamay kapag nakaupo?", a: "Sa kandungan", hint: "Sa ibabaw ng hita." },
+  ],
+
+  "Pakikipag-usap at Pakikinig sa Kapuwa": [
+    { q: "Anong uri ng lakas ng boses ang dapat gamitin sa pakikipag-usap?", a: "Katamtamang lakas", hint: "Hindi mahina, hindi rin sigaw." },
+    { q: "Anong uri ng salita ang dapat gamitin sa pakikipag-usap?", a: "Magagalang na salita", hint: "Kabaligtaran ng bastos." },
+    { q: "Ano pang dapat gamitin bukod sa magagalang na salita habang nakikipag-usap?", a: "Tamang hesto (gesture) ng kamay", hint: "Galaw ng kamay habang nagsasalita." },
+    { q: "Ano ang dapat iwasang sambitin habang nakikipag-usap?", a: "Hindi kaaya-ayang mga salita", hint: "Mga salitang nakasasakit o bastos." },
+    { q: "Ano ang dapat iwasan sa mga publikong lugar?", a: "Ang pagsigaw at pagtawa nang malakas", hint: "Ingay na nakakaabala sa iba." },
+    { q: "Kanino dapat bigyan ng prayoridad sa pag-upo, pag-akyat, at pagbaba ng sasakyan?", a: "Matatanda, may kapansanan, kababaihan, at mga buntis", hint: "Apat na grupo ng tao." },
+  ],
+
+  "Wastong Pag-uugali": [
+    { q: "Anong dalawang salita ang dapat panatilihing magalang sa tono kapag nakikipag-usap?", a: "Po at opo", hint: "Karaniwang gamit sa paggalang." },
+    { q: "Ano ang dapat gawin sa lahat ng pagkakataon, hindi lang kapag kaharap ang magulang?", a: "Maging matapat", hint: "Hindi nagsisinungaling." },
+    { q: "Paano dapat batiin ang mga kakilala at bisita?", a: "Nang may maaliwalas na mukha", hint: "May ngiti." },
+    { q: "Ano ang dapat habaan upang makaiwas sa away o gulo?", a: "Ang pasensiya", hint: "Kabaligtaran ng pagiging maiinitin ang ulo." },
+  ],
+
+  "Mga Uri ng Kasuotan": [
+    { q: "Anong uri ng kasuotan ang isinusuot sa loob ng bahay?", a: "Pambahay", hint: "Ginagamit sa mga gawaing-bahay." },
+    { q: "Bakit karaniwang manipis at magaan ang kasuotang pambahay?", a: "Upang maging madali ang pagkilos sa mga gawaing-bahay", hint: "Para komportable kumilos." },
+    { q: "Anong uri ng kasuotan ang isinusuot upang protektahan ang maseselang bahagi ng katawan?", a: "Panloob", hint: "Isinusuot sa ilalim ng ibang damit." },
+    { q: "Kailan isinusuot ang kasuotang panloob?", a: "Sa lahat ng pagkakataon", hint: "Palagi." },
+    { q: "Anong uri ng kasuotan ang isinusuot habang natutulog?", a: "Pantulog", hint: "Para komportable sa pagtulog." },
+    { q: "Ano ang tawag sa kasuotang isinusuot tuwing nasa paaralan?", a: "Pamasok o uniporme", hint: "Karaniwang may kulay na kakaiba sa bawat paaralan." },
+    { q: "Ano ang silbi ng uniporme?", a: "Pagkakakilanlan ng paaralang pinapasukan", hint: "Nakikilala kung saang eskuwela nag-aaral." },
+    { q: "Anong uri ng kasuotan ang angkop sa paglalaro o pag-eehersisyo?", a: "Pang-isports", hint: "Magaan at maginhawa." },
+    { q: "Anong uri ng kasuotan ang ginagamit sa pamamasyal?", a: "Panlakad", hint: "Malaya ang estilo nito." },
+    { q: "Anong klaseng kasuotan ang karaniwang isinusuot sa simbahan?", a: "Bestidang may manggas at katamtamang taas, hindi hapit sa katawan", hint: "Sumusunod sa panuntunan ng relihiyon." },
+    { q: "Anong uri ng kasuotan ang lapat sa katawan at ginagamit sa dagat, ilog, o palanguyan?", a: "Panligo o panlangoy", hint: "Isinusuot kapag naliligo sa basang lugar." },
+    { q: "Anong uri ng tela karaniwang ginagamit sa kasuotang pantag-init?", a: "Manipis na tela", hint: "Para hindi mainitan." },
+    { q: "Kailan karaniwang isinusuot ang panlamig at pantag-ulan na kasuotan?", a: "Kapag malamig ang panahon o umuulan", hint: "Kabaligtaran ng init." },
+  ],
+
+  "Pagpili ng Angkop na Kasuotan": [
+    { q: "Anong epekto ang ibinibigay ng kasuotang may patayong guhit?", a: "Nagpapamukhang matangkad at/o pumapayat", hint: "Pahaba ang direksyon ng guhit." },
+    { q: "Anong epekto ang ibinibigay ng kasuotang may pahalang na guhit?", a: "Ilusyon ng pagiging malapad at/o mababa", hint: "Pagaling ang direksyon ng guhit." },
+    { q: "Kanino angkop ang kasuotang may malalaking disenyo?", a: "Sa matatangkad at may balingkinitang pangangatawan", hint: "Para sa payat at mataas." },
+    { q: "Kanino angkop ang kasuotang may maliliit na disenyo?", a: "Sa may malaki at malapad na pangangatawan", hint: "Kabaligtaran ng malalaking disenyo." },
+    { q: "Ano ang isa sa dapat isaalang-alang sa pagpili ng kulay ng kasuotan?", a: "Ang kulay ng balat", hint: "Dapat magkabagay ang tela at ito." },
+    { q: "Magbigay ng dalawang halimbawa ng palamuti na maaaring isuot.", a: "Panali sa buhok, headband, kuwintas, scarf, o pulseras", hint: "Mga aksesorya sa buhok, leeg, o kamay." },
+  ],
+
+  "Pag-iingat sa Kasuotan": [
+    { q: "Ano ang dapat gawin sa damit na basa ng pawis bago ito ilagay sa labahin o ropero?", a: "Isabit sa hanger para patuyuin", hint: "Patuyuin muna." },
+    { q: "Ano ang dapat gawin agad sa namantsahang damit?", a: "Labhan agad", hint: "Huwag ipagpaliban." },
+    { q: "Ano ang dapat iwasang gamitin sa pagtanggal ng mantsa o bahid?", a: "Matatapang na kemikal", hint: "Maaari itong makasira sa tela." },
+    { q: "Anong uri ng damit ang dapat ihanger?", a: "Ang mga damit panlakad", hint: "Para hindi kumulubot." },
+    { q: "Anong uri ng damit ang dapat tupiin?", a: "Ang mga damit pambahay", hint: "Kabaligtaran ng ihanger." },
+    { q: "Ano ang dapat gawin sa damit na may punit, tastas, o butas bago ito labhan?", a: "Sulsihan muna", hint: "Ayusin bago labhan." },
+    { q: "Ano ang apat na gawaing kailangan upang mapangalagaan ang kasuotan?", a: "Pagsusulsi, paglalaba, pamamalantsa, at pagtupi", hint: "Apat na gawain sa pag-aalaga ng damit." },
+  ],
+
+};
+
+// ── TRUE OR FALSE ────────────────────────────────────────────────────────────
+const trueOrFalse = [
+  { q: "Sa pag-upo, dapat ay nakalapat nang pantay ang mga paa sa sahig.", a: "tama" },
+  { q: "Palaging dapat tumingin sa mga paa kapag naglalakad.", a: "mali" },
+  { q: "Dapat panatilihing nakatayo ang matanda sa loob ng bus hanggang wala pang bumababa.", a: "mali" },
+  { q: "Dapat maging matapat lamang kapag kaharap ang mga magulang.", a: "mali" },
+  { q: "Dapat magtimpi upang makaiwas sa anumang away o gulo.", a: "tama" },
+  { q: "Ang maayos na postura ay makatutulong upang maiwasan ang pagsakit ng likod at leeg.", a: "tama" },
+  { q: "Sa tamang pagtayo, dapat ilabas ang tiyan at ipasok ang dibdib.", a: "mali" },
+  { q: "Sa tamang pag-upo, dapat suriin muna ang upuan bago umupo.", a: "tama" },
+  { q: "Dapat gumamit ng magagalang na salita sa pakikipag-usap.", a: "tama" },
+  { q: "Dapat bigyan ng prayoridad ang matatanda at buntis sa pag-upo sa sasakyan.", a: "tama" },
+  { q: "Ang panloob na kasuotan ay isinusuot lamang tuwing maliligo.", a: "mali" },
+  { q: "Ang uniporme ay nagsisilbing pagkakakilanlan ng paaralang pinapasukan.", a: "tama" },
+  { q: "Ang kasuotang panligo o panlangoy ay dapat maluwag at hindi lapat sa katawan.", a: "mali" },
+  { q: "Ang kasuotang may patayong guhit ay nagpapamukhang matangkad.", a: "tama" },
+  { q: "Ang kasuotang may pahalang na guhit ay nagbibigay ng ilusyon ng pagiging payat.", a: "mali" },
+  { q: "Ang mga kasuotang may malalaking disenyo ay angkop sa matatangkad at balingkinitan ang pangangatawan.", a: "tama" },
+  { q: "Dapat labhan agad ang namantsahang damit gamit ang matatapang na kemikal.", a: "mali" },
+  { q: "Dapat ihanger ang mga damit pambahay at tupiin ang mga damit panlakad.", a: "mali" },
+  { q: "Dapat sulsihan ang punit na damit bago ito labhan.", a: "tama" },
+  { q: "Ang pagsusuot ng malinis at angkop na kasuotan ay nagpapakita ng pagiging maayos at organisado.", a: "tama" },
+];
+
+// ── IDENTIFY: SITWASYON · URI NG KASUOTAN ────────────────────────────────────
+const identifyQuestions = [
+  { q: "Basang-basa ng pawis ang damit ni Simon dahil sa paglalaro ng basketbol. Ano ang dapat niyang gawin sa kaniyang damit pag-uwi sa bahay?", a: "Patuyuin ang pawis sa hanger saka ilagay sa ropero.", choices: ["Ilagay sa ropero ang damit na hinubad.","Isampay sa sofa upang matuyo ang pawis.","Ilagay sa loob ng aparador upang magamit muli.","Patuyuin ang pawis sa hanger saka ilagay sa ropero."] },
+  { q: "Natapunan ng tsokolate ang uniporme ni Danny. Ano ang dapat niyang gawin pag-uwi ng bahay?", a: "Labhan agad ito upang matanggal ang mantsa.", choices: ["Labhan agad ito upang matanggal ang mantsa.","Isampay para mahanginan at matuyo muna ang mantsa.","Ilagay agad sa ropero para maisama sa labahin.","Ibabad sa tubig na may sabon at kloro (chlorine)."] },
+  { q: "Ano ang dapat tandaan sa pagtutupi at pagsasaayos ng damit?", a: "Ihanger ang mga damit panlakad, tupiin ang mga pambahay, saka ilagay sa aparador.", choices: ["Tupiin ang mga damit pambahay at panlakad, saka isalansan sa aparador.","Ihanger ang mga damit panlakad, tupiin ang mga pambahay, saka ilagay sa aparador.","Pagsamahin lamang ang mga damit sa kani-kaniyang aparador.","Ilagay sa loob ng isang aparador ang lahat ng uri ng kasuotan."] },
+  { q: "Maglalaba na si Ben nang mapansin niyang may punit ang kaniyang uniporme. Ano ang dapat niyang gawin?", a: "Sulsihan muna ang uniporme bago ito labhan.", choices: ["Hiwalay ito at hayaan ang nanay na maglaba.","Labhan muna ang uniporme saka sabihin na may punit ito.","Labhan muna ang uniporme saka ito sulsihan.","Sulsihan muna ang uniporme bago ito labhan."] },
+  { q: "Pumunta kayo ng kaibigan mo sa basketball court para manood ng liga. Paupo ka na sana nang mapansin mong marami palang alikabok ang upuan mo. Ano ang dapat mong gawin?", a: "Linisin ang upuan bago umupo.", choices: ["Umupo na lamang at magpalit na lang pag-uwi.","Huwag na lamang manood ng liga.","Linisin ang upuan bago umupo.","Makipagpalit sa kaibigan ng upuan."] },
+  { q: "Manipis, magaan, at komportable upang maging madali ang paggawa ng gawaing-bahay.", a: "Pambahay", choices: ["Pambahay","Pantulog","Pang-isports","Panlakad"] },
+  { q: "Isinusuot sa lahat ng pagkakataon upang protektahan ang maseselang bahagi ng katawan.", a: "Panloob", choices: ["Panloob","Pambahay","Pamasok","Pantag-init"] },
+  { q: "Karaniwang manipis at komportable upang makatulog nang maayos.", a: "Pantulog", choices: ["Pantulog","Pambahay","Panloob","Panlakad"] },
+  { q: "Tinatawag ding uniporme; nagsisilbing pagkakakilanlan ng paaralan.", a: "Pamasok", choices: ["Pamasok","Pang-isports","Panlakad","Pansimba"] },
+  { q: "Angkop sa mga aktibong pagkilos tulad ng paglalaro o pag-eehersisyo.", a: "Pang-isports", choices: ["Pang-isports","Pambahay","Pansimba","Panligo o Panlangoy"] },
+  { q: "Ginagamit sa pamamasyal; malaya ang estilo ng pananamit.", a: "Panlakad", choices: ["Panlakad","Pamasok","Pantulog","Panloob"] },
+  { q: "Bestidang may manggas at katamtamang taas, hindi hapit sa katawan.", a: "Pansimba", choices: ["Pansimba","Panlakad","Pang-isports","Pantag-init"] },
+  { q: "Lapat sa katawan; ginagamit sa dagat, ilog, o palanguyan.", a: "Panligo o Panlangoy", choices: ["Panligo o Panlangoy","Pantulog","Pambahay","Panloob"] },
+  { q: "Manipis na tela na magaan at maginhawang isuot.", a: "Pantag-init", choices: ["Pantag-init","Panlamig at Pantag-ulan","Pamasok","Pansimba"] },
+  { q: "Madalas isuot kapag malamig ang panahon o umuulan.", a: "Panlamig at Pantag-ulan", choices: ["Panlamig at Pantag-ulan","Pantag-init","Pang-isports","Panlakad"] },
+];
+
+// ═══════════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════════
+let state = {
+  awaiting: 'menu',
+  mode: null,
+  questions: [],
+  allAnswers: [],
+  qIndex: 0,
+  score: 0,
+  total: 0,
+  hintUsed: false,
+  audioEnabled: true,
+};
+
+// ═══════════════════════════════════════════════════════════════
+// TTS (UPGRADED FOR TRUE FILIPINO ACCENT)
+// ═══════════════════════════════════════════════════════════════
+let currentAudioStream = null;
+
+function speak(text) {
+  if (!state.audioEnabled) return;
+  
+  // Linisin ang mga nakaraang audio task
+  window.speechSynthesis.cancel();
+  if (currentAudioStream) {
+    currentAudioStream.pause();
+    currentAudioStream = null;
+  }
+  
+  // Tanggalin ang HTML tags at emojis para hindi basahin nang paputol-putol
+  const clean = text.replace(/<[^>]+>/g,'').replace(/[🇵🇭🌟✅❌💡⏭️🏆😊💪🔄🔲📚👋⭐✕🧭📏🗺️]/g,'');
+  
+  // PRIMARY METHOD: Google Translation Engine cloud voice stream (May natural na Filipino accent)
+  const googleTtsUrl = `https://translate.google.com/translate_tts?ie=UTF-8&tl=tl&client=tw-ob&q=${encodeURIComponent(clean)}`;
+  
+  currentAudioStream = new Audio(googleTtsUrl);
+  currentAudioStream.onplaying = () => showWave(true);
+  currentAudioStream.onended = currentAudioStream.onerror = () => showWave(false);
+  
+  currentAudioStream.play().catch(err => {
+    // BACKUP METHOD: Web Speech API (Gagana kapag walang internet connection)
+    console.warn("Google TTS blocked or offline. Falling back to local system speech engine.");
+    
+    const streamFallback = new SpeechSynthesisUtterance(clean);
+    streamFallback.lang = 'fil-PH';
+    streamFallback.rate = 0.95; streamFallback.pitch = 1.05; streamFallback.volume = 1;
+    
+    const voices = window.speechSynthesis.getVoices();
+    const filVoice = voices.find(v => v.lang.startsWith('fil') || v.lang.startsWith('tl'));
+    const engVoice = voices.find(v => v.lang.startsWith('en') && v.name.toLowerCase().includes('female'))
+                   || voices.find(v => v.lang.startsWith('en'));
+              
+    if (filVoice) {
+      streamFallback.voice = filVoice;
+    } else if (engVoice) {
+      streamFallback.voice = engVoice; 
+      streamFallback.lang = 'en-US'; 
+    }
+    
+    streamFallback.onstart = () => showWave(true);
+    streamFallback.onend = streamFallback.onerror = () => showWave(false);
+    window.speechSynthesis.speak(streamFallback);
+  });
+}
+
+function showWave(on) {
+  document.querySelectorAll('.speaker-wave').forEach(w => w.style.display = on ? 'inline-flex' : 'none');
+}
+
+// I-initialize ang mga boses ng system
+let localSystemVoices = [];
+function lookupSystemVoices() {
+  localSystemVoices = window.speechSynthesis.getVoices();
+}
+lookupSystemVoices();
+if (window.speechSynthesis.onvoiceschanged !== undefined) {
+  window.speechSynthesis.onvoiceschanged = lookupSystemVoices;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// UI HELPERS
+// ═══════════════════════════════════════════════════════════════
+const chatBox = document.getElementById('chat-box');
+const input = document.getElementById('user-input');
+const sendBtn = document.getElementById('send-btn');
+
+function scrollBottom() { chatBox.scrollTop = chatBox.scrollHeight; }
+
+function addMessage(role, html, speakText) {
+  const div = document.createElement('div');
+  div.className = `msg ${role}`;
+  const av = document.createElement('div');
+  av.className = 'avatar';
+  av.textContent = role === 'bot' ? '🤖' : '🧑';
+  const bub = document.createElement('div');
+  bub.className = 'bubble';
+  bub.innerHTML = role === 'bot'
+    ? html + '<span class="speaker-wave" style="display:none"><span></span><span></span><span></span><span></span><span></span></span>'
+    : html;
+  div.appendChild(av); div.appendChild(bub);
+  chatBox.appendChild(div);
+  scrollBottom(); bindChips();
+  if (role === 'bot') {
+    const txt = speakText || html.replace(/<[^>]+>/g,' ');
+    setTimeout(() => speak(txt), 350);
+  }
+}
+
+function addTyping() {
+  const d = document.createElement('div');
+  d.className = 'msg bot'; d.id = 'typing';
+  d.innerHTML = '<div class="avatar">🤖</div><div class="typing"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>';
+  chatBox.appendChild(d); scrollBottom();
+}
+function removeTyping() { const t = document.getElementById('typing'); if(t) t.remove(); }
+
+function bindChips() {
+  document.querySelectorAll('.chip:not([data-bound])').forEach(c => {
+    c.dataset.bound = '1';
+    c.addEventListener('click', () => handleUserMessage(c.dataset.val));
+  });
+}
+
+function updateScore() {
+  document.getElementById('score-val').textContent = state.score;
+  document.getElementById('total-val').textContent = state.total;
+}
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length-1; i > 0; i--) {
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]] = [a[j],a[i]];
+  }
+  return a;
+}
+
+function normalize(s) { return s.toLowerCase().trim().replace(/\s+/g,' '); }
+
+function checkAnswer(user, correct) {
+  const u = normalize(user), c = normalize(correct);
+  if (u === c) return true;
+  if (c.includes(u) && u.length > 5) return true;
+  const parts = c.split(/[,;\/]/);
+  for (const p of parts) if (u.includes(p.trim()) && p.trim().length > 4) return true;
+  return false;
+}
+
+function showResult() {
+  const pct = Math.round((state.score/state.total)*100);
+  const emoji = pct>=90?'🏆':pct>=70?'🌟':pct>=50?'😊':'💪';
+  const msg = pct>=90?'Napakahusay! Alam mo ang lahat!':pct>=70?'Magaling! Patuloy ka lang!':pct>=50?'Mabuti! Pag-aralan pa nang kaunti!':'Huwag sumuko! Subukan ulit!';
+  document.getElementById('res-emoji').textContent = emoji;
+  document.getElementById('res-score').textContent = state.score;
+  document.getElementById('res-total').textContent = state.total;
+  document.getElementById('res-msg').textContent = msg;
+  document.getElementById('result-overlay').classList.add('show');
+  speak(`Tapos na! Ang iyong puntos ay ${state.score} sa ${state.total}. ${msg}`);
+}
+
+function restartApp() {
+  document.getElementById('result-overlay').classList.remove('show');
+  state = { awaiting:'menu', mode:null, questions:[], allAnswers:[], qIndex:0, score:0, total:0, hintUsed:false, audioEnabled:state.audioEnabled };
+  chatBox.innerHTML = '';
+  document.querySelector('.input-bar').style.display = 'flex';
+  updateScore();
+  showMenu();
+}
+
+// ═══════════════════════════════════════════════════════════════
+// MC HELPERS
+// ═══════════════════════════════════════════════════════════════
+function getAllAnswers() {
+  const ans = [];
+  for (const qs of Object.values(topics)) for (const q of qs) ans.push(q.a);
+  return ans;
+}
+
+function generateChoices(correct, pool) {
+  const distractors = shuffle(pool.filter(a => a !== correct)).slice(0,3);
+  return shuffle([correct, ...distractors]);
+}
+
+function buildMCBtns(choices, correctAnswer) {
+  const letters = ['A','B','C','D','E'];
+  return `<div class="mc-options">${choices.map((c,i)=>
+    `<button class="mc-btn" data-answer="${encodeURIComponent(c)}" data-correct="${encodeURIComponent(correctAnswer)}" onclick="handleMCClick(this)">
+      <span class="letter">${letters[i]}</span>${c}
+    </button>`
+  ).join('')}</div>`;
+}
+
+function handleMCClick(btn) {
+  const allBtns = btn.closest('.mc-options').querySelectorAll('.mc-btn');
+  allBtns.forEach(b => b.disabled = true);
+  const chosen = decodeURIComponent(btn.dataset.answer);
+  const correct = decodeURIComponent(btn.dataset.correct);
+  const isCorrect = chosen === correct;
+  allBtns.forEach(b => { if(decodeURIComponent(b.dataset.answer)===correct) b.classList.add('correct'); });
+  if (!isCorrect) btn.classList.add('wrong');
+  setTimeout(() => {
+    if (isCorrect) {
+      state.score++;
+      addMessage('bot', `✅ <strong>Tama!</strong> +1 puntos! Ang sagot ay: <strong>${correct}</strong>`, `Tama! Ang sagot ay: ${correct}`);
+    } else {
+      addMessage('bot', `❌ <strong>Hindi tama.</strong> Ang tamang sagot ay: <strong>${correct}</strong>`, `Hindi tama. Ang tamang sagot ay: ${correct}`);
+    }
+    state.qIndex++; updateScore();
+    if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+    else setTimeout(showResult, 900);
+  }, 650);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// NEXT QUESTION
+// ═══════════════════════════════════════════════════════════════
+function nextQuestion() {
+  const qi = state.qIndex;
+  const q = state.questions[qi];
+  const num = qi + 1;
+
+  if (state.mode === 'full' || state.mode === 'topic_mc') {
+    const choices = generateChoices(q.a, state.allAnswers);
+    const tag = q.topic ? `<span class="topic-tag">${q.topic}</span><br>` : '';
+    const html = `${tag}<strong>T${num} sa ${state.total}:</strong> ${q.q}${buildMCBtns(choices, q.a)}`;
+    addMessage('bot', html, `Tanong ${num}. ${q.q}`);
+    return;
+  }
+
+  if (state.mode === 'tf') {
+    const html = `<strong>T${num} sa ${state.total}:</strong> <div class="scenario-card">${q.q}</div>
+      <span class="chip" data-val="tama">✅ Tama</span><span class="chip" data-val="mali">❌ Mali</span>`;
+    addMessage('bot', html, `Tanong ${num}. Tama o Mali: ${q.q}`);
+    return;
+  }
+
+  if (state.mode === 'identify') {
+    const btns = buildMCBtns(q.choices, q.a);
+    const html = `<strong>T${num} sa ${state.total}:</strong> Kilalanin kung ano ang tinutukoy:<div class="scenario-card">${q.q}</div>${btns}`;
+    addMessage('bot', html, `Tanong ${num}. Kilalanin ang tinutukoy: ${q.q}`);
+    return;
+  }
+
+  // typed answer mode
+  const tag = q.topic ? `<span class="topic-tag">${q.topic}</span><br>` : '';
+  const html = `${tag}<strong>T${num} sa ${state.total}:</strong> ${q.q}<br><small style="color:var(--muted)">Isulat ang sagot · i-type ang <em>hint</em> para sa tulong · <em>skip</em> para lumipat</small>`;
+  addMessage('bot', html, `Tanong ${num}. ${q.q}`);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// MENU
+// ═══════════════════════════════════════════════════════════════
+function showMenu() {
+  addMessage('bot',
+    `👋 <strong>Kumusta! Ako ang iyong EPP Reviewer!</strong><br>Pag-aaralan natin ang <em>Tamang Pagkilos</em> (pagtayo, paglakad, pag-upo), ang <em>Wastong Pag-uugali</em>, ang <em>Mga Uri ng Kasuotan</em>, at ang <em>Pag-iingat sa Kasuotan</em>.<br><br>Ano ang gusto mong gawin?<br>
+    <span class="chip" data-val="1">📚 Pag-aralan ang Paksa</span>
+    <span class="chip" data-val="2">✅ Tama o Mali</span>
+    <span class="chip" data-val="3">🌐 Kilalanin: Sitwasyon o Kasuotan</span>
+    <span class="chip" data-val="4">🌟 Buong Review (Multiple Choice)</span>`,
+    "Kumusta! Ako ang iyong EPP Reviewer tungkol sa Tamang Pagkilos at Kasuotan. Ano ang gusto mong gawin? Pag-aralan ang paksa, Tama o Mali, Kilalanin, o Buong Review na multiple choice?"
+  );
+  state.awaiting = 'menu';
+}
+
+// ═══════════════════════════════════════════════════════════════
+// PROCESS MESSAGE
+// ═══════════════════════════════════════════════════════════════
+function processMessage(msg) {
+  const aw = state.awaiting;
+
+  // ── MENU ──────────────────────────────────────────────────
+  if (aw === 'menu') {
+    if (msg === '1') {
+      state.awaiting = 'topic';
+      const keys = Object.keys(topics);
+      const chips = keys.map((t,i) => `<span class="chip" data-val="${i+1}">${i+1}. ${t}</span>`).join(' ');
+      addMessage('bot', `📚 Alin ang paksang gusto mong pag-aralan?<br>${chips}`, 'Alin ang paksang gusto mong pag-aralan?');
+
+    } else if (msg === '2') {
+      state.mode = 'tf';
+      state.questions = shuffle(trueOrFalse);
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'tf_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `✅ <strong>Tama o Mali!</strong> ${state.total} tanong. Simulan na!`, `Tama o Mali! ${state.total} tanong. Simulan na!`);
+      setTimeout(nextQuestion, 800);
+
+    } else if (msg === '3') {
+      state.mode = 'identify';
+      state.questions = shuffle(identifyQuestions);
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'mc_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `🌐 <strong>Kilalanin!</strong> Alamin kung ano ang dapat gawin sa bawat sitwasyon, o kung anong uri ng kasuotan ang inilalarawan.`, 'Kilalanin! Alamin kung ano ang tinutukoy sa bawat pahayag.');
+      setTimeout(nextQuestion, 800);
+
+    } else if (msg === '4') {
+      state.mode = 'full';
+      const all = [];
+      for (const [topicName, qs] of Object.entries(topics)) {
+        qs.forEach(q => all.push({...q, topic: topicName}));
+      }
+      state.questions = shuffle(all);
+      state.allAnswers = getAllAnswers();
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'mc_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `🌟 <strong>Buong Review — Multiple Choice!</strong> ${state.total} tanong. Pag-isipang mabuti!`, `Buong Review! Multiple Choice! ${state.total} tanong. Pag-isipang mabuti!`);
+      setTimeout(nextQuestion, 800);
+
+    } else {
+      addMessage('bot',
+        `Pumili ng opsyon:<br>
+        <span class="chip" data-val="1">📚 Pag-aralan ang Paksa</span>
+        <span class="chip" data-val="2">✅ Tama o Mali</span>
+        <span class="chip" data-val="3">🌐 Kilalanin</span>
+        <span class="chip" data-val="4">🌟 Buong Review</span>`,
+        'Pumili ng opsyon.'
+      );
+    }
+    return;
+  }
+
+  // ── TOPIC SELECT ──────────────────────────────────────────
+  if (aw === 'topic') {
+    const keys = Object.keys(topics);
+    const idx = parseInt(msg) - 1;
+    if (keys[idx]) {
+      const topicName = keys[idx];
+      state.mode = 'topic';
+      state.questions = shuffle(topics[topicName]);
+      state.allAnswers = getAllAnswers();
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'answer';
+      document.querySelector('.input-bar').style.display = 'flex';
+      updateScore();
+      addMessage('bot', `📚 <strong>${topicName}</strong> — ${state.total} tanong. Handa ka na ba?`, `${topicName}. ${state.total} tanong. Handa ka na ba?`);
+      setTimeout(nextQuestion, 800);
+    } else {
+      const chips = Object.keys(topics).map((t,i) => `<span class="chip" data-val="${i+1}">${i+1}. ${t}</span>`).join(' ');
+      addMessage('bot', `Pumili ng wastong paksa:<br>${chips}`, 'Pumili ng wastong paksa.');
+    }
+    return;
+  }
+
+  // ── TYPED ANSWER ──────────────────────────────────────────
+  if (aw === 'answer') {
+    const q = state.questions[state.qIndex];
+    const m = normalize(msg);
+
+    if (m === 'hint') {
+      state.hintUsed = true;
+      addMessage('bot', `💡 <strong>Hint:</strong> ${q.hint}`, `Hint: ${q.hint}`);
+      return;
+    }
+    if (m === 'skip') {
+      addMessage('bot', `⏭️ Nilaktawan! Ang tamang sagot ay: <strong>${q.a}</strong>`, `Nilaktawan. Ang tamang sagot ay: ${q.a}`);
+      state.qIndex++; state.hintUsed = false;
+      if (state.qIndex < state.total) setTimeout(nextQuestion, 700);
+      else showResult();
+      return;
+    }
+
+    const correct = checkAnswer(msg, q.a);
+    if (correct) {
+      if (!state.hintUsed) state.score++;
+      const note = state.hintUsed ? ' <em>(ginamit ang hint — walang puntos)</em>' : ' +1 puntos!';
+      addMessage('bot', `✅ <strong>Tama!</strong>${note} Sagot: <strong>${q.a}</strong>`, `Tama! Ang sagot ay: ${q.a}`);
+    } else {
+      addMessage('bot', `❌ <strong>Hindi tama.</strong> Ang tamang sagot ay: <strong>${q.a}</strong>`, `Hindi tama. Ang tamang sagot ay: ${q.a}`);
+    }
+    state.qIndex++; state.hintUsed = false; updateScore();
+    if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+    else setTimeout(showResult, 900);
+    return;
+  }
+
+  // ── TRUE OR FALSE ─────────────────────────────────────────
+  if (aw === 'tf_answer') {
+    const q = state.questions[state.qIndex];
+    const ans = normalize(msg);
+    const valid = ans === 'tama' || ans === 'mali' || ans === 'true' || ans === 'false';
+    const mapped = (ans === 'true') ? 'tama' : (ans === 'false') ? 'mali' : ans;
+
+    if (valid) {
+      const correct = mapped === q.a;
+      if (correct) {
+        state.score++;
+        addMessage('bot', `✅ <strong>Tama!</strong> Ang sagot ay <strong>${q.a.toUpperCase()}</strong>.`, `Tama! Ang sagot ay ${q.a}.`);
+      } else {
+        addMessage('bot', `❌ <strong>Mali.</strong> Ang tamang sagot ay <strong>${q.a.toUpperCase()}</strong>.`, `Mali. Ang tamang sagot ay ${q.a}.`);
+      }
+      state.qIndex++; updateScore();
+      if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+      else setTimeout(showResult, 900);
+    } else {
+      addMessage('bot',
+        `Sagot: Tama o Mali?<br><span class="chip" data-val="tama">✅ Tama</span><span class="chip" data-val="mali">❌ Mali</span>`,
+        'Sagot: Tama o Mali?'
+      );
+    }
+    return;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// CONTROLS
+// ═══════════════════════════════════════════════════════════════
+function handleUserMessage(msg) {
+  if (!msg.trim()) return;
+  
+  // Ihinto nang malinis ang nagsasalitang audio kapag sumagot ang user
+  window.speechSynthesis.cancel();
+  if (currentAudioStream) {
+    currentAudioStream.pause();
+    currentAudioStream = null;
+    showWave(false);
+  }
+  
+  addMessage('user', msg.replace(/</g,'&lt;'));
+  input.value = '';
+  input.disabled = true; sendBtn.disabled = true;
+  addTyping();
+  setTimeout(() => {
+    removeTyping();
+    input.disabled = false; sendBtn.disabled = false;
+    input.focus();
+    processMessage(msg);
+  }, 480);
+}
+
+sendBtn.addEventListener('click', () => { handleUserMessage(input.value); });
+input.addEventListener('keydown', e => { if(e.key==='Enter') handleUserMessage(input.value); });
+
+document.getElementById('audio-toggle').addEventListener('click', function() {
+  state.audioEnabled = !state.audioEnabled;
+  this.textContent = state.audioEnabled ? '🔊' : '🔇';
+  this.classList.toggle('active', state.audioEnabled);
+  if (!state.audioEnabled) {
+    window.speechSynthesis.cancel();
+    if (currentAudioStream) {
+      currentAudioStream.pause();
+      currentAudioStream = null;
+      showWave(false);
+    }
+  }
+});
+
+// ═══════════════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════════════
+window.addEventListener('load', () => {
+  lookupSystemVoices();
+  showMenu();
+});
+
+function printPracticeTest() {
+  document.body.classList.add('printing-test');
+  window.print();
+}
+window.addEventListener('afterprint', () => {
+  document.body.classList.remove('printing-test');
+});
+
+function switchTab(tabId, btn) {
+  document.querySelectorAll('.notes-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.notes-tab').forEach(b => b.classList.remove('active'));
+  document.getElementById(tabId).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+
+<!-- ── Notes Panel ── -->
+<div class="notes-overlay" id="notes-overlay">
+  <div class="notes-panel">
+    <div class="notes-header">
+      <h2>📖 Tamang Pagkilos at Kasuotan — Mga Tala</h2>
+      <div class="notes-header-actions">
+        <button class="print-btn" onclick="printPracticeTest()" title="I-print o i-save bilang PDF ang Practice Test at Answer Key">🖨️ I-print ang Test &amp; Key</button>
+        <button class="notes-close" onclick="document.getElementById('notes-overlay').classList.remove('show')">✕</button>
+      </div>
+    </div>
+    <div class="notes-tabs">
+      <button class="notes-tab active" onclick="switchTab('tab-tayo', this)">🧍 Pagtayo</button>
+      <button class="notes-tab" onclick="switchTab('tab-lakad', this)">🚶 Paglakad</button>
+      <button class="notes-tab" onclick="switchTab('tab-upo', this)">🪑 Pag-upo</button>
+      <button class="notes-tab" onclick="switchTab('tab-usap', this)">💬 Pakikipag-usap</button>
+      <button class="notes-tab" onclick="switchTab('tab-uugali', this)">🙏 Pag-uugali</button>
+      <button class="notes-tab" onclick="switchTab('tab-kasuotan', this)">👕 Uri ng Kasuotan</button>
+      <button class="notes-tab" onclick="switchTab('tab-pili', this)">🎨 Pagpili ng Kasuotan</button>
+      <button class="notes-tab" onclick="switchTab('tab-ingat', this)">🧺 Pag-iingat</button>
+      <button class="notes-tab" onclick="switchTab('tab-tamomali', this)">✅ Tama o Mali</button>
+      <button class="notes-tab" onclick="switchTab('tab-ptest', this)">📝 Practice Test</button>
+      <button class="notes-tab" onclick="switchTab('tab-key', this)">🔑 Answer Key</button>
+    </div>
+    <div class="notes-body">
+
+      <div class="notes-section active" id="tab-tayo">
+        <div class="notes-topic">
+          <div class="notes-topic-title">🧍 Tamang Pagkilos sa Pagtayo</div>
+          <div class="notes-item"><span class="notes-term">Paa</span><span class="notes-def">Isang paa sa unahan, ang isa naman ay nakaanggulong palikod</span></div>
+          <div class="notes-item"><span class="notes-term">Braso at Kamay</span><span class="notes-def">Ilagay sa tagiliran</span></div>
+          <div class="notes-item"><span class="notes-term">Dibdib at Tiyan</span><span class="notes-def">Ilabas ang dibdib, ipasok ang tiyan</span></div>
+          <div class="notes-item"><span class="notes-term">Balikat</span><span class="notes-def">Panatilihing tuwid</span></div>
+          <div class="notes-item"><span class="notes-term">Baba</span><span class="notes-def">Itaas nang katamtaman</span></div>
+          <div class="notes-item"><span class="notes-term">Ulo at Katawan</span><span class="notes-def">Panatilihing tuwid</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-lakad">
+        <div class="notes-topic">
+          <div class="notes-topic-title">🚶 Tamang Pagkilos sa Paglakad</div>
+          <div class="notes-item"><span class="notes-term">Paa</span><span class="notes-def">Panatilihing nakatutok sa unahan</span></div>
+          <div class="notes-item"><span class="notes-term">Hakbang</span><span class="notes-def">Katamtamang distansiya at bilis</span></div>
+          <div class="notes-item"><span class="notes-term">Katawan</span><span class="notes-def">Nakatuwid at nakakarelaks habang naglalakad</span></div>
+          <div class="notes-item"><span class="notes-term">Dibdib at Tiyan</span><span class="notes-def">Iharap ang dibdib, ipaloob ang tiyan</span></div>
+          <div class="notes-item"><span class="notes-term">Balikat at Ulo</span><span class="notes-def">Tiyaking tuwid</span></div>
+          <div class="notes-item"><span class="notes-term">Mata</span><span class="notes-def">Nakatuon sa daan sa harap, hindi sa paa</span></div>
+          <div class="notes-item"><span class="notes-term">Braso at Kamay</span><span class="notes-def">Hayaang likas na gumalaw habang naglalakad</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-upo">
+        <div class="notes-topic">
+          <div class="notes-topic-title">🪑 Tamang Pagkilos sa Pag-upo</div>
+          <div class="notes-item"><span class="notes-term">Una</span><span class="notes-def">Suriin ang upuan kung nasa tamang puwesto ito</span></div>
+          <div class="notes-item"><span class="notes-term">Pag-upo</span><span class="notes-def">Umupo nang dahan-dahan</span></div>
+          <div class="notes-item"><span class="notes-term">Likod</span><span class="notes-def">Iharap nang tuwid sa sandalan ng upuan</span></div>
+          <div class="notes-item"><span class="notes-term">Paa</span><span class="notes-def">Ilapat nang pantay sa sahig</span></div>
+          <div class="notes-item"><span class="notes-term">Kamay</span><span class="notes-def">Ilagay sa kandungan</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-usap">
+        <div class="notes-topic">
+          <div class="notes-topic-title">💬 Pakikipag-usap at Pakikinig sa Kapuwa</div>
+          <div class="notes-item"><span class="notes-term">Boses</span><span class="notes-def">Katamtamang lakas</span></div>
+          <div class="notes-item"><span class="notes-term">Salita</span><span class="notes-def">Gumamit ng magagalang na salita; iwasan ang hindi kaaya-ayang salita</span></div>
+          <div class="notes-item"><span class="notes-term">Hesto</span><span class="notes-def">Gumamit ng tamang gesture ng kamay</span></div>
+          <div class="notes-item"><span class="notes-term">Sa Publiko</span><span class="notes-def">Iwasan ang pagsigaw at pagtawa nang malakas</span></div>
+          <div class="notes-item"><span class="notes-term">Prayoridad</span><span class="notes-def">Matatanda, may kapansanan, kababaihan, at mga buntis sa pag-upo, pag-akyat, at pagbaba ng sasakyan</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-uugali">
+        <div class="notes-topic">
+          <div class="notes-topic-title">🙏 Wastong Pag-uugali</div>
+          <div class="notes-item"><span class="notes-term">Po at Opo</span><span class="notes-def">Panatilihing magalang ang tono sa pakikipag-usap</span></div>
+          <div class="notes-item"><span class="notes-term">Katapatan</span><span class="notes-def">Maging matapat sa lahat ng oras, hindi lang kapag kaharap ang magulang</span></div>
+          <div class="notes-item"><span class="notes-term">Pagbati</span><span class="notes-def">Batiin ang mga kakilala at bisita nang may maaliwalas na mukha</span></div>
+          <div class="notes-item"><span class="notes-term">Pasensiya</span><span class="notes-def">Habaan ito upang makaiwas sa away o gulo</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-kasuotan">
+        <div class="notes-topic">
+          <div class="notes-topic-title">👕 Mga Uri ng Kasuotan</div>
+          <div class="notes-item"><span class="notes-term">Pambahay</span><span class="notes-def">Manipis, magaan, komportable para sa gawaing-bahay</span></div>
+          <div class="notes-item"><span class="notes-term">Panloob</span><span class="notes-def">Isinusuot sa lahat ng pagkakataon para protektahan ang maseselang bahagi</span></div>
+          <div class="notes-item"><span class="notes-term">Pantulog</span><span class="notes-def">Manipis at komportable para sa pagtulog</span></div>
+          <div class="notes-item"><span class="notes-term">Pamasok/Uniporme</span><span class="notes-def">Isinusuot sa paaralan; pagkakakilanlan ng eskuwelahan</span></div>
+          <div class="notes-item"><span class="notes-term">Pang-isports</span><span class="notes-def">Angkop sa paglalaro o pag-eehersisyo</span></div>
+          <div class="notes-item"><span class="notes-term">Panlakad</span><span class="notes-def">Para sa pamamasyal; malaya ang estilo</span></div>
+          <div class="notes-item"><span class="notes-term">Pansimba</span><span class="notes-def">Bestidang may manggas, katamtamang taas, hindi hapit sa katawan</span></div>
+          <div class="notes-item"><span class="notes-term">Panligo/Panlangoy</span><span class="notes-def">Lapat sa katawan; para sa dagat, ilog, palanguyan</span></div>
+          <div class="notes-item"><span class="notes-term">Pantag-init</span><span class="notes-def">Manipis na tela, magaan at maginhawa</span></div>
+          <div class="notes-item"><span class="notes-term">Panlamig/Pantag-ulan</span><span class="notes-def">Isinusuot kapag malamig o umuulan</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-pili">
+        <div class="notes-topic">
+          <div class="notes-topic-title">🎨 Pagpili ng Angkop na Kasuotan</div>
+          <div class="notes-item"><span class="notes-term">Patayong Guhit</span><span class="notes-def">Nagpapamukhang matangkad at/o payat</span></div>
+          <div class="notes-item"><span class="notes-term">Pahalang na Guhit</span><span class="notes-def">Ilusyon ng pagiging malapad at/o mababa</span></div>
+          <div class="notes-item"><span class="notes-term">Malalaking Disenyo</span><span class="notes-def">Angkop sa matatangkad, balingkinitan ang pangangatawan</span></div>
+          <div class="notes-item"><span class="notes-term">Maliliit na Disenyo</span><span class="notes-def">Angkop sa malaki at malapad ang pangangatawan</span></div>
+          <div class="notes-item"><span class="notes-term">Kulay</span><span class="notes-def">Piliing angkop sa kulay ng balat</span></div>
+          <div class="notes-item"><span class="notes-term">Palamuti</span><span class="notes-def">Panali sa buhok, headband, kuwintas, scarf, pulseras — naaayon sa damit at okasyon</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-ingat">
+        <div class="notes-topic">
+          <div class="notes-topic-title">🧺 Pag-iingat sa Kasuotan</div>
+          <div class="notes-item"><span class="notes-term">Basa ng Pawis</span><span class="notes-def">Isabit sa hanger para patuyuin bago ilagay sa labahin o ropero</span></div>
+          <div class="notes-item"><span class="notes-term">May Mantsa</span><span class="notes-def">Labhan agad; iwasan ang matatapang na kemikal</span></div>
+          <div class="notes-item"><span class="notes-term">Damit Panlakad</span><span class="notes-def">Ihanger</span></div>
+          <div class="notes-item"><span class="notes-term">Damit Pambahay</span><span class="notes-def">Tupiin</span></div>
+          <div class="notes-item"><span class="notes-term">May Punit</span><span class="notes-def">Sulsihan muna bago labhan</span></div>
+          <div class="notes-item"><span class="notes-term">Apat na Gawain</span><span class="notes-def">Pagsusulsi, paglalaba, pamamalantsa, at pagtupi</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-tamomali">
+        <div class="notes-topic">
+          <div class="notes-topic-title">✅ Tama o Mali — Mga Paalala</div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">MALI</span><span class="notes-def">Palaging tumingin sa paa kapag naglalakad → dapat nakatuon ang mata sa daan sa harap.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">MALI</span><span class="notes-def">Panatilihing nakatayo ang matanda sa bus → dapat bigyan sila ng prayoridad na maupo.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">MALI</span><span class="notes-def">Maging matapat lamang kapag kaharap ang magulang → dapat maging matapat sa lahat ng pagkakataon.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">MALI</span><span class="notes-def">Sa tamang pagtayo, ilabas ang tiyan, ipasok ang dibdib → baligtad ito; ilabas ang dibdib, ipasok ang tiyan.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">MALI</span><span class="notes-def">Panloob na kasuotan ay isinusuot lamang tuwing maliligo → dapat isinusuot sa lahat ng pagkakataon.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">MALI</span><span class="notes-def">Kasuotang panligo/panlangoy ay dapat maluwag → dapat itong lapat sa katawan.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">MALI</span><span class="notes-def">Pahalang na guhit ay nagpapamukhang payat → nagbibigay ito ng ilusyon ng pagiging malapad.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">MALI</span><span class="notes-def">Labhan agad ang namantsahang damit gamit ang matatapang na kemikal → dapat iwasan ang matatapang na kemikal.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">MALI</span><span class="notes-def">Ihanger ang damit pambahay, tupiin ang panlakad → baligtad ito; ihanger ang panlakad, tupiin ang pambahay.</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-ptest">
+        <div class="notes-topic">
+          <div class="notes-topic-title">📝 Practice Test</div>
+<div class="ptest-part-title">Part I — Tsek (✓) o Ekis (✗)</div>
+<div class="ptest-bank">Lagyan ng tsek (✓) kung wasto ang pagkilos, ekis (✗) kung hindi.</div><div class="ptest-q"><b>1.</b> Sa pag-upo, dapat ay nakalapat nang pantay ang mga paa sa sahig. <span class="opt">Sagot: ______</span></div><div class="ptest-q"><b>2.</b> Palaging dapat tumingin sa mga paa kapag naglalakad. <span class="opt">Sagot: ______</span></div><div class="ptest-q"><b>3.</b> Dapat panatilihing nakatayo ang matanda sa loob ng bus hanggang wala pang bumababa. <span class="opt">Sagot: ______</span></div><div class="ptest-q"><b>4.</b> Dapat maging matapat lamang kapag kaharap ang mga magulang. <span class="opt">Sagot: ______</span></div><div class="ptest-q"><b>5.</b> Dapat magtimpi upang makaiwas sa anumang away o gulo. <span class="opt">Sagot: ______</span></div><div class="ptest-part-title">Part II — Multiple Choice (Sitwasyon)</div><div class="ptest-q"><b>6.</b> Basang-basa ng pawis ang damit ni Simon dahil sa paglalaro ng basketbol. Ano ang dapat niyang gawin sa kaniyang damit pag-uwi sa bahay?<br><span class="opt">a) Ilagay sa ropero ang damit na hinubad.</span><span class="opt">b) Isampay sa sofa upang matuyo ang pawis.</span><span class="opt">c) Ilagay sa loob ng aparador upang magamit muli.</span><span class="opt">d) Patuyuin ang pawis sa hanger saka ilagay sa ropero.</span></div><div class="ptest-q"><b>7.</b> Natapunan ng tsokolate ang uniporme ni Danny. Ano ang dapat niyang gawin pag-uwi ng bahay?<br><span class="opt">a) Labhan agad ito upang matanggal ang mantsa.</span><span class="opt">b) Isampay para mahanginan at matuyo muna ang mantsa.</span><span class="opt">c) Ilagay agad sa ropero para maisama sa labahin.</span><span class="opt">d) Ibabad sa tubig na may sabon at kloro (chlorine).</span></div><div class="ptest-q"><b>8.</b> Ano ang dapat tandaan sa pagtutupi at pagsasaayos ng damit?<br><span class="opt">a) Tupiin ang mga damit pambahay at panlakad, saka isalansan sa aparador.</span><span class="opt">b) Ihanger ang mga damit panlakad, tupiin ang mga pambahay, saka ilagay sa aparador.</span><span class="opt">c) Pagsamahin lamang ang mga damit sa kani-kaniyang aparador.</span><span class="opt">d) Ilagay sa loob ng isang aparador ang lahat ng uri ng kasuotan.</span></div><div class="ptest-q"><b>9.</b> Maglalaba na si Ben nang mapansin niyang may punit ang kaniyang uniporme. Ano ang dapat niyang gawin?<br><span class="opt">a) Hiwalay ito at hayaan ang nanay na maglaba.</span><span class="opt">b) Labhan muna ang uniporme saka sabihin na may punit ito.</span><span class="opt">c) Labhan muna ang uniporme saka ito sulsihan.</span><span class="opt">d) Sulsihan muna ang uniporme bago ito labhan.</span></div><div class="ptest-q"><b>10.</b> Pumunta kayo ng kaibigan mo sa basketball court para manood ng liga. Paupo ka na sana nang mapansin mong marami palang alikabok ang upuan mo. Ano ang dapat mong gawin?<br><span class="opt">a) Umupo na lamang at magpalit na lang pag-uwi.</span><span class="opt">b) Huwag na lamang manood ng liga.</span><span class="opt">c) Linisin ang upuan bago umupo.</span><span class="opt">d) Makipagpalit sa kaibigan ng upuan.</span></div><div class="ptest-part-title">Part III — Tama o Mali</div><div class="ptest-q"><b>11.</b> Ang maayos na postura ay makatutulong upang maiwasan ang pagsakit ng likod at leeg. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>12.</b> Sa tamang pagtayo, dapat ilabas ang tiyan at ipasok ang dibdib. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>13.</b> Sa tamang pag-upo, dapat suriin muna ang upuan bago umupo. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>14.</b> Dapat gumamit ng magagalang na salita sa pakikipag-usap. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>15.</b> Dapat bigyan ng prayoridad ang matatanda at buntis sa pag-upo sa sasakyan. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>16.</b> Ang panloob na kasuotan ay isinusuot lamang tuwing maliligo. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>17.</b> Ang uniporme ay nagsisilbing pagkakakilanlan ng paaralang pinapasukan. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>18.</b> Ang kasuotang panligo o panlangoy ay dapat maluwag at hindi lapat sa katawan. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>19.</b> Ang kasuotang may patayong guhit ay nagpapamukhang matangkad. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>20.</b> Ang kasuotang may pahalang na guhit ay nagbibigay ng ilusyon ng pagiging payat. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>21.</b> Ang mga kasuotang may malalaking disenyo ay angkop sa matatangkad at balingkinitan ang pangangatawan. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>22.</b> Dapat labhan agad ang namantsahang damit gamit ang matatapang na kemikal. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>23.</b> Dapat ihanger ang mga damit pambahay at tupiin ang mga damit panlakad. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>24.</b> Dapat sulsihan ang punit na damit bago ito labhan. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>25.</b> Ang pagsusuot ng malinis at angkop na kasuotan ay nagpapakita ng pagiging maayos at organisado. <span class="opt">Sagot: ______________________</span></div><div class="ptest-part-title">Part IV — Multiple Choice (Uri ng Kasuotan)</div><div class="ptest-q"><b>31.</b> Manipis, magaan, at komportable upang maging madali ang paggawa ng gawaing-bahay.<br><span class="opt">a) Pambahay</span><span class="opt">b) Pantulog</span><span class="opt">c) Pang-isports</span><span class="opt">d) Panlakad</span></div><div class="ptest-q"><b>32.</b> Isinusuot sa lahat ng pagkakataon upang protektahan ang maseselang bahagi ng katawan.<br><span class="opt">a) Panloob</span><span class="opt">b) Pambahay</span><span class="opt">c) Pamasok</span><span class="opt">d) Pantag-init</span></div><div class="ptest-q"><b>33.</b> Karaniwang manipis at komportable upang makatulog nang maayos.<br><span class="opt">a) Pantulog</span><span class="opt">b) Pambahay</span><span class="opt">c) Panloob</span><span class="opt">d) Panlakad</span></div><div class="ptest-q"><b>34.</b> Tinatawag ding uniporme; nagsisilbing pagkakakilanlan ng paaralan.<br><span class="opt">a) Pamasok</span><span class="opt">b) Pang-isports</span><span class="opt">c) Panlakad</span><span class="opt">d) Pansimba</span></div><div class="ptest-q"><b>35.</b> Angkop sa mga aktibong pagkilos tulad ng paglalaro o pag-eehersisyo.<br><span class="opt">a) Pang-isports</span><span class="opt">b) Pambahay</span><span class="opt">c) Pansimba</span><span class="opt">d) Panligo o Panlangoy</span></div><div class="ptest-q"><b>36.</b> Ginagamit sa pamamasyal; malaya ang estilo ng pananamit.<br><span class="opt">a) Panlakad</span><span class="opt">b) Pamasok</span><span class="opt">c) Pantulog</span><span class="opt">d) Panloob</span></div><div class="ptest-q"><b>37.</b> Bestidang may manggas at katamtamang taas, hindi hapit sa katawan.<br><span class="opt">a) Pansimba</span><span class="opt">b) Panlakad</span><span class="opt">c) Pang-isports</span><span class="opt">d) Pantag-init</span></div><div class="ptest-q"><b>38.</b> Lapat sa katawan; ginagamit sa dagat, ilog, o palanguyan.<br><span class="opt">a) Panligo o Panlangoy</span><span class="opt">b) Pantulog</span><span class="opt">c) Pambahay</span><span class="opt">d) Panloob</span></div><div class="ptest-q"><b>39.</b> Manipis na tela na magaan at maginhawang isuot.<br><span class="opt">a) Pantag-init</span><span class="opt">b) Panlamig at Pantag-ulan</span><span class="opt">c) Pamasok</span><span class="opt">d) Pansimba</span></div><div class="ptest-q"><b>40.</b> Madalas isuot kapag malamig ang panahon o umuulan.<br><span class="opt">a) Panlamig at Pantag-ulan</span><span class="opt">b) Pantag-init</span><span class="opt">c) Pang-isports</span><span class="opt">d) Panlakad</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-key">
+        <div class="notes-topic">
+<div class="notes-topic-title">Part I — Tsek o Ekis</div><div class="key-grid"><div class="key-pill">1. <b>✓</b></div><div class="key-pill">2. <b>✗</b></div><div class="key-pill">3. <b>✗</b></div><div class="key-pill">4. <b>✗</b></div><div class="key-pill">5. <b>✓</b></div></div><div class="notes-topic-title">Part II — Multiple Choice (Sitwasyon)</div><div class="key-grid"><div class="key-pill">6. <b>Patuyuin ang pawis sa hanger saka ilagay sa ropero.</b></div><div class="key-pill">7. <b>Labhan agad ito upang matanggal ang mantsa.</b></div><div class="key-pill">8. <b>Ihanger ang mga damit panlakad, tupiin ang mga pambahay, saka ilagay sa aparador.</b></div><div class="key-pill">9. <b>Sulsihan muna ang uniporme bago ito labhan.</b></div><div class="key-pill">10. <b>Linisin ang upuan bago umupo.</b></div></div><div class="notes-topic-title">Part III — Tama o Mali</div><div class="key-grid"><div class="key-pill">11. <b>TAMA</b></div><div class="key-pill">12. <b>MALI</b></div><div class="key-pill">13. <b>TAMA</b></div><div class="key-pill">14. <b>TAMA</b></div><div class="key-pill">15. <b>TAMA</b></div><div class="key-pill">16. <b>MALI</b></div><div class="key-pill">17. <b>TAMA</b></div><div class="key-pill">18. <b>MALI</b></div><div class="key-pill">19. <b>TAMA</b></div><div class="key-pill">20. <b>MALI</b></div><div class="key-pill">21. <b>TAMA</b></div><div class="key-pill">22. <b>MALI</b></div><div class="key-pill">23. <b>MALI</b></div><div class="key-pill">24. <b>TAMA</b></div><div class="key-pill">25. <b>TAMA</b></div></div><div class="notes-topic-title">Part IV — Multiple Choice (Uri ng Kasuotan)</div><div class="key-grid"><div class="key-pill">31. <b>Pambahay</b></div><div class="key-pill">32. <b>Panloob</b></div><div class="key-pill">33. <b>Pantulog</b></div><div class="key-pill">34. <b>Pamasok</b></div><div class="key-pill">35. <b>Pang-isports</b></div><div class="key-pill">36. <b>Panlakad</b></div><div class="key-pill">37. <b>Pansimba</b></div><div class="key-pill">38. <b>Panligo o Panlangoy</b></div><div class="key-pill">39. <b>Pantag-init</b></div><div class="key-pill">40. <b>Panlamig at Pantag-ulan</b></div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ── Hidden Print Area (Practice Test + Answer Key) ── -->
+<div id="print-area">
+<div class="p-cover">
+    <div class="p-icon">🧍</div>
+    <h1>EPP 4 — Tamang Pagkilos at Kasuotan Practice Test</h1>
+    <div class="p-sub">Pagtayo, Paglakad, at Pag-upo · Pakikipag-usap · Uri ng Kasuotan · Pag-iingat sa Damit</div>
+    <div class="p-info-box">
+      <div><strong>Pangalan:</strong> _____________________________________</div>
+      <div><strong>Baitang/Pangkat:</strong> ___________________ &nbsp; <strong>Petsa:</strong> ___________________</div>
+      <div><strong>Iskor:</strong> _______ / 35</div>
+    </div>
+    <div class="p-instructions">
+      <strong>Panuto:</strong> Basahing mabuti ang bawat aytem. Lagyan ng tsek o ekis ang patlang (Bahagi I), o piliin ang tamang letra (Bahagi II at IV), o isulat ang sagot (Bahagi III). Good luck!
+    </div>
+  </div>
+
+  <h2 class="p-part-title">Bahagi I — Tsek (✓) o Ekis (✗)</h2>
+  <div class="p-bank">Lagyan ng tsek (✓) kung wasto ang pagkilos, ekis (✗) kung hindi.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>1.</b> Sa pag-upo, dapat ay nakalapat nang pantay ang mga paa sa sahig.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>2.</b> Palaging dapat tumingin sa mga paa kapag naglalakad.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>3.</b> Dapat panatilihing nakatayo ang matanda sa loob ng bus hanggang wala pang bumababa.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>4.</b> Dapat maging matapat lamang kapag kaharap ang mga magulang.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>5.</b> Dapat magtimpi upang makaiwas sa anumang away o gulo.</div><h2 class="p-part-title">Bahagi II — Multiple Choice (Sitwasyon)</h2><div class="p-q"><b>6.</b> Basang-basa ng pawis ang damit ni Simon dahil sa paglalaro ng basketbol. Ano ang dapat niyang gawin sa kaniyang damit pag-uwi sa bahay?<br><span class="p-opt">a) Ilagay sa ropero ang damit na hinubad.</span><span class="p-opt">b) Isampay sa sofa upang matuyo ang pawis.</span><span class="p-opt">c) Ilagay sa loob ng aparador upang magamit muli.</span><span class="p-opt">d) Patuyuin ang pawis sa hanger saka ilagay sa ropero.</span></div><div class="p-q"><b>7.</b> Natapunan ng tsokolate ang uniporme ni Danny. Ano ang dapat niyang gawin pag-uwi ng bahay?<br><span class="p-opt">a) Labhan agad ito upang matanggal ang mantsa.</span><span class="p-opt">b) Isampay para mahanginan at matuyo muna ang mantsa.</span><span class="p-opt">c) Ilagay agad sa ropero para maisama sa labahin.</span><span class="p-opt">d) Ibabad sa tubig na may sabon at kloro (chlorine).</span></div><div class="p-q"><b>8.</b> Ano ang dapat tandaan sa pagtutupi at pagsasaayos ng damit?<br><span class="p-opt">a) Tupiin ang mga damit pambahay at panlakad, saka isalansan sa aparador.</span><span class="p-opt">b) Ihanger ang mga damit panlakad, tupiin ang mga pambahay, saka ilagay sa aparador.</span><span class="p-opt">c) Pagsamahin lamang ang mga damit sa kani-kaniyang aparador.</span><span class="p-opt">d) Ilagay sa loob ng isang aparador ang lahat ng uri ng kasuotan.</span></div><div class="p-q"><b>9.</b> Maglalaba na si Ben nang mapansin niyang may punit ang kaniyang uniporme. Ano ang dapat niyang gawin?<br><span class="p-opt">a) Hiwalay ito at hayaan ang nanay na maglaba.</span><span class="p-opt">b) Labhan muna ang uniporme saka sabihin na may punit ito.</span><span class="p-opt">c) Labhan muna ang uniporme saka ito sulsihan.</span><span class="p-opt">d) Sulsihan muna ang uniporme bago ito labhan.</span></div><div class="p-q"><b>10.</b> Pumunta kayo ng kaibigan mo sa basketball court para manood ng liga. Paupo ka na sana nang mapansin mong marami palang alikabok ang upuan mo. Ano ang dapat mong gawin?<br><span class="p-opt">a) Umupo na lamang at magpalit na lang pag-uwi.</span><span class="p-opt">b) Huwag na lamang manood ng liga.</span><span class="p-opt">c) Linisin ang upuan bago umupo.</span><span class="p-opt">d) Makipagpalit sa kaibigan ng upuan.</span></div><div class="p-break"></div><h2 class="p-part-title">Bahagi III — Tama o Mali</h2><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>11.</b> Ang maayos na postura ay makatutulong upang maiwasan ang pagsakit ng likod at leeg.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>12.</b> Sa tamang pagtayo, dapat ilabas ang tiyan at ipasok ang dibdib.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>13.</b> Sa tamang pag-upo, dapat suriin muna ang upuan bago umupo.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>14.</b> Dapat gumamit ng magagalang na salita sa pakikipag-usap.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>15.</b> Dapat bigyan ng prayoridad ang matatanda at buntis sa pag-upo sa sasakyan.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>16.</b> Ang panloob na kasuotan ay isinusuot lamang tuwing maliligo.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>17.</b> Ang uniporme ay nagsisilbing pagkakakilanlan ng paaralang pinapasukan.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>18.</b> Ang kasuotang panligo o panlangoy ay dapat maluwag at hindi lapat sa katawan.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>19.</b> Ang kasuotang may patayong guhit ay nagpapamukhang matangkad.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>20.</b> Ang kasuotang may pahalang na guhit ay nagbibigay ng ilusyon ng pagiging payat.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>21.</b> Ang mga kasuotang may malalaking disenyo ay angkop sa matatangkad at balingkinitan ang pangangatawan.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>22.</b> Dapat labhan agad ang namantsahang damit gamit ang matatapang na kemikal.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>23.</b> Dapat ihanger ang mga damit pambahay at tupiin ang mga damit panlakad.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>24.</b> Dapat sulsihan ang punit na damit bago ito labhan.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>25.</b> Ang pagsusuot ng malinis at angkop na kasuotan ay nagpapakita ng pagiging maayos at organisado.</div><h2 class="p-part-title">Bahagi IV — Multiple Choice (Uri ng Kasuotan)</h2><div class="p-q"><b>31.</b> Manipis, magaan, at komportable upang maging madali ang paggawa ng gawaing-bahay.<br><span class="p-opt">a) Pambahay</span><span class="p-opt">b) Pantulog</span><span class="p-opt">c) Pang-isports</span><span class="p-opt">d) Panlakad</span></div><div class="p-q"><b>32.</b> Isinusuot sa lahat ng pagkakataon upang protektahan ang maseselang bahagi ng katawan.<br><span class="p-opt">a) Panloob</span><span class="p-opt">b) Pambahay</span><span class="p-opt">c) Pamasok</span><span class="p-opt">d) Pantag-init</span></div><div class="p-q"><b>33.</b> Karaniwang manipis at komportable upang makatulog nang maayos.<br><span class="p-opt">a) Pantulog</span><span class="p-opt">b) Pambahay</span><span class="p-opt">c) Panloob</span><span class="p-opt">d) Panlakad</span></div><div class="p-q"><b>34.</b> Tinatawag ding uniporme; nagsisilbing pagkakakilanlan ng paaralan.<br><span class="p-opt">a) Pamasok</span><span class="p-opt">b) Pang-isports</span><span class="p-opt">c) Panlakad</span><span class="p-opt">d) Pansimba</span></div><div class="p-q"><b>35.</b> Angkop sa mga aktibong pagkilos tulad ng paglalaro o pag-eehersisyo.<br><span class="p-opt">a) Pang-isports</span><span class="p-opt">b) Pambahay</span><span class="p-opt">c) Pansimba</span><span class="p-opt">d) Panligo o Panlangoy</span></div><div class="p-q"><b>36.</b> Ginagamit sa pamamasyal; malaya ang estilo ng pananamit.<br><span class="p-opt">a) Panlakad</span><span class="p-opt">b) Pamasok</span><span class="p-opt">c) Pantulog</span><span class="p-opt">d) Panloob</span></div><div class="p-q"><b>37.</b> Bestidang may manggas at katamtamang taas, hindi hapit sa katawan.<br><span class="p-opt">a) Pansimba</span><span class="p-opt">b) Panlakad</span><span class="p-opt">c) Pang-isports</span><span class="p-opt">d) Pantag-init</span></div><div class="p-q"><b>38.</b> Lapat sa katawan; ginagamit sa dagat, ilog, o palanguyan.<br><span class="p-opt">a) Panligo o Panlangoy</span><span class="p-opt">b) Pantulog</span><span class="p-opt">c) Pambahay</span><span class="p-opt">d) Panloob</span></div><div class="p-q"><b>39.</b> Manipis na tela na magaan at maginhawang isuot.<br><span class="p-opt">a) Pantag-init</span><span class="p-opt">b) Panlamig at Pantag-ulan</span><span class="p-opt">c) Pamasok</span><span class="p-opt">d) Pansimba</span></div><div class="p-q"><b>40.</b> Madalas isuot kapag malamig ang panahon o umuulan.<br><span class="p-opt">a) Panlamig at Pantag-ulan</span><span class="p-opt">b) Pantag-init</span><span class="p-opt">c) Pang-isports</span><span class="p-opt">d) Panlakad</span></div><div class="p-break"></div><h2 class="p-part-title">✅ Complete Answer Key</h2>
+  <div class="p-key-part-title">Part I — Tsek o Ekis</div><div class="p-key-grid"><div class="p-key-pill">1. <b>✓</b></div><div class="p-key-pill">2. <b>✗</b></div><div class="p-key-pill">3. <b>✗</b></div><div class="p-key-pill">4. <b>✗</b></div><div class="p-key-pill">5. <b>✓</b></div></div><div class="p-key-part-title">Part II — Multiple Choice (Sitwasyon)</div><div class="p-key-grid"><div class="p-key-pill">6. <b>Patuyuin ang pawis sa hanger saka ilagay sa ropero.</b></div><div class="p-key-pill">7. <b>Labhan agad ito upang matanggal ang mantsa.</b></div><div class="p-key-pill">8. <b>Ihanger ang mga damit panlakad, tupiin ang mga pambahay, saka ilagay sa aparador.</b></div><div class="p-key-pill">9. <b>Sulsihan muna ang uniporme bago ito labhan.</b></div><div class="p-key-pill">10. <b>Linisin ang upuan bago umupo.</b></div></div><div class="p-key-part-title">Part III — Tama o Mali</div><div class="p-key-grid"><div class="p-key-pill">11. <b>TAMA</b></div><div class="p-key-pill">12. <b>MALI</b></div><div class="p-key-pill">13. <b>TAMA</b></div><div class="p-key-pill">14. <b>TAMA</b></div><div class="p-key-pill">15. <b>TAMA</b></div><div class="p-key-pill">16. <b>MALI</b></div><div class="p-key-pill">17. <b>TAMA</b></div><div class="p-key-pill">18. <b>MALI</b></div><div class="p-key-pill">19. <b>TAMA</b></div><div class="p-key-pill">20. <b>MALI</b></div><div class="p-key-pill">21. <b>TAMA</b></div><div class="p-key-pill">22. <b>MALI</b></div><div class="p-key-pill">23. <b>MALI</b></div><div class="p-key-pill">24. <b>TAMA</b></div><div class="p-key-pill">25. <b>TAMA</b></div></div><div class="p-key-part-title">Part IV — Multiple Choice (Uri ng Kasuotan)</div><div class="p-key-grid"><div class="p-key-pill">31. <b>Pambahay</b></div><div class="p-key-pill">32. <b>Panloob</b></div><div class="p-key-pill">33. <b>Pantulog</b></div><div class="p-key-pill">34. <b>Pamasok</b></div><div class="p-key-pill">35. <b>Pang-isports</b></div><div class="p-key-pill">36. <b>Panlakad</b></div><div class="p-key-pill">37. <b>Pansimba</b></div><div class="p-key-pill">38. <b>Panligo o Panlangoy</b></div><div class="p-key-pill">39. <b>Pantag-init</b></div><div class="p-key-pill">40. <b>Panlamig at Pantag-ulan</b></div></div>
+</div>
+
+</body>
+</html>
