@@ -625,9 +625,9 @@ header .sub { font-size: .72rem; color: var(--muted); margin-top: 1px; }
 <div class="result-overlay" id="result-overlay">
   <div class="result-card">
     <span class="result-emoji" id="res-emoji">🏆</span>
-    <div class="result-title">Tapos na!</div>
+    <div class="result-title">Quiz Complete!</div>
     <div class="result-score"><span id="res-score">0</span>/<span id="res-total">0</span></div>
-    <div class="result-msg" id="res-msg">Magaling!</div>
+    <div class="result-msg" id="res-msg">Great job!</div>
     <button class="result-btn" onclick="restartApp()">🔄 Maglaro Ulit</button>
   </div>
 </div>
@@ -757,7 +757,7 @@ function speak(text) {
   currentAudioStream.onended = currentAudioStream.onerror = () => showWave(false);
   
   currentAudioStream.play().catch(err => {
-    // BACKUP METHOD: Web Speech API (Gagana kapag walang internet connection)
+    // BACKUP METHOD: Web Speech API (works even without internet)
     console.warn("Google TTS blocked or offline. Falling back to local system speech engine.");
     
     const streamFallback = new SpeechSynthesisUtterance(clean);
@@ -868,13 +868,13 @@ function checkAnswer(user, correct) {
 function showResult() {
   const pct = Math.round((state.score/state.total)*100);
   const emoji = pct>=90?'🏆':pct>=70?'🌟':pct>=50?'😊':'💪';
-  const msg = pct>=90?'Napakahusay! Alam mo ang lahat!':pct>=70?'Magaling! Patuloy ka lang!':pct>=50?'Mabuti! Pag-aralan pa nang kaunti!':'Huwag sumuko! Subukan ulit!';
+  const msg = pct>=90?'Excellent! You know it all!':pct>=70?'Great job! Keep it up!':pct>=50?'Good! Study a little more!':"Don't give up! Try again!";
   document.getElementById('res-emoji').textContent = emoji;
   document.getElementById('res-score').textContent = state.score;
   document.getElementById('res-total').textContent = state.total;
   document.getElementById('res-msg').textContent = msg;
   document.getElementById('result-overlay').classList.add('show');
-  speak(`Tapos na! Ang iyong puntos ay ${state.score} sa ${state.total}. ${msg}`);
+  speak(`All done! Your score is ${state.score} out of ${state.total}. ${msg}`);
 }
 
 function restartApp() {
@@ -920,9 +920,9 @@ function handleMCClick(btn) {
   setTimeout(() => {
     if (isCorrect) {
       state.score++;
-      addMessage('bot', `✅ <strong>Tama!</strong> +1 puntos! Ang sagot ay: <strong>${correct}</strong>`, `Tama! Ang sagot ay: ${correct}`);
+      addMessage('bot', `✅ <strong>Correct!</strong> +1 point! The answer is: <strong>${correct}</strong>`, `Correct! The answer is: ${correct}`);
     } else {
-      addMessage('bot', `❌ <strong>Hindi tama.</strong> Ang tamang sagot ay: <strong>${correct}</strong>`, `Hindi tama. Ang tamang sagot ay: ${correct}`);
+      addMessage('bot', `❌ <strong>Not quite.</strong> The correct answer is: <strong>${correct}</strong>`, `Not quite. The correct answer is: ${correct}`);
     }
     state.qIndex++; updateScore();
     if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
