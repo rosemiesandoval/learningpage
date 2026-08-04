@@ -1,0 +1,1274 @@
+<!DOCTYPE html>
+<html lang="tl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>✝️ Religion: Jesus the Healer and Servant Reviewer 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --gold: #f59e0b;
+  --gold-dark: #b45309;
+  --blue: #3b82f6;
+  --blue-dark: #1d4ed8;
+  --red: #ef4444;
+  --green: #22c55e;
+  --bg: #0c1a0e;
+  --surface: #132015;
+  --surface2: #1a2e1d;
+  --text: #f0fdf4;
+  --muted: #86efac;
+  --border: #166534;
+}
+
+body {
+  font-family: 'Baloo 2', cursive;
+  background: var(--bg);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--text);
+  background-image:
+    radial-gradient(ellipse at 10% 30%, rgba(245,158,11,.06) 0%, transparent 55%),
+    radial-gradient(ellipse at 90% 70%, rgba(59,130,246,.06) 0%, transparent 55%);
+}
+
+header {
+  width: 100%;
+  background: linear-gradient(135deg, #14532d, #1e3a5f);
+  border-bottom: 2px solid var(--gold-dark);
+  padding: 13px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 4px 30px rgba(0,0,0,.5);
+}
+.header-icon { font-size: 2rem; animation: float 3s ease-in-out infinite; }
+@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
+
+header h1 {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.45rem;
+  background: linear-gradient(90deg, var(--gold), #fde68a, var(--gold));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+header .sub { font-size: .72rem; color: var(--muted); margin-top: 1px; }
+
+.header-controls { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+.score-pill {
+  background: rgba(245,158,11,.15);
+  border: 1px solid rgba(245,158,11,.4);
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-weight: 800;
+  font-size: .85rem;
+  color: var(--gold);
+}
+.audio-btn {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  background: var(--surface2);
+  color: var(--text);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all .2s;
+  display: flex; align-items: center; justify-content: center;
+}
+.audio-btn:hover, .audio-btn.active { background: #14532d; border-color: var(--gold); }
+
+.chat-wrap {
+  width: 100%; max-width: 700px; flex: 1;
+  display: flex; flex-direction: column;
+  padding: 16px 14px 0;
+}
+
+#chat-box {
+  flex: 1; overflow-y: auto;
+  display: flex; flex-direction: column;
+  gap: 14px; padding-bottom: 10px;
+  max-height: calc(100vh - 200px);
+  scroll-behavior: smooth;
+}
+#chat-box::-webkit-scrollbar { width: 4px; }
+#chat-box::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+.msg { display: flex; gap: 8px; }
+.msg.user { flex-direction: row-reverse; }
+
+.avatar {
+  width: 34px; height: 34px; border-radius: 50%;
+  font-size: 1rem; display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 2px;
+}
+.msg.bot .avatar { background: linear-gradient(135deg, #14532d, #1e3a5f); border: 1.5px solid rgba(245,158,11,.4); }
+.msg.user .avatar { background: linear-gradient(135deg, #1e3a5f, #14532d); border: 1.5px solid rgba(59,130,246,.3); }
+
+.bubble {
+  max-width: 80%;
+  padding: 11px 16px;
+  border-radius: 18px;
+  font-size: .9rem;
+  line-height: 1.65;
+  animation: pop .22s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes pop { from{transform:scale(.88) translateY(6px);opacity:0} to{transform:scale(1) translateY(0);opacity:1} }
+
+.msg.bot .bubble {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-bottom-left-radius: 5px;
+}
+.msg.user .bubble {
+  background: linear-gradient(135deg, #1e3a5f, var(--blue-dark));
+  border-bottom-right-radius: 5px;
+}
+
+/* chips */
+.chip {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: rgba(245,158,11,.12);
+  border: 1.5px solid rgba(245,158,11,.4);
+  color: var(--gold);
+  border-radius: 30px;
+  padding: 5px 13px; margin: 5px 4px 0 0;
+  font-size: .8rem; font-weight: 700;
+  cursor: pointer; transition: all .15s;
+  user-select: none; font-family: 'Baloo 2', cursive;
+}
+.chip:hover {
+  background: var(--gold-dark); color: white;
+  border-color: var(--gold);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(245,158,11,.3);
+}
+
+/* topic tag */
+.topic-tag {
+  display: inline-block;
+  background: linear-gradient(135deg, #14532d, #166534);
+  border: 1px solid var(--gold-dark);
+  color: var(--gold);
+  font-size: .68rem; font-weight: 800;
+  border-radius: 20px; padding: 2px 10px;
+  margin-bottom: 5px; letter-spacing: .5px;
+  text-transform: uppercase;
+}
+
+/* multiple choice */
+.mc-options { display: flex; flex-direction: column; gap: 7px; margin-top: 10px; width: 100%; }
+.mc-btn {
+  display: flex; align-items: center; gap: 10px;
+  background: rgba(255,255,255,.03);
+  border: 1.5px solid var(--border);
+  border-radius: 12px; padding: 9px 14px;
+  color: var(--text); font-family: 'Baloo 2', cursive;
+  font-size: .87rem; font-weight: 600;
+  cursor: pointer; transition: all .15s; text-align: left; width: 100%;
+}
+.mc-btn:hover:not(:disabled) {
+  background: rgba(245,158,11,.12); border-color: var(--gold);
+  color: var(--gold); transform: translateX(3px);
+}
+.mc-btn .letter {
+  display: flex; align-items: center; justify-content: center;
+  width: 26px; height: 26px; border-radius: 8px;
+  background: rgba(245,158,11,.15); border: 1px solid rgba(245,158,11,.35);
+  color: var(--gold); font-size: .78rem; font-weight: 800;
+  flex-shrink: 0; transition: all .15s;
+}
+.mc-btn:hover:not(:disabled) .letter { background: var(--gold-dark); color: white; border-color: var(--gold-dark); }
+.mc-btn.correct { background: rgba(34,197,94,.15)!important; border-color: #22c55e!important; color: #22c55e!important; cursor: default; }
+.mc-btn.correct .letter { background: #22c55e!important; color: white!important; border-color: #22c55e!important; }
+.mc-btn.wrong { background: rgba(239,68,68,.12)!important; border-color: #ef4444!important; color: #ef4444!important; cursor: default; }
+.mc-btn.wrong .letter { background: #ef4444!important; color: white!important; border-color: #ef4444!important; }
+.mc-btn:disabled { cursor: default; transform: none!important; }
+
+/* speaker wave */
+.speaker-wave {
+  display: inline-flex; align-items: flex-end;
+  gap: 2px; height: 14px; margin-left: 6px; vertical-align: middle;
+}
+.speaker-wave span {
+  display: block; width: 3px; border-radius: 2px;
+  background: var(--gold); animation: wave 1s ease-in-out infinite;
+}
+.speaker-wave span:nth-child(1){height:4px;animation-delay:0s}
+.speaker-wave span:nth-child(2){height:10px;animation-delay:.1s}
+.speaker-wave span:nth-child(3){height:6px;animation-delay:.2s}
+.speaker-wave span:nth-child(4){height:12px;animation-delay:.15s}
+.speaker-wave span:nth-child(5){height:4px;animation-delay:.05s}
+@keyframes wave{0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.8)}}
+
+/* typing */
+.typing {
+  display: flex; gap: 4px; padding: 12px 16px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 18px; border-bottom-left-radius: 5px; width: fit-content;
+}
+.dot { width: 7px; height: 7px; border-radius: 50%; background: var(--gold); animation: bounce .9s infinite; }
+.dot:nth-child(2){animation-delay:.15s} .dot:nth-child(3){animation-delay:.3s}
+@keyframes bounce{0%,80%,100%{transform:translateY(0);opacity:.6}40%{transform:translateY(-7px);opacity:1}}
+
+/* input bar */
+.input-bar {
+  width: 100%; max-width: 700px;
+  padding: 10px 14px 18px;
+  display: flex; gap: 8px;
+  background: var(--bg); position: sticky; bottom: 0;
+}
+#user-input {
+  flex: 1; padding: 12px 18px;
+  border: 2px solid var(--border); border-radius: 30px;
+  font-family: 'Baloo 2', cursive; font-size: .92rem;
+  outline: none; background: var(--surface); color: var(--text);
+  transition: border-color .2s, box-shadow .2s;
+}
+#user-input::placeholder { color: var(--muted); }
+#user-input:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(245,158,11,.12); }
+
+#send-btn {
+  width: 48px; height: 48px; border-radius: 50%; border: none;
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  color: white; font-size: 1.1rem; cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 3px 14px rgba(245,158,11,.4); flex-shrink: 0;
+}
+#send-btn:hover { transform: scale(1.08); box-shadow: 0 5px 20px rgba(245,158,11,.55); }
+#send-btn:disabled { opacity: .5; transform: none; }
+
+/* result modal */
+.result-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.75); backdrop-filter: blur(6px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 100; opacity: 0; pointer-events: none; transition: opacity .3s;
+}
+.result-overlay.show { opacity: 1; pointer-events: all; }
+.result-card {
+  background: linear-gradient(135deg, #132015, #0c1a0e);
+  border: 2px solid var(--gold-dark);
+  border-radius: 24px; padding: 36px 40px;
+  text-align: center; max-width: 380px; width: 90%;
+  box-shadow: 0 20px 60px rgba(0,0,0,.6);
+  transform: scale(.9); transition: transform .3s cubic-bezier(.34,1.56,.64,1);
+}
+.result-overlay.show .result-card { transform: scale(1); }
+.result-emoji { font-size: 4rem; margin-bottom: 12px; display: block; }
+.result-title {
+  font-family: 'Fredoka One', cursive; font-size: 1.7rem; margin-bottom: 6px;
+  background: linear-gradient(90deg, var(--gold), #fde68a);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.result-score { font-size: 3rem; font-weight: 900; margin: 10px 0; color: white; }
+.result-msg { color: var(--muted); font-size: .9rem; margin-bottom: 22px; }
+.result-btn {
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  border: none; border-radius: 30px; padding: 12px 30px;
+  color: white; font-family: 'Baloo 2', cursive; font-weight: 800;
+  font-size: 1rem; cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+  box-shadow: 0 4px 16px rgba(245,158,11,.35);
+}
+.result-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 22px rgba(245,158,11,.5); }
+
+/* scenario card for identify questions */
+.scenario-card {
+  background: rgba(245,158,11,.07);
+  border: 1px solid rgba(245,158,11,.25);
+  border-radius: 12px; padding: 10px 14px;
+  margin: 8px 0 6px; font-style: italic;
+  font-size: .87rem; color: #fde68a; line-height: 1.5;
+}
+
+/* ── Notes Panel ─────────────────────────────────────────────── */
+.notes-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.78); backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 200; opacity: 0; pointer-events: none; transition: opacity .3s;
+}
+.notes-overlay.show { opacity: 1; pointer-events: all; }
+.notes-panel {
+  background: linear-gradient(160deg, #0c1a0e, #132015);
+  border: 2px solid var(--gold-dark);
+  border-radius: 20px;
+  width: 92%; max-width: 720px;
+  max-height: 88vh;
+  display: flex; flex-direction: column;
+  box-shadow: 0 24px 60px rgba(0,0,0,.7);
+  overflow: hidden;
+  transform: translateY(30px);
+  transition: transform .35s cubic-bezier(.34,1.2,.64,1);
+}
+.notes-overlay.show .notes-panel { transform: translateY(0); }
+.notes-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 22px; border-bottom: 1px solid var(--border);
+  background: linear-gradient(135deg, #14532d44, #1e3a5f44);
+}
+.notes-header h2 { font-family: 'Fredoka One', cursive; font-size: 1.3rem; color: var(--gold); }
+.notes-close {
+  width: 34px; height: 34px; border-radius: 50%;
+  border: 1.5px solid var(--border); background: var(--surface2);
+  color: var(--text); font-size: 1rem; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; transition: all .2s;
+}
+.notes-close:hover { background: #b91c1c; border-color: #ef4444; }
+.notes-body { overflow-y: auto; padding: 20px 22px; flex: 1; }
+.notes-body::-webkit-scrollbar { width: 4px; }
+.notes-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+.notes-topic { margin-bottom: 28px; }
+.notes-topic-title {
+  font-family: 'Fredoka One', cursive; font-size: 1.05rem;
+  color: var(--gold); margin-bottom: 10px;
+  padding-bottom: 6px; border-bottom: 1px solid var(--border);
+}
+.notes-item {
+  display: flex; gap: 10px; align-items: flex-start;
+  padding: 7px 0; border-bottom: 1px solid rgba(255,255,255,.04);
+  font-size: .87rem; line-height: 1.55;
+}
+.notes-item:last-child { border-bottom: none; }
+.notes-term { font-weight: 800; color: var(--gold); min-width: 150px; flex-shrink: 0; font-size: .84rem; }
+.notes-def { color: #d1fae5; }
+.notes-tabs {
+  display: flex; flex-wrap: wrap; gap: 8px; padding: 14px 22px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(0,0,0,.15);
+}
+.notes-tab {
+  padding: 12px 20px; border-radius: 10px;
+  border: 1.5px solid var(--border); 
+  background: rgba(255,255,255,.04); color: var(--muted);
+  font-family: 'Baloo 2', cursive; font-size: .9rem; font-weight: 700;
+  cursor: pointer; transition: all .15s; white-space: nowrap;
+  min-height: 48px; display: flex; align-items: center;
+}
+.notes-tab.active { background: var(--surface); color: var(--gold); border-color: var(--gold-dark); }
+.notes-tab:hover:not(.active) { color: var(--text); background: var(--surface2); }
+.notes-section { display: none; }
+.notes-section.active { display: block; }
+
+
+/* ── Print button in notes header ─────────────────────────────── */
+.notes-header-actions { display: flex; align-items: center; gap: 10px; }
+.print-btn {
+  display: flex; align-items: center; gap: 6px;
+  background: rgba(245,158,11,.12);
+  border: 1.5px solid rgba(245,158,11,.4);
+  color: var(--gold);
+  border-radius: 20px;
+  padding: 7px 14px;
+  font-family: 'Baloo 2', cursive;
+  font-size: .78rem;
+  font-weight: 800;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all .15s;
+}
+.print-btn:hover { background: var(--gold); color: #0c1a0e; border-color: var(--gold); }
+
+/* ── On-screen Practice Test / Answer Key ─────────────────────── */
+.ptest-part-title {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1rem;
+  color: var(--gold);
+  margin: 22px 0 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+.ptest-part-title:first-child { margin-top: 0; }
+.ptest-q {
+  font-size: .87rem;
+  line-height: 1.6;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed rgba(255,255,255,.06);
+  color: #d1fae5;
+}
+.ptest-q b { color: var(--gold); }
+.ptest-q .opt { display: block; margin: 2px 0 2px 18px; color: #d1fae5; }
+.ptest-bank {
+  background: rgba(59,130,246,.08);
+  border: 1px solid rgba(59,130,246,.3);
+  border-radius: 10px;
+  padding: 10px 16px;
+  margin-bottom: 14px;
+  font-size: .82rem;
+  color: #dbeafe;
+  line-height: 1.6;
+}
+.key-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.key-pill {
+  background: rgba(245,158,11,.1);
+  border: 1px solid rgba(245,158,11,.25);
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: .78rem;
+  color: #fde68a;
+}
+.key-pill b { color: #34d399; }
+
+/* ── Print / Save-as-PDF styles ──────────────────────────────────
+   By default everything is hidden from print. When body carries
+   .printing-test, only #print-area (a light-themed clone of the
+   Practice Test + Answer Key) is shown, laid out for paper. ──── */
+@media print {
+  body * { visibility: hidden; }
+  #print-area, #print-area * { visibility: visible; }
+  #print-area {
+    display: block !important;
+    position: absolute; top: 0; left: 0; width: 100%;
+    background: #fff; color: #14290f;
+    font-family: 'Helvetica', Arial, sans-serif;
+    font-size: 10.5pt;
+    line-height: 1.5;
+  }
+  #print-area .p-cover { text-align: center; padding-top: 40px; }
+  #print-area .p-cover .p-icon { font-size: 34pt; }
+  #print-area .p-cover h1 { font-size: 19pt; color: #b45309; margin: 8px 0 4px; }
+  #print-area .p-cover .p-sub { font-size: 10.5pt; color: #166534; margin-bottom: 20px; }
+  #print-area .p-info-box {
+    border: 1.5px solid #fcd34d; border-radius: 10px;
+    max-width: 460px; margin: 0 auto 20px; padding: 14px 20px;
+    text-align: left; font-size: 10pt;
+  }
+  #print-area .p-info-box div { margin: 6px 0; border-bottom: 1px dotted #fde68a; padding-bottom: 6px; }
+  #print-area .p-instructions {
+    max-width: 460px; margin: 0 auto; text-align: left;
+    background: #fffbeb; border: 1px solid #fcd34d; border-radius: 10px;
+    padding: 12px 18px; font-size: 9.5pt; color: #78350f;
+  }
+  #print-area h2.p-part-title {
+    font-size: 12.5pt; color: #fff;
+    background: linear-gradient(135deg, #b45309, #14532d) !important;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    padding: 6px 12px; border-radius: 7px; margin: 18px 0 10px;
+    page-break-after: avoid;
+  }
+  #print-area .p-bank {
+    background: #f0fdf4 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    border: 1px solid #86efac; border-radius: 8px; padding: 8px 14px;
+    margin-bottom: 12px; font-size: 9.5pt; color: #14532d;
+  }
+  #print-area .p-q {
+    margin-bottom: 8px; padding-bottom: 8px;
+    border-bottom: 1px dotted #fde68a; font-size: 10pt;
+    page-break-inside: avoid; color: #14290f;
+  }
+  #print-area .p-q b { color: #b45309; }
+  #print-area .p-q .p-blank { display: inline-block; min-width: 65px; border-bottom: 1px solid #64748b; }
+  #print-area .p-q .p-opt { display: block; margin: 2px 0 0 20px; color: #365314; }
+  #print-area .p-break { page-break-before: always; }
+  #print-area .p-key-part-title {
+    font-size: 11pt; color: #b45309; font-weight: bold;
+    margin: 14px 0 8px; border-bottom: 2px solid #b45309; padding-bottom: 4px;
+  }
+  #print-area .p-key-grid {
+    display: grid; grid-template-columns: repeat(5, 1fr);
+    gap: 5px 8px; margin-bottom: 14px;
+  }
+  #print-area .p-key-pill {
+    background: #f0fdf4 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    border: 1px solid #86efac; border-radius: 6px;
+    padding: 4px 8px; font-size: 8.5pt; color: #166534;
+  }
+  #print-area .p-key-pill b { color: #b45309; }
+  @page { size: letter; margin: 1.5cm 1.8cm; }
+}
+#print-area { display: none; }
+
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-icon">✝️</div>
+  <div>
+    <h1>Jesus the Healer and Servant</h1>
+    <div class="sub">The Widow's Son · Washing the Disciples' Feet · The Ethiopian Man</div>
+  </div>
+  <div class="header-controls">
+    <div class="score-pill">⭐ <span id="score-val">0</span> / <span id="total-val">0</span></div>
+    <button class="audio-btn" id="notes-toggle" title="Open Reviewer" onclick="document.getElementById('notes-overlay').classList.add('show')">📖</button>
+    <button class="audio-btn active" id="audio-toggle" title="I-toggle ang Audio">🔊</button>
+  </div>
+</header>
+
+<div class="chat-wrap">
+  <div id="chat-box"></div>
+</div>
+
+<div class="input-bar">
+  <input type="text" id="user-input" placeholder="Type your answer here…" autocomplete="off" />
+  <button id="send-btn">➤</button>
+</div>
+
+<div class="result-overlay" id="result-overlay">
+  <div class="result-card">
+    <span class="result-emoji" id="res-emoji">🏆</span>
+    <div class="result-title">Quiz Complete!</div>
+    <div class="result-score"><span id="res-score">0</span>/<span id="res-total">0</span></div>
+    <div class="result-msg" id="res-msg">Great job!</div>
+    <button class="result-btn" onclick="restartApp()">🔄 Maglaro Ulit</button>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+// QUESTION BANK
+// ═══════════════════════════════════════════════════════════════
+const topics = {
+
+  "Jesus Raised the Widow's Son": [
+    { q: "In what town did Jesus raise a widow's son back to life?", a: "Nain", hint: "It's the name of the town Jesus was traveling to." },
+    { q: "Who went with Jesus to the town of Nain?", a: "His disciples and a large crowd", hint: "Two groups of people traveled with Him." },
+    { q: "Who was being carried out of the town as Jesus arrived?", a: "A man who had died, the only son of a widow", hint: "A funeral procession was happening." },
+    { q: "What did Jesus feel when He saw the widow?", a: "He was moved with pity for her", hint: "He felt sadness for her loss." },
+    { q: "What did Jesus say to the widow first?", a: "\"Do not cry.\"", hint: "A short, comforting phrase." },
+    { q: "What did Jesus say after touching the bier?", a: "\"Young man, I tell you, get up!\"", hint: "A direct command to the dead man." },
+    { q: "What happened to the dead man after Jesus spoke to him?", a: "He sat up and began to talk", hint: "He came back to life." },
+    { q: "What did the crowd say after witnessing the miracle?", a: "\"A great prophet has come in our midst. God will help His people.\"", hint: "They recognized who Jesus was." },
+    { q: "In what Bible book and chapter is this story found?", a: "Luke 7:11-17", hint: "It's in one of the four Gospels." },
+    { q: "What does the word \"widow\" mean?", a: "A woman whose husband has died", hint: "This describes the mother in the story." },
+    { q: "What does the word \"pity\" mean?", a: "Sadness for someone", hint: "This is what Jesus felt for the widow." },
+    { q: "What does the word \"bier\" mean?", a: "A stand on which a dead body or coffin is placed", hint: "Jesus touched this before speaking." },
+  ],
+
+  "Jesus as Compassionate Healer": [
+    { q: "What kind of healer is Jesus?", a: "A compassionate healer", hint: "It describes His caring nature." },
+    { q: "According to the Catechism (CCC 1844), what ministry did Jesus work while on earth?", a: "A healing ministry", hint: "It's about making people well." },
+    { q: "What miracle did Jesus perform according to Matthew 9:27-31?", a: "He made the blind see", hint: "It restored someone's sight." },
+    { q: "What miracle did Jesus perform according to Mark 2:1-12?", a: "He healed the paralyzed", hint: "It restored someone's ability to move." },
+    { q: "What did Jesus's healing bring forth, according to PCP II 84?", a: "Faith and discipleship", hint: "People believed and followed Him afterward." },
+    { q: "What did Jesus always say to those He healed?", a: "\"Your faith has saved you. Go in peace.\"", hint: "A blessing He repeated often." },
+    { q: "To whom did Jesus pass on His healing ministry?", a: "The apostles", hint: "His twelve closest followers." },
+    { q: "What sacrament continues to bring us God's healing power today?", a: "The sacrament of the anointing of the sick", hint: "It's given to the very sick or dying." },
+    { q: "To whom is the sacrament of the anointing of the sick given?", a: "A very sick or dying person", hint: "It's meant for serious illness." },
+    { q: "What are the corporal works of mercy?", a: "Ways to show charity or voluntary help to those in need", hint: "Physical acts of kindness." },
+    { q: "What corporal work of mercy are we called to do for the sick?", a: "Visiting them", hint: "A simple act of presence and care." },
+    { q: "What does \"ministry\" mean?", a: "Service, work of love", hint: "This word describes Jesus's healing work." },
+    { q: "Who are the apostles?", a: "The twelve men chosen by Jesus to spread the Gospel", hint: "They carried on Jesus's mission." },
+  ],
+
+  "Jesus Washed the Disciples' Feet": [
+    { q: "What festival was about to take place when Jesus washed His disciples' feet?", a: "The Passover Festival", hint: "An important Jewish feast." },
+    { q: "Who did the devil prompt to betray Jesus?", a: "Judas, the son of Simon Iscariot", hint: "One of the twelve disciples." },
+    { q: "What did Jesus do before washing His disciples' feet?", a: "He took off His outer clothing and wrapped a towel around His waist", hint: "He dressed like a servant." },
+    { q: "What did Jesus use to wash and dry the disciples' feet?", a: "Water in a basin, and a towel", hint: "Simple, humble tools." },
+    { q: "Who first questioned Jesus about washing his feet?", a: "Simon Peter", hint: "One of Jesus's closest disciples." },
+    { q: "What did Peter say when Jesus was about to wash his feet?", a: "\"Lord, are You going to wash my feet?\" / \"You shall never wash my feet.\"", hint: "He resisted at first." },
+    { q: "What did Jesus say would happen if Peter did not let Him wash his feet?", a: "\"Unless I wash you, you have no part with Me.\"", hint: "It was a condition for belonging to Jesus." },
+    { q: "After Jesus's reply, what did Peter ask to have washed too?", a: "His hands and his head, not just his feet", hint: "He changed his mind completely." },
+    { q: "What titles did the disciples call Jesus?", a: "\"Teacher\" and \"Lord\"", hint: "Two respectful titles." },
+    { q: "What did Jesus say about the greatness of a servant compared to his master?", a: "No servant is greater than his master, nor is a messenger greater than the one who sent him", hint: "It's about humility and following Jesus's example." },
+    { q: "In what Bible book and chapter is this story found?", a: "John 13:1-17", hint: "It's in one of the four Gospels." },
+    { q: "What example did Jesus teach His disciples?", a: "To humbly serve and wash one another's feet, just as He washed theirs", hint: "An act of humble service." },
+    { q: "Why do you think Peter did not want Jesus to wash his feet?", a: "Because Peter felt unworthy of having his Lord and Teacher perform such a humble, lowly act of service for him", hint: "Think about how Peter saw Jesus's status." },
+    { q: "What did Jesus say about serving others?", a: "That no servant is greater than his master, and that we will be blessed if we follow His example of humble service", hint: "It connects humility with blessing." },
+  ],
+
+  "Jesus as Servant": [
+    { q: "What is the highest form of loving God, according to the lesson?", a: "Truly loving and serving others just as Jesus did", hint: "It connects love of God with love of neighbor." },
+    { q: "What did Jesus show us during the washing of the disciples' feet?", a: "The perfect example of humble service to others", hint: "This act modeled true humility." },
+    { q: "What was Jesus's last act of service?", a: "His death on the Cross, offering His life for the salvation of all", hint: "His greatest and final act of love." },
+    { q: "As followers of Jesus, whom are we called to serve lovingly?", a: "All who are in need — the poor, the lowly, the sick, and the outcast", hint: "Those on the margins of society." },
+    { q: "What are we called when we serve others just like Jesus did?", a: "A servant Church", hint: "A description of the whole community of believers." },
+    { q: "How should we show kindness, according to the lesson?", a: "Without expecting anything in return, and even to those who are not good to us", hint: "True kindness has no conditions." },
+    { q: "Why should we do acts of service and kindness?", a: "Not to be recognized, praised, or rewarded, but to glorify the name of Jesus who first loved us", hint: "It's about the right motivation." },
+    { q: "What is Jesus as Servant a model of for us?", a: "Loving service to others", hint: "This is the theme of the whole lesson." },
+    { q: "How should we reach out to our neighbors, especially the needy?", a: "Without counting the cost and without choosing who to help", hint: "Service should be generous and unconditional." },
+  ],
+
+  "The Ethiopian Man": [
+    { q: "Who did the Apostle Philip meet?", a: "An Ethiopian eunuch, an important official in charge of the treasury of the Kandake", hint: "A high-ranking government official." },
+    { q: "What does \"Kandake\" mean?", a: "Queen of the Ethiopians", hint: "It's a royal title." },
+    { q: "Why had the Ethiopian man gone to Jerusalem?", a: "To worship", hint: "It was a religious pilgrimage." },
+    { q: "What was the man reading when Philip found him?", a: "The Book of Isaiah the prophet", hint: "A book from the Old Testament." },
+    { q: "Who told Philip to go to the chariot?", a: "The Spirit", hint: "This was a divine prompting." },
+    { q: "What did Philip ask the man?", a: "\"Do you understand what you are reading?\"", hint: "A question about comprehension." },
+    { q: "Why did the man say he could not understand the Scripture?", a: "Because no one had explained it to him", hint: "He needed a guide or teacher." },
+    { q: "What did the man invite Philip to do?", a: "Come up and sit with him in the chariot", hint: "He welcomed Philip's help." },
+    { q: "What did the passage of Scripture the eunuch was reading describe?", a: "Someone being led like a sheep to the slaughter, silent, and deprived of justice", hint: "It's a prophecy about suffering." },
+    { q: "What did Philip tell the man after explaining the Scripture?", a: "The good news about Jesus", hint: "This is also called the Gospel." },
+    { q: "What did the eunuch ask for when they came to some water?", a: "To be baptized", hint: "He wanted to become a follower of Jesus." },
+    { q: "What did Philip do after the eunuch asked to be baptized?", a: "He baptized him in the water", hint: "They went down into the water together." },
+    { q: "In what Bible book and chapter is this story found?", a: "Acts 8:27-38", hint: "It's found in the Acts of the Apostles." },
+    { q: "Whom did Apostle Philip meet?", a: "An Ethiopian eunuch who was an important royal official", hint: "This is the same person from earlier questions." },
+  ],
+
+};
+
+// ── TRUE OR FALSE ────────────────────────────────────────────────────────────
+const trueOrFalse = [
+  { q: "Jesus raised a widow's son back to life in the town of Nain.", a: "true" },
+  { q: "Jesus felt no pity for the widow whose son had died.", a: "false" },
+  { q: "The dead man remained silent after Jesus told him to get up.", a: "false" },
+  { q: "The crowd praised God after witnessing the miracle in Nain.", a: "true" },
+  { q: "Jesus made the blind see and healed the paralyzed during His healing ministry.", a: "true" },
+  { q: "Jesus's healing did not lead people to have faith in Him.", a: "false" },
+  { q: "The sacrament of the anointing of the sick is given to a very sick or dying person.", a: "true" },
+  { q: "Visiting the sick is one of the corporal works of mercy.", a: "true" },
+  { q: "Jesus washed His disciples' feet before the Passover Festival.", a: "true" },
+  { q: "Peter immediately allowed Jesus to wash his feet without any objection.", a: "false" },
+  { q: "Jesus said that no servant is greater than his master.", a: "true" },
+  { q: "Judas was prompted by the devil to betray Jesus.", a: "true" },
+  { q: "Jesus's death on the Cross was His last act of service for the salvation of all.", a: "true" },
+  { q: "As followers of Jesus, we should only show kindness to our friends and loved ones.", a: "false" },
+  { q: "Apostle Philip met an Ethiopian eunuch who was reading the Book of Isaiah.", a: "true" },
+  { q: "The Ethiopian eunuch understood the Scripture without anyone explaining it to him.", a: "false" },
+  { q: "The Spirit told Philip to go near the Ethiopian's chariot.", a: "true" },
+  { q: "Philip baptized the Ethiopian eunuch after telling him the good news about Jesus.", a: "true" },
+];
+
+// ── IDENTIFY: VOCABULARY · WHICH STORY? ──────────────────────────────────────
+const identifyQuestions = [
+  { q: "A woman whose husband has died.", a: "Widow", choices: ["Widow","Pity","Bier","Ministry"] },
+  { q: "Sadness for someone.", a: "Pity", choices: ["Pity","Widow","Bier","Ministry"] },
+  { q: "A stand on which a dead body or coffin is placed.", a: "Bier", choices: ["Bier","Widow","Pity","Apostles"] },
+  { q: "Service, work of love.", a: "Ministry", choices: ["Ministry","Apostles","Pity","Bier"] },
+  { q: "The twelve men chosen by Jesus to spread the Gospel.", a: "Apostles", choices: ["Apostles","Ministry","Widow","Bier"] },
+  { q: "Tired.", a: "Weary", choices: ["Weary","Anxious","Pity","Ministry"] },
+  { q: "Afraid or nervous.", a: "Anxious", choices: ["Anxious","Weary","Pity","Ministry"] },
+  { q: "Jesus touched a bier and told a dead man to get up.", a: "Jesus Raised the Widow's Son", choices: ["Jesus Raised the Widow's Son","Jesus Washed the Disciples' Feet","The Ethiopian Man"] },
+  { q: "Jesus wrapped a towel around His waist and washed feet with water from a basin.", a: "Jesus Washed the Disciples' Feet", choices: ["Jesus Raised the Widow's Son","Jesus Washed the Disciples' Feet","The Ethiopian Man"] },
+  { q: "An important official was reading the Book of Isaiah in his chariot.", a: "The Ethiopian Man", choices: ["Jesus Raised the Widow's Son","Jesus Washed the Disciples' Feet","The Ethiopian Man"] },
+  { q: "Peter said, \"Lord, are You going to wash my feet?\"", a: "Jesus Washed the Disciples' Feet", choices: ["Jesus Raised the Widow's Son","Jesus Washed the Disciples' Feet","The Ethiopian Man"] },
+  { q: "The crowd said, \"A great prophet has come in our midst.\"", a: "Jesus Raised the Widow's Son", choices: ["Jesus Raised the Widow's Son","Jesus Washed the Disciples' Feet","The Ethiopian Man"] },
+  { q: "Philip explained the Good News about Jesus, and the man asked to be baptized.", a: "The Ethiopian Man", choices: ["Jesus Raised the Widow's Son","Jesus Washed the Disciples' Feet","The Ethiopian Man"] },
+  { q: "Jesus said, \"No servant is greater than his master.\"", a: "Jesus Washed the Disciples' Feet", choices: ["Jesus Raised the Widow's Son","Jesus Washed the Disciples' Feet","The Ethiopian Man"] },
+  { q: "The Spirit told Philip to go near a chariot.", a: "The Ethiopian Man", choices: ["Jesus Raised the Widow's Son","Jesus Washed the Disciples' Feet","The Ethiopian Man"] },
+];
+
+// ═══════════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════════
+let state = {
+  awaiting: 'menu',
+  mode: null,
+  questions: [],
+  allAnswers: [],
+  qIndex: 0,
+  score: 0,
+  total: 0,
+  hintUsed: false,
+  audioEnabled: true,
+};
+
+// ═══════════════════════════════════════════════════════════════
+// TTS (UPGRADED FOR TRUE FILIPINO ACCENT)
+// ═══════════════════════════════════════════════════════════════
+let currentAudioStream = null;
+
+function speak(text) {
+  if (!state.audioEnabled) return;
+  
+  // Linisin ang mga nakaraang audio task
+  window.speechSynthesis.cancel();
+  if (currentAudioStream) {
+    currentAudioStream.pause();
+    currentAudioStream = null;
+  }
+  
+  // Tanggalin ang HTML tags at emojis para hindi basahin nang paputol-putol
+  const clean = text.replace(/<[^>]+>/g,'').replace(/[🇵🇭🌟✅❌💡⏭️🏆😊💪🔄🔲📚👋⭐✕🧭📏🗺️]/g,'');
+  
+  // PRIMARY METHOD: Google Translation Engine cloud voice stream (May natural na Filipino accent)
+  const googleTtsUrl = `https://translate.google.com/translate_tts?ie=UTF-8&tl=tl&client=tw-ob&q=${encodeURIComponent(clean)}`;
+  
+  currentAudioStream = new Audio(googleTtsUrl);
+  currentAudioStream.onplaying = () => showWave(true);
+  currentAudioStream.onended = currentAudioStream.onerror = () => showWave(false);
+  
+  currentAudioStream.play().catch(err => {
+    // BACKUP METHOD: Web Speech API (works even without internet)
+    console.warn("Google TTS blocked or offline. Falling back to local system speech engine.");
+    
+    const streamFallback = new SpeechSynthesisUtterance(clean);
+    streamFallback.lang = 'fil-PH';
+    streamFallback.rate = 0.95; streamFallback.pitch = 1.05; streamFallback.volume = 1;
+    
+    const voices = window.speechSynthesis.getVoices();
+    const filVoice = voices.find(v => v.lang.startsWith('fil') || v.lang.startsWith('tl'));
+    const engVoice = voices.find(v => v.lang.startsWith('en') && v.name.toLowerCase().includes('female'))
+                   || voices.find(v => v.lang.startsWith('en'));
+              
+    if (filVoice) {
+      streamFallback.voice = filVoice;
+    } else if (engVoice) {
+      streamFallback.voice = engVoice; 
+      streamFallback.lang = 'en-US'; 
+    }
+    
+    streamFallback.onstart = () => showWave(true);
+    streamFallback.onend = streamFallback.onerror = () => showWave(false);
+    window.speechSynthesis.speak(streamFallback);
+  });
+}
+
+function showWave(on) {
+  document.querySelectorAll('.speaker-wave').forEach(w => w.style.display = on ? 'inline-flex' : 'none');
+}
+
+// I-initialize ang mga boses ng system
+let localSystemVoices = [];
+function lookupSystemVoices() {
+  localSystemVoices = window.speechSynthesis.getVoices();
+}
+lookupSystemVoices();
+if (window.speechSynthesis.onvoiceschanged !== undefined) {
+  window.speechSynthesis.onvoiceschanged = lookupSystemVoices;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// UI HELPERS
+// ═══════════════════════════════════════════════════════════════
+const chatBox = document.getElementById('chat-box');
+const input = document.getElementById('user-input');
+const sendBtn = document.getElementById('send-btn');
+
+function scrollBottom() { chatBox.scrollTop = chatBox.scrollHeight; }
+
+function addMessage(role, html, speakText) {
+  const div = document.createElement('div');
+  div.className = `msg ${role}`;
+  const av = document.createElement('div');
+  av.className = 'avatar';
+  av.textContent = role === 'bot' ? '🤖' : '🧑';
+  const bub = document.createElement('div');
+  bub.className = 'bubble';
+  bub.innerHTML = role === 'bot'
+    ? html + '<span class="speaker-wave" style="display:none"><span></span><span></span><span></span><span></span><span></span></span>'
+    : html;
+  div.appendChild(av); div.appendChild(bub);
+  chatBox.appendChild(div);
+  scrollBottom(); bindChips();
+  if (role === 'bot') {
+    const txt = speakText || html.replace(/<[^>]+>/g,' ');
+    setTimeout(() => speak(txt), 350);
+  }
+}
+
+function addTyping() {
+  const d = document.createElement('div');
+  d.className = 'msg bot'; d.id = 'typing';
+  d.innerHTML = '<div class="avatar">🤖</div><div class="typing"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>';
+  chatBox.appendChild(d); scrollBottom();
+}
+function removeTyping() { const t = document.getElementById('typing'); if(t) t.remove(); }
+
+function bindChips() {
+  document.querySelectorAll('.chip:not([data-bound])').forEach(c => {
+    c.dataset.bound = '1';
+    c.addEventListener('click', () => handleUserMessage(c.dataset.val));
+  });
+}
+
+function updateScore() {
+  document.getElementById('score-val').textContent = state.score;
+  document.getElementById('total-val').textContent = state.total;
+}
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length-1; i > 0; i--) {
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]] = [a[j],a[i]];
+  }
+  return a;
+}
+
+function normalize(s) { return s.toLowerCase().trim().replace(/\s+/g,' '); }
+
+function checkAnswer(user, correct) {
+  const u = normalize(user), c = normalize(correct);
+  if (u === c) return true;
+  if (c.includes(u) && u.length > 5) return true;
+  const parts = c.split(/[,;\/]/);
+  for (const p of parts) if (u.includes(p.trim()) && p.trim().length > 4) return true;
+  return false;
+}
+
+function showResult() {
+  const pct = Math.round((state.score/state.total)*100);
+  const emoji = pct>=90?'🏆':pct>=70?'🌟':pct>=50?'😊':'💪';
+  const msg = pct>=90?'Excellent! You know it all!':pct>=70?'Great job! Keep it up!':pct>=50?'Good! Study a little more!':"Don't give up! Try again!";
+  document.getElementById('res-emoji').textContent = emoji;
+  document.getElementById('res-score').textContent = state.score;
+  document.getElementById('res-total').textContent = state.total;
+  document.getElementById('res-msg').textContent = msg;
+  document.getElementById('result-overlay').classList.add('show');
+  speak(`All done! Your score is ${state.score} out of ${state.total}. ${msg}`);
+}
+
+function restartApp() {
+  document.getElementById('result-overlay').classList.remove('show');
+  state = { awaiting:'menu', mode:null, questions:[], allAnswers:[], qIndex:0, score:0, total:0, hintUsed:false, audioEnabled:state.audioEnabled };
+  chatBox.innerHTML = '';
+  document.querySelector('.input-bar').style.display = 'flex';
+  updateScore();
+  showMenu();
+}
+
+// ═══════════════════════════════════════════════════════════════
+// MC HELPERS
+// ═══════════════════════════════════════════════════════════════
+function getAllAnswers() {
+  const ans = [];
+  for (const qs of Object.values(topics)) for (const q of qs) ans.push(q.a);
+  return ans;
+}
+
+function generateChoices(correct, pool) {
+  const distractors = shuffle(pool.filter(a => a !== correct)).slice(0,3);
+  return shuffle([correct, ...distractors]);
+}
+
+function buildMCBtns(choices, correctAnswer) {
+  const letters = ['A','B','C','D','E'];
+  return `<div class="mc-options">${choices.map((c,i)=>
+    `<button class="mc-btn" data-answer="${encodeURIComponent(c)}" data-correct="${encodeURIComponent(correctAnswer)}" onclick="handleMCClick(this)">
+      <span class="letter">${letters[i]}</span>${c}
+    </button>`
+  ).join('')}</div>`;
+}
+
+function handleMCClick(btn) {
+  const allBtns = btn.closest('.mc-options').querySelectorAll('.mc-btn');
+  allBtns.forEach(b => b.disabled = true);
+  const chosen = decodeURIComponent(btn.dataset.answer);
+  const correct = decodeURIComponent(btn.dataset.correct);
+  const isCorrect = chosen === correct;
+  allBtns.forEach(b => { if(decodeURIComponent(b.dataset.answer)===correct) b.classList.add('correct'); });
+  if (!isCorrect) btn.classList.add('wrong');
+  setTimeout(() => {
+    if (isCorrect) {
+      state.score++;
+      addMessage('bot', `✅ <strong>Correct!</strong> +1 point! The answer is: <strong>${correct}</strong>`, `Correct! The answer is: ${correct}`);
+    } else {
+      addMessage('bot', `❌ <strong>Not quite.</strong> The correct answer is: <strong>${correct}</strong>`, `Not quite. The correct answer is: ${correct}`);
+    }
+    state.qIndex++; updateScore();
+    if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+    else setTimeout(showResult, 900);
+  }, 650);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// NEXT QUESTION
+// ═══════════════════════════════════════════════════════════════
+function nextQuestion() {
+  const qi = state.qIndex;
+  const q = state.questions[qi];
+  const num = qi + 1;
+
+  if (state.mode === 'full' || state.mode === 'topic_mc') {
+    const choices = generateChoices(q.a, state.allAnswers);
+    const tag = q.topic ? `<span class="topic-tag">${q.topic}</span><br>` : '';
+    const html = `${tag}<strong>Q${num} of ${state.total}:</strong> ${q.q}${buildMCBtns(choices, q.a)}`;
+    addMessage('bot', html, `Question ${num}. ${q.q}`);
+    return;
+  }
+
+  if (state.mode === 'tf') {
+    const html = `<strong>T${num} sa ${state.total}:</strong> <div class="scenario-card">${q.q}</div>
+      <span class="chip" data-val="true">✅ True</span><span class="chip" data-val="false">❌ False</span>`;
+    addMessage('bot', html, `Question ${num}. True or False: ${q.q}`);
+    return;
+  }
+
+  if (state.mode === 'identify') {
+    const btns = buildMCBtns(q.choices, q.a);
+    const html = `<strong>Q${num} of ${state.total}:</strong> Identify what is being described:<div class="scenario-card">${q.q}</div>${btns}`;
+    addMessage('bot', html, `Question ${num}. Identify: ${q.q}`);
+    return;
+  }
+
+  // typed answer mode
+  const tag = q.topic ? `<span class="topic-tag">${q.topic}</span><br>` : '';
+  const html = `${tag}<strong>Q${num} of ${state.total}:</strong> ${q.q}<br><small style="color:var(--muted)">Type your answer · type <em>hint</em> for help · <em>skip</em> to move on</small>`;
+  addMessage('bot', html, `Question ${num}. ${q.q}`);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// MENU
+// ═══════════════════════════════════════════════════════════════
+function showMenu() {
+  addMessage('bot',
+    `👋 <strong>Hi! I'm your Religion Reviewer!</strong><br>Let's study <em>Jesus Raised the Widow's Son</em>, <em>Jesus as Compassionate Healer</em>, <em>Jesus Washed the Disciples' Feet</em>, <em>Jesus as Servant</em>, and <em>The Ethiopian Man</em>.<br><br>What would you like to do?<br>
+    <span class="chip" data-val="1">📚 Study by Topic</span>
+    <span class="chip" data-val="2">✅ True or False</span>
+    <span class="chip" data-val="3">🌐 Identify</span>
+    <span class="chip" data-val="4">🌟 Full Review (Multiple Choice)</span>`,
+    "Hi! I'm your Religion Reviewer on Jesus the Healer and Servant. What would you like to do? Study a topic, True or False, Identify, or a Full Review with multiple choice?"
+  );
+  state.awaiting = 'menu';
+}
+
+// ═══════════════════════════════════════════════════════════════
+// PROCESS MESSAGE
+// ═══════════════════════════════════════════════════════════════
+function processMessage(msg) {
+  const aw = state.awaiting;
+
+  // ── MENU ──────────────────────────────────────────────────
+  if (aw === 'menu') {
+    if (msg === '1') {
+      state.awaiting = 'topic';
+      const keys = Object.keys(topics);
+      const chips = keys.map((t,i) => `<span class="chip" data-val="${i+1}">${i+1}. ${t}</span>`).join(' ');
+      addMessage('bot', `📚 Which topic would you like to study?<br>${chips}`, 'Which topic would you like to study?');
+
+    } else if (msg === '2') {
+      state.mode = 'tf';
+      state.questions = shuffle(trueOrFalse);
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'tf_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `✅ <strong>True or False!</strong> ${state.total} questions. Let's start!`, `True or False! ${state.total} questions. Let's start!`);
+      setTimeout(nextQuestion, 800);
+
+    } else if (msg === '3') {
+      state.mode = 'identify';
+      state.questions = shuffle(identifyQuestions);
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'mc_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `🌐 <strong>Identify!</strong> Figure out the vocabulary term, or which Bible story is being described.`, "Identify! Figure out what's being described in each item.");
+      setTimeout(nextQuestion, 800);
+
+    } else if (msg === '4') {
+      state.mode = 'full';
+      const all = [];
+      for (const [topicName, qs] of Object.entries(topics)) {
+        qs.forEach(q => all.push({...q, topic: topicName}));
+      }
+      state.questions = shuffle(all);
+      state.allAnswers = getAllAnswers();
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'mc_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `🌟 <strong>Full Review — Multiple Choice!</strong> ${state.total} questions. Think carefully!`, `Full Review! Multiple Choice! ${state.total} questions. Think carefully!`);
+      setTimeout(nextQuestion, 800);
+
+    } else {
+      addMessage('bot',
+        `Choose an option:<br>
+        <span class="chip" data-val="1">📚 Study by Topic</span>
+        <span class="chip" data-val="2">✅ True or False</span>
+        <span class="chip" data-val="3">🌐 Identify</span>
+        <span class="chip" data-val="4">🌟 Full Review</span>`,
+        'Choose an option.'
+      );
+    }
+    return;
+  }
+
+  // ── TOPIC SELECT ──────────────────────────────────────────
+  if (aw === 'topic') {
+    const keys = Object.keys(topics);
+    const idx = parseInt(msg) - 1;
+    if (keys[idx]) {
+      const topicName = keys[idx];
+      state.mode = 'topic';
+      state.questions = shuffle(topics[topicName]);
+      state.allAnswers = getAllAnswers();
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'answer';
+      document.querySelector('.input-bar').style.display = 'flex';
+      updateScore();
+      addMessage('bot', `📚 <strong>${topicName}</strong> — ${state.total} questions. Ready?`, `${topicName}. ${state.total} questions. Ready?`);
+      setTimeout(nextQuestion, 800);
+    } else {
+      const chips = Object.keys(topics).map((t,i) => `<span class="chip" data-val="${i+1}">${i+1}. ${t}</span>`).join(' ');
+      addMessage('bot', `Please choose a valid topic:<br>${chips}`, 'Please choose a valid topic.');
+    }
+    return;
+  }
+
+  // ── TYPED ANSWER ──────────────────────────────────────────
+  if (aw === 'answer') {
+    const q = state.questions[state.qIndex];
+    const m = normalize(msg);
+
+    if (m === 'hint') {
+      state.hintUsed = true;
+      addMessage('bot', `💡 <strong>Hint:</strong> ${q.hint}`, `Hint: ${q.hint}`);
+      return;
+    }
+    if (m === 'skip') {
+      addMessage('bot', `⏭️ Skipped! The correct answer is: <strong>${q.a}</strong>`, `Skipped. The correct answer is: ${q.a}`);
+      state.qIndex++; state.hintUsed = false;
+      if (state.qIndex < state.total) setTimeout(nextQuestion, 700);
+      else showResult();
+      return;
+    }
+
+    const correct = checkAnswer(msg, q.a);
+    if (correct) {
+      if (!state.hintUsed) state.score++;
+      const note = state.hintUsed ? ' <em>(hint used — no point)</em>' : ' +1 point!';
+      addMessage('bot', `✅ <strong>Correct!</strong>${note} Answer: <strong>${q.a}</strong>`, `Correct! The answer is: ${q.a}`);
+    } else {
+      addMessage('bot', `❌ <strong>Not quite.</strong> The correct answer is: <strong>${q.a}</strong>`, `Not quite. The correct answer is: ${q.a}`);
+    }
+    state.qIndex++; state.hintUsed = false; updateScore();
+    if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+    else setTimeout(showResult, 900);
+    return;
+  }
+
+  // ── TRUE OR FALSE ─────────────────────────────────────────
+  if (aw === 'tf_answer') {
+    const q = state.questions[state.qIndex];
+    const ans = normalize(msg);
+    const valid = ans === 'true' || ans === 'false';
+
+    if (valid) {
+      const correct = ans === q.a;
+      if (correct) {
+        state.score++;
+        addMessage('bot', `✅ <strong>Correct!</strong> The answer is <strong>${q.a.toUpperCase()}</strong>.`, `Correct! The answer is ${q.a}.`);
+      } else {
+        addMessage('bot', `❌ <strong>Incorrect.</strong> The correct answer is <strong>${q.a.toUpperCase()}</strong>.`, `Incorrect. The correct answer is ${q.a}.`);
+      }
+      state.qIndex++; updateScore();
+      if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+      else setTimeout(showResult, 900);
+    } else {
+      addMessage('bot',
+        `Answer: True or False?<br><span class="chip" data-val="true">✅ True</span><span class="chip" data-val="false">❌ False</span>`,
+        'Answer: True or False?'
+      );
+    }
+    return;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// CONTROLS
+// ═══════════════════════════════════════════════════════════════
+function handleUserMessage(msg) {
+  if (!msg.trim()) return;
+  
+  // Stop any speaking audio cleanly when the user answers
+  window.speechSynthesis.cancel();
+  if (currentAudioStream) {
+    currentAudioStream.pause();
+    currentAudioStream = null;
+    showWave(false);
+  }
+  
+  addMessage('user', msg.replace(/</g,'&lt;'));
+  input.value = '';
+  input.disabled = true; sendBtn.disabled = true;
+  addTyping();
+  setTimeout(() => {
+    removeTyping();
+    input.disabled = false; sendBtn.disabled = false;
+    input.focus();
+    processMessage(msg);
+  }, 480);
+}
+
+sendBtn.addEventListener('click', () => { handleUserMessage(input.value); });
+input.addEventListener('keydown', e => { if(e.key==='Enter') handleUserMessage(input.value); });
+
+document.getElementById('audio-toggle').addEventListener('click', function() {
+  state.audioEnabled = !state.audioEnabled;
+  this.textContent = state.audioEnabled ? '🔊' : '🔇';
+  this.classList.toggle('active', state.audioEnabled);
+  if (!state.audioEnabled) {
+    window.speechSynthesis.cancel();
+    if (currentAudioStream) {
+      currentAudioStream.pause();
+      currentAudioStream = null;
+      showWave(false);
+    }
+  }
+});
+
+// ═══════════════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════════════
+window.addEventListener('load', () => {
+  lookupSystemVoices();
+  showMenu();
+});
+
+function printPracticeTest() {
+  document.body.classList.add('printing-test');
+  window.print();
+}
+window.addEventListener('afterprint', () => {
+  document.body.classList.remove('printing-test');
+});
+
+function switchTab(tabId, btn) {
+  document.querySelectorAll('.notes-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.notes-tab').forEach(b => b.classList.remove('active'));
+  document.getElementById(tabId).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+
+<!-- ── Notes Panel ── -->
+<div class="notes-overlay" id="notes-overlay">
+  <div class="notes-panel">
+    <div class="notes-header">
+      <h2>📖 Jesus the Healer and Servant — Notes</h2>
+      <div class="notes-header-actions">
+        <button class="print-btn" onclick="printPracticeTest()" title="Print or save the Practice Test &amp; Answer Key as PDF">🖨️ Print Test &amp; Key</button>
+        <button class="notes-close" onclick="document.getElementById('notes-overlay').classList.remove('show')">✕</button>
+      </div>
+    </div>
+    <div class="notes-tabs">
+      <button class="notes-tab active" onclick="switchTab('tab-widow', this)">✝️ The Widow's Son</button>
+      <button class="notes-tab" onclick="switchTab('tab-healer', this)">🙏 Compassionate Healer</button>
+      <button class="notes-tab" onclick="switchTab('tab-feet', this)">🧺 Washing Feet</button>
+      <button class="notes-tab" onclick="switchTab('tab-servant', this)">❤️ Jesus as Servant</button>
+      <button class="notes-tab" onclick="switchTab('tab-ethiopian', this)">📜 The Ethiopian Man</button>
+      <button class="notes-tab" onclick="switchTab('tab-tf', this)">✅ True or False</button>
+      <button class="notes-tab" onclick="switchTab('tab-ptest', this)">📝 Practice Test</button>
+      <button class="notes-tab" onclick="switchTab('tab-key', this)">🔑 Answer Key</button>
+    </div>
+    <div class="notes-body">
+
+      <div class="notes-section active" id="tab-widow">
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> In the town of Nain, Jesus was moved with pity for a grieving widow and raised her only son back to life. The crowd praised God, recognizing Jesus as a great prophet. <em>(Luke 7:11–17)</em>
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">✝️ Vocabulary</div>
+          <div class="notes-item"><span class="notes-term">Widow</span><span class="notes-def">A woman whose husband has died</span></div>
+          <div class="notes-item"><span class="notes-term">Pity</span><span class="notes-def">Sadness for someone</span></div>
+          <div class="notes-item"><span class="notes-term">Bier</span><span class="notes-def">A stand on which a dead body or coffin is placed</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-healer">
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> Jesus is a compassionate healer who made the blind see, healed the paralyzed, and comforted the sick. His healing brought forth faith and discipleship, and He passed this ministry on to the apostles. Today, the Church continues His healing power through the sacrament of the anointing of the sick.
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">🙏 Key Ideas</div>
+          <div class="notes-item"><span class="notes-term">Healing Ministry</span><span class="notes-def">Jesus made the blind see (Matthew 9:27-31) and healed the paralyzed (Mark 2:1-12)</span></div>
+          <div class="notes-item"><span class="notes-term">"Your faith has saved you"</span><span class="notes-def">What Jesus said to those He healed (Luke 7:50)</span></div>
+          <div class="notes-item"><span class="notes-term">Anointing of the Sick</span><span class="notes-def">The sacrament given to a very sick or dying person</span></div>
+          <div class="notes-item"><span class="notes-term">Corporal Works of Mercy</span><span class="notes-def">Ways to show charity or voluntary help to those in need, like visiting the sick</span></div>
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">📖 Vocabulary</div>
+          <div class="notes-item"><span class="notes-term">Ministry</span><span class="notes-def">Service, work of love</span></div>
+          <div class="notes-item"><span class="notes-term">Apostles</span><span class="notes-def">The twelve men chosen by Jesus to spread the Gospel</span></div>
+          <div class="notes-item"><span class="notes-term">Weary</span><span class="notes-def">Tired</span></div>
+          <div class="notes-item"><span class="notes-term">Anxious</span><span class="notes-def">Afraid or nervous</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-feet">
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> Before the Passover Festival, Jesus washed His disciples' feet as an act of humble service, even though Peter initially resisted. He taught that no servant is greater than his master, and that we are blessed if we follow His example. <em>(John 13:1–17)</em>
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">🧺 What Happened</div>
+          <div class="notes-item"><span class="notes-term">Setting</span><span class="notes-def">Jesus took off His outer clothing, wrapped a towel around His waist, and washed His disciples' feet with water from a basin</span></div>
+          <div class="notes-item"><span class="notes-term">Peter's Reaction</span><span class="notes-def">He first refused, then asked Jesus to wash his hands and head too</span></div>
+          <div class="notes-item"><span class="notes-term">The Lesson</span><span class="notes-def">"No servant is greater than his master... you will be blessed if you do them"</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-servant">
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> The highest form of loving God is truly loving and serving others, just as Jesus did. His death on the Cross was His last and greatest act of service. As His followers, we are called to be a servant Church, serving the poor, the lowly, the sick, and the outcast without expecting anything in return.
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">REMEMBER</span>
+          We should show kindness not only to friends and loved ones, but to anyone who needs help — even those who are not good to us — not to be praised or rewarded, but to glorify the name of Jesus who first loved us.
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-ethiopian">
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> The Apostle Philip, guided by the Spirit, met an Ethiopian official reading the Book of Isaiah. Philip explained that the passage was about Jesus, shared the Good News, and baptized the man when they came to some water. <em>(Acts 8:27–38)</em>
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">📜 Key Details</div>
+          <div class="notes-item"><span class="notes-term">The Man</span><span class="notes-def">An Ethiopian eunuch, an official in charge of the treasury of the Kandake (queen of the Ethiopians)</span></div>
+          <div class="notes-item"><span class="notes-term">What He Was Reading</span><span class="notes-def">A passage from the Book of Isaiah about a suffering servant</span></div>
+          <div class="notes-item"><span class="notes-term">The Outcome</span><span class="notes-def">He believed the Good News about Jesus and asked to be baptized</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-tf">
+        <div class="notes-topic">
+          <div class="notes-topic-title">✅ True or False — Key Reminders</div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">Jesus felt no pity for the widow → He was moved with pity for her.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">The dead man remained silent → he sat up and began to talk.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">Jesus's healing did not lead people to have faith → it brought forth faith and discipleship.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">Peter immediately allowed Jesus to wash his feet → he objected at first.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">We should only show kindness to friends and loved ones → we should show kindness to everyone, even those who aren't good to us.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">The Ethiopian eunuch understood the Scripture on his own → he needed Philip to explain it to him.</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-ptest">
+        <div class="notes-topic">
+          <div class="notes-topic-title">📝 Practice Test</div>
+<div class="ptest-part-title">Part I — Vocabulary Matching</div>
+<div class="ptest-bank"><strong>Word Bank:</strong> Widow &middot; Pity &middot; Bier &middot; Ministry &middot; Apostles &middot; Weary &middot; Anxious</div><div class="ptest-q"><b>1.</b> A woman whose husband has died. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>2.</b> Sadness for someone. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>3.</b> A stand on which a dead body or coffin is placed. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>4.</b> Service, work of love. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>5.</b> The twelve men chosen by Jesus to spread the Gospel. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>6.</b> Tired. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>7.</b> Afraid or nervous. <span class="opt">Answer: ______________________</span></div><div class="ptest-part-title">Part II — Identify: Which Story?</div><div class="ptest-q"><b>8.</b> Jesus touched a bier and told a dead man to get up. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>9.</b> Jesus wrapped a towel around His waist and washed feet with water from a basin. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>10.</b> An important official was reading the Book of Isaiah in his chariot. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>11.</b> Peter said, "Lord, are You going to wash my feet?" <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>12.</b> The crowd said, "A great prophet has come in our midst." <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>13.</b> Philip explained the Good News about Jesus, and the man asked to be baptized. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>14.</b> Jesus said, "No servant is greater than his master." <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>15.</b> The Spirit told Philip to go near a chariot. <span class="opt">Answer: ______________________</span></div><div class="ptest-part-title">Part III — True or False</div><div class="ptest-q"><b>16.</b> Jesus raised a widow's son back to life in the town of Nain. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>17.</b> Jesus felt no pity for the widow whose son had died. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>18.</b> The dead man remained silent after Jesus told him to get up. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>19.</b> The crowd praised God after witnessing the miracle in Nain. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>20.</b> Jesus made the blind see and healed the paralyzed during His healing ministry. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>21.</b> Jesus's healing did not lead people to have faith in Him. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>22.</b> The sacrament of the anointing of the sick is given to a very sick or dying person. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>23.</b> Visiting the sick is one of the corporal works of mercy. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>24.</b> Jesus washed His disciples' feet before the Passover Festival. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>25.</b> Peter immediately allowed Jesus to wash his feet without any objection. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>26.</b> Jesus said that no servant is greater than his master. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>27.</b> Judas was prompted by the devil to betray Jesus. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>28.</b> Jesus's death on the Cross was His last act of service for the salvation of all. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>29.</b> As followers of Jesus, we should only show kindness to our friends and loved ones. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>30.</b> Apostle Philip met an Ethiopian eunuch who was reading the Book of Isaiah. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>31.</b> The Ethiopian eunuch understood the Scripture without anyone explaining it to him. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>32.</b> The Spirit told Philip to go near the Ethiopian's chariot. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>33.</b> Philip baptized the Ethiopian eunuch after telling him the good news about Jesus. <span class="opt">Answer: ______________________</span></div><div class="ptest-part-title">Part IV — Short Answer</div><div class="ptest-q"><b>34.</b> What example did Jesus teach His disciples?</div><div class="ptest-q"><b>35.</b> Why do you think Peter did not want Jesus to wash his feet?</div><div class="ptest-q"><b>36.</b> What did Jesus say about serving others?</div><div class="ptest-q"><b>37.</b> Whom did Apostle Philip meet?</div><div class="ptest-q"><b>38.</b> What was the man reading?</div><div class="ptest-q"><b>39.</b> What did he do after talking to Philip?</div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-key">
+        <div class="notes-topic">
+<div class="notes-topic-title">Part I — Vocabulary Matching</div><div class="key-grid"><div class="key-pill">1. <b>Widow</b></div><div class="key-pill">2. <b>Pity</b></div><div class="key-pill">3. <b>Bier</b></div><div class="key-pill">4. <b>Ministry</b></div><div class="key-pill">5. <b>Apostles</b></div><div class="key-pill">6. <b>Weary</b></div><div class="key-pill">7. <b>Anxious</b></div></div><div class="notes-topic-title">Part II — Which Story?</div><div class="key-grid"><div class="key-pill">8. <b>Jesus Raised the Widow's Son</b></div><div class="key-pill">9. <b>Jesus Washed the Disciples' Feet</b></div><div class="key-pill">10. <b>The Ethiopian Man</b></div><div class="key-pill">11. <b>Jesus Washed the Disciples' Feet</b></div><div class="key-pill">12. <b>Jesus Raised the Widow's Son</b></div><div class="key-pill">13. <b>The Ethiopian Man</b></div><div class="key-pill">14. <b>Jesus Washed the Disciples' Feet</b></div><div class="key-pill">15. <b>The Ethiopian Man</b></div></div><div class="notes-topic-title">Part III — True or False</div><div class="key-grid"><div class="key-pill">16. <b>True</b></div><div class="key-pill">17. <b>False</b></div><div class="key-pill">18. <b>False</b></div><div class="key-pill">19. <b>True</b></div><div class="key-pill">20. <b>True</b></div><div class="key-pill">21. <b>False</b></div><div class="key-pill">22. <b>True</b></div><div class="key-pill">23. <b>True</b></div><div class="key-pill">24. <b>True</b></div><div class="key-pill">25. <b>False</b></div><div class="key-pill">26. <b>True</b></div><div class="key-pill">27. <b>True</b></div><div class="key-pill">28. <b>True</b></div><div class="key-pill">29. <b>False</b></div><div class="key-pill">30. <b>True</b></div><div class="key-pill">31. <b>False</b></div><div class="key-pill">32. <b>True</b></div><div class="key-pill">33. <b>True</b></div></div><div class="notes-topic-title">Part IV — Short Answer (sample answers)</div><div class="ptest-q" style="margin-bottom:6px"><b>34.</b> To humbly serve and wash one another's feet, just as He washed theirs</div><div class="ptest-q" style="margin-bottom:6px"><b>35.</b> Because Peter felt unworthy of having his Lord and Teacher perform such a humble, lowly act of service for him</div><div class="ptest-q" style="margin-bottom:6px"><b>36.</b> That no servant is greater than his master, and that we will be blessed if we follow His example of humble service</div><div class="ptest-q" style="margin-bottom:6px"><b>37.</b> An Ethiopian eunuch, an important official in charge of the treasury of the Kandake</div><div class="ptest-q" style="margin-bottom:6px"><b>38.</b> The Book of Isaiah the prophet</div><div class="ptest-q" style="margin-bottom:6px"><b>39.</b> He asked to be baptized and was baptized in the water</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ── Hidden Print Area (Practice Test + Answer Key) ── -->
+<div id="print-area">
+<div class="p-cover">
+    <div class="p-icon">✝️</div>
+    <h1>Religion 4 — Jesus the Healer and Servant Practice Test</h1>
+    <div class="p-sub">The Widow's Son · Washing the Disciples' Feet · The Ethiopian Man</div>
+    <div class="p-info-box">
+      <div><strong>Name:</strong> _____________________________________</div>
+      <div><strong>Section:</strong> ___________________ &nbsp; <strong>Date:</strong> ___________________</div>
+      <div><strong>Score:</strong> _______ / 39</div>
+    </div>
+    <div class="p-instructions">
+      <strong>Instructions:</strong> Read each item carefully. Write your answer on the blank provided (Parts I–III), or answer in complete sentences (Part IV). Good luck!
+    </div>
+  </div>
+
+  <h2 class="p-part-title">Part I — Vocabulary Matching</h2>
+  <div class="p-bank"><strong>Word Bank:</strong> Widow &middot; Pity &middot; Bier &middot; Ministry &middot; Apostles &middot; Weary &middot; Anxious</div><div class="p-q"><b>1.</b> A woman whose husband has died. <span class="p-blank"></span></div><div class="p-q"><b>2.</b> Sadness for someone. <span class="p-blank"></span></div><div class="p-q"><b>3.</b> A stand on which a dead body or coffin is placed. <span class="p-blank"></span></div><div class="p-q"><b>4.</b> Service, work of love. <span class="p-blank"></span></div><div class="p-q"><b>5.</b> The twelve men chosen by Jesus to spread the Gospel. <span class="p-blank"></span></div><div class="p-q"><b>6.</b> Tired. <span class="p-blank"></span></div><div class="p-q"><b>7.</b> Afraid or nervous. <span class="p-blank"></span></div><h2 class="p-part-title">Part II — Identify: Which Story?</h2><div class="p-q"><b>8.</b> Jesus touched a bier and told a dead man to get up. <span class="p-blank"></span></div><div class="p-q"><b>9.</b> Jesus wrapped a towel around His waist and washed feet with water from a basin. <span class="p-blank"></span></div><div class="p-q"><b>10.</b> An important official was reading the Book of Isaiah in his chariot. <span class="p-blank"></span></div><div class="p-q"><b>11.</b> Peter said, "Lord, are You going to wash my feet?" <span class="p-blank"></span></div><div class="p-q"><b>12.</b> The crowd said, "A great prophet has come in our midst." <span class="p-blank"></span></div><div class="p-q"><b>13.</b> Philip explained the Good News about Jesus, and the man asked to be baptized. <span class="p-blank"></span></div><div class="p-q"><b>14.</b> Jesus said, "No servant is greater than his master." <span class="p-blank"></span></div><div class="p-q"><b>15.</b> The Spirit told Philip to go near a chariot. <span class="p-blank"></span></div><div class="p-break"></div><h2 class="p-part-title">Part III — True or False</h2><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>16.</b> Jesus raised a widow's son back to life in the town of Nain.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>17.</b> Jesus felt no pity for the widow whose son had died.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>18.</b> The dead man remained silent after Jesus told him to get up.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>19.</b> The crowd praised God after witnessing the miracle in Nain.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>20.</b> Jesus made the blind see and healed the paralyzed during His healing ministry.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>21.</b> Jesus's healing did not lead people to have faith in Him.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>22.</b> The sacrament of the anointing of the sick is given to a very sick or dying person.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>23.</b> Visiting the sick is one of the corporal works of mercy.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>24.</b> Jesus washed His disciples' feet before the Passover Festival.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>25.</b> Peter immediately allowed Jesus to wash his feet without any objection.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>26.</b> Jesus said that no servant is greater than his master.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>27.</b> Judas was prompted by the devil to betray Jesus.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>28.</b> Jesus's death on the Cross was His last act of service for the salvation of all.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>29.</b> As followers of Jesus, we should only show kindness to our friends and loved ones.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>30.</b> Apostle Philip met an Ethiopian eunuch who was reading the Book of Isaiah.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>31.</b> The Ethiopian eunuch understood the Scripture without anyone explaining it to him.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>32.</b> The Spirit told Philip to go near the Ethiopian's chariot.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>33.</b> Philip baptized the Ethiopian eunuch after telling him the good news about Jesus.</div><div class="p-break"></div><h2 class="p-part-title">Part IV — Short Answer</h2><div class="p-q"><b>34.</b> What example did Jesus teach His disciples?<br><br>_________________________________________________<br><br>_________________________________________________</div><div class="p-q"><b>35.</b> Why do you think Peter did not want Jesus to wash his feet?<br><br>_________________________________________________<br><br>_________________________________________________</div><div class="p-q"><b>36.</b> What did Jesus say about serving others?<br><br>_________________________________________________<br><br>_________________________________________________</div><div class="p-q"><b>37.</b> Whom did Apostle Philip meet?<br><br>_________________________________________________<br><br>_________________________________________________</div><div class="p-q"><b>38.</b> What was the man reading?<br><br>_________________________________________________<br><br>_________________________________________________</div><div class="p-q"><b>39.</b> What did he do after talking to Philip?<br><br>_________________________________________________<br><br>_________________________________________________</div><div class="p-break"></div><h2 class="p-part-title">✅ Complete Answer Key</h2>
+  <div class="p-key-part-title">Part I — Vocabulary Matching</div><div class="p-key-grid"><div class="p-key-pill">1. <b>Widow</b></div><div class="p-key-pill">2. <b>Pity</b></div><div class="p-key-pill">3. <b>Bier</b></div><div class="p-key-pill">4. <b>Ministry</b></div><div class="p-key-pill">5. <b>Apostles</b></div><div class="p-key-pill">6. <b>Weary</b></div><div class="p-key-pill">7. <b>Anxious</b></div></div><div class="p-key-part-title">Part II — Which Story?</div><div class="p-key-grid"><div class="p-key-pill">8. <b>Jesus Raised the Widow's Son</b></div><div class="p-key-pill">9. <b>Jesus Washed the Disciples' Feet</b></div><div class="p-key-pill">10. <b>The Ethiopian Man</b></div><div class="p-key-pill">11. <b>Jesus Washed the Disciples' Feet</b></div><div class="p-key-pill">12. <b>Jesus Raised the Widow's Son</b></div><div class="p-key-pill">13. <b>The Ethiopian Man</b></div><div class="p-key-pill">14. <b>Jesus Washed the Disciples' Feet</b></div><div class="p-key-pill">15. <b>The Ethiopian Man</b></div></div><div class="p-key-part-title">Part III — True or False</div><div class="p-key-grid"><div class="p-key-pill">16. <b>True</b></div><div class="p-key-pill">17. <b>False</b></div><div class="p-key-pill">18. <b>False</b></div><div class="p-key-pill">19. <b>True</b></div><div class="p-key-pill">20. <b>True</b></div><div class="p-key-pill">21. <b>False</b></div><div class="p-key-pill">22. <b>True</b></div><div class="p-key-pill">23. <b>True</b></div><div class="p-key-pill">24. <b>True</b></div><div class="p-key-pill">25. <b>False</b></div><div class="p-key-pill">26. <b>True</b></div><div class="p-key-pill">27. <b>True</b></div><div class="p-key-pill">28. <b>True</b></div><div class="p-key-pill">29. <b>False</b></div><div class="p-key-pill">30. <b>True</b></div><div class="p-key-pill">31. <b>False</b></div><div class="p-key-pill">32. <b>True</b></div><div class="p-key-pill">33. <b>True</b></div></div><div class="p-key-part-title">Part IV — Short Answer (sample answers)</div><div class="p-q"><b>34.</b> To humbly serve and wash one another's feet, just as He washed theirs</div><div class="p-q"><b>35.</b> Because Peter felt unworthy of having his Lord and Teacher perform such a humble, lowly act of service for him</div><div class="p-q"><b>36.</b> That no servant is greater than his master, and that we will be blessed if we follow His example of humble service</div><div class="p-q"><b>37.</b> An Ethiopian eunuch, an important official in charge of the treasury of the Kandake</div><div class="p-q"><b>38.</b> The Book of Isaiah the prophet</div><div class="p-q"><b>39.</b> He asked to be baptized and was baptized in the water</div>
+</div>
+
+</body>
+</html>
