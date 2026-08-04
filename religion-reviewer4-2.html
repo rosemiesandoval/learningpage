@@ -490,6 +490,112 @@ header .sub { font-size: .72rem; color: var(--muted); margin-top: 1px; }
 }
 #print-area { display: none; }
 
+
+/* ── Chapter Summary / Tandaan / Memory boxes (fix: previously missing) ── */
+.chapter-summary {
+  background: linear-gradient(135deg, rgba(59,130,246,.1), rgba(34,197,94,.08));
+  border: 1px solid rgba(59,130,246,.25);
+  border-left: 4px solid var(--blue);
+  border-radius: 12px;
+  padding: 14px 18px;
+  margin-bottom: 18px;
+  font-size: .88rem;
+  line-height: 1.65;
+  color: #dbeafe;
+}
+.tandaan-box {
+  background: rgba(245,158,11,.08);
+  border: 1px solid rgba(245,158,11,.3);
+  border-left: 4px solid var(--gold);
+  border-radius: 12px;
+  padding: 12px 18px;
+  margin: 14px 0;
+  font-size: .86rem;
+  line-height: 1.6;
+  color: #fde68a;
+}
+.tandaan-label {
+  display: block;
+  font-family: 'Baloo 2', cursive;
+  font-size: .8rem;
+  color: var(--gold);
+  letter-spacing: .5px;
+  margin-bottom: 5px;
+}
+.memory-box {
+  background: rgba(34,197,94,.08);
+  border: 1px solid rgba(34,197,94,.3);
+  border-left: 4px solid var(--green);
+  border-radius: 12px;
+  padding: 12px 18px;
+  margin: 14px 0 22px;
+  font-size: .86rem;
+  line-height: 1.6;
+  color: #bbf7d0;
+}
+.memory-label {
+  display: block;
+  font-family: 'Baloo 2', cursive;
+  font-size: .8rem;
+  color: var(--green);
+  letter-spacing: .5px;
+  margin-bottom: 5px;
+}
+.compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0 20px;
+  font-size: .82rem;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.compare-table th {
+  background: linear-gradient(135deg, var(--blue-dark), var(--gold-dark));
+  color: white;
+  text-align: left;
+  padding: 9px 12px;
+  font-size: .78rem;
+  text-transform: uppercase;
+  letter-spacing: .4px;
+}
+.compare-table td {
+  padding: 9px 12px;
+  border-top: 1px solid var(--border);
+  color: var(--text);
+  vertical-align: top;
+}
+.compare-table tr:nth-child(even) td { background: rgba(255,255,255,.02); }
+
+/* ── Story Box (for reading Bible stories aloud) ─────────────────── */
+.story-box {
+  background: rgba(255,255,255,.03);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px 20px;
+  margin-bottom: 16px;
+  font-size: .92rem;
+  line-height: 1.8;
+  color: var(--text);
+}
+.story-box p { margin-bottom: 10px; }
+.story-box p:last-child { margin-bottom: 0; }
+.story-ref {
+  display: block;
+  text-align: right;
+  font-style: italic;
+  color: var(--muted);
+  font-size: .8rem;
+  margin-top: 10px;
+}
+.story-label {
+  display: block;
+  font-family: 'Baloo 2', cursive;
+  font-size: .9rem;
+  color: var(--gold);
+  letter-spacing: .5px;
+  margin-bottom: 10px;
+}
 </style>
 </head>
 <body>
@@ -1154,6 +1260,13 @@ function switchTab(tabId, btn) {
     <div class="notes-body">
 
       <div class="notes-section active" id="tab-widow">
+        <div class="story-box">
+          <span class="story-label">📖 Read Aloud: Jesus Raised the Widow's Son</span>
+          <p>Jesus went to a town called Nain. His disciples and a large crowd went with Him. As He drew near to the town, a man who had died was being carried out. He was the only son of his mother, and she was a widow.</p>
+          <p>When the Lord saw her, He was moved with pity for her. He said to her, "Do not cry." He stepped forward and touched the bier. The bearers stopped, and Jesus said, "Young man, I tell you, get up!" The dead man sat up and began to talk. Jesus gave him back to his mother.</p>
+          <p>They praised God and said, "A great prophet has come in our midst. God will help His people."</p>
+          <span class="story-ref">— Luke 7:11–17</span>
+        </div>
         <div class="chapter-summary">
           📚 <strong>Chapter Summary:</strong> In the town of Nain, Jesus was moved with pity for a grieving widow and raised her only son back to life. The crowd praised God, recognizing Jesus as a great prophet. <em>(Luke 7:11–17)</em>
         </div>
@@ -1186,6 +1299,19 @@ function switchTab(tabId, btn) {
       </div>
 
       <div class="notes-section" id="tab-feet">
+        <div class="story-box">
+          <span class="story-label">📖 Read Aloud: Jesus Washed the Disciples' Feet</span>
+          <p>It was just before the Passover Festival. Jesus knew that the hour had come for Him to leave this world and go to the Father. Having loved His own who were in the world, He loved them to the end.</p>
+          <p>The evening meal was in progress, and the devil had already prompted Judas, the son of Simon Iscariot, to betray Jesus. Jesus knew that the Father had put all things under His power, and that He had come from God and was returning to God. He got up from the meal, took off his outer clothing, and wrapped a towel around his waist. After that, He poured water into a basin and began to wash His disciples' feet, drying them with the towel that was wrapped around Him.</p>
+          <p>He came to Simon Peter, who said to Him, "Lord, are You going to wash my feet?"</p>
+          <p>Jesus replied, "You do not realize now what I am doing, but later you will understand."</p>
+          <p>"No," said Peter, "You shall never wash my feet."</p>
+          <p>Jesus answered, "Unless I wash you, you have no part with Me."</p>
+          <p>"Then, Lord," Simon Peter replied, "not just my feet but my hands and my head as well!"</p>
+          <p>Jesus answered, "Those who have had a bath need only to wash their feet; their whole body is clean. And you are clean, though not every one of you." For He knew who was going to betray Him, and that was why He said not everyone was clean.</p>
+          <p>When He had finished washing their feet, He put on His clothes and returned to His place. "Do you understand what I have done for you?" He asked them. "You call Me 'Teacher' and 'Lord,' and rightly so, for that is what I am. Now that I, your Lord and Teacher, have washed your feet, you also should wash one another's feet. I have set you an example that you should do as I have done for you. Very truly I tell you, no servant is greater than his master, nor is a messenger greater than the one who sent him. Now that you know these things, you will be blessed if you do them."</p>
+          <span class="story-ref">— John 13:1–17</span>
+        </div>
         <div class="chapter-summary">
           📚 <strong>Chapter Summary:</strong> Before the Passover Festival, Jesus washed His disciples' feet as an act of humble service, even though Peter initially resisted. He taught that no servant is greater than his master, and that we are blessed if we follow His example. <em>(John 13:1–17)</em>
         </div>
@@ -1208,6 +1334,16 @@ function switchTab(tabId, btn) {
       </div>
 
       <div class="notes-section" id="tab-ethiopian">
+        <div class="story-box">
+          <span class="story-label">📖 Read Aloud: The Ethiopian Man</span>
+          <p>The Apostle Philip met an Ethiopian eunuch, an important official in charge of all the treasury of the Kandake (which means "queen of the Ethiopians"). This man had gone to Jerusalem to worship, and on his way home was sitting in his chariot reading the Book of Isaiah the prophet. The Spirit told Philip, "Go to that chariot and stay near it."</p>
+          <p>Then Philip ran up to the chariot and heard the man reading Isaiah the prophet. "Do you understand what you are reading?" Philip asked.</p>
+          <p>"How can I," he said, "unless someone explains it to me?" So he invited Philip to come up and sit with him.</p>
+          <p>This is the passage of Scripture the eunuch was reading: "He was led like a sheep to the slaughter, and as a lamb before its shearer is silent, so he did not open his mouth. In his humiliation he was deprived of justice. Who can speak of his descendants? For his life was taken from the earth."</p>
+          <p>The eunuch asked Philip, "Tell me, please, who is the prophet talking about, himself or someone else?" Then Philip began with that very passage of Scripture and told him the good news about Jesus.</p>
+          <p>As they traveled along the road, they came to some water and the eunuch said, "Look, here is water. What can stand in the way of my being baptized?" And he gave orders to stop the chariot. Then both Philip and the eunuch went down into the water and Philip baptized him.</p>
+          <span class="story-ref">— Acts 8:27–38</span>
+        </div>
         <div class="chapter-summary">
           📚 <strong>Chapter Summary:</strong> The Apostle Philip, guided by the Spirit, met an Ethiopian official reading the Book of Isaiah. Philip explained that the passage was about Jesus, shared the Good News, and baptized the man when they came to some water. <em>(Acts 8:27–38)</em>
         </div>
