@@ -596,6 +596,55 @@ header .sub { font-size: .72rem; color: var(--muted); margin-top: 1px; }
   letter-spacing: .5px;
   margin-bottom: 10px;
 }
+
+/* ── Memory Verses ────────────────────────────────────────────── */
+.verse-intro {
+  font-size: .85rem;
+  color: var(--muted);
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+.verse-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.verse-card {
+  background: linear-gradient(135deg, rgba(245,158,11,.08), rgba(34,197,94,.05));
+  border: 1px solid rgba(245,158,11,.28);
+  border-radius: 14px;
+  padding: 16px 20px;
+}
+.verse-text {
+  font-style: italic;
+  font-size: .95rem;
+  line-height: 1.7;
+  color: var(--text);
+}
+.verse-text::before { content: "\\201C"; }
+.verse-text::after { content: "\\201D"; }
+.verse-ref {
+  display: block;
+  text-align: right;
+  margin-top: 10px;
+  font-family: 'Baloo 2', cursive;
+  color: var(--gold);
+  font-size: .85rem;
+  letter-spacing: .3px;
+}
+.verse-theme {
+  display: inline-block;
+  font-family: 'Baloo 2', cursive;
+  font-size: .68rem;
+  letter-spacing: .4px;
+  text-transform: uppercase;
+  color: var(--green);
+  background: rgba(34,197,94,.1);
+  border: 1px solid rgba(34,197,94,.3);
+  border-radius: 20px;
+  padding: 3px 10px;
+  margin-bottom: 8px;
+}
 </style>
 </head>
 <body>
@@ -1253,6 +1302,7 @@ function switchTab(tabId, btn) {
       <button class="notes-tab" onclick="switchTab('tab-feet', this)">🧺 Washing Feet</button>
       <button class="notes-tab" onclick="switchTab('tab-servant', this)">❤️ Jesus as Servant</button>
       <button class="notes-tab" onclick="switchTab('tab-ethiopian', this)">📜 The Ethiopian Man</button>
+      <button class="notes-tab" onclick="switchTab('tab-verses', this)">🕊️ Memory Verses</button>
       <button class="notes-tab" onclick="switchTab('tab-tf', this)">✅ True or False</button>
       <button class="notes-tab" onclick="switchTab('tab-ptest', this)">📝 Practice Test</button>
       <button class="notes-tab" onclick="switchTab('tab-key', this)">🔑 Answer Key</button>
@@ -1352,6 +1402,57 @@ function switchTab(tabId, btn) {
           <div class="notes-item"><span class="notes-term">The Man</span><span class="notes-def">An Ethiopian eunuch, an official in charge of the treasury of the Kandake (queen of the Ethiopians)</span></div>
           <div class="notes-item"><span class="notes-term">What He Was Reading</span><span class="notes-def">A passage from the Book of Isaiah about a suffering servant</span></div>
           <div class="notes-item"><span class="notes-term">The Outcome</span><span class="notes-def">He believed the Good News about Jesus and asked to be baptized</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-verses">
+        <div class="verse-intro">🕊️ These are the key verses from all three stories, grouped by theme — great for memorization practice.</div>
+        <div class="verse-grid">
+          <div class="verse-card">
+            <span class="verse-theme">Compassion</span>
+            <div class="verse-text">Do not cry.</div>
+            <span class="verse-ref">Jesus, to the widow — Luke 7:13</span>
+          </div>
+          <div class="verse-card">
+            <span class="verse-theme">Healing</span>
+            <div class="verse-text">Young man, I tell you, get up!</div>
+            <span class="verse-ref">Jesus, at Nain — Luke 7:14</span>
+          </div>
+          <div class="verse-card">
+            <span class="verse-theme">Praise</span>
+            <div class="verse-text">A great prophet has come in our midst. God will help His people.</div>
+            <span class="verse-ref">The crowd at Nain — Luke 7:16</span>
+          </div>
+          <div class="verse-card">
+            <span class="verse-theme">Faith</span>
+            <div class="verse-text">Your faith has saved you. Go in peace.</div>
+            <span class="verse-ref">Jesus, to those He healed — Luke 7:50</span>
+          </div>
+          <div class="verse-card">
+            <span class="verse-theme">Service</span>
+            <div class="verse-text">Now that I, your Lord and Teacher, have washed your feet, you also should wash one another's feet. I have set you an example that you should do as I have done for you.</div>
+            <span class="verse-ref">Jesus, to His disciples — John 13:14–15</span>
+          </div>
+          <div class="verse-card">
+            <span class="verse-theme">Humility</span>
+            <div class="verse-text">No servant is greater than his master, nor is a messenger greater than the one who sent him.</div>
+            <span class="verse-ref">Jesus, to His disciples — John 13:16</span>
+          </div>
+          <div class="verse-card">
+            <span class="verse-theme">Blessing</span>
+            <div class="verse-text">Now that you know these things, you will be blessed if you do them.</div>
+            <span class="verse-ref">Jesus, to His disciples — John 13:17</span>
+          </div>
+          <div class="verse-card">
+            <span class="verse-theme">Unity</span>
+            <div class="verse-text">If one part suffers, every part suffers with it; if one part is honored, every part rejoices with it.</div>
+            <span class="verse-ref">1 Corinthians 12:26</span>
+          </div>
+          <div class="verse-card">
+            <span class="verse-theme">Faith</span>
+            <div class="verse-text">Look, here is water. What can stand in the way of my being baptized?</div>
+            <span class="verse-ref">The Ethiopian man, to Philip — Acts 8:36</span>
+          </div>
         </div>
       </div>
 
