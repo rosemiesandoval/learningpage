@@ -1,0 +1,1428 @@
+<!DOCTYPE html>
+<html lang="tl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>📚 Filipino: Kapayapaan at Kaayusan Reviewer 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --gold: #f59e0b;
+  --gold-dark: #b45309;
+  --blue: #3b82f6;
+  --blue-dark: #1d4ed8;
+  --red: #ef4444;
+  --green: #22c55e;
+  --bg: #0c1a0e;
+  --surface: #132015;
+  --surface2: #1a2e1d;
+  --text: #f0fdf4;
+  --muted: #86efac;
+  --border: #166534;
+}
+
+body {
+  font-family: 'Baloo 2', cursive;
+  background: var(--bg);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--text);
+  background-image:
+    radial-gradient(ellipse at 10% 30%, rgba(245,158,11,.06) 0%, transparent 55%),
+    radial-gradient(ellipse at 90% 70%, rgba(59,130,246,.06) 0%, transparent 55%);
+}
+
+header {
+  width: 100%;
+  background: linear-gradient(135deg, #14532d, #1e3a5f);
+  border-bottom: 2px solid var(--gold-dark);
+  padding: 13px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 4px 30px rgba(0,0,0,.5);
+}
+.header-icon { font-size: 2rem; animation: float 3s ease-in-out infinite; }
+@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
+
+header h1 {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.45rem;
+  background: linear-gradient(90deg, var(--gold), #fde68a, var(--gold));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+header .sub { font-size: .72rem; color: var(--muted); margin-top: 1px; }
+
+.header-controls { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+.score-pill {
+  background: rgba(245,158,11,.15);
+  border: 1px solid rgba(245,158,11,.4);
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-weight: 800;
+  font-size: .85rem;
+  color: var(--gold);
+}
+.audio-btn {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  background: var(--surface2);
+  color: var(--text);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all .2s;
+  display: flex; align-items: center; justify-content: center;
+}
+.audio-btn:hover, .audio-btn.active { background: #14532d; border-color: var(--gold); }
+
+.chat-wrap {
+  width: 100%; max-width: 700px; flex: 1;
+  display: flex; flex-direction: column;
+  padding: 16px 14px 0;
+}
+
+#chat-box {
+  flex: 1; overflow-y: auto;
+  display: flex; flex-direction: column;
+  gap: 14px; padding-bottom: 10px;
+  max-height: calc(100vh - 200px);
+  scroll-behavior: smooth;
+}
+#chat-box::-webkit-scrollbar { width: 4px; }
+#chat-box::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+.msg { display: flex; gap: 8px; }
+.msg.user { flex-direction: row-reverse; }
+
+.avatar {
+  width: 34px; height: 34px; border-radius: 50%;
+  font-size: 1rem; display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 2px;
+}
+.msg.bot .avatar { background: linear-gradient(135deg, #14532d, #1e3a5f); border: 1.5px solid rgba(245,158,11,.4); }
+.msg.user .avatar { background: linear-gradient(135deg, #1e3a5f, #14532d); border: 1.5px solid rgba(59,130,246,.3); }
+
+.bubble {
+  max-width: 80%;
+  padding: 11px 16px;
+  border-radius: 18px;
+  font-size: .9rem;
+  line-height: 1.65;
+  animation: pop .22s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes pop { from{transform:scale(.88) translateY(6px);opacity:0} to{transform:scale(1) translateY(0);opacity:1} }
+
+.msg.bot .bubble {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-bottom-left-radius: 5px;
+}
+.msg.user .bubble {
+  background: linear-gradient(135deg, #1e3a5f, var(--blue-dark));
+  border-bottom-right-radius: 5px;
+}
+
+/* chips */
+.chip {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: rgba(245,158,11,.12);
+  border: 1.5px solid rgba(245,158,11,.4);
+  color: var(--gold);
+  border-radius: 30px;
+  padding: 5px 13px; margin: 5px 4px 0 0;
+  font-size: .8rem; font-weight: 700;
+  cursor: pointer; transition: all .15s;
+  user-select: none; font-family: 'Baloo 2', cursive;
+}
+.chip:hover {
+  background: var(--gold-dark); color: white;
+  border-color: var(--gold);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(245,158,11,.3);
+}
+
+/* topic tag */
+.topic-tag {
+  display: inline-block;
+  background: linear-gradient(135deg, #14532d, #166534);
+  border: 1px solid var(--gold-dark);
+  color: var(--gold);
+  font-size: .68rem; font-weight: 800;
+  border-radius: 20px; padding: 2px 10px;
+  margin-bottom: 5px; letter-spacing: .5px;
+  text-transform: uppercase;
+}
+
+/* multiple choice */
+.mc-options { display: flex; flex-direction: column; gap: 7px; margin-top: 10px; width: 100%; }
+.mc-btn {
+  display: flex; align-items: center; gap: 10px;
+  background: rgba(255,255,255,.03);
+  border: 1.5px solid var(--border);
+  border-radius: 12px; padding: 9px 14px;
+  color: var(--text); font-family: 'Baloo 2', cursive;
+  font-size: .87rem; font-weight: 600;
+  cursor: pointer; transition: all .15s; text-align: left; width: 100%;
+}
+.mc-btn:hover:not(:disabled) {
+  background: rgba(245,158,11,.12); border-color: var(--gold);
+  color: var(--gold); transform: translateX(3px);
+}
+.mc-btn .letter {
+  display: flex; align-items: center; justify-content: center;
+  width: 26px; height: 26px; border-radius: 8px;
+  background: rgba(245,158,11,.15); border: 1px solid rgba(245,158,11,.35);
+  color: var(--gold); font-size: .78rem; font-weight: 800;
+  flex-shrink: 0; transition: all .15s;
+}
+.mc-btn:hover:not(:disabled) .letter { background: var(--gold-dark); color: white; border-color: var(--gold-dark); }
+.mc-btn.correct { background: rgba(34,197,94,.15)!important; border-color: #22c55e!important; color: #22c55e!important; cursor: default; }
+.mc-btn.correct .letter { background: #22c55e!important; color: white!important; border-color: #22c55e!important; }
+.mc-btn.wrong { background: rgba(239,68,68,.12)!important; border-color: #ef4444!important; color: #ef4444!important; cursor: default; }
+.mc-btn.wrong .letter { background: #ef4444!important; color: white!important; border-color: #ef4444!important; }
+.mc-btn:disabled { cursor: default; transform: none!important; }
+
+/* speaker wave */
+.speaker-wave {
+  display: inline-flex; align-items: flex-end;
+  gap: 2px; height: 14px; margin-left: 6px; vertical-align: middle;
+}
+.speaker-wave span {
+  display: block; width: 3px; border-radius: 2px;
+  background: var(--gold); animation: wave 1s ease-in-out infinite;
+}
+.speaker-wave span:nth-child(1){height:4px;animation-delay:0s}
+.speaker-wave span:nth-child(2){height:10px;animation-delay:.1s}
+.speaker-wave span:nth-child(3){height:6px;animation-delay:.2s}
+.speaker-wave span:nth-child(4){height:12px;animation-delay:.15s}
+.speaker-wave span:nth-child(5){height:4px;animation-delay:.05s}
+@keyframes wave{0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.8)}}
+
+/* typing */
+.typing {
+  display: flex; gap: 4px; padding: 12px 16px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 18px; border-bottom-left-radius: 5px; width: fit-content;
+}
+.dot { width: 7px; height: 7px; border-radius: 50%; background: var(--gold); animation: bounce .9s infinite; }
+.dot:nth-child(2){animation-delay:.15s} .dot:nth-child(3){animation-delay:.3s}
+@keyframes bounce{0%,80%,100%{transform:translateY(0);opacity:.6}40%{transform:translateY(-7px);opacity:1}}
+
+/* input bar */
+.input-bar {
+  width: 100%; max-width: 700px;
+  padding: 10px 14px 18px;
+  display: flex; gap: 8px;
+  background: var(--bg); position: sticky; bottom: 0;
+}
+#user-input {
+  flex: 1; padding: 12px 18px;
+  border: 2px solid var(--border); border-radius: 30px;
+  font-family: 'Baloo 2', cursive; font-size: .92rem;
+  outline: none; background: var(--surface); color: var(--text);
+  transition: border-color .2s, box-shadow .2s;
+}
+#user-input::placeholder { color: var(--muted); }
+#user-input:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(245,158,11,.12); }
+
+#send-btn {
+  width: 48px; height: 48px; border-radius: 50%; border: none;
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  color: white; font-size: 1.1rem; cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 3px 14px rgba(245,158,11,.4); flex-shrink: 0;
+}
+#send-btn:hover { transform: scale(1.08); box-shadow: 0 5px 20px rgba(245,158,11,.55); }
+#send-btn:disabled { opacity: .5; transform: none; }
+
+/* result modal */
+.result-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.75); backdrop-filter: blur(6px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 100; opacity: 0; pointer-events: none; transition: opacity .3s;
+}
+.result-overlay.show { opacity: 1; pointer-events: all; }
+.result-card {
+  background: linear-gradient(135deg, #132015, #0c1a0e);
+  border: 2px solid var(--gold-dark);
+  border-radius: 24px; padding: 36px 40px;
+  text-align: center; max-width: 380px; width: 90%;
+  box-shadow: 0 20px 60px rgba(0,0,0,.6);
+  transform: scale(.9); transition: transform .3s cubic-bezier(.34,1.56,.64,1);
+}
+.result-overlay.show .result-card { transform: scale(1); }
+.result-emoji { font-size: 4rem; margin-bottom: 12px; display: block; }
+.result-title {
+  font-family: 'Fredoka One', cursive; font-size: 1.7rem; margin-bottom: 6px;
+  background: linear-gradient(90deg, var(--gold), #fde68a);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.result-score { font-size: 3rem; font-weight: 900; margin: 10px 0; color: white; }
+.result-msg { color: var(--muted); font-size: .9rem; margin-bottom: 22px; }
+.result-btn {
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  border: none; border-radius: 30px; padding: 12px 30px;
+  color: white; font-family: 'Baloo 2', cursive; font-weight: 800;
+  font-size: 1rem; cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+  box-shadow: 0 4px 16px rgba(245,158,11,.35);
+}
+.result-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 22px rgba(245,158,11,.5); }
+
+/* scenario card for identify questions */
+.scenario-card {
+  background: rgba(245,158,11,.07);
+  border: 1px solid rgba(245,158,11,.25);
+  border-radius: 12px; padding: 10px 14px;
+  margin: 8px 0 6px; font-style: italic;
+  font-size: .87rem; color: #fde68a; line-height: 1.5;
+}
+
+/* ── Notes Panel ─────────────────────────────────────────────── */
+.notes-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.78); backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 200; opacity: 0; pointer-events: none; transition: opacity .3s;
+}
+.notes-overlay.show { opacity: 1; pointer-events: all; }
+.notes-panel {
+  background: linear-gradient(160deg, #0c1a0e, #132015);
+  border: 2px solid var(--gold-dark);
+  border-radius: 20px;
+  width: 92%; max-width: 720px;
+  max-height: 88vh;
+  display: flex; flex-direction: column;
+  box-shadow: 0 24px 60px rgba(0,0,0,.7);
+  overflow: hidden;
+  transform: translateY(30px);
+  transition: transform .35s cubic-bezier(.34,1.2,.64,1);
+}
+.notes-overlay.show .notes-panel { transform: translateY(0); }
+.notes-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 22px; border-bottom: 1px solid var(--border);
+  background: linear-gradient(135deg, #14532d44, #1e3a5f44);
+}
+.notes-header h2 { font-family: 'Fredoka One', cursive; font-size: 1.3rem; color: var(--gold); }
+.notes-close {
+  width: 34px; height: 34px; border-radius: 50%;
+  border: 1.5px solid var(--border); background: var(--surface2);
+  color: var(--text); font-size: 1rem; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; transition: all .2s;
+}
+.notes-close:hover { background: #b91c1c; border-color: #ef4444; }
+.notes-body { overflow-y: auto; padding: 20px 22px; flex: 1; }
+.notes-body::-webkit-scrollbar { width: 4px; }
+.notes-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+.notes-topic { margin-bottom: 28px; }
+.notes-topic-title {
+  font-family: 'Fredoka One', cursive; font-size: 1.05rem;
+  color: var(--gold); margin-bottom: 10px;
+  padding-bottom: 6px; border-bottom: 1px solid var(--border);
+}
+.notes-item {
+  display: flex; gap: 10px; align-items: flex-start;
+  padding: 7px 0; border-bottom: 1px solid rgba(255,255,255,.04);
+  font-size: .87rem; line-height: 1.55;
+}
+.notes-item:last-child { border-bottom: none; }
+.notes-term { font-weight: 800; color: var(--gold); min-width: 150px; flex-shrink: 0; font-size: .84rem; }
+.notes-def { color: #d1fae5; }
+.notes-tabs {
+  display: flex; flex-wrap: wrap; gap: 8px; padding: 14px 22px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(0,0,0,.15);
+}
+.notes-tab {
+  padding: 12px 20px; border-radius: 10px;
+  border: 1.5px solid var(--border); 
+  background: rgba(255,255,255,.04); color: var(--muted);
+  font-family: 'Baloo 2', cursive; font-size: .9rem; font-weight: 700;
+  cursor: pointer; transition: all .15s; white-space: nowrap;
+  min-height: 48px; display: flex; align-items: center;
+}
+.notes-tab.active { background: var(--surface); color: var(--gold); border-color: var(--gold-dark); }
+.notes-tab:hover:not(.active) { color: var(--text); background: var(--surface2); }
+.notes-section { display: none; }
+.notes-section.active { display: block; }
+
+
+/* ── Print button in notes header ─────────────────────────────── */
+.notes-header-actions { display: flex; align-items: center; gap: 10px; }
+.print-btn {
+  display: flex; align-items: center; gap: 6px;
+  background: rgba(245,158,11,.12);
+  border: 1.5px solid rgba(245,158,11,.4);
+  color: var(--gold);
+  border-radius: 20px;
+  padding: 7px 14px;
+  font-family: 'Baloo 2', cursive;
+  font-size: .78rem;
+  font-weight: 800;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all .15s;
+}
+.print-btn:hover { background: var(--gold); color: #0c1a0e; border-color: var(--gold); }
+
+/* ── On-screen Practice Test / Answer Key ─────────────────────── */
+.ptest-part-title {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1rem;
+  color: var(--gold);
+  margin: 22px 0 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+.ptest-part-title:first-child { margin-top: 0; }
+.ptest-q {
+  font-size: .87rem;
+  line-height: 1.6;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed rgba(255,255,255,.06);
+  color: #d1fae5;
+}
+.ptest-q b { color: var(--gold); }
+.ptest-q .opt { display: block; margin: 2px 0 2px 18px; color: #d1fae5; }
+.ptest-bank {
+  background: rgba(59,130,246,.08);
+  border: 1px solid rgba(59,130,246,.3);
+  border-radius: 10px;
+  padding: 10px 16px;
+  margin-bottom: 14px;
+  font-size: .82rem;
+  color: #dbeafe;
+  line-height: 1.6;
+}
+.key-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.key-pill {
+  background: rgba(245,158,11,.1);
+  border: 1px solid rgba(245,158,11,.25);
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: .78rem;
+  color: #fde68a;
+}
+.key-pill b { color: #34d399; }
+
+/* ── Print / Save-as-PDF styles ──────────────────────────────────
+   By default everything is hidden from print. When body carries
+   .printing-test, only #print-area (a light-themed clone of the
+   Practice Test + Answer Key) is shown, laid out for paper. ──── */
+@media print {
+  body * { visibility: hidden; }
+  #print-area, #print-area * { visibility: visible; }
+  #print-area {
+    display: block !important;
+    position: absolute; top: 0; left: 0; width: 100%;
+    background: #fff; color: #14290f;
+    font-family: 'Helvetica', Arial, sans-serif;
+    font-size: 10.5pt;
+    line-height: 1.5;
+  }
+  #print-area .p-cover { text-align: center; padding-top: 40px; }
+  #print-area .p-cover .p-icon { font-size: 34pt; }
+  #print-area .p-cover h1 { font-size: 19pt; color: #b45309; margin: 8px 0 4px; }
+  #print-area .p-cover .p-sub { font-size: 10.5pt; color: #166534; margin-bottom: 20px; }
+  #print-area .p-info-box {
+    border: 1.5px solid #fcd34d; border-radius: 10px;
+    max-width: 460px; margin: 0 auto 20px; padding: 14px 20px;
+    text-align: left; font-size: 10pt;
+  }
+  #print-area .p-info-box div { margin: 6px 0; border-bottom: 1px dotted #fde68a; padding-bottom: 6px; }
+  #print-area .p-instructions {
+    max-width: 460px; margin: 0 auto; text-align: left;
+    background: #fffbeb; border: 1px solid #fcd34d; border-radius: 10px;
+    padding: 12px 18px; font-size: 9.5pt; color: #78350f;
+  }
+  #print-area h2.p-part-title {
+    font-size: 12.5pt; color: #fff;
+    background: linear-gradient(135deg, #b45309, #14532d) !important;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    padding: 6px 12px; border-radius: 7px; margin: 18px 0 10px;
+    page-break-after: avoid;
+  }
+  #print-area .p-bank {
+    background: #f0fdf4 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    border: 1px solid #86efac; border-radius: 8px; padding: 8px 14px;
+    margin-bottom: 12px; font-size: 9.5pt; color: #14532d;
+  }
+  #print-area .p-q {
+    margin-bottom: 8px; padding-bottom: 8px;
+    border-bottom: 1px dotted #fde68a; font-size: 10pt;
+    page-break-inside: avoid; color: #14290f;
+  }
+  #print-area .p-q b { color: #b45309; }
+  #print-area .p-q .p-blank { display: inline-block; min-width: 65px; border-bottom: 1px solid #64748b; }
+  #print-area .p-q .p-opt { display: block; margin: 2px 0 0 20px; color: #365314; }
+  #print-area .p-break { page-break-before: always; }
+  #print-area .p-key-part-title {
+    font-size: 11pt; color: #b45309; font-weight: bold;
+    margin: 14px 0 8px; border-bottom: 2px solid #b45309; padding-bottom: 4px;
+  }
+  #print-area .p-key-grid {
+    display: grid; grid-template-columns: repeat(5, 1fr);
+    gap: 5px 8px; margin-bottom: 14px;
+  }
+  #print-area .p-key-pill {
+    background: #f0fdf4 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    border: 1px solid #86efac; border-radius: 6px;
+    padding: 4px 8px; font-size: 8.5pt; color: #166534;
+  }
+  #print-area .p-key-pill b { color: #b45309; }
+  @page { size: letter; margin: 1.5cm 1.8cm; }
+}
+#print-area { display: none; }
+
+
+/* ── Chapter Summary / Tandaan / Memory boxes (fix: previously missing) ── */
+.chapter-summary {
+  background: linear-gradient(135deg, rgba(59,130,246,.1), rgba(34,197,94,.08));
+  border: 1px solid rgba(59,130,246,.25);
+  border-left: 4px solid var(--blue);
+  border-radius: 12px;
+  padding: 14px 18px;
+  margin-bottom: 18px;
+  font-size: .88rem;
+  line-height: 1.65;
+  color: #dbeafe;
+}
+.tandaan-box {
+  background: rgba(245,158,11,.08);
+  border: 1px solid rgba(245,158,11,.3);
+  border-left: 4px solid var(--gold);
+  border-radius: 12px;
+  padding: 12px 18px;
+  margin: 14px 0;
+  font-size: .86rem;
+  line-height: 1.6;
+  color: #fde68a;
+}
+.tandaan-label {
+  display: block;
+  font-family: 'Baloo 2', cursive;
+  font-size: .8rem;
+  color: var(--gold);
+  letter-spacing: .5px;
+  margin-bottom: 5px;
+}
+.memory-box {
+  background: rgba(34,197,94,.08);
+  border: 1px solid rgba(34,197,94,.3);
+  border-left: 4px solid var(--green);
+  border-radius: 12px;
+  padding: 12px 18px;
+  margin: 14px 0 22px;
+  font-size: .86rem;
+  line-height: 1.6;
+  color: #bbf7d0;
+}
+.memory-label {
+  display: block;
+  font-family: 'Baloo 2', cursive;
+  font-size: .8rem;
+  color: var(--green);
+  letter-spacing: .5px;
+  margin-bottom: 5px;
+}
+.compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0 20px;
+  font-size: .82rem;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.compare-table th {
+  background: linear-gradient(135deg, var(--blue-dark), var(--gold-dark));
+  color: white;
+  text-align: left;
+  padding: 9px 12px;
+  font-size: .78rem;
+  text-transform: uppercase;
+  letter-spacing: .4px;
+}
+.compare-table td {
+  padding: 9px 12px;
+  border-top: 1px solid var(--border);
+  color: var(--text);
+  vertical-align: top;
+}
+.compare-table tr:nth-child(even) td { background: rgba(255,255,255,.02); }
+
+/* ── Story Box (for reading Bible stories aloud) ─────────────────── */
+.story-box {
+  background: rgba(255,255,255,.03);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px 20px;
+  margin-bottom: 16px;
+  font-size: .92rem;
+  line-height: 1.8;
+  color: var(--text);
+}
+.story-box p { margin-bottom: 10px; }
+.story-box p:last-child { margin-bottom: 0; }
+.story-ref {
+  display: block;
+  text-align: right;
+  font-style: italic;
+  color: var(--muted);
+  font-size: .8rem;
+  margin-top: 10px;
+}
+.story-label {
+  display: block;
+  font-family: 'Baloo 2', cursive;
+  font-size: .9rem;
+  color: var(--gold);
+  letter-spacing: .5px;
+  margin-bottom: 10px;
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-icon">📚</div>
+  <div>
+    <h1>Kapayapaan at Kaayusan</h1>
+    <div class="sub">Maikling Kuwento · Pang-uri · Direksiyon · Pang-abay</div>
+  </div>
+  <div class="header-controls">
+    <div class="score-pill">⭐ <span id="score-val">0</span> / <span id="total-val">0</span></div>
+    <button class="audio-btn" id="notes-toggle" title="Basahin ang mga Tala" onclick="document.getElementById('notes-overlay').classList.add('show')">📖</button>
+    <button class="audio-btn active" id="audio-toggle" title="I-toggle ang Audio">🔊</button>
+  </div>
+</header>
+
+<div class="chat-wrap">
+  <div id="chat-box"></div>
+</div>
+
+<div class="input-bar">
+  <input type="text" id="user-input" placeholder="Isulat ang iyong sagot dito…" autocomplete="off" />
+  <button id="send-btn">➤</button>
+</div>
+
+<div class="result-overlay" id="result-overlay">
+  <div class="result-card">
+    <span class="result-emoji" id="res-emoji">🏆</span>
+    <div class="result-title">Tapos na!</div>
+    <div class="result-score"><span id="res-score">0</span>/<span id="res-total">0</span></div>
+    <div class="result-msg" id="res-msg">Magaling!</div>
+    <button class="result-btn" onclick="restartApp()">🔄 Maglaro Ulit</button>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+// QUESTION BANK
+// ═══════════════════════════════════════════════════════════════
+const topics = {
+
+  "Ang Maikling Kuwento": [
+    { q: "Ano ang maikling kuwento?", a: "Isang anyo ng panitikan na may layuning magsalaysay ng mga pangyayari sa buhay ng pangunahing tauhan", hint: "Isa itong anyo ng panitikan." },
+    { q: "Ano ang iniiwan ng maikling kuwento sa isip ng mambabasa?", a: "Isang mahalagang mensahe", hint: "May aral na natutunan ang mambabasa." },
+    { q: "Ano ang tatlong mahalagang bahagi ng maikling kuwento?", a: "Simula, kasukdulan, at katapusan", hint: "Tatlong bahagi mula umpisa hanggang wakas." },
+    { q: "Ano ang layunin ng may-akda sa bahaging simula o panimula?", a: "Pukawin ang interes ng mga mambabasa", hint: "Nais na mahikayat ang mambabasang magpatuloy sa pagbasa." },
+    { q: "Ano-ano ang nakapaloob sa bahaging panimula?", a: "Pagpapakilala sa mga tauhan, paglalarawan ng tagpuan, at pagpapahiwatig ng suliranin", hint: "Tatlong bagay na ipinakikilala sa umpisa." },
+    { q: "Ano ang tumutukoy sa elementong humahadlang sa tauhan upang makamit niya ang kaniyang mithiin?", a: "Suliranin", hint: "Ito ang dahilan kung bakit may kuwento." },
+    { q: "Ano ang kasukdulan ng kuwento?", a: "Ang kapana-panabik na bahagi kung saan makikita kung paano pagpasiyahan ang kapalaran ng pangunahing tauhan", hint: "Ito ang pinakamataas na antas ng kuwento." },
+    { q: "Ano ang katapusan ng kuwento?", a: "Ang bahaging tumatalakay sa pagwawakas ng kuwento, maaaring masaya, malungkot, o bitin", hint: "Ito ang pagtatapos." },
+    { q: "Maaari bang walang tiyak na solusyon ang wakas ng isang kuwento?", a: "Oo, maaaring bitin ang wakas upang hayaang humatol o magpasya ang mambabasa", hint: "Hindi lahat ng kuwento ay may malinaw na wakas." },
+  ],
+
+  "Ano ang Dapat Kong Dalhin? Ano ang Dapat Kong Iwan?": [
+    { q: "Sino ang sumulat ng kuwentong \"Ano ang Dapat Kong Dalhin? Ano ang Dapat Kong Iwan?\"?", a: "Abdul Khaliq", hint: "Ito ay isang sagisag-panulat." },
+    { q: "Sino ang pangunahing tauhan ng kuwento?", a: "Si Harun", hint: "Isa siyang batang lalaki." },
+    { q: "Anong relihiyon ang kinabibilangan ni Harun?", a: "Islam (Muslim)", hint: "Sumasamba sila kay Allah." },
+    { q: "Saan matatagpuan ang mga Muslim na malimit biktima ng kaguluhan?", a: "Sa Mindanao", hint: "Isa itong pangkat ng isla sa Pilipinas." },
+    { q: "Ano ang unang naganap sa kuwento na ikinatakot ni Harun?", a: "Ang sunod-sunod na pagsabog ng bomba", hint: "Parang kulog at kidlat ang tunog nito." },
+    { q: "Ano ang ginawa ng pamilya ni Harun matapos ang putukan?", a: "Nagbalot sila ng mga puwedeng dalhin at umalis sa bahay", hint: "Kinailangan nilang lumikas." },
+    { q: "Ano ang suliranin ni Harun sa kuwento?", a: "Hindi niya alam kung ano ang dapat niyang dalhin at iwan", hint: "Ito ang pinag-iisipan niya habang naglalagay ng gamit sa bag." },
+    { q: "Ano ang payo ni Tatay kay Harun tungkol sa kaniyang bag?", a: "Huwag isiksik ang lahat; dalhin lamang ang pinakamahalaga", hint: "Sinabi ito ni Tatay habang nagpapasya sila." },
+    { q: "Kanino nagpunta ang pamilya ni Harun matapos umalis sa kanilang bahay?", a: "Sa bahay ng kaniyang Ate Lot sa bayan", hint: "Niyakap sila nito nang mahigpit." },
+    { q: "Ayon kay Tatay, sino ang naaapektuhan sa digmaan?", a: "Lahat sila; walang nananalo sa digmaan", hint: "Lahat ay talo, sabi ni Tatay." },
+    { q: "Sino ang kaklase ni Harun na Muslim rin?", a: "Si Ishaq", hint: "Nagkuwento siya kay Harun tungkol sa pagsabog ng bomba." },
+    { q: "Ano ang mga bagay na gustong gawin ni Harun ngunit hindi niya kayang dalhin o isiksik sa kaniyang bag?", a: "Ang makauwi sa kanilang bahay, makapaglaro sa bukid, makaligo sa ilog, at makita muli ang mga bundok", hint: "Mga alaala at karanasan, hindi bagay, ang tinutukoy dito." },
+  ],
+
+  "Pang-uri: Panlarawan at Pantangi": [
+    { q: "Ano ang pang-uri?", a: "Bahagi ng pananalita na naglalarawan sa tao, hayop, bagay, lugar, o pangyayari", hint: "Naglalarawan ito." },
+    { q: "Ano ang binibigyang-turing ng pang-uri?", a: "Ang pangngalan at panghalip", hint: "Dalawang bahagi ng pananalita ang binibigyang-turing." },
+    { q: "Ano ang pang-uring panlarawan?", a: "Nagpapakilala ng katangian ng pangngalang binibigyang-turing", hint: "Katangian ang inilalarawan nito." },
+    { q: "Magbigay ng halimbawa ng pang-uring panlarawan.", a: "Makulay, matalik, masasarap, magalang, o makulimlim", hint: "Anumang salitang naglalarawan ng katangian." },
+    { q: "Ano ang pang-uring pantangi?", a: "Tiyak na pangngalan na ginagamit para magbigay-turing sa isang pangngalan, karaniwang tumutukoy sa pinagmulan", hint: "Karaniwang tumutukoy ito sa lugar na pinagmulan." },
+    { q: "Magbigay ng halimbawa ng pang-uring pantangi.", a: "Longganisang Vigan, Barong Tagalog, sapatos Marikina, o ilog Pasig", hint: "May kaugnayan sa pangalan ng lugar." },
+    { q: "Anong uri ng pang-uri ang \"mahiyain\" sa pangungusap na \"Kaibiganin natin ang kaklase nating mahiyain\"?", a: "Pang-uring panlarawan (PL)", hint: "Isa itong katangian, hindi pinagmulan." },
+    { q: "Anong uri ng pang-uri ang \"Pilipino\" sa pangungusap na \"Tangkilikin natin ang mga produktong Pilipino\"?", a: "Pang-uring pantangi (PT)", hint: "Tumutukoy ito sa bansang pinagmulan." },
+    { q: "Anong uri ng pang-uri ang \"Guimaras\" sa pangungusap na \"Napakatamis ng manggang Guimaras\"?", a: "Pang-uring pantangi (PT)", hint: "Pangalan ito ng isang lalawigan." },
+    { q: "Anong uri ng pang-uri ang \"mahabang\" sa pangungusap na \"Sinusuklay ni Nanay ang mahabang buhok ni Bunso\"?", a: "Pang-uring panlarawan (PL)", hint: "Katangian ito ng buhok." },
+    { q: "Anong uri ng pang-uri ang \"masunurin\" sa pangungusap na \"Ang mga mag-aaral ni G. Cruz ay masunurin\"?", a: "Pang-uring panlarawan (PL)", hint: "Ugali o katangian ito." },
+  ],
+
+  "Ang Pagtungo sa Pambayang Aklatan": [
+    { q: "Sino ang sumulat ng kuwentong \"Ang Pagtungo sa Pambayang Aklatan\"?", a: "Anna Lian C. Vivas", hint: "Ito ang pangalan ng may-akda." },
+    { q: "Sino ang bidang tauhan sa kuwento?", a: "Si Alexis Roque", hint: "Isang bata siyang nasa ikaapat na baitang." },
+    { q: "Sa anong bayan bagong lipat ang pamilya ni Alexis?", a: "Sta. Ana", hint: "Isang linggo pa lamang sila roon." },
+    { q: "Ano ang takdang-aralin na dahilan kung bakit kailangang pumunta ni Alexis sa aklatan?", a: "Kailangan niyang magsaliksik para sa kaniyang takdang-aralin", hint: "May kailangan siyang hanapin doon." },
+    { q: "Sino ang nakasalubong ni Alexis sa labas ng kanilang bahay?", a: "Si Ginoong Celso Martinez, isang konsehal ng bayan", hint: "Isa siyang opisyal ng bayan." },
+    { q: "Sa anong direksiyon matatagpuan ang pambayang aklatan mula sa bahay ni Alexis?", a: "Sa gawing Timog-Kanluran", hint: "Isa itong pangalawang direksiyon." },
+    { q: "Ano ang matatagpuan sa gawing Timog mula sa bahay ni Alexis?", a: "Ang estasyon ng bumbero", hint: "Dito napupuntahan ang mga sunog." },
+    { q: "Ano ang matatagpuan sa gawing Kanluran?", a: "Ang simbahan", hint: "Nasa unang kanto ito." },
+    { q: "Ano pang matatagpuan sa koleksiyon ng aklatan bukod sa mga aklat?", a: "CD, DVD, audio tape, video tape, at iba pang multimedia", hint: "Makabagong teknolohiya ang mga ito." },
+    { q: "Saan matatagpuan ang Pambansang Aklatan ng Pilipinas?", a: "Sa Timog-Kanlurang bahagi ng Rizal Park, sa kahabaan ng kalye T.M. Kalaw", hint: "Malapit ito sa Rizal Park." },
+  ],
+
+  "Pangunahin at Pangalawang Direksiyon": [
+    { q: "Ilan ang pangunahing direksiyon?", a: "Apat", hint: "Ito ang Hilaga, Timog, Silangan, Kanluran." },
+    { q: "Ano-ano ang apat na pangunahing direksiyon?", a: "Hilaga, Timog, Silangan, at Kanluran", hint: "Makikita ito sa compass rose." },
+    { q: "Ilan ang pangalawang direksiyon?", a: "Apat", hint: "Kumbinasyon ito ng dalawang pangunahing direksiyon." },
+    { q: "Ano-ano ang apat na pangalawang direksiyon?", a: "Hilagang-Silangan (HS), Hilagang-Kanluran (HK), Timog-Silangan (TS), at Timog-Kanluran (TK)", hint: "Pinagsama ang dalawang pangunahing direksiyon sa bawat isa." },
+    { q: "Anong direksiyon ang nasa pagitan ng Timog at Kanluran?", a: "Timog-Kanluran (TK)", hint: "Pinagsamang Timog at Kanluran." },
+    { q: "Kung nakaharap ka sa Hilaga, anong direksiyon ang nasa likod mo?", a: "Timog", hint: "Ito ang kasalungat ng Hilaga." },
+    { q: "Kung nakaharap ka sa Hilagang-Silangan, anong direksiyon ang nasa iyong kaliwa?", a: "Hilagang-Kanluran (HK)", hint: "Isipin ang compass rose." },
+    { q: "Kung ang isang bata ay nakaharap sa Kanluran, anong direksiyon ang nasa kaniyang kanan?", a: "Hilaga", hint: "Umikot nang 90 degrees pakanan mula sa Kanluran." },
+    { q: "Kung ang isang bata ay nakaharap sa Silangan, anong direksiyon ang nasa kaniyang kaliwa?", a: "Hilaga", hint: "Umikot nang 90 degrees pakaliwa mula sa Silangan." },
+  ],
+
+  "Pang-abay at Pariralang Pang-abay": [
+    { q: "Ano ang pang-abay?", a: "Bahagi ng pananalita na nagbibigay-turing sa pandiwa, pang-uri, at kapuwa pang-abay", hint: "Tatlong bagay ang binibigyang-turing nito." },
+    { q: "Sa pangungusap na \"Mahigpit na niyakap si Kala,\" ano ang binibigyang-turing ng pang-abay na \"mahigpit\"?", a: "Ang pandiwang \"niyakap\" — ipinapakita nito kung paano niyakap si Kala", hint: "Naglalarawan ito ng paraan ng paggawa." },
+    { q: "Ano ang tawag sa pinagsamang pang-abay at pandiwa, pang-uri, o kapuwa pang-abay?", a: "Pariralang pang-abay", hint: "Dalawang salita na magkasama." },
+    { q: "Magbigay ng halimbawa ng pariralang pang-abay mula sa aralin.", a: "Mahigpit na niyakap, mag-isang inayos, tunay na mapagmahal, talagang mabait, o talagang mahusay", hint: "Kombinasyon ito ng pang-abay at ibang salita." },
+    { q: "Sa pangungusap na \"Mag-isang inayos ang kanilang gusot,\" ano ang pang-abay na ginamit?", a: "Mag-isa", hint: "Ipinapakita nito na walang katulong." },
+    { q: "Sa pangungusap na \"Tunay na mapagmahal ang mga magulang ni Kala,\" ano ang ipinapakita ng pang-abay na \"tunay\"?", a: "Kung gaano kamahal ng mga magulang si Kala", hint: "Nagbibigay-diin ito sa antas ng pagmamahal." },
+    { q: "Sa pangungusap na \"Malaki talaga ang kakayahan ng mga taga-Vigan,\" ano ang pang-abay na ginamit?", a: "Talaga", hint: "Nagbibigay-diin ito sa katotohanan ng pahayag." },
+    { q: "Sa pangungusap na \"Talagang matiyaga si Ginoong Go sa paggawa ng tapayan,\" ano ang pariralang pang-abay?", a: "Talagang matiyaga", hint: "Pinagsamang pang-abay at pang-uri." },
+  ],
+
+};
+
+// ── TAMA O MALI ────────────────────────────────────────────────────────────
+const trueOrFalse = [
+  { q: "Ang maikling kuwento ay may layuning magsalaysay ng mga pangyayari sa buhay ng pangunahing tauhan.", a: "tama" },
+  { q: "May apat na mahalagang bahagi ang maikling kuwento.", a: "mali" },
+  { q: "Ang layunin ng panimula ay pukawin ang interes ng mambabasa.", a: "tama" },
+  { q: "Ang kasukdulan ay ang bahaging kapana-panabik kung saan pinagpapasiyahan ang kapalaran ng tauhan.", a: "tama" },
+  { q: "Palaging masaya ang katapusan ng isang maikling kuwento.", a: "mali" },
+  { q: "Si Harun ang sumulat ng kuwentong \"Ano ang Dapat Kong Dalhin? Ano ang Dapat Kong Iwan?\"", a: "mali" },
+  { q: "Ang mga Muslim ang pinakamalaking relihiyosong pangkat sa Mindanao.", a: "tama" },
+  { q: "Sinabi ni Tatay na may nananalo sa digmaan.", a: "mali" },
+  { q: "Nagpunta ang pamilya ni Harun sa bahay ng kanilang Ate Lot matapos umalis sa kanilang bahay.", a: "tama" },
+  { q: "Ang pang-uri ay bahagi ng pananalita na naglalarawan sa tao, hayop, bagay, lugar, o pangyayari.", a: "tama" },
+  { q: "Ang pang-uring pantangi ay karaniwang tumutukoy sa pinagmulan ng tao, hayop, o bagay.", a: "tama" },
+  { q: "Ang \"makulay\" ay halimbawa ng pang-uring pantangi.", a: "mali" },
+  { q: "Ang \"Barong Tagalog\" ay halimbawa ng pang-uring panlarawan.", a: "mali" },
+  { q: "Si Alexis Roque ang bidang tauhan sa kuwentong \"Ang Pagtungo sa Pambayang Aklatan.\"", a: "tama" },
+  { q: "Matagal nang naninirahan ang pamilya Roque sa Sta. Ana.", a: "mali" },
+  { q: "Matatagpuan ang pambayang aklatan ng Sta. Ana sa gawing Timog-Kanluran mula sa bahay ni Alexis.", a: "tama" },
+  { q: "May apat na pangunahing direksiyon at apat na pangalawang direksiyon.", a: "tama" },
+  { q: "Ang Timog ang direksiyong nasa likod ng isang taong nakaharap sa Hilaga.", a: "tama" },
+  { q: "Ang pang-abay ay nagbibigay-turing lamang sa pangngalan.", a: "mali" },
+  { q: "Ang \"talagang mahusay\" ay halimbawa ng pariralang pang-abay.", a: "tama" },
+];
+
+// ── KILALANIN: PANG-URI (PL/PT) · KASALUNGAT · PANG-ABAY ─────────────────────
+const identifyQuestions = [
+  { q: "Kaibiganin natin ang kaklase nating mahiyain.", a: "Panlarawan (PL)", choices: ["Panlarawan (PL)","Pantangi (PT)"] },
+  { q: "Malakas ang buhos ng ulan kaninang madaling-araw.", a: "Panlarawan (PL)", choices: ["Panlarawan (PL)","Pantangi (PT)"] },
+  { q: "Tangkilikin natin ang mga produktong Pilipino.", a: "Pantangi (PT)", choices: ["Panlarawan (PL)","Pantangi (PT)"] },
+  { q: "Luma na ang kasangkapan sa bahay ng aking lola.", a: "Panlarawan (PL)", choices: ["Panlarawan (PL)","Pantangi (PT)"] },
+  { q: "Napakatamis ng manggang Guimaras.", a: "Pantangi (PT)", choices: ["Panlarawan (PL)","Pantangi (PT)"] },
+  { q: "Nakaabang sa pinto ang matabang aso ni Dino.", a: "Panlarawan (PL)", choices: ["Panlarawan (PL)","Pantangi (PT)"] },
+  { q: "Masarap ang bagong Balayan.", a: "Pantangi (PT)", choices: ["Panlarawan (PL)","Pantangi (PT)"] },
+  { q: "Sinusuklay ni Nanay ang mahabang buhok ni Bunso.", a: "Panlarawan (PL)", choices: ["Panlarawan (PL)","Pantangi (PT)"] },
+  { q: "Sariwa ang hangin sa probinsiya.", a: "Panlarawan (PL)", choices: ["Panlarawan (PL)","Pantangi (PT)"] },
+  { q: "Ang mga mag-aaral ni G. Cruz ay masunurin.", a: "Panlarawan (PL)", choices: ["Panlarawan (PL)","Pantangi (PT)"] },
+  { q: "Ibigay ang kasalungat: Si Alexis ay nagtungo sa pambayang aklatan ng Sta. Ana.", a: "lumayo", choices: ["lumayo","namasyal","dumaan","umalis"] },
+  { q: "Ibigay ang kasalungat: Madali lamang puntahan mula sa inyong bahay ang ating pambayang aklatan.", a: "mahirap", choices: ["mahirap","mabilis","maganda","mahusay"] },
+  { q: "Ibigay ang kasalungat: Nagalak si Alexis at nakinig nang mabuti sa pagbibigay ng direksiyon.", a: "nalungkot", choices: ["nalungkot","nasabik","nahikayat","nangamba"] },
+  { q: "Ibigay ang kasalungat: Ang aklatan ay moderno dahil kabilang sa koleksiyon ang mga produkto ng makabagong teknolohiya.", a: "tradisyonal", choices: ["tradisyonal","bago","malawak","kahanga-hanga"] },
+  { q: "Ibigay ang kasalungat: Malapit ang aklatan sa estasyon ng bumbero.", a: "malayo", choices: ["malayo","maliit","magkatabi","kahanay"] },
+  { q: "Malaki talaga ang kakayahan ng mga taga-Vigan na umangat ang kanilang kabuhayan.", a: "talaga", choices: ["umangat","talaga","malaki","kabuhayan"] },
+  { q: "Ang mga mamamayan ay hinahangaan dahil mahusay silang gumawa ng tapayan.", a: "mahusay", choices: ["mahusay","gumawa","hinahangaan","tapayan"] },
+  { q: "Talagang matiyaga si Ginoong Go sa paggawa ng tapayan.", a: "talagang", choices: ["tapayan","talagang","Ginoong Go","matiyaga"] },
+  { q: "Totoong nakikilala ang Vigan sa ibang bansa dahil sa ganda ng kalidad ng produkto mula rito.", a: "totoong", choices: ["nakikilala","kalidad","totoong","Vigan"] },
+  { q: "Mabilis lumago ang industriya ng paggawa ng tapayan sa Vigan.", a: "mabilis", choices: ["Vigan","lumago","mabilis","industriya"] },
+  { q: "Totoong masarap inumin ang tubig mula sa tapayan.", a: "totoong", choices: ["masarap","totoong","tapayan","inumin"] },
+  { q: "Talagang masisipag ang gumagawa ng burnay.", a: "talagang", choices: ["mahirap","talagang","gumagawa","burnay"] },
+  { q: "Mag-isang pumunta si Jacob sa Vigan.", a: "mag-isang", choices: ["mag-isang","pumunta","Jacob","Vigan"] },
+];
+
+// ═══════════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════════
+let state = {
+  awaiting: 'menu',
+  mode: null,
+  questions: [],
+  allAnswers: [],
+  qIndex: 0,
+  score: 0,
+  total: 0,
+  hintUsed: false,
+  audioEnabled: true,
+};
+
+// ═══════════════════════════════════════════════════════════════
+// TTS (UPGRADED FOR TRUE FILIPINO ACCENT)
+// ═══════════════════════════════════════════════════════════════
+let currentAudioStream = null;
+
+function speak(text) {
+  if (!state.audioEnabled) return;
+  
+  // Linisin ang mga nakaraang audio task
+  window.speechSynthesis.cancel();
+  if (currentAudioStream) {
+    currentAudioStream.pause();
+    currentAudioStream = null;
+  }
+  
+  // Tanggalin ang HTML tags at emojis para hindi basahin nang paputol-putol
+  const clean = text.replace(/<[^>]+>/g,'').replace(/[🇵🇭🌟✅❌💡⏭️🏆😊💪🔄🔲📚👋⭐✕🧭📏🗺️]/g,'');
+  
+  // PRIMARY METHOD: Google Translation Engine cloud voice stream (May natural na Filipino accent)
+  const googleTtsUrl = `https://translate.google.com/translate_tts?ie=UTF-8&tl=tl&client=tw-ob&q=${encodeURIComponent(clean)}`;
+  
+  currentAudioStream = new Audio(googleTtsUrl);
+  currentAudioStream.onplaying = () => showWave(true);
+  currentAudioStream.onended = currentAudioStream.onerror = () => showWave(false);
+  
+  currentAudioStream.play().catch(err => {
+    // BACKUP METHOD: Web Speech API (Gagana kapag walang internet connection)
+    console.warn("Google TTS blocked or offline. Falling back to local system speech engine.");
+    
+    const streamFallback = new SpeechSynthesisUtterance(clean);
+    streamFallback.lang = 'fil-PH';
+    streamFallback.rate = 0.95; streamFallback.pitch = 1.05; streamFallback.volume = 1;
+    
+    const voices = window.speechSynthesis.getVoices();
+    const filVoice = voices.find(v => v.lang.startsWith('fil') || v.lang.startsWith('tl'));
+    const engVoice = voices.find(v => v.lang.startsWith('en') && v.name.toLowerCase().includes('female'))
+                   || voices.find(v => v.lang.startsWith('en'));
+              
+    if (filVoice) {
+      streamFallback.voice = filVoice;
+    } else if (engVoice) {
+      streamFallback.voice = engVoice; 
+      streamFallback.lang = 'en-US'; 
+    }
+    
+    streamFallback.onstart = () => showWave(true);
+    streamFallback.onend = streamFallback.onerror = () => showWave(false);
+    window.speechSynthesis.speak(streamFallback);
+  });
+}
+
+function showWave(on) {
+  document.querySelectorAll('.speaker-wave').forEach(w => w.style.display = on ? 'inline-flex' : 'none');
+}
+
+// I-initialize ang mga boses ng system
+let localSystemVoices = [];
+function lookupSystemVoices() {
+  localSystemVoices = window.speechSynthesis.getVoices();
+}
+lookupSystemVoices();
+if (window.speechSynthesis.onvoiceschanged !== undefined) {
+  window.speechSynthesis.onvoiceschanged = lookupSystemVoices;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// UI HELPERS
+// ═══════════════════════════════════════════════════════════════
+const chatBox = document.getElementById('chat-box');
+const input = document.getElementById('user-input');
+const sendBtn = document.getElementById('send-btn');
+
+function scrollBottom() { chatBox.scrollTop = chatBox.scrollHeight; }
+
+function addMessage(role, html, speakText) {
+  const div = document.createElement('div');
+  div.className = `msg ${role}`;
+  const av = document.createElement('div');
+  av.className = 'avatar';
+  av.textContent = role === 'bot' ? '🤖' : '🧑';
+  const bub = document.createElement('div');
+  bub.className = 'bubble';
+  bub.innerHTML = role === 'bot'
+    ? html + '<span class="speaker-wave" style="display:none"><span></span><span></span><span></span><span></span><span></span></span>'
+    : html;
+  div.appendChild(av); div.appendChild(bub);
+  chatBox.appendChild(div);
+  scrollBottom(); bindChips();
+  if (role === 'bot') {
+    const txt = speakText || html.replace(/<[^>]+>/g,' ');
+    setTimeout(() => speak(txt), 350);
+  }
+}
+
+function addTyping() {
+  const d = document.createElement('div');
+  d.className = 'msg bot'; d.id = 'typing';
+  d.innerHTML = '<div class="avatar">🤖</div><div class="typing"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>';
+  chatBox.appendChild(d); scrollBottom();
+}
+function removeTyping() { const t = document.getElementById('typing'); if(t) t.remove(); }
+
+function bindChips() {
+  document.querySelectorAll('.chip:not([data-bound])').forEach(c => {
+    c.dataset.bound = '1';
+    c.addEventListener('click', () => handleUserMessage(c.dataset.val));
+  });
+}
+
+function updateScore() {
+  document.getElementById('score-val').textContent = state.score;
+  document.getElementById('total-val').textContent = state.total;
+}
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length-1; i > 0; i--) {
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]] = [a[j],a[i]];
+  }
+  return a;
+}
+
+function normalize(s) { return s.toLowerCase().trim().replace(/\s+/g,' '); }
+
+function checkAnswer(user, correct) {
+  const u = normalize(user), c = normalize(correct);
+  if (u === c) return true;
+  if (c.includes(u) && u.length > 5) return true;
+  const parts = c.split(/[,;\/]/);
+  for (const p of parts) if (u.includes(p.trim()) && p.trim().length > 4) return true;
+  return false;
+}
+
+function showResult() {
+  const pct = Math.round((state.score/state.total)*100);
+  const emoji = pct>=90?'🏆':pct>=70?'🌟':pct>=50?'😊':'💪';
+  const msg = pct>=90?'Napakahusay! Alam mo ang lahat!':pct>=70?'Magaling! Patuloy ka lang!':pct>=50?'Mabuti! Pag-aralan pa nang kaunti!':'Huwag sumuko! Subukan ulit!';
+  document.getElementById('res-emoji').textContent = emoji;
+  document.getElementById('res-score').textContent = state.score;
+  document.getElementById('res-total').textContent = state.total;
+  document.getElementById('res-msg').textContent = msg;
+  document.getElementById('result-overlay').classList.add('show');
+  speak(`Tapos na! Ang iyong puntos ay ${state.score} sa ${state.total}. ${msg}`);
+}
+
+function restartApp() {
+  document.getElementById('result-overlay').classList.remove('show');
+  state = { awaiting:'menu', mode:null, questions:[], allAnswers:[], qIndex:0, score:0, total:0, hintUsed:false, audioEnabled:state.audioEnabled };
+  chatBox.innerHTML = '';
+  document.querySelector('.input-bar').style.display = 'flex';
+  updateScore();
+  showMenu();
+}
+
+// ═══════════════════════════════════════════════════════════════
+// MC HELPERS
+// ═══════════════════════════════════════════════════════════════
+function getAllAnswers() {
+  const ans = [];
+  for (const qs of Object.values(topics)) for (const q of qs) ans.push(q.a);
+  return ans;
+}
+
+function generateChoices(correct, pool) {
+  const distractors = shuffle(pool.filter(a => a !== correct)).slice(0,3);
+  return shuffle([correct, ...distractors]);
+}
+
+function buildMCBtns(choices, correctAnswer) {
+  const letters = ['A','B','C','D','E'];
+  return `<div class="mc-options">${choices.map((c,i)=>
+    `<button class="mc-btn" data-answer="${encodeURIComponent(c)}" data-correct="${encodeURIComponent(correctAnswer)}" onclick="handleMCClick(this)">
+      <span class="letter">${letters[i]}</span>${c}
+    </button>`
+  ).join('')}</div>`;
+}
+
+function handleMCClick(btn) {
+  const allBtns = btn.closest('.mc-options').querySelectorAll('.mc-btn');
+  allBtns.forEach(b => b.disabled = true);
+  const chosen = decodeURIComponent(btn.dataset.answer);
+  const correct = decodeURIComponent(btn.dataset.correct);
+  const isCorrect = chosen === correct;
+  allBtns.forEach(b => { if(decodeURIComponent(b.dataset.answer)===correct) b.classList.add('correct'); });
+  if (!isCorrect) btn.classList.add('wrong');
+  setTimeout(() => {
+    if (isCorrect) {
+      state.score++;
+      addMessage('bot', `✅ <strong>Tama!</strong> +1 puntos! Ang sagot ay: <strong>${correct}</strong>`, `Tama! Ang sagot ay: ${correct}`);
+    } else {
+      addMessage('bot', `❌ <strong>Hindi tama.</strong> Ang tamang sagot ay: <strong>${correct}</strong>`, `Hindi tama. Ang tamang sagot ay: ${correct}`);
+    }
+    state.qIndex++; updateScore();
+    if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+    else setTimeout(showResult, 900);
+  }, 650);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// NEXT QUESTION
+// ═══════════════════════════════════════════════════════════════
+function nextQuestion() {
+  const qi = state.qIndex;
+  const q = state.questions[qi];
+  const num = qi + 1;
+
+  if (state.mode === 'full' || state.mode === 'topic_mc') {
+    const choices = generateChoices(q.a, state.allAnswers);
+    const tag = q.topic ? `<span class="topic-tag">${q.topic}</span><br>` : '';
+    const html = `${tag}<strong>T${num} sa ${state.total}:</strong> ${q.q}${buildMCBtns(choices, q.a)}`;
+    addMessage('bot', html, `Tanong ${num}. ${q.q}`);
+    return;
+  }
+
+  if (state.mode === 'tf') {
+    const html = `<strong>T${num} sa ${state.total}:</strong> <div class="scenario-card">${q.q}</div>
+      <span class="chip" data-val="tama">✅ Tama</span><span class="chip" data-val="mali">❌ Mali</span>`;
+    addMessage('bot', html, `Tanong ${num}. Tama o Mali: ${q.q}`);
+    return;
+  }
+
+  if (state.mode === 'identify') {
+    const btns = buildMCBtns(q.choices, q.a);
+    const html = `<strong>T${num} sa ${state.total}:</strong> Kilalanin kung ano ang tinutukoy:<div class="scenario-card">${q.q}</div>${btns}`;
+    addMessage('bot', html, `Tanong ${num}. Kilalanin ang tinutukoy: ${q.q}`);
+    return;
+  }
+
+  // typed answer mode
+  const tag = q.topic ? `<span class="topic-tag">${q.topic}</span><br>` : '';
+  const html = `${tag}<strong>T${num} sa ${state.total}:</strong> ${q.q}<br><small style="color:var(--muted)">Isulat ang sagot · i-type ang <em>hint</em> para sa tulong · <em>skip</em> para lumipat</small>`;
+  addMessage('bot', html, `Tanong ${num}. ${q.q}`);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// MENU
+// ═══════════════════════════════════════════════════════════════
+function showMenu() {
+  addMessage('bot',
+    `👋 <strong>Kumusta! Ako ang iyong Filipino Reviewer!</strong><br>Pag-aaralan natin ang <em>Maikling Kuwento</em>, ang <em>Pang-uri</em>, ang <em>Direksiyon</em>, at ang <em>Pang-abay</em>.<br><br>Ano ang gusto mong gawin?<br>
+    <span class="chip" data-val="1">📚 Pag-aralan ang Paksa</span>
+    <span class="chip" data-val="2">✅ Tama o Mali</span>
+    <span class="chip" data-val="3">🌐 Kilalanin: Pang-uri, Kasalungat, o Pang-abay</span>
+    <span class="chip" data-val="4">🌟 Buong Review (Multiple Choice)</span>`,
+    "Kumusta! Ako ang iyong Filipino Reviewer tungkol sa Kapayapaan at Kaayusan. Ano ang gusto mong gawin? Pag-aralan ang paksa, Tama o Mali, Kilalanin, o Buong Review na multiple choice?"
+  );
+  state.awaiting = 'menu';
+}
+
+// ═══════════════════════════════════════════════════════════════
+// PROCESS MESSAGE
+// ═══════════════════════════════════════════════════════════════
+function processMessage(msg) {
+  const aw = state.awaiting;
+
+  // ── MENU ──────────────────────────────────────────────────
+  if (aw === 'menu') {
+    if (msg === '1') {
+      state.awaiting = 'topic';
+      const keys = Object.keys(topics);
+      const chips = keys.map((t,i) => `<span class="chip" data-val="${i+1}">${i+1}. ${t}</span>`).join(' ');
+      addMessage('bot', `📚 Alin ang paksang gusto mong pag-aralan?<br>${chips}`, 'Alin ang paksang gusto mong pag-aralan?');
+
+    } else if (msg === '2') {
+      state.mode = 'tf';
+      state.questions = shuffle(trueOrFalse);
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'tf_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `✅ <strong>Tama o Mali!</strong> ${state.total} tanong. Simulan na!`, `Tama o Mali! ${state.total} tanong. Simulan na!`);
+      setTimeout(nextQuestion, 800);
+
+    } else if (msg === '3') {
+      state.mode = 'identify';
+      state.questions = shuffle(identifyQuestions);
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'mc_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `🌐 <strong>Kilalanin!</strong> Alamin kung Panlarawan o Pantangi ang pang-uri, ano ang kasalungat ng salita, o alin ang pang-abay na ginamit.`, 'Kilalanin! Alamin kung ano ang tinutukoy sa bawat pahayag.');
+      setTimeout(nextQuestion, 800);
+
+    } else if (msg === '4') {
+      state.mode = 'full';
+      const all = [];
+      for (const [topicName, qs] of Object.entries(topics)) {
+        qs.forEach(q => all.push({...q, topic: topicName}));
+      }
+      state.questions = shuffle(all);
+      state.allAnswers = getAllAnswers();
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'mc_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `🌟 <strong>Buong Review — Multiple Choice!</strong> ${state.total} tanong. Pag-isipang mabuti!`, `Buong Review! Multiple Choice! ${state.total} tanong. Pag-isipang mabuti!`);
+      setTimeout(nextQuestion, 800);
+
+    } else {
+      addMessage('bot',
+        `Pumili ng opsyon:<br>
+        <span class="chip" data-val="1">📚 Pag-aralan ang Paksa</span>
+        <span class="chip" data-val="2">✅ Tama o Mali</span>
+        <span class="chip" data-val="3">🌐 Kilalanin</span>
+        <span class="chip" data-val="4">🌟 Buong Review</span>`,
+        'Pumili ng opsyon.'
+      );
+    }
+    return;
+  }
+
+  // ── TOPIC SELECT ──────────────────────────────────────────
+  if (aw === 'topic') {
+    const keys = Object.keys(topics);
+    const idx = parseInt(msg) - 1;
+    if (keys[idx]) {
+      const topicName = keys[idx];
+      state.mode = 'topic';
+      state.questions = shuffle(topics[topicName]);
+      state.allAnswers = getAllAnswers();
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'answer';
+      document.querySelector('.input-bar').style.display = 'flex';
+      updateScore();
+      addMessage('bot', `📚 <strong>${topicName}</strong> — ${state.total} tanong. Handa ka na ba?`, `${topicName}. ${state.total} tanong. Handa ka na ba?`);
+      setTimeout(nextQuestion, 800);
+    } else {
+      const chips = Object.keys(topics).map((t,i) => `<span class="chip" data-val="${i+1}">${i+1}. ${t}</span>`).join(' ');
+      addMessage('bot', `Pumili ng wastong paksa:<br>${chips}`, 'Pumili ng wastong paksa.');
+    }
+    return;
+  }
+
+  // ── TYPED ANSWER ──────────────────────────────────────────
+  if (aw === 'answer') {
+    const q = state.questions[state.qIndex];
+    const m = normalize(msg);
+
+    if (m === 'hint') {
+      state.hintUsed = true;
+      addMessage('bot', `💡 <strong>Hint:</strong> ${q.hint}`, `Hint: ${q.hint}`);
+      return;
+    }
+    if (m === 'skip') {
+      addMessage('bot', `⏭️ Nilaktawan! Ang tamang sagot ay: <strong>${q.a}</strong>`, `Nilaktawan. Ang tamang sagot ay: ${q.a}`);
+      state.qIndex++; state.hintUsed = false;
+      if (state.qIndex < state.total) setTimeout(nextQuestion, 700);
+      else showResult();
+      return;
+    }
+
+    const correct = checkAnswer(msg, q.a);
+    if (correct) {
+      if (!state.hintUsed) state.score++;
+      const note = state.hintUsed ? ' <em>(ginamit ang hint — walang puntos)</em>' : ' +1 puntos!';
+      addMessage('bot', `✅ <strong>Tama!</strong>${note} Sagot: <strong>${q.a}</strong>`, `Tama! Ang sagot ay: ${q.a}`);
+    } else {
+      addMessage('bot', `❌ <strong>Hindi tama.</strong> Ang tamang sagot ay: <strong>${q.a}</strong>`, `Hindi tama. Ang tamang sagot ay: ${q.a}`);
+    }
+    state.qIndex++; state.hintUsed = false; updateScore();
+    if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+    else setTimeout(showResult, 900);
+    return;
+  }
+
+  // ── TRUE OR FALSE ─────────────────────────────────────────
+  if (aw === 'tf_answer') {
+    const q = state.questions[state.qIndex];
+    const ans = normalize(msg);
+    const valid = ans === 'tama' || ans === 'mali' || ans === 'true' || ans === 'false';
+    const mapped = (ans === 'true') ? 'tama' : (ans === 'false') ? 'mali' : ans;
+
+    if (valid) {
+      const correct = mapped === q.a;
+      if (correct) {
+        state.score++;
+        addMessage('bot', `✅ <strong>Tama!</strong> Ang sagot ay <strong>${q.a.toUpperCase()}</strong>.`, `Tama! Ang sagot ay ${q.a}.`);
+      } else {
+        addMessage('bot', `❌ <strong>Mali.</strong> Ang tamang sagot ay <strong>${q.a.toUpperCase()}</strong>.`, `Mali. Ang tamang sagot ay ${q.a}.`);
+      }
+      state.qIndex++; updateScore();
+      if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+      else setTimeout(showResult, 900);
+    } else {
+      addMessage('bot',
+        `Sagot: Tama o Mali?<br><span class="chip" data-val="tama">✅ Tama</span><span class="chip" data-val="mali">❌ Mali</span>`,
+        'Sagot: Tama o Mali?'
+      );
+    }
+    return;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// CONTROLS
+// ═══════════════════════════════════════════════════════════════
+function handleUserMessage(msg) {
+  if (!msg.trim()) return;
+  
+  // Ihinto nang malinis ang nagsasalitang audio kapag sumagot ang user
+  window.speechSynthesis.cancel();
+  if (currentAudioStream) {
+    currentAudioStream.pause();
+    currentAudioStream = null;
+    showWave(false);
+  }
+  
+  addMessage('user', msg.replace(/</g,'&lt;'));
+  input.value = '';
+  input.disabled = true; sendBtn.disabled = true;
+  addTyping();
+  setTimeout(() => {
+    removeTyping();
+    input.disabled = false; sendBtn.disabled = false;
+    input.focus();
+    processMessage(msg);
+  }, 480);
+}
+
+sendBtn.addEventListener('click', () => { handleUserMessage(input.value); });
+input.addEventListener('keydown', e => { if(e.key==='Enter') handleUserMessage(input.value); });
+
+document.getElementById('audio-toggle').addEventListener('click', function() {
+  state.audioEnabled = !state.audioEnabled;
+  this.textContent = state.audioEnabled ? '🔊' : '🔇';
+  this.classList.toggle('active', state.audioEnabled);
+  if (!state.audioEnabled) {
+    window.speechSynthesis.cancel();
+    if (currentAudioStream) {
+      currentAudioStream.pause();
+      currentAudioStream = null;
+      showWave(false);
+    }
+  }
+});
+
+// ═══════════════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════════════
+window.addEventListener('load', () => {
+  lookupSystemVoices();
+  showMenu();
+});
+
+function printPracticeTest() {
+  document.body.classList.add('printing-test');
+  window.print();
+}
+window.addEventListener('afterprint', () => {
+  document.body.classList.remove('printing-test');
+});
+
+function switchTab(tabId, btn) {
+  document.querySelectorAll('.notes-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.notes-tab').forEach(b => b.classList.remove('active'));
+  document.getElementById(tabId).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+
+<!-- ── Notes Panel ── -->
+<div class="notes-overlay" id="notes-overlay">
+  <div class="notes-panel">
+    <div class="notes-header">
+      <h2>📖 Kapayapaan at Kaayusan — Mga Tala</h2>
+      <div class="notes-header-actions">
+        <button class="print-btn" onclick="printPracticeTest()" title="I-print o i-save bilang PDF ang Practice Test at Answer Key">🖨️ I-print ang Test &amp; Key</button>
+        <button class="notes-close" onclick="document.getElementById('notes-overlay').classList.remove('show')">✕</button>
+      </div>
+    </div>
+    <div class="notes-tabs">
+      <button class="notes-tab active" onclick="switchTab('tab-kuwento', this)">📝 Maikling Kuwento</button>
+      <button class="notes-tab" onclick="switchTab('tab-harun', this)">🕊️ Kuwento ni Harun</button>
+      <button class="notes-tab" onclick="switchTab('tab-panguri', this)">🎨 Pang-uri</button>
+      <button class="notes-tab" onclick="switchTab('tab-alexis', this)">📕 Kuwento ni Alexis</button>
+      <button class="notes-tab" onclick="switchTab('tab-direksiyon', this)">🧭 Direksiyon</button>
+      <button class="notes-tab" onclick="switchTab('tab-pangabay', this)">🔤 Pang-abay</button>
+      <button class="notes-tab" onclick="switchTab('tab-tamomali', this)">✅ Tama o Mali</button>
+      <button class="notes-tab" onclick="switchTab('tab-ptest', this)">📝 Practice Test</button>
+      <button class="notes-tab" onclick="switchTab('tab-key', this)">🔑 Answer Key</button>
+    </div>
+    <div class="notes-body">
+
+      <div class="notes-section active" id="tab-kuwento">
+        <div class="chapter-summary">
+          📚 <strong>Buod:</strong> Ang <strong>maikling kuwento</strong> ay isang anyo ng panitikan na nagsasalaysay ng mga pangyayari sa buhay ng pangunahing tauhan. May tatlong mahalagang bahagi ito: ang simula, ang kasukdulan, at ang katapusan.
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">📝 Mga Bahagi ng Maikling Kuwento</div>
+          <div class="notes-item"><span class="notes-term">Simula/Panimula</span><span class="notes-def">Pukawin ang interes ng mambabasa; nakapaloob dito ang pagpapakilala sa tauhan, tagpuan, at suliranin</span></div>
+          <div class="notes-item"><span class="notes-term">Suliranin</span><span class="notes-def">Ang elementong humahadlang sa tauhan upang makamit niya ang kaniyang mithiin</span></div>
+          <div class="notes-item"><span class="notes-term">Kasukdulan</span><span class="notes-def">Ang kapana-panabik na bahagi kung saan pinagpapasiyahan ang kapalaran ng tauhan</span></div>
+          <div class="notes-item"><span class="notes-term">Katapusan</span><span class="notes-def">Ang pagwawakas ng kuwento — maaaring masaya, malungkot, o bitin</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-harun">
+        <div class="story-box">
+          <span class="story-label">📖 Basahin Nang Malakas: Ano ang Dapat Kong Dalhin? Ano ang Dapat Kong Iwan?</span>
+          <p><em>ni Abdul Khaliq</em></p>
+          <p>Napakalakas pala ng pagsabog ng bomba! Sunod-sunod na pagsabog! Sa dami, di ko na kayang bilangin!</p>
+          <p>Parang bumaba sa lupa ang kulog at kidlat. Yumayanig ang lupa! Parang guguho ang bundok! Parang may malalaking batong gumugulong paibaba!</p>
+          <p>Kitang-kita ko rin kung paanong lumulusot sa dingding ng aming bahay ang mga bala ng armalayt. Parang malalaking alitaptap na bumubutas sa dingding ng aming bahay.</p>
+          <p>Totoo ang sinabi ni Ishaq, ang kaklase kong Muslim. Nakatatakot pala talaga ang pagsabog ng bomba!</p>
+          <p>Niyakap ako nang mahigpit na mahigpit nina Nanay at Tatay. Dumapa kami sa sahig ng aming bahay. Matagal din kaming dumapa. Tinakpan kong mabuti ang aking mga tainga.</p>
+          <p>"Kailangan nating umalis! Di na ligtas ang ating bahay ngayon dito!" sabi ni Tatay habang nagaganap ang sagupaan ng mga militar at ng mga rebeldeng Muslim sa aming lugar.</p>
+          <p>Pagkatapos ng putukan, nagbalot na kami ng puwedeng dalhin. Pero may napakalaki akong problema. Ano ba ang mga dapat kong dalhin? Ano ba ang mga dapat kong iwan?</p>
+          <p>"Harun, dalhin mo lang ang mahalaga sa iyo!" bilin sa akin ni Nanay. "Iwan na lang natin ang puwedeng balikan sa ibang araw!" paalala ni Tatay.</p>
+          <p>Dadalhin ko ba ang aking mga gamit sa paaralan? Iiwan ko na lang ba ang aking mga laruang kotse at tren? Dadalhin ko ba ang alkansiya kong mapupuno na? Iiwan ko na lang ba ang gitarang regalo sa akin ni Ate Lot? Dadalhin ko ba ang alaga kong puting daga? Iiwan ko na lang ba ang mga photo album ko?</p>
+          <p>"Harun, 'wag mong isiksik ang lahat sa iyong bag. Dalhin mo lang ang pinakamahalaga sa iyo. Babalik naman tayo rito sa ating bahay. Ang mahalaga, maging ligtas tayo, lalo na ikaw, anak ko," sabi ni Tatay.</p>
+          <p>Sa pag-alis namin, di ko na makilala ang magandang lugar na kinalakhan ko. Sira ang magagandang hardin ni Nanay. Nagkaroon ng maraming hukay sa bukid. Maraming bahay ang butas ang mga dingding at sira ang mga bubong.</p>
+          <p>Nagpunta kami sa bahay ng aking Ate Lot sa bayan. Niyakap niya kaming lahat. "Salamat kay Allah at ligtas kayo!" salubong ni Ate Lot habang nanginginig din sa takot.</p>
+          <p>"Tay, bakit ba nag-aaway ang mga militar at ang mga Muslim?" tanong ko kay Tatay.</p>
+          <p>"May mga prinsipyo at karapatan kasi na ipinaglalaban ang mga Muslim," sagot ni Tatay. "Pero ang totoo, Harun, tayo ang naaapektuhan sa digmaan. Walang nananalo sa digmaan, lahat tayo ay talo."</p>
+          <p>Sana matapos na talaga ang digmaan. Gusto ko nang makauwi sa aming bahay. Gusto ko na uling pumasok sa paaralan upang makapag-aral. Gusto kong makita at makausap uli si Ishaq.</p>
+          <p>Ito ang mga gusto kong gawin na talagang hinding-hindi ko madadala, mailalagay, o maisisiksik sa aking pambata at napakaliit na bag.</p>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-panguri">
+        <div class="chapter-summary">
+          📚 <strong>Buod:</strong> Ang <strong>pang-uri</strong> ay bahagi ng pananalita na naglalarawan sa tao, hayop, bagay, lugar, o pangyayari. Ito ay nagbibigay-turing sa pangngalan at panghalip.
+        </div>
+        <table class="compare-table">
+          <tr><th>Uri</th><th>Kahulugan</th><th>Halimbawa</th></tr>
+          <tr><td>Panlarawan</td><td>Nagpapakilala ng katangian ng pangngalan</td><td>makulay, matalik, masasarap, magalang</td></tr>
+          <tr><td>Pantangi</td><td>Tiyak na pangngalan na tumutukoy sa pinagmulan</td><td>longganisang Vigan, Barong Tagalog, sapatos Marikina</td></tr>
+        </table>
+        <div class="memory-box">
+          <span class="memory-label">TANDAAN</span>
+          Ang pang-uring pantangi ay palaging may kaugnayan sa isang tiyak na lugar, tao, o bagay — kadalasan may malaking titik ito dahil ngalan ito ng lugar (hal. Vigan, Marikina, Guimaras).
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-alexis">
+        <div class="story-box">
+          <span class="story-label">📖 Basahin Nang Malakas: Ang Pagtungo sa Pambayang Aklatan</span>
+          <p><em>ni Anna Lian C. Vivas</em></p>
+          <p>Isang linggo pa lamang nakalilipas ang pamilya Roque sa bayan ng Sta. Ana. Hindi pa nila masyadong kabisado ang iba't ibang lugar sa kanilang bayan. Si Alexis ay nasa ikaapat na baitang ng mababang paaralan.</p>
+          <p>Isang araw ng Sabado, may takdang-aralin si Alexis. Kailangan niyang magtungo sa pambayang aklatan upang makapagsaliksik ngunit hindi pa siya pamilyar sa pook nila. Natatakot siyang maligaw.</p>
+          <p>Saktong paglabas ni Alexis ay siyang pagdaan ni Ginoong Celso, isang konsehal ng bayan ng Sta. Ana. "Magandang umaga iha, kayo ba ang bagong lipat?" tanong ni Ginoong Celso.</p>
+          <p>"Opo, Ginoo. Magandang umaga rin po," nakangiting bati ni Alexis. "Ako po si Alexis Roque," dugtong pa niya.</p>
+          <p>"Ako nga pala si Ginoong Celso Martinez, isa sa mga konsehal dito sa ating bayan. Pamilyar ka na ba sa mga lugar dito sa atin?" tanong ng ginoo.</p>
+          <p>"Hindi pa nga po, pupunta po ako ngayon sa pambayang aklatan para magsaliksik tungkol sa aking takdang-aralin. Maaari n'yo po bang ituro sa akin kung paano magtungo roon?" wika ni Alexis.</p>
+          <p>"Matutulungan kita, Alexis. Madali namang puntahan mula sa inyong bahay ang ating pambayang aklatan. Alam mo ba ang pangunahing at pangalawang direksiyon, iha?" tugon ng konsehal.</p>
+          <p>"Opo. Itinuro po iyan ng aming guro," sagot ni Alexis.</p>
+          <p>"Magaling! Mas madali mong matutukoy ang lugar na nais mong puntahan sa tulong ng pangunahing at pangalawang direksiyon," masayang wika ni Ginoong Martinez.</p>
+          <p>"Dahil nakatayo tayo rito sa tapat ng inyong bahay, ito ang gawin nating gabay sa pagtukoy ng direksiyon patungong pambayang aklatan. Kung nakaharap tayo sa inyong bahay, ang aklatang pambayan ay matatagpuan sa gawing Timog-Kanluran," wika ni Ginoong Martinez.</p>
+          <p>"Sa bandang Timog ay matatagpuan mo ang estasyon ng bumbero. Sa gawing Kanluran naman ay makikita mo ang ating simbahan. Ang simbahan ay nasa unang kanto mula rito sa ating kinatatayuan. Kapag nakita mo na ang simbahan, malapit ka na sa pambayang aklatan," paliwanag ni Ginoong Martinez.</p>
+          <p>"Maraming salamat po. Magagamit ko pong gabay ang mga ibinigay ninyong palatandaan patungo sa pambayang aklatan," masayang wika ni Alexis.</p>
+          <p>"Walang anuman, Alexis. Moderno na ang aklatan at malawak ang koleksiyon ng mga sangguniang gamit ang makabagong teknolohiya. Mayroong mga CD, DVD, audio tape, video tape, at iba pang multimedia," masayang pagbabahagi ng konsehal.</p>
+          <p>Magalang na nagpaalam si Alexis sa konsehal at tinungo ang pambayang aklatan. Madali naman niya itong narating. Hindi siya naligaw sapagkat tinandaan niyang mabuti ang panutong binanggit ni Ginoong Martinez patungo sa aklatan.</p>
+        </div>
+        <div class="chapter-summary">
+          📚 <strong>Buod:</strong> Natutunan ni Alexis kung paano gamitin ang pangunahing at pangalawang direksiyon upang mahanap ang pambayang aklatan, salamat sa tulong ni Ginoong Martinez.
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-direksiyon">
+        <div class="chapter-summary">
+          📚 <strong>Buod:</strong> May apat na <strong>pangunahing direksiyon</strong> (Hilaga, Timog, Silangan, Kanluran) at apat na <strong>pangalawang direksiyon</strong> (Hilagang-Silangan, Hilagang-Kanluran, Timog-Silangan, Timog-Kanluran).
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">🧭 Mga Direksiyon</div>
+          <div class="notes-item"><span class="notes-term">Pangunahing Direksiyon</span><span class="notes-def">Hilaga, Timog, Silangan, Kanluran</span></div>
+          <div class="notes-item"><span class="notes-term">Pangalawang Direksiyon</span><span class="notes-def">Hilagang-Silangan (HS), Hilagang-Kanluran (HK), Timog-Silangan (TS), Timog-Kanluran (TK)</span></div>
+        </div>
+        <div class="tandaan-box">
+          <span class="tandaan-label">GABAY</span>
+          Kung nakaharap ka sa isang direksiyon, ang nasa likod mo ang kasalungat nito (hal. Hilaga ↔ Timog, Silangan ↔ Kanluran). Ang nasa kanan at kaliwa mo ay ang mga direksiyong 90 degrees mula sa iyong kinaharap.
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-pangabay">
+        <div class="chapter-summary">
+          📚 <strong>Buod:</strong> Ang <strong>pang-abay</strong> ay bahagi ng pananalita na nagbibigay-turing sa pandiwa, pang-uri, at kapuwa pang-abay. Ang <strong>pariralang pang-abay</strong> naman ay ang pinagsamang pang-abay at pandiwa, pang-uri, o kapuwa pang-abay.
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">🔤 Mga Halimbawa ng Pariralang Pang-abay</div>
+          <div class="notes-item"><span class="notes-term">mahigpit na niyakap</span><span class="notes-def">Nagsasabi kung paano niyakap</span></div>
+          <div class="notes-item"><span class="notes-term">mag-isang inayos</span><span class="notes-def">Nagsasabi na walang katulong sa pag-aayos</span></div>
+          <div class="notes-item"><span class="notes-term">tunay na mapagmahal</span><span class="notes-def">Nagbibigay-diin sa antas ng pagmamahal</span></div>
+          <div class="notes-item"><span class="notes-term">talagang mabait / talagang mahusay</span><span class="notes-def">Nagbibigay-diin sa katotohanan ng pahayag</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-tamomali">
+        <div class="notes-topic">
+          <div class="notes-topic-title">✅ Tama o Mali — Mga Paalala</div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">MALI</span><span class="notes-def">May apat na mahalagang bahagi ang maikling kuwento → tatlo lamang: simula, kasukdulan, katapusan.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">MALI</span><span class="notes-def">Si Harun ang sumulat ng kuwento → si Abdul Khaliq ang may-akda; si Harun ang pangunahing tauhan.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">MALI</span><span class="notes-def">May nananalo sa digmaan → walang nananalo, sabi ni Tatay; lahat ay talo.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">MALI</span><span class="notes-def">Ang "makulay" ay pang-uring pantangi → panlarawan ito, dahil naglalarawan ito ng katangian.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">MALI</span><span class="notes-def">Ang "Barong Tagalog" ay pang-uring panlarawan → pantangi ito, dahil may kaugnayan sa pinagmulan.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">MALI</span><span class="notes-def">Matagal nang naninirahan ang pamilya Roque sa Sta. Ana → isang linggo pa lamang sila roon.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">MALI</span><span class="notes-def">Ang pang-abay ay nagbibigay-turing lamang sa pangngalan → sa pandiwa, pang-uri, at kapuwa pang-abay ito nagbibigay-turing.</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-ptest">
+        <div class="notes-topic">
+          <div class="notes-topic-title">📝 Practice Test</div>
+<div class="ptest-part-title">Part I — Pang-uri: Panlarawan (PL) o Pantangi (PT)</div><div class="ptest-q"><b>1.</b> Kaibiganin natin ang kaklase nating mahiyain. <span class="opt">Sagot: ______</span></div><div class="ptest-q"><b>2.</b> Malakas ang buhos ng ulan kaninang madaling-araw. <span class="opt">Sagot: ______</span></div><div class="ptest-q"><b>3.</b> Tangkilikin natin ang mga produktong Pilipino. <span class="opt">Sagot: ______</span></div><div class="ptest-q"><b>4.</b> Luma na ang kasangkapan sa bahay ng aking lola. <span class="opt">Sagot: ______</span></div><div class="ptest-q"><b>5.</b> Napakatamis ng manggang Guimaras. <span class="opt">Sagot: ______</span></div><div class="ptest-q"><b>6.</b> Nakaabang sa pinto ang matabang aso ni Dino. <span class="opt">Sagot: ______</span></div><div class="ptest-q"><b>7.</b> Masarap ang bagong Balayan. <span class="opt">Sagot: ______</span></div><div class="ptest-q"><b>8.</b> Sinusuklay ni Nanay ang mahabang buhok ni Bunso. <span class="opt">Sagot: ______</span></div><div class="ptest-q"><b>9.</b> Sariwa ang hangin sa probinsiya. <span class="opt">Sagot: ______</span></div><div class="ptest-q"><b>10.</b> Ang mga mag-aaral ni G. Cruz ay masunurin. <span class="opt">Sagot: ______</span></div><div class="ptest-part-title">Part II — Kasalungat (Bokabularyo)</div><div class="ptest-q"><b>11.</b> Ibigay ang kasalungat: Si Alexis ay nagtungo sa pambayang aklatan ng Sta. Ana.<br><span class="opt">a) lumayo</span><span class="opt">b) namasyal</span><span class="opt">c) dumaan</span><span class="opt">d) umalis</span></div><div class="ptest-q"><b>12.</b> Ibigay ang kasalungat: Madali lamang puntahan mula sa inyong bahay ang ating pambayang aklatan.<br><span class="opt">a) mahirap</span><span class="opt">b) mabilis</span><span class="opt">c) maganda</span><span class="opt">d) mahusay</span></div><div class="ptest-q"><b>13.</b> Ibigay ang kasalungat: Nagalak si Alexis at nakinig nang mabuti sa pagbibigay ng direksiyon.<br><span class="opt">a) nalungkot</span><span class="opt">b) nasabik</span><span class="opt">c) nahikayat</span><span class="opt">d) nangamba</span></div><div class="ptest-q"><b>14.</b> Ibigay ang kasalungat: Ang aklatan ay moderno dahil kabilang sa koleksiyon ang mga produkto ng makabagong teknolohiya.<br><span class="opt">a) tradisyonal</span><span class="opt">b) bago</span><span class="opt">c) malawak</span><span class="opt">d) kahanga-hanga</span></div><div class="ptest-q"><b>15.</b> Ibigay ang kasalungat: Malapit ang aklatan sa estasyon ng bumbero.<br><span class="opt">a) malayo</span><span class="opt">b) maliit</span><span class="opt">c) magkatabi</span><span class="opt">d) kahanay</span></div><div class="ptest-part-title">Part III — Tama o Mali</div><div class="ptest-q"><b>16.</b> Ang maikling kuwento ay may layuning magsalaysay ng mga pangyayari sa buhay ng pangunahing tauhan. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>17.</b> May apat na mahalagang bahagi ang maikling kuwento. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>18.</b> Ang layunin ng panimula ay pukawin ang interes ng mambabasa. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>19.</b> Ang kasukdulan ay ang bahaging kapana-panabik kung saan pinagpapasiyahan ang kapalaran ng tauhan. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>20.</b> Palaging masaya ang katapusan ng isang maikling kuwento. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>21.</b> Si Harun ang sumulat ng kuwentong "Ano ang Dapat Kong Dalhin? Ano ang Dapat Kong Iwan?" <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>22.</b> Ang mga Muslim ang pinakamalaking relihiyosong pangkat sa Mindanao. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>23.</b> Sinabi ni Tatay na may nananalo sa digmaan. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>24.</b> Nagpunta ang pamilya ni Harun sa bahay ng kanilang Ate Lot matapos umalis sa kanilang bahay. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>25.</b> Ang pang-uri ay bahagi ng pananalita na naglalarawan sa tao, hayop, bagay, lugar, o pangyayari. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>26.</b> Ang pang-uring pantangi ay karaniwang tumutukoy sa pinagmulan ng tao, hayop, o bagay. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>27.</b> Ang "makulay" ay halimbawa ng pang-uring pantangi. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>28.</b> Ang "Barong Tagalog" ay halimbawa ng pang-uring panlarawan. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>29.</b> Si Alexis Roque ang bidang tauhan sa kuwentong "Ang Pagtungo sa Pambayang Aklatan." <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>30.</b> Matagal nang naninirahan ang pamilya Roque sa Sta. Ana. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>31.</b> Matatagpuan ang pambayang aklatan ng Sta. Ana sa gawing Timog-Kanluran mula sa bahay ni Alexis. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>32.</b> May apat na pangunahing direksiyon at apat na pangalawang direksiyon. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>33.</b> Ang Timog ang direksiyong nasa likod ng isang taong nakaharap sa Hilaga. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>34.</b> Ang pang-abay ay nagbibigay-turing lamang sa pangngalan. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>35.</b> Ang "talagang mahusay" ay halimbawa ng pariralang pang-abay. <span class="opt">Sagot: ______________________</span></div><div class="ptest-part-title">Part IV — Multiple Choice: Pang-abay</div><div class="ptest-q"><b>36.</b> Malaki talaga ang kakayahan ng mga taga-Vigan na umangat ang kanilang kabuhayan.<br><span class="opt">a) umangat</span><span class="opt">b) talaga</span><span class="opt">c) malaki</span><span class="opt">d) kabuhayan</span></div><div class="ptest-q"><b>37.</b> Ang mga mamamayan ay hinahangaan dahil mahusay silang gumawa ng tapayan.<br><span class="opt">a) mahusay</span><span class="opt">b) gumawa</span><span class="opt">c) hinahangaan</span><span class="opt">d) tapayan</span></div><div class="ptest-q"><b>38.</b> Talagang matiyaga si Ginoong Go sa paggawa ng tapayan.<br><span class="opt">a) tapayan</span><span class="opt">b) talagang</span><span class="opt">c) Ginoong Go</span><span class="opt">d) matiyaga</span></div><div class="ptest-q"><b>39.</b> Totoong nakikilala ang Vigan sa ibang bansa dahil sa ganda ng kalidad ng produkto mula rito.<br><span class="opt">a) nakikilala</span><span class="opt">b) kalidad</span><span class="opt">c) totoong</span><span class="opt">d) Vigan</span></div><div class="ptest-q"><b>40.</b> Mabilis lumago ang industriya ng paggawa ng tapayan sa Vigan.<br><span class="opt">a) Vigan</span><span class="opt">b) lumago</span><span class="opt">c) mabilis</span><span class="opt">d) industriya</span></div><div class="ptest-q"><b>41.</b> Totoong masarap inumin ang tubig mula sa tapayan.<br><span class="opt">a) masarap</span><span class="opt">b) totoong</span><span class="opt">c) tapayan</span><span class="opt">d) inumin</span></div><div class="ptest-q"><b>42.</b> Talagang masisipag ang gumagawa ng burnay.<br><span class="opt">a) mahirap</span><span class="opt">b) talagang</span><span class="opt">c) gumagawa</span><span class="opt">d) burnay</span></div><div class="ptest-q"><b>43.</b> Mag-isang pumunta si Jacob sa Vigan.<br><span class="opt">a) mag-isang</span><span class="opt">b) pumunta</span><span class="opt">c) Jacob</span><span class="opt">d) Vigan</span></div><div class="ptest-part-title">Part V — Pag-unawa sa Binasa</div><div class="ptest-q"><b>44.</b> Sino ang pamilyang bagong lipat sa Sta. Ana?</div><div class="ptest-q"><b>45.</b> Saan patungo si Alexis? Ano ang pakay niya sa lugar na iyon?</div><div class="ptest-q"><b>46.</b> Sino ang nakasalubong ni Alexis at paano nakatulong sa kaniya ang taong iyon?</div><div class="ptest-q"><b>47.</b> Saan matatagpuan ang pambayang aklatan ng Sta. Ana? Paano ito mapupuntahan?</div><div class="ptest-q"><b>48.</b> Sa iyong palagay, bakit mahalaga ang kaalaman tungkol sa mga pangunahing at pangalawang direksiyon kapag nakikinig ng panuto patungo sa isang lugar?</div><div class="ptest-q"><b>49.</b> Ano ang kahalagahan ng pambayang aklatan sa mga mag-aaral?</div><div class="ptest-q"><b>50.</b> Tukuyin ang kahalagahan ng marunong sumunod sa direksiyon. Palawakin ang sagot.</div><div class="ptest-q"><b>51.</b> Kilalanin ang madalas sumunod sa direksiyon ng inyong pupuntahan. Tukuyin ang makabagong katawagan sa pagsunod sa direksiyon.</div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-key">
+        <div class="notes-topic">
+<div class="notes-topic-title">Part I — Pang-uri (PL/PT)</div><div class="key-grid"><div class="key-pill">1. <b>Panlarawan (PL)</b></div><div class="key-pill">2. <b>Panlarawan (PL)</b></div><div class="key-pill">3. <b>Pantangi (PT)</b></div><div class="key-pill">4. <b>Panlarawan (PL)</b></div><div class="key-pill">5. <b>Pantangi (PT)</b></div><div class="key-pill">6. <b>Panlarawan (PL)</b></div><div class="key-pill">7. <b>Pantangi (PT)</b></div><div class="key-pill">8. <b>Panlarawan (PL)</b></div><div class="key-pill">9. <b>Panlarawan (PL)</b></div><div class="key-pill">10. <b>Panlarawan (PL)</b></div></div><div class="notes-topic-title">Part II — Kasalungat</div><div class="key-grid"><div class="key-pill">11. <b>lumayo</b></div><div class="key-pill">12. <b>mahirap</b></div><div class="key-pill">13. <b>nalungkot</b></div><div class="key-pill">14. <b>tradisyonal</b></div><div class="key-pill">15. <b>malayo</b></div></div><div class="notes-topic-title">Part III — Tama o Mali</div><div class="key-grid"><div class="key-pill">16. <b>TAMA</b></div><div class="key-pill">17. <b>MALI</b></div><div class="key-pill">18. <b>TAMA</b></div><div class="key-pill">19. <b>TAMA</b></div><div class="key-pill">20. <b>MALI</b></div><div class="key-pill">21. <b>MALI</b></div><div class="key-pill">22. <b>TAMA</b></div><div class="key-pill">23. <b>MALI</b></div><div class="key-pill">24. <b>TAMA</b></div><div class="key-pill">25. <b>TAMA</b></div><div class="key-pill">26. <b>TAMA</b></div><div class="key-pill">27. <b>MALI</b></div><div class="key-pill">28. <b>MALI</b></div><div class="key-pill">29. <b>TAMA</b></div><div class="key-pill">30. <b>MALI</b></div><div class="key-pill">31. <b>TAMA</b></div><div class="key-pill">32. <b>TAMA</b></div><div class="key-pill">33. <b>TAMA</b></div><div class="key-pill">34. <b>MALI</b></div><div class="key-pill">35. <b>TAMA</b></div></div><div class="notes-topic-title">Part IV — Pang-abay</div><div class="key-grid"><div class="key-pill">36. <b>talaga</b></div><div class="key-pill">37. <b>mahusay</b></div><div class="key-pill">38. <b>talagang</b></div><div class="key-pill">39. <b>totoong</b></div><div class="key-pill">40. <b>mabilis</b></div><div class="key-pill">41. <b>totoong</b></div><div class="key-pill">42. <b>talagang</b></div><div class="key-pill">43. <b>mag-isang</b></div></div><div class="notes-topic-title">Part V — Pag-unawa sa Binasa (mga halimbawang sagot)</div><div class="ptest-q" style="margin-bottom:6px"><b>44.</b> Ang pamilya Roque</div><div class="ptest-q" style="margin-bottom:6px"><b>45.</b> Patungo siya sa pambayang aklatan upang magsaliksik para sa kaniyang takdang-aralin</div><div class="ptest-q" style="margin-bottom:6px"><b>46.</b> Si Ginoong Celso Martinez, isang konsehal ng bayan; tinulungan niya si Alexis sa pamamagitan ng pagbibigay ng direksiyon patungo sa aklatan</div><div class="ptest-q" style="margin-bottom:6px"><b>47.</b> Nasa gawing Timog-Kanluran mula sa bahay ni Alexis; malapit ito sa simbahan (sa Kanluran) at sa estasyon ng bumbero (sa Timog)</div><div class="ptest-q" style="margin-bottom:6px"><b>48.</b> Makatutulong ito upang hindi maligaw at mahanap agad ang lugar na pupuntahan (sagot ayon sa opinyon ng bata)</div><div class="ptest-q" style="margin-bottom:6px"><b>49.</b> Makatutulong ito sa pananaliksik at pag-aaral dahil dito matatagpuan ang malawak na koleksiyon ng mga sanggunian</div><div class="ptest-q" style="margin-bottom:6px"><b>50.</b> Nakatutulong ito upang hindi maligaw at maabot agad ang nais puntahan (sagot ayon sa opinyon ng bata)</div><div class="ptest-q" style="margin-bottom:6px"><b>51.</b> Karaniwang gumagamit ng GPS o mapa sa telepono ang mga tao ngayon bilang makabagong paraan ng pagsunod sa direksiyon (sagot ayon sa opinyon ng bata)</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ── Hidden Print Area (Practice Test + Answer Key) ── -->
+<div id="print-area">
+<div class="p-cover">
+    <div class="p-icon">📚</div>
+    <h1>Filipino 4 — Kapayapaan at Kaayusan Practice Test</h1>
+    <div class="p-sub">Maikling Kuwento · Pang-uri · Direksiyon · Pang-abay</div>
+    <div class="p-info-box">
+      <div><strong>Pangalan:</strong> _____________________________________</div>
+      <div><strong>Baitang/Pangkat:</strong> ___________________ &nbsp; <strong>Petsa:</strong> ___________________</div>
+      <div><strong>Iskor:</strong> _______ / 51</div>
+    </div>
+    <div class="p-instructions">
+      <strong>Panuto:</strong> Basahing mabuti ang bawat aytem. Isulat ang sagot sa patlang na inilaan (Bahagi I-III), piliin ang tamang letra (Bahagi IV), o sagutin sa buong pangungusap (Bahagi V). Good luck!
+    </div>
+  </div>
+
+  <h2 class="p-part-title">Bahagi I — Pang-uri: Panlarawan (PL) o Pantangi (PT)</h2><div class="p-q"><b>1.</b> Kaibiganin natin ang kaklase nating mahiyain. <span class="p-blank"></span></div><div class="p-q"><b>2.</b> Malakas ang buhos ng ulan kaninang madaling-araw. <span class="p-blank"></span></div><div class="p-q"><b>3.</b> Tangkilikin natin ang mga produktong Pilipino. <span class="p-blank"></span></div><div class="p-q"><b>4.</b> Luma na ang kasangkapan sa bahay ng aking lola. <span class="p-blank"></span></div><div class="p-q"><b>5.</b> Napakatamis ng manggang Guimaras. <span class="p-blank"></span></div><div class="p-q"><b>6.</b> Nakaabang sa pinto ang matabang aso ni Dino. <span class="p-blank"></span></div><div class="p-q"><b>7.</b> Masarap ang bagong Balayan. <span class="p-blank"></span></div><div class="p-q"><b>8.</b> Sinusuklay ni Nanay ang mahabang buhok ni Bunso. <span class="p-blank"></span></div><div class="p-q"><b>9.</b> Sariwa ang hangin sa probinsiya. <span class="p-blank"></span></div><div class="p-q"><b>10.</b> Ang mga mag-aaral ni G. Cruz ay masunurin. <span class="p-blank"></span></div><h2 class="p-part-title">Bahagi II — Kasalungat (Bokabularyo)</h2><div class="p-q"><b>11.</b> Ibigay ang kasalungat: Si Alexis ay nagtungo sa pambayang aklatan ng Sta. Ana.<br><span class="p-opt">a) lumayo</span><span class="p-opt">b) namasyal</span><span class="p-opt">c) dumaan</span><span class="p-opt">d) umalis</span></div><div class="p-q"><b>12.</b> Ibigay ang kasalungat: Madali lamang puntahan mula sa inyong bahay ang ating pambayang aklatan.<br><span class="p-opt">a) mahirap</span><span class="p-opt">b) mabilis</span><span class="p-opt">c) maganda</span><span class="p-opt">d) mahusay</span></div><div class="p-q"><b>13.</b> Ibigay ang kasalungat: Nagalak si Alexis at nakinig nang mabuti sa pagbibigay ng direksiyon.<br><span class="p-opt">a) nalungkot</span><span class="p-opt">b) nasabik</span><span class="p-opt">c) nahikayat</span><span class="p-opt">d) nangamba</span></div><div class="p-q"><b>14.</b> Ibigay ang kasalungat: Ang aklatan ay moderno dahil kabilang sa koleksiyon ang mga produkto ng makabagong teknolohiya.<br><span class="p-opt">a) tradisyonal</span><span class="p-opt">b) bago</span><span class="p-opt">c) malawak</span><span class="p-opt">d) kahanga-hanga</span></div><div class="p-q"><b>15.</b> Ibigay ang kasalungat: Malapit ang aklatan sa estasyon ng bumbero.<br><span class="p-opt">a) malayo</span><span class="p-opt">b) maliit</span><span class="p-opt">c) magkatabi</span><span class="p-opt">d) kahanay</span></div><div class="p-break"></div><h2 class="p-part-title">Bahagi III — Tama o Mali</h2><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>16.</b> Ang maikling kuwento ay may layuning magsalaysay ng mga pangyayari sa buhay ng pangunahing tauhan.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>17.</b> May apat na mahalagang bahagi ang maikling kuwento.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>18.</b> Ang layunin ng panimula ay pukawin ang interes ng mambabasa.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>19.</b> Ang kasukdulan ay ang bahaging kapana-panabik kung saan pinagpapasiyahan ang kapalaran ng tauhan.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>20.</b> Palaging masaya ang katapusan ng isang maikling kuwento.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>21.</b> Si Harun ang sumulat ng kuwentong "Ano ang Dapat Kong Dalhin? Ano ang Dapat Kong Iwan?"</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>22.</b> Ang mga Muslim ang pinakamalaking relihiyosong pangkat sa Mindanao.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>23.</b> Sinabi ni Tatay na may nananalo sa digmaan.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>24.</b> Nagpunta ang pamilya ni Harun sa bahay ng kanilang Ate Lot matapos umalis sa kanilang bahay.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>25.</b> Ang pang-uri ay bahagi ng pananalita na naglalarawan sa tao, hayop, bagay, lugar, o pangyayari.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>26.</b> Ang pang-uring pantangi ay karaniwang tumutukoy sa pinagmulan ng tao, hayop, o bagay.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>27.</b> Ang "makulay" ay halimbawa ng pang-uring pantangi.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>28.</b> Ang "Barong Tagalog" ay halimbawa ng pang-uring panlarawan.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>29.</b> Si Alexis Roque ang bidang tauhan sa kuwentong "Ang Pagtungo sa Pambayang Aklatan."</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>30.</b> Matagal nang naninirahan ang pamilya Roque sa Sta. Ana.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>31.</b> Matatagpuan ang pambayang aklatan ng Sta. Ana sa gawing Timog-Kanluran mula sa bahay ni Alexis.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>32.</b> May apat na pangunahing direksiyon at apat na pangalawang direksiyon.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>33.</b> Ang Timog ang direksiyong nasa likod ng isang taong nakaharap sa Hilaga.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>34.</b> Ang pang-abay ay nagbibigay-turing lamang sa pangngalan.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>35.</b> Ang "talagang mahusay" ay halimbawa ng pariralang pang-abay.</div><div class="p-break"></div><h2 class="p-part-title">Bahagi IV — Multiple Choice: Pang-abay</h2><div class="p-q"><b>36.</b> Malaki talaga ang kakayahan ng mga taga-Vigan na umangat ang kanilang kabuhayan.<br><span class="p-opt">a) umangat</span><span class="p-opt">b) talaga</span><span class="p-opt">c) malaki</span><span class="p-opt">d) kabuhayan</span></div><div class="p-q"><b>37.</b> Ang mga mamamayan ay hinahangaan dahil mahusay silang gumawa ng tapayan.<br><span class="p-opt">a) mahusay</span><span class="p-opt">b) gumawa</span><span class="p-opt">c) hinahangaan</span><span class="p-opt">d) tapayan</span></div><div class="p-q"><b>38.</b> Talagang matiyaga si Ginoong Go sa paggawa ng tapayan.<br><span class="p-opt">a) tapayan</span><span class="p-opt">b) talagang</span><span class="p-opt">c) Ginoong Go</span><span class="p-opt">d) matiyaga</span></div><div class="p-q"><b>39.</b> Totoong nakikilala ang Vigan sa ibang bansa dahil sa ganda ng kalidad ng produkto mula rito.<br><span class="p-opt">a) nakikilala</span><span class="p-opt">b) kalidad</span><span class="p-opt">c) totoong</span><span class="p-opt">d) Vigan</span></div><div class="p-q"><b>40.</b> Mabilis lumago ang industriya ng paggawa ng tapayan sa Vigan.<br><span class="p-opt">a) Vigan</span><span class="p-opt">b) lumago</span><span class="p-opt">c) mabilis</span><span class="p-opt">d) industriya</span></div><div class="p-q"><b>41.</b> Totoong masarap inumin ang tubig mula sa tapayan.<br><span class="p-opt">a) masarap</span><span class="p-opt">b) totoong</span><span class="p-opt">c) tapayan</span><span class="p-opt">d) inumin</span></div><div class="p-q"><b>42.</b> Talagang masisipag ang gumagawa ng burnay.<br><span class="p-opt">a) mahirap</span><span class="p-opt">b) talagang</span><span class="p-opt">c) gumagawa</span><span class="p-opt">d) burnay</span></div><div class="p-q"><b>43.</b> Mag-isang pumunta si Jacob sa Vigan.<br><span class="p-opt">a) mag-isang</span><span class="p-opt">b) pumunta</span><span class="p-opt">c) Jacob</span><span class="p-opt">d) Vigan</span></div><div class="p-break"></div><h2 class="p-part-title">Bahagi V — Pag-unawa sa Binasa</h2><div class="p-q"><b>44.</b> Sino ang pamilyang bagong lipat sa Sta. Ana?<br><br>_________________________________________________<br><br>_________________________________________________</div><div class="p-q"><b>45.</b> Saan patungo si Alexis? Ano ang pakay niya sa lugar na iyon?<br><br>_________________________________________________<br><br>_________________________________________________</div><div class="p-q"><b>46.</b> Sino ang nakasalubong ni Alexis at paano nakatulong sa kaniya ang taong iyon?<br><br>_________________________________________________<br><br>_________________________________________________</div><div class="p-q"><b>47.</b> Saan matatagpuan ang pambayang aklatan ng Sta. Ana? Paano ito mapupuntahan?<br><br>_________________________________________________<br><br>_________________________________________________</div><div class="p-q"><b>48.</b> Sa iyong palagay, bakit mahalaga ang kaalaman tungkol sa mga pangunahing at pangalawang direksiyon kapag nakikinig ng panuto patungo sa isang lugar?<br><br>_________________________________________________<br><br>_________________________________________________</div><div class="p-q"><b>49.</b> Ano ang kahalagahan ng pambayang aklatan sa mga mag-aaral?<br><br>_________________________________________________<br><br>_________________________________________________</div><div class="p-q"><b>50.</b> Tukuyin ang kahalagahan ng marunong sumunod sa direksiyon. Palawakin ang sagot.<br><br>_________________________________________________<br><br>_________________________________________________</div><div class="p-q"><b>51.</b> Kilalanin ang madalas sumunod sa direksiyon ng inyong pupuntahan. Tukuyin ang makabagong katawagan sa pagsunod sa direksiyon.<br><br>_________________________________________________<br><br>_________________________________________________</div><div class="p-break"></div><h2 class="p-part-title">✅ Kumpletong Susi sa Pagwawasto</h2>
+  <div class="p-key-part-title">Bahagi I — Pang-uri (PL/PT)</div><div class="p-key-grid"><div class="p-key-pill">1. <b>Panlarawan (PL)</b></div><div class="p-key-pill">2. <b>Panlarawan (PL)</b></div><div class="p-key-pill">3. <b>Pantangi (PT)</b></div><div class="p-key-pill">4. <b>Panlarawan (PL)</b></div><div class="p-key-pill">5. <b>Pantangi (PT)</b></div><div class="p-key-pill">6. <b>Panlarawan (PL)</b></div><div class="p-key-pill">7. <b>Pantangi (PT)</b></div><div class="p-key-pill">8. <b>Panlarawan (PL)</b></div><div class="p-key-pill">9. <b>Panlarawan (PL)</b></div><div class="p-key-pill">10. <b>Panlarawan (PL)</b></div></div><div class="p-key-part-title">Bahagi II — Kasalungat</div><div class="p-key-grid"><div class="p-key-pill">11. <b>lumayo</b></div><div class="p-key-pill">12. <b>mahirap</b></div><div class="p-key-pill">13. <b>nalungkot</b></div><div class="p-key-pill">14. <b>tradisyonal</b></div><div class="p-key-pill">15. <b>malayo</b></div></div><div class="p-key-part-title">Bahagi III — Tama o Mali</div><div class="p-key-grid"><div class="p-key-pill">16. <b>TAMA</b></div><div class="p-key-pill">17. <b>MALI</b></div><div class="p-key-pill">18. <b>TAMA</b></div><div class="p-key-pill">19. <b>TAMA</b></div><div class="p-key-pill">20. <b>MALI</b></div><div class="p-key-pill">21. <b>MALI</b></div><div class="p-key-pill">22. <b>TAMA</b></div><div class="p-key-pill">23. <b>MALI</b></div><div class="p-key-pill">24. <b>TAMA</b></div><div class="p-key-pill">25. <b>TAMA</b></div><div class="p-key-pill">26. <b>TAMA</b></div><div class="p-key-pill">27. <b>MALI</b></div><div class="p-key-pill">28. <b>MALI</b></div><div class="p-key-pill">29. <b>TAMA</b></div><div class="p-key-pill">30. <b>MALI</b></div><div class="p-key-pill">31. <b>TAMA</b></div><div class="p-key-pill">32. <b>TAMA</b></div><div class="p-key-pill">33. <b>TAMA</b></div><div class="p-key-pill">34. <b>MALI</b></div><div class="p-key-pill">35. <b>TAMA</b></div></div><div class="p-key-part-title">Bahagi IV — Pang-abay</div><div class="p-key-grid"><div class="p-key-pill">36. <b>talaga</b></div><div class="p-key-pill">37. <b>mahusay</b></div><div class="p-key-pill">38. <b>talagang</b></div><div class="p-key-pill">39. <b>totoong</b></div><div class="p-key-pill">40. <b>mabilis</b></div><div class="p-key-pill">41. <b>totoong</b></div><div class="p-key-pill">42. <b>talagang</b></div><div class="p-key-pill">43. <b>mag-isang</b></div></div><div class="p-key-part-title">Bahagi V — Pag-unawa sa Binasa (mga halimbawang sagot)</div><div class="p-q"><b>44.</b> Ang pamilya Roque</div><div class="p-q"><b>45.</b> Patungo siya sa pambayang aklatan upang magsaliksik para sa kaniyang takdang-aralin</div><div class="p-q"><b>46.</b> Si Ginoong Celso Martinez, isang konsehal ng bayan; tinulungan niya si Alexis sa pamamagitan ng pagbibigay ng direksiyon patungo sa aklatan</div><div class="p-q"><b>47.</b> Nasa gawing Timog-Kanluran mula sa bahay ni Alexis; malapit ito sa simbahan (sa Kanluran) at sa estasyon ng bumbero (sa Timog)</div><div class="p-q"><b>48.</b> Makatutulong ito upang hindi maligaw at mahanap agad ang lugar na pupuntahan (sagot ayon sa opinyon ng bata)</div><div class="p-q"><b>49.</b> Makatutulong ito sa pananaliksik at pag-aaral dahil dito matatagpuan ang malawak na koleksiyon ng mga sanggunian</div><div class="p-q"><b>50.</b> Nakatutulong ito upang hindi maligaw at maabot agad ang nais puntahan (sagot ayon sa opinyon ng bata)</div><div class="p-q"><b>51.</b> Karaniwang gumagamit ng GPS o mapa sa telepono ang mga tao ngayon bilang makabagong paraan ng pagsunod sa direksiyon (sagot ayon sa opinyon ng bata)</div>
+</div>
+
+</body>
+</html>
