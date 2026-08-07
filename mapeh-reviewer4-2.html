@@ -1,0 +1,1510 @@
+<!DOCTYPE html>
+<html lang="tl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🎨 MAPEH: Art &amp; Hygiene Reviewer 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --gold: #f59e0b;
+  --gold-dark: #b45309;
+  --blue: #3b82f6;
+  --blue-dark: #1d4ed8;
+  --red: #ef4444;
+  --green: #22c55e;
+  --bg: #0c1a0e;
+  --surface: #132015;
+  --surface2: #1a2e1d;
+  --text: #f0fdf4;
+  --muted: #86efac;
+  --border: #166534;
+}
+
+body {
+  font-family: 'Baloo 2', cursive;
+  background: var(--bg);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--text);
+  background-image:
+    radial-gradient(ellipse at 10% 30%, rgba(245,158,11,.06) 0%, transparent 55%),
+    radial-gradient(ellipse at 90% 70%, rgba(59,130,246,.06) 0%, transparent 55%);
+}
+
+header {
+  width: 100%;
+  background: linear-gradient(135deg, #14532d, #1e3a5f);
+  border-bottom: 2px solid var(--gold-dark);
+  padding: 13px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 4px 30px rgba(0,0,0,.5);
+}
+.header-icon { font-size: 2rem; animation: float 3s ease-in-out infinite; }
+@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
+
+header h1 {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.45rem;
+  background: linear-gradient(90deg, var(--gold), #fde68a, var(--gold));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+header .sub { font-size: .72rem; color: var(--muted); margin-top: 1px; }
+
+.header-controls { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+.score-pill {
+  background: rgba(245,158,11,.15);
+  border: 1px solid rgba(245,158,11,.4);
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-weight: 800;
+  font-size: .85rem;
+  color: var(--gold);
+}
+.audio-btn {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  background: var(--surface2);
+  color: var(--text);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all .2s;
+  display: flex; align-items: center; justify-content: center;
+}
+.audio-btn:hover, .audio-btn.active { background: #14532d; border-color: var(--gold); }
+
+.chat-wrap {
+  width: 100%; max-width: 700px; flex: 1;
+  display: flex; flex-direction: column;
+  padding: 16px 14px 0;
+}
+
+#chat-box {
+  flex: 1; overflow-y: auto;
+  display: flex; flex-direction: column;
+  gap: 14px; padding-bottom: 10px;
+  max-height: calc(100vh - 200px);
+  scroll-behavior: smooth;
+}
+#chat-box::-webkit-scrollbar { width: 4px; }
+#chat-box::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+.msg { display: flex; gap: 8px; }
+.msg.user { flex-direction: row-reverse; }
+
+.avatar {
+  width: 34px; height: 34px; border-radius: 50%;
+  font-size: 1rem; display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 2px;
+}
+.msg.bot .avatar { background: linear-gradient(135deg, #14532d, #1e3a5f); border: 1.5px solid rgba(245,158,11,.4); }
+.msg.user .avatar { background: linear-gradient(135deg, #1e3a5f, #14532d); border: 1.5px solid rgba(59,130,246,.3); }
+
+.bubble {
+  max-width: 80%;
+  padding: 11px 16px;
+  border-radius: 18px;
+  font-size: .9rem;
+  line-height: 1.65;
+  animation: pop .22s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes pop { from{transform:scale(.88) translateY(6px);opacity:0} to{transform:scale(1) translateY(0);opacity:1} }
+
+.msg.bot .bubble {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-bottom-left-radius: 5px;
+}
+.msg.user .bubble {
+  background: linear-gradient(135deg, #1e3a5f, var(--blue-dark));
+  border-bottom-right-radius: 5px;
+}
+
+/* chips */
+.chip {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: rgba(245,158,11,.12);
+  border: 1.5px solid rgba(245,158,11,.4);
+  color: var(--gold);
+  border-radius: 30px;
+  padding: 5px 13px; margin: 5px 4px 0 0;
+  font-size: .8rem; font-weight: 700;
+  cursor: pointer; transition: all .15s;
+  user-select: none; font-family: 'Baloo 2', cursive;
+}
+.chip:hover {
+  background: var(--gold-dark); color: white;
+  border-color: var(--gold);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(245,158,11,.3);
+}
+
+/* topic tag */
+.topic-tag {
+  display: inline-block;
+  background: linear-gradient(135deg, #14532d, #166534);
+  border: 1px solid var(--gold-dark);
+  color: var(--gold);
+  font-size: .68rem; font-weight: 800;
+  border-radius: 20px; padding: 2px 10px;
+  margin-bottom: 5px; letter-spacing: .5px;
+  text-transform: uppercase;
+}
+
+/* multiple choice */
+.mc-options { display: flex; flex-direction: column; gap: 7px; margin-top: 10px; width: 100%; }
+.mc-btn {
+  display: flex; align-items: center; gap: 10px;
+  background: rgba(255,255,255,.03);
+  border: 1.5px solid var(--border);
+  border-radius: 12px; padding: 9px 14px;
+  color: var(--text); font-family: 'Baloo 2', cursive;
+  font-size: .87rem; font-weight: 600;
+  cursor: pointer; transition: all .15s; text-align: left; width: 100%;
+}
+.mc-btn:hover:not(:disabled) {
+  background: rgba(245,158,11,.12); border-color: var(--gold);
+  color: var(--gold); transform: translateX(3px);
+}
+.mc-btn .letter {
+  display: flex; align-items: center; justify-content: center;
+  width: 26px; height: 26px; border-radius: 8px;
+  background: rgba(245,158,11,.15); border: 1px solid rgba(245,158,11,.35);
+  color: var(--gold); font-size: .78rem; font-weight: 800;
+  flex-shrink: 0; transition: all .15s;
+}
+.mc-btn:hover:not(:disabled) .letter { background: var(--gold-dark); color: white; border-color: var(--gold-dark); }
+.mc-btn.correct { background: rgba(34,197,94,.15)!important; border-color: #22c55e!important; color: #22c55e!important; cursor: default; }
+.mc-btn.correct .letter { background: #22c55e!important; color: white!important; border-color: #22c55e!important; }
+.mc-btn.wrong { background: rgba(239,68,68,.12)!important; border-color: #ef4444!important; color: #ef4444!important; cursor: default; }
+.mc-btn.wrong .letter { background: #ef4444!important; color: white!important; border-color: #ef4444!important; }
+.mc-btn:disabled { cursor: default; transform: none!important; }
+
+/* speaker wave */
+.speaker-wave {
+  display: inline-flex; align-items: flex-end;
+  gap: 2px; height: 14px; margin-left: 6px; vertical-align: middle;
+}
+.speaker-wave span {
+  display: block; width: 3px; border-radius: 2px;
+  background: var(--gold); animation: wave 1s ease-in-out infinite;
+}
+.speaker-wave span:nth-child(1){height:4px;animation-delay:0s}
+.speaker-wave span:nth-child(2){height:10px;animation-delay:.1s}
+.speaker-wave span:nth-child(3){height:6px;animation-delay:.2s}
+.speaker-wave span:nth-child(4){height:12px;animation-delay:.15s}
+.speaker-wave span:nth-child(5){height:4px;animation-delay:.05s}
+@keyframes wave{0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.8)}}
+
+/* typing */
+.typing {
+  display: flex; gap: 4px; padding: 12px 16px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 18px; border-bottom-left-radius: 5px; width: fit-content;
+}
+.dot { width: 7px; height: 7px; border-radius: 50%; background: var(--gold); animation: bounce .9s infinite; }
+.dot:nth-child(2){animation-delay:.15s} .dot:nth-child(3){animation-delay:.3s}
+@keyframes bounce{0%,80%,100%{transform:translateY(0);opacity:.6}40%{transform:translateY(-7px);opacity:1}}
+
+/* input bar */
+.input-bar {
+  width: 100%; max-width: 700px;
+  padding: 10px 14px 18px;
+  display: flex; gap: 8px;
+  background: var(--bg); position: sticky; bottom: 0;
+}
+#user-input {
+  flex: 1; padding: 12px 18px;
+  border: 2px solid var(--border); border-radius: 30px;
+  font-family: 'Baloo 2', cursive; font-size: .92rem;
+  outline: none; background: var(--surface); color: var(--text);
+  transition: border-color .2s, box-shadow .2s;
+}
+#user-input::placeholder { color: var(--muted); }
+#user-input:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(245,158,11,.12); }
+
+#send-btn {
+  width: 48px; height: 48px; border-radius: 50%; border: none;
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  color: white; font-size: 1.1rem; cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 3px 14px rgba(245,158,11,.4); flex-shrink: 0;
+}
+#send-btn:hover { transform: scale(1.08); box-shadow: 0 5px 20px rgba(245,158,11,.55); }
+#send-btn:disabled { opacity: .5; transform: none; }
+
+/* result modal */
+.result-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.75); backdrop-filter: blur(6px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 100; opacity: 0; pointer-events: none; transition: opacity .3s;
+}
+.result-overlay.show { opacity: 1; pointer-events: all; }
+.result-card {
+  background: linear-gradient(135deg, #132015, #0c1a0e);
+  border: 2px solid var(--gold-dark);
+  border-radius: 24px; padding: 36px 40px;
+  text-align: center; max-width: 380px; width: 90%;
+  box-shadow: 0 20px 60px rgba(0,0,0,.6);
+  transform: scale(.9); transition: transform .3s cubic-bezier(.34,1.56,.64,1);
+}
+.result-overlay.show .result-card { transform: scale(1); }
+.result-emoji { font-size: 4rem; margin-bottom: 12px; display: block; }
+.result-title {
+  font-family: 'Fredoka One', cursive; font-size: 1.7rem; margin-bottom: 6px;
+  background: linear-gradient(90deg, var(--gold), #fde68a);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.result-score { font-size: 3rem; font-weight: 900; margin: 10px 0; color: white; }
+.result-msg { color: var(--muted); font-size: .9rem; margin-bottom: 22px; }
+.result-btn {
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  border: none; border-radius: 30px; padding: 12px 30px;
+  color: white; font-family: 'Baloo 2', cursive; font-weight: 800;
+  font-size: 1rem; cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+  box-shadow: 0 4px 16px rgba(245,158,11,.35);
+}
+.result-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 22px rgba(245,158,11,.5); }
+
+/* scenario card for identify questions */
+.scenario-card {
+  background: rgba(245,158,11,.07);
+  border: 1px solid rgba(245,158,11,.25);
+  border-radius: 12px; padding: 10px 14px;
+  margin: 8px 0 6px; font-style: italic;
+  font-size: .87rem; color: #fde68a; line-height: 1.5;
+}
+
+/* ── Notes Panel ─────────────────────────────────────────────── */
+.notes-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.78); backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 200; opacity: 0; pointer-events: none; transition: opacity .3s;
+}
+.notes-overlay.show { opacity: 1; pointer-events: all; }
+.notes-panel {
+  background: linear-gradient(160deg, #0c1a0e, #132015);
+  border: 2px solid var(--gold-dark);
+  border-radius: 20px;
+  width: 92%; max-width: 720px;
+  max-height: 88vh;
+  display: flex; flex-direction: column;
+  box-shadow: 0 24px 60px rgba(0,0,0,.7);
+  overflow: hidden;
+  transform: translateY(30px);
+  transition: transform .35s cubic-bezier(.34,1.2,.64,1);
+}
+.notes-overlay.show .notes-panel { transform: translateY(0); }
+.notes-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 22px; border-bottom: 1px solid var(--border);
+  background: linear-gradient(135deg, #14532d44, #1e3a5f44);
+}
+.notes-header h2 { font-family: 'Fredoka One', cursive; font-size: 1.3rem; color: var(--gold); }
+.notes-close {
+  width: 34px; height: 34px; border-radius: 50%;
+  border: 1.5px solid var(--border); background: var(--surface2);
+  color: var(--text); font-size: 1rem; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; transition: all .2s;
+}
+.notes-close:hover { background: #b91c1c; border-color: #ef4444; }
+.notes-body { overflow-y: auto; padding: 20px 22px; flex: 1; }
+.notes-body::-webkit-scrollbar { width: 4px; }
+.notes-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+.notes-topic { margin-bottom: 28px; }
+.notes-topic-title {
+  font-family: 'Fredoka One', cursive; font-size: 1.05rem;
+  color: var(--gold); margin-bottom: 10px;
+  padding-bottom: 6px; border-bottom: 1px solid var(--border);
+}
+.notes-item {
+  display: flex; gap: 10px; align-items: flex-start;
+  padding: 7px 0; border-bottom: 1px solid rgba(255,255,255,.04);
+  font-size: .87rem; line-height: 1.55;
+}
+.notes-item:last-child { border-bottom: none; }
+.notes-term { font-weight: 800; color: var(--gold); min-width: 150px; flex-shrink: 0; font-size: .84rem; }
+.notes-def { color: #d1fae5; }
+.notes-tabs {
+  display: flex; flex-wrap: wrap; gap: 8px; padding: 14px 22px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(0,0,0,.15);
+}
+.notes-tab {
+  padding: 12px 20px; border-radius: 10px;
+  border: 1.5px solid var(--border); 
+  background: rgba(255,255,255,.04); color: var(--muted);
+  font-family: 'Baloo 2', cursive; font-size: .9rem; font-weight: 700;
+  cursor: pointer; transition: all .15s; white-space: nowrap;
+  min-height: 48px; display: flex; align-items: center;
+}
+.notes-tab.active { background: var(--surface); color: var(--gold); border-color: var(--gold-dark); }
+.notes-tab:hover:not(.active) { color: var(--text); background: var(--surface2); }
+.notes-section { display: none; }
+.notes-section.active { display: block; }
+
+
+/* ── Print button in notes header ─────────────────────────────── */
+.notes-header-actions { display: flex; align-items: center; gap: 10px; }
+.print-btn {
+  display: flex; align-items: center; gap: 6px;
+  background: rgba(245,158,11,.12);
+  border: 1.5px solid rgba(245,158,11,.4);
+  color: var(--gold);
+  border-radius: 20px;
+  padding: 7px 14px;
+  font-family: 'Baloo 2', cursive;
+  font-size: .78rem;
+  font-weight: 800;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all .15s;
+}
+.print-btn:hover { background: var(--gold); color: #0c1a0e; border-color: var(--gold); }
+.print-btn.active { background: var(--gold); color: #0c1a0e; border-color: var(--gold); }
+
+/* ── On-screen Practice Test / Answer Key ─────────────────────── */
+.ptest-part-title {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1rem;
+  color: var(--gold);
+  margin: 22px 0 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+.ptest-part-title:first-child { margin-top: 0; }
+.ptest-q {
+  font-size: .87rem;
+  line-height: 1.6;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed rgba(255,255,255,.06);
+  color: #d1fae5;
+}
+.ptest-q b { color: var(--gold); }
+.ptest-q .opt { display: block; margin: 2px 0 2px 18px; color: #d1fae5; }
+.ptest-bank {
+  background: rgba(59,130,246,.08);
+  border: 1px solid rgba(59,130,246,.3);
+  border-radius: 10px;
+  padding: 10px 16px;
+  margin-bottom: 14px;
+  font-size: .82rem;
+  color: #dbeafe;
+  line-height: 1.6;
+}
+.key-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.key-pill {
+  background: rgba(245,158,11,.1);
+  border: 1px solid rgba(245,158,11,.25);
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: .78rem;
+  color: #fde68a;
+}
+.key-pill b { color: #34d399; }
+
+/* ── Print / Save-as-PDF styles ──────────────────────────────────
+   By default everything is hidden from print. When body carries
+   .printing-test, only #print-area (a light-themed clone of the
+   Practice Test + Answer Key) is shown, laid out for paper. ──── */
+@media print {
+  body * { visibility: hidden; }
+  #print-area, #print-area * { visibility: visible; }
+  #print-area {
+    display: block !important;
+    position: absolute; top: 0; left: 0; width: 100%;
+    background: #fff; color: #14290f;
+    font-family: 'Helvetica', Arial, sans-serif;
+    font-size: 10.5pt;
+    line-height: 1.5;
+  }
+  #print-area .p-cover { text-align: center; padding-top: 40px; }
+  #print-area .p-cover .p-icon { font-size: 34pt; }
+  #print-area .p-cover h1 { font-size: 19pt; color: #b45309; margin: 8px 0 4px; }
+  #print-area .p-cover .p-sub { font-size: 10.5pt; color: #166534; margin-bottom: 20px; }
+  #print-area .p-info-box {
+    border: 1.5px solid #fcd34d; border-radius: 10px;
+    max-width: 460px; margin: 0 auto 20px; padding: 14px 20px;
+    text-align: left; font-size: 10pt;
+  }
+  #print-area .p-info-box div { margin: 6px 0; border-bottom: 1px dotted #fde68a; padding-bottom: 6px; }
+  #print-area .p-instructions {
+    max-width: 460px; margin: 0 auto; text-align: left;
+    background: #fffbeb; border: 1px solid #fcd34d; border-radius: 10px;
+    padding: 12px 18px; font-size: 9.5pt; color: #78350f;
+  }
+  #print-area h2.p-part-title {
+    font-size: 12.5pt; color: #fff;
+    background: linear-gradient(135deg, #b45309, #14532d) !important;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    padding: 6px 12px; border-radius: 7px; margin: 18px 0 10px;
+    page-break-after: avoid;
+  }
+  #print-area .p-bank {
+    background: #f0fdf4 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    border: 1px solid #86efac; border-radius: 8px; padding: 8px 14px;
+    margin-bottom: 12px; font-size: 9.5pt; color: #14532d;
+  }
+  #print-area .p-q {
+    margin-bottom: 8px; padding-bottom: 8px;
+    border-bottom: 1px dotted #fde68a; font-size: 10pt;
+    page-break-inside: avoid; color: #14290f;
+  }
+  #print-area .p-q b { color: #b45309; }
+  #print-area .p-q .p-blank { display: inline-block; min-width: 65px; border-bottom: 1px solid #64748b; }
+  #print-area .p-q .p-opt { display: block; margin: 2px 0 0 20px; color: #365314; }
+  #print-area .p-break { page-break-before: always; }
+  #print-area .p-key-part-title {
+    font-size: 11pt; color: #b45309; font-weight: bold;
+    margin: 14px 0 8px; border-bottom: 2px solid #b45309; padding-bottom: 4px;
+  }
+  #print-area .p-key-grid {
+    display: grid; grid-template-columns: repeat(5, 1fr);
+    gap: 5px 8px; margin-bottom: 14px;
+  }
+  #print-area .p-key-pill {
+    background: #f0fdf4 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    border: 1px solid #86efac; border-radius: 6px;
+    padding: 4px 8px; font-size: 8.5pt; color: #166534;
+  }
+  #print-area .p-key-pill b { color: #b45309; }
+  @page { size: letter; margin: 1.5cm 1.8cm; }
+}
+#print-area { display: none; }
+
+
+/* ── Chapter Summary / Tandaan / Memory boxes (fix: previously missing) ── */
+.chapter-summary {
+  background: linear-gradient(135deg, rgba(59,130,246,.1), rgba(34,197,94,.08));
+  border: 1px solid rgba(59,130,246,.25);
+  border-left: 4px solid var(--blue);
+  border-radius: 12px;
+  padding: 14px 18px;
+  margin-bottom: 18px;
+  font-size: .88rem;
+  line-height: 1.65;
+  color: #dbeafe;
+}
+.tandaan-box {
+  background: rgba(245,158,11,.08);
+  border: 1px solid rgba(245,158,11,.3);
+  border-left: 4px solid var(--gold);
+  border-radius: 12px;
+  padding: 12px 18px;
+  margin: 14px 0;
+  font-size: .86rem;
+  line-height: 1.6;
+  color: #fde68a;
+}
+.tandaan-label {
+  display: block;
+  font-family: 'Baloo 2', cursive;
+  font-size: .8rem;
+  color: var(--gold);
+  letter-spacing: .5px;
+  margin-bottom: 5px;
+}
+.memory-box {
+  background: rgba(34,197,94,.08);
+  border: 1px solid rgba(34,197,94,.3);
+  border-left: 4px solid var(--green);
+  border-radius: 12px;
+  padding: 12px 18px;
+  margin: 14px 0 22px;
+  font-size: .86rem;
+  line-height: 1.6;
+  color: #bbf7d0;
+}
+.memory-label {
+  display: block;
+  font-family: 'Baloo 2', cursive;
+  font-size: .8rem;
+  color: var(--green);
+  letter-spacing: .5px;
+  margin-bottom: 5px;
+}
+.compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0 20px;
+  font-size: .82rem;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.compare-table th {
+  background: linear-gradient(135deg, var(--blue-dark), var(--gold-dark));
+  color: white;
+  text-align: left;
+  padding: 9px 12px;
+  font-size: .78rem;
+  text-transform: uppercase;
+  letter-spacing: .4px;
+}
+.compare-table td {
+  padding: 9px 12px;
+  border-top: 1px solid var(--border);
+  color: var(--text);
+  vertical-align: top;
+}
+.compare-table tr:nth-child(even) td { background: rgba(255,255,255,.02); }
+
+/* ── Story Box (for reading Bible stories aloud) ─────────────────── */
+.story-box {
+  background: rgba(255,255,255,.03);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px 20px;
+  margin-bottom: 16px;
+  font-size: .92rem;
+  line-height: 1.8;
+  color: var(--text);
+}
+.story-box p { margin-bottom: 10px; }
+.story-box p:last-child { margin-bottom: 0; }
+.story-ref {
+  display: block;
+  text-align: right;
+  font-style: italic;
+  color: var(--muted);
+  font-size: .8rem;
+  margin-top: 10px;
+}
+.story-label {
+  display: block;
+  font-family: 'Baloo 2', cursive;
+  font-size: .9rem;
+  color: var(--gold);
+  letter-spacing: .5px;
+  margin-bottom: 10px;
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-icon">🎨</div>
+  <div>
+    <h1>Art &amp; Hygiene</h1>
+    <div class="sub">Elements &amp; Principles of Art · Filipino Folk Art · Personal Hygiene</div>
+  </div>
+  <div class="header-controls">
+    <div class="score-pill">⭐ <span id="score-val">0</span> / <span id="total-val">0</span></div>
+    <button class="audio-btn" id="notes-toggle" title="Open Reviewer" onclick="document.getElementById('notes-overlay').classList.add('show')">📖</button>
+    <button class="audio-btn active" id="audio-toggle" title="Toggle Audio">🔊</button>
+  </div>
+</header>
+
+<div class="chat-wrap">
+  <div id="chat-box"></div>
+</div>
+
+<div class="input-bar">
+  <input type="text" id="user-input" placeholder="Type your answer here…" autocomplete="off" />
+  <button id="send-btn">➤</button>
+</div>
+
+<div class="result-overlay" id="result-overlay">
+  <div class="result-card">
+    <span class="result-emoji" id="res-emoji">🏆</span>
+    <div class="result-title">Quiz Complete!</div>
+    <div class="result-score"><span id="res-score">0</span>/<span id="res-total">0</span></div>
+    <div class="result-msg" id="res-msg">Great job!</div>
+    <button class="result-btn" onclick="restartApp()">🔄 Maglaro Ulit</button>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+// QUESTION BANK
+// ═══════════════════════════════════════════════════════════════
+const topics = {
+
+  "Elements of Art": [
+    { q: "What are the elements of art also known as?", a: "The building blocks of art", hint: "Think of them like ingredients in a recipe." },
+    { q: "What is a line in art?", a: "A moving point that becomes a basic element which can form shapes when joined or linked together", hint: "It's the most basic building block." },
+    { q: "What are the different types of lines?", a: "Straight, curved, wavy, or jagged", hint: "Four different styles of lines." },
+    { q: "What is formed when lines are connected or closed?", a: "A shape", hint: "A closed line results in this." },
+    { q: "Are shapes two-dimensional or three-dimensional?", a: "Two-dimensional (having length and width)", hint: "Think flat, like a piece of paper." },
+    { q: "What does color have to do with?", a: "The aspect of light", hint: "Light is divided into this." },
+    { q: "What are the three components of color?", a: "Hue, brightness (or value), and intensity", hint: "Three technical aspects of color." },
+    { q: "What is texture in art?", a: "How something feels when it is touched or even imagined to be touched", hint: "Think smooth, rough, or fluffy." },
+    { q: "What is space in art?", a: "Where objects are placed or located; the area occupied by an object or around it", hint: "It's about placement and area." },
+    { q: "What does playing with space suggest in an artwork?", a: "Depth", hint: "It creates the illusion of near and far." },
+    { q: "What is form in art?", a: "Shapes that are or look like three-dimensional (having length, width, and height)", hint: "Think of a globe versus a circle." },
+    { q: "What is value in art?", a: "The lightness or darkness of a color", hint: "It's not about worth or price." },
+    { q: "What can value help create in an artwork?", a: "Dimension, texture, and mood or feelings", hint: "Light and dark shading does a lot of work." },
+  ],
+
+  "Principles of Art": [
+    { q: "What do the principles of art refer to?", a: "How an artist uses and organizes the elements of art in an artwork", hint: "It's about arrangement, not the pieces themselves." },
+    { q: "What are the three principles of art discussed in the lesson?", a: "Balance, proportion, and movement", hint: "Three ways artists organize their work." },
+    { q: "What is balance in art?", a: "The way the elements create stability visually", hint: "Think of things looking evenly weighted." },
+    { q: "What are the three types of balance?", a: "Symmetry, asymmetry, and radial symmetry", hint: "One is mirror-like, one contrasts, one is around a point." },
+    { q: "What is symmetry?", a: "Both sides of the artwork are the same", hint: "Like a mirror image." },
+    { q: "What is asymmetry?", a: "Two elements contrast each other", hint: "The opposite of a mirror image." },
+    { q: "What is radial symmetry?", a: "Elements are equally distributed around a point", hint: "Think of a flower or a wheel." },
+    { q: "What is proportion in art?", a: "The relationship in size between different parts of the artwork", hint: "It's about relative size." },
+    { q: "What is needed to serve as a focus for comparing the size of other parts in an artwork?", a: "A scale", hint: "A reference point for size." },
+    { q: "What is movement in art?", a: "How the artwork conveys action and how elements guide your eyes to look throughout the artwork", hint: "It's about where your eyes travel." },
+    { q: "What are visual arts?", a: "Art forms that you see and that bring about emotion to you as a viewer", hint: "Art meant to be seen and felt." },
+    { q: "Give examples of visual arts.", a: "Paintings, drawings, sculptures, architecture, crafts, designs, ceramics, photography, and films", hint: "Many different forms count as visual arts." },
+  ],
+
+  "Folk Art: Bul-ul, Burnay, Táka, Sarimanok": [
+    { q: "What are bul-uls?", a: "Wooden figures or statues of the Ifugao people that represent their rice guardians", hint: "They protect the rice harvest." },
+    { q: "Where are bul-uls placed?", a: "Inside rice granaries", hint: "They watch over stored rice." },
+    { q: "What wood is commonly used to make a bul-ul?", a: "Narra or molave", hint: "Two types of Philippine hardwood." },
+    { q: "What happens to a bul-ul after it is sculpted?", a: "It undergoes a ritual blessing to make it sacred", hint: "This step makes it more than just a carving." },
+    { q: "What balance do bul-ul figures usually have?", a: "Symmetrical balance, with both sides having the same shape", hint: "Recall the types of balance in art." },
+    { q: "Why did the dark color of old bul-ul figures develop?", a: "Because of stains of blood from sacrificed animals during rituals", hint: "It comes from ritual offerings." },
+    { q: "What are bornay or burnay jars?", a: "Earthen jars from Vigan, Ilocos Sur", hint: "A type of pottery from Northern Luzon." },
+    { q: "Who brought the technology of making bornays?", a: "Chinese migrants during the Spanish era", hint: "It came from another culture." },
+    { q: "What were bornay jars traditionally used for?", a: "Processing basi (sugarcane wine), bagoong, and vinegar, and storing salt, sugar, and rice", hint: "Both processing and storage." },
+    { q: "What kiln is used to bake bornay jars?", a: "A dragon kiln", hint: "A massive brick oven." },
+    { q: "How many days are bornay jars left in the dragon kiln?", a: "Three days", hint: "Not just a few hours." },
+    { q: "What can the opening of a bornay jar serve as?", a: "A scale to be aware of the proportion of the entire artwork", hint: "Recall the art principle about relative size." },
+    { q: "What is táka?", a: "The folk art of creating figures from paper pulp (papier-mâché)", hint: "It's made from paper, not wood or clay." },
+    { q: "In what town did táka originate?", a: "Paete, Laguna", hint: "A town known for woodcarvers." },
+    { q: "What paste is used to coat wet stripped paper onto wooden molds for táka?", a: "Gawgaw paste", hint: "A starch-based paste." },
+    { q: "What were the original táka figures?", a: "Horses, chickens, and maidens", hint: "Three classic figures." },
+    { q: "What is the sarimanok?", a: "A mythical bird included in folk stories of the Maranao people around Lanao Lake", hint: "It's a legendary creature, not a real bird." },
+    { q: "What designs are evident in every sarimanok figure?", a: "Okir designs", hint: "Curved carving patterns from Mindanao." },
+    { q: "What does okir refer to?", a: "The art of carving or the curved designs common in many ethnic groups in Mindanao", hint: "It describes a carving style." },
+    { q: "What is the sarimanok usually depicted holding?", a: "A fish, in its beak or claws (or both)", hint: "A symbolic object tied to its legend." },
+    { q: "What are the traditional colors of the sarimanok?", a: "Yellow, red, green, and blue", hint: "Four bright, bold colors." },
+  ],
+
+  "Hand, Fingernail, and Facial Hygiene": [
+    { q: "What is hygiene?", a: "A set of practices or tasks to keep oneself clean", hint: "It's about cleanliness habits." },
+    { q: "What do good hygiene practices help prevent?", a: "The spread of diseases", hint: "It's a health benefit." },
+    { q: "How long should you scrub your hands with soap?", a: "About 20 seconds", hint: "Think of a familiar birthday song." },
+    { q: "What familiar song can help you time your handwashing to 20 seconds?", a: "Singing \"Happy Birthday\" twice", hint: "A song you sing at parties." },
+    { q: "What are the five steps of proper handwashing?", a: "Wet your hands, use soap and lather, rub/scrub for 20 seconds, rinse completely, and pat dry", hint: "Five steps from start to finish." },
+    { q: "Why is it important to keep fingernails short?", a: "Because fingernails can easily collect dirt where germs reside, and unclean fingernails spread these germs", hint: "Dirt hides under long nails." },
+    { q: "What tools should be cleaned before and after use for fingernail hygiene?", a: "Nail cutter (nail clippers) and nail file", hint: "Two grooming tools." },
+    { q: "What should you avoid doing to your fingernails?", a: "Biting them", hint: "A common bad habit." },
+    { q: "What should you avoid doing with dirty hands?", a: "Touching your face", hint: "Germs can transfer this way." },
+    { q: "During the COVID-19 pandemic, how could the virus easily be transferred?", a: "When contaminated hands touched one's eyes, nose, or mouth", hint: "Three parts of the face were especially risky to touch." },
+  ],
+
+  "Coughing, Foot, Hair, and Genital Hygiene": [
+    { q: "How can you prevent the spread of bacteria and viruses when coughing or sneezing?", a: "Cough or sneeze onto your inner elbow, or cover your mouth and nose with a clean tissue or handkerchief", hint: "Two acceptable methods." },
+    { q: "What should you do after coughing or sneezing on your hands?", a: "Wash your hands with soap and water or use alcohol", hint: "Clean up right after." },
+    { q: "What does a face mask act as?", a: "A barrier against droplets containing bacteria or viruses", hint: "It blocks something from spreading." },
+    { q: "What causes smelly feet?", a: "Sweat trapped in socks or shoes", hint: "Moisture is the culprit." },
+    { q: "Where do bacteria and fungi thrive on the feet?", a: "In moist areas", hint: "Not dry areas." },
+    { q: "What should you do before putting on clean socks?", a: "Dry your feet first", hint: "Moisture should be removed first." },
+    { q: "What hair care routine should you practice daily?", a: "Taking a bath every day, washing your hair with shampoo, and rinsing with clean water", hint: "A daily bathing habit." },
+    { q: "What items should you avoid sharing to prevent spreading hair and scalp infections?", a: "Comb, hair clips, or bath towel", hint: "Personal grooming items." },
+    { q: "What is the basic hygiene practice for the genital area?", a: "Wash it with gentle soap, normally done when taking a bath", hint: "Simple and gentle cleaning." },
+    { q: "What type of underwear material is preferred for genital hygiene?", a: "Cotton, because it absorbs sweat easily", hint: "A breathable natural fabric." },
+    { q: "Why should you pee once you feel like it instead of holding it back?", a: "To avoid getting infections", hint: "Holding it in isn't good for your health." },
+  ],
+
+  "Oral, Ear, and Clothes Hygiene": [
+    { q: "How many times a day should you brush your teeth?", a: "At least two times a day", hint: "Morning and night, at minimum." },
+    { q: "What motions should you use when brushing your teeth?", a: "Short strokes and circular motions", hint: "Not just back and forth." },
+    { q: "What does good oral hygiene prevent?", a: "A buildup of materials in the teeth that cause tooth decay", hint: "It protects against cavities." },
+    { q: "Why should you also brush your tongue?", a: "To help remove bacteria and prevent bad breath", hint: "It's not just about your teeth." },
+    { q: "How often should toothbrushes be replaced?", a: "After three to four months", hint: "Roughly every season." },
+    { q: "What thread-like material is used to remove materials between the teeth?", a: "Floss", hint: "A thin string used after brushing." },
+    { q: "How many times a year should you visit the dentist for a dental exam?", a: "One to two times a year", hint: "At least once, ideally twice." },
+    { q: "What is earwax's natural function?", a: "To trap dirt entering the ear canal", hint: "It's actually helpful, not just gross." },
+    { q: "What do experts advise against inserting into your ear canal?", a: "Anything, including cotton buds", hint: "Even common cleaning tools are discouraged." },
+    { q: "How often should you change your clothes?", a: "Every day, or as soon as they get dirty", hint: "Daily, at minimum." },
+    { q: "What does the inner layer of clothing, like underwear and undershirts, collect?", a: "Sweat and dirt from our skin", hint: "It's closest to your body." },
+    { q: "What should be used to wash clothes to remove germs and dirt?", a: "Detergent (laundry soap)", hint: "A cleaning product made for fabric." },
+  ],
+
+};
+
+// ── TRUE OR FALSE ────────────────────────────────────────────────────────────
+const trueOrFalse = [
+  { q: "When washing hands, the undersides of fingernails should not be missed.", a: "true" },
+  { q: "Washing hands frequently can assure you that germs are eliminated.", a: "true" },
+  { q: "Bacteria and fungi thrive best in dry areas of the feet.", a: "false" },
+  { q: "Experts advise not to insert anything into your ear canal.", a: "true" },
+  { q: "Changing used clothes for clean ones every day is inappropriate.", a: "false" },
+  { q: "A line is a moving point that can form shapes when joined together.", a: "true" },
+  { q: "Shapes are three-dimensional.", a: "false" },
+  { q: "Form refers to shapes that look three-dimensional.", a: "true" },
+  { q: "Value is the lightness or darkness of a color.", a: "true" },
+  { q: "Balance can be achieved through symmetry, asymmetry, and radial symmetry.", a: "true" },
+  { q: "Movement in art refers to how the artwork conveys action.", a: "true" },
+  { q: "Bul-uls are wooden figures that represent rice guardians of the Ifugao people.", a: "true" },
+  { q: "Bornay jars are glazed, meaning they have a glossy coating.", a: "false" },
+  { q: "Táka figures are made from carved wood.", a: "false" },
+  { q: "The sarimanok is a mythical bird of the Maranao people.", a: "true" },
+  { q: "You should scrub your hands with soap for about 20 seconds.", a: "true" },
+  { q: "It is fine to bite your fingernails to keep them short.", a: "false" },
+  { q: "A face mask acts as a barrier against droplets containing bacteria or viruses.", a: "true" },
+  { q: "You should brush your teeth at least two times a day.", a: "true" },
+  { q: "Toothbrushes should be replaced only once a year.", a: "false" },
+];
+
+// ── IDENTIFY: ELEMENTS/PRINCIPLES OF ART · FOLK ART · HYGIENE ───────────────
+const identifyQuestions = [
+  { q: "the lightness or darkness of a color", a: "Value", choices: ["Value","Texture","Balance","Line"] },
+  { q: "how something feels when it is touched or even imagined to be", a: "Texture", choices: ["Texture","Value","Shape","Movement"] },
+  { q: "the way the elements create stability visually", a: "Balance", choices: ["Balance","Proportion","Movement","Form"] },
+  { q: "a moving point that can be made into shapes when joined together", a: "Line", choices: ["Line","Shape","Space","Form"] },
+  { q: "how the elements guide you to look throughout the artwork", a: "Movement", choices: ["Movement","Balance","Proportion","Color"] },
+  { q: "Wooden rice guardian figures of the Ifugao people", a: "Bul-ul", choices: ["Bul-ul","Burnay","Táka","Sarimanok"] },
+  { q: "Earthen jars from Vigan, Ilocos Sur", a: "Burnay", choices: ["Burnay","Bul-ul","Táka","Sarimanok"] },
+  { q: "Papier-mâché figures from Paete, Laguna", a: "Táka", choices: ["Táka","Burnay","Bul-ul","Sarimanok"] },
+  { q: "Mythical bird of the Maranao people with okir designs", a: "Sarimanok", choices: ["Sarimanok","Bul-ul","Burnay","Táka"] },
+  { q: "Should be kept short and clipped frequently", a: "Fingernails", choices: ["Fingernails","Hair","Ears","Clothes"] },
+  { q: "Should be covered with your inner elbow or a clean tissue when coughing or sneezing", a: "Mouth and nose", choices: ["Mouth and nose","Eyes","Hands","Feet"] },
+  { q: "Should be dried before putting on clean socks", a: "Feet", choices: ["Feet","Hands","Hair","Face"] },
+  { q: "Should not have anything inserted into it, according to experts", a: "Ear canal", choices: ["Ear canal","Nose","Mouth","Eye"] },
+  { q: "Should be brushed at least two times a day", a: "Teeth", choices: ["Teeth","Hair","Nails","Skin"] },
+  { q: "Should be changed every day or as soon as they get dirty", a: "Clothes", choices: ["Clothes","Shoes","Towels","Toothbrush"] },
+];
+
+// ═══════════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════════
+let state = {
+  awaiting: 'menu',
+  mode: null,
+  questions: [],
+  allAnswers: [],
+  qIndex: 0,
+  score: 0,
+  total: 0,
+  hintUsed: false,
+  audioEnabled: true,
+};
+
+// ═══════════════════════════════════════════════════════════════
+// TTS (UPGRADED FOR TRUE FILIPINO ACCENT)
+// ═══════════════════════════════════════════════════════════════
+let currentAudioStream = null;
+
+function speak(text) {
+  if (!state.audioEnabled) return;
+  
+  // Linisin ang mga nakaraang audio task
+  window.speechSynthesis.cancel();
+  if (currentAudioStream) {
+    currentAudioStream.pause();
+    currentAudioStream = null;
+  }
+  
+  // Tanggalin ang HTML tags at emojis para hindi basahin nang paputol-putol
+  const clean = text.replace(/<[^>]+>/g,'').replace(/[🇵🇭🌟✅❌💡⏭️🏆😊💪🔄🔲📚👋⭐✕🧭📏🗺️]/g,'');
+  
+  // PRIMARY METHOD: Google Translation Engine cloud voice stream (May natural na Filipino accent)
+  const googleTtsUrl = `https://translate.google.com/translate_tts?ie=UTF-8&tl=tl&client=tw-ob&q=${encodeURIComponent(clean)}`;
+  
+  currentAudioStream = new Audio(googleTtsUrl);
+  currentAudioStream.onplaying = () => showWave(true);
+  currentAudioStream.onended = currentAudioStream.onerror = () => showWave(false);
+  
+  currentAudioStream.play().catch(err => {
+    // BACKUP METHOD: Web Speech API (works even without internet)
+    console.warn("Google TTS blocked or offline. Falling back to local system speech engine.");
+    
+    const streamFallback = new SpeechSynthesisUtterance(clean);
+    streamFallback.lang = 'fil-PH';
+    streamFallback.rate = 0.95; streamFallback.pitch = 1.05; streamFallback.volume = 1;
+    
+    const voices = window.speechSynthesis.getVoices();
+    const filVoice = voices.find(v => v.lang.startsWith('fil') || v.lang.startsWith('tl'));
+    const engVoice = voices.find(v => v.lang.startsWith('en') && v.name.toLowerCase().includes('female'))
+                   || voices.find(v => v.lang.startsWith('en'));
+              
+    if (filVoice) {
+      streamFallback.voice = filVoice;
+    } else if (engVoice) {
+      streamFallback.voice = engVoice; 
+      streamFallback.lang = 'en-US'; 
+    }
+    
+    streamFallback.onstart = () => showWave(true);
+    streamFallback.onend = streamFallback.onerror = () => showWave(false);
+    window.speechSynthesis.speak(streamFallback);
+  });
+}
+
+function showWave(on) {
+  document.querySelectorAll('.speaker-wave').forEach(w => w.style.display = on ? 'inline-flex' : 'none');
+}
+
+// I-initialize ang mga boses ng system
+let localSystemVoices = [];
+function lookupSystemVoices() {
+  localSystemVoices = window.speechSynthesis.getVoices();
+}
+lookupSystemVoices();
+if (window.speechSynthesis.onvoiceschanged !== undefined) {
+  window.speechSynthesis.onvoiceschanged = lookupSystemVoices;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// UI HELPERS
+// ═══════════════════════════════════════════════════════════════
+const chatBox = document.getElementById('chat-box');
+const input = document.getElementById('user-input');
+const sendBtn = document.getElementById('send-btn');
+
+function scrollBottom() { chatBox.scrollTop = chatBox.scrollHeight; }
+
+function addMessage(role, html, speakText) {
+  const div = document.createElement('div');
+  div.className = `msg ${role}`;
+  const av = document.createElement('div');
+  av.className = 'avatar';
+  av.textContent = role === 'bot' ? '🤖' : '🧑';
+  const bub = document.createElement('div');
+  bub.className = 'bubble';
+  bub.innerHTML = role === 'bot'
+    ? html + '<span class="speaker-wave" style="display:none"><span></span><span></span><span></span><span></span><span></span></span>'
+    : html;
+  div.appendChild(av); div.appendChild(bub);
+  chatBox.appendChild(div);
+  scrollBottom(); bindChips();
+  if (role === 'bot') {
+    const txt = speakText || html.replace(/<[^>]+>/g,' ');
+    setTimeout(() => speak(txt), 350);
+  }
+}
+
+function addTyping() {
+  const d = document.createElement('div');
+  d.className = 'msg bot'; d.id = 'typing';
+  d.innerHTML = '<div class="avatar">🤖</div><div class="typing"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>';
+  chatBox.appendChild(d); scrollBottom();
+}
+function removeTyping() { const t = document.getElementById('typing'); if(t) t.remove(); }
+
+function bindChips() {
+  document.querySelectorAll('.chip:not([data-bound])').forEach(c => {
+    c.dataset.bound = '1';
+    c.addEventListener('click', () => handleUserMessage(c.dataset.val));
+  });
+}
+
+function updateScore() {
+  document.getElementById('score-val').textContent = state.score;
+  document.getElementById('total-val').textContent = state.total;
+}
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length-1; i > 0; i--) {
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]] = [a[j],a[i]];
+  }
+  return a;
+}
+
+function normalize(s) { return s.toLowerCase().trim().replace(/\s+/g,' '); }
+
+function checkAnswer(user, correct) {
+  const u = normalize(user), c = normalize(correct);
+  if (u === c) return true;
+  if (c.includes(u) && u.length > 5) return true;
+  const parts = c.split(/[,;\/]/);
+  for (const p of parts) if (u.includes(p.trim()) && p.trim().length > 4) return true;
+  return false;
+}
+
+function showResult() {
+  const pct = Math.round((state.score/state.total)*100);
+  const emoji = pct>=90?'🏆':pct>=70?'🌟':pct>=50?'😊':'💪';
+  const msg = pct>=90?'Excellent! You know it all!':pct>=70?'Great job! Keep it up!':pct>=50?'Good! Study a little more!':"Don't give up! Try again!";
+  document.getElementById('res-emoji').textContent = emoji;
+  document.getElementById('res-score').textContent = state.score;
+  document.getElementById('res-total').textContent = state.total;
+  document.getElementById('res-msg').textContent = msg;
+  document.getElementById('result-overlay').classList.add('show');
+  speak(`All done! Your score is ${state.score} out of ${state.total}. ${msg}`);
+}
+
+function restartApp() {
+  document.getElementById('result-overlay').classList.remove('show');
+  state = { awaiting:'menu', mode:null, questions:[], allAnswers:[], qIndex:0, score:0, total:0, hintUsed:false, audioEnabled:state.audioEnabled };
+  chatBox.innerHTML = '';
+  document.querySelector('.input-bar').style.display = 'flex';
+  updateScore();
+  showMenu();
+}
+
+// ═══════════════════════════════════════════════════════════════
+// MC HELPERS
+// ═══════════════════════════════════════════════════════════════
+function getAllAnswers() {
+  const ans = [];
+  for (const qs of Object.values(topics)) for (const q of qs) ans.push(q.a);
+  return ans;
+}
+
+function generateChoices(correct, pool) {
+  const distractors = shuffle(pool.filter(a => a !== correct)).slice(0,3);
+  return shuffle([correct, ...distractors]);
+}
+
+function buildMCBtns(choices, correctAnswer) {
+  const letters = ['A','B','C','D','E'];
+  return `<div class="mc-options">${choices.map((c,i)=>
+    `<button class="mc-btn" data-answer="${encodeURIComponent(c)}" data-correct="${encodeURIComponent(correctAnswer)}" onclick="handleMCClick(this)">
+      <span class="letter">${letters[i]}</span>${c}
+    </button>`
+  ).join('')}</div>`;
+}
+
+function handleMCClick(btn) {
+  const allBtns = btn.closest('.mc-options').querySelectorAll('.mc-btn');
+  allBtns.forEach(b => b.disabled = true);
+  const chosen = decodeURIComponent(btn.dataset.answer);
+  const correct = decodeURIComponent(btn.dataset.correct);
+  const isCorrect = chosen === correct;
+  allBtns.forEach(b => { if(decodeURIComponent(b.dataset.answer)===correct) b.classList.add('correct'); });
+  if (!isCorrect) btn.classList.add('wrong');
+  setTimeout(() => {
+    if (isCorrect) {
+      state.score++;
+      addMessage('bot', `✅ <strong>Correct!</strong> +1 point! The answer is: <strong>${correct}</strong>`, `Correct! The answer is: ${correct}`);
+    } else {
+      addMessage('bot', `❌ <strong>Not quite.</strong> The correct answer is: <strong>${correct}</strong>`, `Not quite. The correct answer is: ${correct}`);
+    }
+    state.qIndex++; updateScore();
+    if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+    else setTimeout(showResult, 900);
+  }, 650);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// NEXT QUESTION
+// ═══════════════════════════════════════════════════════════════
+function nextQuestion() {
+  const qi = state.qIndex;
+  const q = state.questions[qi];
+  const num = qi + 1;
+
+  if (state.mode === 'full' || state.mode === 'topic_mc') {
+    const choices = generateChoices(q.a, state.allAnswers);
+    const tag = q.topic ? `<span class="topic-tag">${q.topic}</span><br>` : '';
+    const html = `${tag}<strong>Q${num} of ${state.total}:</strong> ${q.q}${buildMCBtns(choices, q.a)}`;
+    addMessage('bot', html, `Question ${num}. ${q.q}`);
+    return;
+  }
+
+  if (state.mode === 'tf') {
+    const html = `<strong>Q${num} of ${state.total}:</strong> <div class="scenario-card">${q.q}</div>
+      <span class="chip" data-val="true">✅ True</span><span class="chip" data-val="false">❌ False</span>`;
+    addMessage('bot', html, `Question ${num}. True or False: ${q.q}`);
+    return;
+  }
+
+  if (state.mode === 'identify') {
+    const btns = buildMCBtns(q.choices, q.a);
+    const html = `<strong>Q${num} of ${state.total}:</strong> Identify what is being described:<div class="scenario-card">${q.q}</div>${btns}`;
+    addMessage('bot', html, `Question ${num}. Identify: ${q.q}`);
+    return;
+  }
+
+  // typed answer mode
+  const tag = q.topic ? `<span class="topic-tag">${q.topic}</span><br>` : '';
+  const html = `${tag}<strong>Q${num} of ${state.total}:</strong> ${q.q}<br><small style="color:var(--muted)">Type your answer · type <em>hint</em> for help · <em>skip</em> to move on</small>`;
+  addMessage('bot', html, `Question ${num}. ${q.q}`);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// MENU
+// ═══════════════════════════════════════════════════════════════
+function showMenu() {
+  addMessage('bot',
+    `👋 <strong>Hi! I'm your MAPEH Reviewer!</strong><br>Let's study <em>Elements of Art</em>, <em>Principles of Art</em>, <em>Filipino Folk Art</em>, and <em>Personal Hygiene</em>.<br><br>What would you like to do?<br>
+    <span class="chip" data-val="1">📚 Study by Topic</span>
+    <span class="chip" data-val="2">✅ True or False</span>
+    <span class="chip" data-val="3">🌐 Identify</span>
+    <span class="chip" data-val="4">🌟 Full Review (Multiple Choice)</span>`,
+    "Hi! I'm your MAPEH Reviewer on Art and Hygiene. What would you like to do? Study a topic, True or False, Identify, or a Full Review with multiple choice?"
+  );
+  state.awaiting = 'menu';
+}
+
+// ═══════════════════════════════════════════════════════════════
+// PROCESS MESSAGE
+// ═══════════════════════════════════════════════════════════════
+function processMessage(msg) {
+  const aw = state.awaiting;
+
+  // ── MENU ──────────────────────────────────────────────────
+  if (aw === 'menu') {
+    if (msg === '1') {
+      state.awaiting = 'topic';
+      const keys = Object.keys(topics);
+      const chips = keys.map((t,i) => `<span class="chip" data-val="${i+1}">${i+1}. ${t}</span>`).join(' ');
+      addMessage('bot', `📚 Which topic would you like to study?<br>${chips}`, 'Which topic would you like to study?');
+
+    } else if (msg === '2') {
+      state.mode = 'tf';
+      state.questions = shuffle(trueOrFalse);
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'tf_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `✅ <strong>True or False!</strong> ${state.total} questions. Let's start!`, `True or False! ${state.total} questions. Let's start!`);
+      setTimeout(nextQuestion, 800);
+
+    } else if (msg === '3') {
+      state.mode = 'identify';
+      state.questions = shuffle(identifyQuestions);
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'mc_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `🌐 <strong>Identify!</strong> Figure out the art element or principle, the folk art, or the hygiene practice being described.`, "Identify! Figure out what's being described in each item.");
+      setTimeout(nextQuestion, 800);
+
+    } else if (msg === '4') {
+      state.mode = 'full';
+      const all = [];
+      for (const [topicName, qs] of Object.entries(topics)) {
+        qs.forEach(q => all.push({...q, topic: topicName}));
+      }
+      state.questions = shuffle(all);
+      state.allAnswers = getAllAnswers();
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'mc_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `🌟 <strong>Full Review — Multiple Choice!</strong> ${state.total} questions. Think carefully!`, `Full Review! Multiple Choice! ${state.total} questions. Think carefully!`);
+      setTimeout(nextQuestion, 800);
+
+    } else {
+      addMessage('bot',
+        `Choose an option:<br>
+        <span class="chip" data-val="1">📚 Study by Topic</span>
+        <span class="chip" data-val="2">✅ True or False</span>
+        <span class="chip" data-val="3">🌐 Identify</span>
+        <span class="chip" data-val="4">🌟 Full Review</span>`,
+        'Choose an option.'
+      );
+    }
+    return;
+  }
+
+  // ── TOPIC SELECT ──────────────────────────────────────────
+  if (aw === 'topic') {
+    const keys = Object.keys(topics);
+    const idx = parseInt(msg) - 1;
+    if (keys[idx]) {
+      const topicName = keys[idx];
+      state.mode = 'topic';
+      state.questions = shuffle(topics[topicName]);
+      state.allAnswers = getAllAnswers();
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'answer';
+      document.querySelector('.input-bar').style.display = 'flex';
+      updateScore();
+      addMessage('bot', `📚 <strong>${topicName}</strong> — ${state.total} questions. Ready?`, `${topicName}. ${state.total} questions. Ready?`);
+      setTimeout(nextQuestion, 800);
+    } else {
+      const chips = Object.keys(topics).map((t,i) => `<span class="chip" data-val="${i+1}">${i+1}. ${t}</span>`).join(' ');
+      addMessage('bot', `Please choose a valid topic:<br>${chips}`, 'Please choose a valid topic.');
+    }
+    return;
+  }
+
+  // ── TYPED ANSWER ──────────────────────────────────────────
+  if (aw === 'answer') {
+    const q = state.questions[state.qIndex];
+    const m = normalize(msg);
+
+    if (m === 'hint') {
+      state.hintUsed = true;
+      addMessage('bot', `💡 <strong>Hint:</strong> ${q.hint}`, `Hint: ${q.hint}`);
+      return;
+    }
+    if (m === 'skip') {
+      addMessage('bot', `⏭️ Skipped! The correct answer is: <strong>${q.a}</strong>`, `Skipped. The correct answer is: ${q.a}`);
+      state.qIndex++; state.hintUsed = false;
+      if (state.qIndex < state.total) setTimeout(nextQuestion, 700);
+      else showResult();
+      return;
+    }
+
+    const correct = checkAnswer(msg, q.a);
+    if (correct) {
+      if (!state.hintUsed) state.score++;
+      const note = state.hintUsed ? ' <em>(hint used — no point)</em>' : ' +1 point!';
+      addMessage('bot', `✅ <strong>Correct!</strong>${note} Answer: <strong>${q.a}</strong>`, `Correct! The answer is: ${q.a}`);
+    } else {
+      addMessage('bot', `❌ <strong>Not quite.</strong> The correct answer is: <strong>${q.a}</strong>`, `Not quite. The correct answer is: ${q.a}`);
+    }
+    state.qIndex++; state.hintUsed = false; updateScore();
+    if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+    else setTimeout(showResult, 900);
+    return;
+  }
+
+  // ── TRUE OR FALSE ─────────────────────────────────────────
+  if (aw === 'tf_answer') {
+    const q = state.questions[state.qIndex];
+    const ans = normalize(msg);
+    const valid = ans === 'true' || ans === 'false';
+
+    if (valid) {
+      const correct = ans === q.a;
+      if (correct) {
+        state.score++;
+        addMessage('bot', `✅ <strong>Correct!</strong> The answer is <strong>${q.a.toUpperCase()}</strong>.`, `Correct! The answer is ${q.a}.`);
+      } else {
+        addMessage('bot', `❌ <strong>Incorrect.</strong> The correct answer is <strong>${q.a.toUpperCase()}</strong>.`, `Incorrect. The correct answer is ${q.a}.`);
+      }
+      state.qIndex++; updateScore();
+      if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+      else setTimeout(showResult, 900);
+    } else {
+      addMessage('bot',
+        `Answer: True or False?<br><span class="chip" data-val="true">✅ True</span><span class="chip" data-val="false">❌ False</span>`,
+        'Answer: True or False?'
+      );
+    }
+    return;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// CONTROLS
+// ═══════════════════════════════════════════════════════════════
+function handleUserMessage(msg) {
+  if (!msg.trim()) return;
+  
+  // Stop any speaking audio cleanly when the user answers
+  window.speechSynthesis.cancel();
+  if (currentAudioStream) {
+    currentAudioStream.pause();
+    currentAudioStream = null;
+    showWave(false);
+  }
+  
+  addMessage('user', msg.replace(/</g,'&lt;'));
+  input.value = '';
+  input.disabled = true; sendBtn.disabled = true;
+  addTyping();
+  setTimeout(() => {
+    removeTyping();
+    input.disabled = false; sendBtn.disabled = false;
+    input.focus();
+    processMessage(msg);
+  }, 480);
+}
+
+sendBtn.addEventListener('click', () => { handleUserMessage(input.value); });
+input.addEventListener('keydown', e => { if(e.key==='Enter') handleUserMessage(input.value); });
+
+document.getElementById('audio-toggle').addEventListener('click', function() {
+  state.audioEnabled = !state.audioEnabled;
+  this.textContent = state.audioEnabled ? '🔊' : '🔇';
+  this.classList.toggle('active', state.audioEnabled);
+  if (!state.audioEnabled) {
+    window.speechSynthesis.cancel();
+    if (currentAudioStream) {
+      currentAudioStream.pause();
+      currentAudioStream = null;
+      showWave(false);
+    }
+  }
+});
+
+// ═══════════════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════════════
+window.addEventListener('load', () => {
+  lookupSystemVoices();
+  showMenu();
+});
+
+function printPracticeTest() {
+  document.body.classList.add('printing-test');
+  window.print();
+}
+window.addEventListener('afterprint', () => {
+  document.body.classList.remove('printing-test');
+});
+
+// ═══════════════════════════════════════════════════════════════
+// READ NOTES ALOUD (uses the browser's own voice — no length limit,
+// unlike the short Google TTS clips used for chat messages)
+// ═══════════════════════════════════════════════════════════════
+function getNotesText(section) {
+  // Skip the Practice Test / Answer Key tabs — too long and not meant to be read aloud
+  const clone = section.cloneNode(true);
+  clone.querySelectorAll('button').forEach(b => b.remove());
+  let text = clone.innerText || clone.textContent || '';
+  text = text.replace(/\s+/g, ' ').trim();
+  return text;
+}
+
+function toggleNotesAudio() {
+  const btn = document.getElementById('notes-audio-btn');
+  if (!btn) return;
+
+  if (window.speechSynthesis.speaking || window.speechSynthesis.pending) {
+    window.speechSynthesis.cancel();
+    btn.innerHTML = '🔊 Read Notes Aloud';
+    btn.classList.remove('active');
+    return;
+  }
+
+  const activeSection = document.querySelector('.notes-section.active');
+  if (!activeSection) return;
+  const text = getNotesText(activeSection);
+  if (!text) return;
+
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.lang = 'en-US';
+  utter.rate = 0.95;
+  utter.pitch = 1.05;
+  utter.volume = 1;
+
+  const voices = window.speechSynthesis.getVoices();
+  const voice = voices.find(v => v.lang.startsWith('en') && v.name.toLowerCase().includes('female'))
+             || voices.find(v => v.lang.startsWith('en'));
+  if (voice) utter.voice = voice;
+
+  utter.onstart = () => { btn.innerHTML = '⏹️ Stop Reading'; btn.classList.add('active'); };
+  utter.onend = utter.onerror = () => { btn.innerHTML = '🔊 Read Notes Aloud'; btn.classList.remove('active'); };
+
+  window.speechSynthesis.speak(utter);
+}
+
+function switchTab(tabId, btn) {
+  window.speechSynthesis.cancel();
+  const audioBtn = document.getElementById('notes-audio-btn');
+  if (audioBtn) { audioBtn.innerHTML = '🔊 Read Notes Aloud'; audioBtn.classList.remove('active'); }
+  document.querySelectorAll('.notes-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.notes-tab').forEach(b => b.classList.remove('active'));
+  document.getElementById(tabId).classList.add('active');
+  btn.classList.add('active');
+}
+
+function closeNotesPanel() {
+  window.speechSynthesis.cancel();
+  const audioBtn = document.getElementById('notes-audio-btn');
+  if (audioBtn) { audioBtn.innerHTML = '🔊 Read Notes Aloud'; audioBtn.classList.remove('active'); }
+  document.getElementById('notes-overlay').classList.remove('show');
+}
+</script>
+
+<!-- ── Notes Panel ── -->
+<div class="notes-overlay" id="notes-overlay">
+  <div class="notes-panel">
+    <div class="notes-header">
+      <h2>📖 Art &amp; Hygiene — Notes</h2>
+      <div class="notes-header-actions">
+        <button class="print-btn" id="notes-audio-btn" onclick="toggleNotesAudio()" title="Have this tab read aloud">🔊 Read Notes Aloud</button>
+        <button class="print-btn" onclick="printPracticeTest()" title="Print or save the Practice Test &amp; Answer Key as PDF">🖨️ Print Test &amp; Key</button>
+        <button class="notes-close" onclick="closeNotesPanel()">✕</button>
+      </div>
+    </div>
+    <div class="notes-tabs">
+      <button class="notes-tab active" onclick="switchTab('tab-elements', this)">🖌️ Elements of Art</button>
+      <button class="notes-tab" onclick="switchTab('tab-principles', this)">⚖️ Principles of Art</button>
+      <button class="notes-tab" onclick="switchTab('tab-folkart', this)">🏺 Filipino Folk Art</button>
+      <button class="notes-tab" onclick="switchTab('tab-handhygiene', this)">🧼 Hand &amp; Face Hygiene</button>
+      <button class="notes-tab" onclick="switchTab('tab-bodyhygiene', this)">🦶 Body Hygiene</button>
+      <button class="notes-tab" onclick="switchTab('tab-oralhygiene', this)">🦷 Oral, Ear &amp; Clothes</button>
+      <button class="notes-tab" onclick="switchTab('tab-tf', this)">✅ True or False</button>
+      <button class="notes-tab" onclick="switchTab('tab-ptest', this)">📝 Practice Test</button>
+      <button class="notes-tab" onclick="switchTab('tab-key', this)">🔑 Answer Key</button>
+    </div>
+    <div class="notes-body">
+
+      <div class="notes-section active" id="tab-elements">
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> The <strong>elements of art</strong> are the building blocks artists mix and match to create artwork — line, shape, color, texture, space, form, and value.
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 MEMORY TRICK</span>
+          Remember the 7 elements (Line, Shape, Color, Texture, Space, Form, Value) with this silly sentence:<br>
+          <strong>"Little Sammy Colors The Sky, Framing Views."</strong><br>
+          <strong>L</strong>ine · <strong>S</strong>hape · <strong>C</strong>olor · <strong>T</strong>exture · <strong>S</strong>pace · <strong>F</strong>orm · <strong>V</strong>alue
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">🖌️ The 7 Elements of Art</div>
+          <div class="notes-item"><span class="notes-term">Line</span><span class="notes-def">A moving point; can be straight, curved, wavy, or jagged</span></div>
+          <div class="notes-item"><span class="notes-term">Shape</span><span class="notes-def">Formed when lines connect; two-dimensional (length + width)</span></div>
+          <div class="notes-item"><span class="notes-term">Color</span><span class="notes-def">An aspect of light — hue, brightness (value), and intensity</span></div>
+          <div class="notes-item"><span class="notes-term">Texture</span><span class="notes-def">How something feels (or seems to feel) when touched</span></div>
+          <div class="notes-item"><span class="notes-term">Space</span><span class="notes-def">Where objects are placed; creates a sense of depth</span></div>
+          <div class="notes-item"><span class="notes-term">Form</span><span class="notes-def">Shapes that look three-dimensional (length + width + height)</span></div>
+          <div class="notes-item"><span class="notes-term">Value</span><span class="notes-def">The lightness or darkness of a color</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-principles">
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> The <strong>principles of art</strong> describe how an artist organizes the elements. This lesson covers three: balance, proportion, and movement.
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 MEMORY TRICK</span>
+          Remember the 3 principles (Balance, Proportion, Movement) with:<br>
+          <strong>"Big Paintings Move!"</strong> — <strong>B</strong>alance, <strong>P</strong>roportion, <strong>M</strong>ovement
+        </div>
+        <table class="compare-table">
+          <tr><th>Principle</th><th>Meaning</th></tr>
+          <tr><td>Balance</td><td>Visual stability — symmetry (same both sides), asymmetry (contrasting sides), or radial symmetry (around a point)</td></tr>
+          <tr><td>Proportion</td><td>The size relationship between parts of an artwork, compared using a scale</td></tr>
+          <tr><td>Movement</td><td>How the artwork guides your eyes to travel across it, suggesting action</td></tr>
+        </table>
+      </div>
+
+      <div class="notes-section" id="tab-folkart">
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> Filipino <strong>folk art</strong> reflects the elements and principles of art through local traditions: the bul-ul, burnay, táka, and sarimanok.
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 MEMORY TRICK</span>
+          Match each folk art to its home region using this pattern: <strong>"Bul-ul Blesses, Burnay Bakes, Táka Trims, Sarimanok Soars."</strong><br>
+          <strong>B</strong>ul-ul → Ifugao rice guardians (wood) &nbsp;·&nbsp; <strong>B</strong>urnay → Vigan jars (clay) &nbsp;·&nbsp; <strong>T</strong>áka → Paete figures (paper) &nbsp;·&nbsp; <strong>S</strong>arimanok → Maranao bird (wood/metal/paint)
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">🏺 The Four Folk Art Forms</div>
+          <div class="notes-item"><span class="notes-term">Bul-ul</span><span class="notes-def">Wooden rice guardian figures of the Ifugao people, made from narra or molave, ritually blessed</span></div>
+          <div class="notes-item"><span class="notes-term">Burnay (Bornay)</span><span class="notes-def">Unglazed earthen jars from Vigan, Ilocos Sur, baked in a dragon kiln for 3 days</span></div>
+          <div class="notes-item"><span class="notes-term">Táka</span><span class="notes-def">Papier-mâché figures from Paete, Laguna, made with gawgaw paste over wooden molds</span></div>
+          <div class="notes-item"><span class="notes-term">Sarimanok</span><span class="notes-def">Mythical bird of the Maranao people, decorated with okir carving designs, holding a fish</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-handhygiene">
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> <strong>Hygiene</strong> is a set of practices to keep yourself clean. Washing your hands properly, caring for your fingernails, and keeping your face clean all help prevent the spread of disease.
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 MEMORY TRICK</span>
+          Scrub your hands for <strong>20 seconds</strong> — that's about how long it takes to sing <strong>"Happy Birthday" twice</strong>! 🎂🎂
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">🧼 5 Steps to Wash Your Hands</div>
+          <div class="notes-item"><span class="notes-term">1. Wet</span><span class="notes-def">Wet your hands with clean water</span></div>
+          <div class="notes-item"><span class="notes-term">2. Lather</span><span class="notes-def">Use soap and rub your hands together</span></div>
+          <div class="notes-item"><span class="notes-term">3. Scrub</span><span class="notes-def">Palms, backs, between fingers, under nails — for 20 seconds</span></div>
+          <div class="notes-item"><span class="notes-term">4. Rinse</span><span class="notes-def">Rinse hands completely with water</span></div>
+          <div class="notes-item"><span class="notes-term">5. Dry</span><span class="notes-def">Pat your hands dry</span></div>
+        </div>
+        <div class="tandaan-box">
+          <span class="tandaan-label">REMEMBER</span>
+          Keep fingernails short and clean underneath — never bite them! And always wash your hands before touching your face.
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-bodyhygiene">
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> Good hygiene covers your whole body — how you cough or sneeze, how you care for your feet, hair and scalp, and genital area.
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 MEMORY TRICK</span>
+          When you cough or sneeze, aim for your <strong>elbow, not your hands</strong> — think "vampire cough"! 🧛 Covering with your elbow (instead of your hands) keeps germs off the things you touch next.
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">🦶 Body Hygiene Reminders</div>
+          <div class="notes-item"><span class="notes-term">Coughing/Sneezing</span><span class="notes-def">Cover with your inner elbow or a clean tissue; wash hands after</span></div>
+          <div class="notes-item"><span class="notes-term">Foot Hygiene</span><span class="notes-def">Wash and dry feet well — bacteria and fungi thrive in moist areas</span></div>
+          <div class="notes-item"><span class="notes-term">Hair &amp; Scalp</span><span class="notes-def">Bathe daily, shampoo regularly; don't share combs or towels</span></div>
+          <div class="notes-item"><span class="notes-term">Genital Hygiene</span><span class="notes-def">Wash with gentle soap; wear clean cotton underwear; don't hold in pee</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-oralhygiene">
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> Round out your hygiene routine with your teeth, ears, and clothes — each has its own simple daily habits.
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 MEMORY TRICK</span>
+          The <strong>"2-2-2 Rule"</strong> for oral hygiene: Brush <strong>2</strong> times a day, for <strong>2</strong> minutes, and see the dentist <strong>2</strong> times a year!
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">🦷 Oral, Ear &amp; Clothes Hygiene</div>
+          <div class="notes-item"><span class="notes-term">Brushing</span><span class="notes-def">Short strokes, circular motions, don't forget the tongue</span></div>
+          <div class="notes-item"><span class="notes-term">Toothbrush</span><span class="notes-def">Replace every 3-4 months</span></div>
+          <div class="notes-item"><span class="notes-term">Ear Care</span><span class="notes-def">Never insert anything into the ear canal — earwax protects your ear naturally</span></div>
+          <div class="notes-item"><span class="notes-term">Clothes</span><span class="notes-def">Change daily, wash with detergent, rinse thoroughly</span></div>
+        </div>
+        <div class="tandaan-box">
+          <span class="tandaan-label">REMEMBER</span>
+          If it can't go in your mouth, it shouldn't go in your ear either — not even a cotton bud!
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-tf">
+        <div class="notes-topic">
+          <div class="notes-topic-title">✅ True or False — Key Reminders</div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">Shapes are three-dimensional → shapes are two-dimensional; forms are three-dimensional.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">Bacteria and fungi thrive best in dry areas of the feet → they thrive in moist areas.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">Bornay jars are glazed → they are unglazed, with no glossy coating.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">Táka figures are made from carved wood → they're made from paper pulp (papier-mâché).</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">It is fine to bite your fingernails → this spreads germs and should be avoided.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">Toothbrushes should be replaced only once a year → every 3 to 4 months instead.</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-ptest">
+        <div class="notes-topic">
+          <div class="notes-topic-title">📝 Practice Test</div>
+<div class="ptest-part-title">Part I — Identify: Elements/Principles of Art</div><div class="ptest-q"><b>1.</b> the lightness or darkness of a color <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>2.</b> how something feels when it is touched or even imagined to be <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>3.</b> the way the elements create stability visually <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>4.</b> a moving point that can be made into shapes when joined together <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>5.</b> how the elements guide you to look throughout the artwork <span class="opt">Answer: ______________________</span></div><div class="ptest-part-title">Part II — Multiple Choice: Hygiene</div><div class="ptest-q"><b>6.</b> What are practices for grooming and taking care of oneself?<br><span class="opt">a) personal hygiene</span><span class="opt">b) personal styling</span><span class="opt">c) personal sanitation</span><span class="opt">d) personal cleaning</span></div><div class="ptest-q"><b>7.</b> What causes smelly feet?<br><span class="opt">a) trapped sweat</span><span class="opt">b) muddy feet</span><span class="opt">c) damaged footwear</span><span class="opt">d) toes with calluses</span></div><div class="ptest-q"><b>8.</b> Which of the following is a good practice of genital hygiene?<br><span class="opt">a) Do not hold back when you feel like peeing.</span><span class="opt">b) Do not pat your genital area dry with a towel.</span><span class="opt">c) Do not wear loose clothing for the lower part of your body.</span><span class="opt">d) Do not wear cotton underwear.</span></div><div class="ptest-q"><b>9.</b> What is best to do when you are about to cough or sneeze?<br><span class="opt">a) Put the back of your hand toward your mouth and nose.</span><span class="opt">b) Bend your body forward to prepare for coughing or sneezing.</span><span class="opt">c) Cover your mouth and nose with a handkerchief.</span><span class="opt">d) Look up and prepare to cough or sneeze in the air.</span></div><div class="ptest-q"><b>10.</b> Which of the following is not true about practicing good oral hygiene?<br><span class="opt">a) Use floss to remove materials between the teeth.</span><span class="opt">b) Visit the dentist one to two times a year.</span><span class="opt">c) Brush the tongue to remove the taste buds.</span><span class="opt">d) Brush your teeth at least two times a day.</span></div><div class="ptest-part-title">Part III — True or False</div><div class="ptest-q"><b>11.</b> When washing hands, the undersides of fingernails should not be missed. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>12.</b> Washing hands frequently can assure you that germs are eliminated. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>13.</b> Bacteria and fungi thrive best in dry areas of the feet. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>14.</b> Experts advise not to insert anything into your ear canal. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>15.</b> Changing used clothes for clean ones every day is inappropriate. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>16.</b> A line is a moving point that can form shapes when joined together. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>17.</b> Shapes are three-dimensional. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>18.</b> Form refers to shapes that look three-dimensional. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>19.</b> Value is the lightness or darkness of a color. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>20.</b> Balance can be achieved through symmetry, asymmetry, and radial symmetry. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>21.</b> Movement in art refers to how the artwork conveys action. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>22.</b> Bul-uls are wooden figures that represent rice guardians of the Ifugao people. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>23.</b> Bornay jars are glazed, meaning they have a glossy coating. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>24.</b> Táka figures are made from carved wood. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>25.</b> The sarimanok is a mythical bird of the Maranao people. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>26.</b> You should scrub your hands with soap for about 20 seconds. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>27.</b> It is fine to bite your fingernails to keep them short. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>28.</b> A face mask acts as a barrier against droplets containing bacteria or viruses. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>29.</b> You should brush your teeth at least two times a day. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>30.</b> Toothbrushes should be replaced only once a year. <span class="opt">Answer: ______________________</span></div><div class="ptest-part-title">Part IV — Multiple Choice: Folk Art &amp; Hygiene</div><div class="ptest-q"><b>31.</b> Wooden rice guardian figures of the Ifugao people<br><span class="opt">a) Bul-ul</span><span class="opt">b) Burnay</span><span class="opt">c) Táka</span><span class="opt">d) Sarimanok</span></div><div class="ptest-q"><b>32.</b> Earthen jars from Vigan, Ilocos Sur<br><span class="opt">a) Burnay</span><span class="opt">b) Bul-ul</span><span class="opt">c) Táka</span><span class="opt">d) Sarimanok</span></div><div class="ptest-q"><b>33.</b> Papier-mâché figures from Paete, Laguna<br><span class="opt">a) Táka</span><span class="opt">b) Burnay</span><span class="opt">c) Bul-ul</span><span class="opt">d) Sarimanok</span></div><div class="ptest-q"><b>34.</b> Mythical bird of the Maranao people with okir designs<br><span class="opt">a) Sarimanok</span><span class="opt">b) Bul-ul</span><span class="opt">c) Burnay</span><span class="opt">d) Táka</span></div><div class="ptest-q"><b>35.</b> Should be kept short and clipped frequently<br><span class="opt">a) Fingernails</span><span class="opt">b) Hair</span><span class="opt">c) Ears</span><span class="opt">d) Clothes</span></div><div class="ptest-q"><b>36.</b> Should be covered with your inner elbow or a clean tissue when coughing or sneezing<br><span class="opt">a) Mouth and nose</span><span class="opt">b) Eyes</span><span class="opt">c) Hands</span><span class="opt">d) Feet</span></div><div class="ptest-q"><b>37.</b> Should be dried before putting on clean socks<br><span class="opt">a) Feet</span><span class="opt">b) Hands</span><span class="opt">c) Hair</span><span class="opt">d) Face</span></div><div class="ptest-q"><b>38.</b> Should not have anything inserted into it, according to experts<br><span class="opt">a) Ear canal</span><span class="opt">b) Nose</span><span class="opt">c) Mouth</span><span class="opt">d) Eye</span></div><div class="ptest-q"><b>39.</b> Should be brushed at least two times a day<br><span class="opt">a) Teeth</span><span class="opt">b) Hair</span><span class="opt">c) Nails</span><span class="opt">d) Skin</span></div><div class="ptest-q"><b>40.</b> Should be changed every day or as soon as they get dirty<br><span class="opt">a) Clothes</span><span class="opt">b) Shoes</span><span class="opt">c) Towels</span><span class="opt">d) Toothbrush</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-key">
+        <div class="notes-topic">
+<div class="notes-topic-title">Part I — Elements/Principles of Art</div><div class="key-grid"><div class="key-pill">1. <b>Value</b></div><div class="key-pill">2. <b>Texture</b></div><div class="key-pill">3. <b>Balance</b></div><div class="key-pill">4. <b>Line</b></div><div class="key-pill">5. <b>Movement</b></div></div><div class="notes-topic-title">Part II — Hygiene</div><div class="key-grid"><div class="key-pill">6. <b>personal hygiene</b></div><div class="key-pill">7. <b>trapped sweat</b></div><div class="key-pill">8. <b>Do not hold back when you feel like peeing.</b></div><div class="key-pill">9. <b>Cover your mouth and nose with a handkerchief.</b></div><div class="key-pill">10. <b>Brush the tongue to remove the taste buds.</b></div></div><div class="notes-topic-title">Part III — True or False</div><div class="key-grid"><div class="key-pill">11. <b>True</b></div><div class="key-pill">12. <b>True</b></div><div class="key-pill">13. <b>False</b></div><div class="key-pill">14. <b>True</b></div><div class="key-pill">15. <b>False</b></div><div class="key-pill">16. <b>True</b></div><div class="key-pill">17. <b>False</b></div><div class="key-pill">18. <b>True</b></div><div class="key-pill">19. <b>True</b></div><div class="key-pill">20. <b>True</b></div><div class="key-pill">21. <b>True</b></div><div class="key-pill">22. <b>True</b></div><div class="key-pill">23. <b>False</b></div><div class="key-pill">24. <b>False</b></div><div class="key-pill">25. <b>True</b></div><div class="key-pill">26. <b>True</b></div><div class="key-pill">27. <b>False</b></div><div class="key-pill">28. <b>True</b></div><div class="key-pill">29. <b>True</b></div><div class="key-pill">30. <b>False</b></div></div><div class="notes-topic-title">Part IV — Folk Art &amp; Hygiene</div><div class="key-grid"><div class="key-pill">31. <b>Bul-ul</b></div><div class="key-pill">32. <b>Burnay</b></div><div class="key-pill">33. <b>Táka</b></div><div class="key-pill">34. <b>Sarimanok</b></div><div class="key-pill">35. <b>Fingernails</b></div><div class="key-pill">36. <b>Mouth and nose</b></div><div class="key-pill">37. <b>Feet</b></div><div class="key-pill">38. <b>Ear canal</b></div><div class="key-pill">39. <b>Teeth</b></div><div class="key-pill">40. <b>Clothes</b></div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ── Hidden Print Area (Practice Test + Answer Key) ── -->
+<div id="print-area">
+<div class="p-cover">
+    <div class="p-icon">🎨</div>
+    <h1>MAPEH 4 — Art &amp; Hygiene Practice Test</h1>
+    <div class="p-sub">Elements &amp; Principles of Art · Filipino Folk Art · Personal Hygiene</div>
+    <div class="p-info-box">
+      <div><strong>Name:</strong> _____________________________________</div>
+      <div><strong>Section:</strong> ___________________ &nbsp; <strong>Date:</strong> ___________________</div>
+      <div><strong>Score:</strong> _______ / 40</div>
+    </div>
+    <div class="p-instructions">
+      <strong>Instructions:</strong> Read each item carefully. Write your answer on the blank provided (Parts I and III), or write the letter of the correct answer (Parts II and IV). Good luck!
+    </div>
+  </div>
+
+  <h2 class="p-part-title">Part I — Identify: Elements/Principles of Art</h2><div class="p-q"><b>1.</b> the lightness or darkness of a color <span class="p-blank"></span></div><div class="p-q"><b>2.</b> how something feels when it is touched or even imagined to be <span class="p-blank"></span></div><div class="p-q"><b>3.</b> the way the elements create stability visually <span class="p-blank"></span></div><div class="p-q"><b>4.</b> a moving point that can be made into shapes when joined together <span class="p-blank"></span></div><div class="p-q"><b>5.</b> how the elements guide you to look throughout the artwork <span class="p-blank"></span></div><h2 class="p-part-title">Part II — Multiple Choice: Hygiene</h2><div class="p-q"><b>6.</b> What are practices for grooming and taking care of oneself?<br><span class="p-opt">a) personal hygiene</span><span class="p-opt">b) personal styling</span><span class="p-opt">c) personal sanitation</span><span class="p-opt">d) personal cleaning</span></div><div class="p-q"><b>7.</b> What causes smelly feet?<br><span class="p-opt">a) trapped sweat</span><span class="p-opt">b) muddy feet</span><span class="p-opt">c) damaged footwear</span><span class="p-opt">d) toes with calluses</span></div><div class="p-q"><b>8.</b> Which of the following is a good practice of genital hygiene?<br><span class="p-opt">a) Do not hold back when you feel like peeing.</span><span class="p-opt">b) Do not pat your genital area dry with a towel.</span><span class="p-opt">c) Do not wear loose clothing for the lower part of your body.</span><span class="p-opt">d) Do not wear cotton underwear.</span></div><div class="p-q"><b>9.</b> What is best to do when you are about to cough or sneeze?<br><span class="p-opt">a) Put the back of your hand toward your mouth and nose.</span><span class="p-opt">b) Bend your body forward to prepare for coughing or sneezing.</span><span class="p-opt">c) Cover your mouth and nose with a handkerchief.</span><span class="p-opt">d) Look up and prepare to cough or sneeze in the air.</span></div><div class="p-q"><b>10.</b> Which of the following is not true about practicing good oral hygiene?<br><span class="p-opt">a) Use floss to remove materials between the teeth.</span><span class="p-opt">b) Visit the dentist one to two times a year.</span><span class="p-opt">c) Brush the tongue to remove the taste buds.</span><span class="p-opt">d) Brush your teeth at least two times a day.</span></div><div class="p-break"></div><h2 class="p-part-title">Part III — True or False</h2><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>11.</b> When washing hands, the undersides of fingernails should not be missed.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>12.</b> Washing hands frequently can assure you that germs are eliminated.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>13.</b> Bacteria and fungi thrive best in dry areas of the feet.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>14.</b> Experts advise not to insert anything into your ear canal.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>15.</b> Changing used clothes for clean ones every day is inappropriate.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>16.</b> A line is a moving point that can form shapes when joined together.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>17.</b> Shapes are three-dimensional.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>18.</b> Form refers to shapes that look three-dimensional.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>19.</b> Value is the lightness or darkness of a color.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>20.</b> Balance can be achieved through symmetry, asymmetry, and radial symmetry.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>21.</b> Movement in art refers to how the artwork conveys action.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>22.</b> Bul-uls are wooden figures that represent rice guardians of the Ifugao people.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>23.</b> Bornay jars are glazed, meaning they have a glossy coating.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>24.</b> Táka figures are made from carved wood.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>25.</b> The sarimanok is a mythical bird of the Maranao people.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>26.</b> You should scrub your hands with soap for about 20 seconds.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>27.</b> It is fine to bite your fingernails to keep them short.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>28.</b> A face mask acts as a barrier against droplets containing bacteria or viruses.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>29.</b> You should brush your teeth at least two times a day.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>30.</b> Toothbrushes should be replaced only once a year.</div><div class="p-break"></div><h2 class="p-part-title">Part IV — Multiple Choice: Folk Art &amp; Hygiene</h2><div class="p-q"><b>31.</b> Wooden rice guardian figures of the Ifugao people<br><span class="p-opt">a) Bul-ul</span><span class="p-opt">b) Burnay</span><span class="p-opt">c) Táka</span><span class="p-opt">d) Sarimanok</span></div><div class="p-q"><b>32.</b> Earthen jars from Vigan, Ilocos Sur<br><span class="p-opt">a) Burnay</span><span class="p-opt">b) Bul-ul</span><span class="p-opt">c) Táka</span><span class="p-opt">d) Sarimanok</span></div><div class="p-q"><b>33.</b> Papier-mâché figures from Paete, Laguna<br><span class="p-opt">a) Táka</span><span class="p-opt">b) Burnay</span><span class="p-opt">c) Bul-ul</span><span class="p-opt">d) Sarimanok</span></div><div class="p-q"><b>34.</b> Mythical bird of the Maranao people with okir designs<br><span class="p-opt">a) Sarimanok</span><span class="p-opt">b) Bul-ul</span><span class="p-opt">c) Burnay</span><span class="p-opt">d) Táka</span></div><div class="p-q"><b>35.</b> Should be kept short and clipped frequently<br><span class="p-opt">a) Fingernails</span><span class="p-opt">b) Hair</span><span class="p-opt">c) Ears</span><span class="p-opt">d) Clothes</span></div><div class="p-q"><b>36.</b> Should be covered with your inner elbow or a clean tissue when coughing or sneezing<br><span class="p-opt">a) Mouth and nose</span><span class="p-opt">b) Eyes</span><span class="p-opt">c) Hands</span><span class="p-opt">d) Feet</span></div><div class="p-q"><b>37.</b> Should be dried before putting on clean socks<br><span class="p-opt">a) Feet</span><span class="p-opt">b) Hands</span><span class="p-opt">c) Hair</span><span class="p-opt">d) Face</span></div><div class="p-q"><b>38.</b> Should not have anything inserted into it, according to experts<br><span class="p-opt">a) Ear canal</span><span class="p-opt">b) Nose</span><span class="p-opt">c) Mouth</span><span class="p-opt">d) Eye</span></div><div class="p-q"><b>39.</b> Should be brushed at least two times a day<br><span class="p-opt">a) Teeth</span><span class="p-opt">b) Hair</span><span class="p-opt">c) Nails</span><span class="p-opt">d) Skin</span></div><div class="p-q"><b>40.</b> Should be changed every day or as soon as they get dirty<br><span class="p-opt">a) Clothes</span><span class="p-opt">b) Shoes</span><span class="p-opt">c) Towels</span><span class="p-opt">d) Toothbrush</span></div><div class="p-break"></div><h2 class="p-part-title">✅ Complete Answer Key</h2>
+  <div class="p-key-part-title">Part I — Elements/Principles of Art</div><div class="p-key-grid"><div class="p-key-pill">1. <b>Value</b></div><div class="p-key-pill">2. <b>Texture</b></div><div class="p-key-pill">3. <b>Balance</b></div><div class="p-key-pill">4. <b>Line</b></div><div class="p-key-pill">5. <b>Movement</b></div></div><div class="p-key-part-title">Part II — Hygiene</div><div class="p-key-grid"><div class="p-key-pill">6. <b>personal hygiene</b></div><div class="p-key-pill">7. <b>trapped sweat</b></div><div class="p-key-pill">8. <b>Do not hold back when you feel like peeing.</b></div><div class="p-key-pill">9. <b>Cover your mouth and nose with a handkerchief.</b></div><div class="p-key-pill">10. <b>Brush the tongue to remove the taste buds.</b></div></div><div class="p-key-part-title">Part III — True or False</div><div class="p-key-grid"><div class="p-key-pill">11. <b>True</b></div><div class="p-key-pill">12. <b>True</b></div><div class="p-key-pill">13. <b>False</b></div><div class="p-key-pill">14. <b>True</b></div><div class="p-key-pill">15. <b>False</b></div><div class="p-key-pill">16. <b>True</b></div><div class="p-key-pill">17. <b>False</b></div><div class="p-key-pill">18. <b>True</b></div><div class="p-key-pill">19. <b>True</b></div><div class="p-key-pill">20. <b>True</b></div><div class="p-key-pill">21. <b>True</b></div><div class="p-key-pill">22. <b>True</b></div><div class="p-key-pill">23. <b>False</b></div><div class="p-key-pill">24. <b>False</b></div><div class="p-key-pill">25. <b>True</b></div><div class="p-key-pill">26. <b>True</b></div><div class="p-key-pill">27. <b>False</b></div><div class="p-key-pill">28. <b>True</b></div><div class="p-key-pill">29. <b>True</b></div><div class="p-key-pill">30. <b>False</b></div></div><div class="p-key-part-title">Part IV — Folk Art &amp; Hygiene</div><div class="p-key-grid"><div class="p-key-pill">31. <b>Bul-ul</b></div><div class="p-key-pill">32. <b>Burnay</b></div><div class="p-key-pill">33. <b>Táka</b></div><div class="p-key-pill">34. <b>Sarimanok</b></div><div class="p-key-pill">35. <b>Fingernails</b></div><div class="p-key-pill">36. <b>Mouth and nose</b></div><div class="p-key-pill">37. <b>Feet</b></div><div class="p-key-pill">38. <b>Ear canal</b></div><div class="p-key-pill">39. <b>Teeth</b></div><div class="p-key-pill">40. <b>Clothes</b></div></div>
+</div>
+
+</body>
+</html>
