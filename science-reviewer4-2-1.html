@@ -1,0 +1,1682 @@
+<!DOCTYPE html>
+<html lang="tl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🫀 Science: The Human Body Reviewer 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --gold: #f59e0b;
+  --gold-dark: #b45309;
+  --blue: #3b82f6;
+  --blue-dark: #1d4ed8;
+  --red: #ef4444;
+  --green: #22c55e;
+  --bg: #0c1a0e;
+  --surface: #132015;
+  --surface2: #1a2e1d;
+  --text: #f0fdf4;
+  --muted: #86efac;
+  --border: #166534;
+}
+
+body {
+  font-family: 'Baloo 2', cursive;
+  background: var(--bg);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--text);
+  background-image:
+    radial-gradient(ellipse at 10% 30%, rgba(245,158,11,.06) 0%, transparent 55%),
+    radial-gradient(ellipse at 90% 70%, rgba(59,130,246,.06) 0%, transparent 55%);
+}
+
+header {
+  width: 100%;
+  background: linear-gradient(135deg, #14532d, #1e3a5f);
+  border-bottom: 2px solid var(--gold-dark);
+  padding: 13px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 4px 30px rgba(0,0,0,.5);
+}
+.header-icon { font-size: 2rem; animation: float 3s ease-in-out infinite; }
+@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
+
+header h1 {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.45rem;
+  background: linear-gradient(90deg, var(--gold), #fde68a, var(--gold));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+header .sub { font-size: .72rem; color: var(--muted); margin-top: 1px; }
+
+.header-controls { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+.score-pill {
+  background: rgba(245,158,11,.15);
+  border: 1px solid rgba(245,158,11,.4);
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-weight: 800;
+  font-size: .85rem;
+  color: var(--gold);
+}
+.audio-btn {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  background: var(--surface2);
+  color: var(--text);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all .2s;
+  display: flex; align-items: center; justify-content: center;
+}
+.audio-btn:hover, .audio-btn.active { background: #14532d; border-color: var(--gold); }
+
+.chat-wrap {
+  width: 100%; max-width: 700px; flex: 1;
+  display: flex; flex-direction: column;
+  padding: 16px 14px 0;
+}
+
+#chat-box {
+  flex: 1; overflow-y: auto;
+  display: flex; flex-direction: column;
+  gap: 14px; padding-bottom: 10px;
+  max-height: calc(100vh - 200px);
+  scroll-behavior: smooth;
+}
+#chat-box::-webkit-scrollbar { width: 4px; }
+#chat-box::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+.msg { display: flex; gap: 8px; }
+.msg.user { flex-direction: row-reverse; }
+
+.avatar {
+  width: 34px; height: 34px; border-radius: 50%;
+  font-size: 1rem; display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 2px;
+}
+.msg.bot .avatar { background: linear-gradient(135deg, #14532d, #1e3a5f); border: 1.5px solid rgba(245,158,11,.4); }
+.msg.user .avatar { background: linear-gradient(135deg, #1e3a5f, #14532d); border: 1.5px solid rgba(59,130,246,.3); }
+
+.bubble {
+  max-width: 80%;
+  padding: 11px 16px;
+  border-radius: 18px;
+  font-size: .9rem;
+  line-height: 1.65;
+  animation: pop .22s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes pop { from{transform:scale(.88) translateY(6px);opacity:0} to{transform:scale(1) translateY(0);opacity:1} }
+
+.msg.bot .bubble {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-bottom-left-radius: 5px;
+}
+.msg.user .bubble {
+  background: linear-gradient(135deg, #1e3a5f, var(--blue-dark));
+  border-bottom-right-radius: 5px;
+}
+
+/* chips */
+.chip {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: rgba(245,158,11,.12);
+  border: 1.5px solid rgba(245,158,11,.4);
+  color: var(--gold);
+  border-radius: 30px;
+  padding: 5px 13px; margin: 5px 4px 0 0;
+  font-size: .8rem; font-weight: 700;
+  cursor: pointer; transition: all .15s;
+  user-select: none; font-family: 'Baloo 2', cursive;
+}
+.chip:hover {
+  background: var(--gold-dark); color: white;
+  border-color: var(--gold);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(245,158,11,.3);
+}
+
+/* topic tag */
+.topic-tag {
+  display: inline-block;
+  background: linear-gradient(135deg, #14532d, #166534);
+  border: 1px solid var(--gold-dark);
+  color: var(--gold);
+  font-size: .68rem; font-weight: 800;
+  border-radius: 20px; padding: 2px 10px;
+  margin-bottom: 5px; letter-spacing: .5px;
+  text-transform: uppercase;
+}
+
+/* multiple choice */
+.mc-options { display: flex; flex-direction: column; gap: 7px; margin-top: 10px; width: 100%; }
+.mc-btn {
+  display: flex; align-items: center; gap: 10px;
+  background: rgba(255,255,255,.03);
+  border: 1.5px solid var(--border);
+  border-radius: 12px; padding: 9px 14px;
+  color: var(--text); font-family: 'Baloo 2', cursive;
+  font-size: .87rem; font-weight: 600;
+  cursor: pointer; transition: all .15s; text-align: left; width: 100%;
+}
+.mc-btn:hover:not(:disabled) {
+  background: rgba(245,158,11,.12); border-color: var(--gold);
+  color: var(--gold); transform: translateX(3px);
+}
+.mc-btn .letter {
+  display: flex; align-items: center; justify-content: center;
+  width: 26px; height: 26px; border-radius: 8px;
+  background: rgba(245,158,11,.15); border: 1px solid rgba(245,158,11,.35);
+  color: var(--gold); font-size: .78rem; font-weight: 800;
+  flex-shrink: 0; transition: all .15s;
+}
+.mc-btn:hover:not(:disabled) .letter { background: var(--gold-dark); color: white; border-color: var(--gold-dark); }
+.mc-btn.correct { background: rgba(34,197,94,.15)!important; border-color: #22c55e!important; color: #22c55e!important; cursor: default; }
+.mc-btn.correct .letter { background: #22c55e!important; color: white!important; border-color: #22c55e!important; }
+.mc-btn.wrong { background: rgba(239,68,68,.12)!important; border-color: #ef4444!important; color: #ef4444!important; cursor: default; }
+.mc-btn.wrong .letter { background: #ef4444!important; color: white!important; border-color: #ef4444!important; }
+.mc-btn:disabled { cursor: default; transform: none!important; }
+
+/* speaker wave */
+.speaker-wave {
+  display: inline-flex; align-items: flex-end;
+  gap: 2px; height: 14px; margin-left: 6px; vertical-align: middle;
+}
+.speaker-wave span {
+  display: block; width: 3px; border-radius: 2px;
+  background: var(--gold); animation: wave 1s ease-in-out infinite;
+}
+.speaker-wave span:nth-child(1){height:4px;animation-delay:0s}
+.speaker-wave span:nth-child(2){height:10px;animation-delay:.1s}
+.speaker-wave span:nth-child(3){height:6px;animation-delay:.2s}
+.speaker-wave span:nth-child(4){height:12px;animation-delay:.15s}
+.speaker-wave span:nth-child(5){height:4px;animation-delay:.05s}
+@keyframes wave{0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.8)}}
+
+/* typing */
+.typing {
+  display: flex; gap: 4px; padding: 12px 16px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 18px; border-bottom-left-radius: 5px; width: fit-content;
+}
+.dot { width: 7px; height: 7px; border-radius: 50%; background: var(--gold); animation: bounce .9s infinite; }
+.dot:nth-child(2){animation-delay:.15s} .dot:nth-child(3){animation-delay:.3s}
+@keyframes bounce{0%,80%,100%{transform:translateY(0);opacity:.6}40%{transform:translateY(-7px);opacity:1}}
+
+/* input bar */
+.input-bar {
+  width: 100%; max-width: 700px;
+  padding: 10px 14px 18px;
+  display: flex; gap: 8px;
+  background: var(--bg); position: sticky; bottom: 0;
+}
+#user-input {
+  flex: 1; padding: 12px 18px;
+  border: 2px solid var(--border); border-radius: 30px;
+  font-family: 'Baloo 2', cursive; font-size: .92rem;
+  outline: none; background: var(--surface); color: var(--text);
+  transition: border-color .2s, box-shadow .2s;
+}
+#user-input::placeholder { color: var(--muted); }
+#user-input:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(245,158,11,.12); }
+
+#send-btn {
+  width: 48px; height: 48px; border-radius: 50%; border: none;
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  color: white; font-size: 1.1rem; cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 3px 14px rgba(245,158,11,.4); flex-shrink: 0;
+}
+#send-btn:hover { transform: scale(1.08); box-shadow: 0 5px 20px rgba(245,158,11,.55); }
+#send-btn:disabled { opacity: .5; transform: none; }
+
+/* result modal */
+.result-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.75); backdrop-filter: blur(6px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 100; opacity: 0; pointer-events: none; transition: opacity .3s;
+}
+.result-overlay.show { opacity: 1; pointer-events: all; }
+.result-card {
+  background: linear-gradient(135deg, #132015, #0c1a0e);
+  border: 2px solid var(--gold-dark);
+  border-radius: 24px; padding: 36px 40px;
+  text-align: center; max-width: 380px; width: 90%;
+  box-shadow: 0 20px 60px rgba(0,0,0,.6);
+  transform: scale(.9); transition: transform .3s cubic-bezier(.34,1.56,.64,1);
+}
+.result-overlay.show .result-card { transform: scale(1); }
+.result-emoji { font-size: 4rem; margin-bottom: 12px; display: block; }
+.result-title {
+  font-family: 'Fredoka One', cursive; font-size: 1.7rem; margin-bottom: 6px;
+  background: linear-gradient(90deg, var(--gold), #fde68a);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.result-score { font-size: 3rem; font-weight: 900; margin: 10px 0; color: white; }
+.result-msg { color: var(--muted); font-size: .9rem; margin-bottom: 22px; }
+.result-btn {
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  border: none; border-radius: 30px; padding: 12px 30px;
+  color: white; font-family: 'Baloo 2', cursive; font-weight: 800;
+  font-size: 1rem; cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+  box-shadow: 0 4px 16px rgba(245,158,11,.35);
+}
+.result-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 22px rgba(245,158,11,.5); }
+
+/* scenario card for identify questions */
+.scenario-card {
+  background: rgba(245,158,11,.07);
+  border: 1px solid rgba(245,158,11,.25);
+  border-radius: 12px; padding: 10px 14px;
+  margin: 8px 0 6px; font-style: italic;
+  font-size: .87rem; color: #fde68a; line-height: 1.5;
+}
+
+/* ── Notes Panel ─────────────────────────────────────────────── */
+.notes-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.78); backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 200; opacity: 0; pointer-events: none; transition: opacity .3s;
+}
+.notes-overlay.show { opacity: 1; pointer-events: all; }
+.notes-panel {
+  background: linear-gradient(160deg, #0c1a0e, #132015);
+  border: 2px solid var(--gold-dark);
+  border-radius: 20px;
+  width: 92%; max-width: 720px;
+  max-height: 88vh;
+  display: flex; flex-direction: column;
+  box-shadow: 0 24px 60px rgba(0,0,0,.7);
+  overflow: hidden;
+  transform: translateY(30px);
+  transition: transform .35s cubic-bezier(.34,1.2,.64,1);
+}
+.notes-overlay.show .notes-panel { transform: translateY(0); }
+.notes-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 22px; border-bottom: 1px solid var(--border);
+  background: linear-gradient(135deg, #14532d44, #1e3a5f44);
+}
+.notes-header h2 { font-family: 'Fredoka One', cursive; font-size: 1.3rem; color: var(--gold); }
+.notes-close {
+  width: 34px; height: 34px; border-radius: 50%;
+  border: 1.5px solid var(--border); background: var(--surface2);
+  color: var(--text); font-size: 1rem; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; transition: all .2s;
+}
+.notes-close:hover { background: #b91c1c; border-color: #ef4444; }
+.notes-body { overflow-y: auto; padding: 20px 22px; flex: 1; }
+.notes-body::-webkit-scrollbar { width: 4px; }
+.notes-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+.notes-topic { margin-bottom: 28px; }
+.notes-topic-title {
+  font-family: 'Fredoka One', cursive; font-size: 1.05rem;
+  color: var(--gold); margin-bottom: 10px;
+  padding-bottom: 6px; border-bottom: 1px solid var(--border);
+}
+.notes-item {
+  display: flex; gap: 10px; align-items: flex-start;
+  padding: 7px 0; border-bottom: 1px solid rgba(255,255,255,.04);
+  font-size: .87rem; line-height: 1.55;
+}
+.notes-item:last-child { border-bottom: none; }
+.notes-term { font-weight: 800; color: var(--gold); min-width: 150px; flex-shrink: 0; font-size: .84rem; }
+.notes-def { color: #d1fae5; }
+.notes-tabs {
+  display: flex; flex-wrap: wrap; gap: 8px; padding: 14px 22px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(0,0,0,.15);
+}
+.notes-tab {
+  padding: 12px 20px; border-radius: 10px;
+  border: 1.5px solid var(--border); 
+  background: rgba(255,255,255,.04); color: var(--muted);
+  font-family: 'Baloo 2', cursive; font-size: .9rem; font-weight: 700;
+  cursor: pointer; transition: all .15s; white-space: nowrap;
+  min-height: 48px; display: flex; align-items: center;
+}
+.notes-tab.active { background: var(--surface); color: var(--gold); border-color: var(--gold-dark); }
+.notes-tab:hover:not(.active) { color: var(--text); background: var(--surface2); }
+.notes-section { display: none; }
+.notes-section.active { display: block; }
+
+
+/* ── Print button in notes header ─────────────────────────────── */
+.notes-header-actions { display: flex; align-items: center; gap: 10px; }
+.print-btn {
+  display: flex; align-items: center; gap: 6px;
+  background: rgba(245,158,11,.12);
+  border: 1.5px solid rgba(245,158,11,.4);
+  color: var(--gold);
+  border-radius: 20px;
+  padding: 7px 14px;
+  font-family: 'Baloo 2', cursive;
+  font-size: .78rem;
+  font-weight: 800;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all .15s;
+}
+.print-btn:hover { background: var(--gold); color: #0c1a0e; border-color: var(--gold); }
+.print-btn.active { background: var(--gold); color: #0c1a0e; border-color: var(--gold); }
+
+/* ── On-screen Practice Test / Answer Key ─────────────────────── */
+.ptest-part-title {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1rem;
+  color: var(--gold);
+  margin: 22px 0 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+.ptest-part-title:first-child { margin-top: 0; }
+.ptest-q {
+  font-size: .87rem;
+  line-height: 1.6;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed rgba(255,255,255,.06);
+  color: #d1fae5;
+}
+.ptest-q b { color: var(--gold); }
+.ptest-q .opt { display: block; margin: 2px 0 2px 18px; color: #d1fae5; }
+.ptest-bank {
+  background: rgba(59,130,246,.08);
+  border: 1px solid rgba(59,130,246,.3);
+  border-radius: 10px;
+  padding: 10px 16px;
+  margin-bottom: 14px;
+  font-size: .82rem;
+  color: #dbeafe;
+  line-height: 1.6;
+}
+.key-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.key-pill {
+  background: rgba(245,158,11,.1);
+  border: 1px solid rgba(245,158,11,.25);
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: .78rem;
+  color: #fde68a;
+}
+.key-pill b { color: #34d399; }
+
+/* ── Print / Save-as-PDF styles ──────────────────────────────────
+   By default everything is hidden from print. When body carries
+   .printing-test, only #print-area (a light-themed clone of the
+   Practice Test + Answer Key) is shown, laid out for paper. ──── */
+@media print {
+  body * { visibility: hidden; }
+  #print-area, #print-area * { visibility: visible; }
+  #print-area {
+    display: block !important;
+    position: absolute; top: 0; left: 0; width: 100%;
+    background: #fff; color: #14290f;
+    font-family: 'Helvetica', Arial, sans-serif;
+    font-size: 10.5pt;
+    line-height: 1.5;
+  }
+  #print-area .p-cover { text-align: center; padding-top: 40px; }
+  #print-area .p-cover .p-icon { font-size: 34pt; }
+  #print-area .p-cover h1 { font-size: 19pt; color: #b45309; margin: 8px 0 4px; }
+  #print-area .p-cover .p-sub { font-size: 10.5pt; color: #166534; margin-bottom: 20px; }
+  #print-area .p-info-box {
+    border: 1.5px solid #fcd34d; border-radius: 10px;
+    max-width: 460px; margin: 0 auto 20px; padding: 14px 20px;
+    text-align: left; font-size: 10pt;
+  }
+  #print-area .p-info-box div { margin: 6px 0; border-bottom: 1px dotted #fde68a; padding-bottom: 6px; }
+  #print-area .p-instructions {
+    max-width: 460px; margin: 0 auto; text-align: left;
+    background: #fffbeb; border: 1px solid #fcd34d; border-radius: 10px;
+    padding: 12px 18px; font-size: 9.5pt; color: #78350f;
+  }
+  #print-area h2.p-part-title {
+    font-size: 12.5pt; color: #fff;
+    background: linear-gradient(135deg, #b45309, #14532d) !important;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    padding: 6px 12px; border-radius: 7px; margin: 18px 0 10px;
+    page-break-after: avoid;
+  }
+  #print-area .p-bank {
+    background: #f0fdf4 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    border: 1px solid #86efac; border-radius: 8px; padding: 8px 14px;
+    margin-bottom: 12px; font-size: 9.5pt; color: #14532d;
+  }
+  #print-area .p-q {
+    margin-bottom: 8px; padding-bottom: 8px;
+    border-bottom: 1px dotted #fde68a; font-size: 10pt;
+    page-break-inside: avoid; color: #14290f;
+  }
+  #print-area .p-q b { color: #b45309; }
+  #print-area .p-q .p-blank { display: inline-block; min-width: 65px; border-bottom: 1px solid #64748b; }
+  #print-area .p-q .p-opt { display: block; margin: 2px 0 0 20px; color: #365314; }
+  #print-area .p-break { page-break-before: always; }
+  #print-area .p-key-part-title {
+    font-size: 11pt; color: #b45309; font-weight: bold;
+    margin: 14px 0 8px; border-bottom: 2px solid #b45309; padding-bottom: 4px;
+  }
+  #print-area .p-key-grid {
+    display: grid; grid-template-columns: repeat(5, 1fr);
+    gap: 5px 8px; margin-bottom: 14px;
+  }
+  #print-area .p-key-pill {
+    background: #f0fdf4 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    border: 1px solid #86efac; border-radius: 6px;
+    padding: 4px 8px; font-size: 8.5pt; color: #166534;
+  }
+  #print-area .p-key-pill b { color: #b45309; }
+  @page { size: letter; margin: 1.5cm 1.8cm; }
+}
+#print-area { display: none; }
+
+
+/* ── Chapter Summary / Tandaan / Memory boxes (fix: previously missing) ── */
+.chapter-summary {
+  background: linear-gradient(135deg, rgba(59,130,246,.1), rgba(34,197,94,.08));
+  border: 1px solid rgba(59,130,246,.25);
+  border-left: 4px solid var(--blue);
+  border-radius: 12px;
+  padding: 14px 18px;
+  margin-bottom: 18px;
+  font-size: .88rem;
+  line-height: 1.65;
+  color: #dbeafe;
+}
+.tandaan-box {
+  background: rgba(245,158,11,.08);
+  border: 1px solid rgba(245,158,11,.3);
+  border-left: 4px solid var(--gold);
+  border-radius: 12px;
+  padding: 12px 18px;
+  margin: 14px 0;
+  font-size: .86rem;
+  line-height: 1.6;
+  color: #fde68a;
+}
+.tandaan-label {
+  display: block;
+  font-family: 'Baloo 2', cursive;
+  font-size: .8rem;
+  color: var(--gold);
+  letter-spacing: .5px;
+  margin-bottom: 5px;
+}
+.memory-box {
+  background: rgba(34,197,94,.08);
+  border: 1px solid rgba(34,197,94,.3);
+  border-left: 4px solid var(--green);
+  border-radius: 12px;
+  padding: 12px 18px;
+  margin: 14px 0 22px;
+  font-size: .86rem;
+  line-height: 1.6;
+  color: #bbf7d0;
+}
+.memory-label {
+  display: block;
+  font-family: 'Baloo 2', cursive;
+  font-size: .8rem;
+  color: var(--green);
+  letter-spacing: .5px;
+  margin-bottom: 5px;
+}
+.compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0 20px;
+  font-size: .82rem;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.compare-table th {
+  background: linear-gradient(135deg, var(--blue-dark), var(--gold-dark));
+  color: white;
+  text-align: left;
+  padding: 9px 12px;
+  font-size: .78rem;
+  text-transform: uppercase;
+  letter-spacing: .4px;
+}
+.compare-table td {
+  padding: 9px 12px;
+  border-top: 1px solid var(--border);
+  color: var(--text);
+  vertical-align: top;
+}
+.compare-table tr:nth-child(even) td { background: rgba(255,255,255,.02); }
+
+/* ── Story Box (for reading Bible stories aloud) ─────────────────── */
+.story-box {
+  background: rgba(255,255,255,.03);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px 20px;
+  margin-bottom: 16px;
+  font-size: .92rem;
+  line-height: 1.8;
+  color: var(--text);
+}
+.story-box p { margin-bottom: 10px; }
+.story-box p:last-child { margin-bottom: 0; }
+.story-ref {
+  display: block;
+  text-align: right;
+  font-style: italic;
+  color: var(--muted);
+  font-size: .8rem;
+  margin-top: 10px;
+}
+.story-label {
+  display: block;
+  font-family: 'Baloo 2', cursive;
+  font-size: .9rem;
+  color: var(--gold);
+  letter-spacing: .5px;
+  margin-bottom: 10px;
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-icon">🫀</div>
+  <div>
+    <h1>The Human Body</h1>
+    <div class="sub">Organ Systems · Skeletal &amp; Muscular · Digestive &amp; Respiratory · Nervous &amp; Endocrine</div>
+  </div>
+  <div class="header-controls">
+    <div class="score-pill">⭐ <span id="score-val">0</span> / <span id="total-val">0</span></div>
+    <button class="audio-btn" id="notes-toggle" title="Open Reviewer" onclick="document.getElementById('notes-overlay').classList.add('show')">📖</button>
+    <button class="audio-btn active" id="audio-toggle" title="Toggle Audio">🔊</button>
+  </div>
+</header>
+
+<div class="chat-wrap">
+  <div id="chat-box"></div>
+</div>
+
+<div class="input-bar">
+  <input type="text" id="user-input" placeholder="Type your answer here…" autocomplete="off" />
+  <button id="send-btn">➤</button>
+</div>
+
+<div class="result-overlay" id="result-overlay">
+  <div class="result-card">
+    <span class="result-emoji" id="res-emoji">🏆</span>
+    <div class="result-title">Quiz Complete!</div>
+    <div class="result-score"><span id="res-score">0</span>/<span id="res-total">0</span></div>
+    <div class="result-msg" id="res-msg">Great job!</div>
+    <button class="result-btn" onclick="restartApp()">🔄 Maglaro Ulit</button>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+// QUESTION BANK
+// ═══════════════════════════════════════════════════════════════
+const topics = {
+
+  "Cells, Tissues, Organs, and Organ Systems": [
+    { q: "What are the smallest living units and building blocks of the body?", a: "Cells", hint: "All living things — humans, animals, plants — are made of these." },
+    { q: "What forms when cells of the same kind perform a special function together?", a: "A tissue", hint: "Bone tissue and muscle tissue are examples." },
+    { q: "Give two examples of tissue types.", a: "Bone tissue, muscle tissue, or nervous tissue", hint: "Named after what they're made of or what they do." },
+    { q: "What forms when different tissues work together to carry out an important activity?", a: "An organ", hint: "The brain, heart, and lungs are examples." },
+    { q: "Why can't one organ alone perform a major body function?", a: "Because it needs other organs working together — for example, the stomach alone cannot fully digest food", hint: "Think about digestion needing more than just one organ." },
+    { q: "What forms when different organs work together to perform a major function?", a: "An organ system", hint: "This is the largest level of organization discussed." },
+    { q: "What are the four levels of body organization, from smallest to largest?", a: "Cells, tissues, organs, and organ systems", hint: "Each level is built from the one before it." },
+    { q: "Name the ten organ systems of the human body.", a: "Skeletal, muscular, digestive, circulatory, respiratory, excretory, nervous, integumentary, endocrine, and reproductive systems", hint: "There are ten in total." },
+  ],
+
+  "The Skeletal System": [
+    { q: "What does the skeletal system do for the body?", a: "It supports the body, provides structure, protects internal organs, and enables movement", hint: "Several jobs in one system." },
+    { q: "What are the four shapes of bones?", a: "Long, flat, short, and irregular", hint: "Shape relates to function." },
+    { q: "Why are long bones strong, light, and hollow?", a: "Because they support weight and allow movement", hint: "Their shape suits their job." },
+    { q: "What is the longest and heaviest bone in the human body?", a: "The femur", hint: "It's found in the upper leg." },
+    { q: "What do flat bones do?", a: "Protect and support body organs", hint: "Think of bones like the ribs and skull." },
+    { q: "Give three examples of flat bones.", a: "Ribs, breastbone, and bones of the skull", hint: "They shield organs like the heart, lungs, and brain." },
+    { q: "What do short bones help with?", a: "They help support body weight and assist in small movements", hint: "Found in the wrists and ankles." },
+    { q: "What are the short bones of the ankles and wrists called?", a: "Tarsals (ankles) and carpals (wrists)", hint: "Two different names for two different joints." },
+    { q: "Give two examples of irregular bones.", a: "The vertebra, and the hammer, anvil, and stirrup of the ear", hint: "They don't have a simple, regular shape." },
+    { q: "What are the two main parts of the skeletal system?", a: "The axial skeleton and the appendicular skeleton", hint: "One is the central core, the other is the limbs." },
+    { q: "What bones make up the axial skeleton?", a: "The skull, vertebral column, and thoracic cage", hint: "The central support structure of the body." },
+    { q: "What is the only bone in the skull that moves?", a: "The mandible (jawbone)", hint: "It moves when you chew or talk." },
+    { q: "What is another name for the spine or vertebral column?", a: "The backbone", hint: "A common everyday name." },
+    { q: "What does the spinal cord do?", a: "It's a thick bundle of nerves that sends information to and from the brain", hint: "It's protected by the backbone." },
+    { q: "What holds the vertebrae together?", a: "Tough fibrous tissues called ligaments", hint: "The same connective tissue found at joints." },
+    { q: "What makes up the thoracic cage?", a: "12 pairs of ribs and the sternum (breastbone)", hint: "It protects the heart and lungs." },
+    { q: "What bones make up the appendicular skeleton?", a: "The upper extremities (shoulder girdle and arms) and lower extremities (pelvic girdle and legs)", hint: "The limbs and their supporting girdles." },
+    { q: "What are joints?", a: "The parts where two bones meet, making body movement possible", hint: "They let you bend, twist, or turn." },
+    { q: "What are the two classifications of joints?", a: "Fixed and movable", hint: "One allows motion, the other doesn't." },
+    { q: "Give an example of a fixed joint.", a: "The joints in the cranium", hint: "Found in the skull." },
+    { q: "Give examples of movable joints.", a: "Joints in the hips, shoulders, fingers, and legs", hint: "These allow a wide range of motion." },
+    { q: "What is a ligament?", a: "A band of strong, flexible tissue that holds bones together at a joint", hint: "It prevents joints from slipping out of place." },
+    { q: "What is the largest joint in the body?", a: "The knee", hint: "It's very important for movement." },
+    { q: "What is a tendon?", a: "A tough, strong band or cord of fiber-like tissue that joins a muscle to a bone", hint: "Different from a ligament, which connects bone to bone." },
+    { q: "What is cartilage, and what does it do?", a: "Smooth, rubbery protein that cushions the ends of bones at a joint and acts as a shock absorber", hint: "It keeps bones from grinding together." },
+  ],
+
+  "The Muscular System": [
+    { q: "About how many muscles work together in the human body?", a: "More than 600", hint: "It's a very large number." },
+    { q: "What are muscles made of?", a: "Protein", hint: "A key building material for the body." },
+    { q: "What are muscle fibers?", a: "Hundreds to thousands of long, thin cells that make up a muscle", hint: "Muscles are built from these." },
+    { q: "What tendon connects the calf muscle to the heel?", a: "The Achilles tendon", hint: "Found at the back of the ankle." },
+    { q: "How do muscles produce movement?", a: "By contraction", hint: "This is the basic action of a muscle." },
+    { q: "What is an extensor?", a: "The muscle that straightens a joint", hint: "Think of extending or stretching out." },
+    { q: "What is a flexor?", a: "The muscle that bends a joint", hint: "Think of flexing or curling." },
+    { q: "What are the three types of muscles?", a: "Skeletal, smooth, and cardiac muscles", hint: "Each has a different job and structure." },
+    { q: "What are skeletal muscles?", a: "Muscles attached to the bones that usually work in pairs and give the body shape", hint: "You can control these voluntarily." },
+    { q: "Where can you find skeletal muscles?", a: "In the face, neck, arms, legs, abdomen, and chest", hint: "All over the body." },
+    { q: "What are smooth muscles?", a: "Involuntary muscles that work automatically, such as in the stomach and intestine walls", hint: "You don't consciously control these." },
+    { q: "Where are cardiac muscles found?", a: "Only in the heart", hint: "They contract rhythmically and continuously." },
+    { q: "What are animals with backbones called?", a: "Vertebrates", hint: "Includes humans, fish, birds, and more." },
+    { q: "What are animals without a backbone called?", a: "Invertebrates", hint: "Includes insects, worms, and octopuses." },
+    { q: "How does an octopus move?", a: "Through jet propulsion", hint: "It pushes water to move itself." },
+    { q: "How do earthworms and ribbon worms move?", a: "By wriggling, shortening, and stretching their muscles", hint: "They don't have legs or fins." },
+    { q: "What is an exoskeleton?", a: "A skeleton found outside the body that covers, protects, and supports animals like insects", hint: "\"Exo\" means outside." },
+  ],
+
+  "The Integumentary System": [
+    { q: "What is the integumentary system composed of?", a: "Skin, hair, nails, and millions of sweat and oil glands", hint: "It's your body's outer covering system." },
+    { q: "What is the largest organ of the body?", a: "The skin", hint: "It's bigger than any internal organ." },
+    { q: "What are the three layers of the skin?", a: "The epidermis, dermis, and hypodermis", hint: "From outermost to innermost." },
+    { q: "What is the epidermis?", a: "The surface layer of the skin", hint: "It's the layer you can see and touch." },
+    { q: "What pigment gives skin its color?", a: "Melanin", hint: "The more of this, the darker the skin." },
+    { q: "What happens to melanin production when skin is exposed to UV rays?", a: "It increases, which helps protect the skin from sunburn", hint: "This is the skin's natural defense against sun damage." },
+    { q: "What is the dermis?", a: "The middle layer of skin, located below the epidermis and above a layer of fat", hint: "It contains glands and hair structures." },
+    { q: "What does the dermis contain?", a: "Sweat glands, hair, and oil glands", hint: "Several important structures." },
+    { q: "What are the openings called through which sweat glands secrete fluid?", a: "Pores", hint: "You can often see these on your skin." },
+    { q: "What are the structures called where strands of hair grow within the dermis?", a: "Follicles", hint: "Each strand of hair grows from one of these." },
+    { q: "What is the hypodermis?", a: "The subcutaneous tissue that attaches skin to underlying bone and muscle, and supplies it with blood vessels and nerves", hint: "It's the deepest layer of skin." },
+    { q: "What protein in the hypodermis helps skin return to its original position when poked?", a: "Elastin", hint: "It gives skin its stretchiness." },
+    { q: "What does the fat layer in the hypodermis do?", a: "Pads internal organs and helps keep heat in the body", hint: "It acts like insulation and cushioning." },
+    { q: "How does the skin help regulate body temperature when it's too warm?", a: "Blood flow through the skin increases, channeling heat to the outside, and sweat glands produce sweat that cools the body as it evaporates", hint: "Two cooling mechanisms happen at once." },
+  ],
+
+  "The Digestive System": [
+    { q: "What are the two groups of organs in the digestive system?", a: "The alimentary canal and the accessory organs", hint: "One is a long tube, the other supports it with juices." },
+    { q: "What organs make up the alimentary canal?", a: "The mouth, esophagus, stomach, small intestine, and large intestine", hint: "A long tube about 20 feet in an adult." },
+    { q: "What does the tongue help with during eating?", a: "Moving food inside the mouth while chewing, and helping swallow small pieces of food", hint: "It's made of flexible muscles." },
+    { q: "What is the esophagus?", a: "A long, muscular tube that connects the throat to the stomach", hint: "Muscles here push food down toward the stomach." },
+    { q: "What are the three main functions of the stomach?", a: "To store food temporarily, mix food with digestive juices, and empty food into the small intestine", hint: "Three jobs in the digestive process." },
+    { q: "About how long is the small intestine?", a: "About 6.4 meters (20 feet) long, and 3 to 3.5 centimeters wide", hint: "It's surprisingly long despite being called 'small.'" },
+    { q: "What does the small intestine do?", a: "It completes the digestion of food before sending it to the blood for distribution", hint: "This is where most digestion finishes." },
+    { q: "What does the large intestine do?", a: "It stores undigested food, absorbs water and useful chemicals back into the blood, and moves remaining waste to the rectum", hint: "It's the final portion of the intestines." },
+    { q: "What are the accessory organs of the digestive system?", a: "The salivary glands, liver, pancreas, and gall bladder", hint: "These produce and secrete digestive juices." },
+    { q: "What does saliva contain that helps break down food?", a: "Digestive enzymes", hint: "It also moistens and softens food." },
+    { q: "What is the largest internal organ, and what does it produce?", a: "The liver, which produces bile", hint: "It's located in the abdomen." },
+    { q: "What is bile used for?", a: "It's necessary for the digestion of fats, and is stored in the gall bladder", hint: "It helps break down fatty foods." },
+    { q: "What hormone does the pancreas produce to help with digestion?", a: "Insulin", hint: "This same hormone also regulates blood sugar." },
+    { q: "What is the gall bladder's main function?", a: "To store bile produced by the liver and release it into the small intestine during digestion", hint: "A small sac attached to the liver." },
+  ],
+
+  "The Respiratory System": [
+    { q: "What does the respiratory system do?", a: "It transports air to the cells and handles the exchange of gases in the body", hint: "It's all about breathing and gas exchange." },
+    { q: "What gas is collected when you breathe in air?", a: "Oxygen", hint: "The body needs this to burn food for energy." },
+    { q: "What gas is given off when you breathe out?", a: "Carbon dioxide", hint: "A waste gas from the body." },
+    { q: "What is the main entrance and exit of air in the body?", a: "The nose", hint: "Air usually starts and ends its journey here." },
+    { q: "What in the nose helps filter dust and small particles from the air?", a: "Tiny hairs and the mucous membrane", hint: "These trap particles before they go further." },
+    { q: "What organ connects the nose and mouth to the windpipe?", a: "The pharynx", hint: "It's a funnel-like structure." },
+    { q: "What hair-like parts in the pharynx help further cleanse the air?", a: "Cilia", hint: "They continue the cleaning process started in the nose." },
+    { q: "What is another name for the trachea?", a: "The windpipe", hint: "Air travels through here on its way to the lungs." },
+    { q: "What structure in the trachea closes when you swallow to keep food out of the lungs?", a: "The epiglottis", hint: "It acts like a small trapdoor." },
+    { q: "What is the larynx also known as?", a: "The voice box", hint: "It's where sound is produced." },
+    { q: "What are the two smaller tubes that the lower trachea branches into?", a: "The bronchi", hint: "Each one connects to a lung." },
+    { q: "What are the smaller tubes that bronchi branch into called?", a: "Bronchioles", hint: "They lead to the tiny air sacs." },
+    { q: "What are the tiny air sacs where gas exchange actually takes place?", a: "Alveoli", hint: "This is where oxygen and carbon dioxide are exchanged." },
+    { q: "What is respiration?", a: "The process of gas exchange between the body cells of an organism and its surroundings", hint: "A broader definition than just 'breathing.'" },
+    { q: "What breathing structure do tadpoles use underwater that adult frogs don't need?", a: "Gills", hint: "Tadpoles are the young form of frogs." },
+    { q: "What are the tiny openings in an insect's exoskeleton that allow gas exchange?", a: "Spiracles", hint: "Insects don't breathe through a nose or mouth." },
+  ],
+
+  "The Circulatory System": [
+    { q: "What three things make up the circulatory system?", a: "The heart, blood, and blood vessels", hint: "The pump, the fluid, and the pipes." },
+    { q: "What does the heart do?", a: "It pumps blood to the different parts of the body by expanding and contracting rhythmically", hint: "About the size of a fist." },
+    { q: "What are the openings in the heart that control the direction of blood flow?", a: "Valves", hint: "They keep blood moving in one direction." },
+    { q: "What are the three kinds of blood vessels?", a: "Arteries, capillaries, and veins", hint: "Blood travels through all three in a cycle." },
+    { q: "What blood vessels carry blood away from the heart?", a: "Arteries", hint: "Blood flows outward through these first." },
+    { q: "What are the smallest blood vessels, where gas exchange occurs?", a: "Capillaries", hint: "They connect arteries to veins." },
+    { q: "What blood vessels carry blood back to the heart?", a: "Veins", hint: "Blood returns to the heart through these." },
+    { q: "What is blood made up of?", a: "Red blood cells, white blood cells, platelets, and plasma", hint: "Four main components." },
+    { q: "What is plasma, and what does it do?", a: "A yellowish liquid that is 90 percent water; it carries food to and collects waste from cells", hint: "It's the liquid part of blood." },
+    { q: "What do red blood cells do?", a: "Carry oxygen to different parts of the body", hint: "Their main job relates to oxygen." },
+    { q: "What do white blood cells do?", a: "Fight infection", hint: "They're the body's defenders." },
+    { q: "What do platelets do?", a: "Form a clot to prevent too much bleeding when a blood vessel is injured", hint: "They help stop bleeding from a cut." },
+    { q: "How many chambers do fish hearts typically have?", a: "Two chambers", hint: "Fewer than humans." },
+    { q: "How many chambers do amphibian hearts have?", a: "Three chambers", hint: "One more than fish." },
+    { q: "How many chambers do mammal and bird hearts have?", a: "Four chambers", hint: "The same number as the human heart." },
+    { q: "What animal has no heart at all, relying on fluid movement in its body cavity instead?", a: "Jellyfish", hint: "A simple invertebrate." },
+  ],
+
+  "The Excretory System": [
+    { q: "What is the job of the excretory system?", a: "To remove waste from the body", hint: "It's the body's cleanup crew." },
+    { q: "What three main wastes does the excretory system remove?", a: "Carbon dioxide, excess water, and salts", hint: "Different systems handle different wastes." },
+    { q: "Through what organ is carbon dioxide excreted from the body?", a: "The lungs", hint: "Part of the respiratory system too." },
+    { q: "Through what organs are solid wastes excreted?", a: "The large intestines", hint: "Part of the digestive system." },
+    { q: "What waste is expelled through the skin?", a: "Sweat", hint: "This happens through pores." },
+    { q: "What poisonous compound does the liver produce by combining nitrogen wastes with carbon dioxide?", a: "Urea", hint: "This ends up in urine." },
+    { q: "What does urine contain?", a: "Urea, water, and excess salts", hint: "The final liquid waste product." },
+    { q: "What shape are the kidneys, and where are they located?", a: "Bean-shaped, located in the abdominal cavity, one on each side", hint: "A very recognizable shape." },
+    { q: "What tiny structures in the kidneys filter wastes from the blood?", a: "Nephrons", hint: "Each kidney contains many of these." },
+    { q: "Where is urine deposited before it leaves the body?", a: "The urinary bladder", hint: "It's stored here until you go to the bathroom." },
+    { q: "What tube carries urine out of the body from the bladder?", a: "The urethra", hint: "The final passage for urine." },
+  ],
+
+  "The Nervous and Endocrine Systems": [
+    { q: "What is the nervous system's role in the body?", a: "It is the control center of the body and communicates through electric signals", hint: "It's the body's command system." },
+    { q: "What three major organs make up the nervous system?", a: "The brain, spinal cord, and nerves", hint: "The central and peripheral nervous system together." },
+    { q: "What are the three major regions of the brain?", a: "The cerebrum, cerebellum, and brain stem", hint: "Each has a different role." },
+    { q: "What is the largest part of the brain, divided into two halves?", a: "The cerebrum", hint: "The right half controls the left side of the body, and vice versa." },
+    { q: "What do nerve cells do?", a: "They transmit messages rapidly to the brain, which the brain then interprets", hint: "These cells are extremely sensitive." },
+    { q: "What are hormones?", a: "Chemical messengers that tell certain organs what to do", hint: "Produced by the endocrine system." },
+    { q: "What system is composed of glands that produce hormones to regulate bodily functions?", a: "The endocrine system", hint: "It works through chemical signals, unlike the nervous system's electric signals." },
+    { q: "What gland, located below the brain, controls how you grow?", a: "The pituitary gland", hint: "It's responsible for increases in height and body size." },
+    { q: "What glands sit on top of each kidney and produce adrenaline?", a: "The adrenal glands", hint: "They help you respond quickly when scared or excited." },
+    { q: "What hormone does the pancreas produce to regulate blood sugar?", a: "Insulin", hint: "The same hormone that helps with digestion." },
+    { q: "What hormone do the testes produce?", a: "Testosterone", hint: "It facilitates male secondary characteristics." },
+    { q: "What hormones do the ovaries produce?", a: "Estrogen and progesterone", hint: "These facilitate female secondary sex characteristics." },
+  ],
+
+  "The Reproductive System": [
+    { q: "What is reproduction?", a: "The process by which an organism produces offspring of its own kind", hint: "It ensures a species continues from one generation to the next." },
+    { q: "What are the two main ways living things reproduce?", a: "Sexual reproduction and asexual reproduction", hint: "One needs two parents, the other needs only one." },
+    { q: "What cell does the male parent contribute in sexual reproduction?", a: "A sperm cell", hint: "A special reproductive cell." },
+    { q: "What cell does the female parent contribute in sexual reproduction?", a: "An egg cell, called an ovum", hint: "This cell joins with the sperm." },
+    { q: "What is fertilization?", a: "The process when a sperm meets and joins with an ovum, starting the growth of a new organism", hint: "The starting point of a new life." },
+    { q: "What protects the testes and helps maintain a cooler temperature?", a: "The scrotum", hint: "A protective sac." },
+    { q: "What is the mixture of fluids and sperm called?", a: "Semen", hint: "It protects sperm and provides a medium for transport." },
+    { q: "Where does sperm mature before traveling through the vas deferens?", a: "The epididymis", hint: "A structure near the testes." },
+    { q: "What hormone causes changes in the female body, and where is it produced?", a: "Estrogen, produced in the ovaries", hint: "The female counterpart to testosterone." },
+    { q: "What organ do the ovaries attach to on either side?", a: "The uterus", hint: "The muscular organ that houses a developing baby." },
+    { q: "What is a fertilized egg called?", a: "A zygote", hint: "This is what moves to the uterus after fertilization." },
+    { q: "What is the process called when an unfertilized egg cell is released through the vagina?", a: "Menstruation", hint: "A monthly process in the female body." },
+  ],
+
+};
+
+// ── TRUE OR FALSE ────────────────────────────────────────────────────────────
+const trueOrFalse = [
+  { q: "Cells are the smallest living units and building blocks of the body.", a: "true" },
+  { q: "One organ alone can fully perform a major body function without help from other organs.", a: "false" },
+  { q: "The femur is the longest and heaviest bone in the human body.", a: "true" },
+  { q: "The mandible is the only bone in the skull that moves.", a: "true" },
+  { q: "Fixed joints, like those in the cranium, allow a lot of movement.", a: "false" },
+  { q: "Cartilage acts as a shock absorber and prevents bones from grinding together.", a: "true" },
+  { q: "Cardiac muscles are found throughout the arms and legs.", a: "false" },
+  { q: "Smooth muscles are involuntary and work automatically.", a: "true" },
+  { q: "The skin is the largest organ of the body.", a: "true" },
+  { q: "Melanin production decreases when skin is exposed to UV rays.", a: "false" },
+  { q: "The small intestine completes the digestion of food before sending nutrients to the blood.", a: "true" },
+  { q: "The liver produces bile, which is necessary for digesting fats.", a: "true" },
+  { q: "Alveoli are the tiny air sacs where gas exchange takes place in the lungs.", a: "true" },
+  { q: "The epiglottis stays open when you swallow food.", a: "false" },
+  { q: "Capillaries are the smallest blood vessels, where gas exchange occurs.", a: "true" },
+  { q: "White blood cells fight infection in the body.", a: "true" },
+  { q: "Fish hearts have four chambers, just like humans.", a: "false" },
+  { q: "Nephrons in the kidneys filter wastes from the blood.", a: "true" },
+  { q: "The cerebrum is the largest part of the brain and is divided into two halves.", a: "true" },
+  { q: "Fertilization happens when a sperm cell meets and joins with an egg cell.", a: "true" },
+];
+
+// ── IDENTIFY: FUNCTIONS TO SYSTEMS · ORGANS TO SYSTEMS ───────────────────────
+const identifyQuestions = [
+  { q: "It protects your body from the external environment and regulates temperature.", a: "Integumentary system", choices: ["Integumentary system","Skeletal system","Muscular system","Nervous system"] },
+  { q: "It provides the body structure and protection of internal organs.", a: "Skeletal system", choices: ["Skeletal system","Muscular system","Integumentary system","Circulatory system"] },
+  { q: "It is responsible for movement.", a: "Muscular system", choices: ["Muscular system","Skeletal system","Nervous system","Respiratory system"] },
+  { q: "It controls and regulates bodily functions (electric signals).", a: "Nervous system", choices: ["Nervous system","Endocrine system","Circulatory system","Excretory system"] },
+  { q: "It regulates bodily functions through chemical secretions of glands.", a: "Endocrine system", choices: ["Endocrine system","Nervous system","Digestive system","Reproductive system"] },
+  { q: "It transports gases and nutrients to the different parts of the body.", a: "Circulatory system", choices: ["Circulatory system","Respiratory system","Digestive system","Excretory system"] },
+  { q: "It is responsible for supplying the body with oxygen and expelling carbon dioxide.", a: "Respiratory system", choices: ["Respiratory system","Circulatory system","Excretory system","Digestive system"] },
+  { q: "It breaks down food so that the body can absorb nutrients.", a: "Digestive system", choices: ["Digestive system","Excretory system","Circulatory system","Endocrine system"] },
+  { q: "It facilitates the expulsion of waste materials from the body.", a: "Excretory system", choices: ["Excretory system","Digestive system","Respiratory system","Integumentary system"] },
+  { q: "It is responsible for the perpetuation of life on Earth.", a: "Reproductive system", choices: ["Reproductive system","Endocrine system","Nervous system","Muscular system"] },
+  { q: "Adrenal glands", a: "Endocrine system", choices: ["Endocrine system","Nervous system","Excretory system","Circulatory system"] },
+  { q: "Biceps", a: "Muscular system", choices: ["Muscular system","Skeletal system","Nervous system","Integumentary system"] },
+  { q: "Bladder", a: "Excretory system", choices: ["Excretory system","Digestive system","Circulatory system","Reproductive system"] },
+  { q: "Blood", a: "Circulatory system", choices: ["Circulatory system","Respiratory system","Excretory system","Endocrine system"] },
+  { q: "Brain", a: "Nervous system", choices: ["Nervous system","Endocrine system","Skeletal system","Circulatory system"] },
+  { q: "Hair", a: "Integumentary system", choices: ["Integumentary system","Muscular system","Skeletal system","Excretory system"] },
+  { q: "Heart", a: "Circulatory system", choices: ["Circulatory system","Respiratory system","Muscular system","Excretory system"] },
+  { q: "Intestines", a: "Digestive system", choices: ["Digestive system","Excretory system","Circulatory system","Endocrine system"] },
+  { q: "Kidney", a: "Excretory system", choices: ["Excretory system","Digestive system","Circulatory system","Reproductive system"] },
+  { q: "Lung", a: "Respiratory system", choices: ["Respiratory system","Circulatory system","Excretory system","Digestive system"] },
+  { q: "Pituitary gland", a: "Endocrine system", choices: ["Endocrine system","Nervous system","Reproductive system","Excretory system"] },
+  { q: "Rib", a: "Skeletal system", choices: ["Skeletal system","Muscular system","Integumentary system","Respiratory system"] },
+  { q: "Scrotum", a: "Reproductive system", choices: ["Reproductive system","Excretory system","Endocrine system","Integumentary system"] },
+  { q: "Skin", a: "Integumentary system", choices: ["Integumentary system","Muscular system","Excretory system","Skeletal system"] },
+  { q: "Skull", a: "Skeletal system", choices: ["Skeletal system","Muscular system","Nervous system","Integumentary system"] },
+  { q: "Spinal cord", a: "Nervous system", choices: ["Nervous system","Skeletal system","Endocrine system","Circulatory system"] },
+  { q: "Stomach", a: "Digestive system", choices: ["Digestive system","Excretory system","Circulatory system","Endocrine system"] },
+  { q: "Trachea", a: "Respiratory system", choices: ["Respiratory system","Circulatory system","Digestive system","Excretory system"] },
+  { q: "Triceps", a: "Muscular system", choices: ["Muscular system","Skeletal system","Nervous system","Integumentary system"] },
+  { q: "Uterus", a: "Reproductive system", choices: ["Reproductive system","Excretory system","Endocrine system","Circulatory system"] },
+];
+
+// ═══════════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════════
+let state = {
+  awaiting: 'menu',
+  mode: null,
+  questions: [],
+  allAnswers: [],
+  qIndex: 0,
+  score: 0,
+  total: 0,
+  hintUsed: false,
+  audioEnabled: true,
+};
+
+// ═══════════════════════════════════════════════════════════════
+// TTS (UPGRADED FOR TRUE FILIPINO ACCENT)
+// ═══════════════════════════════════════════════════════════════
+let currentAudioStream = null;
+
+function speak(text) {
+  if (!state.audioEnabled) return;
+  
+  // Linisin ang mga nakaraang audio task
+  window.speechSynthesis.cancel();
+  if (currentAudioStream) {
+    currentAudioStream.pause();
+    currentAudioStream = null;
+  }
+  
+  // Tanggalin ang HTML tags at emojis para hindi basahin nang paputol-putol
+  const clean = text.replace(/<[^>]+>/g,'').replace(/[🇵🇭🌟✅❌💡⏭️🏆😊💪🔄🔲📚👋⭐✕🧭📏🗺️]/g,'');
+  
+  // PRIMARY METHOD: Google Translation Engine cloud voice stream (May natural na Filipino accent)
+  const googleTtsUrl = `https://translate.google.com/translate_tts?ie=UTF-8&tl=tl&client=tw-ob&q=${encodeURIComponent(clean)}`;
+  
+  currentAudioStream = new Audio(googleTtsUrl);
+  currentAudioStream.onplaying = () => showWave(true);
+  currentAudioStream.onended = currentAudioStream.onerror = () => showWave(false);
+  
+  currentAudioStream.play().catch(err => {
+    // BACKUP METHOD: Web Speech API (works even without internet)
+    console.warn("Google TTS blocked or offline. Falling back to local system speech engine.");
+    
+    const streamFallback = new SpeechSynthesisUtterance(clean);
+    streamFallback.lang = 'fil-PH';
+    streamFallback.rate = 0.95; streamFallback.pitch = 1.05; streamFallback.volume = 1;
+    
+    const voices = window.speechSynthesis.getVoices();
+    const filVoice = voices.find(v => v.lang.startsWith('fil') || v.lang.startsWith('tl'));
+    const engVoice = voices.find(v => v.lang.startsWith('en') && v.name.toLowerCase().includes('female'))
+                   || voices.find(v => v.lang.startsWith('en'));
+              
+    if (filVoice) {
+      streamFallback.voice = filVoice;
+    } else if (engVoice) {
+      streamFallback.voice = engVoice; 
+      streamFallback.lang = 'en-US'; 
+    }
+    
+    streamFallback.onstart = () => showWave(true);
+    streamFallback.onend = streamFallback.onerror = () => showWave(false);
+    window.speechSynthesis.speak(streamFallback);
+  });
+}
+
+function showWave(on) {
+  document.querySelectorAll('.speaker-wave').forEach(w => w.style.display = on ? 'inline-flex' : 'none');
+}
+
+// I-initialize ang mga boses ng system
+let localSystemVoices = [];
+function lookupSystemVoices() {
+  localSystemVoices = window.speechSynthesis.getVoices();
+}
+lookupSystemVoices();
+if (window.speechSynthesis.onvoiceschanged !== undefined) {
+  window.speechSynthesis.onvoiceschanged = lookupSystemVoices;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// UI HELPERS
+// ═══════════════════════════════════════════════════════════════
+const chatBox = document.getElementById('chat-box');
+const input = document.getElementById('user-input');
+const sendBtn = document.getElementById('send-btn');
+
+function scrollBottom() { chatBox.scrollTop = chatBox.scrollHeight; }
+
+function addMessage(role, html, speakText) {
+  const div = document.createElement('div');
+  div.className = `msg ${role}`;
+  const av = document.createElement('div');
+  av.className = 'avatar';
+  av.textContent = role === 'bot' ? '🤖' : '🧑';
+  const bub = document.createElement('div');
+  bub.className = 'bubble';
+  bub.innerHTML = role === 'bot'
+    ? html + '<span class="speaker-wave" style="display:none"><span></span><span></span><span></span><span></span><span></span></span>'
+    : html;
+  div.appendChild(av); div.appendChild(bub);
+  chatBox.appendChild(div);
+  scrollBottom(); bindChips();
+  if (role === 'bot') {
+    const txt = speakText || html.replace(/<[^>]+>/g,' ');
+    setTimeout(() => speak(txt), 350);
+  }
+}
+
+function addTyping() {
+  const d = document.createElement('div');
+  d.className = 'msg bot'; d.id = 'typing';
+  d.innerHTML = '<div class="avatar">🤖</div><div class="typing"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>';
+  chatBox.appendChild(d); scrollBottom();
+}
+function removeTyping() { const t = document.getElementById('typing'); if(t) t.remove(); }
+
+function bindChips() {
+  document.querySelectorAll('.chip:not([data-bound])').forEach(c => {
+    c.dataset.bound = '1';
+    c.addEventListener('click', () => handleUserMessage(c.dataset.val));
+  });
+}
+
+function updateScore() {
+  document.getElementById('score-val').textContent = state.score;
+  document.getElementById('total-val').textContent = state.total;
+}
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length-1; i > 0; i--) {
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]] = [a[j],a[i]];
+  }
+  return a;
+}
+
+function normalize(s) { return s.toLowerCase().trim().replace(/\s+/g,' '); }
+
+function checkAnswer(user, correct) {
+  const u = normalize(user), c = normalize(correct);
+  if (u === c) return true;
+  if (c.includes(u) && u.length > 5) return true;
+  const parts = c.split(/[,;\/]/);
+  for (const p of parts) if (u.includes(p.trim()) && p.trim().length > 4) return true;
+  return false;
+}
+
+function showResult() {
+  const pct = Math.round((state.score/state.total)*100);
+  const emoji = pct>=90?'🏆':pct>=70?'🌟':pct>=50?'😊':'💪';
+  const msg = pct>=90?'Excellent! You know it all!':pct>=70?'Great job! Keep it up!':pct>=50?'Good! Study a little more!':"Don't give up! Try again!";
+  document.getElementById('res-emoji').textContent = emoji;
+  document.getElementById('res-score').textContent = state.score;
+  document.getElementById('res-total').textContent = state.total;
+  document.getElementById('res-msg').textContent = msg;
+  document.getElementById('result-overlay').classList.add('show');
+  speak(`All done! Your score is ${state.score} out of ${state.total}. ${msg}`);
+}
+
+function restartApp() {
+  document.getElementById('result-overlay').classList.remove('show');
+  state = { awaiting:'menu', mode:null, questions:[], allAnswers:[], qIndex:0, score:0, total:0, hintUsed:false, audioEnabled:state.audioEnabled };
+  chatBox.innerHTML = '';
+  document.querySelector('.input-bar').style.display = 'flex';
+  updateScore();
+  showMenu();
+}
+
+// ═══════════════════════════════════════════════════════════════
+// MC HELPERS
+// ═══════════════════════════════════════════════════════════════
+function getAllAnswers() {
+  const ans = [];
+  for (const qs of Object.values(topics)) for (const q of qs) ans.push(q.a);
+  return ans;
+}
+
+function generateChoices(correct, pool) {
+  const distractors = shuffle(pool.filter(a => a !== correct)).slice(0,3);
+  return shuffle([correct, ...distractors]);
+}
+
+function buildMCBtns(choices, correctAnswer) {
+  const letters = ['A','B','C','D','E'];
+  return `<div class="mc-options">${choices.map((c,i)=>
+    `<button class="mc-btn" data-answer="${encodeURIComponent(c)}" data-correct="${encodeURIComponent(correctAnswer)}" onclick="handleMCClick(this)">
+      <span class="letter">${letters[i]}</span>${c}
+    </button>`
+  ).join('')}</div>`;
+}
+
+function handleMCClick(btn) {
+  const allBtns = btn.closest('.mc-options').querySelectorAll('.mc-btn');
+  allBtns.forEach(b => b.disabled = true);
+  const chosen = decodeURIComponent(btn.dataset.answer);
+  const correct = decodeURIComponent(btn.dataset.correct);
+  const isCorrect = chosen === correct;
+  allBtns.forEach(b => { if(decodeURIComponent(b.dataset.answer)===correct) b.classList.add('correct'); });
+  if (!isCorrect) btn.classList.add('wrong');
+  setTimeout(() => {
+    if (isCorrect) {
+      state.score++;
+      addMessage('bot', `✅ <strong>Correct!</strong> +1 point! The answer is: <strong>${correct}</strong>`, `Correct! The answer is: ${correct}`);
+    } else {
+      addMessage('bot', `❌ <strong>Not quite.</strong> The correct answer is: <strong>${correct}</strong>`, `Not quite. The correct answer is: ${correct}`);
+    }
+    state.qIndex++; updateScore();
+    if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+    else setTimeout(showResult, 900);
+  }, 650);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// NEXT QUESTION
+// ═══════════════════════════════════════════════════════════════
+function nextQuestion() {
+  const qi = state.qIndex;
+  const q = state.questions[qi];
+  const num = qi + 1;
+
+  if (state.mode === 'full' || state.mode === 'topic_mc') {
+    const choices = generateChoices(q.a, state.allAnswers);
+    const tag = q.topic ? `<span class="topic-tag">${q.topic}</span><br>` : '';
+    const html = `${tag}<strong>Q${num} of ${state.total}:</strong> ${q.q}${buildMCBtns(choices, q.a)}`;
+    addMessage('bot', html, `Question ${num}. ${q.q}`);
+    return;
+  }
+
+  if (state.mode === 'tf') {
+    const html = `<strong>Q${num} of ${state.total}:</strong> <div class="scenario-card">${q.q}</div>
+      <span class="chip" data-val="true">✅ True</span><span class="chip" data-val="false">❌ False</span>`;
+    addMessage('bot', html, `Question ${num}. True or False: ${q.q}`);
+    return;
+  }
+
+  if (state.mode === 'identify') {
+    const btns = buildMCBtns(q.choices, q.a);
+    const html = `<strong>Q${num} of ${state.total}:</strong> Identify what is being described:<div class="scenario-card">${q.q}</div>${btns}`;
+    addMessage('bot', html, `Question ${num}. Identify: ${q.q}`);
+    return;
+  }
+
+  // typed answer mode
+  const tag = q.topic ? `<span class="topic-tag">${q.topic}</span><br>` : '';
+  const html = `${tag}<strong>Q${num} of ${state.total}:</strong> ${q.q}<br><small style="color:var(--muted)">Type your answer · type <em>hint</em> for help · <em>skip</em> to move on</small>`;
+  addMessage('bot', html, `Question ${num}. ${q.q}`);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// MENU
+// ═══════════════════════════════════════════════════════════════
+function showMenu() {
+  addMessage('bot',
+    `👋 <strong>Hi! I'm your Science Reviewer!</strong><br>Let's study <em>Cells to Organ Systems</em>, the <em>Skeletal</em> and <em>Muscular Systems</em>, the <em>Integumentary</em>, <em>Digestive</em>, <em>Respiratory</em>, <em>Circulatory</em>, and <em>Excretory Systems</em>, and the <em>Nervous</em>, <em>Endocrine</em>, and <em>Reproductive Systems</em>.<br><br>What would you like to do?<br>
+    <span class="chip" data-val="1">📚 Study by Topic</span>
+    <span class="chip" data-val="2">✅ True or False</span>
+    <span class="chip" data-val="3">🌐 Identify</span>
+    <span class="chip" data-val="4">🌟 Full Review (Multiple Choice)</span>`,
+    "Hi! I'm your Science Reviewer on the Human Body. What would you like to do? Study a topic, True or False, Identify, or a Full Review with multiple choice?"
+  );
+  state.awaiting = 'menu';
+}
+
+// ═══════════════════════════════════════════════════════════════
+// PROCESS MESSAGE
+// ═══════════════════════════════════════════════════════════════
+function processMessage(msg) {
+  const aw = state.awaiting;
+
+  // ── MENU ──────────────────────────────────────────────────
+  if (aw === 'menu') {
+    if (msg === '1') {
+      state.awaiting = 'topic';
+      const keys = Object.keys(topics);
+      const chips = keys.map((t,i) => `<span class="chip" data-val="${i+1}">${i+1}. ${t}</span>`).join(' ');
+      addMessage('bot', `📚 Which topic would you like to study?<br>${chips}`, 'Which topic would you like to study?');
+
+    } else if (msg === '2') {
+      state.mode = 'tf';
+      state.questions = shuffle(trueOrFalse);
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'tf_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `✅ <strong>True or False!</strong> ${state.total} questions. Let's start!`, `True or False! ${state.total} questions. Let's start!`);
+      setTimeout(nextQuestion, 800);
+
+    } else if (msg === '3') {
+      state.mode = 'identify';
+      state.questions = shuffle(identifyQuestions);
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'mc_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `🌐 <strong>Identify!</strong> Figure out which organ system each function or body part belongs to.`, "Identify! Figure out what's being described in each item.");
+      setTimeout(nextQuestion, 800);
+
+    } else if (msg === '4') {
+      state.mode = 'full';
+      const all = [];
+      for (const [topicName, qs] of Object.entries(topics)) {
+        qs.forEach(q => all.push({...q, topic: topicName}));
+      }
+      state.questions = shuffle(all);
+      state.allAnswers = getAllAnswers();
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'mc_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `🌟 <strong>Full Review — Multiple Choice!</strong> ${state.total} questions. Think carefully!`, `Full Review! Multiple Choice! ${state.total} questions. Think carefully!`);
+      setTimeout(nextQuestion, 800);
+
+    } else {
+      addMessage('bot',
+        `Choose an option:<br>
+        <span class="chip" data-val="1">📚 Study by Topic</span>
+        <span class="chip" data-val="2">✅ True or False</span>
+        <span class="chip" data-val="3">🌐 Identify</span>
+        <span class="chip" data-val="4">🌟 Full Review</span>`,
+        'Choose an option.'
+      );
+    }
+    return;
+  }
+
+  // ── TOPIC SELECT ──────────────────────────────────────────
+  if (aw === 'topic') {
+    const keys = Object.keys(topics);
+    const idx = parseInt(msg) - 1;
+    if (keys[idx]) {
+      const topicName = keys[idx];
+      state.mode = 'topic';
+      state.questions = shuffle(topics[topicName]);
+      state.allAnswers = getAllAnswers();
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'answer';
+      document.querySelector('.input-bar').style.display = 'flex';
+      updateScore();
+      addMessage('bot', `📚 <strong>${topicName}</strong> — ${state.total} questions. Ready?`, `${topicName}. ${state.total} questions. Ready?`);
+      setTimeout(nextQuestion, 800);
+    } else {
+      const chips = Object.keys(topics).map((t,i) => `<span class="chip" data-val="${i+1}">${i+1}. ${t}</span>`).join(' ');
+      addMessage('bot', `Please choose a valid topic:<br>${chips}`, 'Please choose a valid topic.');
+    }
+    return;
+  }
+
+  // ── TYPED ANSWER ──────────────────────────────────────────
+  if (aw === 'answer') {
+    const q = state.questions[state.qIndex];
+    const m = normalize(msg);
+
+    if (m === 'hint') {
+      state.hintUsed = true;
+      addMessage('bot', `💡 <strong>Hint:</strong> ${q.hint}`, `Hint: ${q.hint}`);
+      return;
+    }
+    if (m === 'skip') {
+      addMessage('bot', `⏭️ Skipped! The correct answer is: <strong>${q.a}</strong>`, `Skipped. The correct answer is: ${q.a}`);
+      state.qIndex++; state.hintUsed = false;
+      if (state.qIndex < state.total) setTimeout(nextQuestion, 700);
+      else showResult();
+      return;
+    }
+
+    const correct = checkAnswer(msg, q.a);
+    if (correct) {
+      if (!state.hintUsed) state.score++;
+      const note = state.hintUsed ? ' <em>(hint used — no point)</em>' : ' +1 point!';
+      addMessage('bot', `✅ <strong>Correct!</strong>${note} Answer: <strong>${q.a}</strong>`, `Correct! The answer is: ${q.a}`);
+    } else {
+      addMessage('bot', `❌ <strong>Not quite.</strong> The correct answer is: <strong>${q.a}</strong>`, `Not quite. The correct answer is: ${q.a}`);
+    }
+    state.qIndex++; state.hintUsed = false; updateScore();
+    if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+    else setTimeout(showResult, 900);
+    return;
+  }
+
+  // ── TRUE OR FALSE ─────────────────────────────────────────
+  if (aw === 'tf_answer') {
+    const q = state.questions[state.qIndex];
+    const ans = normalize(msg);
+    const valid = ans === 'true' || ans === 'false';
+
+    if (valid) {
+      const correct = ans === q.a;
+      if (correct) {
+        state.score++;
+        addMessage('bot', `✅ <strong>Correct!</strong> The answer is <strong>${q.a.toUpperCase()}</strong>.`, `Correct! The answer is ${q.a}.`);
+      } else {
+        addMessage('bot', `❌ <strong>Incorrect.</strong> The correct answer is <strong>${q.a.toUpperCase()}</strong>.`, `Incorrect. The correct answer is ${q.a}.`);
+      }
+      state.qIndex++; updateScore();
+      if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+      else setTimeout(showResult, 900);
+    } else {
+      addMessage('bot',
+        `Answer: True or False?<br><span class="chip" data-val="true">✅ True</span><span class="chip" data-val="false">❌ False</span>`,
+        'Answer: True or False?'
+      );
+    }
+    return;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// CONTROLS
+// ═══════════════════════════════════════════════════════════════
+function handleUserMessage(msg) {
+  if (!msg.trim()) return;
+  
+  // Stop any speaking audio cleanly when the user answers
+  window.speechSynthesis.cancel();
+  if (currentAudioStream) {
+    currentAudioStream.pause();
+    currentAudioStream = null;
+    showWave(false);
+  }
+  
+  addMessage('user', msg.replace(/</g,'&lt;'));
+  input.value = '';
+  input.disabled = true; sendBtn.disabled = true;
+  addTyping();
+  setTimeout(() => {
+    removeTyping();
+    input.disabled = false; sendBtn.disabled = false;
+    input.focus();
+    processMessage(msg);
+  }, 480);
+}
+
+sendBtn.addEventListener('click', () => { handleUserMessage(input.value); });
+input.addEventListener('keydown', e => { if(e.key==='Enter') handleUserMessage(input.value); });
+
+document.getElementById('audio-toggle').addEventListener('click', function() {
+  state.audioEnabled = !state.audioEnabled;
+  this.textContent = state.audioEnabled ? '🔊' : '🔇';
+  this.classList.toggle('active', state.audioEnabled);
+  if (!state.audioEnabled) {
+    window.speechSynthesis.cancel();
+    if (currentAudioStream) {
+      currentAudioStream.pause();
+      currentAudioStream = null;
+      showWave(false);
+    }
+  }
+});
+
+// ═══════════════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════════════
+window.addEventListener('load', () => {
+  lookupSystemVoices();
+  showMenu();
+});
+
+function printPracticeTest() {
+  document.body.classList.add('printing-test');
+  window.print();
+}
+window.addEventListener('afterprint', () => {
+  document.body.classList.remove('printing-test');
+});
+
+// ═══════════════════════════════════════════════════════════════
+// READ NOTES ALOUD (uses the browser's own voice — no length limit,
+// unlike the short Google TTS clips used for chat messages)
+// ═══════════════════════════════════════════════════════════════
+function getNotesText(section) {
+  // Skip the Practice Test / Answer Key tabs — too long and not meant to be read aloud
+  const clone = section.cloneNode(true);
+  clone.querySelectorAll('button').forEach(b => b.remove());
+  let text = clone.innerText || clone.textContent || '';
+  text = text.replace(/\s+/g, ' ').trim();
+  return text;
+}
+
+function toggleNotesAudio() {
+  const btn = document.getElementById('notes-audio-btn');
+  if (!btn) return;
+
+  if (window.speechSynthesis.speaking || window.speechSynthesis.pending) {
+    window.speechSynthesis.cancel();
+    btn.innerHTML = '🔊 Read Notes Aloud';
+    btn.classList.remove('active');
+    return;
+  }
+
+  const activeSection = document.querySelector('.notes-section.active');
+  if (!activeSection) return;
+  const text = getNotesText(activeSection);
+  if (!text) return;
+
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.lang = 'en-US';
+  utter.rate = 0.95;
+  utter.pitch = 1.05;
+  utter.volume = 1;
+
+  const voices = window.speechSynthesis.getVoices();
+  const voice = voices.find(v => v.lang.startsWith('en') && v.name.toLowerCase().includes('female'))
+             || voices.find(v => v.lang.startsWith('en'));
+  if (voice) utter.voice = voice;
+
+  utter.onstart = () => { btn.innerHTML = '⏹️ Stop Reading'; btn.classList.add('active'); };
+  utter.onend = utter.onerror = () => { btn.innerHTML = '🔊 Read Notes Aloud'; btn.classList.remove('active'); };
+
+  window.speechSynthesis.speak(utter);
+}
+
+function switchTab(tabId, btn) {
+  window.speechSynthesis.cancel();
+  const audioBtn = document.getElementById('notes-audio-btn');
+  if (audioBtn) { audioBtn.innerHTML = '🔊 Read Notes Aloud'; audioBtn.classList.remove('active'); }
+  document.querySelectorAll('.notes-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.notes-tab').forEach(b => b.classList.remove('active'));
+  document.getElementById(tabId).classList.add('active');
+  btn.classList.add('active');
+}
+
+function closeNotesPanel() {
+  window.speechSynthesis.cancel();
+  const audioBtn = document.getElementById('notes-audio-btn');
+  if (audioBtn) { audioBtn.innerHTML = '🔊 Read Notes Aloud'; audioBtn.classList.remove('active'); }
+  document.getElementById('notes-overlay').classList.remove('show');
+}
+</script>
+
+<!-- ── Notes Panel ── -->
+<div class="notes-overlay" id="notes-overlay">
+  <div class="notes-panel">
+    <div class="notes-header">
+      <h2>📖 The Human Body — Notes</h2>
+      <div class="notes-header-actions">
+        <button class="print-btn" id="notes-audio-btn" onclick="toggleNotesAudio()" title="Have this tab read aloud">🔊 Read Notes Aloud</button>
+        <button class="print-btn" onclick="printPracticeTest()" title="Print or save the Practice Test &amp; Answer Key as PDF">🖨️ Print Test &amp; Key</button>
+        <button class="notes-close" onclick="closeNotesPanel()">✕</button>
+      </div>
+    </div>
+    <div class="notes-tabs">
+      <button class="notes-tab active" onclick="switchTab('tab-levels', this)">🧬 Body Organization</button>
+      <button class="notes-tab" onclick="switchTab('tab-skeletal', this)">🦴 Skeletal System</button>
+      <button class="notes-tab" onclick="switchTab('tab-muscular', this)">💪 Muscular System</button>
+      <button class="notes-tab" onclick="switchTab('tab-skin', this)">🧴 Integumentary System</button>
+      <button class="notes-tab" onclick="switchTab('tab-digestive', this)">🍽️ Digestive System</button>
+      <button class="notes-tab" onclick="switchTab('tab-respiratory', this)">🫁 Respiratory System</button>
+      <button class="notes-tab" onclick="switchTab('tab-circulatory', this)">🩸 Circulatory System</button>
+      <button class="notes-tab" onclick="switchTab('tab-excretory', this)">🚰 Excretory System</button>
+      <button class="notes-tab" onclick="switchTab('tab-nervous', this)">🧠 Nervous &amp; Endocrine</button>
+      <button class="notes-tab" onclick="switchTab('tab-reproductive', this)">👶 Reproductive System</button>
+      <button class="notes-tab" onclick="switchTab('tab-tf', this)">✅ True or False</button>
+      <button class="notes-tab" onclick="switchTab('tab-ptest', this)">📝 Practice Test</button>
+      <button class="notes-tab" onclick="switchTab('tab-key', this)">🔑 Answer Key</button>
+    </div>
+    <div class="notes-body">
+
+      <div class="notes-section active" id="tab-levels">
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> The body is built in four levels, smallest to largest: cells form tissues, tissues form organs, and organs form organ systems. There are ten organ systems in total, each with its own job.
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 MEMORY TRICK</span>
+          Remember the order with: <strong>"Cows Trot Over Streams"</strong> — <strong>C</strong>ells → <strong>T</strong>issues → <strong>O</strong>rgans → <strong>S</strong>ystems. Each level is a team made of smaller teams!
+        </div>
+        <table class="compare-table">
+          <tr><th>Level</th><th>What It Is</th></tr>
+          <tr><td>Cell</td><td>Smallest living unit — the building block of the body</td></tr>
+          <tr><td>Tissue</td><td>Cells of the same kind working together (e.g. bone tissue, muscle tissue)</td></tr>
+          <tr><td>Organ</td><td>Different tissues working together (e.g. brain, heart, lungs)</td></tr>
+          <tr><td>Organ System</td><td>Different organs working together for a major function</td></tr>
+        </table>
+        <div class="notes-topic">
+          <div class="notes-topic-title">🗂️ The 10 Organ Systems, by Job</div>
+          <div class="notes-item"><span class="notes-term">Support &amp; Movement</span><span class="notes-def">Skeletal, Muscular</span></div>
+          <div class="notes-item"><span class="notes-term">Supply &amp; Transport</span><span class="notes-def">Digestive, Circulatory, Respiratory, Excretory</span></div>
+          <div class="notes-item"><span class="notes-term">Control &amp; Sensing</span><span class="notes-def">Nervous, Endocrine</span></div>
+          <div class="notes-item"><span class="notes-term">Protection &amp; Sensation</span><span class="notes-def">Integumentary</span></div>
+          <div class="notes-item"><span class="notes-term">Reproduction</span><span class="notes-def">Reproductive</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-skeletal">
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> The <strong>skeletal system</strong> supports the body, gives it structure, protects organs, and works with joints, ligaments, tendons, and cartilage to enable movement.
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 MEMORY TRICK</span>
+          Tell ligaments and tendons apart: <strong>"Ligaments Link bone to bone, Tendons Tie muscle to bone."</strong> Both start with the same letter as their job!
+        </div>
+        <table class="compare-table">
+          <tr><th>Bone Shape</th><th>Job</th><th>Examples</th></tr>
+          <tr><td>Long</td><td>Support weight, allow movement</td><td>Femur, phalanges, ulna &amp; radius</td></tr>
+          <tr><td>Flat</td><td>Protect &amp; support organs</td><td>Ribs, breastbone, skull bones</td></tr>
+          <tr><td>Short</td><td>Support weight, small movements</td><td>Tarsals (ankle), carpals (wrist)</td></tr>
+          <tr><td>Irregular</td><td>Specialized shapes</td><td>Vertebra, ear's hammer/anvil/stirrup</td></tr>
+        </table>
+        <div class="notes-topic">
+          <div class="notes-topic-title">🦴 Axial vs. Appendicular Skeleton</div>
+          <div class="notes-item"><span class="notes-term">Axial Skeleton</span><span class="notes-def">Skull, vertebral column (backbone), and thoracic cage (12 pairs of ribs + sternum)</span></div>
+          <div class="notes-item"><span class="notes-term">Appendicular Skeleton</span><span class="notes-def">Upper extremities (shoulder girdle + arms) and lower extremities (pelvic girdle + legs)</span></div>
+          <div class="notes-item"><span class="notes-term">Joints</span><span class="notes-def">Fixed (no movement, e.g. cranium) or movable (e.g. hips, knees, fingers)</span></div>
+          <div class="notes-item"><span class="notes-term">Ligament</span><span class="notes-def">Connects bone to bone at a joint</span></div>
+          <div class="notes-item"><span class="notes-term">Tendon</span><span class="notes-def">Connects muscle to bone</span></div>
+          <div class="notes-item"><span class="notes-term">Cartilage</span><span class="notes-def">Cushions joints and acts as a shock absorber</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-muscular">
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> The <strong>muscular system</strong> works with the skeletal system to enable movement, give the body shape, and generate heat. There are three types of muscle: skeletal, smooth, and cardiac.
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 MEMORY TRICK</span>
+          Remember the 3 muscle types with: <strong>"Skeletons Squeeze Constantly"</strong> — <strong>S</strong>keletal (voluntary, attached to bone), <strong>S</strong>mooth (involuntary, in organs), <strong>C</strong>ardiac (only in the heart, never stops).
+        </div>
+        <table class="compare-table">
+          <tr><th>Muscle Type</th><th>Where Found</th><th>Voluntary?</th></tr>
+          <tr><td>Skeletal</td><td>Face, neck, arms, legs, abdomen, chest</td><td>Yes — you control it</td></tr>
+          <tr><td>Smooth</td><td>Stomach and intestine walls</td><td>No — automatic</td></tr>
+          <tr><td>Cardiac</td><td>Only the heart</td><td>No — works nonstop</td></tr>
+        </table>
+        <div class="tandaan-box">
+          <span class="tandaan-label">REMEMBER</span>
+          Muscles work in pairs: an <strong>extensor</strong> straightens a joint, a <strong>flexor</strong> bends it. The Achilles tendon joins your calf muscle to your heel!
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-skin">
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> The <strong>integumentary system</strong> (skin, hair, nails, and glands) protects the body, regulates temperature, and is made of three layers: the epidermis, dermis, and hypodermis.
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 MEMORY TRICK</span>
+          Remember the skin layers outside-in with: <strong>"Every Dog Hides"</strong> — <strong>E</strong>pidermis (top), <strong>D</strong>ermis (middle), <strong>H</strong>ypodermis (bottom, fatty layer).
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">🧴 The 3 Layers of Skin</div>
+          <div class="notes-item"><span class="notes-term">Epidermis</span><span class="notes-def">Surface layer; produces melanin, the pigment that gives skin its color and protects from sunburn</span></div>
+          <div class="notes-item"><span class="notes-term">Dermis</span><span class="notes-def">Middle layer; contains sweat glands, hair follicles, and oil glands</span></div>
+          <div class="notes-item"><span class="notes-term">Hypodermis</span><span class="notes-def">Deepest layer; fatty tissue that pads organs and keeps heat in, contains elastin</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-digestive">
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> The <strong>digestive system</strong> breaks down food into nutrients through the alimentary canal (mouth to large intestine), aided by accessory organs like the liver, pancreas, and gall bladder.
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 MEMORY TRICK</span>
+          Remember the food's journey with: <strong>"Miss Emma Stole Sam's Lunch"</strong> — <strong>M</strong>outh → <strong>E</strong>sophagus → <strong>S</strong>tomach → <strong>S</strong>mall intestine → <strong>L</strong>arge intestine.
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">🍽️ Alimentary Canal vs. Accessory Organs</div>
+          <div class="notes-item"><span class="notes-term">Alimentary Canal</span><span class="notes-def">Mouth, esophagus, stomach, small intestine, large intestine — about 20 feet long</span></div>
+          <div class="notes-item"><span class="notes-term">Accessory Organs</span><span class="notes-def">Salivary glands, liver, pancreas, gall bladder — produce digestive juices</span></div>
+          <div class="notes-item"><span class="notes-term">Liver</span><span class="notes-def">Largest internal organ; produces bile for digesting fats</span></div>
+          <div class="notes-item"><span class="notes-term">Pancreas</span><span class="notes-def">Produces insulin and other digestive enzymes</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-respiratory">
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> The <strong>respiratory system</strong> brings oxygen into the body and removes carbon dioxide, through a path from the nose all the way down to the tiny air sacs called alveoli.
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 MEMORY TRICK</span>
+          Follow the air's path with: <strong>"Naughty Puppies Love To Bark Loudly"</strong> — <strong>N</strong>ose → <strong>P</strong>harynx → <strong>T</strong>rachea → <strong>B</strong>ronchi → bronchio<strong>L</strong>es → a<strong>L</strong>veoli.
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">🫁 Key Respiratory Structures</div>
+          <div class="notes-item"><span class="notes-term">Epiglottis</span><span class="notes-def">Closes when you swallow to keep food out of the lungs</span></div>
+          <div class="notes-item"><span class="notes-term">Larynx</span><span class="notes-def">The voice box — produces sound</span></div>
+          <div class="notes-item"><span class="notes-term">Alveoli</span><span class="notes-def">Tiny air sacs where oxygen and carbon dioxide are actually exchanged</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-circulatory">
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> The <strong>circulatory system</strong> — heart, blood, and blood vessels — transports gases and nutrients throughout the body.
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 MEMORY TRICK</span>
+          Remember blood vessel direction with: <strong>"Arteries Away, Veins to Ventricles"</strong> — <strong>A</strong>rteries carry blood <strong>A</strong>way from the heart, <strong>V</strong>eins carry it back.
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">🩸 Blood Components</div>
+          <div class="notes-item"><span class="notes-term">Red Blood Cells</span><span class="notes-def">Carry oxygen throughout the body</span></div>
+          <div class="notes-item"><span class="notes-term">White Blood Cells</span><span class="notes-def">Fight infection</span></div>
+          <div class="notes-item"><span class="notes-term">Platelets</span><span class="notes-def">Form clots to stop bleeding</span></div>
+          <div class="notes-item"><span class="notes-term">Plasma</span><span class="notes-def">Yellowish liquid, 90% water, carries food and collects waste</span></div>
+        </div>
+        <div class="tandaan-box">
+          <span class="tandaan-label">REMEMBER</span>
+          Heart chambers by animal: fish = 2, amphibians = 3, mammals &amp; birds (and humans!) = 4. Jellyfish have no heart at all!
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-excretory">
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> The <strong>excretory system</strong> removes waste — carbon dioxide (lungs), solid waste (large intestine), sweat (skin), and liquid waste or urine (liver and kidneys).
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 MEMORY TRICK</span>
+          Remember urine's path out of the body with: <strong>"Kidneys Urge Bladder's Exit"</strong> — <strong>K</strong>idneys (filter) → <strong>U</strong>reters → <strong>B</strong>ladder (store) → ur<strong>E</strong>thra (exit).
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">🚰 Key Excretory Facts</div>
+          <div class="notes-item"><span class="notes-term">Urea</span><span class="notes-def">A poisonous nitrogen compound made by the liver, removed in urine</span></div>
+          <div class="notes-item"><span class="notes-term">Nephrons</span><span class="notes-def">Tiny filtering structures inside the kidneys</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-nervous">
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> The <strong>nervous system</strong> is the body's control center, using fast electric signals. The <strong>endocrine system</strong> works more slowly, using chemical signals called hormones.
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 MEMORY TRICK</span>
+          Nervous = <strong>N</strong>ow (fast electric signals). Endocrine = <strong>E</strong>ventually (slower chemical signals/hormones). Both start with the speed they work at!
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">🧠 Nervous &amp; Endocrine Highlights</div>
+          <div class="notes-item"><span class="notes-term">Cerebrum</span><span class="notes-def">Largest part of the brain; right half controls the left side of the body, and vice versa</span></div>
+          <div class="notes-item"><span class="notes-term">Pituitary Gland</span><span class="notes-def">Controls growth — height and body size</span></div>
+          <div class="notes-item"><span class="notes-term">Adrenal Glands</span><span class="notes-def">Produce adrenaline for quick responses to fear or excitement</span></div>
+          <div class="notes-item"><span class="notes-term">Pancreas</span><span class="notes-def">Produces insulin to regulate blood sugar</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-reproductive">
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> The <strong>reproductive system</strong> allows living things to produce offspring, either through sexual reproduction (two parents) or asexual reproduction (one parent).
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 MEMORY TRICK</span>
+          Sperm + Egg = <strong>Zygote</strong>. Think: "S + E = Z" — the last letters of the alphabet, for the start of new life!
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">👶 Key Reproductive Terms</div>
+          <div class="notes-item"><span class="notes-term">Fertilization</span><span class="notes-def">When a sperm cell joins with an egg cell (ovum)</span></div>
+          <div class="notes-item"><span class="notes-term">Testosterone</span><span class="notes-def">Male hormone, produced by the testes</span></div>
+          <div class="notes-item"><span class="notes-term">Estrogen &amp; Progesterone</span><span class="notes-def">Female hormones, produced by the ovaries</span></div>
+          <div class="notes-item"><span class="notes-term">Uterus</span><span class="notes-def">Muscular organ that houses and nourishes a developing baby</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-tf">
+        <div class="notes-topic">
+          <div class="notes-topic-title">✅ True or False — Key Reminders</div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">One organ alone can fully perform a major body function → organs need to work together as a system.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">Fixed joints allow a lot of movement → fixed joints (like in the cranium) allow no movement at all.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">Cardiac muscles are found throughout the arms and legs → cardiac muscle is found only in the heart.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">Melanin production decreases with UV exposure → it actually increases to help protect against sunburn.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">The epiglottis stays open when you swallow → it closes to keep food out of the lungs.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">Fish hearts have four chambers → fish hearts have only two chambers.</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-ptest">
+        <div class="notes-topic">
+          <div class="notes-topic-title">📝 Practice Test</div>
+<div class="ptest-part-title">Part I — Matching Type (Function → System)</div>
+<div class="ptest-bank"><strong>Word Bank:</strong> Circulatory system &middot; Digestive system &middot; Endocrine system &middot; Excretory system &middot; Integumentary system &middot; Muscular system &middot; Nervous system &middot; Reproductive system &middot; Respiratory system &middot; Skeletal system</div><div class="ptest-q"><b>1.</b> It protects your body from the external environment and regulates temperature. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>2.</b> It provides the body structure and protection of internal organs. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>3.</b> It is responsible for movement. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>4.</b> It controls and regulates bodily functions (electric signals). <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>5.</b> It regulates bodily functions through chemical secretions of glands. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>6.</b> It transports gases and nutrients to the different parts of the body. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>7.</b> It is responsible for supplying the body with oxygen and expelling carbon dioxide. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>8.</b> It breaks down food so that the body can absorb nutrients. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>9.</b> It facilitates the expulsion of waste materials from the body. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>10.</b> It is responsible for the perpetuation of life on Earth. <span class="opt">Answer: ______________________</span></div><div class="ptest-part-title">Part II — Identify the Organ System</div><div class="ptest-q"><b>11.</b> Adrenal glands <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>12.</b> Biceps <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>13.</b> Bladder <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>14.</b> Blood <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>15.</b> Brain <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>16.</b> Hair <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>17.</b> Heart <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>18.</b> Intestines <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>19.</b> Kidney <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>20.</b> Lung <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>21.</b> Pituitary gland <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>22.</b> Rib <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>23.</b> Scrotum <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>24.</b> Skin <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>25.</b> Skull <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>26.</b> Spinal cord <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>27.</b> Stomach <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>28.</b> Trachea <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>29.</b> Triceps <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>30.</b> Uterus <span class="opt">Answer: ______________________</span></div><div class="ptest-part-title">Part III — True or False</div><div class="ptest-q"><b>31.</b> Cells are the smallest living units and building blocks of the body. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>32.</b> One organ alone can fully perform a major body function without help from other organs. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>33.</b> The femur is the longest and heaviest bone in the human body. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>34.</b> The mandible is the only bone in the skull that moves. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>35.</b> Fixed joints, like those in the cranium, allow a lot of movement. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>36.</b> Cartilage acts as a shock absorber and prevents bones from grinding together. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>37.</b> Cardiac muscles are found throughout the arms and legs. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>38.</b> Smooth muscles are involuntary and work automatically. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>39.</b> The skin is the largest organ of the body. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>40.</b> Melanin production decreases when skin is exposed to UV rays. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>41.</b> The small intestine completes the digestion of food before sending nutrients to the blood. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>42.</b> The liver produces bile, which is necessary for digesting fats. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>43.</b> Alveoli are the tiny air sacs where gas exchange takes place in the lungs. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>44.</b> The epiglottis stays open when you swallow food. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>45.</b> Capillaries are the smallest blood vessels, where gas exchange occurs. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>46.</b> White blood cells fight infection in the body. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>47.</b> Fish hearts have four chambers, just like humans. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>48.</b> Nephrons in the kidneys filter wastes from the blood. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>49.</b> The cerebrum is the largest part of the brain and is divided into two halves. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>50.</b> Fertilization happens when a sperm cell meets and joins with an egg cell. <span class="opt">Answer: ______________________</span></div><div class="ptest-part-title">Part IV — Short Answer</div><div class="ptest-q"><b>51.</b> How does air reach your lungs and the cells?</div><div class="ptest-q"><b>52.</b> How do the organs of the nervous system work together so that collected messages are interpreted by the brain?</div><div class="ptest-q"><b>53.</b> How do bones and muscles work together in performing their functions?</div><div class="ptest-q"><b>54.</b> How do the respiratory and circulatory systems work together?</div><div class="ptest-q"><b>55.</b> How do the digestive and circulatory systems work together?</div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-key">
+        <div class="notes-topic">
+<div class="notes-topic-title">Part I — Function → System</div><div class="key-grid"><div class="key-pill">1. <b>Integumentary system</b></div><div class="key-pill">2. <b>Skeletal system</b></div><div class="key-pill">3. <b>Muscular system</b></div><div class="key-pill">4. <b>Nervous system</b></div><div class="key-pill">5. <b>Endocrine system</b></div><div class="key-pill">6. <b>Circulatory system</b></div><div class="key-pill">7. <b>Respiratory system</b></div><div class="key-pill">8. <b>Digestive system</b></div><div class="key-pill">9. <b>Excretory system</b></div><div class="key-pill">10. <b>Reproductive system</b></div></div><div class="notes-topic-title">Part II — Organ → System</div><div class="key-grid"><div class="key-pill">11. <b>Endocrine system</b></div><div class="key-pill">12. <b>Muscular system</b></div><div class="key-pill">13. <b>Excretory system</b></div><div class="key-pill">14. <b>Circulatory system</b></div><div class="key-pill">15. <b>Nervous system</b></div><div class="key-pill">16. <b>Integumentary system</b></div><div class="key-pill">17. <b>Circulatory system</b></div><div class="key-pill">18. <b>Digestive system</b></div><div class="key-pill">19. <b>Excretory system</b></div><div class="key-pill">20. <b>Respiratory system</b></div><div class="key-pill">21. <b>Endocrine system</b></div><div class="key-pill">22. <b>Skeletal system</b></div><div class="key-pill">23. <b>Reproductive system</b></div><div class="key-pill">24. <b>Integumentary system</b></div><div class="key-pill">25. <b>Skeletal system</b></div><div class="key-pill">26. <b>Nervous system</b></div><div class="key-pill">27. <b>Digestive system</b></div><div class="key-pill">28. <b>Respiratory system</b></div><div class="key-pill">29. <b>Muscular system</b></div><div class="key-pill">30. <b>Reproductive system</b></div></div><div class="notes-topic-title">Part III — True or False</div><div class="key-grid"><div class="key-pill">31. <b>True</b></div><div class="key-pill">32. <b>False</b></div><div class="key-pill">33. <b>True</b></div><div class="key-pill">34. <b>True</b></div><div class="key-pill">35. <b>False</b></div><div class="key-pill">36. <b>True</b></div><div class="key-pill">37. <b>False</b></div><div class="key-pill">38. <b>True</b></div><div class="key-pill">39. <b>True</b></div><div class="key-pill">40. <b>False</b></div><div class="key-pill">41. <b>True</b></div><div class="key-pill">42. <b>True</b></div><div class="key-pill">43. <b>True</b></div><div class="key-pill">44. <b>False</b></div><div class="key-pill">45. <b>True</b></div><div class="key-pill">46. <b>True</b></div><div class="key-pill">47. <b>False</b></div><div class="key-pill">48. <b>True</b></div><div class="key-pill">49. <b>True</b></div><div class="key-pill">50. <b>True</b></div></div><div class="notes-topic-title">Part IV — Short Answer (sample answers)</div><div class="ptest-q" style="margin-bottom:6px"><b>51.</b> Air enters the body through the nose or mouth and travels through the trachea, bronchi, and bronchioles until it reaches the alveoli in the lungs. Oxygen then passes into the blood through the capillaries and is carried by the blood to the cells of the body.</div><div class="ptest-q" style="margin-bottom:6px"><b>52.</b> The sense organs collect information from the environment and send messages through nerve cells and nerves to the spinal cord and brain. The brain receives and interprets these messages, allowing the body to respond to changes in the environment.</div><div class="ptest-q" style="margin-bottom:6px"><b>53.</b> Bones provide support and structure for the body, while muscles contract and relax to move the bones. Together, bones and muscles allow the body to move and perform different activities.</div><div class="ptest-q" style="margin-bottom:6px"><b>54.</b> The respiratory system brings oxygen into the lungs and removes carbon dioxide. In the alveoli, oxygen passes into the blood, while carbon dioxide passes from the blood into the lungs. The circulatory system then transports oxygen-rich blood to the different parts of the body.</div><div class="ptest-q" style="margin-bottom:6px"><b>55.</b> The digestive system breaks down food into nutrients. These nutrients are absorbed into the blood, and the circulatory system transports them to the different parts of the body where they are needed.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ── Hidden Print Area (Practice Test + Answer Key) ── -->
+<div id="print-area">
+<div class="p-cover">
+    <div class="p-icon">🫀</div>
+    <h1>Science 5 — The Human Body Practice Test</h1>
+    <div class="p-sub">Organ Systems · Skeletal &amp; Muscular · Digestive &amp; Respiratory · Nervous &amp; Endocrine</div>
+    <div class="p-info-box">
+      <div><strong>Name:</strong> _____________________________________</div>
+      <div><strong>Section:</strong> ___________________ &nbsp; <strong>Date:</strong> ___________________</div>
+      <div><strong>Score:</strong> _______ / 55</div>
+    </div>
+    <div class="p-instructions">
+      <strong>Instructions:</strong> Read each item carefully. Write your answer on the blank provided (Parts I-III), or answer in complete sentences (Part IV). Good luck!
+    </div>
+  </div>
+
+  <h2 class="p-part-title">Part I — Matching Type (Function → System)</h2>
+  <div class="p-bank"><strong>Word Bank:</strong> Circulatory system &middot; Digestive system &middot; Endocrine system &middot; Excretory system &middot; Integumentary system &middot; Muscular system &middot; Nervous system &middot; Reproductive system &middot; Respiratory system &middot; Skeletal system</div><div class="p-q"><b>1.</b> It protects your body from the external environment and regulates temperature. <span class="p-blank"></span></div><div class="p-q"><b>2.</b> It provides the body structure and protection of internal organs. <span class="p-blank"></span></div><div class="p-q"><b>3.</b> It is responsible for movement. <span class="p-blank"></span></div><div class="p-q"><b>4.</b> It controls and regulates bodily functions (electric signals). <span class="p-blank"></span></div><div class="p-q"><b>5.</b> It regulates bodily functions through chemical secretions of glands. <span class="p-blank"></span></div><div class="p-q"><b>6.</b> It transports gases and nutrients to the different parts of the body. <span class="p-blank"></span></div><div class="p-q"><b>7.</b> It is responsible for supplying the body with oxygen and expelling carbon dioxide. <span class="p-blank"></span></div><div class="p-q"><b>8.</b> It breaks down food so that the body can absorb nutrients. <span class="p-blank"></span></div><div class="p-q"><b>9.</b> It facilitates the expulsion of waste materials from the body. <span class="p-blank"></span></div><div class="p-q"><b>10.</b> It is responsible for the perpetuation of life on Earth. <span class="p-blank"></span></div><div class="p-break"></div><h2 class="p-part-title">Part II — Identify the Organ System</h2><div class="p-q"><b>11.</b> Adrenal glands <span class="p-blank"></span></div><div class="p-q"><b>12.</b> Biceps <span class="p-blank"></span></div><div class="p-q"><b>13.</b> Bladder <span class="p-blank"></span></div><div class="p-q"><b>14.</b> Blood <span class="p-blank"></span></div><div class="p-q"><b>15.</b> Brain <span class="p-blank"></span></div><div class="p-q"><b>16.</b> Hair <span class="p-blank"></span></div><div class="p-q"><b>17.</b> Heart <span class="p-blank"></span></div><div class="p-q"><b>18.</b> Intestines <span class="p-blank"></span></div><div class="p-q"><b>19.</b> Kidney <span class="p-blank"></span></div><div class="p-q"><b>20.</b> Lung <span class="p-blank"></span></div><div class="p-q"><b>21.</b> Pituitary gland <span class="p-blank"></span></div><div class="p-q"><b>22.</b> Rib <span class="p-blank"></span></div><div class="p-q"><b>23.</b> Scrotum <span class="p-blank"></span></div><div class="p-q"><b>24.</b> Skin <span class="p-blank"></span></div><div class="p-q"><b>25.</b> Skull <span class="p-blank"></span></div><div class="p-q"><b>26.</b> Spinal cord <span class="p-blank"></span></div><div class="p-q"><b>27.</b> Stomach <span class="p-blank"></span></div><div class="p-q"><b>28.</b> Trachea <span class="p-blank"></span></div><div class="p-q"><b>29.</b> Triceps <span class="p-blank"></span></div><div class="p-q"><b>30.</b> Uterus <span class="p-blank"></span></div><div class="p-break"></div><h2 class="p-part-title">Part III — True or False</h2><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>31.</b> Cells are the smallest living units and building blocks of the body.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>32.</b> One organ alone can fully perform a major body function without help from other organs.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>33.</b> The femur is the longest and heaviest bone in the human body.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>34.</b> The mandible is the only bone in the skull that moves.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>35.</b> Fixed joints, like those in the cranium, allow a lot of movement.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>36.</b> Cartilage acts as a shock absorber and prevents bones from grinding together.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>37.</b> Cardiac muscles are found throughout the arms and legs.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>38.</b> Smooth muscles are involuntary and work automatically.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>39.</b> The skin is the largest organ of the body.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>40.</b> Melanin production decreases when skin is exposed to UV rays.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>41.</b> The small intestine completes the digestion of food before sending nutrients to the blood.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>42.</b> The liver produces bile, which is necessary for digesting fats.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>43.</b> Alveoli are the tiny air sacs where gas exchange takes place in the lungs.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>44.</b> The epiglottis stays open when you swallow food.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>45.</b> Capillaries are the smallest blood vessels, where gas exchange occurs.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>46.</b> White blood cells fight infection in the body.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>47.</b> Fish hearts have four chambers, just like humans.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>48.</b> Nephrons in the kidneys filter wastes from the blood.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>49.</b> The cerebrum is the largest part of the brain and is divided into two halves.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>50.</b> Fertilization happens when a sperm cell meets and joins with an egg cell.</div><div class="p-break"></div><h2 class="p-part-title">Part IV — Short Answer</h2><div class="p-q"><b>51.</b> How does air reach your lungs and the cells?<br><br>_________________________________________________<br><br>_________________________________________________<br><br>_________________________________________________</div><div class="p-q"><b>52.</b> How do the organs of the nervous system work together so that collected messages are interpreted by the brain?<br><br>_________________________________________________<br><br>_________________________________________________<br><br>_________________________________________________</div><div class="p-q"><b>53.</b> How do bones and muscles work together in performing their functions?<br><br>_________________________________________________<br><br>_________________________________________________<br><br>_________________________________________________</div><div class="p-q"><b>54.</b> How do the respiratory and circulatory systems work together?<br><br>_________________________________________________<br><br>_________________________________________________<br><br>_________________________________________________</div><div class="p-q"><b>55.</b> How do the digestive and circulatory systems work together?<br><br>_________________________________________________<br><br>_________________________________________________<br><br>_________________________________________________</div><div class="p-break"></div><h2 class="p-part-title">✅ Complete Answer Key</h2>
+  <div class="p-key-part-title">Part I — Function → System</div><div class="p-key-grid"><div class="p-key-pill">1. <b>Integumentary system</b></div><div class="p-key-pill">2. <b>Skeletal system</b></div><div class="p-key-pill">3. <b>Muscular system</b></div><div class="p-key-pill">4. <b>Nervous system</b></div><div class="p-key-pill">5. <b>Endocrine system</b></div><div class="p-key-pill">6. <b>Circulatory system</b></div><div class="p-key-pill">7. <b>Respiratory system</b></div><div class="p-key-pill">8. <b>Digestive system</b></div><div class="p-key-pill">9. <b>Excretory system</b></div><div class="p-key-pill">10. <b>Reproductive system</b></div></div><div class="p-key-part-title">Part II — Organ → System</div><div class="p-key-grid"><div class="p-key-pill">11. <b>Endocrine system</b></div><div class="p-key-pill">12. <b>Muscular system</b></div><div class="p-key-pill">13. <b>Excretory system</b></div><div class="p-key-pill">14. <b>Circulatory system</b></div><div class="p-key-pill">15. <b>Nervous system</b></div><div class="p-key-pill">16. <b>Integumentary system</b></div><div class="p-key-pill">17. <b>Circulatory system</b></div><div class="p-key-pill">18. <b>Digestive system</b></div><div class="p-key-pill">19. <b>Excretory system</b></div><div class="p-key-pill">20. <b>Respiratory system</b></div><div class="p-key-pill">21. <b>Endocrine system</b></div><div class="p-key-pill">22. <b>Skeletal system</b></div><div class="p-key-pill">23. <b>Reproductive system</b></div><div class="p-key-pill">24. <b>Integumentary system</b></div><div class="p-key-pill">25. <b>Skeletal system</b></div><div class="p-key-pill">26. <b>Nervous system</b></div><div class="p-key-pill">27. <b>Digestive system</b></div><div class="p-key-pill">28. <b>Respiratory system</b></div><div class="p-key-pill">29. <b>Muscular system</b></div><div class="p-key-pill">30. <b>Reproductive system</b></div></div><div class="p-key-part-title">Part III — True or False</div><div class="p-key-grid"><div class="p-key-pill">31. <b>True</b></div><div class="p-key-pill">32. <b>False</b></div><div class="p-key-pill">33. <b>True</b></div><div class="p-key-pill">34. <b>True</b></div><div class="p-key-pill">35. <b>False</b></div><div class="p-key-pill">36. <b>True</b></div><div class="p-key-pill">37. <b>False</b></div><div class="p-key-pill">38. <b>True</b></div><div class="p-key-pill">39. <b>True</b></div><div class="p-key-pill">40. <b>False</b></div><div class="p-key-pill">41. <b>True</b></div><div class="p-key-pill">42. <b>True</b></div><div class="p-key-pill">43. <b>True</b></div><div class="p-key-pill">44. <b>False</b></div><div class="p-key-pill">45. <b>True</b></div><div class="p-key-pill">46. <b>True</b></div><div class="p-key-pill">47. <b>False</b></div><div class="p-key-pill">48. <b>True</b></div><div class="p-key-pill">49. <b>True</b></div><div class="p-key-pill">50. <b>True</b></div></div><div class="p-key-part-title">Part IV — Short Answer (sample answers)</div><div class="p-q"><b>51.</b> Air enters the body through the nose or mouth and travels through the trachea, bronchi, and bronchioles until it reaches the alveoli in the lungs. Oxygen then passes into the blood through the capillaries and is carried by the blood to the cells of the body.</div><div class="p-q"><b>52.</b> The sense organs collect information from the environment and send messages through nerve cells and nerves to the spinal cord and brain. The brain receives and interprets these messages, allowing the body to respond to changes in the environment.</div><div class="p-q"><b>53.</b> Bones provide support and structure for the body, while muscles contract and relax to move the bones. Together, bones and muscles allow the body to move and perform different activities.</div><div class="p-q"><b>54.</b> The respiratory system brings oxygen into the lungs and removes carbon dioxide. In the alveoli, oxygen passes into the blood, while carbon dioxide passes from the blood into the lungs. The circulatory system then transports oxygen-rich blood to the different parts of the body.</div><div class="p-q"><b>55.</b> The digestive system breaks down food into nutrients. These nutrients are absorbed into the blood, and the circulatory system transports them to the different parts of the body where they are needed.</div>
+</div>
+
+</body>
+</html>
