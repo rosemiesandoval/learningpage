@@ -1,0 +1,1505 @@
+<!DOCTYPE html>
+<html lang="tl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🌦️ AP: Klima, Panahon, at Pantaong Heograpiya Reviewer 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --gold: #f59e0b;
+  --gold-dark: #b45309;
+  --blue: #3b82f6;
+  --blue-dark: #1d4ed8;
+  --red: #ef4444;
+  --green: #22c55e;
+  --bg: #0c1a0e;
+  --surface: #132015;
+  --surface2: #1a2e1d;
+  --text: #f0fdf4;
+  --muted: #86efac;
+  --border: #166534;
+}
+
+body {
+  font-family: 'Baloo 2', cursive;
+  background: var(--bg);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--text);
+  background-image:
+    radial-gradient(ellipse at 10% 30%, rgba(245,158,11,.06) 0%, transparent 55%),
+    radial-gradient(ellipse at 90% 70%, rgba(59,130,246,.06) 0%, transparent 55%);
+}
+
+header {
+  width: 100%;
+  background: linear-gradient(135deg, #14532d, #1e3a5f);
+  border-bottom: 2px solid var(--gold-dark);
+  padding: 13px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 4px 30px rgba(0,0,0,.5);
+}
+.header-icon { font-size: 2rem; animation: float 3s ease-in-out infinite; }
+@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
+
+header h1 {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.45rem;
+  background: linear-gradient(90deg, var(--gold), #fde68a, var(--gold));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+header .sub { font-size: .72rem; color: var(--muted); margin-top: 1px; }
+
+.header-controls { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+.score-pill {
+  background: rgba(245,158,11,.15);
+  border: 1px solid rgba(245,158,11,.4);
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-weight: 800;
+  font-size: .85rem;
+  color: var(--gold);
+}
+.audio-btn {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  background: var(--surface2);
+  color: var(--text);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all .2s;
+  display: flex; align-items: center; justify-content: center;
+}
+.audio-btn:hover, .audio-btn.active { background: #14532d; border-color: var(--gold); }
+
+.chat-wrap {
+  width: 100%; max-width: 700px; flex: 1;
+  display: flex; flex-direction: column;
+  padding: 16px 14px 0;
+}
+
+#chat-box {
+  flex: 1; overflow-y: auto;
+  display: flex; flex-direction: column;
+  gap: 14px; padding-bottom: 10px;
+  max-height: calc(100vh - 200px);
+  scroll-behavior: smooth;
+}
+#chat-box::-webkit-scrollbar { width: 4px; }
+#chat-box::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+.msg { display: flex; gap: 8px; }
+.msg.user { flex-direction: row-reverse; }
+
+.avatar {
+  width: 34px; height: 34px; border-radius: 50%;
+  font-size: 1rem; display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 2px;
+}
+.msg.bot .avatar { background: linear-gradient(135deg, #14532d, #1e3a5f); border: 1.5px solid rgba(245,158,11,.4); }
+.msg.user .avatar { background: linear-gradient(135deg, #1e3a5f, #14532d); border: 1.5px solid rgba(59,130,246,.3); }
+
+.bubble {
+  max-width: 80%;
+  padding: 11px 16px;
+  border-radius: 18px;
+  font-size: .9rem;
+  line-height: 1.65;
+  animation: pop .22s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes pop { from{transform:scale(.88) translateY(6px);opacity:0} to{transform:scale(1) translateY(0);opacity:1} }
+
+.msg.bot .bubble {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-bottom-left-radius: 5px;
+}
+.msg.user .bubble {
+  background: linear-gradient(135deg, #1e3a5f, var(--blue-dark));
+  border-bottom-right-radius: 5px;
+}
+
+/* chips */
+.chip {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: rgba(245,158,11,.12);
+  border: 1.5px solid rgba(245,158,11,.4);
+  color: var(--gold);
+  border-radius: 30px;
+  padding: 5px 13px; margin: 5px 4px 0 0;
+  font-size: .8rem; font-weight: 700;
+  cursor: pointer; transition: all .15s;
+  user-select: none; font-family: 'Baloo 2', cursive;
+}
+.chip:hover {
+  background: var(--gold-dark); color: white;
+  border-color: var(--gold);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(245,158,11,.3);
+}
+
+/* topic tag */
+.topic-tag {
+  display: inline-block;
+  background: linear-gradient(135deg, #14532d, #166534);
+  border: 1px solid var(--gold-dark);
+  color: var(--gold);
+  font-size: .68rem; font-weight: 800;
+  border-radius: 20px; padding: 2px 10px;
+  margin-bottom: 5px; letter-spacing: .5px;
+  text-transform: uppercase;
+}
+
+/* multiple choice */
+.mc-options { display: flex; flex-direction: column; gap: 7px; margin-top: 10px; width: 100%; }
+.mc-btn {
+  display: flex; align-items: center; gap: 10px;
+  background: rgba(255,255,255,.03);
+  border: 1.5px solid var(--border);
+  border-radius: 12px; padding: 9px 14px;
+  color: var(--text); font-family: 'Baloo 2', cursive;
+  font-size: .87rem; font-weight: 600;
+  cursor: pointer; transition: all .15s; text-align: left; width: 100%;
+}
+.mc-btn:hover:not(:disabled) {
+  background: rgba(245,158,11,.12); border-color: var(--gold);
+  color: var(--gold); transform: translateX(3px);
+}
+.mc-btn .letter {
+  display: flex; align-items: center; justify-content: center;
+  width: 26px; height: 26px; border-radius: 8px;
+  background: rgba(245,158,11,.15); border: 1px solid rgba(245,158,11,.35);
+  color: var(--gold); font-size: .78rem; font-weight: 800;
+  flex-shrink: 0; transition: all .15s;
+}
+.mc-btn:hover:not(:disabled) .letter { background: var(--gold-dark); color: white; border-color: var(--gold-dark); }
+.mc-btn.correct { background: rgba(34,197,94,.15)!important; border-color: #22c55e!important; color: #22c55e!important; cursor: default; }
+.mc-btn.correct .letter { background: #22c55e!important; color: white!important; border-color: #22c55e!important; }
+.mc-btn.wrong { background: rgba(239,68,68,.12)!important; border-color: #ef4444!important; color: #ef4444!important; cursor: default; }
+.mc-btn.wrong .letter { background: #ef4444!important; color: white!important; border-color: #ef4444!important; }
+.mc-btn:disabled { cursor: default; transform: none!important; }
+
+/* speaker wave */
+.speaker-wave {
+  display: inline-flex; align-items: flex-end;
+  gap: 2px; height: 14px; margin-left: 6px; vertical-align: middle;
+}
+.speaker-wave span {
+  display: block; width: 3px; border-radius: 2px;
+  background: var(--gold); animation: wave 1s ease-in-out infinite;
+}
+.speaker-wave span:nth-child(1){height:4px;animation-delay:0s}
+.speaker-wave span:nth-child(2){height:10px;animation-delay:.1s}
+.speaker-wave span:nth-child(3){height:6px;animation-delay:.2s}
+.speaker-wave span:nth-child(4){height:12px;animation-delay:.15s}
+.speaker-wave span:nth-child(5){height:4px;animation-delay:.05s}
+@keyframes wave{0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.8)}}
+
+/* typing */
+.typing {
+  display: flex; gap: 4px; padding: 12px 16px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 18px; border-bottom-left-radius: 5px; width: fit-content;
+}
+.dot { width: 7px; height: 7px; border-radius: 50%; background: var(--gold); animation: bounce .9s infinite; }
+.dot:nth-child(2){animation-delay:.15s} .dot:nth-child(3){animation-delay:.3s}
+@keyframes bounce{0%,80%,100%{transform:translateY(0);opacity:.6}40%{transform:translateY(-7px);opacity:1}}
+
+/* input bar */
+.input-bar {
+  width: 100%; max-width: 700px;
+  padding: 10px 14px 18px;
+  display: flex; gap: 8px;
+  background: var(--bg); position: sticky; bottom: 0;
+}
+#user-input {
+  flex: 1; padding: 12px 18px;
+  border: 2px solid var(--border); border-radius: 30px;
+  font-family: 'Baloo 2', cursive; font-size: .92rem;
+  outline: none; background: var(--surface); color: var(--text);
+  transition: border-color .2s, box-shadow .2s;
+}
+#user-input::placeholder { color: var(--muted); }
+#user-input:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(245,158,11,.12); }
+
+#send-btn {
+  width: 48px; height: 48px; border-radius: 50%; border: none;
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  color: white; font-size: 1.1rem; cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 3px 14px rgba(245,158,11,.4); flex-shrink: 0;
+}
+#send-btn:hover { transform: scale(1.08); box-shadow: 0 5px 20px rgba(245,158,11,.55); }
+#send-btn:disabled { opacity: .5; transform: none; }
+
+/* result modal */
+.result-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.75); backdrop-filter: blur(6px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 100; opacity: 0; pointer-events: none; transition: opacity .3s;
+}
+.result-overlay.show { opacity: 1; pointer-events: all; }
+.result-card {
+  background: linear-gradient(135deg, #132015, #0c1a0e);
+  border: 2px solid var(--gold-dark);
+  border-radius: 24px; padding: 36px 40px;
+  text-align: center; max-width: 380px; width: 90%;
+  box-shadow: 0 20px 60px rgba(0,0,0,.6);
+  transform: scale(.9); transition: transform .3s cubic-bezier(.34,1.56,.64,1);
+}
+.result-overlay.show .result-card { transform: scale(1); }
+.result-emoji { font-size: 4rem; margin-bottom: 12px; display: block; }
+.result-title {
+  font-family: 'Fredoka One', cursive; font-size: 1.7rem; margin-bottom: 6px;
+  background: linear-gradient(90deg, var(--gold), #fde68a);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.result-score { font-size: 3rem; font-weight: 900; margin: 10px 0; color: white; }
+.result-msg { color: var(--muted); font-size: .9rem; margin-bottom: 22px; }
+.result-btn {
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  border: none; border-radius: 30px; padding: 12px 30px;
+  color: white; font-family: 'Baloo 2', cursive; font-weight: 800;
+  font-size: 1rem; cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+  box-shadow: 0 4px 16px rgba(245,158,11,.35);
+}
+.result-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 22px rgba(245,158,11,.5); }
+
+/* scenario card for identify questions */
+.scenario-card {
+  background: rgba(245,158,11,.07);
+  border: 1px solid rgba(245,158,11,.25);
+  border-radius: 12px; padding: 10px 14px;
+  margin: 8px 0 6px; font-style: italic;
+  font-size: .87rem; color: #fde68a; line-height: 1.5;
+}
+
+/* ── Notes Panel ─────────────────────────────────────────────── */
+.notes-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.78); backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 200; opacity: 0; pointer-events: none; transition: opacity .3s;
+}
+.notes-overlay.show { opacity: 1; pointer-events: all; }
+.notes-panel {
+  background: linear-gradient(160deg, #0c1a0e, #132015);
+  border: 2px solid var(--gold-dark);
+  border-radius: 20px;
+  width: 92%; max-width: 720px;
+  max-height: 88vh;
+  display: flex; flex-direction: column;
+  box-shadow: 0 24px 60px rgba(0,0,0,.7);
+  overflow: hidden;
+  transform: translateY(30px);
+  transition: transform .35s cubic-bezier(.34,1.2,.64,1);
+}
+.notes-overlay.show .notes-panel { transform: translateY(0); }
+.notes-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 22px; border-bottom: 1px solid var(--border);
+  background: linear-gradient(135deg, #14532d44, #1e3a5f44);
+}
+.notes-header h2 { font-family: 'Fredoka One', cursive; font-size: 1.3rem; color: var(--gold); }
+.notes-close {
+  width: 34px; height: 34px; border-radius: 50%;
+  border: 1.5px solid var(--border); background: var(--surface2);
+  color: var(--text); font-size: 1rem; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; transition: all .2s;
+}
+.notes-close:hover { background: #b91c1c; border-color: #ef4444; }
+.notes-body { overflow-y: auto; padding: 20px 22px; flex: 1; }
+.notes-body::-webkit-scrollbar { width: 4px; }
+.notes-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+.notes-topic { margin-bottom: 28px; }
+.notes-topic-title {
+  font-family: 'Fredoka One', cursive; font-size: 1.05rem;
+  color: var(--gold); margin-bottom: 10px;
+  padding-bottom: 6px; border-bottom: 1px solid var(--border);
+}
+.notes-item {
+  display: flex; gap: 10px; align-items: flex-start;
+  padding: 7px 0; border-bottom: 1px solid rgba(255,255,255,.04);
+  font-size: .87rem; line-height: 1.55;
+}
+.notes-item:last-child { border-bottom: none; }
+.notes-term { font-weight: 800; color: var(--gold); min-width: 150px; flex-shrink: 0; font-size: .84rem; }
+.notes-def { color: #d1fae5; }
+.notes-tabs {
+  display: flex; flex-wrap: wrap; gap: 8px; padding: 14px 22px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(0,0,0,.15);
+}
+.notes-tab {
+  padding: 12px 20px; border-radius: 10px;
+  border: 1.5px solid var(--border); 
+  background: rgba(255,255,255,.04); color: var(--muted);
+  font-family: 'Baloo 2', cursive; font-size: .9rem; font-weight: 700;
+  cursor: pointer; transition: all .15s; white-space: nowrap;
+  min-height: 48px; display: flex; align-items: center;
+}
+.notes-tab.active { background: var(--surface); color: var(--gold); border-color: var(--gold-dark); }
+.notes-tab:hover:not(.active) { color: var(--text); background: var(--surface2); }
+.notes-section { display: none; }
+.notes-section.active { display: block; }
+
+
+/* ── Print button in notes header ─────────────────────────────── */
+.notes-header-actions { display: flex; align-items: center; gap: 10px; }
+.print-btn {
+  display: flex; align-items: center; gap: 6px;
+  background: rgba(245,158,11,.12);
+  border: 1.5px solid rgba(245,158,11,.4);
+  color: var(--gold);
+  border-radius: 20px;
+  padding: 7px 14px;
+  font-family: 'Baloo 2', cursive;
+  font-size: .78rem;
+  font-weight: 800;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all .15s;
+}
+.print-btn:hover { background: var(--gold); color: #0c1a0e; border-color: var(--gold); }
+.print-btn.active { background: var(--gold); color: #0c1a0e; border-color: var(--gold); }
+
+/* ── On-screen Practice Test / Answer Key ─────────────────────── */
+.ptest-part-title {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1rem;
+  color: var(--gold);
+  margin: 22px 0 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+.ptest-part-title:first-child { margin-top: 0; }
+.ptest-q {
+  font-size: .87rem;
+  line-height: 1.6;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed rgba(255,255,255,.06);
+  color: #d1fae5;
+}
+.ptest-q b { color: var(--gold); }
+.ptest-q .opt { display: block; margin: 2px 0 2px 18px; color: #d1fae5; }
+.ptest-bank {
+  background: rgba(59,130,246,.08);
+  border: 1px solid rgba(59,130,246,.3);
+  border-radius: 10px;
+  padding: 10px 16px;
+  margin-bottom: 14px;
+  font-size: .82rem;
+  color: #dbeafe;
+  line-height: 1.6;
+}
+.key-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.key-pill {
+  background: rgba(245,158,11,.1);
+  border: 1px solid rgba(245,158,11,.25);
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: .78rem;
+  color: #fde68a;
+}
+.key-pill b { color: #34d399; }
+
+/* ── Print / Save-as-PDF styles ──────────────────────────────────
+   By default everything is hidden from print. When body carries
+   .printing-test, only #print-area (a light-themed clone of the
+   Practice Test + Answer Key) is shown, laid out for paper. ──── */
+@media print {
+  body * { visibility: hidden; }
+  #print-area, #print-area * { visibility: visible; }
+  #print-area {
+    display: block !important;
+    position: absolute; top: 0; left: 0; width: 100%;
+    background: #fff; color: #14290f;
+    font-family: 'Helvetica', Arial, sans-serif;
+    font-size: 10.5pt;
+    line-height: 1.5;
+  }
+  #print-area .p-cover { text-align: center; padding-top: 40px; }
+  #print-area .p-cover .p-icon { font-size: 34pt; }
+  #print-area .p-cover h1 { font-size: 19pt; color: #b45309; margin: 8px 0 4px; }
+  #print-area .p-cover .p-sub { font-size: 10.5pt; color: #166534; margin-bottom: 20px; }
+  #print-area .p-info-box {
+    border: 1.5px solid #fcd34d; border-radius: 10px;
+    max-width: 460px; margin: 0 auto 20px; padding: 14px 20px;
+    text-align: left; font-size: 10pt;
+  }
+  #print-area .p-info-box div { margin: 6px 0; border-bottom: 1px dotted #fde68a; padding-bottom: 6px; }
+  #print-area .p-instructions {
+    max-width: 460px; margin: 0 auto; text-align: left;
+    background: #fffbeb; border: 1px solid #fcd34d; border-radius: 10px;
+    padding: 12px 18px; font-size: 9.5pt; color: #78350f;
+  }
+  #print-area h2.p-part-title {
+    font-size: 12.5pt; color: #fff;
+    background: linear-gradient(135deg, #b45309, #14532d) !important;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    padding: 6px 12px; border-radius: 7px; margin: 18px 0 10px;
+    page-break-after: avoid;
+  }
+  #print-area .p-bank {
+    background: #f0fdf4 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    border: 1px solid #86efac; border-radius: 8px; padding: 8px 14px;
+    margin-bottom: 12px; font-size: 9.5pt; color: #14532d;
+  }
+  #print-area .p-q {
+    margin-bottom: 8px; padding-bottom: 8px;
+    border-bottom: 1px dotted #fde68a; font-size: 10pt;
+    page-break-inside: avoid; color: #14290f;
+  }
+  #print-area .p-q b { color: #b45309; }
+  #print-area .p-q .p-blank { display: inline-block; min-width: 65px; border-bottom: 1px solid #64748b; }
+  #print-area .p-q .p-opt { display: block; margin: 2px 0 0 20px; color: #365314; }
+  #print-area .p-break { page-break-before: always; }
+  #print-area .p-key-part-title {
+    font-size: 11pt; color: #b45309; font-weight: bold;
+    margin: 14px 0 8px; border-bottom: 2px solid #b45309; padding-bottom: 4px;
+  }
+  #print-area .p-key-grid {
+    display: grid; grid-template-columns: repeat(5, 1fr);
+    gap: 5px 8px; margin-bottom: 14px;
+  }
+  #print-area .p-key-pill {
+    background: #f0fdf4 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    border: 1px solid #86efac; border-radius: 6px;
+    padding: 4px 8px; font-size: 8.5pt; color: #166534;
+  }
+  #print-area .p-key-pill b { color: #b45309; }
+  @page { size: letter; margin: 1.5cm 1.8cm; }
+}
+#print-area { display: none; }
+
+
+/* ── Chapter Summary / Tandaan / Memory boxes (fix: previously missing) ── */
+.chapter-summary {
+  background: linear-gradient(135deg, rgba(59,130,246,.1), rgba(34,197,94,.08));
+  border: 1px solid rgba(59,130,246,.25);
+  border-left: 4px solid var(--blue);
+  border-radius: 12px;
+  padding: 14px 18px;
+  margin-bottom: 18px;
+  font-size: .88rem;
+  line-height: 1.65;
+  color: #dbeafe;
+}
+.tandaan-box {
+  background: rgba(245,158,11,.08);
+  border: 1px solid rgba(245,158,11,.3);
+  border-left: 4px solid var(--gold);
+  border-radius: 12px;
+  padding: 12px 18px;
+  margin: 14px 0;
+  font-size: .86rem;
+  line-height: 1.6;
+  color: #fde68a;
+}
+.tandaan-label {
+  display: block;
+  font-family: 'Baloo 2', cursive;
+  font-size: .8rem;
+  color: var(--gold);
+  letter-spacing: .5px;
+  margin-bottom: 5px;
+}
+.memory-box {
+  background: rgba(34,197,94,.08);
+  border: 1px solid rgba(34,197,94,.3);
+  border-left: 4px solid var(--green);
+  border-radius: 12px;
+  padding: 12px 18px;
+  margin: 14px 0 22px;
+  font-size: .86rem;
+  line-height: 1.6;
+  color: #bbf7d0;
+}
+.memory-label {
+  display: block;
+  font-family: 'Baloo 2', cursive;
+  font-size: .8rem;
+  color: var(--green);
+  letter-spacing: .5px;
+  margin-bottom: 5px;
+}
+.compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0 20px;
+  font-size: .82rem;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.compare-table th {
+  background: linear-gradient(135deg, var(--blue-dark), var(--gold-dark));
+  color: white;
+  text-align: left;
+  padding: 9px 12px;
+  font-size: .78rem;
+  text-transform: uppercase;
+  letter-spacing: .4px;
+}
+.compare-table td {
+  padding: 9px 12px;
+  border-top: 1px solid var(--border);
+  color: var(--text);
+  vertical-align: top;
+}
+.compare-table tr:nth-child(even) td { background: rgba(255,255,255,.02); }
+
+/* ── Story Box (for reading Bible stories aloud) ─────────────────── */
+.story-box {
+  background: rgba(255,255,255,.03);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px 20px;
+  margin-bottom: 16px;
+  font-size: .92rem;
+  line-height: 1.8;
+  color: var(--text);
+}
+.story-box p { margin-bottom: 10px; }
+.story-box p:last-child { margin-bottom: 0; }
+.story-ref {
+  display: block;
+  text-align: right;
+  font-style: italic;
+  color: var(--muted);
+  font-size: .8rem;
+  margin-top: 10px;
+}
+.story-label {
+  display: block;
+  font-family: 'Baloo 2', cursive;
+  font-size: .9rem;
+  color: var(--gold);
+  letter-spacing: .5px;
+  margin-bottom: 10px;
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-icon">🌦️</div>
+  <div>
+    <h1>Klima, Panahon, at Heograpiyang Pantao</h1>
+    <div class="sub">Klima at Sistema ng Hangin · Bagyo · Pacific Ring of Fire · Mga Pangkat Etnolingguwistiko</div>
+  </div>
+  <div class="header-controls">
+    <div class="score-pill">⭐ <span id="score-val">0</span> / <span id="total-val">0</span></div>
+    <a class="audio-btn" href="AP-Klima-Panahon-HeograpiyangPantao-RawNotes.html" target="_blank" title="Tingnan ang Raw Notes" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;">📄</a>
+    <button class="audio-btn" id="notes-toggle" title="Basahin ang mga Tala" onclick="document.getElementById('notes-overlay').classList.add('show')">📖</button>
+    <button class="audio-btn active" id="audio-toggle" title="I-toggle ang Audio">🔊</button>
+  </div>
+</header>
+
+<div class="chat-wrap">
+  <div id="chat-box"></div>
+</div>
+
+<div class="input-bar">
+  <input type="text" id="user-input" placeholder="Isulat ang iyong sagot dito…" autocomplete="off" />
+  <button id="send-btn">➤</button>
+</div>
+
+<div class="result-overlay" id="result-overlay">
+  <div class="result-card">
+    <span class="result-emoji" id="res-emoji">🏆</span>
+    <div class="result-title">Tapos na!</div>
+    <div class="result-score"><span id="res-score">0</span>/<span id="res-total">0</span></div>
+    <div class="result-msg" id="res-msg">Magaling!</div>
+    <button class="result-btn" onclick="restartApp()">🔄 Maglaro Ulit</button>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+// QUESTION BANK
+// ═══════════════════════════════════════════════════════════════
+const topics = {
+
+  "Klima ng Pilipinas": [
+    { q: "Ano ang klima?", a: "Tumutukoy sa pangkalahatan at pangmatagalang kondisyon ng panahon", hint: "Pangmatagalan ito, hindi panandalian." },
+    { q: "Anong uri ng klima ang nararanasan ng Pilipinas dahil sa lokasyon nito sa pagitan ng Ekwador at Tropiko ng Kanser?", a: "Klimang tropikal at maritima", hint: "May kaugnayan sa init at katubigan." },
+    { q: "Ano ang tatlong tampok na katangian ng klimang tropikal at maritima ng Pilipinas?", a: "Relatibong mataas na temperatura, mataas na humidity o halumigmig, at saganang pag-ulan", hint: "Tatlong katangian tungkol sa init, hamog, at ulan." },
+    { q: "Bakit mataas ang temperatura sa Pilipinas?", a: "Dahil sa lapit ng bansa sa Ekwador, nakatatanggap ito ng halos direktang sinag ng araw", hint: "May kaugnayan sa lokasyon nito malapit sa Ekwador." },
+    { q: "Anong katubigan ang dahilan ng mataas na halumigmig at saganang pag-ulan sa Pilipinas?", a: "Ang Karagatang Pasipiko", hint: "Ang pinakamalaking karagatan sa mundo." },
+    { q: "Ilan ang uri ng klima sa Pilipinas batay sa distribusyon ng ulan?", a: "Apat", hint: "Uri I hanggang IV." },
+    { q: "Saan karaniwang nararanasan ang Uri I ng klima?", a: "Sa mga lalawigan ng Ilocos Norte, Ilocos Sur, La Union, Pangasinan, Cavite, Laguna, Batangas, at iba pa", hint: "May malinaw na tag-araw at tag-ulan." },
+    { q: "Ano ang katangian ng Uri II ng klima?", a: "Sagana sa ulan, halos walang tuyong panahon", hint: "Halos palaging maulan." },
+    { q: "Ano ang katangian ng Uri III ng klima?", a: "May maikling tag-araw mula Nobyembre hanggang Abril at tag-ulan sa ibang buwan", hint: "Katamtamang uri, may maikling tuyong panahon." },
+    { q: "Ano ang katangian ng Uri IV ng klima?", a: "May maulang panahon na laganap sa buong taon", hint: "Halos parepareho ang ulan buong taon." },
+    { q: "Ano ang dahilan ng mga iregularidad sa klima ng Pilipinas ngayon?", a: "Ang patuloy na pag-init ng mundo o global warming", hint: "Isang pandaigdigang isyu." },
+  ],
+
+  "Panahon at Sistema ng Hangin": [
+    { q: "Ano ang season o panahon?", a: "Ang panandaliang kalagayan ng atmosfera na kaugnay ng temperatura, pag-ulan, kaulapan, hangin, at iba pang kondisyon", hint: "Panandalian ito, kaiba sa klima." },
+    { q: "Ilan ang pangunahing panahon na nararanasan sa Pilipinas?", a: "Dalawa — tag-ulan at tagtuyo", hint: "Hindi apat gaya sa ibang bansa." },
+    { q: "Kailan nararanasan ang tag-ulan?", a: "Mula Hunyo hanggang Nobyembre", hint: "Kalagitnaan ng taon." },
+    { q: "Kailan nararanasan ang tagtuyo?", a: "Mula Disyembre hanggang Mayo", hint: "Simula at unang bahagi ng taon." },
+    { q: "Kailan nararanasan ang malamig na tagtuyo?", a: "Disyembre hanggang Pebrero", hint: "Kapaskuhan hanggang unang bahagi ng taon." },
+    { q: "Kailan nararanasan ang mainit na tagtuyo?", a: "Marso hanggang Mayo", hint: "Panahon ng tag-init." },
+    { q: "Ilan ang sistema ng hangin na nakaaapekto sa klima at panahon ng Pilipinas?", a: "Tatlo — amihan, habagat, at balaklaot", hint: "Tatlong pangalan ng hangin." },
+    { q: "Saan nagmumula ang hanging amihan, at kailan ito umiiral?", a: "Mula sa hilagang-silangan, mula Oktubre hanggang huling bahagi ng Marso", hint: "Pinakamahaba sa tatlong sistema ng hangin." },
+    { q: "Saan nagmumula ang hanging habagat, at kailan ito umiiral?", a: "Mula sa timog-kanluran, mula Hulyo hanggang Setyembre", hint: "Panahon ito ng tag-ulan." },
+    { q: "Ano ang balaklaot?", a: "Ang hangin na nagmumula sa hilagang-kanluran, tinatawag ding tradewinds, dumarating tuwing Abril at Mayo", hint: "Maikling panahon lamang ito." },
+    { q: "Ano ang palatandaan ng pagdating ng balaklaot?", a: "Palatandaan ito ng pagbabago ng panahon at pagtatapos ng amihan at pagsisimula ng habagat", hint: "Ito ang hudyat ng paglipat ng panahon." },
+  ],
+
+  "Bagyo at mga Babala": [
+    { q: "Ilang bagyo ang dumaraan sa Pilipinas taon-taon?", a: "20 hanggang 30 bagyo", hint: "Malapit sa dalawampu hanggang tatlumpu." },
+    { q: "Saan karaniwang nabubuo ang mga bagyong dumarating sa Pilipinas?", a: "Sa Karagatang Pasipiko", hint: "Nasa silangan ng Pilipinas." },
+    { q: "Ano ang PAGASA?", a: "Philippine Atmospheric, Geophysical and Astronomical Services Administration — ang pangunahing ahensiya ng pamahalaan na nagbabantay sa panahon at klima", hint: "Sila ang nagbibigay ng mga babala sa panahon." },
+    { q: "Sa Babala Bilang 1, gaano kalakas ang inaasahang hangin, at kailan ito darating?", a: "30 hanggang 60 kilometro bawat oras, sa loob ng 36 na oras", hint: "Pinakamahina sa apat na antas." },
+    { q: "Sa Babala Bilang 2, gaano kalakas ang inaasahang hangin?", a: "61 hanggang 120 kilometro bawat oras, sa loob ng 24 na oras", hint: "Suspendido na ang klase sa antas na ito." },
+    { q: "Ano ang epekto ng Babala Bilang 2 sa mga klase?", a: "Suspindido ang klase sa elementarya at sekundarya", hint: "Hindi pa lahat ng antas ang apektado." },
+    { q: "Sa Babala Bilang 3, gaano kalakas ang inaasahang hangin?", a: "121 hanggang 170 kilometro bawat oras, sa loob ng 18 oras", hint: "Suspindido na ang klase sa lahat ng antas." },
+    { q: "Sa Babala Bilang 4, gaano kalakas ang inaasahang hangin?", a: "171 hanggang 220 kilometro bawat oras, sa loob ng 12 oras", hint: "Pinakamalakas sa apat na antas." },
+    { q: "Ano ang tugon sa babalang RED sa pag-ulan?", a: "Paglikas", hint: "Ang pinakaseryosong hakbang." },
+    { q: "Ano ang tugon sa babalang ORANGE sa pag-ulan?", a: "Maging handa sa posibleng paglikas", hint: "Paghahanda bago pa man lumikas." },
+    { q: "Ano ang tugon sa babalang YELLOW sa pag-ulan?", a: "Subaybayan ang lagay ng panahon", hint: "Pagmamanmanan lamang muna." },
+  ],
+
+  "Pacific Ring of Fire: Bulkan at Lindol": [
+    { q: "Ano ang Pacific Ring of Fire?", a: "Isang rehiyon sa paligid ng Karagatang Pasipiko na kinaroroonan ng maraming aktibong bulkan at madalas na paglindol", hint: "Rehiyon ito sa palibot ng isang karagatan." },
+    { q: "Ano ang PHIVOLCS?", a: "Philippine Institute of Volcanology and Seismology — ang ahensiya ng pamahalaan na nangangasiwa sa impormasyon at babala tungkol sa lindol at bulkan", hint: "Sila ang bantay sa mga bulkan at lindol." },
+    { q: "Ilang aktibong bulkan ang matatagpuan sa Pilipinas?", a: "24", hint: "Dalawampu't apat." },
+    { q: "Kailan itinuturing na aktibo ang isang bulkan?", a: "Kung ito ay pumutok na sa nakaraang 10,000 taon", hint: "Sampung libong taon." },
+    { q: "Magbigay ng apat na halimbawa ng kilalang aktibong bulkan sa Pilipinas.", a: "Bulkang Mayon, Bulkang Taal, Bundok Hibok-Hibok, at Bulkang Pinatubo", hint: "Apat na kilalang bulkan." },
+    { q: "Ano ang lahar?", a: "Pinaghahalong tubig, abo, at mga pira-pirasong bato na dumadaloy mula sa bulkan tuwing umuulan", hint: "Dumadaloy ito tulad ng putik." },
+    { q: "Ano ang sanhi ng paglindol sa Pilipinas?", a: "Ang paggalaw ng mga tectonic plate o malalaking tipak ng lupa", hint: "May kaugnayan sa malalaking tipak ng lupa sa daigdig." },
+    { q: "Ano ang maaaring idulot ng malalakas na lindol?", a: "Pinsala sa mga gusali at kabahayan, pagguho ng lupa, at tsunami", hint: "Tatlong uri ng pinsala." },
+    { q: "Kailan pumutok ang Bulkang Pinatubo?", a: "Ika-12 ng Hunyo, 1991", hint: "Dekada '90." },
+    { q: "Gaano kababa ang naging temperatura sa buong daigdig dahil sa pagputok ng Bulkang Pinatubo?", a: "1.5° Celsius", hint: "Isa't kalahating digri." },
+    { q: "Anong bagyo ang sumabay sa pagputok ng Bulkang Pinatubo?", a: "Bagyong Diding", hint: "Pinangalanan ito tulad ng ibang bagyo." },
+    { q: "Anong lalawigan ang lubos na naapektuhan ng pagputok ng Bulkang Pinatubo?", a: "Zambales", hint: "Lalawigan sa Gitnang Luzon." },
+  ],
+
+  "Demograpiya ng Pilipinas": [
+    { q: "Ano ang demograpiya?", a: "Ang pag-aaral sa populasyon o bilang ng tao sa isang lugar", hint: "May kinalaman sa bilang ng populasyon." },
+    { q: "Ano ang senso o census?", a: "Ang proseso ng pagbibilang ng mga tao sa isang lugar", hint: "Ginagawa ito ng pamahalaan." },
+    { q: "Ano ang populasyon ng Pilipinas batay sa senso ng PSA noong 2020?", a: "109,035,343 katao", hint: "Mahigit isang daang milyon." },
+    { q: "Ilang porsiyento ng mga Pilipino ang naninirahan kasama ang kanilang pamilya?", a: "97.3%", hint: "Halos lahat." },
+    { q: "Ano ang population density?", a: "Ang dami ng tao sa isang tiyak na espasyo; sinusukat ang populasyong naninirahan sa bawat yunit ng lupain", hint: "May kaugnayan ito sa lawak ng lupain." },
+    { q: "Kailan may mataas na population density ang isang lugar?", a: "Kung ito ay may malaking populasyon ngunit maliit na sukat at lawak", hint: "Marami sa maliit na espasyo." },
+    { q: "Ano ang heograpiyang pantao?", a: "Ang sangay ng heograpiya na nakatuon sa pag-aaral ng ugnayan ng tao, pamayanan, at kapaligiran", hint: "May kaugnayan sa tao, hindi lang sa lupa." },
+  ],
+
+  "Mga Pangkat Etnolingguwistiko": [
+    { q: "Ano ang pangkat etnolingguwistiko?", a: "Grupo ng mga taong may natatanging kultura, pagkakakilanlan, at kinagisnang wika", hint: "May sariling wika at kultura ang bawat pangkat." },
+    { q: "Mahigit ilang pangkat etnolingguwistiko ang mayroon sa Pilipinas?", a: "Mahigit sa 180", hint: "Isang daan at walumpu pataas." },
+    { q: "Ano ang tawag sa mga pangkat na napanatili ang kanilang natatanging pagkakakilanlan, kultura, at tradisyon hanggang ngayon?", a: "Katutubong pangkat o indigenous people", hint: "Katutubo ang salitang Tagalog dito." },
+    { q: "Ano ang kultura?", a: "Binubuo ng paraan ng pamumuhay, wika, tradisyon, at paniniwala ng isang pangkat", hint: "Malawak itong konsepto." },
+    { q: "Ano ang dalawang uri ng kultura?", a: "Materyal at di-materyal na kultura", hint: "Isa'y nahahawakan, isa'y hindi." },
+    { q: "Ano ang materyal na kultura?", a: "Mga bagay na nahahawakan o may pisikal na anyo, tulad ng bahay, damit, at kagamitan", hint: "May pisikal na anyo." },
+    { q: "Ano ang di-materyal na kultura?", a: "May kaugnayan sa kaisipan, tradisyon, kaugalian, at saloobin, tulad ng wika, tula, at sayaw", hint: "Walang pisikal na anyo." },
+    { q: "Sino-sino ang mga pangkat etnolingguwistikong may malalaking populasyon sa Luzon?", a: "Ilokano, Pangasinense, Tagalog, Kapampangan, at Bikolano", hint: "Limang pangkat na laganap sa Luzon." },
+    { q: "Ano ang tawag sa katutubong pangkat sa Cordillera Administrative Region?", a: "Igorot, o \"mamamayan ng kabundukan\"", hint: "Nasa mga bundok sila nakatira." },
+    { q: "Sino-sino ang mga kabilang sa mga Igorot?", a: "Ifugao, Bontoc, Kalinga, Ibaloi, Isneg, Kankanaey, at Tingguian", hint: "Pitong pangkat sa ilalim ng Igorot." },
+    { q: "Ano ang tawag sa hagdang-hagdang palayan na inukit ng mga ninuno ng mga Ifugao sa Banaue?", a: "Hagdang-hagdang Palayan ng Banaue (Banaue Rice Terraces)", hint: "Kilalang pasyalan sa Ifugao." },
+    { q: "Anong dalawang epiko ang kilala sa mga Ifugao?", a: "Hudhud at Alim", hint: "Dalawang epikong bayan." },
+    { q: "Ano ang tawag sa bahay ng mga Ifugao?", a: "Bale", hint: "Isang silid lamang at may apat na poste." },
+    { q: "Ano ang Sagada Hanging Coffins?", a: "Isang tradisyon ng paglilibing sa dalisdis ng bundok na ginagawa ng mga Igorot sa loob ng mahigit 2,000 taon", hint: "Kilalang atraksyon sa Mountain Province." },
+    { q: "Ano ang cañao?", a: "Isang pagdiriwang ng mga Igorot tuwing may okasyon tulad ng kasal, panganganak, o paglilibing", hint: "Karaniwang may sayawan at pag-aalay ng hayop." },
+    { q: "Ano ang batok?", a: "Ang tradisyonal na tatu ng mga Kalinga, simbolo ng katapangan at katayuan sa lipunan", hint: "Tatu ito ng mga Kalinga." },
+    { q: "Ano ang bodong?", a: "Ang pagpupulong ng mga pinuno ng iba't ibang tribo ng mga Kalinga upang makipagkasundo at maayos ang anumang sigalot", hint: "Pagpapayapaan ito ng mga tribo." },
+    { q: "Ano ang vakul?", a: "Isang tradisyonal na kasuotan sa ulo ng mga Ivatan, proteksiyon sa sikat ng araw at ulan", hint: "Isinusuot ito sa ulo." },
+    { q: "Ano ang Abel Iloko?", a: "Isang uri ng tela ng mga Ilokano na ginagawang punda ng unan, kumot, balabal, bag, o mantel", hint: "Sikat na produktong Ilokano." },
+    { q: "Sino ang pinaniniwalaang gumagabay sa mga Ivatan tungkol sa lagay ng panahon sa pamamagitan ng pag-oobserba sa mga hayop?", a: "Ang mga Ivatan mismo, sa pamamagitan ng pagmamasid sa kanilang mga alagang hayop", hint: "Tradisyonal na paraan ito ng pagbabantay ng panahon." },
+    { q: "Ano ang Giant Lantern Festival, at sino ang kilala rito?", a: "Isang pistang ipinagdiriwang tuwing Kapaskuhan, kung saan kilala ang mga Kapampangan sa kanilang magagandang parol", hint: "Idinaraos ito tuwing Kapaskuhan." },
+  ],
+
+};
+
+// ── TAMA O MALI ────────────────────────────────────────────────────────────
+const trueOrFalse = [
+  { q: "Ang Pilipinas ay kabilang sa Pacific Ring of Fire.", a: "tama" },
+  { q: "Ang Pilipinas ay matatagpuan sa rehiyong tropikal.", a: "tama" },
+  { q: "Matatagpuan sa Pilipinas ang 23 aktibong bulkan.", a: "mali" },
+  { q: "Ang Pilipinas ay isang arkipelago.", a: "tama" },
+  { q: "Hindi nakararanas ang Pilipinas ng bagyo o lindol.", a: "mali" },
+  { q: "Binubuo ang Pilipinas ng 7,647 na mga pulo.", a: "mali" },
+  { q: "Ang Luzon, Visayas, at Mindanao ang mga pangunahing pangkat ng mga pulo ng Pilipinas.", a: "tama" },
+  { q: "Pangalawa ang Pilipinas sa mga bansang may pinakamahabang baybayin sa buong mundo.", a: "mali" },
+  { q: "Ang amihan, habagat, at balaklaot ang tatlong sistema ng hangin ng Pilipinas.", a: "tama" },
+  { q: "Ang Pilipinas ay matatagpuan sa Timog-Silangang Asya.", a: "tama" },
+  { q: "Ang Pilipinas ay napaliligiran ng malalaking anyo ng tubig.", a: "tama" },
+  { q: "May apat na uri ng klima ang Pilipinas batay sa distribusyon ng ulan.", a: "tama" },
+  { q: "Ang Pilipinas ay nakararanas ng tagsibol at taglamig.", a: "mali" },
+  { q: "May kabuuang sukat na 500,000 kilometro kuwadrado ang Pilipinas.", a: "mali" },
+  { q: "Ang Kapuluan ng Kalayaan ang pinakamahalagang dulo ng Pilipinas.", a: "mali" },
+];
+
+// ── KILALANIN: SITWASYON · BABALA SA BAGYO · PANGKAT ETNOLINGGUWISTIKO ──────
+const identifyQuestions = [
+  { q: "Relatibong mataas ang nararanasang temperatura sa Pilipinas.", a: "Ang Pilipinas ay matatagpuan malapit sa Ekwador.", choices: ["Ang Pilipinas ay matatagpuan malapit sa Ekwador.","Napaliligiran ng tubig ang Pilipinas at matatagpuan sa kanluran nito ang Karagatang Pasipiko.","Kabilang ang Pilipinas sa Pacific Ring of Fire."] },
+  { q: "Tinatayang nasa 20 hanggang 30 ang bagyong dumadaan sa Pilipinas kada taon.", a: "Napaliligiran ng tubig ang Pilipinas at matatagpuan sa kanluran nito ang Karagatang Pasipiko.", choices: ["Ang Pilipinas ay matatagpuan malapit sa Ekwador.","Napaliligiran ng tubig ang Pilipinas at matatagpuan sa kanluran nito ang Karagatang Pasipiko.","Kabilang ang Pilipinas sa Pacific Ring of Fire."] },
+  { q: "Ang Pilipinas ay mayroong 24 na aktibong bulkan.", a: "Kabilang ang Pilipinas sa Pacific Ring of Fire.", choices: ["Ang Pilipinas ay matatagpuan malapit sa Ekwador.","Napaliligiran ng tubig ang Pilipinas at matatagpuan sa kanluran nito ang Karagatang Pasipiko.","Kabilang ang Pilipinas sa Pacific Ring of Fire."] },
+  { q: "Nakakatanggap ng masaganang ulan ang malaking bahagi ng kapuluan taon-taon.", a: "Napaliligiran ng tubig ang Pilipinas at matatagpuan sa kanluran nito ang Karagatang Pasipiko.", choices: ["Ang Pilipinas ay matatagpuan malapit sa Ekwador.","Napaliligiran ng tubig ang Pilipinas at matatagpuan sa kanluran nito ang Karagatang Pasipiko.","Kabilang ang Pilipinas sa Pacific Ring of Fire."] },
+  { q: "Kumakaharap sa banta ng tsunami ang mga pamayanan sa mga dalampasigan ng Pilipinas.", a: "Kabilang ang Pilipinas sa Pacific Ring of Fire.", choices: ["Ang Pilipinas ay matatagpuan malapit sa Ekwador.","Napaliligiran ng tubig ang Pilipinas at matatagpuan sa kanluran nito ang Karagatang Pasipiko.","Kabilang ang Pilipinas sa Pacific Ring of Fire."] },
+  { q: "30–60 kph ang lakas ng hangin, inaasahang darating sa loob ng 36 na oras.", a: "Babala Bilang 1", choices: ["Babala Bilang 1","Babala Bilang 2","Babala Bilang 3","Babala Bilang 4"] },
+  { q: "61–120 kph ang lakas ng hangin, inaasahang darating sa loob ng 24 na oras. Suspindido ang klase sa elementarya at sekundarya.", a: "Babala Bilang 2", choices: ["Babala Bilang 1","Babala Bilang 2","Babala Bilang 3","Babala Bilang 4"] },
+  { q: "121–170 kph ang lakas ng hangin, inaasahang darating sa loob ng 18 oras. Suspindido ang klase sa lahat ng antas.", a: "Babala Bilang 3", choices: ["Babala Bilang 1","Babala Bilang 2","Babala Bilang 3","Babala Bilang 4"] },
+  { q: "171–220 kph ang lakas ng hangin, inaasahang darating sa loob ng 12 oras.", a: "Babala Bilang 4", choices: ["Babala Bilang 1","Babala Bilang 2","Babala Bilang 3","Babala Bilang 4"] },
+  { q: "Kilala sa Hagdang-hagdang Palayan ng Banaue at sa epikong Hudhud at Alim.", a: "Ifugao", choices: ["Ifugao","Bontoc","Kalinga","Ivatan"] },
+  { q: "Nakatira sa 'ato' (lalaki) at 'olag' (babae), sumasamba kay Lumawig, kilala sa tattoo bilang simbolo ng katapangan.", a: "Bontoc", choices: ["Bontoc","Ifugao","Kankanaey","Isneg"] },
+  { q: "May dap-ay (para sa lalaki) at egban (para sa babae); dalawang pangkat: Ibenget at Ibontok.", a: "Kankanaey", choices: ["Kankanaey","Bontoc","Ibaloi","Tingguian"] },
+  { q: "Kilala sa tradisyon ng pagpepreserba sa katawan ng yumao sa Kabayan, Benguet.", a: "Ibaloi", choices: ["Ibaloi","Kankanaey","Bontoc","Kalinga"] },
+  { q: "Kilala sa tradisyonal na tatu na tinatawag na 'batok' at sa pagdaraos ng 'bodong.'", a: "Kalinga", choices: ["Kalinga","Bontoc","Ifugao","Ibanag"] },
+  { q: "Kilala rin bilang Apayao; sumasamba sa mahigit 300 espiritu.", a: "Isneg", choices: ["Isneg","Tingguian","Kankanaey","Ibaloi"] },
+  { q: "Nakatira sa Abra; sumasamba sa diyos na si Kadaklan o Kabunyan.", a: "Tingguian", choices: ["Tingguian","Isneg","Ibaloi","Ibanag"] },
+  { q: "Nakatira sa Batanes sa bahay na tinatawag na Sinadumparan; nagsusuot ng vakul.", a: "Ivatan", choices: ["Ivatan","Ibanag","Ilokano","Kapampangan"] },
+  { q: "May mga ritwal na tinatawag na mamalagun at mawuwa; nakatira sa Cagayan.", a: "Ibanag", choices: ["Ibanag","Ivatan","Ilokano","Isneg"] },
+  { q: "Kilala sa Abel Iloko, basi, burnay, at sa epikong Biag ni Lam-ang.", a: "Ilokano", choices: ["Ilokano","Pangasinense","Ibanag","Kapampangan"] },
+  { q: "Kilala sa kanilang debosyon sa Birhen ng Manaoag.", a: "Pangasinense", choices: ["Pangasinense","Ilokano","Ibaloi","Bontoc"] },
+  { q: "Kilala sa Giant Lantern Festival at sa paggawa ng magagandang parol.", a: "Kapampangan", choices: ["Kapampangan","Ilokano","Pangasinense","Tingguian"] },
+];
+
+// ═══════════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════════
+let state = {
+  awaiting: 'menu',
+  mode: null,
+  questions: [],
+  allAnswers: [],
+  qIndex: 0,
+  score: 0,
+  total: 0,
+  hintUsed: false,
+  audioEnabled: true,
+};
+
+// ═══════════════════════════════════════════════════════════════
+// TTS (UPGRADED FOR TRUE FILIPINO ACCENT)
+// ═══════════════════════════════════════════════════════════════
+let currentAudioStream = null;
+
+function speak(text) {
+  if (!state.audioEnabled) return;
+  
+  // Linisin ang mga nakaraang audio task
+  window.speechSynthesis.cancel();
+  if (currentAudioStream) {
+    currentAudioStream.pause();
+    currentAudioStream = null;
+  }
+  
+  // Tanggalin ang HTML tags at emojis para hindi basahin nang paputol-putol
+  const clean = text.replace(/<[^>]+>/g,'').replace(/[🇵🇭🌟✅❌💡⏭️🏆😊💪🔄🔲📚👋⭐✕🧭📏🗺️]/g,'');
+  
+  // PRIMARY METHOD: Google Translation Engine cloud voice stream (May natural na Filipino accent)
+  const googleTtsUrl = `https://translate.google.com/translate_tts?ie=UTF-8&tl=tl&client=tw-ob&q=${encodeURIComponent(clean)}`;
+  
+  currentAudioStream = new Audio(googleTtsUrl);
+  currentAudioStream.onplaying = () => showWave(true);
+  currentAudioStream.onended = currentAudioStream.onerror = () => showWave(false);
+  
+  currentAudioStream.play().catch(err => {
+    // BACKUP METHOD: Web Speech API (Gagana kapag walang internet connection)
+    console.warn("Google TTS blocked or offline. Falling back to local system speech engine.");
+    
+    const streamFallback = new SpeechSynthesisUtterance(clean);
+    streamFallback.lang = 'fil-PH';
+    streamFallback.rate = 0.95; streamFallback.pitch = 1.05; streamFallback.volume = 1;
+    
+    const voices = window.speechSynthesis.getVoices();
+    const filVoice = voices.find(v => v.lang.startsWith('fil') || v.lang.startsWith('tl'));
+    const engVoice = voices.find(v => v.lang.startsWith('en') && v.name.toLowerCase().includes('female'))
+                   || voices.find(v => v.lang.startsWith('en'));
+              
+    if (filVoice) {
+      streamFallback.voice = filVoice;
+    } else if (engVoice) {
+      streamFallback.voice = engVoice; 
+      streamFallback.lang = 'en-US'; 
+    }
+    
+    streamFallback.onstart = () => showWave(true);
+    streamFallback.onend = streamFallback.onerror = () => showWave(false);
+    window.speechSynthesis.speak(streamFallback);
+  });
+}
+
+function showWave(on) {
+  document.querySelectorAll('.speaker-wave').forEach(w => w.style.display = on ? 'inline-flex' : 'none');
+}
+
+// I-initialize ang mga boses ng system
+let localSystemVoices = [];
+function lookupSystemVoices() {
+  localSystemVoices = window.speechSynthesis.getVoices();
+}
+lookupSystemVoices();
+if (window.speechSynthesis.onvoiceschanged !== undefined) {
+  window.speechSynthesis.onvoiceschanged = lookupSystemVoices;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// UI HELPERS
+// ═══════════════════════════════════════════════════════════════
+const chatBox = document.getElementById('chat-box');
+const input = document.getElementById('user-input');
+const sendBtn = document.getElementById('send-btn');
+
+function scrollBottom() { chatBox.scrollTop = chatBox.scrollHeight; }
+
+function addMessage(role, html, speakText) {
+  const div = document.createElement('div');
+  div.className = `msg ${role}`;
+  const av = document.createElement('div');
+  av.className = 'avatar';
+  av.textContent = role === 'bot' ? '🤖' : '🧑';
+  const bub = document.createElement('div');
+  bub.className = 'bubble';
+  bub.innerHTML = role === 'bot'
+    ? html + '<span class="speaker-wave" style="display:none"><span></span><span></span><span></span><span></span><span></span></span>'
+    : html;
+  div.appendChild(av); div.appendChild(bub);
+  chatBox.appendChild(div);
+  scrollBottom(); bindChips();
+  if (role === 'bot') {
+    const txt = speakText || html.replace(/<[^>]+>/g,' ');
+    setTimeout(() => speak(txt), 350);
+  }
+}
+
+function addTyping() {
+  const d = document.createElement('div');
+  d.className = 'msg bot'; d.id = 'typing';
+  d.innerHTML = '<div class="avatar">🤖</div><div class="typing"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>';
+  chatBox.appendChild(d); scrollBottom();
+}
+function removeTyping() { const t = document.getElementById('typing'); if(t) t.remove(); }
+
+function bindChips() {
+  document.querySelectorAll('.chip:not([data-bound])').forEach(c => {
+    c.dataset.bound = '1';
+    c.addEventListener('click', () => handleUserMessage(c.dataset.val));
+  });
+}
+
+function updateScore() {
+  document.getElementById('score-val').textContent = state.score;
+  document.getElementById('total-val').textContent = state.total;
+}
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length-1; i > 0; i--) {
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]] = [a[j],a[i]];
+  }
+  return a;
+}
+
+function normalize(s) { return s.toLowerCase().trim().replace(/\s+/g,' '); }
+
+function checkAnswer(user, correct) {
+  const u = normalize(user), c = normalize(correct);
+  if (u === c) return true;
+  if (c.includes(u) && u.length > 5) return true;
+  const parts = c.split(/[,;\/]/);
+  for (const p of parts) if (u.includes(p.trim()) && p.trim().length > 4) return true;
+  return false;
+}
+
+function showResult() {
+  const pct = Math.round((state.score/state.total)*100);
+  const emoji = pct>=90?'🏆':pct>=70?'🌟':pct>=50?'😊':'💪';
+  const msg = pct>=90?'Napakahusay! Alam mo ang lahat!':pct>=70?'Magaling! Patuloy ka lang!':pct>=50?'Mabuti! Pag-aralan pa nang kaunti!':'Huwag sumuko! Subukan ulit!';
+  document.getElementById('res-emoji').textContent = emoji;
+  document.getElementById('res-score').textContent = state.score;
+  document.getElementById('res-total').textContent = state.total;
+  document.getElementById('res-msg').textContent = msg;
+  document.getElementById('result-overlay').classList.add('show');
+  speak(`Tapos na! Ang iyong puntos ay ${state.score} sa ${state.total}. ${msg}`);
+}
+
+function restartApp() {
+  document.getElementById('result-overlay').classList.remove('show');
+  state = { awaiting:'menu', mode:null, questions:[], allAnswers:[], qIndex:0, score:0, total:0, hintUsed:false, audioEnabled:state.audioEnabled };
+  chatBox.innerHTML = '';
+  document.querySelector('.input-bar').style.display = 'flex';
+  updateScore();
+  showMenu();
+}
+
+// ═══════════════════════════════════════════════════════════════
+// MC HELPERS
+// ═══════════════════════════════════════════════════════════════
+function getAllAnswers() {
+  const ans = [];
+  for (const qs of Object.values(topics)) for (const q of qs) ans.push(q.a);
+  return ans;
+}
+
+function generateChoices(correct, pool) {
+  const distractors = shuffle(pool.filter(a => a !== correct)).slice(0,3);
+  return shuffle([correct, ...distractors]);
+}
+
+function buildMCBtns(choices, correctAnswer) {
+  const letters = ['A','B','C','D','E'];
+  return `<div class="mc-options">${choices.map((c,i)=>
+    `<button class="mc-btn" data-answer="${encodeURIComponent(c)}" data-correct="${encodeURIComponent(correctAnswer)}" onclick="handleMCClick(this)">
+      <span class="letter">${letters[i]}</span>${c}
+    </button>`
+  ).join('')}</div>`;
+}
+
+function handleMCClick(btn) {
+  const allBtns = btn.closest('.mc-options').querySelectorAll('.mc-btn');
+  allBtns.forEach(b => b.disabled = true);
+  const chosen = decodeURIComponent(btn.dataset.answer);
+  const correct = decodeURIComponent(btn.dataset.correct);
+  const isCorrect = chosen === correct;
+  allBtns.forEach(b => { if(decodeURIComponent(b.dataset.answer)===correct) b.classList.add('correct'); });
+  if (!isCorrect) btn.classList.add('wrong');
+  setTimeout(() => {
+    if (isCorrect) {
+      state.score++;
+      addMessage('bot', `✅ <strong>Tama!</strong> +1 puntos! Ang sagot ay: <strong>${correct}</strong>`, `Tama! Ang sagot ay: ${correct}`);
+    } else {
+      addMessage('bot', `❌ <strong>Hindi tama.</strong> Ang tamang sagot ay: <strong>${correct}</strong>`, `Hindi tama. Ang tamang sagot ay: ${correct}`);
+    }
+    state.qIndex++; updateScore();
+    if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+    else setTimeout(showResult, 900);
+  }, 650);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// NEXT QUESTION
+// ═══════════════════════════════════════════════════════════════
+function nextQuestion() {
+  const qi = state.qIndex;
+  const q = state.questions[qi];
+  const num = qi + 1;
+
+  if (state.mode === 'full' || state.mode === 'topic_mc') {
+    const choices = generateChoices(q.a, state.allAnswers);
+    const tag = q.topic ? `<span class="topic-tag">${q.topic}</span><br>` : '';
+    const html = `${tag}<strong>T${num} sa ${state.total}:</strong> ${q.q}${buildMCBtns(choices, q.a)}`;
+    addMessage('bot', html, `Tanong ${num}. ${q.q}`);
+    return;
+  }
+
+  if (state.mode === 'tf') {
+    const html = `<strong>T${num} sa ${state.total}:</strong> <div class="scenario-card">${q.q}</div>
+      <span class="chip" data-val="tama">✅ Tama</span><span class="chip" data-val="mali">❌ Mali</span>`;
+    addMessage('bot', html, `Tanong ${num}. Tama o Mali: ${q.q}`);
+    return;
+  }
+
+  if (state.mode === 'identify') {
+    const btns = buildMCBtns(q.choices, q.a);
+    const html = `<strong>T${num} sa ${state.total}:</strong> Kilalanin kung ano ang tinutukoy:<div class="scenario-card">${q.q}</div>${btns}`;
+    addMessage('bot', html, `Tanong ${num}. Kilalanin ang tinutukoy: ${q.q}`);
+    return;
+  }
+
+  // typed answer mode
+  const tag = q.topic ? `<span class="topic-tag">${q.topic}</span><br>` : '';
+  const html = `${tag}<strong>T${num} sa ${state.total}:</strong> ${q.q}<br><small style="color:var(--muted)">Isulat ang sagot · i-type ang <em>hint</em> para sa tulong · <em>skip</em> para lumipat</small>`;
+  addMessage('bot', html, `Tanong ${num}. ${q.q}`);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// MENU
+// ═══════════════════════════════════════════════════════════════
+function showMenu() {
+  addMessage('bot',
+    `👋 <strong>Kumusta! Ako ang iyong AP Reviewer!</strong><br>Pag-aaralan natin ang <em>Klima ng Pilipinas</em>, ang <em>Panahon at Sistema ng Hangin</em>, ang <em>Bagyo at mga Babala</em>, ang <em>Pacific Ring of Fire</em>, ang <em>Demograpiya</em>, at ang <em>Mga Pangkat Etnolingguwistiko</em>.<br><br>Ano ang gusto mong gawin?<br>
+    <span class="chip" data-val="1">📚 Pag-aralan ang Paksa</span>
+    <span class="chip" data-val="2">✅ Tama o Mali</span>
+    <span class="chip" data-val="3">🌐 Kilalanin: Sitwasyon, Babala, o Pangkat</span>
+    <span class="chip" data-val="4">🌟 Buong Review (Multiple Choice)</span>`,
+    "Kumusta! Ako ang iyong AP Reviewer tungkol sa Klima, Panahon, at Heograpiyang Pantao. Ano ang gusto mong gawin? Pag-aralan ang paksa, Tama o Mali, Kilalanin, o Buong Review na multiple choice?"
+  );
+  state.awaiting = 'menu';
+}
+
+// ═══════════════════════════════════════════════════════════════
+// PROCESS MESSAGE
+// ═══════════════════════════════════════════════════════════════
+function processMessage(msg) {
+  const aw = state.awaiting;
+
+  // ── MENU ──────────────────────────────────────────────────
+  if (aw === 'menu') {
+    if (msg === '1') {
+      state.awaiting = 'topic';
+      const keys = Object.keys(topics);
+      const chips = keys.map((t,i) => `<span class="chip" data-val="${i+1}">${i+1}. ${t}</span>`).join(' ');
+      addMessage('bot', `📚 Alin ang paksang gusto mong pag-aralan?<br>${chips}`, 'Alin ang paksang gusto mong pag-aralan?');
+
+    } else if (msg === '2') {
+      state.mode = 'tf';
+      state.questions = shuffle(trueOrFalse);
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'tf_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `✅ <strong>Tama o Mali!</strong> ${state.total} tanong. Simulan na!`, `Tama o Mali! ${state.total} tanong. Simulan na!`);
+      setTimeout(nextQuestion, 800);
+
+    } else if (msg === '3') {
+      state.mode = 'identify';
+      state.questions = shuffle(identifyQuestions);
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'mc_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `🌐 <strong>Kilalanin!</strong> Alamin kung anong katangiang pisikal ang tinutukoy, anong babala sa bagyo, o anong pangkat etnolingguwistiko ang inilalarawan.`, 'Kilalanin! Alamin kung ano ang tinutukoy sa bawat pahayag.');
+      setTimeout(nextQuestion, 800);
+
+    } else if (msg === '4') {
+      state.mode = 'full';
+      const all = [];
+      for (const [topicName, qs] of Object.entries(topics)) {
+        qs.forEach(q => all.push({...q, topic: topicName}));
+      }
+      state.questions = shuffle(all);
+      state.allAnswers = getAllAnswers();
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'mc_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `🌟 <strong>Buong Review — Multiple Choice!</strong> ${state.total} tanong. Pag-isipang mabuti!`, `Buong Review! Multiple Choice! ${state.total} tanong. Pag-isipang mabuti!`);
+      setTimeout(nextQuestion, 800);
+
+    } else {
+      addMessage('bot',
+        `Pumili ng opsyon:<br>
+        <span class="chip" data-val="1">📚 Pag-aralan ang Paksa</span>
+        <span class="chip" data-val="2">✅ Tama o Mali</span>
+        <span class="chip" data-val="3">🌐 Kilalanin</span>
+        <span class="chip" data-val="4">🌟 Buong Review</span>`,
+        'Pumili ng opsyon.'
+      );
+    }
+    return;
+  }
+
+  // ── TOPIC SELECT ──────────────────────────────────────────
+  if (aw === 'topic') {
+    const keys = Object.keys(topics);
+    const idx = parseInt(msg) - 1;
+    if (keys[idx]) {
+      const topicName = keys[idx];
+      state.mode = 'topic';
+      state.questions = shuffle(topics[topicName]);
+      state.allAnswers = getAllAnswers();
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'answer';
+      document.querySelector('.input-bar').style.display = 'flex';
+      updateScore();
+      addMessage('bot', `📚 <strong>${topicName}</strong> — ${state.total} tanong. Handa ka na ba?`, `${topicName}. ${state.total} tanong. Handa ka na ba?`);
+      setTimeout(nextQuestion, 800);
+    } else {
+      const chips = Object.keys(topics).map((t,i) => `<span class="chip" data-val="${i+1}">${i+1}. ${t}</span>`).join(' ');
+      addMessage('bot', `Pumili ng wastong paksa:<br>${chips}`, 'Pumili ng wastong paksa.');
+    }
+    return;
+  }
+
+  // ── TYPED ANSWER ──────────────────────────────────────────
+  if (aw === 'answer') {
+    const q = state.questions[state.qIndex];
+    const m = normalize(msg);
+
+    if (m === 'hint') {
+      state.hintUsed = true;
+      addMessage('bot', `💡 <strong>Hint:</strong> ${q.hint}`, `Hint: ${q.hint}`);
+      return;
+    }
+    if (m === 'skip') {
+      addMessage('bot', `⏭️ Nilaktawan! Ang tamang sagot ay: <strong>${q.a}</strong>`, `Nilaktawan. Ang tamang sagot ay: ${q.a}`);
+      state.qIndex++; state.hintUsed = false;
+      if (state.qIndex < state.total) setTimeout(nextQuestion, 700);
+      else showResult();
+      return;
+    }
+
+    const correct = checkAnswer(msg, q.a);
+    if (correct) {
+      if (!state.hintUsed) state.score++;
+      const note = state.hintUsed ? ' <em>(ginamit ang hint — walang puntos)</em>' : ' +1 puntos!';
+      addMessage('bot', `✅ <strong>Tama!</strong>${note} Sagot: <strong>${q.a}</strong>`, `Tama! Ang sagot ay: ${q.a}`);
+    } else {
+      addMessage('bot', `❌ <strong>Hindi tama.</strong> Ang tamang sagot ay: <strong>${q.a}</strong>`, `Hindi tama. Ang tamang sagot ay: ${q.a}`);
+    }
+    state.qIndex++; state.hintUsed = false; updateScore();
+    if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+    else setTimeout(showResult, 900);
+    return;
+  }
+
+  // ── TRUE OR FALSE ─────────────────────────────────────────
+  if (aw === 'tf_answer') {
+    const q = state.questions[state.qIndex];
+    const ans = normalize(msg);
+    const valid = ans === 'tama' || ans === 'mali' || ans === 'true' || ans === 'false';
+    const mapped = (ans === 'true') ? 'tama' : (ans === 'false') ? 'mali' : ans;
+
+    if (valid) {
+      const correct = mapped === q.a;
+      if (correct) {
+        state.score++;
+        addMessage('bot', `✅ <strong>Tama!</strong> Ang sagot ay <strong>${q.a.toUpperCase()}</strong>.`, `Tama! Ang sagot ay ${q.a}.`);
+      } else {
+        addMessage('bot', `❌ <strong>Mali.</strong> Ang tamang sagot ay <strong>${q.a.toUpperCase()}</strong>.`, `Mali. Ang tamang sagot ay ${q.a}.`);
+      }
+      state.qIndex++; updateScore();
+      if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+      else setTimeout(showResult, 900);
+    } else {
+      addMessage('bot',
+        `Sagot: Tama o Mali?<br><span class="chip" data-val="tama">✅ Tama</span><span class="chip" data-val="mali">❌ Mali</span>`,
+        'Sagot: Tama o Mali?'
+      );
+    }
+    return;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// CONTROLS
+// ═══════════════════════════════════════════════════════════════
+function handleUserMessage(msg) {
+  if (!msg.trim()) return;
+  
+  // Ihinto nang malinis ang nagsasalitang audio kapag sumagot ang user
+  window.speechSynthesis.cancel();
+  if (currentAudioStream) {
+    currentAudioStream.pause();
+    currentAudioStream = null;
+    showWave(false);
+  }
+  
+  addMessage('user', msg.replace(/</g,'&lt;'));
+  input.value = '';
+  input.disabled = true; sendBtn.disabled = true;
+  addTyping();
+  setTimeout(() => {
+    removeTyping();
+    input.disabled = false; sendBtn.disabled = false;
+    input.focus();
+    processMessage(msg);
+  }, 480);
+}
+
+sendBtn.addEventListener('click', () => { handleUserMessage(input.value); });
+input.addEventListener('keydown', e => { if(e.key==='Enter') handleUserMessage(input.value); });
+
+document.getElementById('audio-toggle').addEventListener('click', function() {
+  state.audioEnabled = !state.audioEnabled;
+  this.textContent = state.audioEnabled ? '🔊' : '🔇';
+  this.classList.toggle('active', state.audioEnabled);
+  if (!state.audioEnabled) {
+    window.speechSynthesis.cancel();
+    if (currentAudioStream) {
+      currentAudioStream.pause();
+      currentAudioStream = null;
+      showWave(false);
+    }
+  }
+});
+
+// ═══════════════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════════════
+window.addEventListener('load', () => {
+  lookupSystemVoices();
+  showMenu();
+});
+
+function printPracticeTest() {
+  document.body.classList.add('printing-test');
+  window.print();
+}
+window.addEventListener('afterprint', () => {
+  document.body.classList.remove('printing-test');
+});
+
+// ═══════════════════════════════════════════════════════════════
+// BASAHIN ANG TALA (gumagamit ng boses ng browser — walang limitasyon
+// sa haba, hindi tulad ng maiikling audio clip ng Google TTS sa chat)
+// ═══════════════════════════════════════════════════════════════
+function getNotesText(section) {
+  const clone = section.cloneNode(true);
+  clone.querySelectorAll('button').forEach(b => b.remove());
+  let text = clone.innerText || clone.textContent || '';
+  text = text.replace(/\s+/g, ' ').trim();
+  return text;
+}
+
+function toggleNotesAudio() {
+  const btn = document.getElementById('notes-audio-btn');
+  if (!btn) return;
+
+  if (window.speechSynthesis.speaking || window.speechSynthesis.pending) {
+    window.speechSynthesis.cancel();
+    btn.innerHTML = '🔊 Basahin ang Tala';
+    btn.classList.remove('active');
+    return;
+  }
+
+  const activeSection = document.querySelector('.notes-section.active');
+  if (!activeSection) return;
+  const text = getNotesText(activeSection);
+  if (!text) return;
+
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.lang = 'fil-PH';
+  utter.rate = 0.95;
+  utter.pitch = 1.05;
+  utter.volume = 1;
+
+  const voices = window.speechSynthesis.getVoices();
+  const filVoice = voices.find(v => v.lang.startsWith('fil') || v.lang.startsWith('tl'));
+  const engVoice = voices.find(v => v.lang.startsWith('en') && v.name.toLowerCase().includes('female'))
+                 || voices.find(v => v.lang.startsWith('en'));
+  if (filVoice) {
+    utter.voice = filVoice;
+  } else if (engVoice) {
+    utter.voice = engVoice;
+    utter.lang = 'en-US';
+  }
+
+  utter.onstart = () => { btn.innerHTML = '⏹️ Ihinto ang Pagbasa'; btn.classList.add('active'); };
+  utter.onend = utter.onerror = () => { btn.innerHTML = '🔊 Basahin ang Tala'; btn.classList.remove('active'); };
+
+  window.speechSynthesis.speak(utter);
+}
+
+function switchTab(tabId, btn) {
+  window.speechSynthesis.cancel();
+  const audioBtn = document.getElementById('notes-audio-btn');
+  if (audioBtn) { audioBtn.innerHTML = '🔊 Basahin ang Tala'; audioBtn.classList.remove('active'); }
+  document.querySelectorAll('.notes-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.notes-tab').forEach(b => b.classList.remove('active'));
+  document.getElementById(tabId).classList.add('active');
+  btn.classList.add('active');
+}
+
+function closeNotesPanel() {
+  window.speechSynthesis.cancel();
+  const audioBtn = document.getElementById('notes-audio-btn');
+  if (audioBtn) { audioBtn.innerHTML = '🔊 Basahin ang Tala'; audioBtn.classList.remove('active'); }
+  document.getElementById('notes-overlay').classList.remove('show');
+}
+</script>
+
+<!-- ── Notes Panel ── -->
+<div class="notes-overlay" id="notes-overlay">
+  <div class="notes-panel">
+    <div class="notes-header">
+      <h2>📖 Klima, Panahon, at Heograpiyang Pantao — Mga Tala</h2>
+      <div class="notes-header-actions">
+        <button class="print-btn" id="notes-audio-btn" onclick="toggleNotesAudio()" title="Basahin nang malakas ang tab na ito">🔊 Basahin ang Tala</button>
+        <button class="print-btn" onclick="printPracticeTest()" title="I-print o i-save bilang PDF ang Practice Test at Answer Key">🖨️ I-print ang Test &amp; Key</button>
+        <button class="notes-close" onclick="closeNotesPanel()">✕</button>
+      </div>
+    </div>
+    <div class="notes-tabs">
+      <button class="notes-tab active" onclick="switchTab('tab-klima', this)">☀️ Klima</button>
+      <button class="notes-tab" onclick="switchTab('tab-panahon', this)">🌬️ Panahon at Hangin</button>
+      <button class="notes-tab" onclick="switchTab('tab-bagyo', this)">🌀 Bagyo at Babala</button>
+      <button class="notes-tab" onclick="switchTab('tab-ring', this)">🌋 Ring of Fire</button>
+      <button class="notes-tab" onclick="switchTab('tab-demo', this)">📊 Demograpiya</button>
+      <button class="notes-tab" onclick="switchTab('tab-etniko', this)">🎎 Mga Pangkat Etnolingguwistiko</button>
+      <button class="notes-tab" onclick="switchTab('tab-tamomali', this)">✅ Tama o Mali</button>
+      <button class="notes-tab" onclick="switchTab('tab-ptest', this)">📝 Practice Test</button>
+      <button class="notes-tab" onclick="switchTab('tab-key', this)">🔑 Answer Key</button>
+    </div>
+    <div class="notes-body">
+
+      <div class="notes-section active" id="tab-klima">
+        <div class="chapter-summary">
+          📚 <strong>Buod:</strong> Ang <strong>klima</strong> ng Pilipinas ay tropikal at maritima dahil sa lokasyon nito malapit sa Ekwador at sa Karagatang Pasipiko. May apat na uri ng klima batay sa distribusyon ng ulan.
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 MADALING TANDAAN</span>
+          Tatlong katangian ng klimang tropikal-maritima: <strong>"Mainit, Halumigmig, Maulan"</strong> — mataas na temperatura, mataas na humidity, saganang pag-ulan.
+        </div>
+        <table class="compare-table">
+          <tr><th>Uri</th><th>Katangian</th></tr>
+          <tr><td>Uri I</td><td>May malinaw na tag-araw (Nob-Abr) at tag-ulan (Mayo-Okt)</td></tr>
+          <tr><td>Uri II</td><td>Sagana sa ulan, halos walang tuyong panahon</td></tr>
+          <tr><td>Uri III</td><td>Maikling tag-araw (Nob-Abr), tag-ulan sa ibang buwan</td></tr>
+          <tr><td>Uri IV</td><td>Maulan halos buong taon</td></tr>
+        </table>
+      </div>
+
+      <div class="notes-section" id="tab-panahon">
+        <div class="chapter-summary">
+          📚 <strong>Buod:</strong> May dalawang panahon sa Pilipinas — <strong>tag-ulan</strong> (Hunyo-Nob) at <strong>tagtuyo</strong> (Dis-Mayo). Tatlong sistema ng hangin ang nakaaapekto rito: amihan, habagat, at balaklaot.
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 MADALING TANDAAN</span>
+          Alalahanin ang tatlong hangin sa pagkakasunod-sunod ng taon: <strong>"Balaklaot muna (Abr-May), Habagat susunod (Hul-Set), Amihan sa dulo (Okt-Mar)."</strong>
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">🌬️ Mga Sistema ng Hangin</div>
+          <div class="notes-item"><span class="notes-term">Amihan</span><span class="notes-def">Mula hilagang-silangan; Oktubre hanggang huling bahagi ng Marso</span></div>
+          <div class="notes-item"><span class="notes-term">Habagat</span><span class="notes-def">Mula timog-kanluran; Hulyo hanggang Setyembre</span></div>
+          <div class="notes-item"><span class="notes-term">Balaklaot</span><span class="notes-def">Mula hilagang-kanluran (tradewinds); Abril at Mayo — palatandaan ng paglipat ng panahon</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-bagyo">
+        <div class="chapter-summary">
+          📚 <strong>Buod:</strong> Umaabot sa 20-30 bagyo ang dumadaan sa Pilipinas taon-taon. Ang <strong>PAGASA</strong> ang naglalabas ng mga babala batay sa lakas ng hangin.
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 MADALING TANDAAN</span>
+          Habang tumataas ang numero ng babala, tumataas din ang lakas ng hangin at bumababang ang oras bago ito dumating: <strong>Babala 1 (30-60kph, 36 oras) → Babala 4 (171-220kph, 12 oras).</strong> Mas malaki ang panganib, mas maikli ang oras ng paghahanda!
+        </div>
+        <table class="compare-table">
+          <tr><th>Babala</th><th>Lakas ng Hangin</th><th>Oras Bago Dumating</th></tr>
+          <tr><td>Bilang 1</td><td>30-60 kph</td><td>36 oras</td></tr>
+          <tr><td>Bilang 2</td><td>61-120 kph</td><td>24 oras (suspindido ang klase sa elementarya/sekundarya)</td></tr>
+          <tr><td>Bilang 3</td><td>121-170 kph</td><td>18 oras (suspindido ang klase sa lahat ng antas)</td></tr>
+          <tr><td>Bilang 4</td><td>171-220 kph</td><td>12 oras</td></tr>
+        </table>
+        <div class="tandaan-box">
+          <span class="tandaan-label">BABALA SA PAG-ULAN</span>
+          RED (paglikas) → ORANGE (maging handa) → YELLOW (subaybayan) — mula sa pinakaseryoso hanggang sa unang antas ng alerto.
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-ring">
+        <div class="chapter-summary">
+          📚 <strong>Buod:</strong> Kabilang ang Pilipinas sa <strong>Pacific Ring of Fire</strong>, kaya nakararanas ito ng bagyo, lindol, at pagputok ng bulkan. Ang <strong>PHIVOLCS</strong> ang nagbabantay sa mga ito.
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 MADALING TANDAAN</span>
+          <strong>24</strong> aktibong bulkan sa Pilipinas — isipin ito bilang "24 na oras sa isang araw," palaging may posibleng pumutok kahit kailan!
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">🌋 Mahahalagang Detalye</div>
+          <div class="notes-item"><span class="notes-term">PHIVOLCS</span><span class="notes-def">Ahensiyang nagbabantay sa lindol at bulkan</span></div>
+          <div class="notes-item"><span class="notes-term">Lahar</span><span class="notes-def">Pinaghalong tubig, abo, at bato mula sa bulkan tuwing umuulan</span></div>
+          <div class="notes-item"><span class="notes-term">Bulkang Pinatubo</span><span class="notes-def">Pumutok noong Hunyo 12, 1991; nagpababa ng 1.5°C sa temperatura ng buong daigdig</span></div>
+          <div class="notes-item"><span class="notes-term">Tectonic Plates</span><span class="notes-def">Malalaking tipak ng lupa na ang paggalaw ay sanhi ng paglindol</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-demo">
+        <div class="chapter-summary">
+          📚 <strong>Buod:</strong> Ang <strong>demograpiya</strong> ay pag-aaral sa populasyon. Batay sa senso ng PSA (2020), ang populasyon ng Pilipinas ay 109,035,343 katao.
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">📊 Mahahalagang Bilang</div>
+          <div class="notes-item"><span class="notes-term">Populasyon (2020)</span><span class="notes-def">109,035,343 katao</span></div>
+          <div class="notes-item"><span class="notes-term">Naninirahan kasama ang pamilya</span><span class="notes-def">97.3%</span></div>
+          <div class="notes-item"><span class="notes-term">Population Density</span><span class="notes-def">Dami ng tao sa bawat yunit ng lupain — mataas kung marami sa maliit na espasyo</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-etniko">
+        <div class="chapter-summary">
+          📚 <strong>Buod:</strong> May mahigit <strong>180 pangkat etnolingguwistiko</strong> sa Pilipinas, bawat isa may sariling kultura, wika, at tradisyon. Materyal (nahahawakan) at di-materyal (kaisipan, tradisyon) ang dalawang uri ng kultura.
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 MADALING TANDAAN</span>
+          Tandaan ang mga pangkat sa ilalim ng Igorot gamit ang: <strong>"I-Bo-Ka-I-I-Ka-Ti"</strong> — Ifugao, Bontoc, Kalinga, Ibaloi, Isneg, Kankanaey, Tingguian.
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">🎎 Mga Pangkat at Kanilang Kilalang Tradisyon</div>
+          <div class="notes-item"><span class="notes-term">Ifugao</span><span class="notes-def">Hagdang-hagdang Palayan ng Banaue; epikong Hudhud at Alim; bahay na "bale"</span></div>
+          <div class="notes-item"><span class="notes-term">Bontoc</span><span class="notes-def">"Ato" (lalaki) at "olag" (babae); sumasamba kay Lumawig; tattoo bilang katapangan</span></div>
+          <div class="notes-item"><span class="notes-term">Kankanaey</span><span class="notes-def">"Dap-ay" at "egban"; dalawang pangkat: Ibenget at Ibontok</span></div>
+          <div class="notes-item"><span class="notes-term">Ibaloi</span><span class="notes-def">Pagpepreserba ng bangkay sa Kabayan, Benguet</span></div>
+          <div class="notes-item"><span class="notes-term">Kalinga</span><span class="notes-def">Tatung "batok"; pagpupulong na "bodong"</span></div>
+          <div class="notes-item"><span class="notes-term">Isneg (Apayao)</span><span class="notes-def">Sumasamba sa mahigit 300 espiritu</span></div>
+          <div class="notes-item"><span class="notes-term">Tingguian</span><span class="notes-def">Taga-Abra; sumasamba kay Kadaklan o Kabunyan</span></div>
+          <div class="notes-item"><span class="notes-term">Ivatan</span><span class="notes-def">Bahay na "Sinadumparan"; kasuotang "vakul"; taga-Batanes</span></div>
+          <div class="notes-item"><span class="notes-term">Ibanag</span><span class="notes-def">Ritwal na "mamalagun" at "mawuwa"; taga-Cagayan</span></div>
+          <div class="notes-item"><span class="notes-term">Ilokano</span><span class="notes-def">Abel Iloko, basi, burnay; epikong Biag ni Lam-ang</span></div>
+          <div class="notes-item"><span class="notes-term">Pangasinense</span><span class="notes-def">Debosyon sa Birhen ng Manaoag</span></div>
+          <div class="notes-item"><span class="notes-term">Kapampangan</span><span class="notes-def">Giant Lantern Festival; magagandang parol</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-tamomali">
+        <div class="notes-topic">
+          <div class="notes-topic-title">✅ Tama o Mali — Mga Paalala</div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">MALI</span><span class="notes-def">23 aktibong bulkan sa Pilipinas → 24 ang tamang bilang.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">MALI</span><span class="notes-def">Binubuo ng 7,647 pulo ang Pilipinas → 7,641 ang tamang bilang.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">MALI</span><span class="notes-def">Pangalawa ang Pilipinas sa pinakamahabang baybayin → ikalima ito.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">MALI</span><span class="notes-def">Nakararanas ng tagsibol at taglamig ang Pilipinas → dalawa lamang ang panahon: tag-ulan at tagtuyo.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">MALI</span><span class="notes-def">500,000 km² ang sukat ng Pilipinas → 300,000 km² ang tamang sukat.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">MALI</span><span class="notes-def">Kapuluan ng Kalayaan ang pinakamahalagang dulo ng Pilipinas → hindi ito totoo ayon sa aralin.</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-ptest">
+        <div class="notes-topic">
+          <div class="notes-topic-title">📝 Practice Test</div>
+<div class="ptest-part-title">Part I — Tama o Mali</div><div class="ptest-q"><b>1.</b> Ang Pilipinas ay kabilang sa Pacific Ring of Fire. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>2.</b> Ang Pilipinas ay matatagpuan sa rehiyong tropikal. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>3.</b> Matatagpuan sa Pilipinas ang 23 aktibong bulkan. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>4.</b> Ang Pilipinas ay isang arkipelago. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>5.</b> Hindi nakararanas ang Pilipinas ng bagyo o lindol. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>6.</b> Binubuo ang Pilipinas ng 7,647 na mga pulo. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>7.</b> Ang Luzon, Visayas, at Mindanao ang mga pangunahing pangkat ng mga pulo ng Pilipinas. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>8.</b> Pangalawa ang Pilipinas sa mga bansang may pinakamahabang baybayin sa buong mundo. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>9.</b> Ang amihan, habagat, at balaklaot ang tatlong sistema ng hangin ng Pilipinas. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>10.</b> Ang Pilipinas ay matatagpuan sa Timog-Silangang Asya. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>11.</b> Ang Pilipinas ay napaliligiran ng malalaking anyo ng tubig. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>12.</b> May apat na uri ng klima ang Pilipinas batay sa distribusyon ng ulan. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>13.</b> Ang Pilipinas ay nakararanas ng tagsibol at taglamig. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>14.</b> May kabuuang sukat na 500,000 kilometro kuwadrado ang Pilipinas. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>15.</b> Ang Kapuluan ng Kalayaan ang pinakamahalagang dulo ng Pilipinas. <span class="opt">Sagot: ______________________</span></div><div class="ptest-part-title">Part II — Kilalanin ang Katangiang Pisikal</div>
+<div class="ptest-bank">a. Malapit sa Ekwador &middot; b. Napaliligiran ng tubig &middot; c. Kabilang sa Pacific Ring of Fire</div><div class="ptest-q"><b>16.</b> Relatibong mataas ang nararanasang temperatura sa Pilipinas. <span class="opt">Sagot: ______</span></div><div class="ptest-q"><b>17.</b> Tinatayang nasa 20 hanggang 30 ang bagyong dumadaan sa Pilipinas kada taon. <span class="opt">Sagot: ______</span></div><div class="ptest-q"><b>18.</b> Ang Pilipinas ay mayroong 24 na aktibong bulkan. <span class="opt">Sagot: ______</span></div><div class="ptest-q"><b>19.</b> Nakakatanggap ng masaganang ulan ang malaking bahagi ng kapuluan taon-taon. <span class="opt">Sagot: ______</span></div><div class="ptest-q"><b>20.</b> Kumakaharap sa banta ng tsunami ang mga pamayanan sa mga dalampasigan ng Pilipinas. <span class="opt">Sagot: ______</span></div><div class="ptest-part-title">Part III — Kilalanin ang Babala sa Bagyo</div><div class="ptest-q"><b>21.</b> 30–60 kph ang lakas ng hangin, inaasahang darating sa loob ng 36 na oras.<br><span class="opt">a) Babala Bilang 1</span><span class="opt">b) Babala Bilang 2</span><span class="opt">c) Babala Bilang 3</span><span class="opt">d) Babala Bilang 4</span></div><div class="ptest-q"><b>22.</b> 61–120 kph ang lakas ng hangin, inaasahang darating sa loob ng 24 na oras. Suspindido ang klase sa elementarya at sekundarya.<br><span class="opt">a) Babala Bilang 1</span><span class="opt">b) Babala Bilang 2</span><span class="opt">c) Babala Bilang 3</span><span class="opt">d) Babala Bilang 4</span></div><div class="ptest-q"><b>23.</b> 121–170 kph ang lakas ng hangin, inaasahang darating sa loob ng 18 oras. Suspindido ang klase sa lahat ng antas.<br><span class="opt">a) Babala Bilang 1</span><span class="opt">b) Babala Bilang 2</span><span class="opt">c) Babala Bilang 3</span><span class="opt">d) Babala Bilang 4</span></div><div class="ptest-q"><b>24.</b> 171–220 kph ang lakas ng hangin, inaasahang darating sa loob ng 12 oras.<br><span class="opt">a) Babala Bilang 1</span><span class="opt">b) Babala Bilang 2</span><span class="opt">c) Babala Bilang 3</span><span class="opt">d) Babala Bilang 4</span></div><div class="ptest-part-title">Part IV — Kilalanin ang Pangkat Etnolingguwistiko</div><div class="ptest-q"><b>25.</b> Kilala sa Hagdang-hagdang Palayan ng Banaue at sa epikong Hudhud at Alim.<br><span class="opt">a) Ifugao</span><span class="opt">b) Bontoc</span><span class="opt">c) Kalinga</span><span class="opt">d) Ivatan</span></div><div class="ptest-q"><b>26.</b> Nakatira sa 'ato' (lalaki) at 'olag' (babae), sumasamba kay Lumawig, kilala sa tattoo bilang simbolo ng katapangan.<br><span class="opt">a) Bontoc</span><span class="opt">b) Ifugao</span><span class="opt">c) Kankanaey</span><span class="opt">d) Isneg</span></div><div class="ptest-q"><b>27.</b> May dap-ay (para sa lalaki) at egban (para sa babae); dalawang pangkat: Ibenget at Ibontok.<br><span class="opt">a) Kankanaey</span><span class="opt">b) Bontoc</span><span class="opt">c) Ibaloi</span><span class="opt">d) Tingguian</span></div><div class="ptest-q"><b>28.</b> Kilala sa tradisyon ng pagpepreserba sa katawan ng yumao sa Kabayan, Benguet.<br><span class="opt">a) Ibaloi</span><span class="opt">b) Kankanaey</span><span class="opt">c) Bontoc</span><span class="opt">d) Kalinga</span></div><div class="ptest-q"><b>29.</b> Kilala sa tradisyonal na tatu na tinatawag na 'batok' at sa pagdaraos ng 'bodong.'<br><span class="opt">a) Kalinga</span><span class="opt">b) Bontoc</span><span class="opt">c) Ifugao</span><span class="opt">d) Ibanag</span></div><div class="ptest-q"><b>30.</b> Kilala rin bilang Apayao; sumasamba sa mahigit 300 espiritu.<br><span class="opt">a) Isneg</span><span class="opt">b) Tingguian</span><span class="opt">c) Kankanaey</span><span class="opt">d) Ibaloi</span></div><div class="ptest-q"><b>31.</b> Nakatira sa Abra; sumasamba sa diyos na si Kadaklan o Kabunyan.<br><span class="opt">a) Tingguian</span><span class="opt">b) Isneg</span><span class="opt">c) Ibaloi</span><span class="opt">d) Ibanag</span></div><div class="ptest-q"><b>32.</b> Nakatira sa Batanes sa bahay na tinatawag na Sinadumparan; nagsusuot ng vakul.<br><span class="opt">a) Ivatan</span><span class="opt">b) Ibanag</span><span class="opt">c) Ilokano</span><span class="opt">d) Kapampangan</span></div><div class="ptest-q"><b>33.</b> May mga ritwal na tinatawag na mamalagun at mawuwa; nakatira sa Cagayan.<br><span class="opt">a) Ibanag</span><span class="opt">b) Ivatan</span><span class="opt">c) Ilokano</span><span class="opt">d) Isneg</span></div><div class="ptest-q"><b>34.</b> Kilala sa Abel Iloko, basi, burnay, at sa epikong Biag ni Lam-ang.<br><span class="opt">a) Ilokano</span><span class="opt">b) Pangasinense</span><span class="opt">c) Ibanag</span><span class="opt">d) Kapampangan</span></div><div class="ptest-q"><b>35.</b> Kilala sa kanilang debosyon sa Birhen ng Manaoag.<br><span class="opt">a) Pangasinense</span><span class="opt">b) Ilokano</span><span class="opt">c) Ibaloi</span><span class="opt">d) Bontoc</span></div><div class="ptest-q"><b>36.</b> Kilala sa Giant Lantern Festival at sa paggawa ng magagandang parol.<br><span class="opt">a) Kapampangan</span><span class="opt">b) Ilokano</span><span class="opt">c) Pangasinense</span><span class="opt">d) Tingguian</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-key">
+        <div class="notes-topic">
+<div class="notes-topic-title">Part I — Tama o Mali</div><div class="key-grid"><div class="key-pill">1. <b>TAMA</b></div><div class="key-pill">2. <b>TAMA</b></div><div class="key-pill">3. <b>MALI</b></div><div class="key-pill">4. <b>TAMA</b></div><div class="key-pill">5. <b>MALI</b></div><div class="key-pill">6. <b>MALI</b></div><div class="key-pill">7. <b>TAMA</b></div><div class="key-pill">8. <b>MALI</b></div><div class="key-pill">9. <b>TAMA</b></div><div class="key-pill">10. <b>TAMA</b></div><div class="key-pill">11. <b>TAMA</b></div><div class="key-pill">12. <b>TAMA</b></div><div class="key-pill">13. <b>MALI</b></div><div class="key-pill">14. <b>MALI</b></div><div class="key-pill">15. <b>MALI</b></div></div><div class="notes-topic-title">Part II — Katangiang Pisikal</div><div class="key-grid"><div class="key-pill">16. <b>A</b></div><div class="key-pill">17. <b>B</b></div><div class="key-pill">18. <b>C</b></div><div class="key-pill">19. <b>B</b></div><div class="key-pill">20. <b>C</b></div></div><div class="notes-topic-title">Part III — Babala sa Bagyo</div><div class="key-grid"><div class="key-pill">21. <b>Babala Bilang 1</b></div><div class="key-pill">22. <b>Babala Bilang 2</b></div><div class="key-pill">23. <b>Babala Bilang 3</b></div><div class="key-pill">24. <b>Babala Bilang 4</b></div></div><div class="notes-topic-title">Part IV — Pangkat Etnolingguwistiko</div><div class="key-grid"><div class="key-pill">25. <b>Ifugao</b></div><div class="key-pill">26. <b>Bontoc</b></div><div class="key-pill">27. <b>Kankanaey</b></div><div class="key-pill">28. <b>Ibaloi</b></div><div class="key-pill">29. <b>Kalinga</b></div><div class="key-pill">30. <b>Isneg</b></div><div class="key-pill">31. <b>Tingguian</b></div><div class="key-pill">32. <b>Ivatan</b></div><div class="key-pill">33. <b>Ibanag</b></div><div class="key-pill">34. <b>Ilokano</b></div><div class="key-pill">35. <b>Pangasinense</b></div><div class="key-pill">36. <b>Kapampangan</b></div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ── Hidden Print Area (Practice Test + Answer Key) ── -->
+<div id="print-area">
+<div class="p-cover">
+    <div class="p-icon">🌦️</div>
+    <h1>AP 4 — Klima, Panahon, at Heograpiyang Pantao Practice Test</h1>
+    <div class="p-sub">Klima at Sistema ng Hangin · Bagyo · Pacific Ring of Fire · Mga Pangkat Etnolingguwistiko</div>
+    <div class="p-info-box">
+      <div><strong>Pangalan:</strong> _____________________________________</div>
+      <div><strong>Baitang/Pangkat:</strong> ___________________ &nbsp; <strong>Petsa:</strong> ___________________</div>
+      <div><strong>Iskor:</strong> _______ / 36</div>
+    </div>
+    <div class="p-instructions">
+      <strong>Panuto:</strong> Basahing mabuti ang bawat aytem. Isulat ang sagot sa patlang na inilaan (Bahagi I-II), o piliin ang tamang letra (Bahagi III-IV). Good luck!
+    </div>
+  </div>
+
+  <h2 class="p-part-title">Bahagi I — Tama o Mali</h2><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>1.</b> Ang Pilipinas ay kabilang sa Pacific Ring of Fire.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>2.</b> Ang Pilipinas ay matatagpuan sa rehiyong tropikal.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>3.</b> Matatagpuan sa Pilipinas ang 23 aktibong bulkan.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>4.</b> Ang Pilipinas ay isang arkipelago.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>5.</b> Hindi nakararanas ang Pilipinas ng bagyo o lindol.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>6.</b> Binubuo ang Pilipinas ng 7,647 na mga pulo.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>7.</b> Ang Luzon, Visayas, at Mindanao ang mga pangunahing pangkat ng mga pulo ng Pilipinas.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>8.</b> Pangalawa ang Pilipinas sa mga bansang may pinakamahabang baybayin sa buong mundo.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>9.</b> Ang amihan, habagat, at balaklaot ang tatlong sistema ng hangin ng Pilipinas.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>10.</b> Ang Pilipinas ay matatagpuan sa Timog-Silangang Asya.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>11.</b> Ang Pilipinas ay napaliligiran ng malalaking anyo ng tubig.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>12.</b> May apat na uri ng klima ang Pilipinas batay sa distribusyon ng ulan.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>13.</b> Ang Pilipinas ay nakararanas ng tagsibol at taglamig.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>14.</b> May kabuuang sukat na 500,000 kilometro kuwadrado ang Pilipinas.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>15.</b> Ang Kapuluan ng Kalayaan ang pinakamahalagang dulo ng Pilipinas.</div><div class="p-break"></div><h2 class="p-part-title">Bahagi II — Kilalanin ang Katangiang Pisikal</h2>
+  <div class="p-bank">a. Malapit sa Ekwador &middot; b. Napaliligiran ng tubig &middot; c. Kabilang sa Pacific Ring of Fire</div><div class="p-q"><b>16.</b> Relatibong mataas ang nararanasang temperatura sa Pilipinas. <span class="p-blank"></span></div><div class="p-q"><b>17.</b> Tinatayang nasa 20 hanggang 30 ang bagyong dumadaan sa Pilipinas kada taon. <span class="p-blank"></span></div><div class="p-q"><b>18.</b> Ang Pilipinas ay mayroong 24 na aktibong bulkan. <span class="p-blank"></span></div><div class="p-q"><b>19.</b> Nakakatanggap ng masaganang ulan ang malaking bahagi ng kapuluan taon-taon. <span class="p-blank"></span></div><div class="p-q"><b>20.</b> Kumakaharap sa banta ng tsunami ang mga pamayanan sa mga dalampasigan ng Pilipinas. <span class="p-blank"></span></div><h2 class="p-part-title">Bahagi III — Kilalanin ang Babala sa Bagyo</h2><div class="p-q"><b>21.</b> 30–60 kph ang lakas ng hangin, inaasahang darating sa loob ng 36 na oras.<br><span class="p-opt">a) Babala Bilang 1</span><span class="p-opt">b) Babala Bilang 2</span><span class="p-opt">c) Babala Bilang 3</span><span class="p-opt">d) Babala Bilang 4</span></div><div class="p-q"><b>22.</b> 61–120 kph ang lakas ng hangin, inaasahang darating sa loob ng 24 na oras. Suspindido ang klase sa elementarya at sekundarya.<br><span class="p-opt">a) Babala Bilang 1</span><span class="p-opt">b) Babala Bilang 2</span><span class="p-opt">c) Babala Bilang 3</span><span class="p-opt">d) Babala Bilang 4</span></div><div class="p-q"><b>23.</b> 121–170 kph ang lakas ng hangin, inaasahang darating sa loob ng 18 oras. Suspindido ang klase sa lahat ng antas.<br><span class="p-opt">a) Babala Bilang 1</span><span class="p-opt">b) Babala Bilang 2</span><span class="p-opt">c) Babala Bilang 3</span><span class="p-opt">d) Babala Bilang 4</span></div><div class="p-q"><b>24.</b> 171–220 kph ang lakas ng hangin, inaasahang darating sa loob ng 12 oras.<br><span class="p-opt">a) Babala Bilang 1</span><span class="p-opt">b) Babala Bilang 2</span><span class="p-opt">c) Babala Bilang 3</span><span class="p-opt">d) Babala Bilang 4</span></div><div class="p-break"></div><h2 class="p-part-title">Bahagi IV — Kilalanin ang Pangkat Etnolingguwistiko</h2><div class="p-q"><b>25.</b> Kilala sa Hagdang-hagdang Palayan ng Banaue at sa epikong Hudhud at Alim.<br><span class="p-opt">a) Ifugao</span><span class="p-opt">b) Bontoc</span><span class="p-opt">c) Kalinga</span><span class="p-opt">d) Ivatan</span></div><div class="p-q"><b>26.</b> Nakatira sa 'ato' (lalaki) at 'olag' (babae), sumasamba kay Lumawig, kilala sa tattoo bilang simbolo ng katapangan.<br><span class="p-opt">a) Bontoc</span><span class="p-opt">b) Ifugao</span><span class="p-opt">c) Kankanaey</span><span class="p-opt">d) Isneg</span></div><div class="p-q"><b>27.</b> May dap-ay (para sa lalaki) at egban (para sa babae); dalawang pangkat: Ibenget at Ibontok.<br><span class="p-opt">a) Kankanaey</span><span class="p-opt">b) Bontoc</span><span class="p-opt">c) Ibaloi</span><span class="p-opt">d) Tingguian</span></div><div class="p-q"><b>28.</b> Kilala sa tradisyon ng pagpepreserba sa katawan ng yumao sa Kabayan, Benguet.<br><span class="p-opt">a) Ibaloi</span><span class="p-opt">b) Kankanaey</span><span class="p-opt">c) Bontoc</span><span class="p-opt">d) Kalinga</span></div><div class="p-q"><b>29.</b> Kilala sa tradisyonal na tatu na tinatawag na 'batok' at sa pagdaraos ng 'bodong.'<br><span class="p-opt">a) Kalinga</span><span class="p-opt">b) Bontoc</span><span class="p-opt">c) Ifugao</span><span class="p-opt">d) Ibanag</span></div><div class="p-q"><b>30.</b> Kilala rin bilang Apayao; sumasamba sa mahigit 300 espiritu.<br><span class="p-opt">a) Isneg</span><span class="p-opt">b) Tingguian</span><span class="p-opt">c) Kankanaey</span><span class="p-opt">d) Ibaloi</span></div><div class="p-q"><b>31.</b> Nakatira sa Abra; sumasamba sa diyos na si Kadaklan o Kabunyan.<br><span class="p-opt">a) Tingguian</span><span class="p-opt">b) Isneg</span><span class="p-opt">c) Ibaloi</span><span class="p-opt">d) Ibanag</span></div><div class="p-q"><b>32.</b> Nakatira sa Batanes sa bahay na tinatawag na Sinadumparan; nagsusuot ng vakul.<br><span class="p-opt">a) Ivatan</span><span class="p-opt">b) Ibanag</span><span class="p-opt">c) Ilokano</span><span class="p-opt">d) Kapampangan</span></div><div class="p-q"><b>33.</b> May mga ritwal na tinatawag na mamalagun at mawuwa; nakatira sa Cagayan.<br><span class="p-opt">a) Ibanag</span><span class="p-opt">b) Ivatan</span><span class="p-opt">c) Ilokano</span><span class="p-opt">d) Isneg</span></div><div class="p-q"><b>34.</b> Kilala sa Abel Iloko, basi, burnay, at sa epikong Biag ni Lam-ang.<br><span class="p-opt">a) Ilokano</span><span class="p-opt">b) Pangasinense</span><span class="p-opt">c) Ibanag</span><span class="p-opt">d) Kapampangan</span></div><div class="p-q"><b>35.</b> Kilala sa kanilang debosyon sa Birhen ng Manaoag.<br><span class="p-opt">a) Pangasinense</span><span class="p-opt">b) Ilokano</span><span class="p-opt">c) Ibaloi</span><span class="p-opt">d) Bontoc</span></div><div class="p-q"><b>36.</b> Kilala sa Giant Lantern Festival at sa paggawa ng magagandang parol.<br><span class="p-opt">a) Kapampangan</span><span class="p-opt">b) Ilokano</span><span class="p-opt">c) Pangasinense</span><span class="p-opt">d) Tingguian</span></div><div class="p-break"></div><h2 class="p-part-title">✅ Kumpletong Susi sa Pagwawasto</h2>
+  <div class="p-key-part-title">Bahagi I — Tama o Mali</div><div class="p-key-grid"><div class="p-key-pill">1. <b>TAMA</b></div><div class="p-key-pill">2. <b>TAMA</b></div><div class="p-key-pill">3. <b>MALI</b></div><div class="p-key-pill">4. <b>TAMA</b></div><div class="p-key-pill">5. <b>MALI</b></div><div class="p-key-pill">6. <b>MALI</b></div><div class="p-key-pill">7. <b>TAMA</b></div><div class="p-key-pill">8. <b>MALI</b></div><div class="p-key-pill">9. <b>TAMA</b></div><div class="p-key-pill">10. <b>TAMA</b></div><div class="p-key-pill">11. <b>TAMA</b></div><div class="p-key-pill">12. <b>TAMA</b></div><div class="p-key-pill">13. <b>MALI</b></div><div class="p-key-pill">14. <b>MALI</b></div><div class="p-key-pill">15. <b>MALI</b></div></div><div class="p-key-part-title">Bahagi II — Katangiang Pisikal</div><div class="p-key-grid"><div class="p-key-pill">16. <b>A</b></div><div class="p-key-pill">17. <b>B</b></div><div class="p-key-pill">18. <b>C</b></div><div class="p-key-pill">19. <b>B</b></div><div class="p-key-pill">20. <b>C</b></div></div><div class="p-key-part-title">Bahagi III — Babala sa Bagyo</div><div class="p-key-grid"><div class="p-key-pill">21. <b>Babala Bilang 1</b></div><div class="p-key-pill">22. <b>Babala Bilang 2</b></div><div class="p-key-pill">23. <b>Babala Bilang 3</b></div><div class="p-key-pill">24. <b>Babala Bilang 4</b></div></div><div class="p-key-part-title">Bahagi IV — Pangkat Etnolingguwistiko</div><div class="p-key-grid"><div class="p-key-pill">25. <b>Ifugao</b></div><div class="p-key-pill">26. <b>Bontoc</b></div><div class="p-key-pill">27. <b>Kankanaey</b></div><div class="p-key-pill">28. <b>Ibaloi</b></div><div class="p-key-pill">29. <b>Kalinga</b></div><div class="p-key-pill">30. <b>Isneg</b></div><div class="p-key-pill">31. <b>Tingguian</b></div><div class="p-key-pill">32. <b>Ivatan</b></div><div class="p-key-pill">33. <b>Ibanag</b></div><div class="p-key-pill">34. <b>Ilokano</b></div><div class="p-key-pill">35. <b>Pangasinense</b></div><div class="p-key-pill">36. <b>Kapampangan</b></div></div>
+</div>
+
+</body>
+</html>

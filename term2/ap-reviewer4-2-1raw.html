@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="tl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>📄 AP: Klima, Panahon, at Heograpiyang Pantao — Raw Notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Fredoka+One&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --gold: #f59e0b;
+  --gold-dark: #b45309;
+  --blue: #3b82f6;
+  --bg: #0c1a0e;
+  --surface: #132015;
+  --surface2: #1a2e1d;
+  --text: #f0fdf4;
+  --muted: #86efac;
+  --border: #166534;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Lora', Georgia, serif;
+  line-height: 1.75;
+  min-height: 100vh;
+}
+
+/* ── Sticky header ── */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: linear-gradient(135deg, var(--surface), var(--surface2));
+  border-bottom: 2px solid var(--gold-dark);
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+header .icon { font-size: 1.8rem; }
+header h1 {
+  font-family: 'Baloo 2', cursive;
+  font-size: 1.15rem;
+  color: var(--gold);
+  flex: 1;
+}
+header .sub {
+  font-family: 'Baloo 2', cursive;
+  font-size: .72rem;
+  color: var(--muted);
+  display: block;
+  margin-top: 2px;
+}
+header a.back-link {
+  font-family: 'Baloo 2', cursive;
+  font-size: .82rem;
+  color: var(--text);
+  background: rgba(255,255,255,.06);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 8px 16px;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: all .15s;
+}
+header a.back-link:hover { background: var(--gold); color: #0c1a0e; border-color: var(--gold); }
+
+.notice {
+  max-width: 780px;
+  margin: 18px auto 0;
+  padding: 12px 18px;
+  background: rgba(59,130,246,.1);
+  border: 1px solid rgba(59,130,246,.3);
+  border-left: 4px solid var(--blue);
+  border-radius: 10px;
+  font-family: 'Baloo 2', cursive;
+  font-size: .82rem;
+  color: #dbeafe;
+  line-height: 1.6;
+}
+
+/* ── Document body ── */
+.doc-wrap {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 28px 24px 80px;
+}
+
+.doc-wrap p {
+  font-size: 1.02rem;
+  margin-bottom: 16px;
+  color: #e2f5e6;
+}
+.doc-wrap strong { color: var(--gold); font-weight: 700; }
+.doc-wrap em { color: var(--muted); font-style: italic; }
+
+h2.doc-heading {
+  font-family: 'Baloo 2', cursive;
+  font-size: 1.3rem;
+  color: var(--gold);
+  margin: 34px 0 14px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--border);
+}
+h2.doc-heading:first-child { margin-top: 0; }
+
+.doc-wrap ul, .doc-wrap ol {
+  margin: 0 0 16px 28px;
+  color: #e2f5e6;
+}
+.doc-wrap li { margin-bottom: 8px; font-size: 1.02rem; }
+
+/* ── Tables (babala sa pag-ulan) ── */
+.doc-wrap table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0 24px;
+  font-size: .88rem;
+  font-family: 'Baloo 2', cursive;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.doc-wrap th {
+  background: linear-gradient(135deg, var(--blue), var(--gold-dark));
+  color: white;
+  text-align: left;
+  padding: 10px 12px;
+  font-size: .8rem;
+}
+.doc-wrap td {
+  padding: 10px 12px;
+  border-top: 1px solid var(--border);
+  vertical-align: top;
+}
+.doc-wrap tr:nth-child(even) td { background: rgba(255,255,255,.02); }
+
+/* ── Footer ── */
+footer {
+  max-width: 780px;
+  margin: 0 auto 40px;
+  padding: 0 24px;
+  text-align: center;
+  font-family: 'Baloo 2', cursive;
+  font-size: .76rem;
+  color: var(--muted);
+}
+
+@media print {
+  header, .notice, footer { display: none; }
+  body { background: #fff; color: #14290f; }
+  .doc-wrap strong { color: #b45309; }
+  h2.doc-heading { color: #b45309; border-bottom-color: #b45309; }
+  .doc-wrap p, .doc-wrap li { color: #14290f; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="icon">📄</div>
+  <div>
+    <h1>Raw Notes — Klima, Panahon, at Heograpiyang Pantao</h1>
+    <span class="sub">Direktang kopya ng orihinal na aralin na na-upload</span>
+  </div>
+  <a class="back-link" href="AP-Klima-Panahon-HeograpiyangPantao-Reviewer.html">📝 Buksan ang Reviewer</a>
+</header>
+
+<div class="notice">
+  📌 Ito ang orihinal na nilalaman ng dokumentong ini-upload, nang walang binago — para madali mong masangguni ang buong teksto kapag kailangan mo ng detalye na wala sa reviewer.
+</div>
+
+<div class="doc-wrap">
+<h2 class="doc-heading">Klima at Panahon sa Pilipinas</h2>
+<p>Ang <strong>klima</strong> ay tumutukoy sa pangkalahatan at pangmatagalang kondisyon ng panahon. Dahil ang Pilipinas ay matatagpuan sa pagitan ng Ekwador at Tropiko ng Kanser, ito ay nakapaloob sa rehiyong tropikal na nakararanas ng <strong>klimang tropikal at maritima</strong>. Ang klimang tropikal at maritima ng Pilipinas ay may tatlong tampok na katangian: relatibong mataas na temperatura, mataas na <em>humidity</em> o halumigmig, at saganang pag-ulan.</p>
+<p>Ang mga katangiang ito ng tropikal at maritimang klima ay bunsod ng lokasyon ng Pilipinas. Dahil sa lapit ng bansa sa Ekwador, nakatatanggap ang Pilipinas ng halos direktang sinag ng araw na nagdudulot ng mataas na temperatura. Ang katubigan sa paligid ng Pilipinas, partikular na ang Karagatang Pasipiko, ang dahilan ng mataas na halumigmig at saganang pag-ulan sa kapuluan.</p>
+<p>Sa kabilang banda, ang <strong>season o panahon</strong> ay ang panandaliang kalagayan ng atmosfera na kaugnay ng temperatura, pag-ulan, kaulapan, hangin, at iba pang kondisyon. Nakakaranas ang Pilipinas ng dalawang pangunahing panahon: ang <strong>tag-ulan at tagtuyo</strong>. Ang tag-ulan ay nararanasan mula Hunyo hanggang Nobyembre. Tagtuyo o tag-araw naman sa mga buwan ng Disyembre hanggang Mayo. Ang tagtuyo na may malamig na panahon ay nararanasan tuwing Disyembre hanggang Pebrero. Ang mainit na tagtuyo naman ay nararanasan sa mga buwan Marso hanggang Mayo.</p>
+<p>Subalit, dahil sa patuloy na pagtaas ng temperatura ng Daigdig, nagkakaroon ng mga pagbabago sa klima na nararanasan sa Pilipinas ngayon. May mga pagkakataong Mayo pa lamang ay maulan na o kaya naman, Disyembre na ay may mga bagyo pa ring dumarating sa bansa. Ang mga iregularidad na ito sa klima ng Pilipinas ay sinasabing dulot ng patuloy na pag-init ng mundo o <strong>global warming</strong>.</p>
+<p>May apat na uri ng klima sa Pilipinas batay sa distribusyon ng ulan. Tingnan ang mapang pangklima ng bansa. Makikita rito ang iba't ibang uri ng klima sa bansa at kung saan nararanasan ang mga ito.</p>
+<h2 class="doc-heading">Uri I</h2>
+<p>Mayroong dalawang uri ng panahon—tag-araw at tag-ulan. Tuyo sa panahon ng tag-araw na nagaganap sa mga buwan ng Nobyembre hanggang Abril. Tag-ulan o basa sa mga buwan ng Mayo hanggang Oktubre. Nararanasan sa mga lalawigan ng Ilocos Norte, Ilocos Sur, La Union, Pangasinan, Cavite, Laguna, Batangas, Occidental Mindoro, Zambales, Bataan, Tarlac, Pampanga, at ilang bahagi ng Palawan, Antique, Iloilo, Negros Oriental, at Negros Occidental.</p>
+<h2 class="doc-heading">Uri II</h2>
+<p>Sagana sa ulan. Halos walang tuyong panahon. Nararanasan sa silangang bahagi ng Albay at Mindanao kabilang ang hilagang bahagi ng Camarines Norte, Camarines Sur, Samar, at Leyte.</p>
+<h2 class="doc-heading">Uri III</h2>
+<p>Mayroong maikling tag-araw mula Nobyembre hanggang Abril at tag-ulan sa ibang buwan ng taon. Nararanasan sa kanlurang bahagi ng Cagayan, Isabela, Nueva Vizcaya, silangang bahagi ng Mountain Province, timog Quezon, Masbate, hilagang-silangang Panay, Romblon, silangang Negros, gitna at timog Cebu, silangang Palawan, at hilagang Mindanao.</p>
+<h2 class="doc-heading">Uri IV</h2>
+<p>May maulang panahon na laganap sa buong taon. Nararanasan sa hilagang-silangang Luzon; timog-kanlurang bahagi ng Camarines Sur at Albay; Silangang Mindoro, Marinduque, kanlurang Leyte, hilagang Cebu, gitna at silangang Bohol, at timog Mindanao.</p>
+<h2 class="doc-heading">Mga Sistema ng Hangin na Nakaaapekto sa Klima at Panahon sa Pilipinas</h2>
+<p>Ang iba’t ibang bahagi ng bansa ay nakararanas ng magkakaibang uri ng klima. Bukod sa distribusyon ng ulan, nakaaapekto rin sa bansa ang pangkalahatang sistema ng hanging umiihip sa Pilipinas. Mayroong tatlong sistema ng hangin na nararanasan sa bansa: ang <strong>amihan, habagat, at balaklaot.</strong></p>
+<p>Ang hanging <strong>amihan</strong> ay nagmumula sa hilagang-silangan at umiiral sa Pilipinas mula Oktubre hanggang huling bahagi ng Marso. Ang <strong>habagat</strong> naman ay nagmumula sa timog-kanluran at umiiral sa bansa sa mga buwan ng Hulyo hanggang Setyembre.</p>
+<p>Ang <strong>balaklaot</strong> o <em>tradewinds</em> ay ang hanging nagmumula sa hilagang-kanluran na dumarating tuwing buwan ng Abril at Mayo. Ito ay palatandaan ng pagbabago ng panahon at pagtatapos ng pagdaraan ng hanging amihan at pagsisimula ng hanging habagat.</p>
+<h2 class="doc-heading">Bagyo</h2>
+<p>Umaabot sa <strong>20 hanggang 30 bagyo</strong> ang dumaraan sa bansa taon-taon. Karamihan sa mga ito ay dumarating sa panahon ng tag-ulan at nabubuo sa Karagatang Pasipiko. Ang <strong>Philippine Atmospheric, Geophysical and Astronomical Services Administration o PAGASA</strong> ang pangunahing ahensiya ng pamahalaan na nagbabantay sa kalagayan ng panahon at klima sa bansa.</p>
+<h2 class="doc-heading">Mga Babala sa Bagyo</h2>
+<p>Ang PAGASA ang nag-uulat sa publiko hinggil sa kalagayan ng panahon. Ito rin ang nagbibigay ng babala tuwing may bagyong nagbabantang papalapit sa bansa. Ang mga babalang ito ay ayon sa lakas ng hangin at bilis ng pagdating ng bagyo sa isang partikular na lugar.</p>
+<p>Ang sumusunod ay mga babala ng bagyo na ginagamit sa Pilipinas:</p>
+<p><strong>Babala Bilang 1</strong> – Ang hanging may lakas na <strong>30 hanggang 60 kilometro bawat oras</strong> ay inaasahang darating sa loob ng <strong>36 na oras</strong>. Maaari itong makapinsala ng maliliit na puno at magdulot ng pinsala sa mga bahay na gawa sa magaang materyales.</p>
+<p><strong>Babala Bilang 2</strong> – Inaasahang darating ang hangin na may lakas na <strong>61 hanggang 120 kilometro bawat oras</strong> sa loob ng <strong>24 na oras</strong>. Ito ay maaaring makabuwal ng malalaking puno at halaman at makaaapekto sa mga pananim. Suspindido ang klase sa elementarya at sekundarya.</p>
+<p><strong>Babala Bilang 3</strong> – Inaasahang darating ang hangin na may lakas na <strong>121 hanggang 170 kilometro bawat oras</strong> sa loob ng <strong>18 oras</strong>. Maaari itong magdulot ng malawakang pinsala sa mga madaraanan ng pamayanan partikular na sa sektor ng agrikultura. Suspindido ang klase sa lahat ng antas. Pinapayuhan ang lahat na manatili sa loob ng bahay.</p>
+<p><strong>Babala Bilang 4</strong> – Inaasahang darating ang hanging may lakas na <strong>171 hanggang 220 kilometro bawat oras</strong> sa loob ng <strong>12 oras</strong>. Pinaghahanda ang lahat ng mamamayan. Nagdudulot ito ng matinding pinsala sa pamayanan.</p>
+<p>Ang malalakas na bagyo ay nagdudulot ng pinsala sa buhay at mga ari-arian. Ang mga babalang ito ay inilalabas ng pamahalaan upang makapaghanda at makapag-ingat ang mga mamamayan.</p>
+<h2 class="doc-heading">Babala sa Pag-Ulan</h2>
+<p>Nagbibigay rin ang pamahalaan ng <strong>rainfall advisory</strong> o mga babala sa pag-ulan batay sa dami ng ulan na inaasahang babagsak at sa tagal ng pag-ulan sa isang lugar. Kaakibat ng mga babala sa pag-ulan ang mga babala hinggil sa pagbaha na nagbibigay ng abiso sa mga mamamayan hinggil sa angkop na tugon tuwing bumabaha.</p>
+<p>Ang sumusunod ang mga babala sa pag-ulan at pagbaha na inilalabas ng PAGASA.</p>
+<table style="width:98%;">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 30%" />
+<col style="width: 23%" />
+<col style="width: 23%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>Babala sa Pag-ulan</strong></th>
+<th style="text-align: left;"><strong>Sukat ng ulan</strong></th>
+<th style="text-align: left;"><strong>Posibilidad ng pagbaha</strong></th>
+<th style="text-align: left;"><strong>Tugon</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>RED</strong> – ubod ng lakas</td>
+<td style="text-align: left;">Mahigit <strong>30mm ulan sa loob ng 1 oras</strong> at inaasahang magpapatuloy sa susunod na 2 oras</td>
+<td style="text-align: left;">Asahan ang malubhang pagbaha sa mga mabababang lugar</td>
+<td style="text-align: left;"><strong>PAGLIKAS</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>ORANGE</strong> – napakalakas</td>
+<td style="text-align: left;"><strong>15–30mm ulan sa loob ng 1 oras</strong> at inaasahang magpatuloy sa susunod na 2 oras</td>
+<td style="text-align: left;">May banta ng malubhang pagbaha</td>
+<td style="text-align: left;"><strong>MAGING HANDA</strong> sa posibleng paglikas</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>YELLOW</strong> – malakas</td>
+<td style="text-align: left;"><strong>7.5–15mm ulan sa loob ng 1 oras</strong> at inaasahang magpatuloy sa susunod na 2 oras</td>
+<td style="text-align: left;">May posibilidad ng pagbaha sa ilang lugar</td>
+<td style="text-align: left;"><strong>SUBAYBAYAN</strong> ang lagay ng panahon</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">— <strong>katamtaman</strong></td>
+<td style="text-align: left;"><strong>2.5–7.5mm ulan sa loob ng 1 oras</strong> at inaasahang magpatuloy sa susunod na 2 oras</td>
+<td style="text-align: left;">Posible pa ring bumaha sa ilang lugar</td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">— <strong>kaunti</strong></td>
+<td style="text-align: left;"><strong>Hindi hihigit sa 2.5mm ulan kada oras</strong></td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">—</td>
+</tr>
+</tbody>
+</table>
+<p>Ang agaran at malawakang pagbibigay ng babala ng pamahalaan sa pag-ulan at pagbaha ay mahalaga upang makapaghanda ang mga mamamayan at maiwasan ang anumang panganib.</p>
+<h2 class="doc-heading">Ang Pilipinas bilang Bahagi ng Pacific Ring of Fire</h2>
+<p>Ang ilang bahagi ng Pilipinas ay nakararanas ng paglindol at pagputok ng bulkan. Ito ay dahil kabilang ang Pilipinas sa <strong>Pacific Ring of Fire</strong>, isang rehiyon sa paligid ng Karagatang Pasipiko na kinaroroonan ng maraming aktibong bulkan at madalas na paglindol.</p>
+<h2 class="doc-heading">Ang Pilipinas bilang Bahagi ng Pacific Ring of Fire</h2>
+<p>Matatagpuan sa nakapulang bahagi ng mapa ang mga lugar na bahagi ng <strong>Pacific Ring of Fire.</strong></p>
+<p>Ang <strong>Philippine Institute of Volcanology and Seismology</strong> o <strong>PHIVOLCS</strong> ang pangunahing ahensiya ng pamahalaan na nangangasiwa sa pagbibigay ng mga impormasyon at babala tungkol sa mga lindol at pagsabog ng bulkan na nagaganap sa Pilipinas. Ito ay upang epektibong matugunan ang mga panganib na dulot ng mga lindol at pagsabog ng bulkan.</p>
+<p>Bagama’t wala pang teknolohiya na makatutukoy kung kailan lilindol, patuloy ang kampanya ng PHIVOLCS at iba pang organisasyon upang mapaghandaang ang mga lindol. Nagsasagawa ng mga <em>earthquake drill</em> upang malaman ng mga mamamayan ang mga kinakailangang gawin sakaling lumindol.</p>
+<p>Nakatutulong naman ang mga instrumento ng PHIVOLCS upang masubaybayan ang mga aktibidad ng bulkan na nagpapahiwatig ng nalalapit nitong pagsabog. Dahil dito, agad na nabibigyan ng babala ang mga mamamayang naninirahan sa paligid ng bulkan.</p>
+<h2 class="doc-heading">Pagputok ng Bulkan</h2>
+<p>Matatagpuan sa Pilipinas ang <strong>24 na aktibong bulkan</strong>. Ang bulkan ay itinuturing na aktibo kung ito ay pumutok na sa nakaraang <strong>10,000 taon</strong>. Ilan sa mga kilalang aktibong bulkan sa Pilipinas ang <strong>Bulkang Mayon, Bulkang Taal, Bundok Hibok-Hibok, at Bulkang Pinatubo.</strong> Tuwing pumuputok ang bulkan, naglalabas ito ng mainit na <em>lava</em>, usok, at abo. Dumadaloy rin ang <em>lahar</em> mula sa bulkan tuwing umuulan.</p>
+<h2 class="doc-heading">Paglindol</h2>
+<p>Nakakaranas ng paglindol sa Pilipinas dahil sa mga paggalaw ng mga <strong>tectonic plate</strong> o malalaking tipak ng lupa sa daigdig. Madalas ang paggalaw ng mga tipak ng lupa sa <strong>Pacific Ring of Fire</strong>.</p>
+<p>Ang malalakas na lindol ay nagdudulot ng pinsala sa mga gusali at kabahayan, pagguho ng lupa, at malalaking alon o <em>tsunami</em>.</p>
+<h2 class="doc-heading">Alamin Natin</h2>
+<p><strong>Alam mo ba na ang pangalawang pinakamalakas na pagputok ng bulkan sa ika-20 dantaon ay nangyari sa Pilipinas?</strong> Ito ay nang pumutok ang <strong>Bulkang Pinatubo</strong> noong ika-12 ng <strong>Hunyo, 1991</strong>. Sa lakas ng pagputok nito ay bumaba ng <strong>1.5° Celsius</strong> ang temperatura sa buong daigdig. Lubos na naapektuhan ng pagputok ng Bulkang Pinatubo ang malaking bahagi ng Gitnang Luzon, partikular na ang lalawigan ng Zambales.</p>
+<p>Sinabayan din ng malakas na pag-ulan na dala ng <strong>Bagyong Diding</strong> ang pagsabog ng Bulkang Pinatubo, dahilan upang umagos mula sa bulkan patungo sa kapatagan ang <strong>lahar</strong>, o ang pinaghahalong tubig, abo, at mga pira-pirasong bato. Ang matinding pagbaha ng lahar ay humantong sa pagkakalibing sa ilang barangay at maging mga kagubatan at ilog sa mga apektadong lugar. Sa kabuuan, nagdulot ng matinding pinsala sa buhay, ekonomiya, at sa kapaligiran ang pagputok ng Bulkang Pinatubo.</p>
+<h2 class="doc-heading">Alalahanin Natin</h2>
+<ul>
+<li><p>Ang <strong>heograpiyang pisikal</strong> ay ang sangay ng heograpiya na pangunahing nakatuon sa pag-aaral ng mga natural na prosesong nagaganap sa pisikal na daigdig.</p></li>
+<li><p>Ang <strong>topograpiya</strong> ay ang pag-aaral o pagmamanmapa sa mga anyong lupa at anyong tubig na matatagpuan sa ibabaw ng lupa.</p></li>
+<li><p>Ang Pilipinas ay isang <strong>arkipelago</strong> na binubuo ng <strong>7,641 malalaki at maliliit na pulo</strong>. Tanging <strong>1,000 pulo lamang</strong> ang natitirahan ng tao.</p></li>
+<li><p>Ang kabuuang laki at sukat ng Pilipinas ay <strong>300,000 kilometro kuwadrado</strong> at may baybaying <strong>36,289 na kilometro</strong> ang haba.</p></li>
+<li><p>Tatlo ang pangunahing pangkat ng mga pulo nito—ang <strong>Luzon, Visayas, at Mindanao</strong>.</p></li>
+<li><p>Nasa gawing hilaga nito ang <strong>Lagusan ng Bashi</strong>, sa silangan ang <strong>Karagatang Pasipiko</strong>, sa kanluran ang <strong>Kanlurang Dagat Pilipinas</strong>, at ang <strong>Dagat Celebes</strong> sa timog.</p></li>
+<li><p>Nakakaranas ng klimang tropikal at maritima ang Pilipinas na bunsod ng lokasyon nito malapit sa <strong>Ekwador</strong> at sa mga katubigang nakapaligid dito.</p></li>
+<li><p>May dalawang uri ng panahon sa Pilipinas: ang <strong>tag-ulan at tagtuyo</strong>.</p></li>
+<li><p>May apat na uri ng klima sa Pilipinas batay sa distribusyon ng ulan sa arkipelago.</p></li>
+<li><p>Ang tatlong sistema ng hangin na nakaaapekto sa panahon ng Pilipinas ay ang <strong>amihan, balaklaot, at habagat</strong>.</p></li>
+<li><p>Ang Pilipinas ay matatagpuan sa rehiyon ng <strong>Pacific Ring of Fire</strong> kung kaya’t nakararanas ito ng <strong>bagyo, lindol, at pagputok ng bulkan</strong>.</p></li>
+</ul>
+<h2 class="doc-heading">III. Isaisip</h2>
+<h2 class="doc-heading">A. Panuto</h2>
+<p><strong>Lagyan ng bituin (★) ang patlang kung ang pangungusap ay naglalarawan sa Pilipinas.</strong></p>
+<ol type="1">
+<li><p>__<strong>★</strong>__ Ito ay kabilang sa Pacific Ring of Fire.</p></li>
+<li><p>__<strong>★</strong>__ Ito ay matatagpuan sa rehiyong tropikal.</p></li>
+<li><p>_____ Matatagpuan dito ang 23 aktibong bulkan.</p></li>
+<li><p>__<strong>★</strong>__ Ito ay isang arkipelago.</p></li>
+<li><p>_____ Hindi ito nakararanas ng bagyo o lindol.</p></li>
+<li><p>__<strong>★</strong>__ Binubuo ito ng 7,647 mga pulo.</p></li>
+<li><p>__<strong>★</strong>__ Ang Luzon, Visayas, at Mindanao ang mga pangunahing pangkat ng mga pulo rito.</p></li>
+<li><p>_____ Pangalawa ang Pilipinas sa may pinakamahabang baybayin sa buong mundo.</p></li>
+<li><p>__<strong>★</strong>__ Ang amihan, habagat, at balaklaot ang tatlong sistema ng hangin nito.</p></li>
+<li><p>__<strong>★</strong>__ Ito ay matatagpuan sa Timog-Silangang Asya.</p></li>
+<li><p>__<strong>★</strong>__ Ito ay napaliligiran ng malalaking anyo ng tubig.</p></li>
+<li><p>__<strong>★</strong>__ Ito ay may apat na uri ng klima batay sa distribusyon ng ulan.</p></li>
+<li><p>_____ Ito ay nakararanas ng tagsibol at taglamig.</p></li>
+<li><p>_____ Ito ay may kabuuang sukat na 500,000 kilometro kuwadrado.</p></li>
+<li><p>_____ Ang Kapuluan ng Kalayaan ang pinakamahalagang dulo ng Pilipinas.</p></li>
+</ol>
+<h2 class="doc-heading">B. Panuto</h2>
+<p><strong>Aling katangiang pisikal ng Pilipinas ang nauugnay sa sumusunod na mga sitwasyon? Isulat sa patlang ang titik ng iyong sagot.</strong></p>
+<p><strong>a.</strong> Ang Pilipinas ay matatagpuan malapit sa Ekwador.</p>
+<p><strong>b.</strong> Napaliligiran ng tubig ang Pilipinas at matatagpuan sa kanluran nito ang Karagatang Pasipiko—ang pinakamalaking anyong tubig sa daigdig.</p>
+<p><strong>c.</strong> Kabilang ang Pilipinas sa Pacific Ring of Fire.</p>
+<h2 class="doc-heading">Mga Sitwasyon</h2>
+<ol type="1">
+<li><p>__A__ Relatibong mataas ang nararanasang temperatura sa Pilipinas.</p></li>
+<li><p>__B__ Tinatayang nasa 20 hanggang 30 ang bagyong dumadaan sa Pilipinas kada taon.</p></li>
+<li><p>__C__ Ang Pilipinas ay mayroong 24 na aktibong bulkan.</p></li>
+<li><p>__B__ Nakakatanggap ng masaganang ulan ang malaking bahagi ng kapuluan taon-taon.</p></li>
+<li><p>__C__ Kumakaharap sa banta ng <em>tsunami</em> ang mga pamayanan sa mga dalampasigan ng Pilipinas.</p></li>
+</ol>
+<h2 class="doc-heading">Talakayin Natin</h2>
+<h2 class="doc-heading">Heograpiyang Pantao</h2>
+<p>Ang <strong>heograpiyang pantao</strong> ay ang sangay ng heograpiya na nakatuon sa pag-aaral ng ugnayan ng tao, pamayanan ng mga tao, at ng kapaligiran. Karaniwang paksa sa heograpiyang pantao ang paninirahan ng mga tao, mga gawaing may kaugnay sa kapaligiran, at kung paano ginagamit ng tao ang kanilang lugar o espasyong tinitirahan. Pinag-aaralan din sa heograpiyang pantao ang kultura sa iba't ibang lugar sa mundo at kung ano ang bahagi ng pisikal na kapaligiran sa paghubog ng mga kulturang ito.</p>
+<p>Bibigyang-pansin sa araling ito ang <strong>pangkalalahatang demograpiya ng Pilipinas</strong> at ang mga <strong>pangkat etnolingguwistiko</strong> na naninirahan dito.</p>
+<h2 class="doc-heading">Demograpiya ng Pilipinas</h2>
+<p>Ang <strong>demograpiya</strong> ay ang pag-aaral sa populasyon o bilang ng tao sa isang lugar. Mahalaga sa pag-aaral ng populasyon ang pagsasagawa ng <strong>senso o census</strong> na proseso ng pagbibilang ng mga tao sa isang lugar. Ang pamahalaan ng isang bansa ang nagsasagawa ng senso. Sa prosesong ito, kinukuha ang iba't ibang impormasyon tungkol sa isang tao tulad ng kanilang edad, trabaho, kasarian, at iba pa. Ang mga impormasyong nakukuha sa senso at iba pang sarbey ang batayan ng pag-aaral sa demograpiya ng isang bansa.</p>
+<p>Batay sa senso ng <strong>Philippine Statistics Authority (PSA)</strong> na nailimbag noong <strong>2020</strong>, ang populasyon ng Pilipinas ay nasa <strong>109,035,343 katao</strong>. Tinatayang <strong>97.3%</strong> ng mga Pilipino ang naninirahan kasama ang kanilang pamilya. Pag-aralan ang <strong>population pyramid</strong> batay sa datos mula sa PSA sa susunod na pahina. Ipinapakita nito ang porsiyento ng mga lalaki at babae sa bawat pangkat ng edad sa bawat tahanan.</p>
+<p>Nasa pinakababang bahagi ng <em>population graph</em> ang datos ng mga batang edad <strong>14 na taong gulang pababa</strong>. Ipinahihiwatig ng datos na malaking bahagi ng bawat sambahayan ay binubuo ng mga bata. Makikita rin na ang mga kabataang edad <strong>15 hanggang 30 taong gulang</strong> ang bumubuo sa halos isang katlo <strong>(1/3)</strong> ng bawat sambahayan.</p>
+<p>Samantala, mahigit sa kalahati ng populasyon ng Pilipinas ay nasa edad <strong>18 taong gulang pataas</strong>. Nangangahulugan ito na mahigit kalahati ng populasyon ng bansa ang maaaring lumahok sa mga gawaing pang-ekonomiya, gaya ng pagtatrabaho, at pampolitika, tulad ng pagboto sa mga halalan.</p>
+<h2 class="doc-heading">Population Density</h2>
+<p>Isa sa mga paraan upang sistematikong maunawaan ang heograpiyang pantao ng isang bansa ay ang paglalarawan sa distribusyon ng populasyon nito. Ang <strong>population density</strong> ay tumutukoy sa dami ng tao sa isang tiyak na espasyo. Sinusukat nito ang populasyong naninirahan sa bawat yunit ng lupain.</p>
+<p>Ipinapakita rin ng <em>population density</em> ang antas ng konsentrasyon o dami ng mga taong naninirahan sa isang lugar kumpara sa sukat at lawak nito. Kung ang isang lugar ay may malaking populasyon ngunit may maliit na sukat at lawak, ito ay may mataas na <em>population density</em>. Sa kabilang banda, kung ang isang lugar ay may maliit na populasyon ngunit may malaking sukat at lawak, ito ay may mababang antas ng <em>population density</em>.</p>
+<p>Pag-aralan ang mapa sa pahina 100 at tingnan ang sanggunian sa kaliwang bahagi nito. Mapapansin na ang bawat kulay ay katumbas ng antas ng <em>population density</em>. Alamin kung aling lalawigan ang may mataas na <em>population density</em>. Alin naman ang may mababang <em>population density</em>?</p>
+<p><strong>Hanapin sa mapa ang lalawigan kung saan ka nakatira. Batay sa mapa, mataas ba o mababa ang <em>population density</em> sa inyong lalawigan?</strong></p>
+<p>Marami pang impormasyon ang maaaring makalap mula sa senso. Ang mga impormasyong nakakalap sa senso ay maaaring makapagbigay-linaw sa distribusyon ng populasyon sa kapuluan batay sa iba't ibang kategorya. Sa pangkalahatan, ang pag-aaral sa demograpiya ng isang bansa ay isa sa mga paraan upang maunawaan ang kalagayan nito at ang mga salik na nakaaapekto rito.</p>
+<p>Sa pamamagitan ng mga datos mula sa demograpiya, maayos na magagabayan ang pamahalaan sa paglikha ng mga patakaran at programa na makatutulong sa paglutas ng mga suliraning hinaharap ng bansa. Bilang mamamayan, nakatutulong ang pag-unawa sa heograpiyang pantao sa ating paglahok sa ating pamayanan at sa mapayapa at makataong pakikitungo sa bawat isa.</p>
+<h2 class="doc-heading">Ang mga Pangkat Etnolingguwistiko sa Pilipinas</h2>
+<p>Ang mga pangkat etnolingguwistiko ay mga grupo ng mga taong may natatanging kultura at pagkakakilanlan at kinagisnang wika. Mayroong mahigit sa <strong>180 pangkat etnolingguwistiko sa Pilipinas</strong>. Higit sa kalahati nito ay itinuturing na mga minoryang pangkat dahil maliit lamang ang populasyon ng mga taong nabibilang dito. Bawat pangkat etnolingguwistiko ay may sariling pagkakakilanlan na dapat unawain at igalang ng lahat.</p>
+<p>Samantala, ang mga katutubong pangkat o <strong>indigenous people</strong> ay mga pangkat na napanatili ang kanilang natatanging pagkakakilanlan, kultura, pamumuhay, paniniwala, at mga tradisyon hanggang sa kasalukuyan. Sila ay may malalim na ugnayan sa kanilang lupang tinubuan na nakaiimpluwensiya sa kanilang pagkakakilanlan. Karamihan ng mga katutubong pangkat ay may malaking pagpapahalaga sa mga nakatatanda nilang kasapi, na siyang namumuno o gumagabay sa kanilang pamayanan.</p>
+<p>Tingnan sa kasunod na pahina ang mapa ng mga pangkat etnolingguwistiko sa Pilipinas. Kilala mo ba ang mga ito?</p>
+<h2 class="doc-heading">Uri ng Kultura</h2>
+<p>Ang paraan ng pamumuhay, wika, tradisyon, at mga paniniwala ang bumubuo sa <strong>kultura</strong> ng isang pangkat. Kabilang din sa kultura ang panitikan, kasaysayan, musika, awit, pagkain, sayaw, at mga likha tulad ng kagamitan, kasuotan, gusali, at mga palamuti. Ang kultura ay nagbibigay ng natatanging pagkakakilanlan sa isang pangkat etnolingguwistiko at sa mga kasapi nito.</p>
+<p>May dalawang uri ng kultura—ang <strong>material</strong> at <strong>di-materyal na kultura</strong>. Ang <strong>materyal na kultura</strong> ay tumutukoy sa mga bagay na nahahawakan o may pisikal na anyo. Ilan sa mga halimbawa nito ang mga bahay, gusali, imprastruktura, alahas, damit, palamuti, sasakyan, laruan, kagamitan, pagkain, at marami pang iba.</p>
+<p>Ang <strong>di-materyal na kultura</strong> naman ay may kaugnayan sa mga kaisipan, tradisyon, kaugalian, pagpapahalaga at saloobin ng isang pangkat o lipunan. Halimbawa nito ang wika, tula, kuwento, sayaw, at awit. Ang mga ito ay walang pisikal na representasyong maaaring nating hawakan. Ang kulturang di-materyal ay naibabahagi at naipapasa sa pamamagitan ng pagsasabuhay sa mga ito.</p>
+<p>May mga pagkakaiba sa kaugalian, pamumuhay, paniniwala, wika, at iba pang aspeto ng kultura ng bawat pangkat etnolingguwistiko. Ang mga ito ay masasabing dulot ng pagkakaiba ng kanilang kapaligiran. Malaki ang kinalaman ng katangiang heograpikal ng isang rehiyon sa paglinang ng mga aspekto ng kultura ng mga mamamayang naninirahan dito.</p>
+<h2 class="doc-heading">Subukin Natin</h2>
+<h2 class="doc-heading">PASALUBONG</h2>
+<p>Ano ang paborito mong pasalubong? Ang pag-uuwi ng pasalubong ay isang bahagi ng kulturang Pilipino. Ang susunod na talakayan ay magtatampok sa ilang pangkat etnolingguwistiko mula sa iba't ibang lalawigan o rehiyon ng Pilipinas. Kaya naman, ituring mong pamamasyal sa kapuluan ng Pilipinas ang susunod na bahagi ng aralin.</p>
+<p>Kapag nakita mo ang imahe ng bayong sa pahina, pumili ng isa hanggang tatlong tampok na materyal o di-materyal na kultura ng mga pangkat etnolingguwistikong natalakay. Ilagay ang pangalan ng pangkat etnolingguwistiko sa bayong at ilista ang iyong pasalubong sa kahon.</p>
+<h2 class="doc-heading">Mga Pangkat Etnolingguwistiko sa Luzon</h2>
+<p>Ang mga <strong>Ilokano, Pangasinense, Tagalog, Kapampangan, at Bikolano</strong> ang mga pangkat etnolingguwistikong may malalaking populasyon at laganap sa mga rehiyon sa Luzon. Matatagpuan din sa Luzon ang ilang maliliit na pangkat etnolingguwistiko tulad ng mga <strong>Igorot, Ivatan, Ibanag, Negrito, Mangyan, Tagbanwa, at Palawano</strong>. Karamihan sa mga ito ay kinikilalang mga katutubong pangkat.</p>
+<h2 class="doc-heading">Ang mga Ilokano</h2>
+<p>Ang mga <strong>Ilokano</strong> ay nakatira sa mga lalawigan ng <strong>Ilocos Norte, Ilocos Sur, Abra, La Union, Cagayan, Isabela, Nueva Vizcaya, Quirino, at sa ilang bahagi ng Nueva Ecija, Mountain Province, Pangasinan, at Tarlac</strong>. Sila ay unang kinilala bilang mga Iloko na ang ibig sabihin ay “mga taong nakilala sa mabababang lugar.” Ilokano o Iloko din ang tawag sa wikang ginagamit ng mga Ilokano.</p>
+<p>Ang malaking bahagi ng Rehiyon ng Ilocos ay binubuo ng mga kabundukan na hindi angkop sa pagtatanim. Ang limitadong lupaing pansakahan ang nagturo sa mga Ilokano na maging masipag at masinop.</p>
+<p>Bagama’t maliit ang mga lupaing napagtataniman, pagsasaka pa rin ang isa sa mga pangunahing hanap-buhay ng mga Ilokano. Ilan sa mga produktong pang-agrikultura ng mga Ilokano ang <strong>tabako, mais, bawang, sibuyas, at mga halamang-ugat</strong>. Sila rin ay nangingisda, naghahabi, at gumagawa ng <strong>alak, suka, at mga paso</strong>.</p>
+<p>Ilan sa mga sikat na produktong Ilokano ang <strong>Abel Iloko</strong>, isang uri ng tela na ginagawang punda ng unan, kumot, balabal, bag, o mantel; <strong>basi o alak mula sa tubo</strong>; at mga <strong>burnay o paso</strong> na yari sa isang uri ng luwad na matatagpuan sa Vigan. Kilala rin sila sa paggawa ng masasasarap na pagkain tulad ng <strong>chicharon, bagnet, pinakbet, dinengdeng, longganisa, empanada, karyoka, tupig, at patupat</strong>. Mayroon din silang sariling bersiyon ng <em>pizza</em> tulad ng <strong>pinakbet pizza</strong> at <strong>dinuguan pizza</strong>.</p>
+<p>Bago pa makarating ang mga Espanyol ay mayroon nang sariling panitikan ang mga Ilokano. Isang patunay nito ang epikong <strong>Biag ni Lam-ang</strong>. Karamihan sa mga Ilokano ay mga Katoliko at ang iba naman ay miyembro ng simbahang <strong>Aglipay</strong> at <strong>Iglesia ni Cristo</strong>.</p>
+<h2 class="doc-heading">Ang mga Pangasinense</h2>
+<p>Ang mga <strong>Pangasinense</strong> ay nakatira sa <strong>Pangasinan</strong>. Ginagamit nila ang wikang <strong>Pangasinense</strong>. Ayon sa kasaysayan, ang mga Pangasinense ay isa sa mga naunang grupo ng mga tao sa bansa na nakisalamuha sa mga mangangalakal na Tsino.</p>
+<p>Pangunahing kabuhayan ng mga Pangasinense ang <strong>pangingisda at pagsasaka</strong>. Kilala rin ang mga produkto nilang <strong>palay, mais, tabako, bangus, bagoong, puto, at tupig</strong>.</p>
+<p>Isang kilalang katangian ng mga Pangasinense ang kanilang malakas na pananalig sa <strong>Birheng Maria</strong>. Naniniwala sila na ang Birheng Maria ay nagbibigay ng himala at tumutulong sa kanila sa pamamagitan ng <strong>Birhen ng Manaoag</strong>. Ang <strong>Birhen ng Manaoag</strong> ay dinarayo ng maraming Katoliko sa bansa.</p>
+<h2 class="doc-heading">Ang mga Igorot</h2>
+<p>Ang <strong>Cordillera Administrative Region (CAR)</strong> ang tahanan ng mga <strong>Igorot</strong> o “mamamayan ng kabundukan.” Kasama rito ang mga <strong>Ifugao, Bontoc, Kalinga, Ibaloi, Isneg, Kankanaey, at Tingguian</strong>. Ang mga pangkat na ito ay may kani-kaniyang wika, tradisyon, paniniwala, at pagkakakilanlan.</p>
+<p>Ang <strong>Sagada Hanging Coffins</strong> na makikita sa dalisdis ng bundok ay isang yamang lahi ng mga Igorot. Isa ito sa mga dinarayo ng mga turista sa Mountain Province. Ayon sa mga Igorot, ang tradisyon ng paglilibing sa dalisdis ng bundok ay isinasagawa na ng kanilang mga ninuno nang mahigit <strong>2,000 taon</strong> na ang nakalilipas. Naniniwala ang mga Igorot na kung sa mataas na lugar nakalibing ang bangkay, mas malapit ito sa langit. Nakatutulong din ito upang hindi kaagad mabulok ang katawan. Proteksiyon din ito sa mga natural na kalamidad tulad ng baha at lindol, maging sa mababangis na hayop.</p>
+<p>Kilala rin ang mga Igorot sa pagdiriwang ng <strong>cañao</strong> tuwing may okasyon tulad ng kasal, panganganak, o paglilibing. Idinaraos din ang <em>cañao</em> upang humingi ng tulong sa mga diyos, mapagaling ang isang may sakit, o bilang pasasalamat sa masaganang ani. Karaniwang may sayawan at pag-aalay ng mga hayop tuwing nagdaraos ng <em>cañao</em>.</p>
+<p>Kilala rin ang mga Igorot sa kanilang musika. Sila ay tumutugtog ng <strong>gong at plawta</strong> at ang mga ritwal ay karaniwang sinasabayan ng musika at sayawan.</p>
+<h2 class="doc-heading">Mga Ifugao</h2>
+<p>Ang pangalang <strong>“Ifugao”</strong> ay nangangahulugang <strong>“tao sa lupa.”</strong> Ang mga ninuno ng mga Ifugao ang umukit ng <strong>Hagdang-hagdang Palayan</strong> sa bayan ng <strong>Banaue</strong> sa lalawigan ng Ifugao.</p>
+<p>Ang mga Ifugao ay magagaling na magsasaka at mahuhusay na manghahabi. Tradisyonal na kasuotan ng mga lalaking Ifugao ang <strong>bahag</strong>. Ang mga kababaihan naman ay nagsusuot ng makukulay na <strong>tapis</strong>. Nagsusuot din sila ng mga alahas tulad ng mga <strong>hikaw at kuwintas</strong>.</p>
+<p>May iba't ibang ritwal ang mga Ifugao na bahagi ng kanilang paniniwala. Ang <strong>upin</strong> ay ginagawa upang magkaroon ng masaganang ani. Nag-aalay sila ng hayop sa kanilang mga anito habang nagdadasal. Ang <strong>bogwa</strong> naman ay isang ritwal para sa yumao. Pinangungunahan ang mga ritwal ng isang <strong>mumbaki</strong> na nagsisilbing manggagamot at tagapamagitan sa mga tao at diyos.</p>
+<p>Ang bahay ng mga Ifugao ay tinatawag na <strong>bale</strong>. Ito ay isang silid lamang at nakatayo sa apat na malalaking poste. Kilala rin ang mga Ifugao sa mga epikong <strong>Hudhud at Alim</strong>. Ang <em>Hudhud</em> ay kuwento ng bayaning si <strong>Aliguyon</strong> habang ang <em>Alim</em> ay kuwento nina <strong>Bugan at Wigan</strong>. Kilalang sayaw ng mga Ifugao ang <strong>tayaw</strong> na ginagaya ng mga sumasayaw ang kilos ng ibon.</p>
+<h2 class="doc-heading">Mga Bontoc</h2>
+<p>Ang mga <strong>Bontoc</strong> ay matatagpuan sa mga bayan ng <strong>Bontoc, Sadanga, at Barlig</strong> sa Mountain Province. Ang kanilang wika ay tinatawag ding <strong>Bontoc</strong>. Sila ay nagtatanim ng <strong>palay, kamote, mais, at dawa</strong>.</p>
+<p>Ang kalalakihan ay sama-samang nakatira sa isang pamayanan na tinatawag na <strong>ato</strong>. Ang kababaihan naman ay nakatira sa <strong>olag</strong>.</p>
+<p>Ang mga Bontoc ay sumusunod sa <strong>animismo</strong>, o ang paniniwala sa mga espiritu ng kalikasan, at sinasamba ang diyos na si <strong>Lumawig</strong>. Nakilala ang mga Bontoc bilang matatapang na mandirigma at sa paglalagay ng mga tattoo bilang simbolo ng katapangan.</p>
+<h2 class="doc-heading">Mga Kankanaey</h2>
+<p>Ang mga <strong>Kankanaey</strong> ay matatagpuan sa mga lalawigan ng <strong>Mountain Province, sa hilagang Benguet, at timog-silangang bahagi ng Ilocos Sur</strong>. Mayroong dalawang malalaking pangkat ng mga Kankanaey: ang mga <strong>Ibenget</strong>, na matatagpuan sa lalawigan ng Benguet, at ang mga <strong>Ibontok</strong>, na nakatira sa Mountain Province.</p>
+<p>Kilalang tradisyon ng mga Kankanaey ang <strong>dap-ay</strong>, isang tahanan para sa kalalakihan at <strong>egban</strong>, na tahanan para sa kababaihan. Sa mga tahanang ito sinasanay ang mga nakatatanda ang mga binata at dalaga sa mga gawain at responsibilidad sa bahay at pamayanan. Nagsisilbi ring lugar para sa pagpupulong ang <em>dap-ay</em>. Dito nagkikita ang mga mamamayan upang mag-usap tungkol sa mahahalagang kaganapan sa kanilang pamayanan. Pinamamahalaan ang mga pamayanang Kankanaey ng mga <strong>lupon ng mga matatanda</strong>.</p>
+<h2 class="doc-heading">Mga Ibaloi</h2>
+<p>Ang mga <strong>Ibaloi</strong> ay kabilang din sa pangkat ng mga Igorot na naninirahan sa lalawigan ng <strong>Benguet</strong>. Ang kanilang wika ay tinatawag ding <strong>Ibaloi o Nabaloi</strong>. Ang mga Ibaloi ay mapayapa at masipag na pangkat. Sila ay nabubuhay sa pamamagitan ng pagtatanim ng <strong>palay at iba pang mga gulay at prutas</strong>.</p>
+<p>Kilala ang mga Ibaloi sa kanilang tradisyon ng <strong>pagpepreserba sa katawan ng yumao</strong> na inilalagay nang paupo sa kabaong na yari sa troso. Kilala ang mga kuweba sa bayan ng <strong>Kabayan sa Benguet</strong> dahil sa mga napreserbang bangkay o <em>mummy</em> na natagpuan dito.</p>
+<h2 class="doc-heading">Mga Kalinga</h2>
+<p>Dating kilala ang mga Kalinga bilang mga mamumugot dahil pinupututan nila ng ulo ang mga nagagaping kalaban. Sa kasalukuyan ay mahigpit nang ipinagbabawal ang gawaing ito.</p>
+<p>Bagamat nakilala sa pamumugot ng ulo, ang mga Kalinga ay mapagmahal sa kapayapaan. Kilala sila sa pagkakaroon ng maraming tatu sa katawan na simbolo ng kanilang katapangan at katayuan sa lipunan. Tinatawag na <strong>batok</strong> ang tradisyonal na tatu ng mga Kalinga.</p>
+<p>Gamit ang manipis na kahoy o kawayan, inihahampas sa balat ang isang patpat ng kawayan na may matulis na tinik sa dulo upang makabuo mula sa iba't ibang mga hugis ng disenyong tulad ng puno, halaman, at mga hayop. Gumagamit din sila ng tina mula sa halaman at abo ng uling upang maging matingkad ang itim na kulay ng tatu.</p>
+<p>Mahalagang tradisyon ng mga Kalinga ang <strong>bodong</strong> o pagpupulong ng mga pinuno ng iba't ibang tribo upang makipagkasundo at maayos ang anumang sigalot. Karaniwang sinusundan ng pagsasalo at sayawan ang isang bodong.</p>
+<h2 class="doc-heading">Mga Isneg</h2>
+<p>Ang mga <strong>Isneg</strong>, na kilala rin sa tawag na Apayao, ay naninirahan sa lalawigan ng Apayao at ilang pamayanan sa Ilocos Norte. Ang kanilang katutubong wika ay tinatawag ding Isneg, ngunit marami din sa kanila ang nagsasalita ng wikang Ilokano. Nabubuhay ang mga Isneg sa pagtatanim ng palay, mais, kamote, at gabi. Ang mga Isneg ay sumasamba sa mahigit 300 espiritu. Mayaman din ang mga Isneg sa panitikan tulad ng mga bugtong at maikling kuwento.</p>
+<h2 class="doc-heading">Mga Tingguian</h2>
+<p>Ang mga <strong>Tingguian</strong> ay matatagpuan sa lalawigan ng Abra ngunit may ilang pamayanang nakatira sa Ilocos Sur. Sila ay namumuhay sa pagsasaka ng palay at mga halamang-gamot. Ang kanilang katutubong relihiyon ay animismo at sinasamba nila ang diyos na si <strong>Kadaklan o Kabunyan</strong>.</p>
+<h2 class="doc-heading">Ang mga Ivatan</h2>
+<p>Ang mga <strong>Ivatan</strong> ay nakatira sa mga pulo ng Batanes, sa pinakamahilagang bahagi ng Pilipinas. Ginagamit nila ang wikang <strong>Chirin nu Ibatan</strong> o Ivatan.</p>
+<p>Ang Batanes ay madalas na dinaraanan ng bagyo at ang pamumuhay ng mga Ivatan ay naaayon sa klima sa kanilang lugar. Nakatira sila sa mabababang at maliliit na bahay na yari sa bato at apog na tinatawag na <strong>Sinadumparan</strong>. Ang ganitong uri ng bahay ay hindi madaling mapinsala ng mga bagyo. Ngunit noong taong 2019 ay niyanig ng sunod-sunod na lindol ang Batanes na nagdulot ng matinding pinsala sa lalawigan.</p>
+<p>Karamihan sa mga Ivatan ay magsasaka kaya naman mahalaga sa kanila ang pag-alam kung may paparating na bagyo o malakas na ulan. Gumagamit ang mga Ivatan ng mga tradisyonal na paraan upang malaman ang lagay ng panahon.</p>
+<p>Isa sa mga ito ang pag-oobserba ng mga Ivatan sa kanilang mga alagang hayop. Kung ang mga ito ay nagtatago o hindi mapakali, hudyat ito na may darating na masamang panahon. Inoobserbahan nila ang direksiyon ng hangin at mga ulap.</p>
+<p>Mayaman ang panitikan ng mga Ivatan. Mayroon silang mga tradisyonal na kanta tulad ng <strong>laji</strong>, na inaawit pagkatapos ng mga gawain, at <strong>rawod</strong>, na nagsasalaysay ng buhay ng kanilang mga ninuno.</p>
+<p>Kilala rin ang mga Ivatan sa pagsusuot ng <strong>vakul</strong>, isang tradisyonal na kasuotan sa ulo na proteksiyon sa sikat ng araw at ulan.</p>
+<h2 class="doc-heading">Ang mga Ibanag</h2>
+<p>Ang mga <strong>Ibanag</strong> ay nakatira sa maliliit na pamayanan sa Cagayan at sa ilang bahagi ng Nueva Vizcaya at Isabela. Ibanag ang wikang ginagamit nila. Ang isang pangkat ng mga Ibanag ay binubuo ng magkakamag-anak.</p>
+<p>Karamihan sa mga Ibanag ay nabubuhay sa pangingisda at pagsasaka. Gumagawa sila ng mga sariling gamit sa pagsasaka na yari sa kahoy at bakal.</p>
+<p>Katoliko ang karamihan sa mga Ibanag ngunit nananatili pa rin ang ilan sa kanilang mga katutubong paniniwala. Kabilang dito ang ilang ritwal sa panggagamot sa mga bata. Isang halimbawa ang <strong>mamalagun</strong> na pinapalitan ang palayaw ng may karamdaman upang malito ang masamang espiritung nagdudulot ng sakit. Ang <strong>mawuwa</strong> ay ritwal ng paghuhugas ng mga damit ng namatay sa ilog pagkatapos ng libing.</p>
+<h2 class="doc-heading">Ang mga Kapampangan (Pampagueño)</h2>
+<p>Ang mga <strong>Kapampangan</strong> ay nakatira sa Pampanga at sa mga lalawigan ng Tarlac, Nueva Ecija, at Zambales. Kapampangan ang wikang kanilang ginagamit.</p>
+<p>Karamihan sa mga Kapampangan ay nabubuhay sa pagtatanim ng palay at asukal. Sila rin ay kilala sa kahusayang magluto at sa paggawa ng tocino, tapa, at longganisa.</p>
+<p>Kilala rin ang mga Kapampangan sa paggawa ng mga kagamitang yari sa kahoy at magagandang parol. Makikita ang mga ipinagmamalaking parol ng mga Kapampangan sa <strong>Giant Lantern Festival</strong> tuwing panahon ng Kapaskuhan.</p>
+
+</div>
+
+<footer>
+  📖 Kasama nitong raw notes ang interactive reviewer — hanapin ang <strong>AP-Klima-Panahon-HeograpiyangPantao-Reviewer.html</strong> file.
+</footer>
+
+</body>
+</html>
