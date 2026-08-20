@@ -1,0 +1,1668 @@
+<!DOCTYPE html>
+<html lang="tl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>📘 English: Nouns &amp; Complex Sentences Reviewer 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --gold: #f59e0b;
+  --gold-dark: #b45309;
+  --blue: #3b82f6;
+  --blue-dark: #1d4ed8;
+  --red: #ef4444;
+  --green: #22c55e;
+  --bg: #0c1a0e;
+  --surface: #132015;
+  --surface2: #1a2e1d;
+  --text: #f0fdf4;
+  --muted: #86efac;
+  --border: #166534;
+}
+
+body {
+  font-family: 'Baloo 2', cursive;
+  background: var(--bg);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--text);
+  background-image:
+    radial-gradient(ellipse at 10% 30%, rgba(245,158,11,.06) 0%, transparent 55%),
+    radial-gradient(ellipse at 90% 70%, rgba(59,130,246,.06) 0%, transparent 55%);
+}
+
+header {
+  width: 100%;
+  background: linear-gradient(135deg, #14532d, #1e3a5f);
+  border-bottom: 2px solid var(--gold-dark);
+  padding: 13px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 4px 30px rgba(0,0,0,.5);
+}
+.header-icon { font-size: 2rem; animation: float 3s ease-in-out infinite; }
+@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
+
+header h1 {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.45rem;
+  background: linear-gradient(90deg, var(--gold), #fde68a, var(--gold));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+header .sub { font-size: .72rem; color: var(--muted); margin-top: 1px; }
+
+.header-controls { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+.score-pill {
+  background: rgba(245,158,11,.15);
+  border: 1px solid rgba(245,158,11,.4);
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-weight: 800;
+  font-size: .85rem;
+  color: var(--gold);
+}
+.audio-btn {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  background: var(--surface2);
+  color: var(--text);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all .2s;
+  display: flex; align-items: center; justify-content: center;
+}
+.audio-btn:hover, .audio-btn.active { background: #14532d; border-color: var(--gold); }
+
+.chat-wrap {
+  width: 100%; max-width: 700px; flex: 1;
+  display: flex; flex-direction: column;
+  padding: 16px 14px 0;
+}
+
+#chat-box {
+  flex: 1; overflow-y: auto;
+  display: flex; flex-direction: column;
+  gap: 14px; padding-bottom: 10px;
+  max-height: calc(100vh - 200px);
+  scroll-behavior: smooth;
+}
+#chat-box::-webkit-scrollbar { width: 4px; }
+#chat-box::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+.msg { display: flex; gap: 8px; }
+.msg.user { flex-direction: row-reverse; }
+
+.avatar {
+  width: 34px; height: 34px; border-radius: 50%;
+  font-size: 1rem; display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 2px;
+}
+.msg.bot .avatar { background: linear-gradient(135deg, #14532d, #1e3a5f); border: 1.5px solid rgba(245,158,11,.4); }
+.msg.user .avatar { background: linear-gradient(135deg, #1e3a5f, #14532d); border: 1.5px solid rgba(59,130,246,.3); }
+
+.bubble {
+  max-width: 80%;
+  padding: 11px 16px;
+  border-radius: 18px;
+  font-size: .9rem;
+  line-height: 1.65;
+  animation: pop .22s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes pop { from{transform:scale(.88) translateY(6px);opacity:0} to{transform:scale(1) translateY(0);opacity:1} }
+
+.msg.bot .bubble {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-bottom-left-radius: 5px;
+}
+.msg.user .bubble {
+  background: linear-gradient(135deg, #1e3a5f, var(--blue-dark));
+  border-bottom-right-radius: 5px;
+}
+
+/* chips */
+.chip {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: rgba(245,158,11,.12);
+  border: 1.5px solid rgba(245,158,11,.4);
+  color: var(--gold);
+  border-radius: 30px;
+  padding: 5px 13px; margin: 5px 4px 0 0;
+  font-size: .8rem; font-weight: 700;
+  cursor: pointer; transition: all .15s;
+  user-select: none; font-family: 'Baloo 2', cursive;
+}
+.chip:hover {
+  background: var(--gold-dark); color: white;
+  border-color: var(--gold);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(245,158,11,.3);
+}
+
+/* topic tag */
+.topic-tag {
+  display: inline-block;
+  background: linear-gradient(135deg, #14532d, #166534);
+  border: 1px solid var(--gold-dark);
+  color: var(--gold);
+  font-size: .68rem; font-weight: 800;
+  border-radius: 20px; padding: 2px 10px;
+  margin-bottom: 5px; letter-spacing: .5px;
+  text-transform: uppercase;
+}
+
+/* multiple choice */
+.mc-options { display: flex; flex-direction: column; gap: 7px; margin-top: 10px; width: 100%; }
+.mc-btn {
+  display: flex; align-items: center; gap: 10px;
+  background: rgba(255,255,255,.03);
+  border: 1.5px solid var(--border);
+  border-radius: 12px; padding: 9px 14px;
+  color: var(--text); font-family: 'Baloo 2', cursive;
+  font-size: .87rem; font-weight: 600;
+  cursor: pointer; transition: all .15s; text-align: left; width: 100%;
+}
+.mc-btn:hover:not(:disabled) {
+  background: rgba(245,158,11,.12); border-color: var(--gold);
+  color: var(--gold); transform: translateX(3px);
+}
+.mc-btn .letter {
+  display: flex; align-items: center; justify-content: center;
+  width: 26px; height: 26px; border-radius: 8px;
+  background: rgba(245,158,11,.15); border: 1px solid rgba(245,158,11,.35);
+  color: var(--gold); font-size: .78rem; font-weight: 800;
+  flex-shrink: 0; transition: all .15s;
+}
+.mc-btn:hover:not(:disabled) .letter { background: var(--gold-dark); color: white; border-color: var(--gold-dark); }
+.mc-btn.correct { background: rgba(34,197,94,.15)!important; border-color: #22c55e!important; color: #22c55e!important; cursor: default; }
+.mc-btn.correct .letter { background: #22c55e!important; color: white!important; border-color: #22c55e!important; }
+.mc-btn.wrong { background: rgba(239,68,68,.12)!important; border-color: #ef4444!important; color: #ef4444!important; cursor: default; }
+.mc-btn.wrong .letter { background: #ef4444!important; color: white!important; border-color: #ef4444!important; }
+.mc-btn:disabled { cursor: default; transform: none!important; }
+
+/* speaker wave */
+.speaker-wave {
+  display: inline-flex; align-items: flex-end;
+  gap: 2px; height: 14px; margin-left: 6px; vertical-align: middle;
+}
+.speaker-wave span {
+  display: block; width: 3px; border-radius: 2px;
+  background: var(--gold); animation: wave 1s ease-in-out infinite;
+}
+.speaker-wave span:nth-child(1){height:4px;animation-delay:0s}
+.speaker-wave span:nth-child(2){height:10px;animation-delay:.1s}
+.speaker-wave span:nth-child(3){height:6px;animation-delay:.2s}
+.speaker-wave span:nth-child(4){height:12px;animation-delay:.15s}
+.speaker-wave span:nth-child(5){height:4px;animation-delay:.05s}
+@keyframes wave{0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.8)}}
+
+/* typing */
+.typing {
+  display: flex; gap: 4px; padding: 12px 16px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 18px; border-bottom-left-radius: 5px; width: fit-content;
+}
+.dot { width: 7px; height: 7px; border-radius: 50%; background: var(--gold); animation: bounce .9s infinite; }
+.dot:nth-child(2){animation-delay:.15s} .dot:nth-child(3){animation-delay:.3s}
+@keyframes bounce{0%,80%,100%{transform:translateY(0);opacity:.6}40%{transform:translateY(-7px);opacity:1}}
+
+/* input bar */
+.input-bar {
+  width: 100%; max-width: 700px;
+  padding: 10px 14px 18px;
+  display: flex; gap: 8px;
+  background: var(--bg); position: sticky; bottom: 0;
+}
+#user-input {
+  flex: 1; padding: 12px 18px;
+  border: 2px solid var(--border); border-radius: 30px;
+  font-family: 'Baloo 2', cursive; font-size: .92rem;
+  outline: none; background: var(--surface); color: var(--text);
+  transition: border-color .2s, box-shadow .2s;
+}
+#user-input::placeholder { color: var(--muted); }
+#user-input:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(245,158,11,.12); }
+
+#send-btn {
+  width: 48px; height: 48px; border-radius: 50%; border: none;
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  color: white; font-size: 1.1rem; cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 3px 14px rgba(245,158,11,.4); flex-shrink: 0;
+}
+#send-btn:hover { transform: scale(1.08); box-shadow: 0 5px 20px rgba(245,158,11,.55); }
+#send-btn:disabled { opacity: .5; transform: none; }
+
+/* result modal */
+.result-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.75); backdrop-filter: blur(6px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 100; opacity: 0; pointer-events: none; transition: opacity .3s;
+}
+.result-overlay.show { opacity: 1; pointer-events: all; }
+.result-card {
+  background: linear-gradient(135deg, #132015, #0c1a0e);
+  border: 2px solid var(--gold-dark);
+  border-radius: 24px; padding: 36px 40px;
+  text-align: center; max-width: 380px; width: 90%;
+  box-shadow: 0 20px 60px rgba(0,0,0,.6);
+  transform: scale(.9); transition: transform .3s cubic-bezier(.34,1.56,.64,1);
+}
+.result-overlay.show .result-card { transform: scale(1); }
+.result-emoji { font-size: 4rem; margin-bottom: 12px; display: block; }
+.result-title {
+  font-family: 'Fredoka One', cursive; font-size: 1.7rem; margin-bottom: 6px;
+  background: linear-gradient(90deg, var(--gold), #fde68a);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.result-score { font-size: 3rem; font-weight: 900; margin: 10px 0; color: white; }
+.result-msg { color: var(--muted); font-size: .9rem; margin-bottom: 22px; }
+.result-btn {
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  border: none; border-radius: 30px; padding: 12px 30px;
+  color: white; font-family: 'Baloo 2', cursive; font-weight: 800;
+  font-size: 1rem; cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+  box-shadow: 0 4px 16px rgba(245,158,11,.35);
+}
+.result-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 22px rgba(245,158,11,.5); }
+
+/* scenario card for identify questions */
+.scenario-card {
+  background: rgba(245,158,11,.07);
+  border: 1px solid rgba(245,158,11,.25);
+  border-radius: 12px; padding: 10px 14px;
+  margin: 8px 0 6px; font-style: italic;
+  font-size: .87rem; color: #fde68a; line-height: 1.5;
+}
+
+/* ── Notes Panel ─────────────────────────────────────────────── */
+.notes-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.78); backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 200; opacity: 0; pointer-events: none; transition: opacity .3s;
+}
+.notes-overlay.show { opacity: 1; pointer-events: all; }
+.notes-panel {
+  background: linear-gradient(160deg, #0c1a0e, #132015);
+  border: 2px solid var(--gold-dark);
+  border-radius: 20px;
+  width: 92%; max-width: 720px;
+  max-height: 88vh;
+  display: flex; flex-direction: column;
+  box-shadow: 0 24px 60px rgba(0,0,0,.7);
+  overflow: hidden;
+  transform: translateY(30px);
+  transition: transform .35s cubic-bezier(.34,1.2,.64,1);
+}
+.notes-overlay.show .notes-panel { transform: translateY(0); }
+.notes-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 22px; border-bottom: 1px solid var(--border);
+  background: linear-gradient(135deg, #14532d44, #1e3a5f44);
+}
+.notes-header h2 { font-family: 'Fredoka One', cursive; font-size: 1.3rem; color: var(--gold); }
+.notes-close {
+  width: 34px; height: 34px; border-radius: 50%;
+  border: 1.5px solid var(--border); background: var(--surface2);
+  color: var(--text); font-size: 1rem; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; transition: all .2s;
+}
+.notes-close:hover { background: #b91c1c; border-color: #ef4444; }
+.notes-body { overflow-y: auto; padding: 20px 22px; flex: 1; }
+.notes-body::-webkit-scrollbar { width: 4px; }
+.notes-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+.notes-topic { margin-bottom: 28px; }
+.notes-topic-title {
+  font-family: 'Fredoka One', cursive; font-size: 1.05rem;
+  color: var(--gold); margin-bottom: 10px;
+  padding-bottom: 6px; border-bottom: 1px solid var(--border);
+}
+.notes-item {
+  display: flex; gap: 10px; align-items: flex-start;
+  padding: 7px 0; border-bottom: 1px solid rgba(255,255,255,.04);
+  font-size: .87rem; line-height: 1.55;
+}
+.notes-item:last-child { border-bottom: none; }
+.notes-term { font-weight: 800; color: var(--gold); min-width: 150px; flex-shrink: 0; font-size: .84rem; }
+.notes-def { color: #d1fae5; }
+.notes-tabs {
+  display: flex; flex-wrap: wrap; gap: 8px; padding: 14px 22px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(0,0,0,.15);
+}
+.notes-tab {
+  padding: 12px 20px; border-radius: 10px;
+  border: 1.5px solid var(--border); 
+  background: rgba(255,255,255,.04); color: var(--muted);
+  font-family: 'Baloo 2', cursive; font-size: .9rem; font-weight: 700;
+  cursor: pointer; transition: all .15s; white-space: nowrap;
+  min-height: 48px; display: flex; align-items: center;
+}
+.notes-tab.active { background: var(--surface); color: var(--gold); border-color: var(--gold-dark); }
+.notes-tab:hover:not(.active) { color: var(--text); background: var(--surface2); }
+.notes-section { display: none; }
+.notes-section.active { display: block; }
+
+
+/* ── Print button in notes header ─────────────────────────────── */
+.notes-header-actions { display: flex; align-items: center; gap: 10px; }
+.print-btn {
+  display: flex; align-items: center; gap: 6px;
+  background: rgba(245,158,11,.12);
+  border: 1.5px solid rgba(245,158,11,.4);
+  color: var(--gold);
+  border-radius: 20px;
+  padding: 7px 14px;
+  font-family: 'Baloo 2', cursive;
+  font-size: .78rem;
+  font-weight: 800;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all .15s;
+}
+.print-btn:hover { background: var(--gold); color: #0c1a0e; border-color: var(--gold); }
+.print-btn.active { background: var(--gold); color: #0c1a0e; border-color: var(--gold); }
+
+/* ── On-screen Practice Test / Answer Key ─────────────────────── */
+.ptest-part-title {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1rem;
+  color: var(--gold);
+  margin: 22px 0 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+.ptest-part-title:first-child { margin-top: 0; }
+.ptest-q {
+  font-size: .87rem;
+  line-height: 1.6;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed rgba(255,255,255,.06);
+  color: #d1fae5;
+}
+.ptest-q b { color: var(--gold); }
+.ptest-q .opt { display: block; margin: 2px 0 2px 18px; color: #d1fae5; }
+.ptest-bank {
+  background: rgba(59,130,246,.08);
+  border: 1px solid rgba(59,130,246,.3);
+  border-radius: 10px;
+  padding: 10px 16px;
+  margin-bottom: 14px;
+  font-size: .82rem;
+  color: #dbeafe;
+  line-height: 1.6;
+}
+.key-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.key-pill {
+  background: rgba(245,158,11,.1);
+  border: 1px solid rgba(245,158,11,.25);
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: .78rem;
+  color: #fde68a;
+}
+.key-pill b { color: #34d399; }
+
+/* ── Print / Save-as-PDF styles ──────────────────────────────────
+   By default everything is hidden from print. When body carries
+   .printing-test, only #print-area (a light-themed clone of the
+   Practice Test + Answer Key) is shown, laid out for paper. ──── */
+@media print {
+  body * { visibility: hidden; }
+  #print-area, #print-area * { visibility: visible; }
+  #print-area {
+    display: block !important;
+    position: absolute; top: 0; left: 0; width: 100%;
+    background: #fff; color: #14290f;
+    font-family: 'Helvetica', Arial, sans-serif;
+    font-size: 10.5pt;
+    line-height: 1.5;
+  }
+  #print-area .p-cover { text-align: center; padding-top: 40px; }
+  #print-area .p-cover .p-icon { font-size: 34pt; }
+  #print-area .p-cover h1 { font-size: 19pt; color: #b45309; margin: 8px 0 4px; }
+  #print-area .p-cover .p-sub { font-size: 10.5pt; color: #166534; margin-bottom: 20px; }
+  #print-area .p-info-box {
+    border: 1.5px solid #fcd34d; border-radius: 10px;
+    max-width: 460px; margin: 0 auto 20px; padding: 14px 20px;
+    text-align: left; font-size: 10pt;
+  }
+  #print-area .p-info-box div { margin: 6px 0; border-bottom: 1px dotted #fde68a; padding-bottom: 6px; }
+  #print-area .p-instructions {
+    max-width: 460px; margin: 0 auto; text-align: left;
+    background: #fffbeb; border: 1px solid #fcd34d; border-radius: 10px;
+    padding: 12px 18px; font-size: 9.5pt; color: #78350f;
+  }
+  #print-area h2.p-part-title {
+    font-size: 12.5pt; color: #fff;
+    background: linear-gradient(135deg, #b45309, #14532d) !important;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    padding: 6px 12px; border-radius: 7px; margin: 18px 0 10px;
+    page-break-after: avoid;
+  }
+  #print-area .p-bank {
+    background: #f0fdf4 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    border: 1px solid #86efac; border-radius: 8px; padding: 8px 14px;
+    margin-bottom: 12px; font-size: 9.5pt; color: #14532d;
+  }
+  #print-area .p-q {
+    margin-bottom: 8px; padding-bottom: 8px;
+    border-bottom: 1px dotted #fde68a; font-size: 10pt;
+    page-break-inside: avoid; color: #14290f;
+  }
+  #print-area .p-q b { color: #b45309; }
+  #print-area .p-q .p-blank { display: inline-block; min-width: 65px; border-bottom: 1px solid #64748b; }
+  #print-area .p-q .p-opt { display: block; margin: 2px 0 0 20px; color: #365314; }
+  #print-area .p-break { page-break-before: always; }
+  #print-area .p-key-part-title {
+    font-size: 11pt; color: #b45309; font-weight: bold;
+    margin: 14px 0 8px; border-bottom: 2px solid #b45309; padding-bottom: 4px;
+  }
+  #print-area .p-key-grid {
+    display: grid; grid-template-columns: repeat(5, 1fr);
+    gap: 5px 8px; margin-bottom: 14px;
+  }
+  #print-area .p-key-pill {
+    background: #f0fdf4 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    border: 1px solid #86efac; border-radius: 6px;
+    padding: 4px 8px; font-size: 8.5pt; color: #166534;
+  }
+  #print-area .p-key-pill b { color: #b45309; }
+  @page { size: letter; margin: 1.5cm 1.8cm; }
+}
+#print-area { display: none; }
+
+
+/* ── Chapter Summary / Tandaan / Memory boxes (fix: previously missing) ── */
+.chapter-summary {
+  background: linear-gradient(135deg, rgba(59,130,246,.1), rgba(34,197,94,.08));
+  border: 1px solid rgba(59,130,246,.25);
+  border-left: 4px solid var(--blue);
+  border-radius: 12px;
+  padding: 14px 18px;
+  margin-bottom: 18px;
+  font-size: .88rem;
+  line-height: 1.65;
+  color: #dbeafe;
+}
+.tandaan-box {
+  background: rgba(245,158,11,.08);
+  border: 1px solid rgba(245,158,11,.3);
+  border-left: 4px solid var(--gold);
+  border-radius: 12px;
+  padding: 12px 18px;
+  margin: 14px 0;
+  font-size: .86rem;
+  line-height: 1.6;
+  color: #fde68a;
+}
+.tandaan-label {
+  display: block;
+  font-family: 'Baloo 2', cursive;
+  font-size: .8rem;
+  color: var(--gold);
+  letter-spacing: .5px;
+  margin-bottom: 5px;
+}
+.memory-box {
+  background: rgba(34,197,94,.08);
+  border: 1px solid rgba(34,197,94,.3);
+  border-left: 4px solid var(--green);
+  border-radius: 12px;
+  padding: 12px 18px;
+  margin: 14px 0 22px;
+  font-size: .86rem;
+  line-height: 1.6;
+  color: #bbf7d0;
+}
+.memory-label {
+  display: block;
+  font-family: 'Baloo 2', cursive;
+  font-size: .8rem;
+  color: var(--green);
+  letter-spacing: .5px;
+  margin-bottom: 5px;
+}
+.compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0 20px;
+  font-size: .82rem;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.compare-table th {
+  background: linear-gradient(135deg, var(--blue-dark), var(--gold-dark));
+  color: white;
+  text-align: left;
+  padding: 9px 12px;
+  font-size: .78rem;
+  text-transform: uppercase;
+  letter-spacing: .4px;
+}
+.compare-table td {
+  padding: 9px 12px;
+  border-top: 1px solid var(--border);
+  color: var(--text);
+  vertical-align: top;
+}
+.compare-table tr:nth-child(even) td { background: rgba(255,255,255,.02); }
+
+/* ── Story Box (for reading Bible stories aloud) ─────────────────── */
+.story-box {
+  background: rgba(255,255,255,.03);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px 20px;
+  margin-bottom: 16px;
+  font-size: .92rem;
+  line-height: 1.8;
+  color: var(--text);
+}
+.story-box p { margin-bottom: 10px; }
+.story-box p:last-child { margin-bottom: 0; }
+.story-ref {
+  display: block;
+  text-align: right;
+  font-style: italic;
+  color: var(--muted);
+  font-size: .8rem;
+  margin-top: 10px;
+}
+.story-label {
+  display: block;
+  font-family: 'Baloo 2', cursive;
+  font-size: .9rem;
+  color: var(--gold);
+  letter-spacing: .5px;
+  margin-bottom: 10px;
+}
+/* ── Raw Notes (original document view) ──────────────────────── */
+.rawnotes-intro {
+  font-size: .82rem;
+  color: var(--muted);
+  line-height: 1.6;
+  background: rgba(59,130,246,.1);
+  border: 1px solid rgba(59,130,246,.3);
+  border-left: 4px solid var(--blue);
+  border-radius: 10px;
+  padding: 12px 18px;
+  margin-bottom: 20px;
+}
+.rawnotes-doc {
+  font-family: 'Lora', Georgia, serif;
+  line-height: 1.75;
+}
+.rawnotes-doc p {
+  font-size: .95rem;
+  margin-bottom: 14px;
+  color: #e2f5e6;
+}
+.rawnotes-doc strong { color: var(--gold); font-weight: 700; }
+.rawnotes-doc em { color: var(--muted); font-style: italic; }
+.rawnotes-doc h3.doc-heading {
+  font-family: 'Baloo 2', cursive;
+  font-size: 1.05rem;
+  color: var(--gold);
+  margin: 26px 0 12px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid var(--border);
+}
+.rawnotes-doc h3.doc-heading:first-child { margin-top: 0; }
+.rawnotes-doc ul, .rawnotes-doc ol {
+  margin: 0 0 14px 26px;
+  color: #e2f5e6;
+}
+.rawnotes-doc li { margin-bottom: 6px; font-size: .95rem; }
+.rawnotes-doc table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0 20px;
+  font-size: .82rem;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.rawnotes-doc th {
+  background: linear-gradient(135deg, var(--blue-dark), var(--gold-dark));
+  color: white;
+  text-align: left;
+  padding: 9px 12px;
+  font-size: .78rem;
+}
+.rawnotes-doc td {
+  padding: 9px 12px;
+  border-top: 1px solid var(--border);
+  color: var(--text);
+  vertical-align: top;
+}
+.rawnotes-doc tr:nth-child(even) td { background: rgba(255,255,255,.02); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-icon">📘</div>
+  <div>
+    <h1>Nouns &amp; Complex Sentences</h1>
+    <div class="sub">Count &amp; Mass Nouns · Signal Words of Time Order · Complex Sentences</div>
+  </div>
+  <div class="header-controls">
+    <div class="score-pill">⭐ <span id="score-val">0</span> / <span id="total-val">0</span></div>
+    <button class="audio-btn" id="notes-toggle" title="Open Reviewer" onclick="document.getElementById('notes-overlay').classList.add('show')">📖</button>
+    <button class="audio-btn active" id="audio-toggle" title="Toggle Audio">🔊</button>
+  </div>
+</header>
+
+<div class="chat-wrap">
+  <div id="chat-box"></div>
+</div>
+
+<div class="input-bar">
+  <input type="text" id="user-input" placeholder="Type your answer here…" autocomplete="off" />
+  <button id="send-btn">➤</button>
+</div>
+
+<div class="result-overlay" id="result-overlay">
+  <div class="result-card">
+    <span class="result-emoji" id="res-emoji">🏆</span>
+    <div class="result-title">Quiz Complete!</div>
+    <div class="result-score"><span id="res-score">0</span>/<span id="res-total">0</span></div>
+    <div class="result-msg" id="res-msg">Great job!</div>
+    <button class="result-btn" onclick="restartApp()">🔄 Maglaro Ulit</button>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+// QUESTION BANK
+// ═══════════════════════════════════════════════════════════════
+const topics = {
+
+  "Count Nouns and Mass Nouns": [
+    { q: "What is a count noun?", a: "A noun that can be counted", hint: "The name gives it away." },
+    { q: "What is a mass noun?", a: "Something that cannot be counted, or is difficult to count", hint: "Think of things like water or rice." },
+    { q: "Give three examples of count nouns from the lesson.", a: "typhoon, house, tank, appliance, window, area, device, book, bag, ice cream, document, mug, jewelry, or magazine (any three)", hint: "Things you could put a number in front of." },
+    { q: "Give three examples of mass nouns from the lesson.", a: "information, electricity, nature, life, rice, water, or rain (any three)", hint: "Things that are hard to count individually." },
+    { q: "Is \"butter\" a count noun or a mass noun?", a: "Mass noun", hint: "You measure it by weight or spoonfuls, not by counting pieces." },
+    { q: "Is \"candles\" a count noun or a mass noun?", a: "Count noun", hint: "You can count how many there are." },
+    { q: "Is \"honey\" a count noun or a mass noun?", a: "Mass noun", hint: "A sticky, pourable substance." },
+    { q: "Is \"materials\" a count noun or a mass noun?", a: "Count noun", hint: "Can be counted as separate items." },
+    { q: "Is \"ingredients\" a count noun or a mass noun?", a: "Count noun", hint: "Each one is a separate item on a list." },
+    { q: "Is \"pork\" a count noun or a mass noun?", a: "Mass noun", hint: "A type of meat, measured rather than counted." },
+  ],
+
+  "Signal Words of Time Order": [
+    { q: "What are signal words of time order?", a: "Words used to introduce steps in a process or sequence of events in a story", hint: "They show the order that things happen in." },
+    { q: "Name five signal words of time order used in the Angie story.", a: "First, next, then, after that, and finally", hint: "Five words that show sequence." },
+    { q: "What can understanding signal words of time order help you do?", a: "Understand the structure of a text", hint: "It helps you see how a text is organized." },
+    { q: "In the Angie story, what did her mother tell her to do first?", a: "Wash her hands", hint: "Before eating lunch." },
+    { q: "What signal word introduces Angie telling her mom she had a stomachache?", a: "Next", hint: "It comes right after 'first.'" },
+    { q: "What signal word introduces the doctor telling Angie she was infected by microbes?", a: "Then", hint: "It's the third event in the sequence." },
+    { q: "What signal word introduces the doctor's advice on staying healthy?", a: "After that", hint: "It comes after 'then.'" },
+    { q: "What signal word introduces Angie becoming a healthy child again?", a: "Finally", hint: "The last word in the sequence." },
+    { q: "What does reading texts help activate, according to the lesson?", a: "Your schema", hint: "Your collection of everything you've learned so far." },
+  ],
+
+  "Complex Sentences": [
+    { q: "What is a complex sentence?", a: "A sentence containing a complete idea connected with an incomplete idea", hint: "It has two unequal parts." },
+    { q: "What are the two parts of a complex sentence?", a: "A main, complete part and a supporting, incomplete part", hint: "One part can stand alone, the other can't." },
+    { q: "What connects the two unequal ideas in a complex sentence?", a: "A subordinator", hint: "A linking word." },
+    { q: "Give examples of subordinators mentioned in the lesson.", a: "because, although, while, when, whenever, since, before, as, even though", hint: "Nine examples were given." },
+    { q: "In the sentence \"I need to study hard even though it is difficult,\" what is the subordinator?", a: "even though", hint: "A two-word subordinator." },
+    { q: "In the sentence \"Whenever I am sad, I listen to music,\" what is the main idea?", a: "I listen to music", hint: "The part that can stand alone." },
+    { q: "In the sentence \"Although they are rich, they are really humble,\" what is the supporting idea?", a: "Although they are rich", hint: "The part that can't stand alone." },
+    { q: "What is the basic structure of a complex sentence?", a: "Main/complete idea + subordinator + supporting/incomplete idea", hint: "Three parts in order." },
+    { q: "Does every part of a complex sentence have a subject and a predicate?", a: "Yes, both the complete and incomplete ideas have a subject and a predicate", hint: "Both parts are grammatically similar to full sentences." },
+    { q: "In the paragraph about May's morning, how many complex sentences were found?", a: "4", hint: "Not every sentence in the paragraph was complex." },
+  ],
+
+};
+
+// ── TRUE OR FALSE ────────────────────────────────────────────────────────────
+const trueOrFalse = [
+  { q: "A count noun can be counted.", a: "true" },
+  { q: "A mass noun can always be counted easily.", a: "false" },
+  { q: "\"Butter\" is an example of a count noun.", a: "false" },
+  { q: "\"Candles\" is an example of a mass noun.", a: "false" },
+  { q: "Signal words of time order include first, next, then, after that, and finally.", a: "true" },
+  { q: "Reading texts does not help activate your schema.", a: "false" },
+  { q: "A complex sentence contains only one complete idea and nothing else.", a: "false" },
+  { q: "A subordinator connects a complete idea and an incomplete idea.", a: "true" },
+  { q: "\"Because\" is an example of a subordinator.", a: "true" },
+  { q: "Both parts of a complex sentence have a subject and a predicate.", a: "true" },
+  { q: "In \"I stayed home because I was sick,\" the phrase \"because I was sick\" is the main idea.", a: "false" },
+  { q: "A complex sentence can begin with the subordinator instead of the main idea.", a: "true" },
+  { q: "\"Honey\" is a mass noun.", a: "true" },
+  { q: "\"Ingredients\" is a mass noun.", a: "false" },
+  { q: "\"Whenever\" can be used as a subordinator.", a: "true" },
+  { q: "A paragraph can contain more than one complex sentence.", a: "true" },
+  { q: "\"Pork\" is an example of a count noun.", a: "false" },
+];
+
+// ── IDENTIFY: COUNT/MASS · SUBORDINATOR ──────────────────────────────────────
+const identifyQuestions = [
+  { q: "We went to the supermarket to buy ingredients for the meals we will prepare for Dad's birthday.", a: "Count", choices: ["Count","Mass"] },
+  { q: "We found the special butter to use for the meals in the dairy section.", a: "Mass", choices: ["Count","Mass"] },
+  { q: "Candice and Mom chose the best quality pork for adobo.", a: "Mass", choices: ["Count","Mass"] },
+  { q: "I prepared the birthday materials to decorate our living room.", a: "Count", choices: ["Count","Mass"] },
+  { q: "Dad enjoyed especially the blowing of his birthday candles.", a: "Count", choices: ["Count","Mass"] },
+  { q: "Do we have a jar of honey in the fridge? (Circle the mass noun.)", a: "honey", choices: ["honey","jar","fridge","jars"] },
+  { q: "Three cups of flour will be used in making pancakes. (Circle the mass noun.)", a: "flour", choices: ["flour","cups","pancakes","cup"] },
+  { q: "Dad needs his cup of coffee every day. (Circle the mass noun.)", a: "coffee", choices: ["coffee","cup","day","cups"] },
+  { q: "Do not forget to add eight tablespoons of butter. (Circle the mass noun.)", a: "butter", choices: ["butter","tablespoons","spoon","spoons"] },
+  { q: "I prepare different spreads for our slices of toast every morning. (Circle the mass noun.)", a: "spreads", choices: ["spreads","slices","toast","morning"] },
+  { q: "I need to study hard even though it is difficult. (Identify the subordinator.)", a: "even though", choices: ["even though","since","because","while"] },
+  { q: "Whenever I am sad, I listen to music. (Identify the subordinator.)", a: "Whenever", choices: ["Whenever","Although","Because","As"] },
+  { q: "The show started while I was still in the car. (Identify the subordinator.)", a: "while", choices: ["while","since","before","as"] },
+  { q: "I am extremely happy since you are here. (Identify the subordinator.)", a: "since", choices: ["since","because","when","before"] },
+  { q: "Although they are rich, they are really humble. (Identify the subordinator.)", a: "Although", choices: ["Although","Whenever","Since","While"] },
+  { q: "The doctor told Don to drink eight glasses of water because he was dehydrated. (Identify the subordinator.)", a: "because", choices: ["because","since","while","as"] },
+  { q: "I need to go home early because it will rain soon. (Identify the subordinator.)", a: "because", choices: ["because","when","since","although"] },
+  { q: "I like reading books before I go to sleep. (Identify the subordinator.)", a: "before", choices: ["before","while","because","since"] },
+  { q: "Because Erika was late, the party did not start on time. (Identify the subordinator.)", a: "Because", choices: ["Because","Although","Since","While"] },
+  { q: "Please turn off the lights as you leave the room. (Identify the subordinator.)", a: "as", choices: ["as","before","because","while"] },
+];
+
+// ═══════════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════════
+let state = {
+  awaiting: 'menu',
+  mode: null,
+  questions: [],
+  allAnswers: [],
+  qIndex: 0,
+  score: 0,
+  total: 0,
+  hintUsed: false,
+  audioEnabled: true,
+};
+
+// ═══════════════════════════════════════════════════════════════
+// TTS (UPGRADED FOR TRUE FILIPINO ACCENT)
+// ═══════════════════════════════════════════════════════════════
+let currentAudioStream = null;
+
+function speak(text) {
+  if (!state.audioEnabled) return;
+  
+  // Linisin ang mga nakaraang audio task
+  window.speechSynthesis.cancel();
+  if (currentAudioStream) {
+    currentAudioStream.pause();
+    currentAudioStream = null;
+  }
+  
+  // Tanggalin ang HTML tags at emojis para hindi basahin nang paputol-putol
+  const clean = text.replace(/<[^>]+>/g,'').replace(/[🇵🇭🌟✅❌💡⏭️🏆😊💪🔄🔲📚👋⭐✕🧭📏🗺️]/g,'');
+  
+  // PRIMARY METHOD: Google Translation Engine cloud voice stream (May natural na Filipino accent)
+  const googleTtsUrl = `https://translate.google.com/translate_tts?ie=UTF-8&tl=tl&client=tw-ob&q=${encodeURIComponent(clean)}`;
+  
+  currentAudioStream = new Audio(googleTtsUrl);
+  currentAudioStream.onplaying = () => showWave(true);
+  currentAudioStream.onended = currentAudioStream.onerror = () => showWave(false);
+  
+  currentAudioStream.play().catch(err => {
+    // BACKUP METHOD: Web Speech API (works even without internet)
+    console.warn("Google TTS blocked or offline. Falling back to local system speech engine.");
+    
+    const streamFallback = new SpeechSynthesisUtterance(clean);
+    streamFallback.lang = 'fil-PH';
+    streamFallback.rate = 0.95; streamFallback.pitch = 1.05; streamFallback.volume = 1;
+    
+    const voices = window.speechSynthesis.getVoices();
+    const filVoice = voices.find(v => v.lang.startsWith('fil') || v.lang.startsWith('tl'));
+    const engVoice = voices.find(v => v.lang.startsWith('en') && v.name.toLowerCase().includes('female'))
+                   || voices.find(v => v.lang.startsWith('en'));
+              
+    if (filVoice) {
+      streamFallback.voice = filVoice;
+    } else if (engVoice) {
+      streamFallback.voice = engVoice; 
+      streamFallback.lang = 'en-US'; 
+    }
+    
+    streamFallback.onstart = () => showWave(true);
+    streamFallback.onend = streamFallback.onerror = () => showWave(false);
+    window.speechSynthesis.speak(streamFallback);
+  });
+}
+
+function showWave(on) {
+  document.querySelectorAll('.speaker-wave').forEach(w => w.style.display = on ? 'inline-flex' : 'none');
+}
+
+// I-initialize ang mga boses ng system
+let localSystemVoices = [];
+function lookupSystemVoices() {
+  localSystemVoices = window.speechSynthesis.getVoices();
+}
+lookupSystemVoices();
+if (window.speechSynthesis.onvoiceschanged !== undefined) {
+  window.speechSynthesis.onvoiceschanged = lookupSystemVoices;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// UI HELPERS
+// ═══════════════════════════════════════════════════════════════
+const chatBox = document.getElementById('chat-box');
+const input = document.getElementById('user-input');
+const sendBtn = document.getElementById('send-btn');
+
+function scrollBottom() { chatBox.scrollTop = chatBox.scrollHeight; }
+
+function addMessage(role, html, speakText) {
+  const div = document.createElement('div');
+  div.className = `msg ${role}`;
+  const av = document.createElement('div');
+  av.className = 'avatar';
+  av.textContent = role === 'bot' ? '🤖' : '🧑';
+  const bub = document.createElement('div');
+  bub.className = 'bubble';
+  bub.innerHTML = role === 'bot'
+    ? html + '<span class="speaker-wave" style="display:none"><span></span><span></span><span></span><span></span><span></span></span>'
+    : html;
+  div.appendChild(av); div.appendChild(bub);
+  chatBox.appendChild(div);
+  scrollBottom(); bindChips();
+  if (role === 'bot') {
+    const txt = speakText || html.replace(/<[^>]+>/g,' ');
+    setTimeout(() => speak(txt), 350);
+  }
+}
+
+function addTyping() {
+  const d = document.createElement('div');
+  d.className = 'msg bot'; d.id = 'typing';
+  d.innerHTML = '<div class="avatar">🤖</div><div class="typing"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>';
+  chatBox.appendChild(d); scrollBottom();
+}
+function removeTyping() { const t = document.getElementById('typing'); if(t) t.remove(); }
+
+function bindChips() {
+  document.querySelectorAll('.chip:not([data-bound])').forEach(c => {
+    c.dataset.bound = '1';
+    c.addEventListener('click', () => handleUserMessage(c.dataset.val));
+  });
+}
+
+function updateScore() {
+  document.getElementById('score-val').textContent = state.score;
+  document.getElementById('total-val').textContent = state.total;
+}
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length-1; i > 0; i--) {
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]] = [a[j],a[i]];
+  }
+  return a;
+}
+
+function normalize(s) { return s.toLowerCase().trim().replace(/\s+/g,' '); }
+
+function checkAnswer(user, correct) {
+  const u = normalize(user), c = normalize(correct);
+  if (u === c) return true;
+  if (c.includes(u) && u.length > 5) return true;
+  const parts = c.split(/[,;\/]/);
+  for (const p of parts) if (u.includes(p.trim()) && p.trim().length > 4) return true;
+  return false;
+}
+
+function showResult() {
+  const pct = Math.round((state.score/state.total)*100);
+  const emoji = pct>=90?'🏆':pct>=70?'🌟':pct>=50?'😊':'💪';
+  const msg = pct>=90?'Excellent! You know it all!':pct>=70?'Great job! Keep it up!':pct>=50?'Good! Study a little more!':"Don't give up! Try again!";
+  document.getElementById('res-emoji').textContent = emoji;
+  document.getElementById('res-score').textContent = state.score;
+  document.getElementById('res-total').textContent = state.total;
+  document.getElementById('res-msg').textContent = msg;
+  document.getElementById('result-overlay').classList.add('show');
+  speak(`All done! Your score is ${state.score} out of ${state.total}. ${msg}`);
+}
+
+function restartApp() {
+  document.getElementById('result-overlay').classList.remove('show');
+  state = { awaiting:'menu', mode:null, questions:[], allAnswers:[], qIndex:0, score:0, total:0, hintUsed:false, audioEnabled:state.audioEnabled };
+  chatBox.innerHTML = '';
+  document.querySelector('.input-bar').style.display = 'flex';
+  updateScore();
+  showMenu();
+}
+
+// ═══════════════════════════════════════════════════════════════
+// MC HELPERS
+// ═══════════════════════════════════════════════════════════════
+function getAllAnswers() {
+  const ans = [];
+  for (const qs of Object.values(topics)) for (const q of qs) ans.push(q.a);
+  return ans;
+}
+
+function generateChoices(correct, pool) {
+  const distractors = shuffle(pool.filter(a => a !== correct)).slice(0,3);
+  return shuffle([correct, ...distractors]);
+}
+
+function buildMCBtns(choices, correctAnswer) {
+  const letters = ['A','B','C','D','E'];
+  return `<div class="mc-options">${choices.map((c,i)=>
+    `<button class="mc-btn" data-answer="${encodeURIComponent(c)}" data-correct="${encodeURIComponent(correctAnswer)}" onclick="handleMCClick(this)">
+      <span class="letter">${letters[i]}</span>${c}
+    </button>`
+  ).join('')}</div>`;
+}
+
+function handleMCClick(btn) {
+  const allBtns = btn.closest('.mc-options').querySelectorAll('.mc-btn');
+  allBtns.forEach(b => b.disabled = true);
+  const chosen = decodeURIComponent(btn.dataset.answer);
+  const correct = decodeURIComponent(btn.dataset.correct);
+  const isCorrect = chosen === correct;
+  allBtns.forEach(b => { if(decodeURIComponent(b.dataset.answer)===correct) b.classList.add('correct'); });
+  if (!isCorrect) btn.classList.add('wrong');
+  setTimeout(() => {
+    if (isCorrect) {
+      state.score++;
+      addMessage('bot', `✅ <strong>Correct!</strong> +1 point! The answer is: <strong>${correct}</strong>`, `Correct! The answer is: ${correct}`);
+    } else {
+      addMessage('bot', `❌ <strong>Not quite.</strong> The correct answer is: <strong>${correct}</strong>`, `Not quite. The correct answer is: ${correct}`);
+    }
+    state.qIndex++; updateScore();
+    if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+    else setTimeout(showResult, 900);
+  }, 650);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// NEXT QUESTION
+// ═══════════════════════════════════════════════════════════════
+function nextQuestion() {
+  const qi = state.qIndex;
+  const q = state.questions[qi];
+  const num = qi + 1;
+
+  if (state.mode === 'full' || state.mode === 'topic_mc') {
+    const choices = generateChoices(q.a, state.allAnswers);
+    const tag = q.topic ? `<span class="topic-tag">${q.topic}</span><br>` : '';
+    const html = `${tag}<strong>Q${num} of ${state.total}:</strong> ${q.q}${buildMCBtns(choices, q.a)}`;
+    addMessage('bot', html, `Question ${num}. ${q.q}`);
+    return;
+  }
+
+  if (state.mode === 'tf') {
+    const html = `<strong>Q${num} of ${state.total}:</strong> <div class="scenario-card">${q.q}</div>
+      <span class="chip" data-val="true">✅ True</span><span class="chip" data-val="false">❌ False</span>`;
+    addMessage('bot', html, `Question ${num}. True or False: ${q.q}`);
+    return;
+  }
+
+  if (state.mode === 'identify') {
+    const btns = buildMCBtns(q.choices, q.a);
+    const html = `<strong>Q${num} of ${state.total}:</strong> Identify what is being described:<div class="scenario-card">${q.q}</div>${btns}`;
+    addMessage('bot', html, `Question ${num}. Identify: ${q.q}`);
+    return;
+  }
+
+  // typed answer mode
+  const tag = q.topic ? `<span class="topic-tag">${q.topic}</span><br>` : '';
+  const html = `${tag}<strong>Q${num} of ${state.total}:</strong> ${q.q}<br><small style="color:var(--muted)">Type your answer · type <em>hint</em> for help · <em>skip</em> to move on</small>`;
+  addMessage('bot', html, `Question ${num}. ${q.q}`);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// MENU
+// ═══════════════════════════════════════════════════════════════
+function showMenu() {
+  addMessage('bot',
+    `👋 <strong>Hi! I'm your English Reviewer!</strong><br>Let's study <em>Count Nouns and Mass Nouns</em>, <em>Signal Words of Time Order</em>, and <em>Complex Sentences</em>.<br><br>What would you like to do?<br>
+    <span class="chip" data-val="1">📚 Study by Topic</span>
+    <span class="chip" data-val="2">✅ True or False</span>
+    <span class="chip" data-val="3">🌐 Identify</span>
+    <span class="chip" data-val="4">🌟 Full Review (Multiple Choice)</span>`,
+    "Hi! I'm your English Reviewer on Nouns and Complex Sentences. What would you like to do? Study a topic, True or False, Identify, or a Full Review with multiple choice?"
+  );
+  state.awaiting = 'menu';
+}
+
+// ═══════════════════════════════════════════════════════════════
+// PROCESS MESSAGE
+// ═══════════════════════════════════════════════════════════════
+function processMessage(msg) {
+  const aw = state.awaiting;
+
+  // ── MENU ──────────────────────────────────────────────────
+  if (aw === 'menu') {
+    if (msg === '1') {
+      state.awaiting = 'topic';
+      const keys = Object.keys(topics);
+      const chips = keys.map((t,i) => `<span class="chip" data-val="${i+1}">${i+1}. ${t}</span>`).join(' ');
+      addMessage('bot', `📚 Which topic would you like to study?<br>${chips}`, 'Which topic would you like to study?');
+
+    } else if (msg === '2') {
+      state.mode = 'tf';
+      state.questions = shuffle(trueOrFalse);
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'tf_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `✅ <strong>True or False!</strong> ${state.total} questions. Let's start!`, `True or False! ${state.total} questions. Let's start!`);
+      setTimeout(nextQuestion, 800);
+
+    } else if (msg === '3') {
+      state.mode = 'identify';
+      state.questions = shuffle(identifyQuestions);
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'mc_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `🌐 <strong>Identify!</strong> Figure out whether a noun is Count or Mass, or identify the subordinator in a complex sentence.`, "Identify! Figure out what's being described in each item.");
+      setTimeout(nextQuestion, 800);
+
+    } else if (msg === '4') {
+      state.mode = 'full';
+      const all = [];
+      for (const [topicName, qs] of Object.entries(topics)) {
+        qs.forEach(q => all.push({...q, topic: topicName}));
+      }
+      state.questions = shuffle(all);
+      state.allAnswers = getAllAnswers();
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'mc_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `🌟 <strong>Full Review — Multiple Choice!</strong> ${state.total} questions. Think carefully!`, `Full Review! Multiple Choice! ${state.total} questions. Think carefully!`);
+      setTimeout(nextQuestion, 800);
+
+    } else {
+      addMessage('bot',
+        `Choose an option:<br>
+        <span class="chip" data-val="1">📚 Study by Topic</span>
+        <span class="chip" data-val="2">✅ True or False</span>
+        <span class="chip" data-val="3">🌐 Identify</span>
+        <span class="chip" data-val="4">🌟 Full Review</span>`,
+        'Choose an option.'
+      );
+    }
+    return;
+  }
+
+  // ── TOPIC SELECT ──────────────────────────────────────────
+  if (aw === 'topic') {
+    const keys = Object.keys(topics);
+    const idx = parseInt(msg) - 1;
+    if (keys[idx]) {
+      const topicName = keys[idx];
+      state.mode = 'topic';
+      state.questions = shuffle(topics[topicName]);
+      state.allAnswers = getAllAnswers();
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'answer';
+      document.querySelector('.input-bar').style.display = 'flex';
+      updateScore();
+      addMessage('bot', `📚 <strong>${topicName}</strong> — ${state.total} questions. Ready?`, `${topicName}. ${state.total} questions. Ready?`);
+      setTimeout(nextQuestion, 800);
+    } else {
+      const chips = Object.keys(topics).map((t,i) => `<span class="chip" data-val="${i+1}">${i+1}. ${t}</span>`).join(' ');
+      addMessage('bot', `Please choose a valid topic:<br>${chips}`, 'Please choose a valid topic.');
+    }
+    return;
+  }
+
+  // ── TYPED ANSWER ──────────────────────────────────────────
+  if (aw === 'answer') {
+    const q = state.questions[state.qIndex];
+    const m = normalize(msg);
+
+    if (m === 'hint') {
+      state.hintUsed = true;
+      addMessage('bot', `💡 <strong>Hint:</strong> ${q.hint}`, `Hint: ${q.hint}`);
+      return;
+    }
+    if (m === 'skip') {
+      addMessage('bot', `⏭️ Skipped! The correct answer is: <strong>${q.a}</strong>`, `Skipped. The correct answer is: ${q.a}`);
+      state.qIndex++; state.hintUsed = false;
+      if (state.qIndex < state.total) setTimeout(nextQuestion, 700);
+      else showResult();
+      return;
+    }
+
+    const correct = checkAnswer(msg, q.a);
+    if (correct) {
+      if (!state.hintUsed) state.score++;
+      const note = state.hintUsed ? ' <em>(hint used — no point)</em>' : ' +1 point!';
+      addMessage('bot', `✅ <strong>Correct!</strong>${note} Answer: <strong>${q.a}</strong>`, `Correct! The answer is: ${q.a}`);
+    } else {
+      addMessage('bot', `❌ <strong>Not quite.</strong> The correct answer is: <strong>${q.a}</strong>`, `Not quite. The correct answer is: ${q.a}`);
+    }
+    state.qIndex++; state.hintUsed = false; updateScore();
+    if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+    else setTimeout(showResult, 900);
+    return;
+  }
+
+  // ── TRUE OR FALSE ─────────────────────────────────────────
+  if (aw === 'tf_answer') {
+    const q = state.questions[state.qIndex];
+    const ans = normalize(msg);
+    const valid = ans === 'true' || ans === 'false';
+
+    if (valid) {
+      const correct = ans === q.a;
+      if (correct) {
+        state.score++;
+        addMessage('bot', `✅ <strong>Correct!</strong> The answer is <strong>${q.a.toUpperCase()}</strong>.`, `Correct! The answer is ${q.a}.`);
+      } else {
+        addMessage('bot', `❌ <strong>Incorrect.</strong> The correct answer is <strong>${q.a.toUpperCase()}</strong>.`, `Incorrect. The correct answer is ${q.a}.`);
+      }
+      state.qIndex++; updateScore();
+      if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+      else setTimeout(showResult, 900);
+    } else {
+      addMessage('bot',
+        `Answer: True or False?<br><span class="chip" data-val="true">✅ True</span><span class="chip" data-val="false">❌ False</span>`,
+        'Answer: True or False?'
+      );
+    }
+    return;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// CONTROLS
+// ═══════════════════════════════════════════════════════════════
+function handleUserMessage(msg) {
+  if (!msg.trim()) return;
+  
+  // Stop any speaking audio cleanly when the user answers
+  window.speechSynthesis.cancel();
+  if (currentAudioStream) {
+    currentAudioStream.pause();
+    currentAudioStream = null;
+    showWave(false);
+  }
+  
+  addMessage('user', msg.replace(/</g,'&lt;'));
+  input.value = '';
+  input.disabled = true; sendBtn.disabled = true;
+  addTyping();
+  setTimeout(() => {
+    removeTyping();
+    input.disabled = false; sendBtn.disabled = false;
+    input.focus();
+    processMessage(msg);
+  }, 480);
+}
+
+sendBtn.addEventListener('click', () => { handleUserMessage(input.value); });
+input.addEventListener('keydown', e => { if(e.key==='Enter') handleUserMessage(input.value); });
+
+document.getElementById('audio-toggle').addEventListener('click', function() {
+  state.audioEnabled = !state.audioEnabled;
+  this.textContent = state.audioEnabled ? '🔊' : '🔇';
+  this.classList.toggle('active', state.audioEnabled);
+  if (!state.audioEnabled) {
+    window.speechSynthesis.cancel();
+    if (currentAudioStream) {
+      currentAudioStream.pause();
+      currentAudioStream = null;
+      showWave(false);
+    }
+  }
+});
+
+// ═══════════════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════════════
+window.addEventListener('load', () => {
+  lookupSystemVoices();
+  showMenu();
+});
+
+function printPracticeTest() {
+  document.body.classList.add('printing-test');
+  window.print();
+}
+window.addEventListener('afterprint', () => {
+  document.body.classList.remove('printing-test');
+});
+
+// ═══════════════════════════════════════════════════════════════
+// READ NOTES ALOUD (uses the browser's own voice — no length limit,
+// unlike the short Google TTS clips used for chat messages)
+// ═══════════════════════════════════════════════════════════════
+function getNotesText(section) {
+  // Skip the Practice Test / Answer Key tabs — too long and not meant to be read aloud
+  const clone = section.cloneNode(true);
+  clone.querySelectorAll('button').forEach(b => b.remove());
+  let text = clone.innerText || clone.textContent || '';
+  text = text.replace(/\s+/g, ' ').trim();
+  return text;
+}
+
+function toggleNotesAudio() {
+  const btn = document.getElementById('notes-audio-btn');
+  if (!btn) return;
+
+  if (window.speechSynthesis.speaking || window.speechSynthesis.pending) {
+    window.speechSynthesis.cancel();
+    btn.innerHTML = '🔊 Read Notes Aloud';
+    btn.classList.remove('active');
+    return;
+  }
+
+  const activeSection = document.querySelector('.notes-section.active');
+  if (!activeSection) return;
+  const text = getNotesText(activeSection);
+  if (!text) return;
+
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.lang = 'en-US';
+  utter.rate = 0.95;
+  utter.pitch = 1.05;
+  utter.volume = 1;
+
+  const voices = window.speechSynthesis.getVoices();
+  const voice = voices.find(v => v.lang.startsWith('en') && v.name.toLowerCase().includes('female'))
+             || voices.find(v => v.lang.startsWith('en'));
+  if (voice) utter.voice = voice;
+
+  utter.onstart = () => { btn.innerHTML = '⏹️ Stop Reading'; btn.classList.add('active'); };
+  utter.onend = utter.onerror = () => { btn.innerHTML = '🔊 Read Notes Aloud'; btn.classList.remove('active'); };
+
+  window.speechSynthesis.speak(utter);
+}
+
+function switchTab(tabId, btn) {
+  window.speechSynthesis.cancel();
+  const audioBtn = document.getElementById('notes-audio-btn');
+  if (audioBtn) { audioBtn.innerHTML = '🔊 Read Notes Aloud'; audioBtn.classList.remove('active'); }
+  document.querySelectorAll('.notes-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.notes-tab').forEach(b => b.classList.remove('active'));
+  document.getElementById(tabId).classList.add('active');
+  btn.classList.add('active');
+}
+
+function closeNotesPanel() {
+  window.speechSynthesis.cancel();
+  const audioBtn = document.getElementById('notes-audio-btn');
+  if (audioBtn) { audioBtn.innerHTML = '🔊 Read Notes Aloud'; audioBtn.classList.remove('active'); }
+  document.getElementById('notes-overlay').classList.remove('show');
+}
+</script>
+
+<!-- ── Notes Panel ── -->
+<div class="notes-overlay" id="notes-overlay">
+  <div class="notes-panel">
+    <div class="notes-header">
+      <h2>📖 Nouns &amp; Complex Sentences — Notes</h2>
+      <div class="notes-header-actions">
+        <button class="print-btn" id="notes-audio-btn" onclick="toggleNotesAudio()" title="Have this tab read aloud">🔊 Read Notes Aloud</button>
+        <button class="print-btn" onclick="printPracticeTest()" title="Print or save the Practice Test &amp; Answer Key as PDF">🖨️ Print Test &amp; Key</button>
+        <button class="notes-close" onclick="closeNotesPanel()">✕</button>
+      </div>
+    </div>
+    <div class="notes-tabs">
+      <button class="notes-tab active" onclick="switchTab('tab-nouns', this)">🔢 Count &amp; Mass Nouns</button>
+      <button class="notes-tab" onclick="switchTab('tab-signal', this)">⏳ Signal Words</button>
+      <button class="notes-tab" onclick="switchTab('tab-complex', this)">🔗 Complex Sentences</button>
+      <button class="notes-tab" onclick="switchTab('tab-tf', this)">✅ True or False</button>
+      <button class="notes-tab" onclick="switchTab('tab-ptest', this)">📝 Practice Test</button>
+      <button class="notes-tab" onclick="switchTab('tab-key', this)">🔑 Answer Key</button>
+      <button class="notes-tab" onclick="switchTab('tab-raw', this)">📄 Raw Notes</button>
+    </div>
+    <div class="notes-body">
+
+      <div class="notes-section active" id="tab-nouns">
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> Nouns can be classified as <strong>count nouns</strong> (things you can count individually) or <strong>mass nouns</strong> (things that can't be counted, or are hard to count).
+        </div>
+        <table class="compare-table">
+          <tr><th>Count Nouns</th><th>Mass Nouns</th></tr>
+          <tr><td>typhoon, house, tank, appliance, window, area, device, book, bag, ice cream, document, mug, jewelry, magazine</td><td>information, electricity, nature, life, rice, water, rain</td></tr>
+        </table>
+        <div class="tandaan-box">
+          <span class="tandaan-label">REMEMBER</span>
+          If you can put a number in front of it ("two candles," "five ingredients"), it's a count noun. If it needs a unit of measure instead ("a cup of butter," "a jar of honey"), it's a mass noun.
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-signal">
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> <strong>Signal words of time order</strong> — first, next, then, after that, and finally — introduce the steps in a process or the sequence of events in a story.
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">⏳ The Angie Story, in Order</div>
+          <div class="notes-item"><span class="notes-term">First</span><span class="notes-def">Mom told Angie to wash her hands; Angie didn't listen and started eating</span></div>
+          <div class="notes-item"><span class="notes-term">Next</span><span class="notes-def">Angie told her mom she had a stomachache</span></div>
+          <div class="notes-item"><span class="notes-term">Then</span><span class="notes-def">They went to the doctor, who said she was infected by microbes</span></div>
+          <div class="notes-item"><span class="notes-term">After That</span><span class="notes-def">The doctor told Angie ways to stay healthy</span></div>
+          <div class="notes-item"><span class="notes-term">Finally</span><span class="notes-def">Angie followed the advice and became healthy</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-complex">
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> A <strong>complex sentence</strong> joins a complete idea with an incomplete idea, using a linking word called a <strong>subordinator</strong>.
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 MEMORY TRICK</span>
+          Remember the formula: <strong>"Main + Subordinator + Support"</strong> — or flip it: <strong>"Subordinator + Support, Main"</strong> (with a comma). Either order works, as long as the subordinator connects the two!
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">🔗 Common Subordinators</div>
+          <div class="notes-item"><span class="notes-term">Time</span><span class="notes-def">before, while, since, when, whenever</span></div>
+          <div class="notes-item"><span class="notes-term">Reason</span><span class="notes-def">because, since, as</span></div>
+          <div class="notes-item"><span class="notes-term">Contrast</span><span class="notes-def">although, even though</span></div>
+        </div>
+        <div class="tandaan-box">
+          <span class="tandaan-label">REMEMBER</span>
+          Both parts of a complex sentence have a subject and a predicate — but only the main part can stand alone as its own complete sentence.
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-tf">
+        <div class="notes-topic">
+          <div class="notes-topic-title">✅ True or False — Key Reminders</div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">A mass noun can always be counted easily → mass nouns are hard or impossible to count directly.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">"Butter" and "pork" are count nouns → both are mass nouns.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">"Candles" and "ingredients" are mass nouns → both are count nouns.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">A complex sentence contains only one complete idea and nothing else → it also has a supporting, incomplete idea.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">In "I stayed home because I was sick," the phrase "because I was sick" is the main idea → it's actually the supporting idea; "I stayed home" is the main idea.</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-ptest">
+        <div class="notes-topic">
+          <div class="notes-topic-title">📝 Practice Test</div>
+<div class="ptest-part-title">Part I — Count (C) or Mass (M)</div><div class="ptest-q"><b>1.</b> We went to the supermarket to buy ingredients for the meals we will prepare for Dad's birthday. <span class="opt">Answer: ______</span></div><div class="ptest-q"><b>2.</b> We found the special butter to use for the meals in the dairy section. <span class="opt">Answer: ______</span></div><div class="ptest-q"><b>3.</b> Candice and Mom chose the best quality pork for adobo. <span class="opt">Answer: ______</span></div><div class="ptest-q"><b>4.</b> I prepared the birthday materials to decorate our living room. <span class="opt">Answer: ______</span></div><div class="ptest-q"><b>5.</b> Dad enjoyed especially the blowing of his birthday candles. <span class="opt">Answer: ______</span></div><div class="ptest-part-title">Part II — Circle the Mass Noun</div><div class="ptest-q"><b>6.</b> Do we have a jar of honey in the fridge? (Circle the mass noun.) <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>7.</b> Three cups of flour will be used in making pancakes. (Circle the mass noun.) <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>8.</b> Dad needs his cup of coffee every day. (Circle the mass noun.) <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>9.</b> Do not forget to add eight tablespoons of butter. (Circle the mass noun.) <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>10.</b> I prepare different spreads for our slices of toast every morning. (Circle the mass noun.) <span class="opt">Answer: ______________________</span></div><div class="ptest-part-title">Part III — True or False</div><div class="ptest-q"><b>11.</b> A count noun can be counted. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>12.</b> A mass noun can always be counted easily. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>13.</b> "Butter" is an example of a count noun. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>14.</b> "Candles" is an example of a mass noun. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>15.</b> Signal words of time order include first, next, then, after that, and finally. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>16.</b> Reading texts does not help activate your schema. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>17.</b> A complex sentence contains only one complete idea and nothing else. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>18.</b> A subordinator connects a complete idea and an incomplete idea. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>19.</b> "Because" is an example of a subordinator. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>20.</b> Both parts of a complex sentence have a subject and a predicate. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>21.</b> In "I stayed home because I was sick," the phrase "because I was sick" is the main idea. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>22.</b> A complex sentence can begin with the subordinator instead of the main idea. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>23.</b> "Honey" is a mass noun. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>24.</b> "Ingredients" is a mass noun. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>25.</b> "Whenever" can be used as a subordinator. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>26.</b> A paragraph can contain more than one complex sentence. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>27.</b> "Pork" is an example of a count noun. <span class="opt">Answer: ______________________</span></div><div class="ptest-part-title">Part IV — Identify the Subordinator</div><div class="ptest-q"><b>28.</b> I need to study hard even though it is difficult. (Identify the subordinator.)<br><span class="opt">a) even though</span><span class="opt">b) since</span><span class="opt">c) because</span><span class="opt">d) while</span></div><div class="ptest-q"><b>29.</b> Whenever I am sad, I listen to music. (Identify the subordinator.)<br><span class="opt">a) Whenever</span><span class="opt">b) Although</span><span class="opt">c) Because</span><span class="opt">d) As</span></div><div class="ptest-q"><b>30.</b> The show started while I was still in the car. (Identify the subordinator.)<br><span class="opt">a) while</span><span class="opt">b) since</span><span class="opt">c) before</span><span class="opt">d) as</span></div><div class="ptest-q"><b>31.</b> I am extremely happy since you are here. (Identify the subordinator.)<br><span class="opt">a) since</span><span class="opt">b) because</span><span class="opt">c) when</span><span class="opt">d) before</span></div><div class="ptest-q"><b>32.</b> Although they are rich, they are really humble. (Identify the subordinator.)<br><span class="opt">a) Although</span><span class="opt">b) Whenever</span><span class="opt">c) Since</span><span class="opt">d) While</span></div><div class="ptest-q"><b>33.</b> The doctor told Don to drink eight glasses of water because he was dehydrated. (Identify the subordinator.)<br><span class="opt">a) because</span><span class="opt">b) since</span><span class="opt">c) while</span><span class="opt">d) as</span></div><div class="ptest-q"><b>34.</b> I need to go home early because it will rain soon. (Identify the subordinator.)<br><span class="opt">a) because</span><span class="opt">b) when</span><span class="opt">c) since</span><span class="opt">d) although</span></div><div class="ptest-q"><b>35.</b> I like reading books before I go to sleep. (Identify the subordinator.)<br><span class="opt">a) before</span><span class="opt">b) while</span><span class="opt">c) because</span><span class="opt">d) since</span></div><div class="ptest-q"><b>36.</b> Because Erika was late, the party did not start on time. (Identify the subordinator.)<br><span class="opt">a) Because</span><span class="opt">b) Although</span><span class="opt">c) Since</span><span class="opt">d) While</span></div><div class="ptest-q"><b>37.</b> Please turn off the lights as you leave the room. (Identify the subordinator.)<br><span class="opt">a) as</span><span class="opt">b) before</span><span class="opt">c) because</span><span class="opt">d) while</span></div><div class="ptest-part-title">Part V — Main Idea &amp; Supporting Idea</div><div class="ptest-q"><b>38.</b> Her mom cooked fried rice, eggs, and tinapa while May prepared her father's brewed coffee.<br>Give the main idea, supporting idea, and subordinator.</div><div class="ptest-q"><b>39.</b> Happiness was written on their faces as they talked about May's performance in the school play yesterday.<br>Give the main idea, supporting idea, and subordinator.</div><div class="ptest-q"><b>40.</b> Her father was amazed because she did extremely well to portray the character.<br>Give the main idea, supporting idea, and subordinator.</div><div class="ptest-q"><b>41.</b> Her mother was proud of her to get a main role.<br>Give the main idea, supporting idea, and subordinator.</div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-key">
+        <div class="notes-topic">
+<div class="notes-topic-title">Part I — Count or Mass</div><div class="key-grid"><div class="key-pill">1. <b>Count</b></div><div class="key-pill">2. <b>Mass</b></div><div class="key-pill">3. <b>Mass</b></div><div class="key-pill">4. <b>Count</b></div><div class="key-pill">5. <b>Count</b></div></div><div class="notes-topic-title">Part II — Mass Noun</div><div class="key-grid"><div class="key-pill">6. <b>honey</b></div><div class="key-pill">7. <b>flour</b></div><div class="key-pill">8. <b>coffee</b></div><div class="key-pill">9. <b>butter</b></div><div class="key-pill">10. <b>spreads</b></div></div><div class="notes-topic-title">Part III — True or False</div><div class="key-grid"><div class="key-pill">11. <b>True</b></div><div class="key-pill">12. <b>False</b></div><div class="key-pill">13. <b>False</b></div><div class="key-pill">14. <b>False</b></div><div class="key-pill">15. <b>True</b></div><div class="key-pill">16. <b>False</b></div><div class="key-pill">17. <b>False</b></div><div class="key-pill">18. <b>True</b></div><div class="key-pill">19. <b>True</b></div><div class="key-pill">20. <b>True</b></div><div class="key-pill">21. <b>False</b></div><div class="key-pill">22. <b>True</b></div><div class="key-pill">23. <b>True</b></div><div class="key-pill">24. <b>False</b></div><div class="key-pill">25. <b>True</b></div><div class="key-pill">26. <b>True</b></div><div class="key-pill">27. <b>False</b></div></div><div class="notes-topic-title">Part IV — Subordinator</div><div class="key-grid"><div class="key-pill">28. <b>even though</b></div><div class="key-pill">29. <b>Whenever</b></div><div class="key-pill">30. <b>while</b></div><div class="key-pill">31. <b>since</b></div><div class="key-pill">32. <b>Although</b></div><div class="key-pill">33. <b>because</b></div><div class="key-pill">34. <b>because</b></div><div class="key-pill">35. <b>before</b></div><div class="key-pill">36. <b>Because</b></div><div class="key-pill">37. <b>as</b></div></div><div class="notes-topic-title">Part V — Main/Supporting Idea (sample answers)</div><div class="ptest-q" style="margin-bottom:6px"><b>38.</b> Main idea: Her mom cooked fried rice, eggs, and tinapa. | Supporting idea: while May prepared her father's brewed coffee. | Subordinator: while</div><div class="ptest-q" style="margin-bottom:6px"><b>39.</b> Main idea: Happiness was written on their faces. | Supporting idea: as they talked about May's performance in the school play yesterday. | Subordinator: as</div><div class="ptest-q" style="margin-bottom:6px"><b>40.</b> Main idea: Her father was amazed. | Supporting idea: because she did extremely well to portray the character. | Subordinator: because</div><div class="ptest-q" style="margin-bottom:6px"><b>41.</b> Main idea: Her mother was proud of her. | Supporting idea: to get a main role. | Subordinator: to</div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-raw">
+        <div class="rawnotes-intro">
+          📌 This is the original content of the uploaded lesson, unedited — for whenever you need to check the exact wording or an example not covered in the reviewer.
+        </div>
+        <div class="rawnotes-doc">
+<h3 class="doc-heading">Count Nouns and Mass Nouns</h3>
+<p>Nouns can also be classified as either a <strong>count noun</strong> or a <strong>mass noun</strong>. A <strong>count noun</strong>, as the name implies, can be counted. A <strong>mass noun</strong> is something that cannot be counted or is difficult to count. Study some examples:</p>
+<h3 class="doc-heading">Count Nouns</h3>
+<ul>
+<li><p>typhoon</p></li>
+<li><p>house</p></li>
+<li><p>tank</p></li>
+<li><p>appliance</p></li>
+<li><p>window</p></li>
+<li><p>area</p></li>
+<li><p>device</p></li>
+<li><p>cash</p></li>
+<li><p>book</p></li>
+<li><p>bag</p></li>
+<li><p>powder</p></li>
+<li><p>ice cream</p></li>
+<li><p>clay</p></li>
+<li><p>document</p></li>
+<li><p>mug</p></li>
+<li><p>jewelry</p></li>
+<li><p>magazine</p></li>
+</ul>
+<h3 class="doc-heading">Mass Nouns</h3>
+<ul>
+<li><p>information</p></li>
+<li><p>electricity</p></li>
+<li><p>nature</p></li>
+<li><p>life</p></li>
+<li><p>rice</p></li>
+<li><p>water</p></li>
+<li><p>rain</p></li>
+</ul>
+<h3 class="doc-heading">Task 2</h3>
+<p><strong>Write C on the blank if the underlined word is a count noun, and M if a mass noun.</strong></p>
+<ol type="1">
+<li><p>We went to the supermarket to buy <strong>ingredients</strong> for the meals that we will prepare for Dad's birthday.<br />
+<strong>Answer: C</strong> — ingredients</p></li>
+<li><p>We found the special <strong>butter</strong> to use for the meals in the dairy section.<br />
+<strong>Answer: M</strong> — butter</p></li>
+<li><p>Candice and Mom chose the best quality <strong>pork</strong> for adobo.<br />
+<strong>Answer: M</strong> — pork</p></li>
+<li><p>I prepared the birthday <strong>materials</strong> to decorate our living room.<br />
+<strong>Answer: C</strong> — materials</p></li>
+<li><p>Dad enjoyed especially the blowing of his birthday <strong>candles</strong>.<br />
+<strong>Answer: C</strong> — candles</p></li>
+</ol>
+<h3 class="doc-heading">Task 3</h3>
+<p><strong>Circle the mass noun in each sentence.</strong></p>
+<ol type="1">
+<li><p>Do we have a jar of <strong>honey</strong> in the fridge?<br />
+<strong>Answer: honey</strong></p></li>
+<li><p>Three cups of <strong>flour</strong> will be used in making pancakes.<br />
+<strong>Answer: flour</strong></p></li>
+<li><p>Dad needs his cup of <strong>coffee</strong> every day.<br />
+<strong>Answer: coffee</strong></p></li>
+<li><p>Do not forget to add eight tablespoons of <strong>butter</strong>.<br />
+<strong>Answer: butter</strong></p></li>
+<li><p>I prepare different <strong>spreads</strong> for our slices of toast every morning.<br />
+<strong>Answer: spreads</strong></p></li>
+</ol>
+<h3 class="doc-heading">Signal Words of Time Order</h3>
+<p>Read the following events in the story. Take note of the signal words used at the beginning of each sentence.</p>
+<ul>
+<li><p><strong>First</strong>, Angie's mother called her for lunch and told her to wash her hands. Angie didn't pay attention and started eating.</p></li>
+<li><p><strong>Next</strong>, Angie told her mom that she had a stomachache.</p></li>
+<li><p><strong>Then</strong>, they went to the doctor. The doctor told Angie that she was infected by microbes.</p></li>
+<li><p><strong>After that</strong>, the doctor told Angie ways to stay healthy and prevent diseases.</p></li>
+<li><p><strong>Finally</strong>, Angie followed the doctor's advice and she became a healthy child.</p></li>
+</ul>
+<p>The words <strong>first, next, then, after that,</strong> and <strong>finally</strong> are some signal words of time order. They are used to introduce steps in a process or sequence of events in a story. Understanding signal words of time order can help you understand the structure of a text.</p>
+<h3 class="doc-heading">Remember</h3>
+<ul>
+<li><p>Reading texts helps activate your schema.</p></li>
+<li><p>Signal words of time order are helpful to use in sequencing a story or showing steps in a process.</p></li>
+</ul>
+<h3 class="doc-heading">Task 1</h3>
+<p><strong>Arrange the following events in order. Write 1–5 on the blanks.</strong></p>
+<p>The sentences in the picture are:</p>
+<ol type="1">
+<li><p><strong>Next, she spread peanut butter on one slice.</strong></p></li>
+<li><p><strong>First, Maya prepared two slices of bread.</strong></p></li>
+<li><p><strong>Then, she spread the strawberry jam on another slice.</strong></p></li>
+<li><p><strong>Finally, she ate it.</strong></p></li>
+<li><p><strong>After that, she put the two slices of bread together.</strong></p></li>
+</ol>
+<h3 class="doc-heading">Correct Order</h3>
+<ul>
+<li><p><strong>2 —</strong> Next, she spread peanut butter on one slice.</p></li>
+<li><p><strong>1 —</strong> First, Maya prepared two slices of bread.</p></li>
+<li><p><strong>3 —</strong> Then, she spread the strawberry jam on another slice.</p></li>
+<li><p><strong>5 —</strong> Finally, she ate it.</p></li>
+<li><p><strong>4 —</strong> After that, she put the two slices of bread together.</p></li>
+</ul>
+<h3 class="doc-heading">Complex Sentences</h3>
+<p>Most sentences usually contain one complete idea, such as this:</p>
+<p><strong>We will support what you want to study.</strong></p>
+<p>There are sentences that may have more ideas to express. A sentence containing a complete idea connected with an incomplete idea is called a <strong>complex sentence</strong>. Compare the next sentence with the first one.</p>
+<p><strong>We will support what you want to study when you grow up.</strong></p>
+<p>In the second sentence, you have two ideas. The underlined is a complete idea, while the doubly underlined is not complete on its own but merely supports the main idea.</p>
+<p>Notice that the second part starts with a <strong>subordinator (when)</strong>. A subordinator connects the two unequal ideas, meaning the complete idea and the incomplete idea. Notice also that both ideas have a subject and a predicate.</p>
+<h3 class="doc-heading">Examples:</h3>
+<p><strong>Since she has learned of many unusual words, Susan now uses them when writing.</strong></p>
+<p><strong>She suddenly feels scared to speak her mind now that her parents have so much to say about her future.</strong></p>
+<h3 class="doc-heading">Build New Knowledge</h3>
+<ul>
+<li><p>A complex sentence has a main, complete part and a supporting, incomplete part.</p></li>
+<li><p>A subordinator links these two parts together.</p></li>
+</ul>
+<h3 class="doc-heading">Task 1</h3>
+<p><strong>Instruction:</strong> Identify the main idea and the supporting idea. Underline the main idea once and underline the supporting idea twice. Circle also the subordinator.</p>
+<p><strong>1.</strong></p>
+<p><strong>I need to study hard even though it is difficult.</strong></p>
+<ul>
+<li><p><strong>Main idea:</strong> I need to study hard.</p></li>
+<li><p><strong>Supporting idea:</strong> even though it is difficult.</p></li>
+<li><p><strong>Subordinator:</strong> <strong>even though</strong></p></li>
+</ul>
+<p><strong>2.</strong></p>
+<p><strong>Whenever I am sad, I listen to music.</strong></p>
+<ul>
+<li><p><strong>Main idea:</strong> I listen to music.</p></li>
+<li><p><strong>Supporting idea:</strong> Whenever I am sad.</p></li>
+<li><p><strong>Subordinator:</strong> <strong>Whenever</strong></p></li>
+</ul>
+<p><strong>3.</strong></p>
+<p><strong>The show started while I was still in the car.</strong></p>
+<ul>
+<li><p><strong>Main idea:</strong> The show started.</p></li>
+<li><p><strong>Supporting idea:</strong> while I was still in the car.</p></li>
+<li><p><strong>Subordinator:</strong> <strong>while</strong></p></li>
+</ul>
+<p><strong>4.</strong></p>
+<p><strong>I am extremely happy since you are here.</strong></p>
+<ul>
+<li><p><strong>Main idea:</strong> I am extremely happy.</p></li>
+<li><p><strong>Supporting idea:</strong> since you are here.</p></li>
+<li><p><strong>Subordinator:</strong> <strong>since</strong></p></li>
+</ul>
+<p><strong>5.</strong></p>
+<p><strong>Although they are rich, they are really humble.</strong></p>
+<ul>
+<li><p><strong>Main idea:</strong> they are really humble.</p></li>
+<li><p><strong>Supporting idea:</strong> Although they are rich.</p></li>
+<li><p><strong>Subordinator:</strong> <strong>Although</strong></p></li>
+</ul>
+<p><strong>6.</strong></p>
+<p><strong>The doctor told Don to drink eight glasses of water because he was dehydrated.</strong></p>
+<ul>
+<li><p><strong>Main idea:</strong> The doctor told Don to drink eight glasses of water.</p></li>
+<li><p><strong>Supporting idea:</strong> because he was dehydrated.</p></li>
+<li><p><strong>Subordinator:</strong> <strong>because</strong></p></li>
+</ul>
+<p><strong>7.</strong></p>
+<p><strong>I need to go home early because it will rain soon.</strong></p>
+<ul>
+<li><p><strong>Main idea:</strong> I need to go home early.</p></li>
+<li><p><strong>Supporting idea:</strong> because it will rain soon.</p></li>
+<li><p><strong>Subordinator:</strong> <strong>because</strong></p></li>
+</ul>
+<p><strong>8.</strong></p>
+<p><strong>I like reading books before I go to sleep.</strong></p>
+<ul>
+<li><p><strong>Main idea:</strong> I like reading books.</p></li>
+<li><p><strong>Supporting idea:</strong> before I go to sleep.</p></li>
+<li><p><strong>Subordinator:</strong> <strong>before</strong></p></li>
+</ul>
+<p><strong>9.</strong></p>
+<p><strong>Because Erika was late, the party did not start on time.</strong></p>
+<ul>
+<li><p><strong>Main idea:</strong> the party did not start on time.</p></li>
+<li><p><strong>Supporting idea:</strong> Because Erika was late.</p></li>
+<li><p><strong>Subordinator:</strong> <strong>Because</strong></p></li>
+</ul>
+<p><strong>10.</strong></p>
+<p><strong>Please turn off the lights as you leave the room.</strong></p>
+<ul>
+<li><p><strong>Main idea:</strong> Please turn off the lights.</p></li>
+<li><p><strong>Supporting idea:</strong> as you leave the room.</p></li>
+<li><p><strong>Subordinator:</strong> <strong>as</strong></p></li>
+</ul>
+<h3 class="doc-heading">Task 2</h3>
+<h3 class="doc-heading">Converted Text</h3>
+<p><strong>Task 2:</strong> Underline the complex sentences in the paragraph.</p>
+<p>One morning, May woke up early and fixed her bed. She went to the kitchen and helped her mother prepare their breakfast. Her mom cooked fried rice, eggs, and tinapa while May prepared her father’s brewed coffee. The three of them sat on the table and ate together. Happiness was written on their faces as they talked about May’s performance in the school play yesterday. Her father was amazed because she did extremely well to portray the character. Her mother was proud of her to get a main role.</p>
+<h3 class="doc-heading">Answer: Complex Sentences</h3>
+<p>There are <strong>4 complex sentences</strong> in the paragraph:</p>
+<p><strong>1. Her mom cooked fried rice, eggs, and tinapa while May prepared her father’s brewed coffee.</strong></p>
+<ul>
+<li><p>Main idea: <strong>Her mom cooked fried rice, eggs, and tinapa.</strong></p></li>
+<li><p>Supporting idea: <strong>while May prepared her father’s brewed coffee.</strong></p></li>
+<li><p>Subordinator: <strong>while</strong></p></li>
+</ul>
+<p><strong>2. Happiness was written on their faces as they talked about May’s performance in the school play yesterday.</strong></p>
+<ul>
+<li><p>Main idea: <strong>Happiness was written on their faces.</strong></p></li>
+<li><p>Supporting idea: <strong>as they talked about May’s performance in the school play yesterday.</strong></p></li>
+<li><p>Subordinator: <strong>as</strong></p></li>
+</ul>
+<p><strong>3. Her father was amazed because she did extremely well to portray the character.</strong></p>
+<ul>
+<li><p>Main idea: <strong>Her father was amazed.</strong></p></li>
+<li><p>Supporting idea: <strong>because she did extremely well to portray the character.</strong></p></li>
+<li><p>Subordinator: <strong>because</strong></p></li>
+</ul>
+<p><strong>4. Her mother was proud of her to get a main role.</strong></p>
+<p><strong>Main idea:</strong> Her mother was proud of her.</p>
+<p><strong>Supporting idea:</strong> to get a main role.</p>
+<p><strong>Subordinator:</strong> <strong>to</strong></p>
+<h3 class="doc-heading">Quick reminder</h3>
+<p>A <strong>complex sentence</strong> has:</p>
+<p><strong>Main/complete idea + subordinator + supporting/incomplete idea</strong></p>
+<p>Examples:</p>
+<ul>
+<li><p>I stayed home <strong>because I was sick.</strong></p></li>
+<li><p><strong>Although it was raining</strong>, we went outside.</p></li>
+<li><p>She studied hard <strong>so that she could pass the exam.</strong></p></li>
+</ul>
+<p>The words <strong>because, although, while, when, whenever, since, before, as, even though</strong> are examples of <strong>subordinators</strong>.</p>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ── Hidden Print Area (Practice Test + Answer Key) ── -->
+<div id="print-area">
+<div class="p-cover">
+    <div class="p-icon">📘</div>
+    <h1>English 4 — Nouns &amp; Complex Sentences Practice Test</h1>
+    <div class="p-sub">Count &amp; Mass Nouns · Signal Words of Time Order · Complex Sentences</div>
+    <div class="p-info-box">
+      <div><strong>Name:</strong> _____________________________________</div>
+      <div><strong>Section:</strong> ___________________ &nbsp; <strong>Date:</strong> ___________________</div>
+      <div><strong>Score:</strong> _______ / 41</div>
+    </div>
+    <div class="p-instructions">
+      <strong>Instructions:</strong> Read each item carefully. Write your answer on the blank provided (Parts I-III), write the letter of the correct answer (Part IV), or answer in complete sentences (Part V). Good luck!
+    </div>
+  </div>
+
+  <h2 class="p-part-title">Part I — Count (C) or Mass (M)</h2><div class="p-q"><b>1.</b> We went to the supermarket to buy ingredients for the meals we will prepare for Dad's birthday. <span class="p-blank" style="min-width:40px"></span></div><div class="p-q"><b>2.</b> We found the special butter to use for the meals in the dairy section. <span class="p-blank" style="min-width:40px"></span></div><div class="p-q"><b>3.</b> Candice and Mom chose the best quality pork for adobo. <span class="p-blank" style="min-width:40px"></span></div><div class="p-q"><b>4.</b> I prepared the birthday materials to decorate our living room. <span class="p-blank" style="min-width:40px"></span></div><div class="p-q"><b>5.</b> Dad enjoyed especially the blowing of his birthday candles. <span class="p-blank" style="min-width:40px"></span></div><h2 class="p-part-title">Part II — Circle the Mass Noun</h2><div class="p-q"><b>6.</b> Do we have a jar of honey in the fridge? (Circle the mass noun.) <span class="p-blank"></span></div><div class="p-q"><b>7.</b> Three cups of flour will be used in making pancakes. (Circle the mass noun.) <span class="p-blank"></span></div><div class="p-q"><b>8.</b> Dad needs his cup of coffee every day. (Circle the mass noun.) <span class="p-blank"></span></div><div class="p-q"><b>9.</b> Do not forget to add eight tablespoons of butter. (Circle the mass noun.) <span class="p-blank"></span></div><div class="p-q"><b>10.</b> I prepare different spreads for our slices of toast every morning. (Circle the mass noun.) <span class="p-blank"></span></div><div class="p-break"></div><h2 class="p-part-title">Part III — True or False</h2><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>11.</b> A count noun can be counted.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>12.</b> A mass noun can always be counted easily.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>13.</b> "Butter" is an example of a count noun.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>14.</b> "Candles" is an example of a mass noun.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>15.</b> Signal words of time order include first, next, then, after that, and finally.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>16.</b> Reading texts does not help activate your schema.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>17.</b> A complex sentence contains only one complete idea and nothing else.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>18.</b> A subordinator connects a complete idea and an incomplete idea.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>19.</b> "Because" is an example of a subordinator.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>20.</b> Both parts of a complex sentence have a subject and a predicate.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>21.</b> In "I stayed home because I was sick," the phrase "because I was sick" is the main idea.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>22.</b> A complex sentence can begin with the subordinator instead of the main idea.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>23.</b> "Honey" is a mass noun.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>24.</b> "Ingredients" is a mass noun.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>25.</b> "Whenever" can be used as a subordinator.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>26.</b> A paragraph can contain more than one complex sentence.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>27.</b> "Pork" is an example of a count noun.</div><div class="p-break"></div><h2 class="p-part-title">Part IV — Identify the Subordinator</h2><div class="p-q"><b>28.</b> I need to study hard even though it is difficult. (Identify the subordinator.)<br><span class="p-opt">a) even though</span><span class="p-opt">b) since</span><span class="p-opt">c) because</span><span class="p-opt">d) while</span></div><div class="p-q"><b>29.</b> Whenever I am sad, I listen to music. (Identify the subordinator.)<br><span class="p-opt">a) Whenever</span><span class="p-opt">b) Although</span><span class="p-opt">c) Because</span><span class="p-opt">d) As</span></div><div class="p-q"><b>30.</b> The show started while I was still in the car. (Identify the subordinator.)<br><span class="p-opt">a) while</span><span class="p-opt">b) since</span><span class="p-opt">c) before</span><span class="p-opt">d) as</span></div><div class="p-q"><b>31.</b> I am extremely happy since you are here. (Identify the subordinator.)<br><span class="p-opt">a) since</span><span class="p-opt">b) because</span><span class="p-opt">c) when</span><span class="p-opt">d) before</span></div><div class="p-q"><b>32.</b> Although they are rich, they are really humble. (Identify the subordinator.)<br><span class="p-opt">a) Although</span><span class="p-opt">b) Whenever</span><span class="p-opt">c) Since</span><span class="p-opt">d) While</span></div><div class="p-q"><b>33.</b> The doctor told Don to drink eight glasses of water because he was dehydrated. (Identify the subordinator.)<br><span class="p-opt">a) because</span><span class="p-opt">b) since</span><span class="p-opt">c) while</span><span class="p-opt">d) as</span></div><div class="p-q"><b>34.</b> I need to go home early because it will rain soon. (Identify the subordinator.)<br><span class="p-opt">a) because</span><span class="p-opt">b) when</span><span class="p-opt">c) since</span><span class="p-opt">d) although</span></div><div class="p-q"><b>35.</b> I like reading books before I go to sleep. (Identify the subordinator.)<br><span class="p-opt">a) before</span><span class="p-opt">b) while</span><span class="p-opt">c) because</span><span class="p-opt">d) since</span></div><div class="p-q"><b>36.</b> Because Erika was late, the party did not start on time. (Identify the subordinator.)<br><span class="p-opt">a) Because</span><span class="p-opt">b) Although</span><span class="p-opt">c) Since</span><span class="p-opt">d) While</span></div><div class="p-q"><b>37.</b> Please turn off the lights as you leave the room. (Identify the subordinator.)<br><span class="p-opt">a) as</span><span class="p-opt">b) before</span><span class="p-opt">c) because</span><span class="p-opt">d) while</span></div><div class="p-break"></div><h2 class="p-part-title">Part V — Main Idea &amp; Supporting Idea</h2><div class="p-q"><b>38.</b> Her mom cooked fried rice, eggs, and tinapa while May prepared her father's brewed coffee.<br>Give the main idea, supporting idea, and subordinator.<br><br>Main idea: _________________________________________________<br><br>Supporting idea: _________________________________________________<br><br>Subordinator: ______________________</div><div class="p-q"><b>39.</b> Happiness was written on their faces as they talked about May's performance in the school play yesterday.<br>Give the main idea, supporting idea, and subordinator.<br><br>Main idea: _________________________________________________<br><br>Supporting idea: _________________________________________________<br><br>Subordinator: ______________________</div><div class="p-q"><b>40.</b> Her father was amazed because she did extremely well to portray the character.<br>Give the main idea, supporting idea, and subordinator.<br><br>Main idea: _________________________________________________<br><br>Supporting idea: _________________________________________________<br><br>Subordinator: ______________________</div><div class="p-q"><b>41.</b> Her mother was proud of her to get a main role.<br>Give the main idea, supporting idea, and subordinator.<br><br>Main idea: _________________________________________________<br><br>Supporting idea: _________________________________________________<br><br>Subordinator: ______________________</div><div class="p-break"></div><h2 class="p-part-title">✅ Complete Answer Key</h2>
+  <div class="p-key-part-title">Part I — Count or Mass</div><div class="p-key-grid"><div class="p-key-pill">1. <b>Count</b></div><div class="p-key-pill">2. <b>Mass</b></div><div class="p-key-pill">3. <b>Mass</b></div><div class="p-key-pill">4. <b>Count</b></div><div class="p-key-pill">5. <b>Count</b></div></div><div class="p-key-part-title">Part II — Mass Noun</div><div class="p-key-grid"><div class="p-key-pill">6. <b>honey</b></div><div class="p-key-pill">7. <b>flour</b></div><div class="p-key-pill">8. <b>coffee</b></div><div class="p-key-pill">9. <b>butter</b></div><div class="p-key-pill">10. <b>spreads</b></div></div><div class="p-key-part-title">Part III — True or False</div><div class="p-key-grid"><div class="p-key-pill">11. <b>True</b></div><div class="p-key-pill">12. <b>False</b></div><div class="p-key-pill">13. <b>False</b></div><div class="p-key-pill">14. <b>False</b></div><div class="p-key-pill">15. <b>True</b></div><div class="p-key-pill">16. <b>False</b></div><div class="p-key-pill">17. <b>False</b></div><div class="p-key-pill">18. <b>True</b></div><div class="p-key-pill">19. <b>True</b></div><div class="p-key-pill">20. <b>True</b></div><div class="p-key-pill">21. <b>False</b></div><div class="p-key-pill">22. <b>True</b></div><div class="p-key-pill">23. <b>True</b></div><div class="p-key-pill">24. <b>False</b></div><div class="p-key-pill">25. <b>True</b></div><div class="p-key-pill">26. <b>True</b></div><div class="p-key-pill">27. <b>False</b></div></div><div class="p-key-part-title">Part IV — Subordinator</div><div class="p-key-grid"><div class="p-key-pill">28. <b>even though</b></div><div class="p-key-pill">29. <b>Whenever</b></div><div class="p-key-pill">30. <b>while</b></div><div class="p-key-pill">31. <b>since</b></div><div class="p-key-pill">32. <b>Although</b></div><div class="p-key-pill">33. <b>because</b></div><div class="p-key-pill">34. <b>because</b></div><div class="p-key-pill">35. <b>before</b></div><div class="p-key-pill">36. <b>Because</b></div><div class="p-key-pill">37. <b>as</b></div></div><div class="p-key-part-title">Part V — Main/Supporting Idea (sample answers)</div><div class="p-q"><b>38.</b> Main idea: Her mom cooked fried rice, eggs, and tinapa. | Supporting idea: while May prepared her father's brewed coffee. | Subordinator: while</div><div class="p-q"><b>39.</b> Main idea: Happiness was written on their faces. | Supporting idea: as they talked about May's performance in the school play yesterday. | Subordinator: as</div><div class="p-q"><b>40.</b> Main idea: Her father was amazed. | Supporting idea: because she did extremely well to portray the character. | Subordinator: because</div><div class="p-q"><b>41.</b> Main idea: Her mother was proud of her. | Supporting idea: to get a main role. | Subordinator: to</div>
+</div>
+
+</body>
+</html>
