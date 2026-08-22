@@ -1,0 +1,1983 @@
+<!DOCTYPE html>
+<html lang="tl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🎵 MAPEH: Music &amp; Health Reviewer 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --gold: #f59e0b;
+  --gold-dark: #b45309;
+  --blue: #3b82f6;
+  --blue-dark: #1d4ed8;
+  --red: #ef4444;
+  --green: #22c55e;
+  --bg: #0c1a0e;
+  --surface: #132015;
+  --surface2: #1a2e1d;
+  --text: #f0fdf4;
+  --muted: #86efac;
+  --border: #166534;
+}
+
+body {
+  font-family: 'Baloo 2', cursive;
+  background: var(--bg);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--text);
+  background-image:
+    radial-gradient(ellipse at 10% 30%, rgba(245,158,11,.06) 0%, transparent 55%),
+    radial-gradient(ellipse at 90% 70%, rgba(59,130,246,.06) 0%, transparent 55%);
+}
+
+header {
+  width: 100%;
+  background: linear-gradient(135deg, #14532d, #1e3a5f);
+  border-bottom: 2px solid var(--gold-dark);
+  padding: 13px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 4px 30px rgba(0,0,0,.5);
+}
+.header-icon { font-size: 2rem; animation: float 3s ease-in-out infinite; }
+@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
+
+header h1 {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.45rem;
+  background: linear-gradient(90deg, var(--gold), #fde68a, var(--gold));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+header .sub { font-size: .72rem; color: var(--muted); margin-top: 1px; }
+
+.header-controls { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+.score-pill {
+  background: rgba(245,158,11,.15);
+  border: 1px solid rgba(245,158,11,.4);
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-weight: 800;
+  font-size: .85rem;
+  color: var(--gold);
+}
+.audio-btn {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  background: var(--surface2);
+  color: var(--text);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all .2s;
+  display: flex; align-items: center; justify-content: center;
+}
+.audio-btn:hover, .audio-btn.active { background: #14532d; border-color: var(--gold); }
+
+.chat-wrap {
+  width: 100%; max-width: 700px; flex: 1;
+  display: flex; flex-direction: column;
+  padding: 16px 14px 0;
+}
+
+#chat-box {
+  flex: 1; overflow-y: auto;
+  display: flex; flex-direction: column;
+  gap: 14px; padding-bottom: 10px;
+  max-height: calc(100vh - 200px);
+  scroll-behavior: smooth;
+}
+#chat-box::-webkit-scrollbar { width: 4px; }
+#chat-box::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+.msg { display: flex; gap: 8px; }
+.msg.user { flex-direction: row-reverse; }
+
+.avatar {
+  width: 34px; height: 34px; border-radius: 50%;
+  font-size: 1rem; display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 2px;
+}
+.msg.bot .avatar { background: linear-gradient(135deg, #14532d, #1e3a5f); border: 1.5px solid rgba(245,158,11,.4); }
+.msg.user .avatar { background: linear-gradient(135deg, #1e3a5f, #14532d); border: 1.5px solid rgba(59,130,246,.3); }
+
+.bubble {
+  max-width: 80%;
+  padding: 11px 16px;
+  border-radius: 18px;
+  font-size: .9rem;
+  line-height: 1.65;
+  animation: pop .22s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes pop { from{transform:scale(.88) translateY(6px);opacity:0} to{transform:scale(1) translateY(0);opacity:1} }
+
+.msg.bot .bubble {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-bottom-left-radius: 5px;
+}
+.msg.user .bubble {
+  background: linear-gradient(135deg, #1e3a5f, var(--blue-dark));
+  border-bottom-right-radius: 5px;
+}
+
+/* chips */
+.chip {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: rgba(245,158,11,.12);
+  border: 1.5px solid rgba(245,158,11,.4);
+  color: var(--gold);
+  border-radius: 30px;
+  padding: 5px 13px; margin: 5px 4px 0 0;
+  font-size: .8rem; font-weight: 700;
+  cursor: pointer; transition: all .15s;
+  user-select: none; font-family: 'Baloo 2', cursive;
+}
+.chip:hover {
+  background: var(--gold-dark); color: white;
+  border-color: var(--gold);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(245,158,11,.3);
+}
+
+/* topic tag */
+.topic-tag {
+  display: inline-block;
+  background: linear-gradient(135deg, #14532d, #166534);
+  border: 1px solid var(--gold-dark);
+  color: var(--gold);
+  font-size: .68rem; font-weight: 800;
+  border-radius: 20px; padding: 2px 10px;
+  margin-bottom: 5px; letter-spacing: .5px;
+  text-transform: uppercase;
+}
+
+/* multiple choice */
+.mc-options { display: flex; flex-direction: column; gap: 7px; margin-top: 10px; width: 100%; }
+.mc-btn {
+  display: flex; align-items: center; gap: 10px;
+  background: rgba(255,255,255,.03);
+  border: 1.5px solid var(--border);
+  border-radius: 12px; padding: 9px 14px;
+  color: var(--text); font-family: 'Baloo 2', cursive;
+  font-size: .87rem; font-weight: 600;
+  cursor: pointer; transition: all .15s; text-align: left; width: 100%;
+}
+.mc-btn:hover:not(:disabled) {
+  background: rgba(245,158,11,.12); border-color: var(--gold);
+  color: var(--gold); transform: translateX(3px);
+}
+.mc-btn .letter {
+  display: flex; align-items: center; justify-content: center;
+  width: 26px; height: 26px; border-radius: 8px;
+  background: rgba(245,158,11,.15); border: 1px solid rgba(245,158,11,.35);
+  color: var(--gold); font-size: .78rem; font-weight: 800;
+  flex-shrink: 0; transition: all .15s;
+}
+.mc-btn:hover:not(:disabled) .letter { background: var(--gold-dark); color: white; border-color: var(--gold-dark); }
+.mc-btn.correct { background: rgba(34,197,94,.15)!important; border-color: #22c55e!important; color: #22c55e!important; cursor: default; }
+.mc-btn.correct .letter { background: #22c55e!important; color: white!important; border-color: #22c55e!important; }
+.mc-btn.wrong { background: rgba(239,68,68,.12)!important; border-color: #ef4444!important; color: #ef4444!important; cursor: default; }
+.mc-btn.wrong .letter { background: #ef4444!important; color: white!important; border-color: #ef4444!important; }
+.mc-btn:disabled { cursor: default; transform: none!important; }
+
+/* speaker wave */
+.speaker-wave {
+  display: inline-flex; align-items: flex-end;
+  gap: 2px; height: 14px; margin-left: 6px; vertical-align: middle;
+}
+.speaker-wave span {
+  display: block; width: 3px; border-radius: 2px;
+  background: var(--gold); animation: wave 1s ease-in-out infinite;
+}
+.speaker-wave span:nth-child(1){height:4px;animation-delay:0s}
+.speaker-wave span:nth-child(2){height:10px;animation-delay:.1s}
+.speaker-wave span:nth-child(3){height:6px;animation-delay:.2s}
+.speaker-wave span:nth-child(4){height:12px;animation-delay:.15s}
+.speaker-wave span:nth-child(5){height:4px;animation-delay:.05s}
+@keyframes wave{0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.8)}}
+
+/* typing */
+.typing {
+  display: flex; gap: 4px; padding: 12px 16px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 18px; border-bottom-left-radius: 5px; width: fit-content;
+}
+.dot { width: 7px; height: 7px; border-radius: 50%; background: var(--gold); animation: bounce .9s infinite; }
+.dot:nth-child(2){animation-delay:.15s} .dot:nth-child(3){animation-delay:.3s}
+@keyframes bounce{0%,80%,100%{transform:translateY(0);opacity:.6}40%{transform:translateY(-7px);opacity:1}}
+
+/* input bar */
+.input-bar {
+  width: 100%; max-width: 700px;
+  padding: 10px 14px 18px;
+  display: flex; gap: 8px;
+  background: var(--bg); position: sticky; bottom: 0;
+}
+#user-input {
+  flex: 1; padding: 12px 18px;
+  border: 2px solid var(--border); border-radius: 30px;
+  font-family: 'Baloo 2', cursive; font-size: .92rem;
+  outline: none; background: var(--surface); color: var(--text);
+  transition: border-color .2s, box-shadow .2s;
+}
+#user-input::placeholder { color: var(--muted); }
+#user-input:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(245,158,11,.12); }
+
+#send-btn {
+  width: 48px; height: 48px; border-radius: 50%; border: none;
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  color: white; font-size: 1.1rem; cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 3px 14px rgba(245,158,11,.4); flex-shrink: 0;
+}
+#send-btn:hover { transform: scale(1.08); box-shadow: 0 5px 20px rgba(245,158,11,.55); }
+#send-btn:disabled { opacity: .5; transform: none; }
+
+/* result modal */
+.result-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.75); backdrop-filter: blur(6px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 100; opacity: 0; pointer-events: none; transition: opacity .3s;
+}
+.result-overlay.show { opacity: 1; pointer-events: all; }
+.result-card {
+  background: linear-gradient(135deg, #132015, #0c1a0e);
+  border: 2px solid var(--gold-dark);
+  border-radius: 24px; padding: 36px 40px;
+  text-align: center; max-width: 380px; width: 90%;
+  box-shadow: 0 20px 60px rgba(0,0,0,.6);
+  transform: scale(.9); transition: transform .3s cubic-bezier(.34,1.56,.64,1);
+}
+.result-overlay.show .result-card { transform: scale(1); }
+.result-emoji { font-size: 4rem; margin-bottom: 12px; display: block; }
+.result-title {
+  font-family: 'Fredoka One', cursive; font-size: 1.7rem; margin-bottom: 6px;
+  background: linear-gradient(90deg, var(--gold), #fde68a);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.result-score { font-size: 3rem; font-weight: 900; margin: 10px 0; color: white; }
+.result-msg { color: var(--muted); font-size: .9rem; margin-bottom: 22px; }
+.result-btn {
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  border: none; border-radius: 30px; padding: 12px 30px;
+  color: white; font-family: 'Baloo 2', cursive; font-weight: 800;
+  font-size: 1rem; cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+  box-shadow: 0 4px 16px rgba(245,158,11,.35);
+}
+.result-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 22px rgba(245,158,11,.5); }
+
+/* scenario card for identify questions */
+.scenario-card {
+  background: rgba(245,158,11,.07);
+  border: 1px solid rgba(245,158,11,.25);
+  border-radius: 12px; padding: 10px 14px;
+  margin: 8px 0 6px; font-style: italic;
+  font-size: .87rem; color: #fde68a; line-height: 1.5;
+}
+
+/* ── Notes Panel ─────────────────────────────────────────────── */
+.notes-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.78); backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 200; opacity: 0; pointer-events: none; transition: opacity .3s;
+}
+.notes-overlay.show { opacity: 1; pointer-events: all; }
+.notes-panel {
+  background: linear-gradient(160deg, #0c1a0e, #132015);
+  border: 2px solid var(--gold-dark);
+  border-radius: 20px;
+  width: 92%; max-width: 720px;
+  max-height: 88vh;
+  display: flex; flex-direction: column;
+  box-shadow: 0 24px 60px rgba(0,0,0,.7);
+  overflow: hidden;
+  transform: translateY(30px);
+  transition: transform .35s cubic-bezier(.34,1.2,.64,1);
+}
+.notes-overlay.show .notes-panel { transform: translateY(0); }
+.notes-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 22px; border-bottom: 1px solid var(--border);
+  background: linear-gradient(135deg, #14532d44, #1e3a5f44);
+}
+.notes-header h2 { font-family: 'Fredoka One', cursive; font-size: 1.3rem; color: var(--gold); }
+.notes-close {
+  width: 34px; height: 34px; border-radius: 50%;
+  border: 1.5px solid var(--border); background: var(--surface2);
+  color: var(--text); font-size: 1rem; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; transition: all .2s;
+}
+.notes-close:hover { background: #b91c1c; border-color: #ef4444; }
+.notes-body { overflow-y: auto; padding: 20px 22px; flex: 1; }
+.notes-body::-webkit-scrollbar { width: 4px; }
+.notes-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+.notes-topic { margin-bottom: 28px; }
+.notes-topic-title {
+  font-family: 'Fredoka One', cursive; font-size: 1.05rem;
+  color: var(--gold); margin-bottom: 10px;
+  padding-bottom: 6px; border-bottom: 1px solid var(--border);
+}
+.notes-item {
+  display: flex; gap: 10px; align-items: flex-start;
+  padding: 7px 0; border-bottom: 1px solid rgba(255,255,255,.04);
+  font-size: .87rem; line-height: 1.55;
+}
+.notes-item:last-child { border-bottom: none; }
+.notes-term { font-weight: 800; color: var(--gold); min-width: 150px; flex-shrink: 0; font-size: .84rem; }
+.notes-def { color: #d1fae5; }
+.notes-tabs {
+  display: flex; flex-wrap: wrap; gap: 8px; padding: 14px 22px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(0,0,0,.15);
+}
+.notes-tab {
+  padding: 12px 20px; border-radius: 10px;
+  border: 1.5px solid var(--border); 
+  background: rgba(255,255,255,.04); color: var(--muted);
+  font-family: 'Baloo 2', cursive; font-size: .9rem; font-weight: 700;
+  cursor: pointer; transition: all .15s; white-space: nowrap;
+  min-height: 48px; display: flex; align-items: center;
+}
+.notes-tab.active { background: var(--surface); color: var(--gold); border-color: var(--gold-dark); }
+.notes-tab:hover:not(.active) { color: var(--text); background: var(--surface2); }
+.notes-section { display: none; }
+.notes-section.active { display: block; }
+
+
+/* ── Print button in notes header ─────────────────────────────── */
+.notes-header-actions { display: flex; align-items: center; gap: 10px; }
+.print-btn {
+  display: flex; align-items: center; gap: 6px;
+  background: rgba(245,158,11,.12);
+  border: 1.5px solid rgba(245,158,11,.4);
+  color: var(--gold);
+  border-radius: 20px;
+  padding: 7px 14px;
+  font-family: 'Baloo 2', cursive;
+  font-size: .78rem;
+  font-weight: 800;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all .15s;
+}
+.print-btn:hover { background: var(--gold); color: #0c1a0e; border-color: var(--gold); }
+.print-btn.active { background: var(--gold); color: #0c1a0e; border-color: var(--gold); }
+
+/* ── On-screen Practice Test / Answer Key ─────────────────────── */
+.ptest-part-title {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1rem;
+  color: var(--gold);
+  margin: 22px 0 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+.ptest-part-title:first-child { margin-top: 0; }
+.ptest-q {
+  font-size: .87rem;
+  line-height: 1.6;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed rgba(255,255,255,.06);
+  color: #d1fae5;
+}
+.ptest-q b { color: var(--gold); }
+.ptest-q .opt { display: block; margin: 2px 0 2px 18px; color: #d1fae5; }
+.ptest-bank {
+  background: rgba(59,130,246,.08);
+  border: 1px solid rgba(59,130,246,.3);
+  border-radius: 10px;
+  padding: 10px 16px;
+  margin-bottom: 14px;
+  font-size: .82rem;
+  color: #dbeafe;
+  line-height: 1.6;
+}
+.key-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.key-pill {
+  background: rgba(245,158,11,.1);
+  border: 1px solid rgba(245,158,11,.25);
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: .78rem;
+  color: #fde68a;
+}
+.key-pill b { color: #34d399; }
+
+/* ── Print / Save-as-PDF styles ──────────────────────────────────
+   By default everything is hidden from print. When body carries
+   .printing-test, only #print-area (a light-themed clone of the
+   Practice Test + Answer Key) is shown, laid out for paper. ──── */
+@media print {
+  body * { visibility: hidden; }
+  #print-area, #print-area * { visibility: visible; }
+  #print-area {
+    display: block !important;
+    position: absolute; top: 0; left: 0; width: 100%;
+    background: #fff; color: #14290f;
+    font-family: 'Helvetica', Arial, sans-serif;
+    font-size: 10.5pt;
+    line-height: 1.5;
+  }
+  #print-area .p-cover { text-align: center; padding-top: 40px; }
+  #print-area .p-cover .p-icon { font-size: 34pt; }
+  #print-area .p-cover h1 { font-size: 19pt; color: #b45309; margin: 8px 0 4px; }
+  #print-area .p-cover .p-sub { font-size: 10.5pt; color: #166534; margin-bottom: 20px; }
+  #print-area .p-info-box {
+    border: 1.5px solid #fcd34d; border-radius: 10px;
+    max-width: 460px; margin: 0 auto 20px; padding: 14px 20px;
+    text-align: left; font-size: 10pt;
+  }
+  #print-area .p-info-box div { margin: 6px 0; border-bottom: 1px dotted #fde68a; padding-bottom: 6px; }
+  #print-area .p-instructions {
+    max-width: 460px; margin: 0 auto; text-align: left;
+    background: #fffbeb; border: 1px solid #fcd34d; border-radius: 10px;
+    padding: 12px 18px; font-size: 9.5pt; color: #78350f;
+  }
+  #print-area h2.p-part-title {
+    font-size: 12.5pt; color: #fff;
+    background: linear-gradient(135deg, #b45309, #14532d) !important;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    padding: 6px 12px; border-radius: 7px; margin: 18px 0 10px;
+    page-break-after: avoid;
+  }
+  #print-area .p-bank {
+    background: #f0fdf4 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    border: 1px solid #86efac; border-radius: 8px; padding: 8px 14px;
+    margin-bottom: 12px; font-size: 9.5pt; color: #14532d;
+  }
+  #print-area .p-q {
+    margin-bottom: 8px; padding-bottom: 8px;
+    border-bottom: 1px dotted #fde68a; font-size: 10pt;
+    page-break-inside: avoid; color: #14290f;
+  }
+  #print-area .p-q b { color: #b45309; }
+  #print-area .p-q .p-blank { display: inline-block; min-width: 65px; border-bottom: 1px solid #64748b; }
+  #print-area .p-q .p-opt { display: block; margin: 2px 0 0 20px; color: #365314; }
+  #print-area .p-break { page-break-before: always; }
+  #print-area .p-key-part-title {
+    font-size: 11pt; color: #b45309; font-weight: bold;
+    margin: 14px 0 8px; border-bottom: 2px solid #b45309; padding-bottom: 4px;
+  }
+  #print-area .p-key-grid {
+    display: grid; grid-template-columns: repeat(5, 1fr);
+    gap: 5px 8px; margin-bottom: 14px;
+  }
+  #print-area .p-key-pill {
+    background: #f0fdf4 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    border: 1px solid #86efac; border-radius: 6px;
+    padding: 4px 8px; font-size: 8.5pt; color: #166534;
+  }
+  #print-area .p-key-pill b { color: #b45309; }
+  @page { size: letter; margin: 1.5cm 1.8cm; }
+}
+#print-area { display: none; }
+
+
+/* ── Chapter Summary / Tandaan / Memory boxes (fix: previously missing) ── */
+.chapter-summary {
+  background: linear-gradient(135deg, rgba(59,130,246,.1), rgba(34,197,94,.08));
+  border: 1px solid rgba(59,130,246,.25);
+  border-left: 4px solid var(--blue);
+  border-radius: 12px;
+  padding: 14px 18px;
+  margin-bottom: 18px;
+  font-size: .88rem;
+  line-height: 1.65;
+  color: #dbeafe;
+}
+.tandaan-box {
+  background: rgba(245,158,11,.08);
+  border: 1px solid rgba(245,158,11,.3);
+  border-left: 4px solid var(--gold);
+  border-radius: 12px;
+  padding: 12px 18px;
+  margin: 14px 0;
+  font-size: .86rem;
+  line-height: 1.6;
+  color: #fde68a;
+}
+.tandaan-label {
+  display: block;
+  font-family: 'Baloo 2', cursive;
+  font-size: .8rem;
+  color: var(--gold);
+  letter-spacing: .5px;
+  margin-bottom: 5px;
+}
+.memory-box {
+  background: rgba(34,197,94,.08);
+  border: 1px solid rgba(34,197,94,.3);
+  border-left: 4px solid var(--green);
+  border-radius: 12px;
+  padding: 12px 18px;
+  margin: 14px 0 22px;
+  font-size: .86rem;
+  line-height: 1.6;
+  color: #bbf7d0;
+}
+.memory-label {
+  display: block;
+  font-family: 'Baloo 2', cursive;
+  font-size: .8rem;
+  color: var(--green);
+  letter-spacing: .5px;
+  margin-bottom: 5px;
+}
+.compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0 20px;
+  font-size: .82rem;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.compare-table th {
+  background: linear-gradient(135deg, var(--blue-dark), var(--gold-dark));
+  color: white;
+  text-align: left;
+  padding: 9px 12px;
+  font-size: .78rem;
+  text-transform: uppercase;
+  letter-spacing: .4px;
+}
+.compare-table td {
+  padding: 9px 12px;
+  border-top: 1px solid var(--border);
+  color: var(--text);
+  vertical-align: top;
+}
+.compare-table tr:nth-child(even) td { background: rgba(255,255,255,.02); }
+
+/* ── Story Box (for reading Bible stories aloud) ─────────────────── */
+.story-box {
+  background: rgba(255,255,255,.03);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px 20px;
+  margin-bottom: 16px;
+  font-size: .92rem;
+  line-height: 1.8;
+  color: var(--text);
+}
+.story-box p { margin-bottom: 10px; }
+.story-box p:last-child { margin-bottom: 0; }
+.story-ref {
+  display: block;
+  text-align: right;
+  font-style: italic;
+  color: var(--muted);
+  font-size: .8rem;
+  margin-top: 10px;
+}
+.story-label {
+  display: block;
+  font-family: 'Baloo 2', cursive;
+  font-size: .9rem;
+  color: var(--gold);
+  letter-spacing: .5px;
+  margin-bottom: 10px;
+}
+/* ── Raw Notes (original document view) ──────────────────────── */
+.rawnotes-intro {
+  font-size: .82rem;
+  color: var(--muted);
+  line-height: 1.6;
+  background: rgba(59,130,246,.1);
+  border: 1px solid rgba(59,130,246,.3);
+  border-left: 4px solid var(--blue);
+  border-radius: 10px;
+  padding: 12px 18px;
+  margin-bottom: 20px;
+}
+.rawnotes-doc {
+  font-family: 'Lora', Georgia, serif;
+  line-height: 1.75;
+}
+.rawnotes-doc p {
+  font-size: .95rem;
+  margin-bottom: 14px;
+  color: #e2f5e6;
+}
+.rawnotes-doc strong { color: var(--gold); font-weight: 700; }
+.rawnotes-doc em { color: var(--muted); font-style: italic; }
+.rawnotes-doc h3.doc-heading {
+  font-family: 'Baloo 2', cursive;
+  font-size: 1.05rem;
+  color: var(--gold);
+  margin: 26px 0 12px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid var(--border);
+}
+.rawnotes-doc h3.doc-heading:first-child { margin-top: 0; }
+.rawnotes-doc ul, .rawnotes-doc ol {
+  margin: 0 0 14px 26px;
+  color: #e2f5e6;
+}
+.rawnotes-doc li { margin-bottom: 6px; font-size: .95rem; }
+.rawnotes-doc table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0 20px;
+  font-size: .82rem;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.rawnotes-doc th {
+  background: linear-gradient(135deg, var(--blue-dark), var(--gold-dark));
+  color: white;
+  text-align: left;
+  padding: 9px 12px;
+  font-size: .78rem;
+}
+.rawnotes-doc td {
+  padding: 9px 12px;
+  border-top: 1px solid var(--border);
+  color: var(--text);
+  vertical-align: top;
+}
+.rawnotes-doc tr:nth-child(even) td { background: rgba(255,255,255,.02); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-icon">🎵</div>
+  <div>
+    <h1>Music &amp; Health</h1>
+    <div class="sub">Rhythm, Beat &amp; Tempo · Liturgical Music · Personal Health · Hygiene · Health Screening</div>
+  </div>
+  <div class="header-controls">
+    <div class="score-pill">⭐ <span id="score-val">0</span> / <span id="total-val">0</span></div>
+    <button class="audio-btn" id="notes-toggle" title="Open Reviewer" onclick="document.getElementById('notes-overlay').classList.add('show')">📖</button>
+    <button class="audio-btn active" id="audio-toggle" title="Toggle Audio">🔊</button>
+  </div>
+</header>
+
+<div class="chat-wrap">
+  <div id="chat-box"></div>
+</div>
+
+<div class="input-bar">
+  <input type="text" id="user-input" placeholder="Type your answer here…" autocomplete="off" />
+  <button id="send-btn">➤</button>
+</div>
+
+<div class="result-overlay" id="result-overlay">
+  <div class="result-card">
+    <span class="result-emoji" id="res-emoji">🏆</span>
+    <div class="result-title">Quiz Complete!</div>
+    <div class="result-score"><span id="res-score">0</span>/<span id="res-total">0</span></div>
+    <div class="result-msg" id="res-msg">Great job!</div>
+    <button class="result-btn" onclick="restartApp()">🔄 Maglaro Ulit</button>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+// QUESTION BANK
+// ═══════════════════════════════════════════════════════════════
+const topics = {
+
+  "Rhythm, Beat, Notes, and Rests": [
+    { q: "What is rhythm?", a: "The organized pattern of sounds and silences in music", hint: "It gives music its unique character." },
+    { q: "What is the beat?", a: "The steady, unchanging pulse that guides music and keeps all musical elements in sync", hint: "Like the ticking of a clock." },
+    { q: "What is the difference between rhythm and beat?", a: "Rhythm creates varied and expressive patterns through different sounds, durations, and silences, while the beat is the constant, steady pulse that anchors the music", hint: "One is dynamic, the other stays constant." },
+    { q: "What do notes represent in music?", a: "The visual representations of sounds in music", hint: "Think of them as the \"dots\" and lines you use to draw a picture." },
+    { q: "What does each note symbol tell a musician?", a: "How high or low a sound should be, and how long to hold that sound", hint: "Pitch and duration, both at once." },
+    { q: "What do rests represent in music?", a: "Silence", hint: "The opposite of a note." },
+    { q: "In many common songs, which note is often counted as one beat?", a: "The quarter note", hint: "It holds the basic beat." },
+    { q: "How many beats does a whole note hold?", a: "Four beats", hint: "The longest common note value." },
+    { q: "How many beats does a half note hold?", a: "Two beats", hint: "Half of a whole note." },
+    { q: "How many beats does an eighth note hold?", a: "One-half beat", hint: "Two of these fit into one quarter note." },
+    { q: "How many beats does a sixteenth note hold?", a: "One-fourth beat", hint: "Four of these fit into one quarter note." },
+    { q: "How many eighth notes fit into the space of one quarter note?", a: "Two", hint: "Half of a quarter note, twice." },
+    { q: "How many sixteenth notes fit into the space of one quarter note?", a: "Four", hint: "A quarter of a quarter note, four times." },
+    { q: "What time signatures were mentioned as common for these note values?", a: "2/4 and 4/4 time signatures", hint: "Two common time signatures in music." },
+  ],
+
+  "Tempo": [
+    { q: "What is tempo?", a: "The speed of the music — how fast or slow it goes", hint: "It helps set the mood and energy of a piece." },
+    { q: "What language do composers often use for tempo markings?", a: "Italian", hint: "A European language known for musical terms." },
+    { q: "What does \"Lento\" mean?", a: "Slowly", hint: "The most straightforward slow tempo marking." },
+    { q: "What does \"Largo\" mean?", a: "Slow and stately, often implying a broad, dignified pace", hint: "Slow, but with grandeur." },
+    { q: "What does \"Adagio\" mean?", a: "Leisurely, a comfortable, slow tempo", hint: "Relaxed and unhurried." },
+    { q: "What does \"Andante\" mean?", a: "At a walking pace", hint: "Think of a comfortable stroll." },
+    { q: "What does \"Allegro\" mean?", a: "Fast, often cheerful", hint: "A common upbeat tempo marking." },
+    { q: "What does \"Vivace\" mean?", a: "Lively, even more energetic than allegro", hint: "Even more energy than 'fast.'" },
+    { q: "What does \"Presto\" mean?", a: "Very quickly, as fast as possible", hint: "The fastest of the tempo markings listed." },
+  ],
+
+  "Liturgical and Devotional Music": [
+    { q: "What is liturgical music?", a: "Music specifically created for use in church services, such as Mass", hint: "Tied closely to formal worship." },
+    { q: "What kind of beat does liturgical music often incorporate?", a: "A steady, meditative beat that guides the flow of the service", hint: "It helps guide prayer and participation." },
+    { q: "What is devotional music?", a: "Music that helps individuals express their love and devotion, not strictly produced for formal liturgical use", hint: "More flexible than liturgical music." },
+    { q: "Name the four parts of the Mass listed as sample liturgical songs.", a: "Kyrie Eleison, Gloria, Sanctus et Benedictus, and Agnus Dei", hint: "Four Latin-named parts of the Mass." },
+    { q: "What is the English name for \"Kyrie Eleison\"?", a: "Lord, Have Mercy", hint: "A prayer asking for mercy." },
+    { q: "What is the English name for \"Agnus Dei\"?", a: "Lamb of God", hint: "A title referring to Jesus." },
+    { q: "What is pastores a belen?", a: "A traditional Filipino Christmas performance that recounts the story of the shepherds' journey to Bethlehem to see the baby Jesus", hint: "A Christmas tradition, not a Holy Week one." },
+    { q: "Who introduced the pastores a belen tradition, and when?", a: "Spanish priests, in the 1800s", hint: "Brought by missionaries during the Spanish era." },
+    { q: "In what region is pastores a belen especially popular?", a: "The Bicol region", hint: "A region in southern Luzon." },
+    { q: "What kind of rhythm does pastores a belen feature?", a: "A lively, upbeat, cheerful, and syncopated rhythmic pattern", hint: "It matches the festive spirit of Christmas." },
+    { q: "What is the pasyon?", a: "An epic narrative sung during Holy Week that tells the story of Jesus Christ's life, suffering, death, and resurrection", hint: "A Holy Week tradition, not a Christmas one." },
+    { q: "Who is attributed with the first printed version of the pasyon?", a: "Gaspar Aquino de Belen", hint: "A name closely tied to this literary tradition." },
+    { q: "What kind of rhythm does the pasyon feature?", a: "A slow, deliberate, chant-like rhythmic pattern that creates a solemn and reflective tone", hint: "Very different in feel from pastores a belen." },
+  ],
+
+  "Personal Health and the Five Dimensions": [
+    { q: "According to the World Health Organization (WHO), what is health?", a: "A condition of total physical, mental, and social well-being", hint: "It's more than just the absence of illness." },
+    { q: "What is wellness?", a: "Having good physical condition through a healthy lifestyle, and achieving the best level of health from having a positive view about life", hint: "It includes a positive outlook, not just physical condition." },
+    { q: "What is personal health?", a: "The ability to actively choose healthy living and be in control of one's own health", hint: "It's about being in control." },
+    { q: "What are the two main goals of personal health?", a: "To maintain good physical health and to keep one's living and working environments germ-free", hint: "One is about the body, the other about surroundings." },
+    { q: "What are the five dimensions of health?", a: "Physical, mental, emotional, social, and spiritual health", hint: "Five different aspects of well-being." },
+    { q: "What is physical health?", a: "A condition of the body that includes the size, structure, organs, and body processes and functions", hint: "The most straightforward dimension." },
+    { q: "What is mental health?", a: "The ability to think and to understand and process information", hint: "Related to activities like solving math problems." },
+    { q: "What is emotional health?", a: "The ability to show and control feelings, such as being sad, happy, angry, and scared", hint: "About expressing and managing feelings." },
+    { q: "What is social health?", a: "The ability to adjust to different situations and behaviors, including how a person interacts with others", hint: "About relationships and communication." },
+    { q: "What is spiritual health?", a: "One's faith and beliefs in following practices related to seeking a purpose in life", hint: "Related to worship, prayer, and inner peace." },
+    { q: "Give an example of an activity that can enrich both social and spiritual health.", a: "Volunteer work", hint: "It involves both helping others and a sense of purpose." },
+  ],
+
+  "Hygiene Practices": [
+    { q: "What is hygiene?", a: "A set of practices or tasks to keep oneself clean", hint: "It's about cleanliness habits." },
+    { q: "How long should you scrub your hands with soap?", a: "20 seconds, about the same time it takes to sing \"Happy Birthday\" twice", hint: "Think of a familiar birthday song." },
+    { q: "What are the five steps of proper handwashing?", a: "Wet your hands, use soap and lather, scrub for 20 seconds, rinse completely, and pat dry", hint: "Five steps from start to finish." },
+    { q: "Why is it important to clip fingernails short?", a: "Because fingernails can easily collect dirt where germs reside, and unclean fingernails spread these germs", hint: "Dirt hides under long nails." },
+    { q: "What should you use to prevent the spread of bacteria and viruses when coughing or sneezing?", a: "Your inner elbow, or a clean tissue or handkerchief covering your mouth and nose", hint: "Two acceptable methods." },
+    { q: "What causes smelly feet?", a: "Sweat trapped in socks or shoes", hint: "Moisture is the culprit." },
+    { q: "Where do bacteria and fungi thrive on the feet?", a: "In moist areas", hint: "Not dry areas." },
+    { q: "What hair care routine should be practiced daily?", a: "Taking a bath, washing hair with shampoo, and rinsing with clean water", hint: "A daily bathing habit." },
+    { q: "What material of underwear is preferred for genital hygiene, and why?", a: "Cotton, because it absorbs sweat easily", hint: "A breathable natural fabric." },
+    { q: "How many times a day should you brush your teeth?", a: "At least two times a day", hint: "Morning and night, at minimum." },
+    { q: "How often should toothbrushes be replaced?", a: "After three to four months", hint: "Roughly every season." },
+    { q: "What thread-like material is used to remove materials between the teeth?", a: "Floss", hint: "A thin string used after brushing." },
+    { q: "What do experts advise against inserting into the ear canal?", a: "Anything, including cotton buds", hint: "Even common cleaning tools are discouraged." },
+    { q: "What is earwax's natural function?", a: "To trap dirt entering the ear", hint: "It's actually helpful, not just gross." },
+    { q: "How often should you change your clothes?", a: "Every day, or as soon as they get dirty", hint: "Daily, at minimum." },
+  ],
+
+  "Health Screening and Appraisals": [
+    { q: "What is the role of health screening and assessment?", a: "To determine whether your body is functioning well, performed by doctors and medical professionals", hint: "It answers a question you can't answer just by feeling okay." },
+    { q: "What does a medical examination generally do?", a: "Keeps you updated on your overall state of health by assessing the basic functioning of your organs", hint: "A broad check-up of your whole body." },
+    { q: "Who assesses your overall health during a medical examination?", a: "A physician", hint: "Another term for doctor." },
+    { q: "What can a medical examination help detect?", a: "Communicable diseases like chickenpox, common cold, influenza, measles, and COVID-19, as well as conditions like high blood pressure, high cholesterol, and diabetes", hint: "Both contagious illnesses and chronic conditions." },
+    { q: "What does a dental examination check for?", a: "Tooth cavities and gum diseases", hint: "Focused on your mouth." },
+    { q: "What instrument is used to measure height in clinics and hospitals?", a: "A stadiometer", hint: "A specialized measuring tool." },
+    { q: "What is used to test vision, and from how far away do you read it?", a: "A Snellen chart, read from 20 feet away", hint: "A chart with letters from biggest to smallest." },
+    { q: "Who conducts a vision test?", a: "An ophthalmologist or an optometrist", hint: "Two types of eye specialists." },
+    { q: "What condition does a scoliosis test check for?", a: "Abnormal curving of the spine", hint: "Related to posture and the backbone." },
+    { q: "Name two visible signs of scoliosis.", a: "One shoulder looks higher than the other, the head is not aligned to the center of the body, one side of the hips or rib cage appears higher, the waist is uneven, or the body leans to one side (any two)", hint: "These are all about symmetry of the body." },
+    { q: "What test uses headphones and detects hearing loss?", a: "Audiometry", hint: "You indicate every time you hear a tone." },
+    { q: "Who can conduct a hearing test?", a: "An ENT (ear-nose-throat) doctor or an audiologist", hint: "Two types of hearing specialists." },
+    { q: "What is corrective action?", a: "Steps done to address health issues and improve one's health", hint: "What happens after a health concern is found." },
+    { q: "What is Body Mass Index (BMI)?", a: "A measurement of height in relation to weight to determine if a person is underweight, normal, overweight, or obese", hint: "Combines two measurements: height and weight." },
+    { q: "What device might someone be prescribed if they have hearing loss?", a: "A hearing aid", hint: "It makes sounds louder for the wearer." },
+    { q: "What is used to stop the development of further spine curving in mild scoliosis cases?", a: "A scoliosis brace", hint: "A hard plastic jacket worn over the upper body." },
+  ],
+
+};
+
+// ── TRUE OR FALSE ────────────────────────────────────────────────────────────
+const trueOrFalse = [
+  { q: "Rhythm is defined as the organized pattern of sounds and silences in music.", a: "true" },
+  { q: "The beat is the steady, unchanging pulse that guides music, similar to a ticking clock.", a: "true" },
+  { q: "When you tap your foot consistently to a song, you are most likely following the beat of the music.", a: "true" },
+  { q: "Notes are fundamental symbols used to represent periods of silence.", a: "false" },
+  { q: "In many common songs, the half note is typically counted as one beat.", a: "false" },
+  { q: "A whole note is typically held for four beats.", a: "true" },
+  { q: "Rests represent moments of silence in music.", a: "true" },
+  { q: "A half rest typically represents silence for one beat.", a: "false" },
+  { q: "A healthy body allows you to perform different physical activities.", a: "true" },
+  { q: "Completing homework, calculating expenses, and solving problems are examples of activities enriching your spiritual health.", a: "false" },
+  { q: "Keeping oneself clean can help prevent illnesses and the spread of germs.", a: "true" },
+  { q: "Personal hygiene is defined as having good physical condition through a healthy lifestyle.", a: "false" },
+  { q: "Social health is one's ability to adjust to different situations and behaviors.", a: "true" },
+  { q: "One of the main goals of personal health is to maintain good physical health.", a: "true" },
+  { q: "One's ability to think, understand, and process information is linked to physical health.", a: "false" },
+  { q: "Maintaining proper personal hygiene can project a positive body image.", a: "true" },
+  { q: "Having good personal health lets you enjoy a longer life period.", a: "true" },
+  { q: "Giving back to the community in the form of donations can develop one's physical health.", a: "false" },
+  { q: "When washing hands, the undersides of fingernails should not be missed.", a: "true" },
+  { q: "Washing hands frequently can assure you that germs are eliminated.", a: "true" },
+  { q: "Bacteria and fungi thrive best in dry areas of the feet.", a: "false" },
+  { q: "Experts advise not to insert anything into your ear canal.", a: "true" },
+  { q: "Changing used clothes for clean ones every day is inappropriate.", a: "false" },
+];
+
+// ── IDENTIFY: DIMENSIONS OF HEALTH · HYGIENE · SCREENING TESTS ──────────────
+const identifyQuestions = [
+  { q: "Maintaining a healthy diet and having enough sleep enrich this dimension of health.", a: "Physical health", choices: ["Physical health","Mental health","Emotional health","Social health"] },
+  { q: "Regularly joining religious activities fulfills this dimension of health.", a: "Spiritual health", choices: ["Spiritual health","Physical health","Mental health","Emotional health"] },
+  { q: "Interacting with community volunteers during a disaster relief operation can enrich this dimension of health.", a: "Social health", choices: ["Social health","Physical health","Mental health","Spiritual health"] },
+  { q: "Expressing and controlling feelings when facing a given situation are a manifestation of this dimension of health.", a: "Emotional health", choices: ["Emotional health","Physical health","Social health","Spiritual health"] },
+  { q: "Being able to solve problems, connected with minimizing stress at work, affects this dimension of health.", a: "Mental health", choices: ["Mental health","Physical health","Emotional health","Social health"] },
+  { q: "What are practices for grooming and taking care of oneself?", a: "personal hygiene", choices: ["personal hygiene","personal styling","personal sanitation","personal cleaning"] },
+  { q: "What causes smelly feet?", a: "trapped sweat", choices: ["trapped sweat","muddy feet","damaged footwear","toes with calluses"] },
+  { q: "Which of the following is a good practice of genital hygiene?", a: "Do not hold back when you feel like peeing.", choices: ["Do not hold back when you feel like peeing.","Do not pat your genital area dry with a towel.","Do not wear loose clothing for the lower part of your body.","Do not wear cotton underwear."] },
+  { q: "What is best to do when you are about to cough or sneeze?", a: "Cover your mouth and nose with a handkerchief.", choices: ["Put the back of your hand toward your mouth and nose.","Bend your body forward to prepare for coughing or sneezing.","Cover your mouth and nose with a handkerchief.","Look up and prepare to cough or sneeze in the air."] },
+  { q: "Which of the following is not true about practicing good oral hygiene?", a: "Brush the tongue to remove the taste buds.", choices: ["Use floss to remove materials between the teeth.","Visit the dentist one to two times a year.","Brush the tongue to remove the taste buds.","Brush your teeth at least two times a day."] },
+  { q: "This is calculated using your height and weight to determine if you are underweight, normal, overweight, or obese.", a: "Body Mass Index (BMI)", choices: ["Body Mass Index (BMI)","Scoliosis","Dental Radiograph","Corrective Action"] },
+  { q: "This is the condition that causes the spine to curve irregularly to one side.", a: "Scoliosis", choices: ["Scoliosis","Body Mass Index (BMI)","Corrective Action","Tooth Filling"] },
+  { q: "This is also called a dental X-ray.", a: "Dental Radiograph", choices: ["Dental Radiograph","Scoliosis","Corrective Action","Tooth Filling"] },
+  { q: "This consists of steps done to address health issues and improve one's health.", a: "Corrective Action", choices: ["Corrective Action","Body Mass Index (BMI)","Scoliosis","Dental Radiograph"] },
+  { q: "This is done when a crack, chip, or minor cavity can be repaired by filling the tooth with a material.", a: "Tooth Filling", choices: ["Tooth Filling","Tooth Extraction","Tooth Cleaning","Dental Radiograph"] },
+  { q: "Who assesses your overall health during a medical examination?", a: "Physician", choices: ["Physician","Dentist","Nurse","Audiologist"] },
+  { q: "Who checks your teeth, face, neck, and mouth during a dental examination?", a: "Dentist", choices: ["Dentist","Physician","Nurse","Optometrist"] },
+  { q: "Who typically takes your height and weight measurements in a clinic?", a: "Nurse", choices: ["Nurse","Physician","Dentist","ENT"] },
+  { q: "Who conducts a vision test using a Snellen chart?", a: "Ophthalmologist or Optometrist", choices: ["Ophthalmologist or Optometrist","Physician","Nurse","Audiologist"] },
+  { q: "Who can conduct a hearing test using audiometry?", a: "ENT or Audiologist", choices: ["ENT or Audiologist","Physician","Dentist","Nurse"] },
+];
+
+// ═══════════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════════
+let state = {
+  awaiting: 'menu',
+  mode: null,
+  questions: [],
+  allAnswers: [],
+  qIndex: 0,
+  score: 0,
+  total: 0,
+  hintUsed: false,
+  audioEnabled: true,
+};
+
+// ═══════════════════════════════════════════════════════════════
+// TTS (UPGRADED FOR TRUE FILIPINO ACCENT)
+// ═══════════════════════════════════════════════════════════════
+let currentAudioStream = null;
+
+function speak(text) {
+  if (!state.audioEnabled) return;
+  
+  // Linisin ang mga nakaraang audio task
+  window.speechSynthesis.cancel();
+  if (currentAudioStream) {
+    currentAudioStream.pause();
+    currentAudioStream = null;
+  }
+  
+  // Tanggalin ang HTML tags at emojis para hindi basahin nang paputol-putol
+  const clean = text.replace(/<[^>]+>/g,'').replace(/[🇵🇭🌟✅❌💡⏭️🏆😊💪🔄🔲📚👋⭐✕🧭📏🗺️]/g,'');
+  
+  // PRIMARY METHOD: Google Translation Engine cloud voice stream (May natural na Filipino accent)
+  const googleTtsUrl = `https://translate.google.com/translate_tts?ie=UTF-8&tl=tl&client=tw-ob&q=${encodeURIComponent(clean)}`;
+  
+  currentAudioStream = new Audio(googleTtsUrl);
+  currentAudioStream.onplaying = () => showWave(true);
+  currentAudioStream.onended = currentAudioStream.onerror = () => showWave(false);
+  
+  currentAudioStream.play().catch(err => {
+    // BACKUP METHOD: Web Speech API (works even without internet)
+    console.warn("Google TTS blocked or offline. Falling back to local system speech engine.");
+    
+    const streamFallback = new SpeechSynthesisUtterance(clean);
+    streamFallback.lang = 'fil-PH';
+    streamFallback.rate = 0.95; streamFallback.pitch = 1.05; streamFallback.volume = 1;
+    
+    const voices = window.speechSynthesis.getVoices();
+    const filVoice = voices.find(v => v.lang.startsWith('fil') || v.lang.startsWith('tl'));
+    const engVoice = voices.find(v => v.lang.startsWith('en') && v.name.toLowerCase().includes('female'))
+                   || voices.find(v => v.lang.startsWith('en'));
+              
+    if (filVoice) {
+      streamFallback.voice = filVoice;
+    } else if (engVoice) {
+      streamFallback.voice = engVoice; 
+      streamFallback.lang = 'en-US'; 
+    }
+    
+    streamFallback.onstart = () => showWave(true);
+    streamFallback.onend = streamFallback.onerror = () => showWave(false);
+    window.speechSynthesis.speak(streamFallback);
+  });
+}
+
+function showWave(on) {
+  document.querySelectorAll('.speaker-wave').forEach(w => w.style.display = on ? 'inline-flex' : 'none');
+}
+
+// I-initialize ang mga boses ng system
+let localSystemVoices = [];
+function lookupSystemVoices() {
+  localSystemVoices = window.speechSynthesis.getVoices();
+}
+lookupSystemVoices();
+if (window.speechSynthesis.onvoiceschanged !== undefined) {
+  window.speechSynthesis.onvoiceschanged = lookupSystemVoices;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// UI HELPERS
+// ═══════════════════════════════════════════════════════════════
+const chatBox = document.getElementById('chat-box');
+const input = document.getElementById('user-input');
+const sendBtn = document.getElementById('send-btn');
+
+function scrollBottom() { chatBox.scrollTop = chatBox.scrollHeight; }
+
+function addMessage(role, html, speakText) {
+  const div = document.createElement('div');
+  div.className = `msg ${role}`;
+  const av = document.createElement('div');
+  av.className = 'avatar';
+  av.textContent = role === 'bot' ? '🤖' : '🧑';
+  const bub = document.createElement('div');
+  bub.className = 'bubble';
+  bub.innerHTML = role === 'bot'
+    ? html + '<span class="speaker-wave" style="display:none"><span></span><span></span><span></span><span></span><span></span></span>'
+    : html;
+  div.appendChild(av); div.appendChild(bub);
+  chatBox.appendChild(div);
+  scrollBottom(); bindChips();
+  if (role === 'bot') {
+    const txt = speakText || html.replace(/<[^>]+>/g,' ');
+    setTimeout(() => speak(txt), 350);
+  }
+}
+
+function addTyping() {
+  const d = document.createElement('div');
+  d.className = 'msg bot'; d.id = 'typing';
+  d.innerHTML = '<div class="avatar">🤖</div><div class="typing"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>';
+  chatBox.appendChild(d); scrollBottom();
+}
+function removeTyping() { const t = document.getElementById('typing'); if(t) t.remove(); }
+
+function bindChips() {
+  document.querySelectorAll('.chip:not([data-bound])').forEach(c => {
+    c.dataset.bound = '1';
+    c.addEventListener('click', () => handleUserMessage(c.dataset.val));
+  });
+}
+
+function updateScore() {
+  document.getElementById('score-val').textContent = state.score;
+  document.getElementById('total-val').textContent = state.total;
+}
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length-1; i > 0; i--) {
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]] = [a[j],a[i]];
+  }
+  return a;
+}
+
+function normalize(s) { return s.toLowerCase().trim().replace(/\s+/g,' '); }
+
+function checkAnswer(user, correct) {
+  const u = normalize(user), c = normalize(correct);
+  if (u === c) return true;
+  if (c.includes(u) && u.length > 5) return true;
+  const parts = c.split(/[,;\/]/);
+  for (const p of parts) if (u.includes(p.trim()) && p.trim().length > 4) return true;
+  return false;
+}
+
+function showResult() {
+  const pct = Math.round((state.score/state.total)*100);
+  const emoji = pct>=90?'🏆':pct>=70?'🌟':pct>=50?'😊':'💪';
+  const msg = pct>=90?'Excellent! You know it all!':pct>=70?'Great job! Keep it up!':pct>=50?'Good! Study a little more!':"Don't give up! Try again!";
+  document.getElementById('res-emoji').textContent = emoji;
+  document.getElementById('res-score').textContent = state.score;
+  document.getElementById('res-total').textContent = state.total;
+  document.getElementById('res-msg').textContent = msg;
+  document.getElementById('result-overlay').classList.add('show');
+  speak(`All done! Your score is ${state.score} out of ${state.total}. ${msg}`);
+}
+
+function restartApp() {
+  document.getElementById('result-overlay').classList.remove('show');
+  state = { awaiting:'menu', mode:null, questions:[], allAnswers:[], qIndex:0, score:0, total:0, hintUsed:false, audioEnabled:state.audioEnabled };
+  chatBox.innerHTML = '';
+  document.querySelector('.input-bar').style.display = 'flex';
+  updateScore();
+  showMenu();
+}
+
+// ═══════════════════════════════════════════════════════════════
+// MC HELPERS
+// ═══════════════════════════════════════════════════════════════
+function getAllAnswers() {
+  const ans = [];
+  for (const qs of Object.values(topics)) for (const q of qs) ans.push(q.a);
+  return ans;
+}
+
+function generateChoices(correct, pool) {
+  const distractors = shuffle(pool.filter(a => a !== correct)).slice(0,3);
+  return shuffle([correct, ...distractors]);
+}
+
+function buildMCBtns(choices, correctAnswer) {
+  const letters = ['A','B','C','D','E'];
+  return `<div class="mc-options">${choices.map((c,i)=>
+    `<button class="mc-btn" data-answer="${encodeURIComponent(c)}" data-correct="${encodeURIComponent(correctAnswer)}" onclick="handleMCClick(this)">
+      <span class="letter">${letters[i]}</span>${c}
+    </button>`
+  ).join('')}</div>`;
+}
+
+function handleMCClick(btn) {
+  const allBtns = btn.closest('.mc-options').querySelectorAll('.mc-btn');
+  allBtns.forEach(b => b.disabled = true);
+  const chosen = decodeURIComponent(btn.dataset.answer);
+  const correct = decodeURIComponent(btn.dataset.correct);
+  const isCorrect = chosen === correct;
+  allBtns.forEach(b => { if(decodeURIComponent(b.dataset.answer)===correct) b.classList.add('correct'); });
+  if (!isCorrect) btn.classList.add('wrong');
+  setTimeout(() => {
+    if (isCorrect) {
+      state.score++;
+      addMessage('bot', `✅ <strong>Correct!</strong> +1 point! The answer is: <strong>${correct}</strong>`, `Correct! The answer is: ${correct}`);
+    } else {
+      addMessage('bot', `❌ <strong>Not quite.</strong> The correct answer is: <strong>${correct}</strong>`, `Not quite. The correct answer is: ${correct}`);
+    }
+    state.qIndex++; updateScore();
+    if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+    else setTimeout(showResult, 900);
+  }, 650);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// NEXT QUESTION
+// ═══════════════════════════════════════════════════════════════
+function nextQuestion() {
+  const qi = state.qIndex;
+  const q = state.questions[qi];
+  const num = qi + 1;
+
+  if (state.mode === 'full' || state.mode === 'topic_mc') {
+    const choices = generateChoices(q.a, state.allAnswers);
+    const tag = q.topic ? `<span class="topic-tag">${q.topic}</span><br>` : '';
+    const html = `${tag}<strong>Q${num} of ${state.total}:</strong> ${q.q}${buildMCBtns(choices, q.a)}`;
+    addMessage('bot', html, `Question ${num}. ${q.q}`);
+    return;
+  }
+
+  if (state.mode === 'tf') {
+    const html = `<strong>Q${num} of ${state.total}:</strong> <div class="scenario-card">${q.q}</div>
+      <span class="chip" data-val="true">✅ True</span><span class="chip" data-val="false">❌ False</span>`;
+    addMessage('bot', html, `Question ${num}. True or False: ${q.q}`);
+    return;
+  }
+
+  if (state.mode === 'identify') {
+    const btns = buildMCBtns(q.choices, q.a);
+    const html = `<strong>Q${num} of ${state.total}:</strong> Identify what is being described:<div class="scenario-card">${q.q}</div>${btns}`;
+    addMessage('bot', html, `Question ${num}. Identify: ${q.q}`);
+    return;
+  }
+
+  // typed answer mode
+  const tag = q.topic ? `<span class="topic-tag">${q.topic}</span><br>` : '';
+  const html = `${tag}<strong>Q${num} of ${state.total}:</strong> ${q.q}<br><small style="color:var(--muted)">Type your answer · type <em>hint</em> for help · <em>skip</em> to move on</small>`;
+  addMessage('bot', html, `Question ${num}. ${q.q}`);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// MENU
+// ═══════════════════════════════════════════════════════════════
+function showMenu() {
+  addMessage('bot',
+    `👋 <strong>Hi! I'm your MAPEH Reviewer!</strong><br>Let's study <em>Rhythm, Beat, Notes, and Rests</em>, <em>Tempo</em>, <em>Liturgical and Devotional Music</em>, <em>Personal Health</em>, <em>Hygiene Practices</em>, and <em>Health Screening and Appraisals</em>.<br><br>What would you like to do?<br>
+    <span class="chip" data-val="1">📚 Study by Topic</span>
+    <span class="chip" data-val="2">✅ True or False</span>
+    <span class="chip" data-val="3">🌐 Identify</span>
+    <span class="chip" data-val="4">🌟 Full Review (Multiple Choice)</span>`,
+    "Hi! I'm your MAPEH Reviewer on Music and Health. What would you like to do? Study a topic, True or False, Identify, or a Full Review with multiple choice?"
+  );
+  state.awaiting = 'menu';
+}
+
+// ═══════════════════════════════════════════════════════════════
+// PROCESS MESSAGE
+// ═══════════════════════════════════════════════════════════════
+function processMessage(msg) {
+  const aw = state.awaiting;
+
+  // ── MENU ──────────────────────────────────────────────────
+  if (aw === 'menu') {
+    if (msg === '1') {
+      state.awaiting = 'topic';
+      const keys = Object.keys(topics);
+      const chips = keys.map((t,i) => `<span class="chip" data-val="${i+1}">${i+1}. ${t}</span>`).join(' ');
+      addMessage('bot', `📚 Which topic would you like to study?<br>${chips}`, 'Which topic would you like to study?');
+
+    } else if (msg === '2') {
+      state.mode = 'tf';
+      state.questions = shuffle(trueOrFalse);
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'tf_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `✅ <strong>True or False!</strong> ${state.total} questions. Let's start!`, `True or False! ${state.total} questions. Let's start!`);
+      setTimeout(nextQuestion, 800);
+
+    } else if (msg === '3') {
+      state.mode = 'identify';
+      state.questions = shuffle(identifyQuestions);
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'mc_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `🌐 <strong>Identify!</strong> Figure out the dimension of health, the hygiene practice, or who performs each screening test.`, "Identify! Figure out what's being described in each item.");
+      setTimeout(nextQuestion, 800);
+
+    } else if (msg === '4') {
+      state.mode = 'full';
+      const all = [];
+      for (const [topicName, qs] of Object.entries(topics)) {
+        qs.forEach(q => all.push({...q, topic: topicName}));
+      }
+      state.questions = shuffle(all);
+      state.allAnswers = getAllAnswers();
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'mc_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `🌟 <strong>Full Review — Multiple Choice!</strong> ${state.total} questions. Think carefully!`, `Full Review! Multiple Choice! ${state.total} questions. Think carefully!`);
+      setTimeout(nextQuestion, 800);
+
+    } else {
+      addMessage('bot',
+        `Choose an option:<br>
+        <span class="chip" data-val="1">📚 Study by Topic</span>
+        <span class="chip" data-val="2">✅ True or False</span>
+        <span class="chip" data-val="3">🌐 Identify</span>
+        <span class="chip" data-val="4">🌟 Full Review</span>`,
+        'Choose an option.'
+      );
+    }
+    return;
+  }
+
+  // ── TOPIC SELECT ──────────────────────────────────────────
+  if (aw === 'topic') {
+    const keys = Object.keys(topics);
+    const idx = parseInt(msg) - 1;
+    if (keys[idx]) {
+      const topicName = keys[idx];
+      state.mode = 'topic_mc';
+      state.questions = shuffle(topics[topicName]);
+      state.allAnswers = getAllAnswers();
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'mc_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `📚 <strong>${topicName}</strong> — ${state.total} questions. Ready?`, `${topicName}. ${state.total} questions. Ready?`);
+      setTimeout(nextQuestion, 800);
+    } else {
+      const chips = Object.keys(topics).map((t,i) => `<span class="chip" data-val="${i+1}">${i+1}. ${t}</span>`).join(' ');
+      addMessage('bot', `Please choose a valid topic:<br>${chips}`, 'Please choose a valid topic.');
+    }
+    return;
+  }
+
+  // ── TYPED ANSWER ──────────────────────────────────────────
+  if (aw === 'answer') {
+    const q = state.questions[state.qIndex];
+    const m = normalize(msg);
+
+    if (m === 'hint') {
+      state.hintUsed = true;
+      addMessage('bot', `💡 <strong>Hint:</strong> ${q.hint}`, `Hint: ${q.hint}`);
+      return;
+    }
+    if (m === 'skip') {
+      addMessage('bot', `⏭️ Skipped! The correct answer is: <strong>${q.a}</strong>`, `Skipped. The correct answer is: ${q.a}`);
+      state.qIndex++; state.hintUsed = false;
+      if (state.qIndex < state.total) setTimeout(nextQuestion, 700);
+      else showResult();
+      return;
+    }
+
+    const correct = checkAnswer(msg, q.a);
+    if (correct) {
+      if (!state.hintUsed) state.score++;
+      const note = state.hintUsed ? ' <em>(hint used — no point)</em>' : ' +1 point!';
+      addMessage('bot', `✅ <strong>Correct!</strong>${note} Answer: <strong>${q.a}</strong>`, `Correct! The answer is: ${q.a}`);
+    } else {
+      addMessage('bot', `❌ <strong>Not quite.</strong> The correct answer is: <strong>${q.a}</strong>`, `Not quite. The correct answer is: ${q.a}`);
+    }
+    state.qIndex++; state.hintUsed = false; updateScore();
+    if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+    else setTimeout(showResult, 900);
+    return;
+  }
+
+  // ── TRUE OR FALSE ─────────────────────────────────────────
+  if (aw === 'tf_answer') {
+    const q = state.questions[state.qIndex];
+    const ans = normalize(msg);
+    const valid = ans === 'true' || ans === 'false';
+
+    if (valid) {
+      const correct = ans === q.a;
+      if (correct) {
+        state.score++;
+        addMessage('bot', `✅ <strong>Correct!</strong> The answer is <strong>${q.a.toUpperCase()}</strong>.`, `Correct! The answer is ${q.a}.`);
+      } else {
+        addMessage('bot', `❌ <strong>Incorrect.</strong> The correct answer is <strong>${q.a.toUpperCase()}</strong>.`, `Incorrect. The correct answer is ${q.a}.`);
+      }
+      state.qIndex++; updateScore();
+      if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+      else setTimeout(showResult, 900);
+    } else {
+      addMessage('bot',
+        `Answer: True or False?<br><span class="chip" data-val="true">✅ True</span><span class="chip" data-val="false">❌ False</span>`,
+        'Answer: True or False?'
+      );
+    }
+    return;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// CONTROLS
+// ═══════════════════════════════════════════════════════════════
+function handleUserMessage(msg) {
+  if (!msg.trim()) return;
+  
+  // Stop any speaking audio cleanly when the user answers
+  window.speechSynthesis.cancel();
+  if (currentAudioStream) {
+    currentAudioStream.pause();
+    currentAudioStream = null;
+    showWave(false);
+  }
+  
+  addMessage('user', msg.replace(/</g,'&lt;'));
+  input.value = '';
+  input.disabled = true; sendBtn.disabled = true;
+  addTyping();
+  setTimeout(() => {
+    removeTyping();
+    input.disabled = false; sendBtn.disabled = false;
+    input.focus();
+    processMessage(msg);
+  }, 480);
+}
+
+sendBtn.addEventListener('click', () => { handleUserMessage(input.value); });
+input.addEventListener('keydown', e => { if(e.key==='Enter') handleUserMessage(input.value); });
+
+document.getElementById('audio-toggle').addEventListener('click', function() {
+  state.audioEnabled = !state.audioEnabled;
+  this.textContent = state.audioEnabled ? '🔊' : '🔇';
+  this.classList.toggle('active', state.audioEnabled);
+  if (!state.audioEnabled) {
+    window.speechSynthesis.cancel();
+    if (currentAudioStream) {
+      currentAudioStream.pause();
+      currentAudioStream = null;
+      showWave(false);
+    }
+  }
+});
+
+// ═══════════════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════════════
+window.addEventListener('load', () => {
+  lookupSystemVoices();
+  showMenu();
+});
+
+function printPracticeTest() {
+  document.body.classList.add('printing-test');
+  window.print();
+}
+window.addEventListener('afterprint', () => {
+  document.body.classList.remove('printing-test');
+});
+
+// ═══════════════════════════════════════════════════════════════
+// READ NOTES ALOUD (uses the browser's own voice — no length limit,
+// unlike the short Google TTS clips used for chat messages)
+// ═══════════════════════════════════════════════════════════════
+function getNotesText(section) {
+  // Skip the Practice Test / Answer Key tabs — too long and not meant to be read aloud
+  const clone = section.cloneNode(true);
+  clone.querySelectorAll('button').forEach(b => b.remove());
+  let text = clone.innerText || clone.textContent || '';
+  text = text.replace(/\s+/g, ' ').trim();
+  return text;
+}
+
+function toggleNotesAudio() {
+  const btn = document.getElementById('notes-audio-btn');
+  if (!btn) return;
+
+  if (window.speechSynthesis.speaking || window.speechSynthesis.pending) {
+    window.speechSynthesis.cancel();
+    btn.innerHTML = '🔊 Read Notes Aloud';
+    btn.classList.remove('active');
+    return;
+  }
+
+  const activeSection = document.querySelector('.notes-section.active');
+  if (!activeSection) return;
+  const text = getNotesText(activeSection);
+  if (!text) return;
+
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.lang = 'en-US';
+  utter.rate = 0.95;
+  utter.pitch = 1.05;
+  utter.volume = 1;
+
+  const voices = window.speechSynthesis.getVoices();
+  const voice = voices.find(v => v.lang.startsWith('en') && v.name.toLowerCase().includes('female'))
+             || voices.find(v => v.lang.startsWith('en'));
+  if (voice) utter.voice = voice;
+
+  utter.onstart = () => { btn.innerHTML = '⏹️ Stop Reading'; btn.classList.add('active'); };
+  utter.onend = utter.onerror = () => { btn.innerHTML = '🔊 Read Notes Aloud'; btn.classList.remove('active'); };
+
+  window.speechSynthesis.speak(utter);
+}
+
+function switchTab(tabId, btn) {
+  window.speechSynthesis.cancel();
+  const audioBtn = document.getElementById('notes-audio-btn');
+  if (audioBtn) { audioBtn.innerHTML = '🔊 Read Notes Aloud'; audioBtn.classList.remove('active'); }
+  document.querySelectorAll('.notes-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.notes-tab').forEach(b => b.classList.remove('active'));
+  document.getElementById(tabId).classList.add('active');
+  btn.classList.add('active');
+}
+
+function closeNotesPanel() {
+  window.speechSynthesis.cancel();
+  const audioBtn = document.getElementById('notes-audio-btn');
+  if (audioBtn) { audioBtn.innerHTML = '🔊 Read Notes Aloud'; audioBtn.classList.remove('active'); }
+  document.getElementById('notes-overlay').classList.remove('show');
+}
+</script>
+
+<!-- ── Notes Panel ── -->
+<div class="notes-overlay" id="notes-overlay">
+  <div class="notes-panel">
+    <div class="notes-header">
+      <h2>📖 Music &amp; Health — Notes</h2>
+      <div class="notes-header-actions">
+        <button class="print-btn" id="notes-audio-btn" onclick="toggleNotesAudio()" title="Have this tab read aloud">🔊 Read Notes Aloud</button>
+        <button class="print-btn" onclick="printPracticeTest()" title="Print or save the Practice Test &amp; Answer Key as PDF">🖨️ Print Test &amp; Key</button>
+        <button class="notes-close" onclick="closeNotesPanel()">✕</button>
+      </div>
+    </div>
+    <div class="notes-tabs">
+      <button class="notes-tab active" onclick="switchTab('tab-rhythm', this)">🥁 Rhythm &amp; Beat</button>
+      <button class="notes-tab" onclick="switchTab('tab-tempo', this)">⏱️ Tempo</button>
+      <button class="notes-tab" onclick="switchTab('tab-liturgical', this)">🎶 Liturgical &amp; Devotional</button>
+      <button class="notes-tab" onclick="switchTab('tab-personalhealth', this)">🌱 Personal Health</button>
+      <button class="notes-tab" onclick="switchTab('tab-hygiene', this)">🧼 Hygiene</button>
+      <button class="notes-tab" onclick="switchTab('tab-screening', this)">🩺 Health Screening</button>
+      <button class="notes-tab" onclick="switchTab('tab-tf', this)">✅ True or False</button>
+      <button class="notes-tab" onclick="switchTab('tab-ptest', this)">📝 Practice Test</button>
+      <button class="notes-tab" onclick="switchTab('tab-key', this)">🔑 Answer Key</button>
+      <button class="notes-tab" onclick="switchTab('tab-raw', this)">📄 Raw Notes</button>
+    </div>
+    <div class="notes-body">
+
+      <div class="notes-section active" id="tab-rhythm">
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> <strong>Rhythm</strong> is the organized pattern of sounds and silences in music, while the <strong>beat</strong> is the steady, unchanging pulse underneath it all. <strong>Notes</strong> show sound, <strong>rests</strong> show silence.
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 MEMORY TRICK</span>
+          "Rhythm is the <strong>dance</strong>, the beat is the <strong>heartbeat</strong>." The dance (rhythm) can change and move in different ways, but the heartbeat (beat) never stops its steady pulse underneath.
+        </div>
+        <table class="compare-table">
+          <tr><th>Note</th><th>Beats</th><th>Rest</th></tr>
+          <tr><td>Whole Note</td><td>4</td><td>Whole Rest</td></tr>
+          <tr><td>Half Note</td><td>2</td><td>Half Rest</td></tr>
+          <tr><td>Quarter Note</td><td>1</td><td>Quarter Rest</td></tr>
+          <tr><td>Eighth Note</td><td>1/2</td><td>Eighth Rest</td></tr>
+          <tr><td>Sixteenth Note</td><td>1/4</td><td>Sixteenth Rest</td></tr>
+        </table>
+        <div class="tandaan-box">
+          <span class="tandaan-label">REMEMBER</span>
+          Each note value is exactly half of the one before it: Whole (4) → Half (2) → Quarter (1) → Eighth (½) → Sixteenth (¼). The name literally tells you the fraction!
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-tempo">
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> <strong>Tempo</strong> is the speed of music. Composers use Italian words to mark tempo, from very slow to very fast.
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 MEMORY TRICK</span>
+          Remember the tempo order, slowest to fastest, with: <strong>"Le's Learn About Awesome Very fast Playing"</strong> — <strong>Le</strong>nto → <strong>L</strong>argo → <strong>A</strong>dagio → <strong>A</strong>ndante → <strong>A</strong>llegro → <strong>V</strong>ivace → <strong>P</strong>resto.
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">⏱️ Tempo Markings, Slowest to Fastest</div>
+          <div class="notes-item"><span class="notes-term">Lento</span><span class="notes-def">Slowly</span></div>
+          <div class="notes-item"><span class="notes-term">Largo</span><span class="notes-def">Slow and stately, broad and dignified</span></div>
+          <div class="notes-item"><span class="notes-term">Adagio</span><span class="notes-def">Leisurely, comfortable and slow</span></div>
+          <div class="notes-item"><span class="notes-term">Andante</span><span class="notes-def">At a walking pace</span></div>
+          <div class="notes-item"><span class="notes-term">Allegro</span><span class="notes-def">Fast, often cheerful</span></div>
+          <div class="notes-item"><span class="notes-term">Vivace</span><span class="notes-def">Lively, more energetic than allegro</span></div>
+          <div class="notes-item"><span class="notes-term">Presto</span><span class="notes-def">Very quickly, as fast as possible</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-liturgical">
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> <strong>Liturgical music</strong> is made for formal church services like Mass. <strong>Devotional music</strong> expresses personal faith more freely, outside of formal worship — like pastores a belen and the pasyon.
+        </div>
+        <table class="compare-table">
+          <tr><th>Tradition</th><th>Season</th><th>Feel</th></tr>
+          <tr><td>Pastores a Belen</td><td>Christmas</td><td>Lively, upbeat, cheerful, syncopated</td></tr>
+          <tr><td>Pasyon</td><td>Holy Week</td><td>Slow, deliberate, chant-like, solemn</td></tr>
+        </table>
+        <div class="notes-topic">
+          <div class="notes-topic-title">🎶 Parts of the Mass</div>
+          <div class="notes-item"><span class="notes-term">Kyrie Eleison</span><span class="notes-def">Lord, Have Mercy</span></div>
+          <div class="notes-item"><span class="notes-term">Gloria</span><span class="notes-def">Glory (to God in the Highest)</span></div>
+          <div class="notes-item"><span class="notes-term">Sanctus et Benedictus</span><span class="notes-def">Holy, Holy and Blessed Is He</span></div>
+          <div class="notes-item"><span class="notes-term">Agnus Dei</span><span class="notes-def">Lamb of God</span></div>
+        </div>
+        <div class="tandaan-box">
+          <span class="tandaan-label">REMEMBER</span>
+          Pastores a Belen = happy shepherds going TO Bethlehem (Christmas, upbeat). Pasyon = the solemn story of Christ's suffering (Holy Week, slow and reflective). Opposite seasons, opposite feels!
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-personalhealth">
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> <strong>Health</strong> (WHO) is total physical, mental, and social well-being. <strong>Personal health</strong> is being in control of your own health across five dimensions.
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 MEMORY TRICK</span>
+          Remember the 5 dimensions with: <strong>"People Must Eat Salad Slowly"</strong> — <strong>P</strong>hysical, <strong>M</strong>ental, <strong>E</strong>motional, <strong>S</strong>ocial, <strong>S</strong>piritual.
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">🌱 The 5 Dimensions of Health</div>
+          <div class="notes-item"><span class="notes-term">Physical</span><span class="notes-def">Body, organs, hygiene, diet, exercise, sleep</span></div>
+          <div class="notes-item"><span class="notes-term">Mental</span><span class="notes-def">Thinking, understanding, processing information</span></div>
+          <div class="notes-item"><span class="notes-term">Emotional</span><span class="notes-def">Showing and controlling feelings</span></div>
+          <div class="notes-item"><span class="notes-term">Social</span><span class="notes-def">Adjusting to situations, interacting with others</span></div>
+          <div class="notes-item"><span class="notes-term">Spiritual</span><span class="notes-def">Faith, beliefs, purpose in life</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-hygiene">
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> <strong>Hygiene</strong> is a set of practices to keep yourself clean, covering hands, nails, face, feet, hair, genitals, teeth, ears, and clothes.
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 MEMORY TRICK</span>
+          Scrub your hands for <strong>20 seconds</strong> — sing <strong>"Happy Birthday" twice</strong>! 🎂🎂 And remember: <strong>"If it can't go in your mouth, it shouldn't go in your ear"</strong> — never insert anything (even cotton buds) into the ear canal.
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">🧼 Quick Hygiene Facts</div>
+          <div class="notes-item"><span class="notes-term">Toothbrush</span><span class="notes-def">Replace every 3-4 months; brush at least 2x a day</span></div>
+          <div class="notes-item"><span class="notes-term">Dentist Visits</span><span class="notes-def">1-2 times a year</span></div>
+          <div class="notes-item"><span class="notes-term">Feet</span><span class="notes-def">Dry them before putting on socks — bacteria and fungi love moisture</span></div>
+          <div class="notes-item"><span class="notes-term">Underwear</span><span class="notes-def">Choose cotton — it absorbs sweat easily</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-screening">
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> Regular <strong>health screening</strong> tells you how your body is really doing. Different specialists handle different tests.
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 MEMORY TRICK</span>
+          Match the specialist to the test: <strong>Physician</strong> = overall health, <strong>Dentist</strong> = teeth, <strong>Nurse</strong> = height/weight, <strong>Ophthalmologist/Optometrist</strong> = eyes, <strong>ENT/Audiologist</strong> = ears.
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">🩺 Screening Tests at a Glance</div>
+          <div class="notes-item"><span class="notes-term">Medical Exam</span><span class="notes-def">Overall health, done by a physician</span></div>
+          <div class="notes-item"><span class="notes-term">Dental Exam</span><span class="notes-def">Cavities and gum disease, may include a dental X-ray (radiograph)</span></div>
+          <div class="notes-item"><span class="notes-term">Height/Weight</span><span class="notes-def">Uses a stadiometer and scale; combines into BMI</span></div>
+          <div class="notes-item"><span class="notes-term">Vision Test</span><span class="notes-def">Snellen chart, read from 20 feet away</span></div>
+          <div class="notes-item"><span class="notes-term">Scoliosis Test</span><span class="notes-def">Checks for abnormal spine curving</span></div>
+          <div class="notes-item"><span class="notes-term">Hearing Test</span><span class="notes-def">Audiometry, using headphones and tones</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-tf">
+        <div class="notes-topic">
+          <div class="notes-topic-title">✅ True or False — Key Reminders</div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">Notes represent periods of silence → notes represent sounds; rests represent silence.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">The half note is typically counted as one beat → the quarter note is.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">A half rest represents silence for one beat → it represents two beats, same as a half note.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">Homework and calculating expenses enrich spiritual health → these are examples of mental health activities.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">Personal hygiene is defined as having good physical condition through a healthy lifestyle → that's actually the definition of wellness.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">The ability to think and process information is linked to physical health → this is mental health.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">Bacteria and fungi thrive best in dry areas of the feet → they thrive in moist areas.</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-ptest">
+        <div class="notes-topic">
+          <div class="notes-topic-title">📝 Practice Test</div>
+<div class="ptest-part-title">Part I — Dimension of Health</div>
+<div class="ptest-bank">a. physical health &middot; b. mental health &middot; c. emotional health &middot; d. social health &middot; e. spiritual health</div><div class="ptest-q"><b>1.</b> Maintaining a healthy diet and having enough sleep enrich this dimension of health. <span class="opt">Answer: ______</span></div><div class="ptest-q"><b>2.</b> Regularly joining religious activities fulfills this dimension of health. <span class="opt">Answer: ______</span></div><div class="ptest-q"><b>3.</b> Interacting with community volunteers during a disaster relief operation can enrich this dimension of health. <span class="opt">Answer: ______</span></div><div class="ptest-q"><b>4.</b> Expressing and controlling feelings when facing a given situation are a manifestation of this dimension of health. <span class="opt">Answer: ______</span></div><div class="ptest-q"><b>5.</b> Being able to solve problems, connected with minimizing stress at work, affects this dimension of health. <span class="opt">Answer: ______</span></div><div class="ptest-part-title">Part II — Hygiene Multiple Choice</div><div class="ptest-q"><b>6.</b> What are practices for grooming and taking care of oneself?<br><span class="opt">a) personal hygiene</span><span class="opt">b) personal styling</span><span class="opt">c) personal sanitation</span><span class="opt">d) personal cleaning</span></div><div class="ptest-q"><b>7.</b> What causes smelly feet?<br><span class="opt">a) trapped sweat</span><span class="opt">b) muddy feet</span><span class="opt">c) damaged footwear</span><span class="opt">d) toes with calluses</span></div><div class="ptest-q"><b>8.</b> Which of the following is a good practice of genital hygiene?<br><span class="opt">a) Do not hold back when you feel like peeing.</span><span class="opt">b) Do not pat your genital area dry with a towel.</span><span class="opt">c) Do not wear loose clothing for the lower part of your body.</span><span class="opt">d) Do not wear cotton underwear.</span></div><div class="ptest-q"><b>9.</b> What is best to do when you are about to cough or sneeze?<br><span class="opt">a) Put the back of your hand toward your mouth and nose.</span><span class="opt">b) Bend your body forward to prepare for coughing or sneezing.</span><span class="opt">c) Cover your mouth and nose with a handkerchief.</span><span class="opt">d) Look up and prepare to cough or sneeze in the air.</span></div><div class="ptest-q"><b>10.</b> Which of the following is not true about practicing good oral hygiene?<br><span class="opt">a) Use floss to remove materials between the teeth.</span><span class="opt">b) Visit the dentist one to two times a year.</span><span class="opt">c) Brush the tongue to remove the taste buds.</span><span class="opt">d) Brush your teeth at least two times a day.</span></div><div class="ptest-part-title">Part III — True or False</div><div class="ptest-q"><b>11.</b> Rhythm is defined as the organized pattern of sounds and silences in music. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>12.</b> The beat is the steady, unchanging pulse that guides music, similar to a ticking clock. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>13.</b> When you tap your foot consistently to a song, you are most likely following the beat of the music. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>14.</b> Notes are fundamental symbols used to represent periods of silence. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>15.</b> In many common songs, the half note is typically counted as one beat. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>16.</b> A whole note is typically held for four beats. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>17.</b> Rests represent moments of silence in music. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>18.</b> A half rest typically represents silence for one beat. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>19.</b> A healthy body allows you to perform different physical activities. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>20.</b> Completing homework, calculating expenses, and solving problems are examples of activities enriching your spiritual health. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>21.</b> Keeping oneself clean can help prevent illnesses and the spread of germs. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>22.</b> Personal hygiene is defined as having good physical condition through a healthy lifestyle. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>23.</b> Social health is one's ability to adjust to different situations and behaviors. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>24.</b> One of the main goals of personal health is to maintain good physical health. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>25.</b> One's ability to think, understand, and process information is linked to physical health. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>26.</b> Maintaining proper personal hygiene can project a positive body image. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>27.</b> Having good personal health lets you enjoy a longer life period. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>28.</b> Giving back to the community in the form of donations can develop one's physical health. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>29.</b> When washing hands, the undersides of fingernails should not be missed. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>30.</b> Washing hands frequently can assure you that germs are eliminated. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>31.</b> Bacteria and fungi thrive best in dry areas of the feet. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>32.</b> Experts advise not to insert anything into your ear canal. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>33.</b> Changing used clothes for clean ones every day is inappropriate. <span class="opt">Answer: ______________________</span></div><div class="ptest-part-title">Part IV — Health Screening Terms</div><div class="ptest-q"><b>34.</b> This is calculated using your height and weight to determine if you are underweight, normal, overweight, or obese. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>35.</b> This is the condition that causes the spine to curve irregularly to one side. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>36.</b> This is also called a dental X-ray. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>37.</b> This consists of steps done to address health issues and improve one's health. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>38.</b> This is done when a crack, chip, or minor cavity can be repaired by filling the tooth with a material. <span class="opt">Answer: ______________________</span></div><div class="ptest-part-title">Part V — Who Performs This Test?</div><div class="ptest-q"><b>39.</b> Who assesses your overall health during a medical examination? <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>40.</b> Who checks your teeth, face, neck, and mouth during a dental examination? <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>41.</b> Who typically takes your height and weight measurements in a clinic? <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>42.</b> Who conducts a vision test using a Snellen chart? <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>43.</b> Who can conduct a hearing test using audiometry? <span class="opt">Answer: ______________________</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-key">
+        <div class="notes-topic">
+<div class="notes-topic-title">Part I — Dimension of Health</div><div class="key-grid"><div class="key-pill">1. <b>Physical health</b></div><div class="key-pill">2. <b>Spiritual health</b></div><div class="key-pill">3. <b>Social health</b></div><div class="key-pill">4. <b>Emotional health</b></div><div class="key-pill">5. <b>Mental health</b></div></div><div class="notes-topic-title">Part II — Hygiene</div><div class="key-grid"><div class="key-pill">6. <b>personal hygiene</b></div><div class="key-pill">7. <b>trapped sweat</b></div><div class="key-pill">8. <b>Do not hold back when you feel like peeing.</b></div><div class="key-pill">9. <b>Cover your mouth and nose with a handkerchief.</b></div><div class="key-pill">10. <b>Brush the tongue to remove the taste buds.</b></div></div><div class="notes-topic-title">Part III — True or False</div><div class="key-grid"><div class="key-pill">11. <b>True</b></div><div class="key-pill">12. <b>True</b></div><div class="key-pill">13. <b>True</b></div><div class="key-pill">14. <b>False</b></div><div class="key-pill">15. <b>False</b></div><div class="key-pill">16. <b>True</b></div><div class="key-pill">17. <b>True</b></div><div class="key-pill">18. <b>False</b></div><div class="key-pill">19. <b>True</b></div><div class="key-pill">20. <b>False</b></div><div class="key-pill">21. <b>True</b></div><div class="key-pill">22. <b>False</b></div><div class="key-pill">23. <b>True</b></div><div class="key-pill">24. <b>True</b></div><div class="key-pill">25. <b>False</b></div><div class="key-pill">26. <b>True</b></div><div class="key-pill">27. <b>True</b></div><div class="key-pill">28. <b>False</b></div><div class="key-pill">29. <b>True</b></div><div class="key-pill">30. <b>True</b></div><div class="key-pill">31. <b>False</b></div><div class="key-pill">32. <b>True</b></div><div class="key-pill">33. <b>False</b></div></div><div class="notes-topic-title">Part IV — Health Screening Terms</div><div class="key-grid"><div class="key-pill">34. <b>Body Mass Index (BMI)</b></div><div class="key-pill">35. <b>Scoliosis</b></div><div class="key-pill">36. <b>Dental Radiograph</b></div><div class="key-pill">37. <b>Corrective Action</b></div><div class="key-pill">38. <b>Tooth Filling</b></div></div><div class="notes-topic-title">Part V — Who Performs This Test?</div><div class="key-grid"><div class="key-pill">39. <b>Physician</b></div><div class="key-pill">40. <b>Dentist</b></div><div class="key-pill">41. <b>Nurse</b></div><div class="key-pill">42. <b>Ophthalmologist or Optometrist</b></div><div class="key-pill">43. <b>ENT or Audiologist</b></div></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-raw">
+        <div class="rawnotes-intro">
+          📌 This is the original content of the uploaded lesson, unedited — for whenever you need to check the exact wording or an example not covered in the reviewer.
+        </div>
+        <div class="rawnotes-doc">
+<h3 class="doc-heading">Understanding the Building Blocks of Music: Rhythm, Beat, Notes, and Rests</h3>
+<p>Music is all around us, from the songs we hum to the grand orchestras we hear. But what exactly makes music move and resonate? Let us explore some of its fundamental elements.</p>
+<h3 class="doc-heading">Rhythm</h3>
+<p>At its heart, <strong>rhythm</strong> is the organized pattern of sounds and silences in music. It is what gives music its unique character, making it dynamic and engaging. Think of it as the dance of the sounds, creating a sense of forward motion and flow. When you find yourself clapping along to the lyrics of a song, you are intuitively following one of the many rhythms woven into the piece.</p>
+<h3 class="doc-heading">Beat</h3>
+<p>Now, let us talk about the <strong>beat</strong>. If rhythm is the dance, the <strong>beat</strong> is the steady pulse that guides it. Imagine the consistent ticking of a clock or the steady pulse that continues even when you are active. That is the beat—the underlying, unchanging pulse that keeps all the musical elements in sync. It is what you naturally tap your foot or clap along with when listening to music.</p>
+<p>For example, if you are holding a tambourine while your favorite song plays, every time you make it in time with the music is following the beat. The beat provides the foundational tempo, or how fast or slow the music is, to which all other musical parts are built.</p>
+<p>To reiterate, while rhythm creates varied and expressive patterns through different sounds, durations, and silences, the <strong>beat remains the constant, steady pulse that anchors the music</strong>. Rhythm is dynamic and can change to create different emotions and ideas, but the beat provides the consistent framework.</p>
+<p>For a deeper understanding of the distinct differences between rhythm and beat, watch the video <strong>“Primary Music Lesson – Beat vs. Rhythm.”</strong></p>
+<h3 class="doc-heading">Notes and Rests</h3>
+<p>To create music, we use fundamental symbols called <strong>notes and rests</strong>. Notes are the visual representations of sounds in music. Think of them as the “dots” and lines you use to draw a picture. Each note symbol tells a musician how high or low a sound should be and, crucially, how long to hold that sound. Think of them as instructions for singing or playing an instrument.</p>
+<p>Each note symbol has a specific duration, measured in beats. In many common songs, we often count the quarter note as one beat.</p>
+<p><strong>Rests</strong>, on the other hand, represent silence in music. They are just as crucial as notes! Just like notes, rests have specific durations, also measured in beats. A short rest means a quick pause, while a long rest means a longer silence. Rests are essential because they give music breathing room, making it more interesting and allowing the sounds to stand out clearly.</p>
+<p>Here are the common note and rest symbols and their typical beat values, particularly in music with <strong>2/4 and 4/4 time signatures</strong>:</p>
+<table style="width:98%;">
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 15%" />
+<col style="width: 48%" />
+<col style="width: 17%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>Note Symbol</strong></th>
+<th style="text-align: left;"><strong>Number of Beats</strong></th>
+<th style="text-align: left;"><strong>Meaning</strong></th>
+<th style="text-align: left;"><strong>Equivalent Rest</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Whole Note</strong></td>
+<td style="text-align: left;">Four</td>
+<td style="text-align: left;">This note holds a long and sustained sound. Imagine stretching out a word for a full four counts.</td>
+<td style="text-align: left;">Whole Rest</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Half Note</strong></td>
+<td style="text-align: left;">Two</td>
+<td style="text-align: left;">This note is half as long as a whole note. Two half notes fit into the space of one whole note.</td>
+<td style="text-align: left;">Half Rest</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Quarter Note</strong></td>
+<td style="text-align: left;">One</td>
+<td style="text-align: left;">This holds the basic beat. Often, this is the beat you tap your foot to in a song.</td>
+<td style="text-align: left;">Quarter Rest</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Eighth Note</strong></td>
+<td style="text-align: left;">One-half</td>
+<td style="text-align: left;">This note is held for half a beat. That means two eighth notes fit into the space of one quarter note, making them sound quick and flowing.</td>
+<td style="text-align: left;">Eighth Rest</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Sixteenth Note</strong></td>
+<td style="text-align: left;">One-fourth</td>
+<td style="text-align: left;">Four sixteenth notes fit into the space of one quarter note, making them sound very fast and short.</td>
+<td style="text-align: left;">Sixteenth Rest</td>
+</tr>
+</tbody>
+</table>
+<p>When you combine notes and rests in various sequences, you can construct an endless variety of musical pieces, from the simple melodies you sing in school to the rich, complex music performed at vibrant festivals across the Philippines. It is like drawing an intricate picture, but with sounds and silences as your art tools!</p>
+<p><strong>Write True on the blank if the statement is correct; write False if incorrect.</strong></p>
+<p><strong>Answers:</strong></p>
+<ol type="1">
+<li><p><strong>True</strong> — Rhythm is defined as the organized pattern of sounds &gt; and silences in music.</p></li>
+<li><p><strong>True</strong> — The beat is the steady, unchanging pulse that guides &gt; music, similar to a ticking clock.</p></li>
+<li><p><strong>True</strong> — When you tap your foot consistently to a song, you are &gt; most likely following the beat of the music.</p></li>
+<li><p><strong>False</strong> — Notes are fundamental symbols used to represent &gt; <strong>sounds</strong>, not periods of silence. Rests represent silence in &gt; music.</p></li>
+<li><p><strong>False</strong> — In many common songs, the <strong>quarter note</strong> is &gt; typically counted as one beat.</p></li>
+<li><p><strong>True</strong> — A whole note is typically held for four beats.</p></li>
+<li><p><strong>True</strong> — Rests represent moments of silence in music.</p></li>
+<li><p><strong>False</strong> — A half rest typically represents silence for <strong>two &gt; beats</strong>, not one beat.</p></li>
+</ol>
+<h3 class="doc-heading">Exploring Tempo and Musical Traditions</h3>
+<h3 class="doc-heading">Tempo</h3>
+<p>Imagine you are tapping your feet to a song. Sometimes, you tap slowly because the music feels calm and deliberate. Other times, you tap quickly because the music is fast and energetic. This "speed" of the music—how fast or slow it goes—is called <strong>tempo</strong>. Tempo helps to set the mood and energy of a musical piece.</p>
+<p>Music composers often use Italian words to indicate tempo. Here are some of the most commonly used tempo markings:</p>
+<ul>
+<li><p><strong>Lento</strong> – Slowly</p></li>
+<li><p><strong>Largo</strong> – Slow and stately (often implying a broad, dignified pace)</p></li>
+<li><p><strong>Adagio</strong> – Leisurely (a comfortable, slow tempo)</p></li>
+<li><p><strong>Andante</strong> – At a walking pace (a comfortable, slow tempo)</p></li>
+<li><p><strong>Allegro</strong> – Fast (often cheerful)</p></li>
+<li><p><strong>Vivace</strong> – Lively (even more energetic than allegro)</p></li>
+<li><p><strong>Presto</strong> – Very quickly (as fast as possible)</p></li>
+</ul>
+<h3 class="doc-heading">Liturgical and Devotional Music in the Philippines</h3>
+<p>Rhythm and tempo are especially evident in liturgical and devotional music, which holds a very special place in the Philippines. These are spiritual songs used in churches and during times of prayer, designed to foster a deeper connection to the divine and unite communities. The rhythms and tempos in this type of music often change depending on the liturgical season. For example, the music can be fast and festive during Christmas, contrasting with the more solemn and contemplative rhythms of Holy Week.</p>
+<p><strong>Liturgical music</strong> is specifically created for use in church services, such as Mass. Songs are sung during the Mass to help people pray, participate, and celebrate their faith together. Used within church services, this type of music often incorporates a steady, meditative beat that guides the flow of the service.</p>
+<p>The rhythm in liturgical music is generally moderate and repetitive, which helps to create a reverent and reflective atmosphere during prayer and worship. The tempo of these songs can vary—it can be fast, slow, or moderately paced—depending on the specific part of the service and the intended arrangement.</p>
+<p>Below is a list of sample liturgical songs observed in a Catholic Mass. Listen to these songs by scanning the QR code.</p>
+<table style="width:97%;">
+<colgroup>
+<col style="width: 41%" />
+<col style="width: 55%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>Mass Song</strong></th>
+<th style="text-align: left;"><strong>English Name</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Kyrie Eleison</td>
+<td style="text-align: left;">Lord, Have Mercy</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Gloria</td>
+<td style="text-align: left;">Glory (to God in the Highest)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Sanctus et Benedictus</td>
+<td style="text-align: left;">Holy, Holy and Blessed Is He</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Agnus Dei</td>
+<td style="text-align: left;">Lamb of God</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Devotional music</strong> helps individuals express their love and devotion, particularly in religious contexts. Unlike liturgical music, these pieces are not strictly produced for formal liturgical use, meaning they can be performed and enjoyed outside of church services. This flexibility allows devotional music to be less bound by strict liturgical traditions. Musicians and singers of devotional music often use a wider range of instruments and vocal tones to express their profound love for God.</p>
+<p>Two excellent Filipino examples of devotional music are the <strong>pastores a belen</strong> and the <strong>pasyon</strong>, often performed during Christmas and Holy Week, respectively.</p>
+<ul>
+<li><strong>Pastores a Belen</strong> – This is a traditional Filipino Christmas performance, introduced by Spanish priests in the 1800s. It beautifully recounts the story of the shepherds' journey to Bethlehem to see the baby Jesus. Popular in the Bicol region, the pastores features a lively, upbeat rhythm. Its cheerful and syncopated rhythmic pattern perfectly matches the festive spirit of the shepherds' journey, often performed with colorful and elaborate costumes and dance movements. This cherished tradition is a special part of Christmas in the Philippines, helping communities remember the story of the first Christmas through a beautiful blend of singing, dancing, and storytelling that brings everyone together during the holiday season.</li>
+</ul>
+<p>You can find many performances of pastores a belen music online to experience its joyous spirit.</p>
+<p>Watch a sample performance of <strong>pastores a belen</strong> by scanning the given QR code.</p>
+<ul>
+<li><strong>Pasyon</strong> – A vital tradition in the Philippines during Holy Week, the pasyon is an epic narrative that tells the story of Jesus Christ’s life, suffering, death, and resurrection. The first printed version of the pasyon was attributed to Gaspar Aquino de Belen. The story is sung in a special, gradual, and often chant-like tune. It features a slow, deliberate rhythmic pattern, which creates a solemn and reflective tone. The beat is steady but extended, allowing the profound story of Christ’s life and sacrifice to unfold through a reflective chant. When people sing the pasyon, they often gather in homes or special community spaces, taking turns to sing different parts of the extensive story. This can continue for several days, from morning until night, serving as a powerful way for communities to come together, reflect on Jesus’ story, and express their deep faith.</li>
+</ul>
+<p>Watch the video <strong>“Pasyong Mahal”</strong> for a sample performance of the pasyon.</p>
+<p>Today, some groups incorporate modern musical instruments like guitars, keyboards, and sound systems to make the pasyon more engaging and relatable, especially for younger listeners. While the basic tune often remains slow and reflective, these instruments can add more variety and depth to the music. You can easily find samples of pasyon music online to hear its unique, solemn sound.</p>
+<p>The absence of illness does not mean you are healthy. According to the World Health Organization (WHO), <strong>health</strong> is a condition of total physical, mental, and social well-being. On the other hand, <strong>wellness</strong> is defined as having good physical condition through a healthy lifestyle. It also means achieving the best level of health from having a positive view about life.</p>
+<h3 class="doc-heading">Personal Health</h3>
+<p>The ability to actively choose healthy living and be in control of one’s own health is called <strong>personal health</strong>. This includes one’s emotional, intellectual, social, economic, spiritual, and other aspects of well-being in addition to physical health. To achieve good personal health, one should have a balanced relationship of these aspects.</p>
+<p>The two main goals of personal health are to maintain good physical health and to keep one’s living and working environments germ-free. Keeping oneself clean can help prevent illnesses and the spread of germs. It will also keep the body in good shape and give the person more confidence. Being well and looking good makes you feel good.</p>
+<p>A person's overall well-being can be influenced by five dimensions of health. The best level of health can be influenced by the balance of these dimensions.</p>
+<ul>
+<li><p><strong>Physical health</strong> is a condition of the body that includes the size, structure, organs, and body processes and functions. Practicing good personal hygiene, maintaining a healthy diet, exercising daily, and having enough sleep benefit physical health.</p></li>
+<li><p><strong>Mental health</strong> is the ability to think and to understand and process information. Mental activities include doing homework, solving math problems, calculating expenses, and answering tests and quizzes.</p></li>
+<li><p><strong>Emotional health</strong> is the ability to show and control feelings, such as being sad, happy, angry, and scared, among others. Manifestations of emotional health include smiling at compliments, controlling rage, and expressing emotions through the face.</p></li>
+<li><p><strong>Social health</strong> is the ability to adjust to different situations and behaviors. It also pertains to how a person interacts or communicates with other people. Activities related to this are playing outdoor games, communicating with other people, and keeping commitments in studies or work.</p></li>
+<li><p><strong>Spiritual health</strong> is one’s faith and beliefs in following practices related to seeking a purpose in life. Visiting places of worship, practicing religious obligations, praying, and having inner peace can help develop spiritual health.</p></li>
+</ul>
+<p>Certain activities often develop different dimensions of health, especially those that are closely related with each other. For example, treating anxiety may fall under mental health and emotional health, depending on the cause of one’s anxiety. Volunteer work may enrich one’s social health and spiritual health. Even so, working out may not only develop physical health but social health, too, as a person may want to seek comfort in a new set of friends who are into sports.</p>
+<h3 class="doc-heading">Importance of Personal Health for Active Living</h3>
+<p>One secret to good health is to practice a variety of physical activities and to maintain correct personal cleanliness. If you do these regularly, you can avoid having illnesses.</p>
+<p>For one, you can be healthier if you follow good personal hygiene, or the practice of keeping oneself clean. Washing your hands after handling dirty materials is an example of good personal hygiene.</p>
+<p>If you want to lead an active and healthy life, you must be aware of how your body should be cleaned, as well as what things you need to do to keep your body functioning properly. The following are some reasons why personal health is important for active living:</p>
+<p><strong>1. Maintaining proper personal hygiene</strong> can project a positive body image and a positive impression. This may result in improved confidence and self-esteem (how one feels about oneself). Someone who smells bad and appears dirty is normally seen as unattractive and possibly even dangerous to others.</p>
+<p><strong>2.</strong> Having a healthy body allows the performance of more physical activities that can help one move more and avoid being inactive. One can enjoy group activities with friends and family if one's body is healthy and strong.</p>
+<p><strong>3.</strong> Having good personal health lets one enjoy life for a longer period.</p>
+<h3 class="doc-heading">My Checkpoint 1.1</h3>
+<p><strong>A. From the choices, choose the letter of your answer pertaining to the given statements.</strong></p>
+<p><strong>Choices:</strong></p>
+<p>a. physical health<br />
+b. mental health<br />
+c. emotional health<br />
+d. social health<br />
+e. spiritual health</p>
+<ol type="1">
+<li><p>Maintaining a healthy diet and having enough sleep enrich this dimension of health. Answer: A</p></li>
+<li><p>Regularly joining religious activities fulfills this dimension of health. Answer: E</p></li>
+<li><p>Interacting with community volunteers during a disaster relief operation can enrich this dimension of health. Answer: D</p></li>
+<li><p>Expressing and controlling feelings when facing a given situation are a manifestation of this dimension of health. Answer: C</p></li>
+<li><p>Being able to solve problems, connected with minimizing stress at work, affects this dimension of health. Answer: B</p></li>
+</ol>
+<p><strong>B. Write T if the statement is correct or F if it is incorrect.</strong></p>
+<ol type="1">
+<li><p>A healthy body allows you to perform different physical activities. Answer: T</p></li>
+<li><p>Completing homework, calculating expenses, and solving problems are examples of activities enriching your spiritual health. Answer: F</p></li>
+<li><p>Keeping oneself clean can help prevent illnesses and the spread of germs. Answer: T</p></li>
+<li><p>Personal hygiene is defined as having good physical condition through a healthy lifestyle. Answer: F</p></li>
+<li><p>Social health is one’s ability to adjust to different situations and behaviors. Answer: T</p></li>
+<li><p>One of the main goals of personal health is to maintain good physical health. Answer: T</p></li>
+<li><p>One’s ability to think, understand, and process information is linked to physical health. Answer: F</p></li>
+<li><p>Maintaining proper personal hygiene can project a positive body image. Answer: T</p></li>
+<li><p>Having good personal health lets you enjoy a longer life period. Answer: T</p></li>
+<li><p>Giving back to the community in the form of donations can develop one’s physical health. Answer: F</p></li>
+</ol>
+<p><strong>Hygiene</strong> is a set of practices or tasks to keep oneself clean. Personal hygiene involves practices for grooming and taking care of oneself.</p>
+<p>We must practice personal hygiene practices and participate in health checkups. Good hygiene practices help prevent or minimize the spread of diseases. Some hygiene practices that you can do on your own are the following.</p>
+<h3 class="doc-heading">Hand Washing</h3>
+<p>One of the best ways to protect yourself from getting diseases is to <strong>wash your hands</strong>. You use your hands in almost every activity. That means they are in contact with different things. Washing hands frequently can assure you that germs are eliminated so they do not get to other parts of your body. It is best to wash hands in these situations:</p>
+<table style="width:97%;">
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 63%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>Before and After</strong></th>
+<th style="text-align: left;"><strong>After</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Preparing food</td>
+<td style="text-align: left;">Using the toilet</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Eating a meal</td>
+<td style="text-align: left;">Getting soiled hands</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Tending a sick person</td>
+<td style="text-align: left;">Sneezing, coughing, or blowing the nose</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Treating a cut wound</td>
+<td style="text-align: left;">Touching animals or pets</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Touching dirty surfaces or trash</td>
+</tr>
+</tbody>
+</table>
+<p>Here are the steps on how to wash your hands the right way:</p>
+<ol type="1">
+<li><p>Wet your hands with clean water.</p></li>
+<li><p>Use soap and create a lather by rubbing your hands together.</p></li>
+<li><p>Rub your palms, backs of your hands, spaces between fingers, and undersides of fingernails. Scrub your hands for <strong>20 seconds</strong>, which is about the same time you sing <strong>"Happy Birthday"</strong> twice.</p></li>
+<li><p>Rinse your hands completely with water.</p></li>
+<li><p>Pat your hands dry.</p></li>
+</ol>
+<h3 class="doc-heading">Fingernail Hygiene</h3>
+<p>As you use your hands with anything, fingernails can easily collect dirt, where germs reside. Unclean fingernails also spread these germs. Thus, it is important to clip your fingernails short. When washing hands, the undersides of fingernails should not be missed. The same goes with toenails.</p>
+<p>It is also important to thoroughly clean tools used in cleaning fingernails, such as nail cutter (nail clippers) and nail file. To prevent fingernail infections and stop the spread of germs, the following should be observed:</p>
+<ol type="1">
+<li><p>Keep your fingernails short and clip them frequently.</p></li>
+<li><p>Use a nail brush to scrub the undersides of your fingernails.</p></li>
+<li><p>Clean fingernail tools before and after using.</p></li>
+<li><p>Do not bite your fingernails.</p></li>
+</ol>
+<h3 class="doc-heading">Facial Hygiene</h3>
+<p>Keeping your face clean is important for your overall health. As much as possible, avoid touching your face with dirty hands. If you really have to, it is important to wash your hands with soap and clean water. Then dry your hands and face with a fresh towel or piece of tissue paper. Use another towel or tissue paper to clean your nose and ears.</p>
+<p>During the COVID-19 pandemic, the virus was easily transferred when contaminated hands touched one's eyes, nose, or mouth. It was advised then to always wash the hands with soap and water or to use alcohol to disinfect the hands.</p>
+<h3 class="doc-heading">Coughing and Sneezing Hygiene</h3>
+<p>You can prevent the spread of bacteria and viruses by coughing and sneezing onto your inner elbow or covering your mouth and nose with clean tissue or handkerchief. Make sure to wash your hands with soap and water or use alcohol after coughing or sneezing on them. Properly dispose of any used tissues, too.</p>
+<p>Wearing a face mask has been the norm for people who are suffering from coughing. The face mask acts as a barrier against droplets containing bacteria or viruses from spreading to the air when one coughs or sneezes.</p>
+<h3 class="doc-heading">Foot Hygiene</h3>
+<p>Properly washing your feet with soap and clean water can help maintain clean feet and avoid foot problems. One problem is having smelly feet. This happens when sweat is trapped in your socks or shoes. Bacteria and fungi thrive in moist areas of the feet. So it is important to always wash your feet. Also, make sure to dry your feet first before putting on clean socks.</p>
+<p>Examine your feet for wounds, sores, and infections. Make sure to treat them before wearing any footwear. Avoid walking barefoot as much as possible. But if you have to, like after walking on the sand or grass, be sure to wash your feet afterward.</p>
+<h3 class="doc-heading">Hair and Scalp Hygiene</h3>
+<p>Keep your hair and scalp healthy by practicing hair care routines including taking a bath every day, washing your hair with shampoo, and rinsing it with clean water. Wash your hair often to remove dirt and oil from your scalp. Comb it to untangle the hair strands. Avoid sharing your comb, hair clips, or bath towel to avoid spreading hair and scalp infections.</p>
+<h3 class="doc-heading">Genital Hygiene</h3>
+<p>The genital area refers to the body organ where you pee (or urinate). There is a different organ for boys and for girls. The basic hygiene for genitals is to wash them with gentle soap, which is normally done when taking a bath. Be sure to pat the area dry using a clean towel.</p>
+<p>To avoid getting irritations or infections in the area, always wear clean underwear, preferably of cotton material because it absorbs sweat easily. Also, wear loose clothing to allow air to circulate in the lower parts of your body.</p>
+<p>It is important to pee once you feel like it and avoid holding it back. This is to avoid getting infections.</p>
+<h3 class="doc-heading">Oral Hygiene</h3>
+<p>Your teeth become easily visible when you smile, while your tongue is responsible for tasting the food you eat. To clean your teeth, always brush them at least two times a day. Use a toothpaste of your choice. When brushing your teeth, make short strokes and circular motions. Make sure also to cover all the teeth. Good oral hygiene prevents a buildup of materials in the teeth that cause tooth decay.</p>
+<p>Do not forget to brush the tongue, too. This helps remove bacteria and prevent bad breath. Stick out your tongue and scrape it starting at the back toward the front. Toothbrushes should also be replaced after three to four months.</p>
+<p>Some use floss, a flat thread-like material, to remove materials between the teeth. Finally, visit the dentist (tooth doctor) for dental exams one to two times a year.</p>
+<h3 class="doc-heading">Ear Hygiene</h3>
+<p>Everyone occasionally develops an accumulation of earwax. Some might be found outside the ear canal. Use a clean, damp washcloth to clean the outside. Hardened earwax should be removed by a doctor or trained health worker. Experts advise not to insert anything into your ear canal. Earwax is naturally occurring and functions to trap dirt entering the ear. Using a cotton bud might only push the earwax further into the ear canal. Only wipe the dried earwax that is expelled out of the ear canal.</p>
+<h3 class="doc-heading">Clothes Hygiene</h3>
+<p>It is essential to change your clothes every day or as soon as they get dirty. The inner layer of clothing, such as underwear and undershirt, collects sweat and dirt from our skin. The outer layer of clothing is prone to stains and outside dirt. These clothes should be regularly washed using detergent (laundry soap) to remove germs and dirt. They should likewise be rinsed thoroughly to remove soap particles that might irritate the skin.</p>
+<h3 class="doc-heading">My Checkpoint 2.1</h3>
+<p><strong>A. Read the questions. Circle the letter of answer from the choices.</strong></p>
+<p><strong>1. What are practices for grooming and taking care of oneself?</strong></p>
+<p>a. personal hygiene <strong>(this is the answer)</strong><br />
+b. personal styling<br />
+c. personal sanitation<br />
+d. personal cleaning</p>
+<p><strong>2. What causes smelly feet?</strong></p>
+<p>a. trapped sweat <strong>(this is the answer)</strong><br />
+b. muddy feet<br />
+c. damaged footwear<br />
+d. toes with calluses</p>
+<p><strong>3. Which of the following is a good practice of genital hygiene?</strong></p>
+<p>a. Do not hold back when you feel like peeing. <strong>(this is the answer)</strong><br />
+b. Do not pat your genital area dry with a towel.<br />
+c. Do not wear loose clothing for the lower part of your body.<br />
+d. Do not wear cotton underwear.</p>
+<p><strong>4. What is best to do when you are about to cough or sneeze?</strong></p>
+<p>a. Put the back of your hand toward your mouth and nose.<br />
+b. Bend your body forward to prepare for coughing or sneezing.<br />
+c. Cover your mouth and nose with a handkerchief. <strong>(this is the answer)</strong><br />
+d. Look up and prepare to cough or sneeze in the air.</p>
+<p><strong>5. Which of the following is not true about practicing good oral hygiene?</strong></p>
+<p>a. Use floss to remove materials between the teeth.<br />
+b. Visit the dentist one to two times a year.<br />
+c. Brush the tongue to remove the taste buds. <strong>(this is the answer)</strong><br />
+d. Brush your teeth at least two times a day.</p>
+<p><strong>B. Read the statements. Write True on the blank if the statement is correct and False if incorrect.</strong></p>
+<p><strong>1.</strong> When washing hands, the undersides of fingernails should not be missed.</p>
+<ul>
+<li>✅ <strong>True</strong></li>
+</ul>
+<p><strong>2.</strong> Washing hands frequently can assure you that germs are eliminated.</p>
+<ul>
+<li>✅ <strong>True</strong></li>
+</ul>
+<p><strong>3.</strong> Bacteria and fungi thrive best in dry areas of the feet.</p>
+<ul>
+<li>✅ <strong>False</strong></li>
+</ul>
+<p>They thrive in <strong>moist</strong> areas.</p>
+<p><strong>4.</strong> Experts advise not to insert anything into your ear canal.</p>
+<ul>
+<li>✅ <strong>True</strong></li>
+</ul>
+<p><strong>5.</strong> Changing used clothes for clean ones every day is inappropriate.</p>
+<ul>
+<li>✅ <strong>False</strong></li>
+</ul>
+<p>It is <strong>appropriate</strong> and recommended to change into clean clothes every day.</p>
+<h3 class="doc-heading">Current Health Status and Body Awareness</h3>
+<p>You might be feeling well at first glance, but how do you really know if your body is functioning well? This is the role of health screening and assessment, which are performed by doctors and medical professionals. You can only know your health status by undergoing these assessments.</p>
+<p>Common health assessments include measuring one’s height and weight, testing one’s hearing and vision, and checking one’s dental health. Through these assessments, people can learn about their current state of health. The doctors will also advise what foods to eat and what physical activities to engage in to stay healthy.</p>
+<h3 class="doc-heading">Health Appraisals or Screening Tests</h3>
+<p>It is important to have your body checked regularly. Your eyes and ears should also be checked regularly as you grow to ensure that your senses of sight and hearing are in the best state. The same goes with your teeth to prevent mouth problems. Health appraisals are done by doctors and health professionals.</p>
+<p>The following are some appraisals or screening tests that you can go through.</p>
+<p><strong>1. Medical Examination</strong></p>
+<p>This generally keeps you updated on your overall state of health. Your overall health is assessed by a physician (other term for doctor) during an examination of the basic functioning of your organs, management of any problems, updating of your immunizations, and maintenance of your health. A physician will usually recommend more screening tests if a suspected medical condition is found.</p>
+<p>This helps for the detection of communicable diseases such as chickenpox, common cold, influenza (flu), measles, and COVID-19. Other conditions that can be discovered are high blood pressure, high cholesterol, diabetes, arthritis, digestive problems, allergies, heart disease, and lung disease.</p>
+<p><strong>2. Dental Examination</strong></p>
+<p>This keeps you updated on any dental issues. During a dental exam, the dentist will look for tooth cavities and gum diseases. The dentist will also check your face, neck, and mouth for any unusual characteristics and determine the likelihood of you experiencing further problems with your oral health. A dental examination may also include dental radiograph (dental X-ray) to help the dentist detect tooth and gum issues. Also during a dental exam, the dentist will likely discuss your eating habits and oral hygiene routine, such as proper brushing and using of a floss.</p>
+<p><strong>3. Height Taking</strong></p>
+<p>This provides an estimation of your growth rate. In clinics and hospitals, a stadiometer is used to measure one’s height. To use it, remove your shoes, stand up on straight legs, put your arms down at your sides, and level your shoulders. Stare straight ahead. The nurse will take your height by adjusting the slider to touch the top of your head. Height is usually expressed in centimeters or feet and inches.</p>
+<p><strong>4. Weight Taking</strong></p>
+<p>This lets you know if you are within a healthy weight range. Weight monitoring lets you keep track of your growth and development. In clinics and hospitals, a more accurate weighing scale is used. To use it, remove your shoes and heavy clothing, stand straight with feet slightly apart, and avoid making any movement. The nurse will record your weight. Weight is expressed in kilograms or sometimes in pounds.</p>
+<p><strong>5. Vision Test</strong></p>
+<p>This assesses your vision and how clear you see objects. A Snellen chart is used to test your vision. This chart usually consists of letters arranged from biggest to smallest. An ophthalmologist or an optometrist will have you read the series of letters of the chart from 20 feet away. You will be given a score separately for your left and right eye. If you have difficulty seeing clearly, you may be prescribed to wear eyeglasses.</p>
+<p><strong>6. Scoliosis Test</strong></p>
+<p>This aims to check for any abnormal curving of your spine. Scoliosis is the condition that causes the spine to curve irregularly to one side. If the condition is addressed before the bones fully develop, it is treatable. This is why it is important that your spine is checked at an early age. The following are visible signs of having scoliosis:</p>
+<ul>
+<li><p>One shoulder looks higher than the other.</p></li>
+<li><p>The head is not aligned to the center of the body.</p></li>
+<li><p>One side of the hips appears higher or is sticking out.</p></li>
+<li><p>One side of the rib cage looks higher than the other side when bending forward.</p></li>
+<li><p>The waist is uneven.</p></li>
+<li><p>The entire body is leaning to one side.</p></li>
+</ul>
+<p><strong>7. Hearing Test</strong></p>
+<p>This lets you determine whether you are experiencing hearing loss. There are various types of hearing tests that detect hearing loss. One such test is <strong>audiometry</strong>, where you wear headphones and you indicate every time you hear a tone. An <strong>ENT</strong> (“ear-nose-throat” doctor) and an <strong>audiologist</strong> (hearing specialist) can conduct a hearing test.</p>
+<h3 class="doc-heading">Corrective Action</h3>
+<p>Various screening tests allow doctors to identify health concerns that you may have. After you have determined a health concern, a <strong>corrective action</strong> is needed. It consists of steps done to address health issues. Following it aims to improve your health by suggesting you to change lifestyle choices or habits.</p>
+<p>Based on the results of medical examinations and tests, corrective actions are meant to lead you to have a healthier lifestyle. You may be asked to consume more nutritious meals, drink enough water, avoid sugary drinks, exercise frequently or be physically active, get enough rest, and reduce screen time and sitting. Getting regular checkups is a common practice to monitor the progress of your health.</p>
+<p>Depending on the condition of your teeth, a dentist may recommend extracting (<strong>pagbunot</strong>) a damaged or decaying tooth. A tooth filling is done if the dentist thinks that a crack, chip, or minor cavity in a tooth can be repaired by filling it with a material. Most of the time, a dentist performs tooth cleaning by removing materials and stains on your teeth using special dental tools.</p>
+<p>Your height and weight measurements are used to calculate your <strong>body mass index (BMI)</strong>. It measures your height in relation to your weight to determine if you are normal, underweight, overweight, or obese (extremely fat). This classification allows a physician to assess your risk for other diseases as you grow older. Some of these diseases may include hypertension (high blood pressure), diabetes, and cancer. In the meantime, taking your height and weight measurements helps in identifying any growth problem of a child like you.</p>
+<p>If you are proven to have vision problems following a vision test, you may be prescribed to wear eyeglasses or contact lenses to correct your existing vision. Wearing such things allows you to have clearer vision. You may not be able to tell right away that yourself if your vision is blurred unless you have a vision test. Also, you may be told to have your eyes rest since constant exposure to digital screens (from cellphones, tablets, television, and gadgets) can strain them.</p>
+<p>In many cases, minor scoliosis may be managed with exercise, medical supervision, and physical therapy. In mild cases, a scoliosis brace is used to stop the development of further curving of the spine. A brace is a hard plastic jacket worn over the upper body. Surgery is only needed for severe cases.</p>
+<p>Hearing loss may make everyday activities difficult, such as taking part in conversations and listening to instructions. Using a hearing aid may be recommended. A hearing aid makes sounds louder for its wearer. It is best to prevent developing hearing loss by taking care of your ears. When listening to music, it is a good idea to turn down the volume, especially if you use earphones. Also, avoid inserting anything into your ear canal.</p>
+<p>After every screening test, be sure to follow the advice of your doctor. If you do this, you will have improved results the next time you go for a screening test.</p>
+<h3 class="doc-heading">Question and answer:</h3>
+<ol type="1">
+<li><p> <strong>Body Mass Index (BMI)</strong><br />
+— This is calculated using your height and weight to determine if you are underweight, normal, overweight, or obese.</p></li>
+<li><p> <strong>Scoliosis</strong><br />
+— This is the condition that causes the spine to curve irregularly to one side.</p></li>
+<li><p> <strong>Dental Radiograph</strong><br />
+— A dental radiograph is also called a <strong>dental X-ray</strong>.</p></li>
+<li><p> <strong>Corrective Action</strong><br />
+— This consists of steps done to address health issues and improve one's health.</p></li>
+<li><p> <strong>Tooth Filling</strong><br />
+— This is done when a crack, chip, or minor cavity can be repaired by filling the tooth with a material.</p></li>
+</ol>
+<p>Common helath assessments include measuring one's height and weight, testing one's hearing and vision, and checking one's dental health.</p>
+<p>Health Appraisals or Screening Test</p>
+<p>Medical Examination: Your overall health is assessed by a physician during an examination of the basic functioning of your organs, management of nay problems, updating of your immunizations and maintenance of your health.</p>
+<p>(physician)</p>
+<p>Dental Examination: This keeps you updated on any dental issues. It may also include dental radiograph (dental X-ray) to help the dentist detect tooth and gum issues.</p>
+<p>(dentist)</p>
+<p>Height Taking: This provides an estimation of your growth rate. In clinics and hospitals, a stadiometer is used to measure one's height.</p>
+<p>(nurse)</p>
+<p>Weight Taking: Weight monitoring lets you keep track of your growth and development. This lets you know if you are within a healthy weight range.</p>
+<p>(nurse)</p>
+<p>Vision Test:This assesses your vision and how clear you see objects. A snellen chart is used to test your vision.</p>
+<p>(optalmologist , optometrist)</p>
+<p>Scoliosis Test: The aims to check of any abnormal curving of your spine. It is the condition that causes the spine curve irregullarly to one side.</p>
+<p>Visible signs of havinf scoliosis:</p>
+<p>one shoulder looks higher than other.</p>
+<p>the head is not aligned to the center of the body.</p>
+<p>One side of the rib cage looks higher than the other side when bending forward.</p>
+<p>The waist is uneven</p>
+<p>the entire body is leaning to one side</p>
+<p>Hearing Test: This lets you determine whether you are experiencing hearing loss.</p>
+<p>Audiomentry, where you wear headphones and you indicate every time you hear a tone.</p>
+<p>(ENT- ear nose troat doctor)</p>
+<p>(hearing - audiologist)</p>
+<p>Corrective Action: Various screening test allow doctors to identify health concerns that you have.</p>
+<p>Corrective actions are meant to lead you to have a healthier lifestyle.</p>
+<p>examples of corrective actions:</p>
+<p>medical exam: exercise, eat healthy foods</p>
+<p>dental: tooth extraction, tooth cleaning</p>
+<p>vision: wear eyeglasses</p>
+<p>scolisis: exercise, wear brace, surgery</p>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ── Hidden Print Area (Practice Test + Answer Key) ── -->
+<div id="print-area">
+<div class="p-cover">
+    <div class="p-icon">🎵</div>
+    <h1>MAPEH 4 — Music &amp; Health Practice Test</h1>
+    <div class="p-sub">Rhythm, Beat &amp; Tempo · Liturgical Music · Personal Health · Hygiene · Health Screening</div>
+    <div class="p-info-box">
+      <div><strong>Name:</strong> _____________________________________</div>
+      <div><strong>Section:</strong> ___________________ &nbsp; <strong>Date:</strong> ___________________</div>
+      <div><strong>Score:</strong> _______ / 43</div>
+    </div>
+    <div class="p-instructions">
+      <strong>Instructions:</strong> Read each item carefully. Write your answer on the blank provided (Parts I, III-V), or write the letter of the correct answer (Part II). Good luck!
+    </div>
+  </div>
+
+  <h2 class="p-part-title">Part I — Dimension of Health</h2>
+  <div class="p-bank">a. physical health &middot; b. mental health &middot; c. emotional health &middot; d. social health &middot; e. spiritual health</div><div class="p-q"><b>1.</b> Maintaining a healthy diet and having enough sleep enrich this dimension of health. <span class="p-blank"></span></div><div class="p-q"><b>2.</b> Regularly joining religious activities fulfills this dimension of health. <span class="p-blank"></span></div><div class="p-q"><b>3.</b> Interacting with community volunteers during a disaster relief operation can enrich this dimension of health. <span class="p-blank"></span></div><div class="p-q"><b>4.</b> Expressing and controlling feelings when facing a given situation are a manifestation of this dimension of health. <span class="p-blank"></span></div><div class="p-q"><b>5.</b> Being able to solve problems, connected with minimizing stress at work, affects this dimension of health. <span class="p-blank"></span></div><h2 class="p-part-title">Part II — Hygiene Multiple Choice</h2><div class="p-q"><b>6.</b> What are practices for grooming and taking care of oneself?<br><span class="p-opt">a) personal hygiene</span><span class="p-opt">b) personal styling</span><span class="p-opt">c) personal sanitation</span><span class="p-opt">d) personal cleaning</span></div><div class="p-q"><b>7.</b> What causes smelly feet?<br><span class="p-opt">a) trapped sweat</span><span class="p-opt">b) muddy feet</span><span class="p-opt">c) damaged footwear</span><span class="p-opt">d) toes with calluses</span></div><div class="p-q"><b>8.</b> Which of the following is a good practice of genital hygiene?<br><span class="p-opt">a) Do not hold back when you feel like peeing.</span><span class="p-opt">b) Do not pat your genital area dry with a towel.</span><span class="p-opt">c) Do not wear loose clothing for the lower part of your body.</span><span class="p-opt">d) Do not wear cotton underwear.</span></div><div class="p-q"><b>9.</b> What is best to do when you are about to cough or sneeze?<br><span class="p-opt">a) Put the back of your hand toward your mouth and nose.</span><span class="p-opt">b) Bend your body forward to prepare for coughing or sneezing.</span><span class="p-opt">c) Cover your mouth and nose with a handkerchief.</span><span class="p-opt">d) Look up and prepare to cough or sneeze in the air.</span></div><div class="p-q"><b>10.</b> Which of the following is not true about practicing good oral hygiene?<br><span class="p-opt">a) Use floss to remove materials between the teeth.</span><span class="p-opt">b) Visit the dentist one to two times a year.</span><span class="p-opt">c) Brush the tongue to remove the taste buds.</span><span class="p-opt">d) Brush your teeth at least two times a day.</span></div><div class="p-break"></div><h2 class="p-part-title">Part III — True or False</h2><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>11.</b> Rhythm is defined as the organized pattern of sounds and silences in music.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>12.</b> The beat is the steady, unchanging pulse that guides music, similar to a ticking clock.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>13.</b> When you tap your foot consistently to a song, you are most likely following the beat of the music.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>14.</b> Notes are fundamental symbols used to represent periods of silence.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>15.</b> In many common songs, the half note is typically counted as one beat.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>16.</b> A whole note is typically held for four beats.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>17.</b> Rests represent moments of silence in music.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>18.</b> A half rest typically represents silence for one beat.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>19.</b> A healthy body allows you to perform different physical activities.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>20.</b> Completing homework, calculating expenses, and solving problems are examples of activities enriching your spiritual health.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>21.</b> Keeping oneself clean can help prevent illnesses and the spread of germs.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>22.</b> Personal hygiene is defined as having good physical condition through a healthy lifestyle.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>23.</b> Social health is one's ability to adjust to different situations and behaviors.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>24.</b> One of the main goals of personal health is to maintain good physical health.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>25.</b> One's ability to think, understand, and process information is linked to physical health.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>26.</b> Maintaining proper personal hygiene can project a positive body image.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>27.</b> Having good personal health lets you enjoy a longer life period.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>28.</b> Giving back to the community in the form of donations can develop one's physical health.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>29.</b> When washing hands, the undersides of fingernails should not be missed.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>30.</b> Washing hands frequently can assure you that germs are eliminated.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>31.</b> Bacteria and fungi thrive best in dry areas of the feet.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>32.</b> Experts advise not to insert anything into your ear canal.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>33.</b> Changing used clothes for clean ones every day is inappropriate.</div><div class="p-break"></div><h2 class="p-part-title">Part IV — Health Screening Terms</h2><div class="p-q"><b>34.</b> This is calculated using your height and weight to determine if you are underweight, normal, overweight, or obese. <span class="p-blank"></span></div><div class="p-q"><b>35.</b> This is the condition that causes the spine to curve irregularly to one side. <span class="p-blank"></span></div><div class="p-q"><b>36.</b> This is also called a dental X-ray. <span class="p-blank"></span></div><div class="p-q"><b>37.</b> This consists of steps done to address health issues and improve one's health. <span class="p-blank"></span></div><div class="p-q"><b>38.</b> This is done when a crack, chip, or minor cavity can be repaired by filling the tooth with a material. <span class="p-blank"></span></div><h2 class="p-part-title">Part V — Who Performs This Test?</h2><div class="p-q"><b>39.</b> Who assesses your overall health during a medical examination? <span class="p-blank"></span></div><div class="p-q"><b>40.</b> Who checks your teeth, face, neck, and mouth during a dental examination? <span class="p-blank"></span></div><div class="p-q"><b>41.</b> Who typically takes your height and weight measurements in a clinic? <span class="p-blank"></span></div><div class="p-q"><b>42.</b> Who conducts a vision test using a Snellen chart? <span class="p-blank"></span></div><div class="p-q"><b>43.</b> Who can conduct a hearing test using audiometry? <span class="p-blank"></span></div><div class="p-break"></div><h2 class="p-part-title">✅ Complete Answer Key</h2>
+  <div class="p-key-part-title">Part I — Dimension of Health</div><div class="p-key-grid"><div class="p-key-pill">1. <b>Physical health</b></div><div class="p-key-pill">2. <b>Spiritual health</b></div><div class="p-key-pill">3. <b>Social health</b></div><div class="p-key-pill">4. <b>Emotional health</b></div><div class="p-key-pill">5. <b>Mental health</b></div></div><div class="p-key-part-title">Part II — Hygiene</div><div class="p-key-grid"><div class="p-key-pill">6. <b>personal hygiene</b></div><div class="p-key-pill">7. <b>trapped sweat</b></div><div class="p-key-pill">8. <b>Do not hold back when you feel like peeing.</b></div><div class="p-key-pill">9. <b>Cover your mouth and nose with a handkerchief.</b></div><div class="p-key-pill">10. <b>Brush the tongue to remove the taste buds.</b></div></div><div class="p-key-part-title">Part III — True or False</div><div class="p-key-grid"><div class="p-key-pill">11. <b>True</b></div><div class="p-key-pill">12. <b>True</b></div><div class="p-key-pill">13. <b>True</b></div><div class="p-key-pill">14. <b>False</b></div><div class="p-key-pill">15. <b>False</b></div><div class="p-key-pill">16. <b>True</b></div><div class="p-key-pill">17. <b>True</b></div><div class="p-key-pill">18. <b>False</b></div><div class="p-key-pill">19. <b>True</b></div><div class="p-key-pill">20. <b>False</b></div><div class="p-key-pill">21. <b>True</b></div><div class="p-key-pill">22. <b>False</b></div><div class="p-key-pill">23. <b>True</b></div><div class="p-key-pill">24. <b>True</b></div><div class="p-key-pill">25. <b>False</b></div><div class="p-key-pill">26. <b>True</b></div><div class="p-key-pill">27. <b>True</b></div><div class="p-key-pill">28. <b>False</b></div><div class="p-key-pill">29. <b>True</b></div><div class="p-key-pill">30. <b>True</b></div><div class="p-key-pill">31. <b>False</b></div><div class="p-key-pill">32. <b>True</b></div><div class="p-key-pill">33. <b>False</b></div></div><div class="p-key-part-title">Part IV — Health Screening Terms</div><div class="p-key-grid"><div class="p-key-pill">34. <b>Body Mass Index (BMI)</b></div><div class="p-key-pill">35. <b>Scoliosis</b></div><div class="p-key-pill">36. <b>Dental Radiograph</b></div><div class="p-key-pill">37. <b>Corrective Action</b></div><div class="p-key-pill">38. <b>Tooth Filling</b></div></div><div class="p-key-part-title">Part V — Who Performs This Test?</div><div class="p-key-grid"><div class="p-key-pill">39. <b>Physician</b></div><div class="p-key-pill">40. <b>Dentist</b></div><div class="p-key-pill">41. <b>Nurse</b></div><div class="p-key-pill">42. <b>Ophthalmologist or Optometrist</b></div><div class="p-key-pill">43. <b>ENT or Audiologist</b></div></div>
+</div>
+
+</body>
+</html>
