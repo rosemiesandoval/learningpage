@@ -1113,13 +1113,13 @@ function processMessage(msg) {
     const idx = parseInt(msg) - 1;
     if (keys[idx]) {
       const topicName = keys[idx];
-      state.mode = 'topic';
+      state.mode = 'topic_mc';
       state.questions = shuffle(topics[topicName]);
       state.allAnswers = getAllAnswers();
       state.qIndex = 0; state.score = 0;
       state.total = state.questions.length;
-      state.awaiting = 'answer';
-      document.querySelector('.input-bar').style.display = 'flex';
+      state.awaiting = 'mc_answer';
+      document.querySelector('.input-bar').style.display = 'none';
       updateScore();
       addMessage('bot', `📚 <strong>${topicName}</strong> — ${state.total} tanong. Handa ka na ba?`, `${topicName}. ${state.total} tanong. Handa ka na ba?`);
       setTimeout(nextQuestion, 800);
