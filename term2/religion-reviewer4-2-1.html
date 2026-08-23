@@ -1,0 +1,1802 @@
+<!DOCTYPE html>
+<html lang="tl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>✝️ Religion: Symbols, Sacraments &amp; Mission Reviewer 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --gold: #f59e0b;
+  --gold-dark: #b45309;
+  --blue: #3b82f6;
+  --blue-dark: #1d4ed8;
+  --red: #ef4444;
+  --green: #22c55e;
+  --bg: #0c1a0e;
+  --surface: #132015;
+  --surface2: #1a2e1d;
+  --text: #f0fdf4;
+  --muted: #86efac;
+  --border: #166534;
+}
+
+body {
+  font-family: 'Baloo 2', cursive;
+  background: var(--bg);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--text);
+  background-image:
+    radial-gradient(ellipse at 10% 30%, rgba(245,158,11,.06) 0%, transparent 55%),
+    radial-gradient(ellipse at 90% 70%, rgba(59,130,246,.06) 0%, transparent 55%);
+}
+
+header {
+  width: 100%;
+  background: linear-gradient(135deg, #14532d, #1e3a5f);
+  border-bottom: 2px solid var(--gold-dark);
+  padding: 13px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 4px 30px rgba(0,0,0,.5);
+}
+.header-icon { font-size: 2rem; animation: float 3s ease-in-out infinite; }
+@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
+
+header h1 {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.45rem;
+  background: linear-gradient(90deg, var(--gold), #fde68a, var(--gold));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+header .sub { font-size: .72rem; color: var(--muted); margin-top: 1px; }
+
+.header-controls { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+.score-pill {
+  background: rgba(245,158,11,.15);
+  border: 1px solid rgba(245,158,11,.4);
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-weight: 800;
+  font-size: .85rem;
+  color: var(--gold);
+}
+.audio-btn {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  background: var(--surface2);
+  color: var(--text);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all .2s;
+  display: flex; align-items: center; justify-content: center;
+}
+.audio-btn:hover, .audio-btn.active { background: #14532d; border-color: var(--gold); }
+
+.chat-wrap {
+  width: 100%; max-width: 700px; flex: 1;
+  display: flex; flex-direction: column;
+  padding: 16px 14px 0;
+}
+
+#chat-box {
+  flex: 1; overflow-y: auto;
+  display: flex; flex-direction: column;
+  gap: 14px; padding-bottom: 10px;
+  max-height: calc(100vh - 200px);
+  scroll-behavior: smooth;
+}
+#chat-box::-webkit-scrollbar { width: 4px; }
+#chat-box::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+.msg { display: flex; gap: 8px; }
+.msg.user { flex-direction: row-reverse; }
+
+.avatar {
+  width: 34px; height: 34px; border-radius: 50%;
+  font-size: 1rem; display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 2px;
+}
+.msg.bot .avatar { background: linear-gradient(135deg, #14532d, #1e3a5f); border: 1.5px solid rgba(245,158,11,.4); }
+.msg.user .avatar { background: linear-gradient(135deg, #1e3a5f, #14532d); border: 1.5px solid rgba(59,130,246,.3); }
+
+.bubble {
+  max-width: 80%;
+  padding: 11px 16px;
+  border-radius: 18px;
+  font-size: .9rem;
+  line-height: 1.65;
+  animation: pop .22s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes pop { from{transform:scale(.88) translateY(6px);opacity:0} to{transform:scale(1) translateY(0);opacity:1} }
+
+.msg.bot .bubble {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-bottom-left-radius: 5px;
+}
+.msg.user .bubble {
+  background: linear-gradient(135deg, #1e3a5f, var(--blue-dark));
+  border-bottom-right-radius: 5px;
+}
+
+/* chips */
+.chip {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: rgba(245,158,11,.12);
+  border: 1.5px solid rgba(245,158,11,.4);
+  color: var(--gold);
+  border-radius: 30px;
+  padding: 5px 13px; margin: 5px 4px 0 0;
+  font-size: .8rem; font-weight: 700;
+  cursor: pointer; transition: all .15s;
+  user-select: none; font-family: 'Baloo 2', cursive;
+}
+.chip:hover {
+  background: var(--gold-dark); color: white;
+  border-color: var(--gold);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(245,158,11,.3);
+}
+
+/* topic tag */
+.topic-tag {
+  display: inline-block;
+  background: linear-gradient(135deg, #14532d, #166534);
+  border: 1px solid var(--gold-dark);
+  color: var(--gold);
+  font-size: .68rem; font-weight: 800;
+  border-radius: 20px; padding: 2px 10px;
+  margin-bottom: 5px; letter-spacing: .5px;
+  text-transform: uppercase;
+}
+
+/* multiple choice */
+.mc-options { display: flex; flex-direction: column; gap: 7px; margin-top: 10px; width: 100%; }
+.mc-btn {
+  display: flex; align-items: center; gap: 10px;
+  background: rgba(255,255,255,.03);
+  border: 1.5px solid var(--border);
+  border-radius: 12px; padding: 9px 14px;
+  color: var(--text); font-family: 'Baloo 2', cursive;
+  font-size: .87rem; font-weight: 600;
+  cursor: pointer; transition: all .15s; text-align: left; width: 100%;
+}
+.mc-btn:hover:not(:disabled) {
+  background: rgba(245,158,11,.12); border-color: var(--gold);
+  color: var(--gold); transform: translateX(3px);
+}
+.mc-btn .letter {
+  display: flex; align-items: center; justify-content: center;
+  width: 26px; height: 26px; border-radius: 8px;
+  background: rgba(245,158,11,.15); border: 1px solid rgba(245,158,11,.35);
+  color: var(--gold); font-size: .78rem; font-weight: 800;
+  flex-shrink: 0; transition: all .15s;
+}
+.mc-btn:hover:not(:disabled) .letter { background: var(--gold-dark); color: white; border-color: var(--gold-dark); }
+.mc-btn.correct { background: rgba(34,197,94,.15)!important; border-color: #22c55e!important; color: #22c55e!important; cursor: default; }
+.mc-btn.correct .letter { background: #22c55e!important; color: white!important; border-color: #22c55e!important; }
+.mc-btn.wrong { background: rgba(239,68,68,.12)!important; border-color: #ef4444!important; color: #ef4444!important; cursor: default; }
+.mc-btn.wrong .letter { background: #ef4444!important; color: white!important; border-color: #ef4444!important; }
+.mc-btn:disabled { cursor: default; transform: none!important; }
+
+/* speaker wave */
+.speaker-wave {
+  display: inline-flex; align-items: flex-end;
+  gap: 2px; height: 14px; margin-left: 6px; vertical-align: middle;
+}
+.speaker-wave span {
+  display: block; width: 3px; border-radius: 2px;
+  background: var(--gold); animation: wave 1s ease-in-out infinite;
+}
+.speaker-wave span:nth-child(1){height:4px;animation-delay:0s}
+.speaker-wave span:nth-child(2){height:10px;animation-delay:.1s}
+.speaker-wave span:nth-child(3){height:6px;animation-delay:.2s}
+.speaker-wave span:nth-child(4){height:12px;animation-delay:.15s}
+.speaker-wave span:nth-child(5){height:4px;animation-delay:.05s}
+@keyframes wave{0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.8)}}
+
+/* typing */
+.typing {
+  display: flex; gap: 4px; padding: 12px 16px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 18px; border-bottom-left-radius: 5px; width: fit-content;
+}
+.dot { width: 7px; height: 7px; border-radius: 50%; background: var(--gold); animation: bounce .9s infinite; }
+.dot:nth-child(2){animation-delay:.15s} .dot:nth-child(3){animation-delay:.3s}
+@keyframes bounce{0%,80%,100%{transform:translateY(0);opacity:.6}40%{transform:translateY(-7px);opacity:1}}
+
+/* input bar */
+.input-bar {
+  width: 100%; max-width: 700px;
+  padding: 10px 14px 18px;
+  display: flex; gap: 8px;
+  background: var(--bg); position: sticky; bottom: 0;
+}
+#user-input {
+  flex: 1; padding: 12px 18px;
+  border: 2px solid var(--border); border-radius: 30px;
+  font-family: 'Baloo 2', cursive; font-size: .92rem;
+  outline: none; background: var(--surface); color: var(--text);
+  transition: border-color .2s, box-shadow .2s;
+}
+#user-input::placeholder { color: var(--muted); }
+#user-input:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(245,158,11,.12); }
+
+#send-btn {
+  width: 48px; height: 48px; border-radius: 50%; border: none;
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  color: white; font-size: 1.1rem; cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 3px 14px rgba(245,158,11,.4); flex-shrink: 0;
+}
+#send-btn:hover { transform: scale(1.08); box-shadow: 0 5px 20px rgba(245,158,11,.55); }
+#send-btn:disabled { opacity: .5; transform: none; }
+
+/* result modal */
+.result-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.75); backdrop-filter: blur(6px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 100; opacity: 0; pointer-events: none; transition: opacity .3s;
+}
+.result-overlay.show { opacity: 1; pointer-events: all; }
+.result-card {
+  background: linear-gradient(135deg, #132015, #0c1a0e);
+  border: 2px solid var(--gold-dark);
+  border-radius: 24px; padding: 36px 40px;
+  text-align: center; max-width: 380px; width: 90%;
+  box-shadow: 0 20px 60px rgba(0,0,0,.6);
+  transform: scale(.9); transition: transform .3s cubic-bezier(.34,1.56,.64,1);
+}
+.result-overlay.show .result-card { transform: scale(1); }
+.result-emoji { font-size: 4rem; margin-bottom: 12px; display: block; }
+.result-title {
+  font-family: 'Fredoka One', cursive; font-size: 1.7rem; margin-bottom: 6px;
+  background: linear-gradient(90deg, var(--gold), #fde68a);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.result-score { font-size: 3rem; font-weight: 900; margin: 10px 0; color: white; }
+.result-msg { color: var(--muted); font-size: .9rem; margin-bottom: 22px; }
+.result-btn {
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  border: none; border-radius: 30px; padding: 12px 30px;
+  color: white; font-family: 'Baloo 2', cursive; font-weight: 800;
+  font-size: 1rem; cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+  box-shadow: 0 4px 16px rgba(245,158,11,.35);
+}
+.result-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 22px rgba(245,158,11,.5); }
+
+/* scenario card for identify questions */
+.scenario-card {
+  background: rgba(245,158,11,.07);
+  border: 1px solid rgba(245,158,11,.25);
+  border-radius: 12px; padding: 10px 14px;
+  margin: 8px 0 6px; font-style: italic;
+  font-size: .87rem; color: #fde68a; line-height: 1.5;
+}
+
+/* ── Notes Panel ─────────────────────────────────────────────── */
+.notes-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.78); backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 200; opacity: 0; pointer-events: none; transition: opacity .3s;
+}
+.notes-overlay.show { opacity: 1; pointer-events: all; }
+.notes-panel {
+  background: linear-gradient(160deg, #0c1a0e, #132015);
+  border: 2px solid var(--gold-dark);
+  border-radius: 20px;
+  width: 92%; max-width: 720px;
+  max-height: 88vh;
+  display: flex; flex-direction: column;
+  box-shadow: 0 24px 60px rgba(0,0,0,.7);
+  overflow: hidden;
+  transform: translateY(30px);
+  transition: transform .35s cubic-bezier(.34,1.2,.64,1);
+}
+.notes-overlay.show .notes-panel { transform: translateY(0); }
+.notes-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 22px; border-bottom: 1px solid var(--border);
+  background: linear-gradient(135deg, #14532d44, #1e3a5f44);
+}
+.notes-header h2 { font-family: 'Fredoka One', cursive; font-size: 1.3rem; color: var(--gold); }
+.notes-close {
+  width: 34px; height: 34px; border-radius: 50%;
+  border: 1.5px solid var(--border); background: var(--surface2);
+  color: var(--text); font-size: 1rem; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; transition: all .2s;
+}
+.notes-close:hover { background: #b91c1c; border-color: #ef4444; }
+.notes-body { overflow-y: auto; padding: 20px 22px; flex: 1; }
+.notes-body::-webkit-scrollbar { width: 4px; }
+.notes-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+.notes-topic { margin-bottom: 28px; }
+.notes-topic-title {
+  font-family: 'Fredoka One', cursive; font-size: 1.05rem;
+  color: var(--gold); margin-bottom: 10px;
+  padding-bottom: 6px; border-bottom: 1px solid var(--border);
+}
+.notes-item {
+  display: flex; gap: 10px; align-items: flex-start;
+  padding: 7px 0; border-bottom: 1px solid rgba(255,255,255,.04);
+  font-size: .87rem; line-height: 1.55;
+}
+.notes-item:last-child { border-bottom: none; }
+.notes-term { font-weight: 800; color: var(--gold); min-width: 150px; flex-shrink: 0; font-size: .84rem; }
+.notes-def { color: #d1fae5; }
+.notes-tabs {
+  display: flex; flex-wrap: wrap; gap: 8px; padding: 14px 22px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(0,0,0,.15);
+}
+.notes-tab {
+  padding: 12px 20px; border-radius: 10px;
+  border: 1.5px solid var(--border); 
+  background: rgba(255,255,255,.04); color: var(--muted);
+  font-family: 'Baloo 2', cursive; font-size: .9rem; font-weight: 700;
+  cursor: pointer; transition: all .15s; white-space: nowrap;
+  min-height: 48px; display: flex; align-items: center;
+}
+.notes-tab.active { background: var(--surface); color: var(--gold); border-color: var(--gold-dark); }
+.notes-tab:hover:not(.active) { color: var(--text); background: var(--surface2); }
+.notes-section { display: none; }
+.notes-section.active { display: block; }
+
+
+/* ── Print button in notes header ─────────────────────────────── */
+.notes-header-actions { display: flex; align-items: center; gap: 10px; }
+.print-btn {
+  display: flex; align-items: center; gap: 6px;
+  background: rgba(245,158,11,.12);
+  border: 1.5px solid rgba(245,158,11,.4);
+  color: var(--gold);
+  border-radius: 20px;
+  padding: 7px 14px;
+  font-family: 'Baloo 2', cursive;
+  font-size: .78rem;
+  font-weight: 800;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all .15s;
+}
+.print-btn:hover { background: var(--gold); color: #0c1a0e; border-color: var(--gold); }
+.print-btn.active { background: var(--gold); color: #0c1a0e; border-color: var(--gold); }
+
+/* ── On-screen Practice Test / Answer Key ─────────────────────── */
+.ptest-part-title {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1rem;
+  color: var(--gold);
+  margin: 22px 0 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+.ptest-part-title:first-child { margin-top: 0; }
+.ptest-q {
+  font-size: .87rem;
+  line-height: 1.6;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed rgba(255,255,255,.06);
+  color: #d1fae5;
+}
+.ptest-q b { color: var(--gold); }
+.ptest-q .opt { display: block; margin: 2px 0 2px 18px; color: #d1fae5; }
+.ptest-bank {
+  background: rgba(59,130,246,.08);
+  border: 1px solid rgba(59,130,246,.3);
+  border-radius: 10px;
+  padding: 10px 16px;
+  margin-bottom: 14px;
+  font-size: .82rem;
+  color: #dbeafe;
+  line-height: 1.6;
+}
+.key-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.key-pill {
+  background: rgba(245,158,11,.1);
+  border: 1px solid rgba(245,158,11,.25);
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: .78rem;
+  color: #fde68a;
+}
+.key-pill b { color: #34d399; }
+
+/* ── Print / Save-as-PDF styles ──────────────────────────────────
+   By default everything is hidden from print. When body carries
+   .printing-test, only #print-area (a light-themed clone of the
+   Practice Test + Answer Key) is shown, laid out for paper. ──── */
+@media print {
+  body * { visibility: hidden; }
+  #print-area, #print-area * { visibility: visible; }
+  #print-area {
+    display: block !important;
+    position: absolute; top: 0; left: 0; width: 100%;
+    background: #fff; color: #14290f;
+    font-family: 'Helvetica', Arial, sans-serif;
+    font-size: 10.5pt;
+    line-height: 1.5;
+  }
+  #print-area .p-cover { text-align: center; padding-top: 40px; }
+  #print-area .p-cover .p-icon { font-size: 34pt; }
+  #print-area .p-cover h1 { font-size: 19pt; color: #b45309; margin: 8px 0 4px; }
+  #print-area .p-cover .p-sub { font-size: 10.5pt; color: #166534; margin-bottom: 20px; }
+  #print-area .p-info-box {
+    border: 1.5px solid #fcd34d; border-radius: 10px;
+    max-width: 460px; margin: 0 auto 20px; padding: 14px 20px;
+    text-align: left; font-size: 10pt;
+  }
+  #print-area .p-info-box div { margin: 6px 0; border-bottom: 1px dotted #fde68a; padding-bottom: 6px; }
+  #print-area .p-instructions {
+    max-width: 460px; margin: 0 auto; text-align: left;
+    background: #fffbeb; border: 1px solid #fcd34d; border-radius: 10px;
+    padding: 12px 18px; font-size: 9.5pt; color: #78350f;
+  }
+  #print-area h2.p-part-title {
+    font-size: 12.5pt; color: #fff;
+    background: linear-gradient(135deg, #b45309, #14532d) !important;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    padding: 6px 12px; border-radius: 7px; margin: 18px 0 10px;
+    page-break-after: avoid;
+  }
+  #print-area .p-bank {
+    background: #f0fdf4 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    border: 1px solid #86efac; border-radius: 8px; padding: 8px 14px;
+    margin-bottom: 12px; font-size: 9.5pt; color: #14532d;
+  }
+  #print-area .p-q {
+    margin-bottom: 8px; padding-bottom: 8px;
+    border-bottom: 1px dotted #fde68a; font-size: 10pt;
+    page-break-inside: avoid; color: #14290f;
+  }
+  #print-area .p-q b { color: #b45309; }
+  #print-area .p-q .p-blank { display: inline-block; min-width: 65px; border-bottom: 1px solid #64748b; }
+  #print-area .p-q .p-opt { display: block; margin: 2px 0 0 20px; color: #365314; }
+  #print-area .p-break { page-break-before: always; }
+  #print-area .p-key-part-title {
+    font-size: 11pt; color: #b45309; font-weight: bold;
+    margin: 14px 0 8px; border-bottom: 2px solid #b45309; padding-bottom: 4px;
+  }
+  #print-area .p-key-grid {
+    display: grid; grid-template-columns: repeat(5, 1fr);
+    gap: 5px 8px; margin-bottom: 14px;
+  }
+  #print-area .p-key-pill {
+    background: #f0fdf4 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    border: 1px solid #86efac; border-radius: 6px;
+    padding: 4px 8px; font-size: 8.5pt; color: #166534;
+  }
+  #print-area .p-key-pill b { color: #b45309; }
+  @page { size: letter; margin: 1.5cm 1.8cm; }
+}
+#print-area { display: none; }
+
+
+/* ── Chapter Summary / Tandaan / Memory boxes (fix: previously missing) ── */
+.chapter-summary {
+  background: linear-gradient(135deg, rgba(59,130,246,.1), rgba(34,197,94,.08));
+  border: 1px solid rgba(59,130,246,.25);
+  border-left: 4px solid var(--blue);
+  border-radius: 12px;
+  padding: 14px 18px;
+  margin-bottom: 18px;
+  font-size: .88rem;
+  line-height: 1.65;
+  color: #dbeafe;
+}
+.tandaan-box {
+  background: rgba(245,158,11,.08);
+  border: 1px solid rgba(245,158,11,.3);
+  border-left: 4px solid var(--gold);
+  border-radius: 12px;
+  padding: 12px 18px;
+  margin: 14px 0;
+  font-size: .86rem;
+  line-height: 1.6;
+  color: #fde68a;
+}
+.tandaan-label {
+  display: block;
+  font-family: 'Baloo 2', cursive;
+  font-size: .8rem;
+  color: var(--gold);
+  letter-spacing: .5px;
+  margin-bottom: 5px;
+}
+.memory-box {
+  background: rgba(34,197,94,.08);
+  border: 1px solid rgba(34,197,94,.3);
+  border-left: 4px solid var(--green);
+  border-radius: 12px;
+  padding: 12px 18px;
+  margin: 14px 0 22px;
+  font-size: .86rem;
+  line-height: 1.6;
+  color: #bbf7d0;
+}
+.memory-label {
+  display: block;
+  font-family: 'Baloo 2', cursive;
+  font-size: .8rem;
+  color: var(--green);
+  letter-spacing: .5px;
+  margin-bottom: 5px;
+}
+.compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0 20px;
+  font-size: .82rem;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.compare-table th {
+  background: linear-gradient(135deg, var(--blue-dark), var(--gold-dark));
+  color: white;
+  text-align: left;
+  padding: 9px 12px;
+  font-size: .78rem;
+  text-transform: uppercase;
+  letter-spacing: .4px;
+}
+.compare-table td {
+  padding: 9px 12px;
+  border-top: 1px solid var(--border);
+  color: var(--text);
+  vertical-align: top;
+}
+.compare-table tr:nth-child(even) td { background: rgba(255,255,255,.02); }
+
+/* ── Story Box (for reading Bible stories aloud) ─────────────────── */
+.story-box {
+  background: rgba(255,255,255,.03);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px 20px;
+  margin-bottom: 16px;
+  font-size: .92rem;
+  line-height: 1.8;
+  color: var(--text);
+}
+.story-box p { margin-bottom: 10px; }
+.story-box p:last-child { margin-bottom: 0; }
+.story-ref {
+  display: block;
+  text-align: right;
+  font-style: italic;
+  color: var(--muted);
+  font-size: .8rem;
+  margin-top: 10px;
+}
+.story-label {
+  display: block;
+  font-family: 'Baloo 2', cursive;
+  font-size: .9rem;
+  color: var(--gold);
+  letter-spacing: .5px;
+  margin-bottom: 10px;
+}
+/* ── Raw Notes (original document view) ──────────────────────── */
+.rawnotes-intro {
+  font-size: .82rem;
+  color: var(--muted);
+  line-height: 1.6;
+  background: rgba(59,130,246,.1);
+  border: 1px solid rgba(59,130,246,.3);
+  border-left: 4px solid var(--blue);
+  border-radius: 10px;
+  padding: 12px 18px;
+  margin-bottom: 20px;
+}
+.rawnotes-doc {
+  font-family: 'Lora', Georgia, serif;
+  line-height: 1.75;
+}
+.rawnotes-doc p {
+  font-size: .95rem;
+  margin-bottom: 14px;
+  color: #e2f5e6;
+}
+.rawnotes-doc strong { color: var(--gold); font-weight: 700; }
+.rawnotes-doc em { color: var(--muted); font-style: italic; }
+.rawnotes-doc h3.doc-heading {
+  font-family: 'Baloo 2', cursive;
+  font-size: 1.05rem;
+  color: var(--gold);
+  margin: 26px 0 12px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid var(--border);
+}
+.rawnotes-doc h3.doc-heading:first-child { margin-top: 0; }
+.rawnotes-doc ul, .rawnotes-doc ol {
+  margin: 0 0 14px 26px;
+  color: #e2f5e6;
+}
+.rawnotes-doc li { margin-bottom: 6px; font-size: .95rem; }
+.rawnotes-doc table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0 20px;
+  font-size: .82rem;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.rawnotes-doc th {
+  background: linear-gradient(135deg, var(--blue-dark), var(--gold-dark));
+  color: white;
+  text-align: left;
+  padding: 9px 12px;
+  font-size: .78rem;
+}
+.rawnotes-doc td {
+  padding: 9px 12px;
+  border-top: 1px solid var(--border);
+  color: var(--text);
+  vertical-align: top;
+}
+.rawnotes-doc tr:nth-child(even) td { background: rgba(255,255,255,.02); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-icon">✝️</div>
+  <div>
+    <h1>Symbols, Sacraments &amp; Mission</h1>
+    <div class="sub">Symbols of Christ · Baptism &amp; Confirmation · Gifts of the Spirit · The Twelve Apostles</div>
+  </div>
+  <div class="header-controls">
+    <div class="score-pill">⭐ <span id="score-val">0</span> / <span id="total-val">0</span></div>
+    <button class="audio-btn" id="notes-toggle" title="Open Reviewer" onclick="document.getElementById('notes-overlay').classList.add('show')">📖</button>
+    <button class="audio-btn active" id="audio-toggle" title="Toggle Audio">🔊</button>
+  </div>
+</header>
+
+<div class="chat-wrap">
+  <div id="chat-box"></div>
+</div>
+
+<div class="input-bar">
+  <input type="text" id="user-input" placeholder="Type your answer here…" autocomplete="off" />
+  <button id="send-btn">➤</button>
+</div>
+
+<div class="result-overlay" id="result-overlay">
+  <div class="result-card">
+    <span class="result-emoji" id="res-emoji">🏆</span>
+    <div class="result-title">Quiz Complete!</div>
+    <div class="result-score"><span id="res-score">0</span>/<span id="res-total">0</span></div>
+    <div class="result-msg" id="res-msg">Great job!</div>
+    <button class="result-btn" onclick="restartApp()">🔄 Maglaro Ulit</button>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+// QUESTION BANK
+// ═══════════════════════════════════════════════════════════════
+const topics = {
+
+  "Symbols of Christ": [
+    { q: "During what period did Christians begin using symbols to represent their faith in Jesus?", a: "The period when Christians were being persecuted", hint: "It was a dangerous time to openly practice the faith." },
+    { q: "Where can these symbols of Christ be seen?", a: "In religious paintings, altars and carvings on Church walls, Mass vestments, sacred linens, and many devotional objects", hint: "Both in art and in items used during Mass." },
+    { q: "What does Alpha and Omega (Α Ω) represent?", a: "That Christ is the beginning and the end", hint: "Two letters, first and last." },
+    { q: "What is Alpha in the Greek alphabet?", a: "The first letter", hint: "Where the alphabet starts." },
+    { q: "What is Omega in the Greek alphabet?", a: "The last letter", hint: "Where the alphabet ends." },
+    { q: "What two Greek letters combine to form the Chi-Rho symbol (☧)?", a: "Chi (Χ) and Rho (Ρ)", hint: "Two Greek letters overlapped together." },
+    { q: "What Greek word do Chi and Rho represent the first two letters of?", a: "Christos, meaning Christ", hint: "The Greek word for 'Christ.'" },
+    { q: "What does the symbol IHS represent?", a: "The first three letters of the Greek name for Jesus (ΙΗΣΟΥΣ)", hint: "Three letters taken from a Greek name." },
+    { q: "What is the Greek word for \"fish,\" used as an early Christian symbol?", a: "Ichthus (ΙΧΘΥΣ)", hint: "A simple sea creature became a secret symbol." },
+    { q: "What do the Greek letters ΙΧΘΥΣ stand for as an abbreviation?", a: "\"Jesus Christ, Son of God, Savior\"", hint: "Each letter stands for a word in this phrase." },
+  ],
+
+  "Christograms": [
+    { q: "What is a Christogram?", a: "A monogram or typographic abbreviation for the name of Jesus Christ, used as a traditional symbol within Christian art and iconography", hint: "A shortened symbol standing in for a name." },
+    { q: "What did Christograms serve as during times of persecution?", a: "Early identifiers for believers who confessed the faith", hint: "A quiet way to recognize fellow believers." },
+    { q: "What does INRI stand for?", a: "Iesus Nazarenus, Rex Iudaeorum", hint: "A Latin phrase." },
+    { q: "What does INRI mean in English?", a: "\"Jesus of Nazareth, King of the Jews\"", hint: "This was written above Jesus on the cross." },
+    { q: "What is IC XC NIKA?", a: "A Byzantine Christogram formed from the first and last letters of ΧΡΙΣΤΟΣ, accompanied by NIKA (conquers)", hint: "Comes from an Eastern Christian tradition." },
+    { q: "What does IC XC NIKA proclaim?", a: "\"Jesus Christ conquers\"", hint: "A declaration of victory." },
+    { q: "Where do Christograms continue to appear today?", a: "On ecclesiastical architecture, vestments, and devotional objects", hint: "Church buildings and religious items." },
+  ],
+
+  "Baptism: Sacrament of Initiation": [
+    { q: "What is initiation?", a: "An admission process by which new members are formally accepted as members of a group", hint: "Think of joining any club or organization." },
+    { q: "What three sacraments make up the sacraments of initiation?", a: "Baptism, confirmation, and Holy Eucharist", hint: "Three sacraments that welcome someone into the Church." },
+    { q: "What is baptism?", a: "The first sacrament of initiation; it brings us new life in Christ and incorporates us into the Church", hint: "It's the very first of the three." },
+    { q: "What does baptism make us?", a: "Members of the Church and adopted brothers and sisters of Christ", hint: "It changes our family status spiritually." },
+    { q: "What is immersion in baptism?", a: "The act of being completely covered with water", hint: "Full submersion." },
+    { q: "What is infusion in baptism?", a: "The pouring of holy water on the forehead of the person to be baptized", hint: "Water poured, not submerged." },
+    { q: "What words does the priest say during baptism?", a: "\"I baptize you in the name of the Father, and of the Son, and of the Holy Spirit.\"", hint: "It names the Holy Trinity." },
+    { q: "Who can be the minister of baptism?", a: "A bishop, a priest, or a deacon", hint: "Three possible roles." },
+    { q: "What are the four symbols of baptism?", a: "Water, chrism oil, lighted candle, and white garment", hint: "Four physical items used in the ritual." },
+    { q: "What does water symbolize in baptism?", a: "The saving presence of God; sharing in the new life in Christ", hint: "It's poured as a sign of new life." },
+    { q: "What does chrism oil symbolize in baptism?", a: "Being healed and strengthened by the Spirit, and the baptized person's mission as a follower of Jesus", hint: "A blessed, scented oil." },
+    { q: "What does the lighted candle symbolize in baptism?", a: "The light and warmth of God's love that Jesus gives as the Light of the world", hint: "Think of Jesus's own title, 'Light of the world.'" },
+    { q: "What does the white garment represent in baptism?", a: "Our new dignity as Christians; it signifies mystery and purity, death, and life", hint: "Its color carries several meanings at once." },
+  ],
+
+  "Confirmation and the Gifts of the Holy Spirit": [
+    { q: "What is confirmation?", a: "A sacrament of initiation that draws us to a closer union with the Church through the power of the Holy Spirit", hint: "The second sacrament of initiation." },
+    { q: "How is the sacrament of confirmation conferred?", a: "Through the laying on of hands, anointing the forehead, and saying a prayer", hint: "Three actions happen together." },
+    { q: "What prayer is said during confirmation?", a: "\"Be sealed with the gifts of the Holy Spirit\"", hint: "A short blessing said over the person." },
+    { q: "Who is the minister of confirmation?", a: "The bishop", hint: "Unlike baptism, only one role can do this." },
+    { q: "Who helps the one being confirmed grow as a good Catholic Christian?", a: "The godparents", hint: "The same kind of role as in baptism." },
+    { q: "How many special gifts of the Holy Spirit are received in confirmation?", a: "Seven", hint: "A number often associated with completeness." },
+    { q: "What are the seven gifts of the Holy Spirit?", a: "Wisdom, understanding, counsel, fortitude, knowledge, fear of the Lord, and piety", hint: "Seven virtues waiting to be developed." },
+    { q: "What is the gift of wisdom?", a: "The gift which enables us to appreciate spiritual things and have right judgment in deciding what is true and good", hint: "About discerning truth and goodness." },
+    { q: "What is the gift of understanding?", a: "The gift which enables us to grasp the meaning of the truths of faith", hint: "About comprehending what we believe." },
+    { q: "What is the gift of counsel?", a: "The gift which enables us to identify the right course of action in a given situation", hint: "About knowing what to do." },
+    { q: "What is the gift of fortitude?", a: "The gift which allows us to be strong and brave to stand up for our faith in Christ", hint: "About courage." },
+    { q: "What is the gift of knowledge?", a: "The ability to give importance to the value and use of created things", hint: "About appreciating the world around us." },
+    { q: "What is the gift of fear of the Lord?", a: "The gift which enables us to show respect and awe toward God", hint: "Not fear as in being scared, but deep reverence." },
+    { q: "What is the gift of piety?", a: "The gift which teaches us about duty, respect, and loyalty toward our parents, family, and country", hint: "About devotion to those close to us." },
+    { q: "What are the two symbols of confirmation?", a: "Laying on of hands and anointing with chrism", hint: "One is a gesture, the other uses oil." },
+    { q: "What does the laying on of hands symbolize in confirmation?", a: "Sending forth the Holy Spirit and handing us the rights and responsibilities as mature Christians", hint: "An ancient gesture of conferring power." },
+    { q: "What does anointing with chrism symbolize?", a: "Our commitment to profess our faith, practice it boldly, and spread the \"aroma of Christ\"", hint: "It uses a fragrant oil." },
+  ],
+
+  "Fruits of the Spirit": [
+    { q: "What are the fruits of the Spirit?", a: "Signs of the presence of the Holy Spirit in our lives", hint: "Visible results of the Spirit at work." },
+    { q: "How many fruits of the Spirit does Church tradition list?", a: "Twelve", hint: "More than the number of gifts of the Holy Spirit." },
+    { q: "Name the twelve fruits of the Spirit.", a: "Charity, joy, peace, patience, kindness, goodness, generosity, gentleness, faithfulness, modesty, self-control, and chastity", hint: "Twelve virtues, quite a long list." },
+    { q: "Which fruit is described as \"not being rude or harsh in our treatment of one another\"?", a: "Gentleness", hint: "About being soft and kind in how we treat people." },
+    { q: "Which fruit is described as \"being able to accept others and be more understanding of their mistakes\"?", a: "Patience", hint: "About tolerating others' flaws calmly." },
+    { q: "Which fruit is described as \"being happy for the blessings God has given us and others\"?", a: "Joy", hint: "A feeling of deep happiness." },
+    { q: "Which fruit is described as \"not being proud nor despising others for their lack of talents and gifts\"?", a: "Modesty", hint: "About not looking down on others." },
+    { q: "Which fruit is described as \"the capacity to willingly share with others whatever we have\"?", a: "Generosity", hint: "About giving freely." },
+  ],
+
+  "Jesus Sends Out the Twelve Apostles": [
+    { q: "What authority did Jesus give His twelve disciples?", a: "Authority to drive out impure spirits and to heal every disease and sickness", hint: "Power over both spiritual and physical afflictions." },
+    { q: "Name the first four apostles listed.", a: "Simon (called Peter) and his brother Andrew, James son of Zebedee, and his brother John", hint: "Two pairs of brothers." },
+    { q: "Who was the tax collector among the twelve apostles?", a: "Matthew", hint: "His profession is mentioned alongside his name." },
+    { q: "Who betrayed Jesus among the twelve apostles?", a: "Judas Iscariot", hint: "The last apostle named in the list." },
+    { q: "According to Jesus's instructions, where should the twelve NOT go?", a: "Among the Gentiles or into any town of the Samaritans", hint: "Two groups they were told to avoid, for now." },
+    { q: "To whom did Jesus tell the twelve to go instead?", a: "The lost sheep of Israel", hint: "A specific group described using a farming metaphor." },
+    { q: "What message did Jesus tell them to proclaim?", a: "\"The kingdom of heaven has come near.\"", hint: "A message about God's kingdom." },
+    { q: "In what Bible book and chapter is this story found?", a: "Matthew 10:1-10", hint: "The first Gospel in the New Testament." },
+    { q: "What did Jesus tell the twelve NOT to bring for their journey?", a: "Gold, silver, or copper, no bag, extra shirt, sandals, or staff", hint: "A long list of things to travel light without." },
+    { q: "What was the mission Jesus gave to His apostles?", a: "To proclaim the Good News of God's Kingdom, heal the sick, raise the dead, cleanse those with leprosy, drive out demons, and call people to become His disciples", hint: "Several different tasks combined into one mission." },
+    { q: "Who continued the mission of the apostles?", a: "The Church and all Christians", hint: "It didn't stop with the original twelve." },
+    { q: "According to John 20:21, what did Jesus say when sending out His followers?", a: "\"As the Father has sent me, I am sending you.\"", hint: "It draws a parallel between the Father's sending of Jesus and Jesus's sending of us." },
+  ],
+
+  "Corporal and Spiritual Works of Mercy": [
+    { q: "What are the corporal and spiritual works of mercy?", a: "Lists of actions or ways by which all Catholics can actively continue the mission of Jesus in their lives, schools, parishes, country, and the world", hint: "Practical ways to live out the Christian mission." },
+    { q: "Name the seven corporal works of mercy.", a: "Feed the hungry, give drink to the thirsty, clothe those who lack clothes, visit those in prison, shelter the homeless, visit the sick, and bury the dead", hint: "These address physical needs." },
+    { q: "Name the seven spiritual works of mercy.", a: "Correct sinners, teach those who need to learn, give advice to those who need it, comfort those who suffer, be patient with others, forgive injuries, and pray for the living and the dead", hint: "These address spiritual and emotional needs." },
+  ],
+
+};
+
+// ── TRUE OR FALSE ────────────────────────────────────────────────────────────
+const trueOrFalse = [
+  { q: "Christians used symbols to represent their faith in Jesus during times of persecution.", a: "true" },
+  { q: "Alpha and Omega represent that Christ has no beginning or end.", a: "false" },
+  { q: "Chi-Rho combines the first two letters of the Greek word for \"fish.\"", a: "false" },
+  { q: "IHS is derived from the first three letters of the Greek name for Jesus.", a: "true" },
+  { q: "Ichthus is the Greek word for \"bread.\"", a: "false" },
+  { q: "INRI stands for a Latin phrase meaning \"Jesus of Nazareth, King of the Jews.\"", a: "true" },
+  { q: "IC XC NIKA proclaims that \"Jesus Christ conquers.\"", a: "true" },
+  { q: "The sacraments of initiation are baptism, confirmation, and Holy Eucharist.", a: "true" },
+  { q: "Immersion is the pouring of water on the forehead.", a: "false" },
+  { q: "The minister of baptism can be a bishop, priest, or deacon.", a: "true" },
+  { q: "There are four symbols of baptism: water, chrism oil, lighted candle, and white garment.", a: "true" },
+  { q: "The white garment in baptism symbolizes only death, with no other meaning.", a: "false" },
+  { q: "Confirmation is conferred through the laying on of hands and anointing the forehead.", a: "true" },
+  { q: "The minister of confirmation is a priest, never a bishop.", a: "false" },
+  { q: "There are seven special gifts of the Holy Spirit received in confirmation.", a: "true" },
+  { q: "Church tradition lists twelve fruits of the Spirit.", a: "true" },
+  { q: "Jesus told His twelve apostles to go first among the Gentiles.", a: "false" },
+  { q: "Judas Iscariot was one of the twelve apostles who betrayed Jesus.", a: "true" },
+  { q: "There are seven corporal works of mercy and seven spiritual works of mercy.", a: "true" },
+  { q: "Visiting the sick is one of the spiritual works of mercy.", a: "false" },
+];
+
+// ── IDENTIFY: SYMBOLS · BAPTISM SYMBOLS · GIFTS/FRUITS OF THE SPIRIT ────────
+const identifyQuestions = [
+  { q: "Α Ω", a: "Alpha and Omega", choices: ["Alpha and Omega","Chi-Rho","IHS","Ichthus"] },
+  { q: "☧", a: "Chi-Rho", choices: ["Chi-Rho","Alpha and Omega","IHS","Ichthus"] },
+  { q: "IHS", a: "IHS (name of Jesus)", choices: ["IHS (name of Jesus)","Chi-Rho","INRI","IC XC NIKA"] },
+  { q: "ΙΧΘΥΣ (fish)", a: "Ichthus", choices: ["Ichthus","Chi-Rho","Alpha and Omega","IHS (name of Jesus)"] },
+  { q: "Symbol of the saving presence of God; sharing in the new life in Christ.", a: "Water", choices: ["Water","Chrism Oil","Lighted Candle","White Garment"] },
+  { q: "Signifies being healed and strengthened by the Spirit.", a: "Chrism Oil", choices: ["Chrism Oil","Water","Lighted Candle","White Garment"] },
+  { q: "Symbol of the light and warmth of God's love.", a: "Lighted Candle", choices: ["Lighted Candle","Water","Chrism Oil","White Garment"] },
+  { q: "Represents our new dignity as Christians.", a: "White Garment", choices: ["White Garment","Water","Chrism Oil","Lighted Candle"] },
+  { q: "It is the quality of not being rude or harsh in our treatment of one another.", a: "Gentleness", choices: ["Gentleness","Patience","Kindness","Modesty"] },
+  { q: "It is being able to accept others and be more understanding of their mistakes.", a: "Patience", choices: ["Patience","Gentleness","Kindness","Faithfulness"] },
+  { q: "It is being happy for the blessings God has given us and others in the Spirit.", a: "Joy", choices: ["Joy","Peace","Charity","Goodness"] },
+  { q: "It is not being proud nor despising others for their lack of talents and gifts.", a: "Modesty", choices: ["Modesty","Gentleness","Patience","Self-control"] },
+  { q: "It is the capacity to willingly share with others whatever we have.", a: "Generosity", choices: ["Generosity","Charity","Kindness","Goodness"] },
+  { q: "It is the gift which enables us to appreciate spiritual things and to have right judgment in deciding what is true and good.", a: "Wisdom", choices: ["Wisdom","Understanding","Counsel","Knowledge"] },
+  { q: "It is the gift which enables us to grasp the meaning of the truths of faith.", a: "Understanding", choices: ["Understanding","Wisdom","Knowledge","Counsel"] },
+  { q: "It is the gift which enables us to identify the right course of action in a given situation.", a: "Counsel", choices: ["Counsel","Wisdom","Fortitude","Understanding"] },
+  { q: "It is the gift which allows us to be strong and brave to stand up for our faith in Christ.", a: "Fortitude", choices: ["Fortitude","Counsel","Piety","Knowledge"] },
+  { q: "It is the ability to give importance to the value and use of created things.", a: "Knowledge", choices: ["Knowledge","Wisdom","Understanding","Fear of the Lord"] },
+  { q: "It is the gift which enables us to show respect and awe toward God.", a: "Fear of the Lord", choices: ["Fear of the Lord","Piety","Knowledge","Wisdom"] },
+  { q: "It is the gift which teaches us about duty, respect, and loyalty toward our parents, family, and country.", a: "Piety", choices: ["Piety","Fear of the Lord","Fortitude","Counsel"] },
+];
+
+// ═══════════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════════
+let state = {
+  awaiting: 'menu',
+  mode: null,
+  questions: [],
+  allAnswers: [],
+  qIndex: 0,
+  score: 0,
+  total: 0,
+  hintUsed: false,
+  audioEnabled: true,
+};
+
+// ═══════════════════════════════════════════════════════════════
+// TTS (UPGRADED FOR TRUE FILIPINO ACCENT)
+// ═══════════════════════════════════════════════════════════════
+let currentAudioStream = null;
+
+function speak(text) {
+  if (!state.audioEnabled) return;
+  
+  // Linisin ang mga nakaraang audio task
+  window.speechSynthesis.cancel();
+  if (currentAudioStream) {
+    currentAudioStream.pause();
+    currentAudioStream = null;
+  }
+  
+  // Tanggalin ang HTML tags at emojis para hindi basahin nang paputol-putol
+  const clean = text.replace(/<[^>]+>/g,'').replace(/[🇵🇭🌟✅❌💡⏭️🏆😊💪🔄🔲📚👋⭐✕🧭📏🗺️]/g,'');
+  
+  // PRIMARY METHOD: Google Translation Engine cloud voice stream (May natural na Filipino accent)
+  const googleTtsUrl = `https://translate.google.com/translate_tts?ie=UTF-8&tl=tl&client=tw-ob&q=${encodeURIComponent(clean)}`;
+  
+  currentAudioStream = new Audio(googleTtsUrl);
+  currentAudioStream.onplaying = () => showWave(true);
+  currentAudioStream.onended = currentAudioStream.onerror = () => showWave(false);
+  
+  currentAudioStream.play().catch(err => {
+    // BACKUP METHOD: Web Speech API (works even without internet)
+    console.warn("Google TTS blocked or offline. Falling back to local system speech engine.");
+    
+    const streamFallback = new SpeechSynthesisUtterance(clean);
+    streamFallback.lang = 'fil-PH';
+    streamFallback.rate = 0.95; streamFallback.pitch = 1.05; streamFallback.volume = 1;
+    
+    const voices = window.speechSynthesis.getVoices();
+    const filVoice = voices.find(v => v.lang.startsWith('fil') || v.lang.startsWith('tl'));
+    const engVoice = voices.find(v => v.lang.startsWith('en') && v.name.toLowerCase().includes('female'))
+                   || voices.find(v => v.lang.startsWith('en'));
+              
+    if (filVoice) {
+      streamFallback.voice = filVoice;
+    } else if (engVoice) {
+      streamFallback.voice = engVoice; 
+      streamFallback.lang = 'en-US'; 
+    }
+    
+    streamFallback.onstart = () => showWave(true);
+    streamFallback.onend = streamFallback.onerror = () => showWave(false);
+    window.speechSynthesis.speak(streamFallback);
+  });
+}
+
+function showWave(on) {
+  document.querySelectorAll('.speaker-wave').forEach(w => w.style.display = on ? 'inline-flex' : 'none');
+}
+
+// I-initialize ang mga boses ng system
+let localSystemVoices = [];
+function lookupSystemVoices() {
+  localSystemVoices = window.speechSynthesis.getVoices();
+}
+lookupSystemVoices();
+if (window.speechSynthesis.onvoiceschanged !== undefined) {
+  window.speechSynthesis.onvoiceschanged = lookupSystemVoices;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// UI HELPERS
+// ═══════════════════════════════════════════════════════════════
+const chatBox = document.getElementById('chat-box');
+const input = document.getElementById('user-input');
+const sendBtn = document.getElementById('send-btn');
+
+function scrollBottom() { chatBox.scrollTop = chatBox.scrollHeight; }
+
+function addMessage(role, html, speakText) {
+  const div = document.createElement('div');
+  div.className = `msg ${role}`;
+  const av = document.createElement('div');
+  av.className = 'avatar';
+  av.textContent = role === 'bot' ? '🤖' : '🧑';
+  const bub = document.createElement('div');
+  bub.className = 'bubble';
+  bub.innerHTML = role === 'bot'
+    ? html + '<span class="speaker-wave" style="display:none"><span></span><span></span><span></span><span></span><span></span></span>'
+    : html;
+  div.appendChild(av); div.appendChild(bub);
+  chatBox.appendChild(div);
+  scrollBottom(); bindChips();
+  if (role === 'bot') {
+    const txt = speakText || html.replace(/<[^>]+>/g,' ');
+    setTimeout(() => speak(txt), 350);
+  }
+}
+
+function addTyping() {
+  const d = document.createElement('div');
+  d.className = 'msg bot'; d.id = 'typing';
+  d.innerHTML = '<div class="avatar">🤖</div><div class="typing"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>';
+  chatBox.appendChild(d); scrollBottom();
+}
+function removeTyping() { const t = document.getElementById('typing'); if(t) t.remove(); }
+
+function bindChips() {
+  document.querySelectorAll('.chip:not([data-bound])').forEach(c => {
+    c.dataset.bound = '1';
+    c.addEventListener('click', () => handleUserMessage(c.dataset.val));
+  });
+}
+
+function updateScore() {
+  document.getElementById('score-val').textContent = state.score;
+  document.getElementById('total-val').textContent = state.total;
+}
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length-1; i > 0; i--) {
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]] = [a[j],a[i]];
+  }
+  return a;
+}
+
+function normalize(s) { return s.toLowerCase().trim().replace(/\s+/g,' '); }
+
+function checkAnswer(user, correct) {
+  const u = normalize(user), c = normalize(correct);
+  if (u === c) return true;
+  if (c.includes(u) && u.length > 5) return true;
+  const parts = c.split(/[,;\/]/);
+  for (const p of parts) if (u.includes(p.trim()) && p.trim().length > 4) return true;
+  return false;
+}
+
+function showResult() {
+  const pct = Math.round((state.score/state.total)*100);
+  const emoji = pct>=90?'🏆':pct>=70?'🌟':pct>=50?'😊':'💪';
+  const msg = pct>=90?'Excellent! You know it all!':pct>=70?'Great job! Keep it up!':pct>=50?'Good! Study a little more!':"Don't give up! Try again!";
+  document.getElementById('res-emoji').textContent = emoji;
+  document.getElementById('res-score').textContent = state.score;
+  document.getElementById('res-total').textContent = state.total;
+  document.getElementById('res-msg').textContent = msg;
+  document.getElementById('result-overlay').classList.add('show');
+  speak(`All done! Your score is ${state.score} out of ${state.total}. ${msg}`);
+}
+
+function restartApp() {
+  document.getElementById('result-overlay').classList.remove('show');
+  state = { awaiting:'menu', mode:null, questions:[], allAnswers:[], qIndex:0, score:0, total:0, hintUsed:false, audioEnabled:state.audioEnabled };
+  chatBox.innerHTML = '';
+  document.querySelector('.input-bar').style.display = 'flex';
+  updateScore();
+  showMenu();
+}
+
+// ═══════════════════════════════════════════════════════════════
+// MC HELPERS
+// ═══════════════════════════════════════════════════════════════
+function getAllAnswers() {
+  const ans = [];
+  for (const qs of Object.values(topics)) for (const q of qs) ans.push(q.a);
+  return ans;
+}
+
+function generateChoices(correct, pool) {
+  const distractors = shuffle(pool.filter(a => a !== correct)).slice(0,3);
+  return shuffle([correct, ...distractors]);
+}
+
+function buildMCBtns(choices, correctAnswer) {
+  const letters = ['A','B','C','D','E'];
+  return `<div class="mc-options">${choices.map((c,i)=>
+    `<button class="mc-btn" data-answer="${encodeURIComponent(c)}" data-correct="${encodeURIComponent(correctAnswer)}" onclick="handleMCClick(this)">
+      <span class="letter">${letters[i]}</span>${c}
+    </button>`
+  ).join('')}</div>`;
+}
+
+function handleMCClick(btn) {
+  const allBtns = btn.closest('.mc-options').querySelectorAll('.mc-btn');
+  allBtns.forEach(b => b.disabled = true);
+  const chosen = decodeURIComponent(btn.dataset.answer);
+  const correct = decodeURIComponent(btn.dataset.correct);
+  const isCorrect = chosen === correct;
+  allBtns.forEach(b => { if(decodeURIComponent(b.dataset.answer)===correct) b.classList.add('correct'); });
+  if (!isCorrect) btn.classList.add('wrong');
+  setTimeout(() => {
+    if (isCorrect) {
+      state.score++;
+      addMessage('bot', `✅ <strong>Correct!</strong> +1 point! The answer is: <strong>${correct}</strong>`, `Correct! The answer is: ${correct}`);
+    } else {
+      addMessage('bot', `❌ <strong>Not quite.</strong> The correct answer is: <strong>${correct}</strong>`, `Not quite. The correct answer is: ${correct}`);
+    }
+    state.qIndex++; updateScore();
+    if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+    else setTimeout(showResult, 900);
+  }, 650);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// NEXT QUESTION
+// ═══════════════════════════════════════════════════════════════
+function nextQuestion() {
+  const qi = state.qIndex;
+  const q = state.questions[qi];
+  const num = qi + 1;
+
+  if (state.mode === 'full' || state.mode === 'topic_mc') {
+    const choices = generateChoices(q.a, state.allAnswers);
+    const tag = q.topic ? `<span class="topic-tag">${q.topic}</span><br>` : '';
+    const html = `${tag}<strong>Q${num} of ${state.total}:</strong> ${q.q}${buildMCBtns(choices, q.a)}`;
+    addMessage('bot', html, `Question ${num}. ${q.q}`);
+    return;
+  }
+
+  if (state.mode === 'tf') {
+    const html = `<strong>Q${num} of ${state.total}:</strong> <div class="scenario-card">${q.q}</div>
+      <span class="chip" data-val="true">✅ True</span><span class="chip" data-val="false">❌ False</span>`;
+    addMessage('bot', html, `Question ${num}. True or False: ${q.q}`);
+    return;
+  }
+
+  if (state.mode === 'identify') {
+    const btns = buildMCBtns(q.choices, q.a);
+    const html = `<strong>Q${num} of ${state.total}:</strong> Identify what is being described:<div class="scenario-card">${q.q}</div>${btns}`;
+    addMessage('bot', html, `Question ${num}. Identify: ${q.q}`);
+    return;
+  }
+
+  // typed answer mode
+  const tag = q.topic ? `<span class="topic-tag">${q.topic}</span><br>` : '';
+  const html = `${tag}<strong>Q${num} of ${state.total}:</strong> ${q.q}<br><small style="color:var(--muted)">Type your answer · type <em>hint</em> for help · <em>skip</em> to move on</small>`;
+  addMessage('bot', html, `Question ${num}. ${q.q}`);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// MENU
+// ═══════════════════════════════════════════════════════════════
+function showMenu() {
+  addMessage('bot',
+    `👋 <strong>Hi! I'm your Religion Reviewer!</strong><br>Let's study <em>Symbols of Christ</em>, <em>Christograms</em>, <em>Baptism</em>, <em>Confirmation and the Gifts of the Holy Spirit</em>, the <em>Fruits of the Spirit</em>, <em>Jesus Sends Out the Twelve Apostles</em>, and the <em>Corporal and Spiritual Works of Mercy</em>.<br><br>What would you like to do?<br>
+    <span class="chip" data-val="1">📚 Study by Topic</span>
+    <span class="chip" data-val="2">✅ True or False</span>
+    <span class="chip" data-val="3">🌐 Identify</span>
+    <span class="chip" data-val="4">🌟 Full Review (Multiple Choice)</span>`,
+    "Hi! I'm your Religion Reviewer on Symbols, Sacraments, and Mission. What would you like to do? Study a topic, True or False, Identify, or a Full Review with multiple choice?"
+  );
+  state.awaiting = 'menu';
+}
+
+// ═══════════════════════════════════════════════════════════════
+// PROCESS MESSAGE
+// ═══════════════════════════════════════════════════════════════
+function processMessage(msg) {
+  const aw = state.awaiting;
+
+  // ── MENU ──────────────────────────────────────────────────
+  if (aw === 'menu') {
+    if (msg === '1') {
+      state.awaiting = 'topic';
+      const keys = Object.keys(topics);
+      const chips = keys.map((t,i) => `<span class="chip" data-val="${i+1}">${i+1}. ${t}</span>`).join(' ');
+      addMessage('bot', `📚 Which topic would you like to study?<br>${chips}`, 'Which topic would you like to study?');
+
+    } else if (msg === '2') {
+      state.mode = 'tf';
+      state.questions = shuffle(trueOrFalse);
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'tf_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `✅ <strong>True or False!</strong> ${state.total} questions. Let's start!`, `True or False! ${state.total} questions. Let's start!`);
+      setTimeout(nextQuestion, 800);
+
+    } else if (msg === '3') {
+      state.mode = 'identify';
+      state.questions = shuffle(identifyQuestions);
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'mc_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `🌐 <strong>Identify!</strong> Figure out which symbol, baptism symbol, or gift/fruit of the Holy Spirit is being described.`, "Identify! Figure out what's being described in each item.");
+      setTimeout(nextQuestion, 800);
+
+    } else if (msg === '4') {
+      state.mode = 'full';
+      const all = [];
+      for (const [topicName, qs] of Object.entries(topics)) {
+        qs.forEach(q => all.push({...q, topic: topicName}));
+      }
+      state.questions = shuffle(all);
+      state.allAnswers = getAllAnswers();
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'mc_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `🌟 <strong>Full Review — Multiple Choice!</strong> ${state.total} questions. Think carefully!`, `Full Review! Multiple Choice! ${state.total} questions. Think carefully!`);
+      setTimeout(nextQuestion, 800);
+
+    } else {
+      addMessage('bot',
+        `Choose an option:<br>
+        <span class="chip" data-val="1">📚 Study by Topic</span>
+        <span class="chip" data-val="2">✅ True or False</span>
+        <span class="chip" data-val="3">🌐 Identify</span>
+        <span class="chip" data-val="4">🌟 Full Review</span>`,
+        'Choose an option.'
+      );
+    }
+    return;
+  }
+
+  // ── TOPIC SELECT ──────────────────────────────────────────
+  if (aw === 'topic') {
+    const keys = Object.keys(topics);
+    const idx = parseInt(msg) - 1;
+    if (keys[idx]) {
+      const topicName = keys[idx];
+      state.mode = 'topic_mc';
+      state.questions = shuffle(topics[topicName]);
+      state.allAnswers = getAllAnswers();
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'mc_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `📚 <strong>${topicName}</strong> — ${state.total} questions. Ready?`, `${topicName}. ${state.total} questions. Ready?`);
+      setTimeout(nextQuestion, 800);
+    } else {
+      const chips = Object.keys(topics).map((t,i) => `<span class="chip" data-val="${i+1}">${i+1}. ${t}</span>`).join(' ');
+      addMessage('bot', `Please choose a valid topic:<br>${chips}`, 'Please choose a valid topic.');
+    }
+    return;
+  }
+
+  // ── TYPED ANSWER ──────────────────────────────────────────
+  if (aw === 'answer') {
+    const q = state.questions[state.qIndex];
+    const m = normalize(msg);
+
+    if (m === 'hint') {
+      state.hintUsed = true;
+      addMessage('bot', `💡 <strong>Hint:</strong> ${q.hint}`, `Hint: ${q.hint}`);
+      return;
+    }
+    if (m === 'skip') {
+      addMessage('bot', `⏭️ Skipped! The correct answer is: <strong>${q.a}</strong>`, `Skipped. The correct answer is: ${q.a}`);
+      state.qIndex++; state.hintUsed = false;
+      if (state.qIndex < state.total) setTimeout(nextQuestion, 700);
+      else showResult();
+      return;
+    }
+
+    const correct = checkAnswer(msg, q.a);
+    if (correct) {
+      if (!state.hintUsed) state.score++;
+      const note = state.hintUsed ? ' <em>(hint used — no point)</em>' : ' +1 point!';
+      addMessage('bot', `✅ <strong>Correct!</strong>${note} Answer: <strong>${q.a}</strong>`, `Correct! The answer is: ${q.a}`);
+    } else {
+      addMessage('bot', `❌ <strong>Not quite.</strong> The correct answer is: <strong>${q.a}</strong>`, `Not quite. The correct answer is: ${q.a}`);
+    }
+    state.qIndex++; state.hintUsed = false; updateScore();
+    if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+    else setTimeout(showResult, 900);
+    return;
+  }
+
+  // ── TRUE OR FALSE ─────────────────────────────────────────
+  if (aw === 'tf_answer') {
+    const q = state.questions[state.qIndex];
+    const ans = normalize(msg);
+    const valid = ans === 'true' || ans === 'false';
+
+    if (valid) {
+      const correct = ans === q.a;
+      if (correct) {
+        state.score++;
+        addMessage('bot', `✅ <strong>Correct!</strong> The answer is <strong>${q.a.toUpperCase()}</strong>.`, `Correct! The answer is ${q.a}.`);
+      } else {
+        addMessage('bot', `❌ <strong>Incorrect.</strong> The correct answer is <strong>${q.a.toUpperCase()}</strong>.`, `Incorrect. The correct answer is ${q.a}.`);
+      }
+      state.qIndex++; updateScore();
+      if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+      else setTimeout(showResult, 900);
+    } else {
+      addMessage('bot',
+        `Answer: True or False?<br><span class="chip" data-val="true">✅ True</span><span class="chip" data-val="false">❌ False</span>`,
+        'Answer: True or False?'
+      );
+    }
+    return;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// CONTROLS
+// ═══════════════════════════════════════════════════════════════
+function handleUserMessage(msg) {
+  if (!msg.trim()) return;
+  
+  // Stop any speaking audio cleanly when the user answers
+  window.speechSynthesis.cancel();
+  if (currentAudioStream) {
+    currentAudioStream.pause();
+    currentAudioStream = null;
+    showWave(false);
+  }
+  
+  addMessage('user', msg.replace(/</g,'&lt;'));
+  input.value = '';
+  input.disabled = true; sendBtn.disabled = true;
+  addTyping();
+  setTimeout(() => {
+    removeTyping();
+    input.disabled = false; sendBtn.disabled = false;
+    input.focus();
+    processMessage(msg);
+  }, 480);
+}
+
+sendBtn.addEventListener('click', () => { handleUserMessage(input.value); });
+input.addEventListener('keydown', e => { if(e.key==='Enter') handleUserMessage(input.value); });
+
+document.getElementById('audio-toggle').addEventListener('click', function() {
+  state.audioEnabled = !state.audioEnabled;
+  this.textContent = state.audioEnabled ? '🔊' : '🔇';
+  this.classList.toggle('active', state.audioEnabled);
+  if (!state.audioEnabled) {
+    window.speechSynthesis.cancel();
+    if (currentAudioStream) {
+      currentAudioStream.pause();
+      currentAudioStream = null;
+      showWave(false);
+    }
+  }
+});
+
+// ═══════════════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════════════
+window.addEventListener('load', () => {
+  lookupSystemVoices();
+  showMenu();
+});
+
+function printPracticeTest() {
+  document.body.classList.add('printing-test');
+  window.print();
+}
+window.addEventListener('afterprint', () => {
+  document.body.classList.remove('printing-test');
+});
+
+// ═══════════════════════════════════════════════════════════════
+// READ NOTES ALOUD (uses the browser's own voice — no length limit,
+// unlike the short Google TTS clips used for chat messages)
+// ═══════════════════════════════════════════════════════════════
+function getNotesText(section) {
+  // Skip the Practice Test / Answer Key tabs — too long and not meant to be read aloud
+  const clone = section.cloneNode(true);
+  clone.querySelectorAll('button').forEach(b => b.remove());
+  let text = clone.innerText || clone.textContent || '';
+  text = text.replace(/\s+/g, ' ').trim();
+  return text;
+}
+
+function toggleNotesAudio() {
+  const btn = document.getElementById('notes-audio-btn');
+  if (!btn) return;
+
+  if (window.speechSynthesis.speaking || window.speechSynthesis.pending) {
+    window.speechSynthesis.cancel();
+    btn.innerHTML = '🔊 Read Notes Aloud';
+    btn.classList.remove('active');
+    return;
+  }
+
+  const activeSection = document.querySelector('.notes-section.active');
+  if (!activeSection) return;
+  const text = getNotesText(activeSection);
+  if (!text) return;
+
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.lang = 'en-US';
+  utter.rate = 0.95;
+  utter.pitch = 1.05;
+  utter.volume = 1;
+
+  const voices = window.speechSynthesis.getVoices();
+  const voice = voices.find(v => v.lang.startsWith('en') && v.name.toLowerCase().includes('female'))
+             || voices.find(v => v.lang.startsWith('en'));
+  if (voice) utter.voice = voice;
+
+  utter.onstart = () => { btn.innerHTML = '⏹️ Stop Reading'; btn.classList.add('active'); };
+  utter.onend = utter.onerror = () => { btn.innerHTML = '🔊 Read Notes Aloud'; btn.classList.remove('active'); };
+
+  window.speechSynthesis.speak(utter);
+}
+
+function switchTab(tabId, btn) {
+  window.speechSynthesis.cancel();
+  const audioBtn = document.getElementById('notes-audio-btn');
+  if (audioBtn) { audioBtn.innerHTML = '🔊 Read Notes Aloud'; audioBtn.classList.remove('active'); }
+  document.querySelectorAll('.notes-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.notes-tab').forEach(b => b.classList.remove('active'));
+  document.getElementById(tabId).classList.add('active');
+  btn.classList.add('active');
+}
+
+function closeNotesPanel() {
+  window.speechSynthesis.cancel();
+  const audioBtn = document.getElementById('notes-audio-btn');
+  if (audioBtn) { audioBtn.innerHTML = '🔊 Read Notes Aloud'; audioBtn.classList.remove('active'); }
+  document.getElementById('notes-overlay').classList.remove('show');
+}
+</script>
+
+<!-- ── Notes Panel ── -->
+<div class="notes-overlay" id="notes-overlay">
+  <div class="notes-panel">
+    <div class="notes-header">
+      <h2>📖 Symbols, Sacraments &amp; Mission — Notes</h2>
+      <div class="notes-header-actions">
+        <button class="print-btn" id="notes-audio-btn" onclick="toggleNotesAudio()" title="Have this tab read aloud">🔊 Read Notes Aloud</button>
+        <button class="print-btn" onclick="printPracticeTest()" title="Print or save the Practice Test &amp; Answer Key as PDF">🖨️ Print Test &amp; Key</button>
+        <button class="notes-close" onclick="closeNotesPanel()">✕</button>
+      </div>
+    </div>
+    <div class="notes-tabs">
+      <button class="notes-tab active" onclick="switchTab('tab-symbols', this)">☧ Symbols of Christ</button>
+      <button class="notes-tab" onclick="switchTab('tab-baptism', this)">💧 Baptism</button>
+      <button class="notes-tab" onclick="switchTab('tab-confirmation', this)">🕊️ Confirmation</button>
+      <button class="notes-tab" onclick="switchTab('tab-fruits', this)">🍇 Fruits of the Spirit</button>
+      <button class="notes-tab" onclick="switchTab('tab-apostles', this)">✝️ The Twelve Apostles</button>
+      <button class="notes-tab" onclick="switchTab('tab-mercy', this)">🤲 Works of Mercy</button>
+      <button class="notes-tab" onclick="switchTab('tab-tf', this)">✅ True or False</button>
+      <button class="notes-tab" onclick="switchTab('tab-ptest', this)">📝 Practice Test</button>
+      <button class="notes-tab" onclick="switchTab('tab-key', this)">🔑 Answer Key</button>
+      <button class="notes-tab" onclick="switchTab('tab-raw', this)">📄 Raw Notes</button>
+    </div>
+    <div class="notes-body">
+
+      <div class="notes-section active" id="tab-symbols">
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> During times of persecution, early Christians used <strong>symbols</strong> to secretly represent their faith. <strong>Christograms</strong> are abbreviations of Christ's name used in art and worship.
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 MEMORY TRICK</span>
+          Remember the 4 core symbols with: <strong>"A Cool Ichthus Helps"</strong> — <strong>A</strong>lpha &amp; Omega, <strong>C</strong>hi-Rho, <strong>I</strong>chthus, <strong>H</strong>IS (IHS).
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">☧ The Four Symbols of Christ</div>
+          <div class="notes-item"><span class="notes-term">Alpha and Omega (Α Ω)</span><span class="notes-def">First and last Greek letters — Christ is the beginning and the end</span></div>
+          <div class="notes-item"><span class="notes-term">Chi-Rho (☧)</span><span class="notes-def">First two Greek letters of "Christos" (Christ)</span></div>
+          <div class="notes-item"><span class="notes-term">IHS</span><span class="notes-def">First three Greek letters of "Jesus" (ΙΗΣΟΥΣ)</span></div>
+          <div class="notes-item"><span class="notes-term">Ichthus (ΙΧΘΥΣ, fish)</span><span class="notes-def">Greek for "fish"; abbreviation for "Jesus Christ, Son of God, Savior"</span></div>
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">✝️ More Christograms</div>
+          <div class="notes-item"><span class="notes-term">INRI</span><span class="notes-def">Latin: "Jesus of Nazareth, King of the Jews"</span></div>
+          <div class="notes-item"><span class="notes-term">IC XC NIKA</span><span class="notes-def">Byzantine Christogram: "Jesus Christ conquers"</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-baptism">
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> <strong>Baptism</strong> is the first sacrament of initiation, bringing new life in Christ. It uses four symbols and can be done by immersion or infusion.
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 MEMORY TRICK</span>
+          Remember the 4 symbols of baptism with: <strong>"Wonderful Children Learn Well"</strong> — <strong>W</strong>ater, <strong>C</strong>hrism oil, <strong>L</strong>ighted candle, <strong>W</strong>hite garment.
+        </div>
+        <table class="compare-table">
+          <tr><th>Symbol</th><th>Meaning</th></tr>
+          <tr><td>Water</td><td>The saving presence of God; new life in Christ</td></tr>
+          <tr><td>Chrism Oil</td><td>Healed and strengthened by the Spirit; mission as a follower of Jesus</td></tr>
+          <tr><td>Lighted Candle</td><td>The light and warmth of God's love</td></tr>
+          <tr><td>White Garment</td><td>New dignity as Christians; mystery, purity, death, and life</td></tr>
+        </table>
+        <div class="tandaan-box">
+          <span class="tandaan-label">REMEMBER</span>
+          Immersion = fully covered with water. Infusion = water poured on the forehead. The minister of baptism can be a bishop, priest, or deacon.
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-confirmation">
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> <strong>Confirmation</strong> draws us closer to the Church through the Holy Spirit, who gives us <strong>seven gifts</strong>. The bishop is the minister of confirmation.
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 MEMORY TRICK</span>
+          Remember the 7 gifts of the Holy Spirit with: <strong>"Wise Uncles Cook Food Knowing Full Peace"</strong> — <strong>W</strong>isdom, <strong>U</strong>nderstanding, <strong>C</strong>ounsel, <strong>F</strong>ortitude, <strong>K</strong>nowledge, <strong>F</strong>ear of the Lord, <strong>P</strong>iety.
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">🕊️ The 7 Gifts of the Holy Spirit</div>
+          <div class="notes-item"><span class="notes-term">Wisdom</span><span class="notes-def">Right judgment about what is true and good</span></div>
+          <div class="notes-item"><span class="notes-term">Understanding</span><span class="notes-def">Grasping the meaning of the truths of faith</span></div>
+          <div class="notes-item"><span class="notes-term">Counsel</span><span class="notes-def">Identifying the right course of action</span></div>
+          <div class="notes-item"><span class="notes-term">Fortitude</span><span class="notes-def">Strength and bravery to stand up for our faith</span></div>
+          <div class="notes-item"><span class="notes-term">Knowledge</span><span class="notes-def">Appreciating the value and use of created things</span></div>
+          <div class="notes-item"><span class="notes-term">Fear of the Lord</span><span class="notes-def">Respect and awe toward God</span></div>
+          <div class="notes-item"><span class="notes-term">Piety</span><span class="notes-def">Duty, respect, and loyalty toward family and country</span></div>
+        </div>
+        <div class="tandaan-box">
+          <span class="tandaan-label">REMEMBER</span>
+          The 2 symbols of confirmation: laying on of hands (sends the Holy Spirit) and anointing with chrism (commitment to profess our faith boldly).
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-fruits">
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> The <strong>12 fruits of the Spirit</strong> are visible signs the Holy Spirit is at work in our lives.
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 MEMORY TRICK</span>
+          Fruits grow slowly and are seen — unlike gifts (7, given at confirmation), fruits (12) show up in daily behavior. More fruits than gifts: think of a fruit basket with a full dozen!
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">🍇 The 12 Fruits of the Spirit</div>
+          <div class="notes-item"><span class="notes-term">Charity, Joy, Peace</span><span class="notes-def">Love and contentment in the Spirit</span></div>
+          <div class="notes-item"><span class="notes-term">Patience, Kindness, Goodness</span><span class="notes-def">How we treat others gently</span></div>
+          <div class="notes-item"><span class="notes-term">Generosity, Gentleness, Faithfulness</span><span class="notes-def">Giving freely and staying true</span></div>
+          <div class="notes-item"><span class="notes-term">Modesty, Self-control, Chastity</span><span class="notes-def">Humility and self-discipline</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-apostles">
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> Jesus sent out the <strong>Twelve Apostles</strong> with authority to heal and drive out spirits, and a mission to proclaim the Good News. <em>(Matthew 10:1-10)</em>
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">✝️ The Twelve Apostles</div>
+          <div class="notes-item"><span class="notes-term">The Brothers</span><span class="notes-def">Simon Peter &amp; Andrew; James (son of Zebedee) &amp; John</span></div>
+          <div class="notes-item"><span class="notes-term">The Rest</span><span class="notes-def">Philip, Bartholomew, Thomas, Matthew (the tax collector), James (son of Alphaeus), Thaddaeus, Simon the Zealot, Judas Iscariot</span></div>
+        </div>
+        <div class="tandaan-box">
+          <span class="tandaan-label">REMEMBER</span>
+          Jesus told them to go first to "the lost sheep of Israel" — not yet to the Gentiles or Samaritans. They were told to travel light: no gold, silver, bag, extra shirt, sandals, or staff.
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-mercy">
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> The <strong>Corporal</strong> (physical) and <strong>Spiritual</strong> Works of Mercy are seven actions each that help all Catholics continue Jesus's mission today.
+        </div>
+        <table class="compare-table">
+          <tr><th>Corporal (Body)</th><th>Spiritual (Soul)</th></tr>
+          <tr><td>Feed the hungry</td><td>Correct sinners</td></tr>
+          <tr><td>Give drink to the thirsty</td><td>Teach those who need to learn</td></tr>
+          <tr><td>Clothe those who lack clothes</td><td>Give advice to those who need it</td></tr>
+          <tr><td>Visit those in prison</td><td>Comfort those who suffer</td></tr>
+          <tr><td>Shelter the homeless</td><td>Be patient with others</td></tr>
+          <tr><td>Visit the sick</td><td>Forgive injuries</td></tr>
+          <tr><td>Bury the dead</td><td>Pray for the living and the dead</td></tr>
+        </table>
+      </div>
+
+      <div class="notes-section" id="tab-tf">
+        <div class="notes-topic">
+          <div class="notes-topic-title">✅ True or False — Key Reminders</div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">Alpha and Omega mean Christ has no beginning or end → they mean Christ IS the beginning and the end.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">Chi-Rho combines letters for "fish" → it combines the first two letters of "Christos."</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">Immersion is pouring water on the forehead → that's infusion; immersion means being fully covered with water.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">The minister of confirmation is a priest, never a bishop → the bishop IS the minister of confirmation.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">Jesus told the twelve to go first among the Gentiles → He told them to go to the lost sheep of Israel first.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">Visiting the sick is a spiritual work of mercy → it's a corporal (physical) work of mercy.</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-ptest">
+        <div class="notes-topic">
+          <div class="notes-topic-title">📝 Practice Test</div>
+<div class="ptest-part-title">Part I — Identify the Symbol</div><div class="ptest-q"><b>1.</b> Α Ω <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>2.</b> ☧ <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>3.</b> IHS <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>4.</b> ΙΧΘΥΣ (fish) <span class="opt">Answer: ______________________</span></div><div class="ptest-part-title">Part II — Identify the Symbol of Baptism</div><div class="ptest-q"><b>5.</b> Symbol of the saving presence of God; sharing in the new life in Christ. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>6.</b> Signifies being healed and strengthened by the Spirit. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>7.</b> Symbol of the light and warmth of God's love. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>8.</b> Represents our new dignity as Christians. <span class="opt">Answer: ______________________</span></div><div class="ptest-part-title">Part III — True or False</div><div class="ptest-q"><b>9.</b> Christians used symbols to represent their faith in Jesus during times of persecution. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>10.</b> Alpha and Omega represent that Christ has no beginning or end. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>11.</b> Chi-Rho combines the first two letters of the Greek word for "fish." <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>12.</b> IHS is derived from the first three letters of the Greek name for Jesus. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>13.</b> Ichthus is the Greek word for "bread." <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>14.</b> INRI stands for a Latin phrase meaning "Jesus of Nazareth, King of the Jews." <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>15.</b> IC XC NIKA proclaims that "Jesus Christ conquers." <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>16.</b> The sacraments of initiation are baptism, confirmation, and Holy Eucharist. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>17.</b> Immersion is the pouring of water on the forehead. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>18.</b> The minister of baptism can be a bishop, priest, or deacon. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>19.</b> There are four symbols of baptism: water, chrism oil, lighted candle, and white garment. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>20.</b> The white garment in baptism symbolizes only death, with no other meaning. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>21.</b> Confirmation is conferred through the laying on of hands and anointing the forehead. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>22.</b> The minister of confirmation is a priest, never a bishop. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>23.</b> There are seven special gifts of the Holy Spirit received in confirmation. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>24.</b> Church tradition lists twelve fruits of the Spirit. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>25.</b> Jesus told His twelve apostles to go first among the Gentiles. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>26.</b> Judas Iscariot was one of the twelve apostles who betrayed Jesus. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>27.</b> There are seven corporal works of mercy and seven spiritual works of mercy. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>28.</b> Visiting the sick is one of the spiritual works of mercy. <span class="opt">Answer: ______________________</span></div><div class="ptest-part-title">Part IV — Identify the Gift or Fruit of the Holy Spirit</div><div class="ptest-q"><b>29.</b> It is the quality of not being rude or harsh in our treatment of one another. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>30.</b> It is being able to accept others and be more understanding of their mistakes. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>31.</b> It is being happy for the blessings God has given us and others in the Spirit. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>32.</b> It is not being proud nor despising others for their lack of talents and gifts. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>33.</b> It is the capacity to willingly share with others whatever we have. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>34.</b> It is the gift which enables us to appreciate spiritual things and to have right judgment in deciding what is true and good. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>35.</b> It is the gift which enables us to grasp the meaning of the truths of faith. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>36.</b> It is the gift which enables us to identify the right course of action in a given situation. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>37.</b> It is the gift which allows us to be strong and brave to stand up for our faith in Christ. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>38.</b> It is the ability to give importance to the value and use of created things. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>39.</b> It is the gift which enables us to show respect and awe toward God. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>40.</b> It is the gift which teaches us about duty, respect, and loyalty toward our parents, family, and country. <span class="opt">Answer: ______________________</span></div><div class="ptest-part-title">Part V — Short Answer</div><div class="ptest-q"><b>41.</b> What are the names of the twelve apostles?</div><div class="ptest-q"><b>42.</b> What was the mission Jesus gave to His apostles?</div><div class="ptest-q"><b>43.</b> If you were one of the twelve apostles, would you accept the mission Jesus entrusted to you? Why or why not?</div><div class="ptest-q"><b>44.</b> How can you share in the mission of Jesus?</div><div class="ptest-q"><b>45.</b> Who continued the mission of the apostles?</div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-key">
+        <div class="notes-topic">
+<div class="notes-topic-title">Part I — Symbol</div><div class="key-grid"><div class="key-pill">1. <b>Alpha and Omega</b></div><div class="key-pill">2. <b>Chi-Rho</b></div><div class="key-pill">3. <b>IHS (name of Jesus)</b></div><div class="key-pill">4. <b>Ichthus</b></div></div><div class="notes-topic-title">Part II — Symbol of Baptism</div><div class="key-grid"><div class="key-pill">5. <b>Water</b></div><div class="key-pill">6. <b>Chrism Oil</b></div><div class="key-pill">7. <b>Lighted Candle</b></div><div class="key-pill">8. <b>White Garment</b></div></div><div class="notes-topic-title">Part III — True or False</div><div class="key-grid"><div class="key-pill">9. <b>True</b></div><div class="key-pill">10. <b>False</b></div><div class="key-pill">11. <b>False</b></div><div class="key-pill">12. <b>True</b></div><div class="key-pill">13. <b>False</b></div><div class="key-pill">14. <b>True</b></div><div class="key-pill">15. <b>True</b></div><div class="key-pill">16. <b>True</b></div><div class="key-pill">17. <b>False</b></div><div class="key-pill">18. <b>True</b></div><div class="key-pill">19. <b>True</b></div><div class="key-pill">20. <b>False</b></div><div class="key-pill">21. <b>True</b></div><div class="key-pill">22. <b>False</b></div><div class="key-pill">23. <b>True</b></div><div class="key-pill">24. <b>True</b></div><div class="key-pill">25. <b>False</b></div><div class="key-pill">26. <b>True</b></div><div class="key-pill">27. <b>True</b></div><div class="key-pill">28. <b>False</b></div></div><div class="notes-topic-title">Part IV — Gift or Fruit of the Holy Spirit</div><div class="key-grid"><div class="key-pill">29. <b>Gentleness</b></div><div class="key-pill">30. <b>Patience</b></div><div class="key-pill">31. <b>Joy</b></div><div class="key-pill">32. <b>Modesty</b></div><div class="key-pill">33. <b>Generosity</b></div><div class="key-pill">34. <b>Wisdom</b></div><div class="key-pill">35. <b>Understanding</b></div><div class="key-pill">36. <b>Counsel</b></div><div class="key-pill">37. <b>Fortitude</b></div><div class="key-pill">38. <b>Knowledge</b></div><div class="key-pill">39. <b>Fear of the Lord</b></div><div class="key-pill">40. <b>Piety</b></div></div><div class="notes-topic-title">Part V — Short Answer (sample answers)</div><div class="ptest-q" style="margin-bottom:6px"><b>41.</b> Simon Peter, Andrew, James (son of Zebedee), John, Philip, Bartholomew, Thomas, Matthew, James (son of Alphaeus), Thaddaeus, Simon the Zealot, and Judas Iscariot</div><div class="ptest-q" style="margin-bottom:6px"><b>42.</b> Jesus sent the apostles to proclaim the Good News of God's Kingdom, heal the sick, raise the dead, cleanse those with leprosy, drive out demons, and call people to become His disciples</div><div class="ptest-q" style="margin-bottom:6px"><b>43.</b> Yes, I would accept the mission because I would want to follow Jesus, share His teachings with others, help people, and serve God. (Answers will vary.)</div><div class="ptest-q" style="margin-bottom:6px"><b>44.</b> I can share in the mission of Jesus by helping others, spreading God's word, showing kindness and love, serving people in need, forgiving others, and being a good example of a Christian.</div><div class="ptest-q" style="margin-bottom:6px"><b>45.</b> The Church and all Christians continued the mission of the apostles by spreading the Gospel and serving others.</div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-raw">
+        <div class="rawnotes-intro">
+          📌 This is the original content of the uploaded lesson, unedited — for whenever you need to check the exact wording or an example not covered in the reviewer.
+        </div>
+        <div class="rawnotes-doc">
+<h3 class="doc-heading">Symbols of Christ</h3>
+<p>During the period when Christians were being persecuted, they used different symbols to represent their faith in Jesus. These symbols can be seen in religious paintings, altars and carvings on Church walls, Mass vestments, sacred linens, and many devotional objects.</p>
+<p>The following are four important symbols of Jesus through the years:</p>
+<table style="width:97%;">
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 50%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>No.</strong></th>
+<th style="text-align: left;"><strong>Name</strong></th>
+<th style="text-align: left;"><strong>Symbol</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>1.</strong></td>
+<td style="text-align: left;"><strong>Alpha and Omega</strong></td>
+<td style="text-align: left;"><strong>Α Ω</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>2.</strong></td>
+<td style="text-align: left;"><strong>Chi-Rho</strong></td>
+<td style="text-align: left;"><strong>☧</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>3.</strong></td>
+<td style="text-align: left;"><strong>IHS</strong></td>
+<td style="text-align: left;"><strong>IHS</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>4.</strong></td>
+<td style="text-align: left;"><strong>Ichthus (fish)</strong></td>
+<td style="text-align: left;"><strong>ΙΧΘΥΣ 🐟</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>1. Alpha and Omega — Α Ω</strong></p>
+<p><strong>Α (Alpha)</strong> is the first letter of the Greek alphabet, while <strong>Ω (Omega)</strong> is the last letter. Together, Alpha and Omega represent that Christ is the <strong>beginning and the end</strong>.</p>
+<p><strong>2. Chi-Rho — ☧</strong></p>
+<p><strong>Chi-Rho</strong> combines two Greek letters: <strong>Χ (Chi)</strong> and <strong>Ρ (Rho)</strong>. They are the first two letters of the Greek word <em>Christos</em>, meaning <strong>Christ</strong>.</p>
+<p><strong>3. IHS — IHS</strong></p>
+<p><strong>IHS</strong> is a Christian symbol derived from the first three letters of the Greek name for <strong>Jesus (ΙΗΣΟΥΣ)</strong>. It is commonly used to represent <strong>Jesus Christ</strong>.</p>
+<p><strong>4. Ichthus (Fish) — ΙΧΘΥΣ</strong></p>
+<p><strong>Ichthus</strong> is the Greek word for <strong>fish</strong>. The fish became an early Christian symbol. The Greek letters <strong>ΙΧΘΥΣ</strong> are also understood as an abbreviation for <strong>“Jesus Christ, Son of God, Savior.”</strong></p>
+<p><strong>Symbols for easy copying:</strong></p>
+<ul>
+<li><p><strong>Alpha &amp; Omega:</strong> Α Ω</p></li>
+<li><p><strong>Chi-Rho:</strong> ☧</p></li>
+<li><p><strong>IHS:</strong> IHS</p></li>
+<li><p><strong>Ichthus:</strong> 𓆟 / 🐟 or <strong>ΙΧΘΥΣ</strong></p></li>
+</ul>
+<h3 class="doc-heading">Christogram</h3>
+<p>Christogram is a monogram or typographic abbreviation for the name of Jesus Christ, used as a traditional symbol within Christian art and iconography. These visual abbreviations served as early identifiers for believers, confessed the faith during times of persecution, and continue to decorate ecclesiastical architecture, vestments, and devotional objects.</p>
+<table style="width:98%;">
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 15%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>No.</strong></th>
+<th style="text-align: left;"><strong>Name</strong></th>
+<th style="text-align: left;"><strong>Meaning</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>1.</strong></td>
+<td style="text-align: left;"><strong>Alpha and Omega (ΑΩ)</strong></td>
+<td style="text-align: left;">A Christological letter-symbol using the first and last letters of the Greek alphabet to signify Christ as the beginning and the end.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>2.</strong></td>
+<td style="text-align: left;"><strong>Chi-rho (☧)</strong></td>
+<td style="text-align: left;">A Christogram formed from the Greek letters Chi (Χ) and Rho (Ρ), the first two letters of <strong>ΧΡΙΣΤΟΣ (Christos)</strong>.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>3.</strong></td>
+<td style="text-align: left;"><strong>IHS</strong></td>
+<td style="text-align: left;">A Christogram derived from the first three letters of the Greek name <strong>ΙΗΣΟΥΣ (Iēsous)</strong>.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>4.</strong></td>
+<td style="text-align: left;"><strong>Ichthus (fish)</strong></td>
+<td style="text-align: left;">A Christogrammatic acrostic meaning <strong>Iēsous Christos Theou Yios Sōtēr</strong> (Jesus Christ, Son of God, Savior).</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>5.</strong></td>
+<td style="text-align: left;"><strong>INRI</strong></td>
+<td style="text-align: left;">It is an acronym for the Latin phrase <strong>Iesus Nazarenus, Rex Iudaeorum</strong>, which translates to <strong>“Jesus of Nazareth, King of the Jews.”</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>6.</strong></td>
+<td style="text-align: left;"><strong>IC XC NIKA</strong></td>
+<td style="text-align: left;">A Byzantine Christogram formed from the first and last letters of <strong>ΧΡΙΣΤΟΣ</strong>, accompanied by <strong>NIKA</strong> (conquers), proclaiming <strong>Jesus Christ conquers</strong>.</td>
+</tr>
+</tbody>
+</table>
+<p>When we join groups, organizations, clubs, and movements in the school or in the community, we are welcomed through an initiation rite. <em>Initiation</em> is an admission process by which new members are formally accepted as members of the group.</p>
+<p>The Catholic Church is a religious group or community. It is God’s family. We are initiated into God’s family through the sacraments of initiation, which include the sacraments of baptism, confirmation, and Holy Eucharist. These sacraments enable us to carry out our mission as Christians in both the Church and the world.</p>
+<p>Baptism is the first sacrament of initiation. It brings us new life in Christ and incorporates us into the Church. It means that we become members of the Church and adopted brothers and sisters of Christ (CFC 1647, CCC 1266).</p>
+<p>During baptism, the whole community welcomes the new member into the Church. Baptism may be done either by immersion or infusion. <em>Immersion</em> is the act of being completely covered with water. <em>Infusion</em> refers to the pouring of the holy water on the forehead of the person to be baptized. Baptism is carried out by the priest saying, “I baptize you in the name of the Father, and of the Son, and of the Holy Spirit.” The minister of baptism is a bishop, a priest, or a deacon (CCC 1213, CCC 1240).</p>
+<p>There are <strong>four symbols of baptism</strong>. These are <strong>water, chrism oil, lighted candle, and white garment</strong>.</p>
+<p><strong>1. Water</strong> is the symbol of the saving presence of God. The pouring of water is a sign of sharing in the new life in Christ.</p>
+<p><strong>2. Chrism oil</strong> is scented or perfumed oil blessed by the bishop. Anointing during baptism signifies being both healed and strengthened by the Spirit. It is also a special sign of the baptized person’s mission as follower of Jesus.</p>
+<p><strong>3. The lighted candle</strong> is the symbol of the light and warmth of God’s love that Jesus gives as the Light of the world. As followers of Jesus, we have to let Christ’s light shine for all to see.</p>
+<p><strong>4. The white garment</strong> represents our new dignity as Christians. White signifies mystery and purity, death, and life.</p>
+<h3 class="doc-heading">Gifts of the Spirit</h3>
+<p>A shoot will come up from the stump of Jesse; from his roots a Branch will bear fruit.</p>
+<p>The Spirit of the Lord will rest on him—the Spirit of wisdom and of understanding, the Spirit of counsel and of knowledge and fear of the Lord—and he will delight in the fear of the Lord. (Isaiah 11:1–3)</p>
+<h3 class="doc-heading">B. Answer these questions.</h3>
+<p>1. What are the different gifts of the Holy Spirit?</p>
+<p>The seven gifts of the Holy Spirit are wisdom, understanding, counsel, fortitude, knowledge, fear of the Lord, and piety.</p>
+<p>2. To whom do they belong?</p>
+<p>They belong to the Holy Spirit, who gives these gifts to us, especially through the Sacrament of Confirmation.</p>
+<p>3. Why does the Holy Spirit give us these spiritual gifts?</p>
+<p>The Holy Spirit gives us these spiritual gifts to help us grow as mature Christians, live our Christian faith, serve God and others, and become witnesses for Christ in words and deeds.</p>
+<h3 class="doc-heading">Lesson Text</h3>
+<p>In baptism, we were welcomed and became members of God’s family and the Catholic Church. Through this membership, we are given roles and responsibilities to participate in Christ’s mission.</p>
+<p>The gifts of the Holy Spirit which we receive in confirmation sustain the moral life of those who receive them.</p>
+<p>The Holy Spirit, our Helper and Guide, gives us these spiritual gifts. Through these gifts, we become witnesses for Christ in words and deeds. We become inspired to share and defend our faith. We are able to serve God and others just as Jesus did. We bring light and life to others. We receive the gifts of the Holy Spirit in the sacrament of confirmation (Code of Canon Law 879).</p>
+<p>Confirmation is another sacrament of initiation that draws us to a closer union with the Church through the power of the Holy Spirit. The Holy Spirit gives us the strength to grow as mature Christians and to actively spread the word of God. (CFC 1658)</p>
+<p>The sacrament of confirmation is conferred through laying on of hands, anointing the forehead, and saying the prayer:</p>
+<p>“Be sealed with the gifts of the Holy Spirit” (CFC 1660).</p>
+<p>The minister of confirmation is the bishop. The godparents help the one to be confirmed to grow as a good Catholic Christian.</p>
+<p>There are seven special gifts of the Holy Spirit that we receive in confirmation. These are wisdom, understanding, counsel, fortitude, knowledge, fear of the Lord, and piety. These gifts are virtues waiting to be accepted and developed. These serve as guidelines to Christian maturity. (CCC 1831)</p>
+<h3 class="doc-heading">The Seven Gifts of the Holy Spirit</h3>
+<p>1. Wisdom is the gift which enables us to appreciate spiritual things and to have right judgment in deciding what is true and good.</p>
+<p>2. Understanding is the gift which enables us to grasp the meaning of the truths of faith. It helps us act in ways that show we are living our Christian faith.</p>
+<p>3. Counsel is the gift which enables us to identify the right course of action in a given situation.</p>
+<p><strong>4. Fortitude</strong> is the gift which allows us to be strong and brave to stand up for our faith in Christ.</p>
+<p><strong>5. Knowledge</strong> is the ability to give importance to the value and use of created things.</p>
+<p><strong>6. Fear of the Lord</strong> is the gift which enables us to show respect and awe toward God. It helps us to thank and praise God for the gift of life.</p>
+<p><strong>7. Piety</strong> is the gift which teaches us about duty, respect, and loyalty toward our parents, family, and country.</p>
+<p>The <strong>fruits of the Spirit</strong> are signs of the presence of the Holy Spirit in our lives. The tradition of the Church lists twelve of them. These are <strong>charity, joy, peace, patience, kindness, goodness, generosity, gentleness, faithfulness, modesty, self-control, and chastity.</strong> (CCC 1832)</p>
+<p>The <strong>two symbols of confirmation</strong> are laying on of hands and anointing with chrism.</p>
+<p>The <strong>laying on of hands</strong> is an ancient practice of conferring or giving power to another person. In confirmation, the bishop does the laying on of hands as a sign of sending forth the Holy Spirit and handing us the rights and responsibilities as mature Christians.</p>
+<p>The <strong>anointing with chrism</strong> symbolizes our commitment to profess our faith, practice it boldly, and spread the “aroma of Christ.” (2 Corinthians 2:15)</p>
+<h3 class="doc-heading">B. Identify the gift or fruit of the Holy Spirit being described.</h3>
+<p><strong>1.</strong> It is the quality of not being rude or harsh in our treatment of one another.</p>
+<p>Answer: <strong>Gentleness</strong></p>
+<p><strong>2.</strong> It is being able to accept others and be more understanding of their mistakes.<br />
+Answer: <strong>Patience</strong></p>
+<p><strong>3.</strong> It is being happy for the blessings God has given us and others in the Spirit.<br />
+Answer: <strong>Joy</strong></p>
+<p><strong>4.</strong> It is not being proud nor despising others for their lack of talents and gifts.<br />
+Answer: <strong>Modesty</strong></p>
+<p><strong>5.</strong> It is the capacity to willingly share with others whatever we have.<br />
+Answer: <strong>Generosity</strong></p>
+<p><strong>6.</strong> It is the gift which enables us to appreciate spiritual things and to have right judgment in deciding what is true and good.<br />
+Answer: <strong>Wisdom</strong></p>
+<p><strong>7.</strong> It is the gift which enables us to grasp the meaning of the truths of faith. It helps us act in ways that show we are living our Christian faith.<br />
+Answer: <strong>Understanding</strong></p>
+<p><strong>8.</strong> It is the gift which enables us to identify the right course of action in a given situation.<br />
+Answer: <strong>Counsel</strong></p>
+<p><strong>9.</strong> It is the gift which allows us to be strong and brave to stand up for our faith in Christ.<br />
+Answer: <strong>Fortitude</strong></p>
+<p><strong>10.</strong> It is the ability to give importance to the value and use of created things.<br />
+Answer: <strong>Knowledge</strong></p>
+<p><strong>11.</strong> It is the gift which enables us to show respect and awe toward God. It helps us to thank and praise God for the gift of life.<br />
+Answer: <strong>Fear of the Lord</strong></p>
+<p><strong>12.</strong> It is the gift which teaches us about duty, respect, and loyalty toward our parents, family, and country.<br />
+Answer: <strong>Piety</strong></p>
+<p>Confirmation is a sacrament by which we receive the gifts of the Holy Spirit. The gifts of the Spirit are virtues that help us grow as mature Christians. The Holy Spirit sustains us through a lifetime of becoming witnesses for Christ and service to others.</p>
+<h3 class="doc-heading">Jesus Sends Out the Twelve</h3>
+<p>Jesus called his twelve disciples to him and gave them authority to drive out impure spirits and to heal every disease and sickness.</p>
+<p>These are the names of the twelve apostles: first, <strong>Simon (who is called Peter) and his brother Andrew; James son of Zebedee, and his brother John; Philip and Bartholomew; Thomas and Matthew the tax collector; James son of Alphaeus, and Thaddaeus; Simon the Zealot and Judas Iscariot, who betrayed him.</strong></p>
+<h3 class="doc-heading">Jesus' Instructions to the Twelve</h3>
+<p>These twelve Jesus sent out with the following instructions:</p>
+<p>“Do not go among the Gentiles or enter any town of the Samaritans. Go rather to the lost sheep of Israel. As you go, proclaim this message: ‘The kingdom of heaven has come near.’ Heal the sick, raise the dead, cleanse those who have leprosy, drive out demons. Freely you have received; freely give.</p>
+<p>“Do not get any gold or silver or copper to take with you in your belts—no bag for the journey or extra shirt or sandals or a staff, for the worker is worth his keep.”</p>
+<p><strong>(Matthew 10:1–10)</strong></p>
+<h3 class="doc-heading">Answer the Following Questions</h3>
+<p><strong>1. What are the names of the twelve apostles?</strong></p>
+<p>The twelve apostles are:</p>
+<ol type="1">
+<li><p><strong>Simon Peter</strong></p></li>
+<li><p><strong>Andrew</strong></p></li>
+<li><p><strong>James, son of Zebedee</strong></p></li>
+<li><p><strong>John</strong></p></li>
+<li><p><strong>Philip</strong></p></li>
+<li><p><strong>Bartholomew</strong></p></li>
+<li><p><strong>Thomas</strong></p></li>
+<li><p><strong>Matthew</strong></p></li>
+<li><p><strong>James, son of Alphaeus</strong></p></li>
+<li><p><strong>Thaddaeus</strong></p></li>
+<li><p><strong>Simon the Zealot</strong></p></li>
+<li><p><strong>Judas Iscariot</strong></p></li>
+</ol>
+<p><strong>2. What was the mission Jesus gave to His apostles?</strong></p>
+<p>Jesus sent the apostles to <strong>proclaim the Good News of God's Kingdom, heal the sick, raise the dead, cleanse those with leprosy, drive out demons, and call people to become His disciples.</strong></p>
+<p><strong>3. If you were one of the twelve apostles, would you accept the mission Jesus entrusted to you? Why or why not?</strong></p>
+<p><strong>Yes, I would accept the mission because I would want to follow Jesus, share His teachings with others, help people, and serve God.</strong></p>
+<p><strong>4. How can you share in the mission of Jesus?</strong></p>
+<p>I can share in the mission of Jesus by <strong>helping others, spreading God's word, showing kindness and love, serving people in need, forgiving others, and being a good example of a Christian.</strong></p>
+<p><strong>5. Who continued the mission of the apostles?</strong></p>
+<p><strong>The Church and all Christians</strong> continued the mission of the apostles by spreading the Gospel and serving others.</p>
+<h3 class="doc-heading">Continuing the Mission of Jesus</h3>
+<p>Jesus called His twelve apostles to carry on His work and to call others to be His disciples. He sent them on a mission to proclaim the Good News of God's Kingdom: <strong>“As the Father has sent me, I am sending you” (John 20:21).</strong> He gave them the authority to teach, heal, and cast out devils.</p>
+<p>Today, the Church, founded by Christ, continued the saving mission of Christ (LG 5). As Christians, by virtue of our baptism, therefore, we share “the obligation of spreading the faith” (LG 17). PCP II asserts: <strong>“All are called to mission... all—without exception—are called to evangelize” (PCP II 402, CFC 1414).</strong></p>
+<p>The corporal and spiritual works of mercy are lists of actions or ways by which all Catholics can actively continue the mission of Jesus in our lives, schools, parishes, country, and the world.</p>
+<h3 class="doc-heading">The Corporal Works of Mercy</h3>
+<ol type="1">
+<li><p><strong>Feed the hungry</strong></p></li>
+<li><p><strong>Give drink to the thirsty</strong></p></li>
+<li><p><strong>Clothe those who lack clothes</strong></p></li>
+<li><p><strong>Visit those in prison</strong></p></li>
+<li><p><strong>Shelter the homeless</strong></p></li>
+<li><p><strong>Visit the sick</strong></p></li>
+<li><p><strong>Bury the dead</strong></p></li>
+</ol>
+<h3 class="doc-heading">The Spiritual Works of Mercy</h3>
+<ol type="1">
+<li><p><strong>Correct sinners</strong></p></li>
+<li><p><strong>Teach those who need to learn</strong></p></li>
+<li><p><strong>Give advice to those who need it</strong></p></li>
+<li><p><strong>Comfort those who suffer</strong></p></li>
+<li><p><strong>Be patient with others</strong></p></li>
+<li><p><strong>Forgive injuries</strong></p></li>
+<li><p><strong>Pray for the living and the dead</strong></p></li>
+</ol>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ── Hidden Print Area (Practice Test + Answer Key) ── -->
+<div id="print-area">
+<div class="p-cover">
+    <div class="p-icon">✝️</div>
+    <h1>Religion 5 — Symbols, Sacraments &amp; Mission Practice Test</h1>
+    <div class="p-sub">Symbols of Christ · Baptism &amp; Confirmation · Gifts of the Spirit · The Twelve Apostles</div>
+    <div class="p-info-box">
+      <div><strong>Name:</strong> _____________________________________</div>
+      <div><strong>Section:</strong> ___________________ &nbsp; <strong>Date:</strong> ___________________</div>
+      <div><strong>Score:</strong> _______ / 45</div>
+    </div>
+    <div class="p-instructions">
+      <strong>Instructions:</strong> Read each item carefully. Write your answer on the blank provided (Parts I-IV), or answer in complete sentences (Part V). Good luck!
+    </div>
+  </div>
+
+  <h2 class="p-part-title">Part I — Identify the Symbol</h2><div class="p-q"><b>1.</b> Α Ω <span class="p-blank"></span></div><div class="p-q"><b>2.</b> ☧ <span class="p-blank"></span></div><div class="p-q"><b>3.</b> IHS <span class="p-blank"></span></div><div class="p-q"><b>4.</b> ΙΧΘΥΣ (fish) <span class="p-blank"></span></div><h2 class="p-part-title">Part II — Identify the Symbol of Baptism</h2><div class="p-q"><b>5.</b> Symbol of the saving presence of God; sharing in the new life in Christ. <span class="p-blank"></span></div><div class="p-q"><b>6.</b> Signifies being healed and strengthened by the Spirit. <span class="p-blank"></span></div><div class="p-q"><b>7.</b> Symbol of the light and warmth of God's love. <span class="p-blank"></span></div><div class="p-q"><b>8.</b> Represents our new dignity as Christians. <span class="p-blank"></span></div><div class="p-break"></div><h2 class="p-part-title">Part III — True or False</h2><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>9.</b> Christians used symbols to represent their faith in Jesus during times of persecution.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>10.</b> Alpha and Omega represent that Christ has no beginning or end.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>11.</b> Chi-Rho combines the first two letters of the Greek word for "fish."</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>12.</b> IHS is derived from the first three letters of the Greek name for Jesus.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>13.</b> Ichthus is the Greek word for "bread."</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>14.</b> INRI stands for a Latin phrase meaning "Jesus of Nazareth, King of the Jews."</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>15.</b> IC XC NIKA proclaims that "Jesus Christ conquers."</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>16.</b> The sacraments of initiation are baptism, confirmation, and Holy Eucharist.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>17.</b> Immersion is the pouring of water on the forehead.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>18.</b> The minister of baptism can be a bishop, priest, or deacon.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>19.</b> There are four symbols of baptism: water, chrism oil, lighted candle, and white garment.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>20.</b> The white garment in baptism symbolizes only death, with no other meaning.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>21.</b> Confirmation is conferred through the laying on of hands and anointing the forehead.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>22.</b> The minister of confirmation is a priest, never a bishop.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>23.</b> There are seven special gifts of the Holy Spirit received in confirmation.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>24.</b> Church tradition lists twelve fruits of the Spirit.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>25.</b> Jesus told His twelve apostles to go first among the Gentiles.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>26.</b> Judas Iscariot was one of the twelve apostles who betrayed Jesus.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>27.</b> There are seven corporal works of mercy and seven spiritual works of mercy.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>28.</b> Visiting the sick is one of the spiritual works of mercy.</div><div class="p-break"></div><h2 class="p-part-title">Part IV — Identify the Gift or Fruit of the Holy Spirit</h2><div class="p-q"><b>29.</b> It is the quality of not being rude or harsh in our treatment of one another. <span class="p-blank"></span></div><div class="p-q"><b>30.</b> It is being able to accept others and be more understanding of their mistakes. <span class="p-blank"></span></div><div class="p-q"><b>31.</b> It is being happy for the blessings God has given us and others in the Spirit. <span class="p-blank"></span></div><div class="p-q"><b>32.</b> It is not being proud nor despising others for their lack of talents and gifts. <span class="p-blank"></span></div><div class="p-q"><b>33.</b> It is the capacity to willingly share with others whatever we have. <span class="p-blank"></span></div><div class="p-q"><b>34.</b> It is the gift which enables us to appreciate spiritual things and to have right judgment in deciding what is true and good. <span class="p-blank"></span></div><div class="p-q"><b>35.</b> It is the gift which enables us to grasp the meaning of the truths of faith. <span class="p-blank"></span></div><div class="p-q"><b>36.</b> It is the gift which enables us to identify the right course of action in a given situation. <span class="p-blank"></span></div><div class="p-q"><b>37.</b> It is the gift which allows us to be strong and brave to stand up for our faith in Christ. <span class="p-blank"></span></div><div class="p-q"><b>38.</b> It is the ability to give importance to the value and use of created things. <span class="p-blank"></span></div><div class="p-q"><b>39.</b> It is the gift which enables us to show respect and awe toward God. <span class="p-blank"></span></div><div class="p-q"><b>40.</b> It is the gift which teaches us about duty, respect, and loyalty toward our parents, family, and country. <span class="p-blank"></span></div><div class="p-break"></div><h2 class="p-part-title">Part V — Short Answer</h2><div class="p-q"><b>41.</b> What are the names of the twelve apostles?<br><br>_________________________________________________<br><br>_________________________________________________</div><div class="p-q"><b>42.</b> What was the mission Jesus gave to His apostles?<br><br>_________________________________________________<br><br>_________________________________________________</div><div class="p-q"><b>43.</b> If you were one of the twelve apostles, would you accept the mission Jesus entrusted to you? Why or why not?<br><br>_________________________________________________<br><br>_________________________________________________</div><div class="p-q"><b>44.</b> How can you share in the mission of Jesus?<br><br>_________________________________________________<br><br>_________________________________________________</div><div class="p-q"><b>45.</b> Who continued the mission of the apostles?<br><br>_________________________________________________<br><br>_________________________________________________</div><div class="p-break"></div><h2 class="p-part-title">✅ Complete Answer Key</h2>
+  <div class="p-key-part-title">Part I — Symbol</div><div class="p-key-grid"><div class="p-key-pill">1. <b>Alpha and Omega</b></div><div class="p-key-pill">2. <b>Chi-Rho</b></div><div class="p-key-pill">3. <b>IHS (name of Jesus)</b></div><div class="p-key-pill">4. <b>Ichthus</b></div></div><div class="p-key-part-title">Part II — Symbol of Baptism</div><div class="p-key-grid"><div class="p-key-pill">5. <b>Water</b></div><div class="p-key-pill">6. <b>Chrism Oil</b></div><div class="p-key-pill">7. <b>Lighted Candle</b></div><div class="p-key-pill">8. <b>White Garment</b></div></div><div class="p-key-part-title">Part III — True or False</div><div class="p-key-grid"><div class="p-key-pill">9. <b>True</b></div><div class="p-key-pill">10. <b>False</b></div><div class="p-key-pill">11. <b>False</b></div><div class="p-key-pill">12. <b>True</b></div><div class="p-key-pill">13. <b>False</b></div><div class="p-key-pill">14. <b>True</b></div><div class="p-key-pill">15. <b>True</b></div><div class="p-key-pill">16. <b>True</b></div><div class="p-key-pill">17. <b>False</b></div><div class="p-key-pill">18. <b>True</b></div><div class="p-key-pill">19. <b>True</b></div><div class="p-key-pill">20. <b>False</b></div><div class="p-key-pill">21. <b>True</b></div><div class="p-key-pill">22. <b>False</b></div><div class="p-key-pill">23. <b>True</b></div><div class="p-key-pill">24. <b>True</b></div><div class="p-key-pill">25. <b>False</b></div><div class="p-key-pill">26. <b>True</b></div><div class="p-key-pill">27. <b>True</b></div><div class="p-key-pill">28. <b>False</b></div></div><div class="p-key-part-title">Part IV — Gift or Fruit of the Holy Spirit</div><div class="p-key-grid"><div class="p-key-pill">29. <b>Gentleness</b></div><div class="p-key-pill">30. <b>Patience</b></div><div class="p-key-pill">31. <b>Joy</b></div><div class="p-key-pill">32. <b>Modesty</b></div><div class="p-key-pill">33. <b>Generosity</b></div><div class="p-key-pill">34. <b>Wisdom</b></div><div class="p-key-pill">35. <b>Understanding</b></div><div class="p-key-pill">36. <b>Counsel</b></div><div class="p-key-pill">37. <b>Fortitude</b></div><div class="p-key-pill">38. <b>Knowledge</b></div><div class="p-key-pill">39. <b>Fear of the Lord</b></div><div class="p-key-pill">40. <b>Piety</b></div></div><div class="p-key-part-title">Part V — Short Answer (sample answers)</div><div class="p-q"><b>41.</b> Simon Peter, Andrew, James (son of Zebedee), John, Philip, Bartholomew, Thomas, Matthew, James (son of Alphaeus), Thaddaeus, Simon the Zealot, and Judas Iscariot</div><div class="p-q"><b>42.</b> Jesus sent the apostles to proclaim the Good News of God's Kingdom, heal the sick, raise the dead, cleanse those with leprosy, drive out demons, and call people to become His disciples</div><div class="p-q"><b>43.</b> Yes, I would accept the mission because I would want to follow Jesus, share His teachings with others, help people, and serve God. (Answers will vary.)</div><div class="p-q"><b>44.</b> I can share in the mission of Jesus by helping others, spreading God's word, showing kindness and love, serving people in need, forgiving others, and being a good example of a Christian.</div><div class="p-q"><b>45.</b> The Church and all Christians continued the mission of the apostles by spreading the Gospel and serving others.</div>
+</div>
+
+</body>
+</html>
