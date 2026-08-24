@@ -1,0 +1,2030 @@
+<!DOCTYPE html>
+<html lang="tl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>📐 Math: Angles &amp; Perimeter Reviewer 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --gold: #f59e0b;
+  --gold-dark: #b45309;
+  --blue: #3b82f6;
+  --blue-dark: #1d4ed8;
+  --red: #ef4444;
+  --green: #22c55e;
+  --bg: #0c1a0e;
+  --surface: #132015;
+  --surface2: #1a2e1d;
+  --text: #f0fdf4;
+  --muted: #86efac;
+  --border: #166534;
+}
+
+body {
+  font-family: 'Baloo 2', cursive;
+  background: var(--bg);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--text);
+  background-image:
+    radial-gradient(ellipse at 10% 30%, rgba(245,158,11,.06) 0%, transparent 55%),
+    radial-gradient(ellipse at 90% 70%, rgba(59,130,246,.06) 0%, transparent 55%);
+}
+
+header {
+  width: 100%;
+  background: linear-gradient(135deg, #14532d, #1e3a5f);
+  border-bottom: 2px solid var(--gold-dark);
+  padding: 13px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 4px 30px rgba(0,0,0,.5);
+}
+.header-icon { font-size: 2rem; animation: float 3s ease-in-out infinite; }
+@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
+
+header h1 {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.45rem;
+  background: linear-gradient(90deg, var(--gold), #fde68a, var(--gold));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+header .sub { font-size: .72rem; color: var(--muted); margin-top: 1px; }
+
+.header-controls { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+.score-pill {
+  background: rgba(245,158,11,.15);
+  border: 1px solid rgba(245,158,11,.4);
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-weight: 800;
+  font-size: .85rem;
+  color: var(--gold);
+}
+.audio-btn {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  background: var(--surface2);
+  color: var(--text);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all .2s;
+  display: flex; align-items: center; justify-content: center;
+}
+.audio-btn:hover, .audio-btn.active { background: #14532d; border-color: var(--gold); }
+
+.chat-wrap {
+  width: 100%; max-width: 700px; flex: 1;
+  display: flex; flex-direction: column;
+  padding: 16px 14px 0;
+}
+
+#chat-box {
+  flex: 1; overflow-y: auto;
+  display: flex; flex-direction: column;
+  gap: 14px; padding-bottom: 10px;
+  max-height: calc(100vh - 200px);
+  scroll-behavior: smooth;
+}
+#chat-box::-webkit-scrollbar { width: 4px; }
+#chat-box::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+.msg { display: flex; gap: 8px; }
+.msg.user { flex-direction: row-reverse; }
+
+.avatar {
+  width: 34px; height: 34px; border-radius: 50%;
+  font-size: 1rem; display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 2px;
+}
+.msg.bot .avatar { background: linear-gradient(135deg, #14532d, #1e3a5f); border: 1.5px solid rgba(245,158,11,.4); }
+.msg.user .avatar { background: linear-gradient(135deg, #1e3a5f, #14532d); border: 1.5px solid rgba(59,130,246,.3); }
+
+.bubble {
+  max-width: 80%;
+  padding: 11px 16px;
+  border-radius: 18px;
+  font-size: .9rem;
+  line-height: 1.65;
+  animation: pop .22s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes pop { from{transform:scale(.88) translateY(6px);opacity:0} to{transform:scale(1) translateY(0);opacity:1} }
+
+.msg.bot .bubble {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-bottom-left-radius: 5px;
+}
+.msg.user .bubble {
+  background: linear-gradient(135deg, #1e3a5f, var(--blue-dark));
+  border-bottom-right-radius: 5px;
+}
+
+/* chips */
+.chip {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: rgba(245,158,11,.12);
+  border: 1.5px solid rgba(245,158,11,.4);
+  color: var(--gold);
+  border-radius: 30px;
+  padding: 5px 13px; margin: 5px 4px 0 0;
+  font-size: .8rem; font-weight: 700;
+  cursor: pointer; transition: all .15s;
+  user-select: none; font-family: 'Baloo 2', cursive;
+}
+.chip:hover {
+  background: var(--gold-dark); color: white;
+  border-color: var(--gold);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(245,158,11,.3);
+}
+
+/* topic tag */
+.topic-tag {
+  display: inline-block;
+  background: linear-gradient(135deg, #14532d, #166534);
+  border: 1px solid var(--gold-dark);
+  color: var(--gold);
+  font-size: .68rem; font-weight: 800;
+  border-radius: 20px; padding: 2px 10px;
+  margin-bottom: 5px; letter-spacing: .5px;
+  text-transform: uppercase;
+}
+
+/* multiple choice */
+.mc-options { display: flex; flex-direction: column; gap: 7px; margin-top: 10px; width: 100%; }
+.mc-btn {
+  display: flex; align-items: center; gap: 10px;
+  background: rgba(255,255,255,.03);
+  border: 1.5px solid var(--border);
+  border-radius: 12px; padding: 9px 14px;
+  color: var(--text); font-family: 'Baloo 2', cursive;
+  font-size: .87rem; font-weight: 600;
+  cursor: pointer; transition: all .15s; text-align: left; width: 100%;
+}
+.mc-btn:hover:not(:disabled) {
+  background: rgba(245,158,11,.12); border-color: var(--gold);
+  color: var(--gold); transform: translateX(3px);
+}
+.mc-btn .letter {
+  display: flex; align-items: center; justify-content: center;
+  width: 26px; height: 26px; border-radius: 8px;
+  background: rgba(245,158,11,.15); border: 1px solid rgba(245,158,11,.35);
+  color: var(--gold); font-size: .78rem; font-weight: 800;
+  flex-shrink: 0; transition: all .15s;
+}
+.mc-btn:hover:not(:disabled) .letter { background: var(--gold-dark); color: white; border-color: var(--gold-dark); }
+.mc-btn.correct { background: rgba(34,197,94,.15)!important; border-color: #22c55e!important; color: #22c55e!important; cursor: default; }
+.mc-btn.correct .letter { background: #22c55e!important; color: white!important; border-color: #22c55e!important; }
+.mc-btn.wrong { background: rgba(239,68,68,.12)!important; border-color: #ef4444!important; color: #ef4444!important; cursor: default; }
+.mc-btn.wrong .letter { background: #ef4444!important; color: white!important; border-color: #ef4444!important; }
+.mc-btn:disabled { cursor: default; transform: none!important; }
+
+/* speaker wave */
+.speaker-wave {
+  display: inline-flex; align-items: flex-end;
+  gap: 2px; height: 14px; margin-left: 6px; vertical-align: middle;
+}
+.speaker-wave span {
+  display: block; width: 3px; border-radius: 2px;
+  background: var(--gold); animation: wave 1s ease-in-out infinite;
+}
+.speaker-wave span:nth-child(1){height:4px;animation-delay:0s}
+.speaker-wave span:nth-child(2){height:10px;animation-delay:.1s}
+.speaker-wave span:nth-child(3){height:6px;animation-delay:.2s}
+.speaker-wave span:nth-child(4){height:12px;animation-delay:.15s}
+.speaker-wave span:nth-child(5){height:4px;animation-delay:.05s}
+@keyframes wave{0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.8)}}
+
+/* typing */
+.typing {
+  display: flex; gap: 4px; padding: 12px 16px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 18px; border-bottom-left-radius: 5px; width: fit-content;
+}
+.dot { width: 7px; height: 7px; border-radius: 50%; background: var(--gold); animation: bounce .9s infinite; }
+.dot:nth-child(2){animation-delay:.15s} .dot:nth-child(3){animation-delay:.3s}
+@keyframes bounce{0%,80%,100%{transform:translateY(0);opacity:.6}40%{transform:translateY(-7px);opacity:1}}
+
+/* input bar */
+.input-bar {
+  width: 100%; max-width: 700px;
+  padding: 10px 14px 18px;
+  display: flex; gap: 8px;
+  background: var(--bg); position: sticky; bottom: 0;
+}
+#user-input {
+  flex: 1; padding: 12px 18px;
+  border: 2px solid var(--border); border-radius: 30px;
+  font-family: 'Baloo 2', cursive; font-size: .92rem;
+  outline: none; background: var(--surface); color: var(--text);
+  transition: border-color .2s, box-shadow .2s;
+}
+#user-input::placeholder { color: var(--muted); }
+#user-input:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(245,158,11,.12); }
+
+#send-btn {
+  width: 48px; height: 48px; border-radius: 50%; border: none;
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  color: white; font-size: 1.1rem; cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 3px 14px rgba(245,158,11,.4); flex-shrink: 0;
+}
+#send-btn:hover { transform: scale(1.08); box-shadow: 0 5px 20px rgba(245,158,11,.55); }
+#send-btn:disabled { opacity: .5; transform: none; }
+
+/* result modal */
+.result-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.75); backdrop-filter: blur(6px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 100; opacity: 0; pointer-events: none; transition: opacity .3s;
+}
+.result-overlay.show { opacity: 1; pointer-events: all; }
+.result-card {
+  background: linear-gradient(135deg, #132015, #0c1a0e);
+  border: 2px solid var(--gold-dark);
+  border-radius: 24px; padding: 36px 40px;
+  text-align: center; max-width: 380px; width: 90%;
+  box-shadow: 0 20px 60px rgba(0,0,0,.6);
+  transform: scale(.9); transition: transform .3s cubic-bezier(.34,1.56,.64,1);
+}
+.result-overlay.show .result-card { transform: scale(1); }
+.result-emoji { font-size: 4rem; margin-bottom: 12px; display: block; }
+.result-title {
+  font-family: 'Fredoka One', cursive; font-size: 1.7rem; margin-bottom: 6px;
+  background: linear-gradient(90deg, var(--gold), #fde68a);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.result-score { font-size: 3rem; font-weight: 900; margin: 10px 0; color: white; }
+.result-msg { color: var(--muted); font-size: .9rem; margin-bottom: 22px; }
+.result-btn {
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  border: none; border-radius: 30px; padding: 12px 30px;
+  color: white; font-family: 'Baloo 2', cursive; font-weight: 800;
+  font-size: 1rem; cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+  box-shadow: 0 4px 16px rgba(245,158,11,.35);
+}
+.result-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 22px rgba(245,158,11,.5); }
+
+/* scenario card for identify questions */
+.scenario-card {
+  background: rgba(245,158,11,.07);
+  border: 1px solid rgba(245,158,11,.25);
+  border-radius: 12px; padding: 10px 14px;
+  margin: 8px 0 6px; font-style: italic;
+  font-size: .87rem; color: #fde68a; line-height: 1.5;
+}
+
+/* ── Notes Panel ─────────────────────────────────────────────── */
+.notes-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.78); backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 200; opacity: 0; pointer-events: none; transition: opacity .3s;
+}
+.notes-overlay.show { opacity: 1; pointer-events: all; }
+.notes-panel {
+  background: linear-gradient(160deg, #0c1a0e, #132015);
+  border: 2px solid var(--gold-dark);
+  border-radius: 20px;
+  width: 92%; max-width: 720px;
+  max-height: 88vh;
+  display: flex; flex-direction: column;
+  box-shadow: 0 24px 60px rgba(0,0,0,.7);
+  overflow: hidden;
+  transform: translateY(30px);
+  transition: transform .35s cubic-bezier(.34,1.2,.64,1);
+}
+.notes-overlay.show .notes-panel { transform: translateY(0); }
+.notes-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 22px; border-bottom: 1px solid var(--border);
+  background: linear-gradient(135deg, #14532d44, #1e3a5f44);
+}
+.notes-header h2 { font-family: 'Fredoka One', cursive; font-size: 1.3rem; color: var(--gold); }
+.notes-close {
+  width: 34px; height: 34px; border-radius: 50%;
+  border: 1.5px solid var(--border); background: var(--surface2);
+  color: var(--text); font-size: 1rem; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; transition: all .2s;
+}
+.notes-close:hover { background: #b91c1c; border-color: #ef4444; }
+.notes-body { overflow-y: auto; padding: 20px 22px; flex: 1; }
+.notes-body::-webkit-scrollbar { width: 4px; }
+.notes-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+.notes-topic { margin-bottom: 28px; }
+.notes-topic-title {
+  font-family: 'Fredoka One', cursive; font-size: 1.05rem;
+  color: var(--gold); margin-bottom: 10px;
+  padding-bottom: 6px; border-bottom: 1px solid var(--border);
+}
+.notes-item {
+  display: flex; gap: 10px; align-items: flex-start;
+  padding: 7px 0; border-bottom: 1px solid rgba(255,255,255,.04);
+  font-size: .87rem; line-height: 1.55;
+}
+.notes-item:last-child { border-bottom: none; }
+.notes-term { font-weight: 800; color: var(--gold); min-width: 150px; flex-shrink: 0; font-size: .84rem; }
+.notes-def { color: #d1fae5; }
+.notes-tabs {
+  display: flex; flex-wrap: wrap; gap: 8px; padding: 14px 22px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(0,0,0,.15);
+}
+.notes-tab {
+  padding: 12px 20px; border-radius: 10px;
+  border: 1.5px solid var(--border); 
+  background: rgba(255,255,255,.04); color: var(--muted);
+  font-family: 'Baloo 2', cursive; font-size: .9rem; font-weight: 700;
+  cursor: pointer; transition: all .15s; white-space: nowrap;
+  min-height: 48px; display: flex; align-items: center;
+}
+.notes-tab.active { background: var(--surface); color: var(--gold); border-color: var(--gold-dark); }
+.notes-tab:hover:not(.active) { color: var(--text); background: var(--surface2); }
+.notes-section { display: none; }
+.notes-section.active { display: block; }
+
+
+/* ── Print button in notes header ─────────────────────────────── */
+.notes-header-actions { display: flex; align-items: center; gap: 10px; }
+.print-btn {
+  display: flex; align-items: center; gap: 6px;
+  background: rgba(245,158,11,.12);
+  border: 1.5px solid rgba(245,158,11,.4);
+  color: var(--gold);
+  border-radius: 20px;
+  padding: 7px 14px;
+  font-family: 'Baloo 2', cursive;
+  font-size: .78rem;
+  font-weight: 800;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all .15s;
+}
+.print-btn:hover { background: var(--gold); color: #0c1a0e; border-color: var(--gold); }
+.print-btn.active { background: var(--gold); color: #0c1a0e; border-color: var(--gold); }
+
+/* ── On-screen Practice Test / Answer Key ─────────────────────── */
+.ptest-part-title {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1rem;
+  color: var(--gold);
+  margin: 22px 0 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+.ptest-part-title:first-child { margin-top: 0; }
+.ptest-q {
+  font-size: .87rem;
+  line-height: 1.6;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed rgba(255,255,255,.06);
+  color: #d1fae5;
+}
+.ptest-q b { color: var(--gold); }
+.ptest-q .opt { display: block; margin: 2px 0 2px 18px; color: #d1fae5; }
+.ptest-bank {
+  background: rgba(59,130,246,.08);
+  border: 1px solid rgba(59,130,246,.3);
+  border-radius: 10px;
+  padding: 10px 16px;
+  margin-bottom: 14px;
+  font-size: .82rem;
+  color: #dbeafe;
+  line-height: 1.6;
+}
+.key-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.key-pill {
+  background: rgba(245,158,11,.1);
+  border: 1px solid rgba(245,158,11,.25);
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: .78rem;
+  color: #fde68a;
+}
+.key-pill b { color: #34d399; }
+
+/* ── Print / Save-as-PDF styles ──────────────────────────────────
+   By default everything is hidden from print. When body carries
+   .printing-test, only #print-area (a light-themed clone of the
+   Practice Test + Answer Key) is shown, laid out for paper. ──── */
+@media print {
+  body * { visibility: hidden; }
+  #print-area, #print-area * { visibility: visible; }
+  #print-area {
+    display: block !important;
+    position: absolute; top: 0; left: 0; width: 100%;
+    background: #fff; color: #14290f;
+    font-family: 'Helvetica', Arial, sans-serif;
+    font-size: 10.5pt;
+    line-height: 1.5;
+  }
+  #print-area .p-cover { text-align: center; padding-top: 40px; }
+  #print-area .p-cover .p-icon { font-size: 34pt; }
+  #print-area .p-cover h1 { font-size: 19pt; color: #b45309; margin: 8px 0 4px; }
+  #print-area .p-cover .p-sub { font-size: 10.5pt; color: #166534; margin-bottom: 20px; }
+  #print-area .p-info-box {
+    border: 1.5px solid #fcd34d; border-radius: 10px;
+    max-width: 460px; margin: 0 auto 20px; padding: 14px 20px;
+    text-align: left; font-size: 10pt;
+  }
+  #print-area .p-info-box div { margin: 6px 0; border-bottom: 1px dotted #fde68a; padding-bottom: 6px; }
+  #print-area .p-instructions {
+    max-width: 460px; margin: 0 auto; text-align: left;
+    background: #fffbeb; border: 1px solid #fcd34d; border-radius: 10px;
+    padding: 12px 18px; font-size: 9.5pt; color: #78350f;
+  }
+  #print-area h2.p-part-title {
+    font-size: 12.5pt; color: #fff;
+    background: linear-gradient(135deg, #b45309, #14532d) !important;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    padding: 6px 12px; border-radius: 7px; margin: 18px 0 10px;
+    page-break-after: avoid;
+  }
+  #print-area .p-bank {
+    background: #f0fdf4 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    border: 1px solid #86efac; border-radius: 8px; padding: 8px 14px;
+    margin-bottom: 12px; font-size: 9.5pt; color: #14532d;
+  }
+  #print-area .p-q {
+    margin-bottom: 8px; padding-bottom: 8px;
+    border-bottom: 1px dotted #fde68a; font-size: 10pt;
+    page-break-inside: avoid; color: #14290f;
+  }
+  #print-area .p-q b { color: #b45309; }
+  #print-area .p-q .p-blank { display: inline-block; min-width: 65px; border-bottom: 1px solid #64748b; }
+  #print-area .p-q .p-opt { display: block; margin: 2px 0 0 20px; color: #365314; }
+  #print-area .p-break { page-break-before: always; }
+  #print-area .p-key-part-title {
+    font-size: 11pt; color: #b45309; font-weight: bold;
+    margin: 14px 0 8px; border-bottom: 2px solid #b45309; padding-bottom: 4px;
+  }
+  #print-area .p-key-grid {
+    display: grid; grid-template-columns: repeat(5, 1fr);
+    gap: 5px 8px; margin-bottom: 14px;
+  }
+  #print-area .p-key-pill {
+    background: #f0fdf4 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    border: 1px solid #86efac; border-radius: 6px;
+    padding: 4px 8px; font-size: 8.5pt; color: #166534;
+  }
+  #print-area .p-key-pill b { color: #b45309; }
+  @page { size: letter; margin: 1.5cm 1.8cm; }
+}
+#print-area { display: none; }
+
+
+/* ── Chapter Summary / Tandaan / Memory boxes (fix: previously missing) ── */
+.chapter-summary {
+  background: linear-gradient(135deg, rgba(59,130,246,.1), rgba(34,197,94,.08));
+  border: 1px solid rgba(59,130,246,.25);
+  border-left: 4px solid var(--blue);
+  border-radius: 12px;
+  padding: 14px 18px;
+  margin-bottom: 18px;
+  font-size: .88rem;
+  line-height: 1.65;
+  color: #dbeafe;
+}
+.tandaan-box {
+  background: rgba(245,158,11,.08);
+  border: 1px solid rgba(245,158,11,.3);
+  border-left: 4px solid var(--gold);
+  border-radius: 12px;
+  padding: 12px 18px;
+  margin: 14px 0;
+  font-size: .86rem;
+  line-height: 1.6;
+  color: #fde68a;
+}
+.tandaan-label {
+  display: block;
+  font-family: 'Baloo 2', cursive;
+  font-size: .8rem;
+  color: var(--gold);
+  letter-spacing: .5px;
+  margin-bottom: 5px;
+}
+.memory-box {
+  background: rgba(34,197,94,.08);
+  border: 1px solid rgba(34,197,94,.3);
+  border-left: 4px solid var(--green);
+  border-radius: 12px;
+  padding: 12px 18px;
+  margin: 14px 0 22px;
+  font-size: .86rem;
+  line-height: 1.6;
+  color: #bbf7d0;
+}
+.memory-label {
+  display: block;
+  font-family: 'Baloo 2', cursive;
+  font-size: .8rem;
+  color: var(--green);
+  letter-spacing: .5px;
+  margin-bottom: 5px;
+}
+.compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0 20px;
+  font-size: .82rem;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.compare-table th {
+  background: linear-gradient(135deg, var(--blue-dark), var(--gold-dark));
+  color: white;
+  text-align: left;
+  padding: 9px 12px;
+  font-size: .78rem;
+  text-transform: uppercase;
+  letter-spacing: .4px;
+}
+.compare-table td {
+  padding: 9px 12px;
+  border-top: 1px solid var(--border);
+  color: var(--text);
+  vertical-align: top;
+}
+.compare-table tr:nth-child(even) td { background: rgba(255,255,255,.02); }
+
+/* ── Story Box (for reading Bible stories aloud) ─────────────────── */
+.story-box {
+  background: rgba(255,255,255,.03);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px 20px;
+  margin-bottom: 16px;
+  font-size: .92rem;
+  line-height: 1.8;
+  color: var(--text);
+}
+.story-box p { margin-bottom: 10px; }
+.story-box p:last-child { margin-bottom: 0; }
+.story-ref {
+  display: block;
+  text-align: right;
+  font-style: italic;
+  color: var(--muted);
+  font-size: .8rem;
+  margin-top: 10px;
+}
+.story-label {
+  display: block;
+  font-family: 'Baloo 2', cursive;
+  font-size: .9rem;
+  color: var(--gold);
+  letter-spacing: .5px;
+  margin-bottom: 10px;
+}
+/* ── Raw Notes (original document view) ──────────────────────── */
+.rawnotes-intro {
+  font-size: .82rem;
+  color: var(--muted);
+  line-height: 1.6;
+  background: rgba(59,130,246,.1);
+  border: 1px solid rgba(59,130,246,.3);
+  border-left: 4px solid var(--blue);
+  border-radius: 10px;
+  padding: 12px 18px;
+  margin-bottom: 20px;
+}
+.rawnotes-doc {
+  font-family: 'Lora', Georgia, serif;
+  line-height: 1.75;
+}
+.rawnotes-doc p {
+  font-size: .95rem;
+  margin-bottom: 14px;
+  color: #e2f5e6;
+}
+.rawnotes-doc strong { color: var(--gold); font-weight: 700; }
+.rawnotes-doc em { color: var(--muted); font-style: italic; }
+.rawnotes-doc h3.doc-heading {
+  font-family: 'Baloo 2', cursive;
+  font-size: 1.05rem;
+  color: var(--gold);
+  margin: 26px 0 12px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid var(--border);
+}
+.rawnotes-doc h3.doc-heading:first-child { margin-top: 0; }
+.rawnotes-doc ul, .rawnotes-doc ol {
+  margin: 0 0 14px 26px;
+  color: #e2f5e6;
+}
+.rawnotes-doc li { margin-bottom: 6px; font-size: .95rem; }
+.rawnotes-doc table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0 20px;
+  font-size: .82rem;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.rawnotes-doc th {
+  background: linear-gradient(135deg, var(--blue-dark), var(--gold-dark));
+  color: white;
+  text-align: left;
+  padding: 9px 12px;
+  font-size: .78rem;
+}
+.rawnotes-doc td {
+  padding: 9px 12px;
+  border-top: 1px solid var(--border);
+  color: var(--text);
+  vertical-align: top;
+}
+.rawnotes-doc tr:nth-child(even) td { background: rgba(255,255,255,.02); }
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE: TABLET (≤820px)
+   ═══════════════════════════════════════════════════════════════ */
+@media (max-width: 820px) {
+  .notes-panel { width: 95%; max-height: 92vh; }
+  .notes-tabs { padding: 12px 16px; gap: 6px; }
+  .notes-tab { padding: 10px 14px; font-size: .82rem; min-height: 42px; }
+  .notes-body { padding: 16px; }
+  .notes-header { padding: 14px 16px; }
+  .chat-wrap { padding: 14px 10px 0; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE: MOBILE (≤600px)
+   ═══════════════════════════════════════════════════════════════ */
+@media (max-width: 600px) {
+  header {
+    padding: 10px 12px;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .header-icon { font-size: 1.5rem; }
+  header h1 { font-size: 1.05rem; line-height: 1.2; }
+  header .sub { font-size: .62rem; }
+  .header-controls { gap: 6px; margin-left: auto; }
+  .score-pill { padding: 4px 10px; font-size: .74rem; }
+  .audio-btn { width: 32px; height: 32px; font-size: .85rem; }
+
+  .chat-wrap { padding: 10px 6px 0; }
+  #chat-box { gap: 12px; }
+  .bubble { max-width: 88%; font-size: .88rem; padding: 10px 13px; }
+  .avatar { width: 30px; height: 30px; font-size: .85rem; }
+
+  .chip { font-size: .78rem; padding: 7px 12px; }
+  .mc-btn { font-size: .84rem; padding: 10px 12px; }
+  .mc-btn .letter { width: 22px; height: 22px; font-size: .74rem; }
+  .topic-tag { font-size: .68rem; }
+  .scenario-card { font-size: .88rem; padding: 10px 14px; }
+
+  .input-bar { padding: 8px 8px calc(8px + env(safe-area-inset-bottom)); gap: 8px; }
+  #user-input { font-size: .88rem; padding: 10px 14px; }
+  #send-btn { width: 40px; height: 40px; font-size: 1rem; }
+
+  .result-card { width: 92%; padding: 26px 20px; }
+  .result-emoji { font-size: 2.6rem; }
+  .result-title { font-size: 1.2rem; }
+  .result-score { font-size: 1.8rem; }
+
+  /* ── Notes panel: near-full-screen on phones ── */
+  .notes-overlay { align-items: flex-end; }
+  .notes-panel {
+    width: 100%; max-width: 100%;
+    max-height: 94vh;
+    border-radius: 20px 20px 0 0;
+    border-left: none; border-right: none; border-bottom: none;
+  }
+  .notes-header { padding: 12px 14px; flex-wrap: wrap; gap: 8px; }
+  .notes-header h2 { font-size: 1.05rem; flex: 1 1 100%; }
+  .notes-header-actions { flex-wrap: wrap; gap: 6px; width: 100%; justify-content: flex-start; }
+  .print-btn { font-size: .7rem; padding: 6px 11px; }
+  .notes-close { width: 30px; height: 30px; font-size: .9rem; margin-left: auto; }
+
+  .notes-tabs { padding: 10px 12px; gap: 5px; }
+  .notes-tab { padding: 8px 12px; font-size: .76rem; min-height: 38px; }
+  .notes-body { padding: 14px; }
+
+  .notes-item { flex-direction: column; gap: 2px; }
+  .notes-term { min-width: 0; font-size: .82rem; }
+  .notes-def { font-size: .84rem; }
+  .notes-topic-title { font-size: .95rem; }
+  .chapter-summary, .memory-box, .tandaan-box, .story-box, .verse-card { font-size: .82rem; padding: 12px 14px; }
+
+  /* ── Tables: allow horizontal scroll instead of squeezing ── */
+  .compare-table { display: block; overflow-x: auto; white-space: nowrap; }
+  .compare-table th, .compare-table td { white-space: normal; min-width: 110px; }
+
+  .key-grid { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 5px; }
+  .key-pill { font-size: .72rem; padding: 5px 8px; }
+  .ptest-part-title { font-size: .92rem; }
+  .ptest-q { font-size: .82rem; }
+  .ptest-bank { font-size: .78rem; padding: 8px 12px; }
+
+  .rawnotes-doc p, .rawnotes-doc li { font-size: .87rem; }
+  .rawnotes-doc h3.doc-heading { font-size: .95rem; }
+  .rawnotes-doc table { display: block; overflow-x: auto; white-space: nowrap; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE: VERY SMALL PHONES (≤380px)
+   ═══════════════════════════════════════════════════════════════ */
+@media (max-width: 380px) {
+  header h1 { font-size: .92rem; }
+  header .sub { display: none; }
+  .score-pill span { font-size: .7rem; }
+  .bubble { max-width: 92%; font-size: .84rem; }
+  .notes-tab { font-size: .7rem; padding: 7px 10px; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE: LANDSCAPE PHONES (short height)
+   ═══════════════════════════════════════════════════════════════ */
+@media (max-height: 480px) and (orientation: landscape) {
+  .notes-panel { max-height: 98vh; }
+  .notes-tabs { padding: 6px 12px; }
+  .notes-tab { min-height: 32px; padding: 6px 10px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-icon">📐</div>
+  <div>
+    <h1>Angles &amp; Perimeter</h1>
+    <div class="sub">Measuring &amp; Drawing Angles · Kinds of Angles · Perimeter Formulas · Word Problems</div>
+  </div>
+  <div class="header-controls">
+    <div class="score-pill">⭐ <span id="score-val">0</span> / <span id="total-val">0</span></div>
+    <button class="audio-btn" id="notes-toggle" title="Open Reviewer" onclick="document.getElementById('notes-overlay').classList.add('show')">📖</button>
+    <button class="audio-btn active" id="audio-toggle" title="Toggle Audio">🔊</button>
+  </div>
+</header>
+
+<div class="chat-wrap">
+  <div id="chat-box"></div>
+</div>
+
+<div class="input-bar">
+  <input type="text" id="user-input" placeholder="Type your answer here…" autocomplete="off" />
+  <button id="send-btn">➤</button>
+</div>
+
+<div class="result-overlay" id="result-overlay">
+  <div class="result-card">
+    <span class="result-emoji" id="res-emoji">🏆</span>
+    <div class="result-title">Quiz Complete!</div>
+    <div class="result-score"><span id="res-score">0</span>/<span id="res-total">0</span></div>
+    <div class="result-msg" id="res-msg">Great job!</div>
+    <button class="result-btn" onclick="restartApp()">🔄 Maglaro Ulit</button>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+// QUESTION BANK
+// ═══════════════════════════════════════════════════════════════
+const topics = {
+
+  "Measuring and Drawing Angles": [
+    { q: "What is the measure of an angle?", a: "The amount of opening of the sides in the angle", hint: "It's about how wide the angle opens up." },
+    { q: "What device is used to measure an angle?", a: "A protractor", hint: "A semicircular tool with degree markings." },
+    { q: "Where should the vertex of the angle be placed when measuring with a protractor?", a: "At the 0-point of the protractor", hint: "This is the starting reference point." },
+    { q: "What two tools are used to draw an angle?", a: "A protractor and a ruler", hint: "One measures degrees, the other draws straight lines." },
+    { q: "What is the first step in drawing an angle?", a: "Draw a straight line using a ruler", hint: "You need a starting side first." },
+    { q: "Where should the center of the protractor be placed when drawing an angle?", a: "At one end of the line, which becomes the vertex of the angle", hint: "This point becomes the corner of your new angle." },
+    { q: "What are the two sets of numbers found on a protractor?", a: "The inner numbers and the outer numbers", hint: "You have to pick the correct set depending on which side you start from." },
+    { q: "After marking the angle measure on the protractor, what should you do next?", a: "Remove the protractor, then use a ruler to connect the mark to the end of the line at the vertex", hint: "The final step completes the second side of the angle." },
+  ],
+
+  "Kinds of Angles": [
+    { q: "How are angles classified?", a: "According to their measures", hint: "Their size in degrees determines their type." },
+    { q: "What is an acute angle?", a: "An angle that measures greater than 0° but less than 90°", hint: "It's a \"small\" angle." },
+    { q: "What is a right angle?", a: "An angle that measures exactly 90°", hint: "Think of the corner of a square piece of paper." },
+    { q: "What symbol indicates that an angle is a right angle?", a: "A small square drawn at the corner of the angle", hint: "Look for a tiny square marking, not a curved line." },
+    { q: "What is an obtuse angle?", a: "An angle that measures greater than 90° but less than 180°", hint: "It's \"wider\" than a right angle." },
+  ],
+
+  "Quadrilaterals Review": [
+    { q: "What is a quadrilateral?", a: "A four-sided polygon", hint: "\"Quad\" means four." },
+    { q: "What are the four classifications of quadrilaterals?", a: "General quadrilateral, parallelogram, trapezoid, and kite", hint: "Four categories based on parallel sides." },
+    { q: "What is a general quadrilateral?", a: "A quadrilateral with no pairs of parallel sides", hint: "None of its sides run in the same direction." },
+    { q: "What is a trapezoid?", a: "A quadrilateral with only one pair of parallel sides", hint: "Only one pair matches in direction." },
+    { q: "What is a parallelogram?", a: "A quadrilateral with two pairs of opposite sides that are both parallel and of equal measure", hint: "Both pairs of opposite sides match." },
+    { q: "Into what two shapes can a parallelogram be classified?", a: "A rectangle or a rhombus", hint: "Two special types of parallelograms." },
+    { q: "What is a kite?", a: "A quadrilateral with two pairs of consecutive sides with the same measure", hint: "Think of the sides next to each other, not opposite." },
+    { q: "What is a rectangle?", a: "A parallelogram with four right angles", hint: "All four corners are 90°." },
+    { q: "What is a rhombus?", a: "A parallelogram with four sides of the same measure", hint: "All four sides are equal in length." },
+    { q: "What is a square?", a: "A special rectangle with four sides of the same measure", hint: "It combines features of a rectangle and a rhombus." },
+    { q: "Which polygon has the least number of sides?", a: "A triangle", hint: "It only needs 3 sides to close a shape." },
+  ],
+
+  "Perimeter Formulas": [
+    { q: "What is the perimeter of a polygon?", a: "The sum of the measures of its sides; the distance around a polygon", hint: "Add up all the outer edges." },
+    { q: "What is the formula for the perimeter of an equilateral triangle?", a: "P = 3 × a, where a is the measure of its side", hint: "Multiply one side by the number of sides." },
+    { q: "What is the formula for the perimeter of a rectangle?", a: "P = 2 × (L + W), where L is the length and W is the width", hint: "Add length and width, then double it." },
+    { q: "What is the formula for the perimeter of a square?", a: "P = 4 × a, where a is the measure of its side", hint: "Multiply one side by 4." },
+    { q: "Why can the same formula for a square's perimeter also be used for a rhombus?", a: "Because a rhombus also has four equal sides", hint: "Both shapes share this key feature." },
+    { q: "What is the formula for the perimeter of a general quadrilateral?", a: "P = a + b + c + d, where a, b, c, and d are the measures of its sides", hint: "Simply add up all four sides." },
+    { q: "What is the formula for the perimeter of a trapezoid?", a: "P = a + b + c + d, where a, b, c, and d are the measures of its sides", hint: "Same approach as a general quadrilateral." },
+    { q: "What is the formula for the perimeter of a kite?", a: "P = (2 × L) + (2 × S), where L is the length of the longer side and S is the length of the shorter side", hint: "Two pairs of matching sides." },
+    { q: "What is a composite figure?", a: "A figure made up of triangles, squares, rectangles, and other plane figures put together", hint: "Multiple shapes combined into one." },
+    { q: "How do you find the perimeter of a composite figure?", a: "Find the distance around the figure, which may require first finding the lengths of any unknown sides", hint: "Sometimes you must calculate missing sides first." },
+  ],
+
+  "Solving Perimeter Problems": [
+    { q: "Find the perimeter of an equilateral triangle whose side measures 12 cm.", a: "36 cm", hint: "Use P = 3 × a." },
+    { q: "Find the perimeter of a rectangle with length 10 and width 5.", a: "30 units", hint: "Use P = 2 × (L + W)." },
+    { q: "Find the perimeter of a rhombus whose side measures 8 cm.", a: "32 cm", hint: "Use P = 4 × a." },
+    { q: "Find the perimeter of a general quadrilateral with sides 4 cm, 5 cm, 7 cm, and 9 cm.", a: "25 cm", hint: "Just add all four sides together." },
+    { q: "Find the perimeter of a trapezoid with sides 3 cm, 4 cm, 5 cm, and 8 cm.", a: "20 cm", hint: "Just add all four sides together." },
+    { q: "Find the perimeter of a kite with a longer side of 12 cm and a shorter side of 7 cm.", a: "38 cm", hint: "Use P = (2 × L) + (2 × S)." },
+    { q: "The length of a rectangular field is 200 m and its perimeter is 700 m. What is its width?", a: "150 m", hint: "Work backwards from P = 2 × (L + W)." },
+    { q: "A triangular park has sides 14 m, 17 m, and 20 m. What is its perimeter?", a: "51 m", hint: "Add all three sides." },
+    { q: "The perimeter of a rectangular hall is 24 m and its length is 8 m. What is its width?", a: "4 m", hint: "Work backwards from P = 2 × (L + W)." },
+    { q: "A triangular field has sides 210 m, 180 m, and 230 m. How many meters of wire are needed to fence it?", a: "620 m", hint: "The wire needed equals the perimeter." },
+    { q: "Japhet jogs around a rectangular park (length 50 m, width 30 m) for 10 rounds each day. How much distance does he cover?", a: "1,600 m", hint: "Find the perimeter first, then multiply by the number of rounds." },
+    { q: "A square has a side of 7 meters, and a rectangle has a length of 9 meters and a width of 5 meters. Which has a greater perimeter?", a: "Neither — both have a perimeter of 28 meters", hint: "Calculate both and compare." },
+    { q: "Willy wants to fence his 12-meter by 8-meter garden, leaving a 1-meter opening for a gate. How many meters of fencing wire must he buy?", a: "39 meters", hint: "Find the perimeter, then subtract the gate opening." },
+    { q: "A 9-meter lace will be sewn around a square tablecloth whose side measures 2 meters. Is there enough lace?", a: "Yes — only 8 meters are needed, so 1 meter of lace will be left over", hint: "Find the perimeter of the tablecloth and compare to 9 meters." },
+    { q: "A 200-meter roll of barbed wire is used to fence a rectangular lot that is 50 meters long and 40 meters wide. How many meters will be left?", a: "20 meters", hint: "Find the perimeter of the lot, then subtract from 200." },
+    { q: "A trapezoid-shaped farm has a perimeter of 980 meters, with three sides measuring 400 m, 260 m, and 150 m. What is the length of the fourth side?", a: "170 meters", hint: "Subtract the sum of the three known sides from the total perimeter." },
+  ],
+
+};
+
+// ── TRUE OR FALSE ────────────────────────────────────────────────────────────
+const trueOrFalse = [
+  { q: "A three-sided polygon is a triangle.", a: "true" },
+  { q: "An obtuse triangle can be an isosceles triangle.", a: "true" },
+  { q: "A scalene triangle can be an acute triangle.", a: "true" },
+  { q: "An obtuse triangle can be a right triangle.", a: "false" },
+  { q: "A right triangle can be an isosceles triangle.", a: "true" },
+  { q: "A square is always a rectangle.", a: "true" },
+  { q: "All parallelograms are quadrilaterals.", a: "true" },
+  { q: "A quadrilateral is always a parallelogram.", a: "false" },
+  { q: "A rhombus is always a square.", a: "false" },
+  { q: "A trapezoid is a parallelogram.", a: "false" },
+  { q: "An acute angle measures greater than 0° but less than 90°.", a: "true" },
+  { q: "A right angle measures 180°.", a: "false" },
+  { q: "An obtuse angle measures greater than 90° but less than 180°.", a: "true" },
+  { q: "The perimeter of a polygon is the sum of the measures of its sides.", a: "true" },
+  { q: "The formula for the perimeter of a rectangle is P = L × W.", a: "false" },
+  { q: "A rhombus and a square use the same perimeter formula, P = 4a.", a: "true" },
+  { q: "The perimeter of a kite is found using P = 2L + 2S.", a: "true" },
+  { q: "To measure an angle, the vertex should align with the 0-point of the protractor.", a: "true" },
+];
+
+// ── IDENTIFY: TRIANGLES · QUADRILATERALS · ANGLES · PERIMETER FORMULAS ──────
+const identifyQuestions = [
+  { q: "Has three acute angles.", a: "Acute", choices: ["Acute","Isosceles","Equilateral","Right"] },
+  { q: "Has two sides of the same measure.", a: "Isosceles", choices: ["Isosceles","Acute","Equilateral","Obtuse"] },
+  { q: "Has three sides of the same measure.", a: "Equilateral", choices: ["Equilateral","Isosceles","Right","Obtuse"] },
+  { q: "Has one right angle.", a: "Right", choices: ["Right","Acute","Isosceles","Obtuse"] },
+  { q: "Has one obtuse angle.", a: "Obtuse", choices: ["Obtuse","Acute","Right","Equilateral"] },
+  { q: "A quadrilateral with two pairs of parallel sides.", a: "Parallelogram", choices: ["Parallelogram","Trapezoid","Kite","General Quadrilateral"] },
+  { q: "A parallelogram with four right angles.", a: "Rectangle", choices: ["Rectangle","Rhombus","Square","Trapezoid"] },
+  { q: "A rectangle with four sides of the same measure.", a: "Square", choices: ["Square","Rectangle","Rhombus","Kite"] },
+  { q: "A parallelogram with all sides of the same measure.", a: "Rhombus", choices: ["Rhombus","Rectangle","Square","Kite"] },
+  { q: "A quadrilateral with one pair of parallel sides.", a: "Trapezoid", choices: ["Trapezoid","Parallelogram","Kite","General Quadrilateral"] },
+  { q: "An angle that measures 45°. Classify this angle.", a: "Acute", choices: ["Acute","Right","Obtuse"] },
+  { q: "An angle that measures 90°. Classify this angle.", a: "Right", choices: ["Right","Acute","Obtuse"] },
+  { q: "An angle that measures 120°. Classify this angle.", a: "Obtuse", choices: ["Obtuse","Acute","Right"] },
+  { q: "An angle that measures 15°. Classify this angle.", a: "Acute", choices: ["Acute","Right","Obtuse"] },
+  { q: "An angle that measures 175°. Classify this angle.", a: "Obtuse", choices: ["Obtuse","Acute","Right"] },
+  { q: "An angle that measures 89°. Classify this angle.", a: "Acute", choices: ["Acute","Right","Obtuse"] },
+  { q: "Which formula gives the perimeter of an equilateral triangle?", a: "P = 3 × a", choices: ["P = 3 × a","P = 2 × (L + W)","P = 4 × a","P = 2L + 2S"] },
+  { q: "Which formula gives the perimeter of a rectangle?", a: "P = 2 × (L + W)", choices: ["P = 2 × (L + W)","P = 3 × a","P = 4 × a","P = a + b + c + d"] },
+  { q: "Which formula gives the perimeter of a square?", a: "P = 4 × a", choices: ["P = 4 × a","P = 3 × a","P = 2 × (L + W)","P = 2L + 2S"] },
+  { q: "Which formula gives the perimeter of a rhombus?", a: "P = 4 × a", choices: ["P = 4 × a","P = 3 × a","P = a + b + c + d","P = 2L + 2S"] },
+  { q: "Which formula gives the perimeter of a general quadrilateral or trapezoid?", a: "P = a + b + c + d", choices: ["P = a + b + c + d","P = 4 × a","P = 3 × a","P = 2L + 2S"] },
+  { q: "Which formula gives the perimeter of a kite?", a: "P = (2 × L) + (2 × S)", choices: ["P = (2 × L) + (2 × S)","P = 4 × a","P = 3 × a","P = a + b + c + d"] },
+];
+
+// ═══════════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════════
+let state = {
+  awaiting: 'menu',
+  mode: null,
+  questions: [],
+  allAnswers: [],
+  qIndex: 0,
+  score: 0,
+  total: 0,
+  hintUsed: false,
+  audioEnabled: true,
+};
+
+// ═══════════════════════════════════════════════════════════════
+// TTS (UPGRADED FOR TRUE FILIPINO ACCENT)
+// ═══════════════════════════════════════════════════════════════
+let currentAudioStream = null;
+
+function speak(text) {
+  if (!state.audioEnabled) return;
+  
+  // Linisin ang mga nakaraang audio task
+  window.speechSynthesis.cancel();
+  if (currentAudioStream) {
+    currentAudioStream.pause();
+    currentAudioStream = null;
+  }
+  
+  // Tanggalin ang HTML tags at emojis para hindi basahin nang paputol-putol
+  const clean = text.replace(/<[^>]+>/g,'').replace(/[🇵🇭🌟✅❌💡⏭️🏆😊💪🔄🔲📚👋⭐✕🧭📏🗺️]/g,'');
+  
+  // PRIMARY METHOD: Google Translation Engine cloud voice stream (May natural na Filipino accent)
+  const googleTtsUrl = `https://translate.google.com/translate_tts?ie=UTF-8&tl=tl&client=tw-ob&q=${encodeURIComponent(clean)}`;
+  
+  currentAudioStream = new Audio(googleTtsUrl);
+  currentAudioStream.onplaying = () => showWave(true);
+  currentAudioStream.onended = currentAudioStream.onerror = () => showWave(false);
+  
+  currentAudioStream.play().catch(err => {
+    // BACKUP METHOD: Web Speech API (works even without internet)
+    console.warn("Google TTS blocked or offline. Falling back to local system speech engine.");
+    
+    const streamFallback = new SpeechSynthesisUtterance(clean);
+    streamFallback.lang = 'fil-PH';
+    streamFallback.rate = 0.95; streamFallback.pitch = 1.05; streamFallback.volume = 1;
+    
+    const voices = window.speechSynthesis.getVoices();
+    const filVoice = voices.find(v => v.lang.startsWith('fil') || v.lang.startsWith('tl'));
+    const engVoice = voices.find(v => v.lang.startsWith('en') && v.name.toLowerCase().includes('female'))
+                   || voices.find(v => v.lang.startsWith('en'));
+              
+    if (filVoice) {
+      streamFallback.voice = filVoice;
+    } else if (engVoice) {
+      streamFallback.voice = engVoice; 
+      streamFallback.lang = 'en-US'; 
+    }
+    
+    streamFallback.onstart = () => showWave(true);
+    streamFallback.onend = streamFallback.onerror = () => showWave(false);
+    window.speechSynthesis.speak(streamFallback);
+  });
+}
+
+function showWave(on) {
+  document.querySelectorAll('.speaker-wave').forEach(w => w.style.display = on ? 'inline-flex' : 'none');
+}
+
+// I-initialize ang mga boses ng system
+let localSystemVoices = [];
+function lookupSystemVoices() {
+  localSystemVoices = window.speechSynthesis.getVoices();
+}
+lookupSystemVoices();
+if (window.speechSynthesis.onvoiceschanged !== undefined) {
+  window.speechSynthesis.onvoiceschanged = lookupSystemVoices;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// UI HELPERS
+// ═══════════════════════════════════════════════════════════════
+const chatBox = document.getElementById('chat-box');
+const input = document.getElementById('user-input');
+const sendBtn = document.getElementById('send-btn');
+
+function scrollBottom() { chatBox.scrollTop = chatBox.scrollHeight; }
+
+function addMessage(role, html, speakText) {
+  const div = document.createElement('div');
+  div.className = `msg ${role}`;
+  const av = document.createElement('div');
+  av.className = 'avatar';
+  av.textContent = role === 'bot' ? '🤖' : '🧑';
+  const bub = document.createElement('div');
+  bub.className = 'bubble';
+  bub.innerHTML = role === 'bot'
+    ? html + '<span class="speaker-wave" style="display:none"><span></span><span></span><span></span><span></span><span></span></span>'
+    : html;
+  div.appendChild(av); div.appendChild(bub);
+  chatBox.appendChild(div);
+  scrollBottom(); bindChips();
+  if (role === 'bot') {
+    const txt = speakText || html.replace(/<[^>]+>/g,' ');
+    setTimeout(() => speak(txt), 350);
+  }
+}
+
+function addTyping() {
+  const d = document.createElement('div');
+  d.className = 'msg bot'; d.id = 'typing';
+  d.innerHTML = '<div class="avatar">🤖</div><div class="typing"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>';
+  chatBox.appendChild(d); scrollBottom();
+}
+function removeTyping() { const t = document.getElementById('typing'); if(t) t.remove(); }
+
+function bindChips() {
+  document.querySelectorAll('.chip:not([data-bound])').forEach(c => {
+    c.dataset.bound = '1';
+    c.addEventListener('click', () => handleUserMessage(c.dataset.val));
+  });
+}
+
+function updateScore() {
+  document.getElementById('score-val').textContent = state.score;
+  document.getElementById('total-val').textContent = state.total;
+}
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length-1; i > 0; i--) {
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]] = [a[j],a[i]];
+  }
+  return a;
+}
+
+function normalize(s) { return s.toLowerCase().trim().replace(/\s+/g,' '); }
+
+function checkAnswer(user, correct) {
+  const u = normalize(user), c = normalize(correct);
+  if (u === c) return true;
+  if (c.includes(u) && u.length > 5) return true;
+  const parts = c.split(/[,;\/]/);
+  for (const p of parts) if (u.includes(p.trim()) && p.trim().length > 4) return true;
+  return false;
+}
+
+function showResult() {
+  const pct = Math.round((state.score/state.total)*100);
+  const emoji = pct>=90?'🏆':pct>=70?'🌟':pct>=50?'😊':'💪';
+  const msg = pct>=90?'Excellent! You know it all!':pct>=70?'Great job! Keep it up!':pct>=50?'Good! Study a little more!':"Don't give up! Try again!";
+  document.getElementById('res-emoji').textContent = emoji;
+  document.getElementById('res-score').textContent = state.score;
+  document.getElementById('res-total').textContent = state.total;
+  document.getElementById('res-msg').textContent = msg;
+  document.getElementById('result-overlay').classList.add('show');
+  speak(`All done! Your score is ${state.score} out of ${state.total}. ${msg}`);
+}
+
+function restartApp() {
+  document.getElementById('result-overlay').classList.remove('show');
+  state = { awaiting:'menu', mode:null, questions:[], allAnswers:[], qIndex:0, score:0, total:0, hintUsed:false, audioEnabled:state.audioEnabled };
+  chatBox.innerHTML = '';
+  document.querySelector('.input-bar').style.display = 'flex';
+  updateScore();
+  showMenu();
+}
+
+// ═══════════════════════════════════════════════════════════════
+// MC HELPERS
+// ═══════════════════════════════════════════════════════════════
+function getAllAnswers() {
+  const ans = [];
+  for (const qs of Object.values(topics)) for (const q of qs) ans.push(q.a);
+  return ans;
+}
+
+function generateChoices(correct, pool) {
+  const distractors = shuffle(pool.filter(a => a !== correct)).slice(0,3);
+  return shuffle([correct, ...distractors]);
+}
+
+function buildMCBtns(choices, correctAnswer) {
+  const letters = ['A','B','C','D','E'];
+  return `<div class="mc-options">${choices.map((c,i)=>
+    `<button class="mc-btn" data-answer="${encodeURIComponent(c)}" data-correct="${encodeURIComponent(correctAnswer)}" onclick="handleMCClick(this)">
+      <span class="letter">${letters[i]}</span>${c}
+    </button>`
+  ).join('')}</div>`;
+}
+
+function handleMCClick(btn) {
+  const allBtns = btn.closest('.mc-options').querySelectorAll('.mc-btn');
+  allBtns.forEach(b => b.disabled = true);
+  const chosen = decodeURIComponent(btn.dataset.answer);
+  const correct = decodeURIComponent(btn.dataset.correct);
+  const isCorrect = chosen === correct;
+  allBtns.forEach(b => { if(decodeURIComponent(b.dataset.answer)===correct) b.classList.add('correct'); });
+  if (!isCorrect) btn.classList.add('wrong');
+  setTimeout(() => {
+    if (isCorrect) {
+      state.score++;
+      addMessage('bot', `✅ <strong>Correct!</strong> +1 point! The answer is: <strong>${correct}</strong>`, `Correct! The answer is: ${correct}`);
+    } else {
+      addMessage('bot', `❌ <strong>Not quite.</strong> The correct answer is: <strong>${correct}</strong>`, `Not quite. The correct answer is: ${correct}`);
+    }
+    state.qIndex++; updateScore();
+    if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+    else setTimeout(showResult, 900);
+  }, 650);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// NEXT QUESTION
+// ═══════════════════════════════════════════════════════════════
+function nextQuestion() {
+  const qi = state.qIndex;
+  const q = state.questions[qi];
+  const num = qi + 1;
+
+  if (state.mode === 'full' || state.mode === 'topic_mc') {
+    const choices = generateChoices(q.a, state.allAnswers);
+    const tag = q.topic ? `<span class="topic-tag">${q.topic}</span><br>` : '';
+    const html = `${tag}<strong>Q${num} of ${state.total}:</strong> ${q.q}${buildMCBtns(choices, q.a)}`;
+    addMessage('bot', html, `Question ${num}. ${q.q}`);
+    return;
+  }
+
+  if (state.mode === 'tf') {
+    const html = `<strong>Q${num} of ${state.total}:</strong> <div class="scenario-card">${q.q}</div>
+      <span class="chip" data-val="true">✅ True</span><span class="chip" data-val="false">❌ False</span>`;
+    addMessage('bot', html, `Question ${num}. True or False: ${q.q}`);
+    return;
+  }
+
+  if (state.mode === 'identify') {
+    const btns = buildMCBtns(q.choices, q.a);
+    const html = `<strong>Q${num} of ${state.total}:</strong> Identify what is being described:<div class="scenario-card">${q.q}</div>${btns}`;
+    addMessage('bot', html, `Question ${num}. Identify: ${q.q}`);
+    return;
+  }
+
+  // typed answer mode
+  const tag = q.topic ? `<span class="topic-tag">${q.topic}</span><br>` : '';
+  const html = `${tag}<strong>Q${num} of ${state.total}:</strong> ${q.q}<br><small style="color:var(--muted)">Type your answer · type <em>hint</em> for help · <em>skip</em> to move on</small>`;
+  addMessage('bot', html, `Question ${num}. ${q.q}`);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// MENU
+// ═══════════════════════════════════════════════════════════════
+function showMenu() {
+  addMessage('bot',
+    `👋 <strong>Hi! I'm your Math Reviewer!</strong><br>Let's study <em>Measuring and Drawing Angles</em>, <em>Kinds of Angles</em>, a <em>Quadrilaterals Review</em>, <em>Perimeter Formulas</em>, and <em>Solving Perimeter Problems</em>.<br><br>What would you like to do?<br>
+    <span class="chip" data-val="1">📚 Study by Topic</span>
+    <span class="chip" data-val="2">✅ True or False</span>
+    <span class="chip" data-val="3">🌐 Identify</span>
+    <span class="chip" data-val="4">🌟 Full Review (Multiple Choice)</span>`,
+    "Hi! I'm your Math Reviewer on Angles and Perimeter. What would you like to do? Study a topic, True or False, Identify, or a Full Review with multiple choice?"
+  );
+  state.awaiting = 'menu';
+}
+
+// ═══════════════════════════════════════════════════════════════
+// PROCESS MESSAGE
+// ═══════════════════════════════════════════════════════════════
+function processMessage(msg) {
+  const aw = state.awaiting;
+
+  // ── MENU ──────────────────────────────────────────────────
+  if (aw === 'menu') {
+    if (msg === '1') {
+      state.awaiting = 'topic';
+      const keys = Object.keys(topics);
+      const chips = keys.map((t,i) => `<span class="chip" data-val="${i+1}">${i+1}. ${t}</span>`).join(' ');
+      addMessage('bot', `📚 Which topic would you like to study?<br>${chips}`, 'Which topic would you like to study?');
+
+    } else if (msg === '2') {
+      state.mode = 'tf';
+      state.questions = shuffle(trueOrFalse);
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'tf_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `✅ <strong>True or False!</strong> ${state.total} questions. Let's start!`, `True or False! ${state.total} questions. Let's start!`);
+      setTimeout(nextQuestion, 800);
+
+    } else if (msg === '3') {
+      state.mode = 'identify';
+      state.questions = shuffle(identifyQuestions);
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'mc_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `🌐 <strong>Identify!</strong> Classify triangles, quadrilaterals, angles, or match a shape to its perimeter formula.`, "Identify! Figure out what's being described in each item.");
+      setTimeout(nextQuestion, 800);
+
+    } else if (msg === '4') {
+      state.mode = 'full';
+      const all = [];
+      for (const [topicName, qs] of Object.entries(topics)) {
+        qs.forEach(q => all.push({...q, topic: topicName}));
+      }
+      state.questions = shuffle(all);
+      state.allAnswers = getAllAnswers();
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'mc_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `🌟 <strong>Full Review — Multiple Choice!</strong> ${state.total} questions. Think carefully!`, `Full Review! Multiple Choice! ${state.total} questions. Think carefully!`);
+      setTimeout(nextQuestion, 800);
+
+    } else {
+      addMessage('bot',
+        `Choose an option:<br>
+        <span class="chip" data-val="1">📚 Study by Topic</span>
+        <span class="chip" data-val="2">✅ True or False</span>
+        <span class="chip" data-val="3">🌐 Identify</span>
+        <span class="chip" data-val="4">🌟 Full Review</span>`,
+        'Choose an option.'
+      );
+    }
+    return;
+  }
+
+  // ── TOPIC SELECT ──────────────────────────────────────────
+  if (aw === 'topic') {
+    const keys = Object.keys(topics);
+    const idx = parseInt(msg) - 1;
+    if (keys[idx]) {
+      const topicName = keys[idx];
+      state.mode = 'topic_mc';
+      state.questions = shuffle(topics[topicName]);
+      state.allAnswers = getAllAnswers();
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'mc_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `📚 <strong>${topicName}</strong> — ${state.total} questions. Ready?`, `${topicName}. ${state.total} questions. Ready?`);
+      setTimeout(nextQuestion, 800);
+    } else {
+      const chips = Object.keys(topics).map((t,i) => `<span class="chip" data-val="${i+1}">${i+1}. ${t}</span>`).join(' ');
+      addMessage('bot', `Please choose a valid topic:<br>${chips}`, 'Please choose a valid topic.');
+    }
+    return;
+  }
+
+  // ── TYPED ANSWER ──────────────────────────────────────────
+  if (aw === 'answer') {
+    const q = state.questions[state.qIndex];
+    const m = normalize(msg);
+
+    if (m === 'hint') {
+      state.hintUsed = true;
+      addMessage('bot', `💡 <strong>Hint:</strong> ${q.hint}`, `Hint: ${q.hint}`);
+      return;
+    }
+    if (m === 'skip') {
+      addMessage('bot', `⏭️ Skipped! The correct answer is: <strong>${q.a}</strong>`, `Skipped. The correct answer is: ${q.a}`);
+      state.qIndex++; state.hintUsed = false;
+      if (state.qIndex < state.total) setTimeout(nextQuestion, 700);
+      else showResult();
+      return;
+    }
+
+    const correct = checkAnswer(msg, q.a);
+    if (correct) {
+      if (!state.hintUsed) state.score++;
+      const note = state.hintUsed ? ' <em>(hint used — no point)</em>' : ' +1 point!';
+      addMessage('bot', `✅ <strong>Correct!</strong>${note} Answer: <strong>${q.a}</strong>`, `Correct! The answer is: ${q.a}`);
+    } else {
+      addMessage('bot', `❌ <strong>Not quite.</strong> The correct answer is: <strong>${q.a}</strong>`, `Not quite. The correct answer is: ${q.a}`);
+    }
+    state.qIndex++; state.hintUsed = false; updateScore();
+    if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+    else setTimeout(showResult, 900);
+    return;
+  }
+
+  // ── TRUE OR FALSE ─────────────────────────────────────────
+  if (aw === 'tf_answer') {
+    const q = state.questions[state.qIndex];
+    const ans = normalize(msg);
+    const valid = ans === 'true' || ans === 'false';
+
+    if (valid) {
+      const correct = ans === q.a;
+      if (correct) {
+        state.score++;
+        addMessage('bot', `✅ <strong>Correct!</strong> The answer is <strong>${q.a.toUpperCase()}</strong>.`, `Correct! The answer is ${q.a}.`);
+      } else {
+        addMessage('bot', `❌ <strong>Incorrect.</strong> The correct answer is <strong>${q.a.toUpperCase()}</strong>.`, `Incorrect. The correct answer is ${q.a}.`);
+      }
+      state.qIndex++; updateScore();
+      if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+      else setTimeout(showResult, 900);
+    } else {
+      addMessage('bot',
+        `Answer: True or False?<br><span class="chip" data-val="true">✅ True</span><span class="chip" data-val="false">❌ False</span>`,
+        'Answer: True or False?'
+      );
+    }
+    return;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// CONTROLS
+// ═══════════════════════════════════════════════════════════════
+function handleUserMessage(msg) {
+  if (!msg.trim()) return;
+  
+  // Stop any speaking audio cleanly when the user answers
+  window.speechSynthesis.cancel();
+  if (currentAudioStream) {
+    currentAudioStream.pause();
+    currentAudioStream = null;
+    showWave(false);
+  }
+  
+  addMessage('user', msg.replace(/</g,'&lt;'));
+  input.value = '';
+  input.disabled = true; sendBtn.disabled = true;
+  addTyping();
+  setTimeout(() => {
+    removeTyping();
+    input.disabled = false; sendBtn.disabled = false;
+    input.focus();
+    processMessage(msg);
+  }, 480);
+}
+
+sendBtn.addEventListener('click', () => { handleUserMessage(input.value); });
+input.addEventListener('keydown', e => { if(e.key==='Enter') handleUserMessage(input.value); });
+
+document.getElementById('audio-toggle').addEventListener('click', function() {
+  state.audioEnabled = !state.audioEnabled;
+  this.textContent = state.audioEnabled ? '🔊' : '🔇';
+  this.classList.toggle('active', state.audioEnabled);
+  if (!state.audioEnabled) {
+    window.speechSynthesis.cancel();
+    if (currentAudioStream) {
+      currentAudioStream.pause();
+      currentAudioStream = null;
+      showWave(false);
+    }
+  }
+});
+
+// ═══════════════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════════════
+window.addEventListener('load', () => {
+  lookupSystemVoices();
+  showMenu();
+});
+
+function printPracticeTest() {
+  document.body.classList.add('printing-test');
+  window.print();
+}
+window.addEventListener('afterprint', () => {
+  document.body.classList.remove('printing-test');
+});
+
+// ═══════════════════════════════════════════════════════════════
+// READ NOTES ALOUD (uses the browser's own voice — no length limit,
+// unlike the short Google TTS clips used for chat messages)
+// ═══════════════════════════════════════════════════════════════
+function getNotesText(section) {
+  // Skip the Practice Test / Answer Key tabs — too long and not meant to be read aloud
+  const clone = section.cloneNode(true);
+  clone.querySelectorAll('button').forEach(b => b.remove());
+  let text = clone.innerText || clone.textContent || '';
+  text = text.replace(/\s+/g, ' ').trim();
+  return text;
+}
+
+function toggleNotesAudio() {
+  const btn = document.getElementById('notes-audio-btn');
+  if (!btn) return;
+
+  if (window.speechSynthesis.speaking || window.speechSynthesis.pending) {
+    window.speechSynthesis.cancel();
+    btn.innerHTML = '🔊 Read Notes Aloud';
+    btn.classList.remove('active');
+    return;
+  }
+
+  const activeSection = document.querySelector('.notes-section.active');
+  if (!activeSection) return;
+  const text = getNotesText(activeSection);
+  if (!text) return;
+
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.lang = 'en-US';
+  utter.rate = 0.95;
+  utter.pitch = 1.05;
+  utter.volume = 1;
+
+  const voices = window.speechSynthesis.getVoices();
+  const voice = voices.find(v => v.lang.startsWith('en') && v.name.toLowerCase().includes('female'))
+             || voices.find(v => v.lang.startsWith('en'));
+  if (voice) utter.voice = voice;
+
+  utter.onstart = () => { btn.innerHTML = '⏹️ Stop Reading'; btn.classList.add('active'); };
+  utter.onend = utter.onerror = () => { btn.innerHTML = '🔊 Read Notes Aloud'; btn.classList.remove('active'); };
+
+  window.speechSynthesis.speak(utter);
+}
+
+function switchTab(tabId, btn) {
+  window.speechSynthesis.cancel();
+  const audioBtn = document.getElementById('notes-audio-btn');
+  if (audioBtn) { audioBtn.innerHTML = '🔊 Read Notes Aloud'; audioBtn.classList.remove('active'); }
+  document.querySelectorAll('.notes-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.notes-tab').forEach(b => b.classList.remove('active'));
+  document.getElementById(tabId).classList.add('active');
+  btn.classList.add('active');
+}
+
+function closeNotesPanel() {
+  window.speechSynthesis.cancel();
+  const audioBtn = document.getElementById('notes-audio-btn');
+  if (audioBtn) { audioBtn.innerHTML = '🔊 Read Notes Aloud'; audioBtn.classList.remove('active'); }
+  document.getElementById('notes-overlay').classList.remove('show');
+}
+</script>
+
+<!-- ── Notes Panel ── -->
+<div class="notes-overlay" id="notes-overlay">
+  <div class="notes-panel">
+    <div class="notes-header">
+      <h2>📖 Angles &amp; Perimeter — Notes</h2>
+      <div class="notes-header-actions">
+        <button class="print-btn" id="notes-audio-btn" onclick="toggleNotesAudio()" title="Have this tab read aloud">🔊 Read Notes Aloud</button>
+        <button class="print-btn" onclick="printPracticeTest()" title="Print or save the Practice Test &amp; Answer Key as PDF">🖨️ Print Test &amp; Key</button>
+        <button class="notes-close" onclick="closeNotesPanel()">✕</button>
+      </div>
+    </div>
+    <div class="notes-tabs">
+      <button class="notes-tab active" onclick="switchTab('tab-angles', this)">📐 Angles</button>
+      <button class="notes-tab" onclick="switchTab('tab-quad', this)">🔳 Quadrilaterals</button>
+      <button class="notes-tab" onclick="switchTab('tab-formulas', this)">📏 Perimeter Formulas</button>
+      <button class="notes-tab" onclick="switchTab('tab-problems', this)">🧮 Word Problems</button>
+      <button class="notes-tab" onclick="switchTab('tab-tf', this)">✅ True or False</button>
+      <button class="notes-tab" onclick="switchTab('tab-ptest', this)">📝 Practice Test</button>
+      <button class="notes-tab" onclick="switchTab('tab-key', this)">🔑 Answer Key</button>
+      <button class="notes-tab" onclick="switchTab('tab-raw', this)">📄 Raw Notes</button>
+    </div>
+    <div class="notes-body">
+
+      <div class="notes-section active" id="tab-angles">
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> A <strong>protractor</strong> measures and helps draw angles. Angles are classified by their measure: acute, right, or obtuse.
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 MEMORY TRICK</span>
+          Remember the angle types in order with: <strong>"A Right Owl"</strong> — <strong>A</strong>cute (less than 90°) → <strong>Right</strong> (exactly 90°) → <strong>O</strong>btuse (more than 90° but less than 180°). Small, Square, Wide!
+        </div>
+        <table class="compare-table">
+          <tr><th>Angle Type</th><th>Measure</th></tr>
+          <tr><td>Acute</td><td>Greater than 0° but less than 90°</td></tr>
+          <tr><td>Right</td><td>Exactly 90° (has a small square marker)</td></tr>
+          <tr><td>Obtuse</td><td>Greater than 90° but less than 180°</td></tr>
+        </table>
+        <div class="tandaan-box">
+          <span class="tandaan-label">REMEMBER</span>
+          When measuring or drawing, always place the vertex at the 0-point of the protractor, and make sure to use the correct scale (inner or outer numbers) depending on which side your starting line is on.
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-quad">
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> Quadrilaterals are classified as general quadrilateral, trapezoid, parallelogram, or kite based on their parallel sides.
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">🔳 Classification of Quadrilaterals</div>
+          <div class="notes-item"><span class="notes-term">General Quadrilateral</span><span class="notes-def">No pairs of parallel sides</span></div>
+          <div class="notes-item"><span class="notes-term">Trapezoid</span><span class="notes-def">Only one pair of parallel sides</span></div>
+          <div class="notes-item"><span class="notes-term">Parallelogram</span><span class="notes-def">Two pairs of opposite sides, both parallel and equal in measure</span></div>
+          <div class="notes-item"><span class="notes-term">Kite</span><span class="notes-def">Two pairs of consecutive sides with the same measure</span></div>
+          <div class="notes-item"><span class="notes-term">Rectangle</span><span class="notes-def">A parallelogram with four right angles</span></div>
+          <div class="notes-item"><span class="notes-term">Rhombus</span><span class="notes-def">A parallelogram with four sides of the same measure</span></div>
+          <div class="notes-item"><span class="notes-term">Square</span><span class="notes-def">A special rectangle with four sides of the same measure</span></div>
+        </div>
+        <div class="tandaan-box">
+          <span class="tandaan-label">REMEMBER</span>
+          A square is always a rectangle AND a rhombus — but a rectangle or rhombus isn't always a square. A trapezoid is NOT a parallelogram, since it only has one pair of parallel sides.
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-formulas">
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> The <strong>perimeter</strong> is the distance around a polygon — the sum of the lengths of all its sides.
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 MEMORY TRICK</span>
+          Shapes with equal sides use a multiplication shortcut: <strong>Equilateral triangle = 3 × side</strong>, <strong>Square/Rhombus = 4 × side</strong>. Shapes with different sides just get added up: <strong>Rectangle = 2 × (L + W)</strong>, <strong>Kite = 2L + 2S</strong>, and general quadrilaterals/trapezoids = add all 4 sides!
+        </div>
+        <table class="compare-table">
+          <tr><th>Shape</th><th>Formula</th></tr>
+          <tr><td>Equilateral Triangle</td><td>P = 3 × a</td></tr>
+          <tr><td>Rectangle</td><td>P = 2 × (L + W)</td></tr>
+          <tr><td>Square</td><td>P = 4 × a</td></tr>
+          <tr><td>Rhombus</td><td>P = 4 × a</td></tr>
+          <tr><td>General Quadrilateral / Trapezoid</td><td>P = a + b + c + d</td></tr>
+          <tr><td>Kite</td><td>P = (2 × L) + (2 × S)</td></tr>
+        </table>
+        <div class="tandaan-box">
+          <span class="tandaan-label">REMEMBER</span>
+          For a composite figure, you may need to find missing side lengths first (by comparing opposite sides of the rectangles that make it up) before adding everything together.
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-problems">
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> Perimeter word problems often ask you to find a missing side, compare two shapes, or calculate leftover material.
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">🧮 Problem-Solving Steps</div>
+          <div class="notes-item"><span class="notes-term">1. Identify</span><span class="notes-def">What shape is it? What's given (sides, perimeter)?</span></div>
+          <div class="notes-item"><span class="notes-term">2. Choose the Formula</span><span class="notes-def">Pick the right perimeter formula for that shape</span></div>
+          <div class="notes-item"><span class="notes-term">3. Substitute</span><span class="notes-def">Plug in the known values</span></div>
+          <div class="notes-item"><span class="notes-term">4. Solve</span><span class="notes-def">Work backwards if solving for a missing side</span></div>
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 MEMORY TRICK</span>
+          If you know the perimeter but need a missing side, just <strong>flip the formula around</strong>: instead of P = 2(L+W), solve W = (P ÷ 2) − L. Same idea works for any shape!
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-tf">
+        <div class="notes-topic">
+          <div class="notes-topic-title">✅ True or False — Key Reminders</div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">An obtuse triangle can be a right triangle → a triangle's angles add up to 180°, so it can't have both an obtuse and a right angle.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">A quadrilateral is always a parallelogram → only quadrilaterals with two pairs of parallel sides are parallelograms.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">A rhombus is always a square → a rhombus only needs 4 equal sides, not 4 right angles.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">A trapezoid is a parallelogram → it only has one pair of parallel sides, not two.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">A right angle measures 180° → a right angle is exactly 90°; 180° is a straight angle.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">The formula for a rectangle's perimeter is P = L × W → that's the formula for AREA; perimeter is P = 2(L + W).</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-ptest">
+        <div class="notes-topic">
+          <div class="notes-topic-title">📝 Practice Test</div>
+<div class="ptest-part-title">Part I — Fill in the Blank (Triangles)</div><div class="ptest-q"><b>1.</b> A/An __________ triangle has three acute angles. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>2.</b> A/An __________ triangle has two sides of the same measure. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>3.</b> A/An __________ triangle has three sides of the same measure. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>4.</b> A/An __________ triangle has one right angle. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>5.</b> A/An __________ triangle has one obtuse angle. <span class="opt">Answer: ______________________</span></div><div class="ptest-part-title">Part II — Fill in the Blank (Quadrilaterals)</div><div class="ptest-q"><b>6.</b> A quadrilateral with two pairs of parallel sides is called __________. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>7.</b> A parallelogram with four right angles is called __________. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>8.</b> A rectangle with four sides of the same measure is called __________. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>9.</b> A parallelogram with all sides of the same measure is called __________. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>10.</b> A quadrilateral with one pair of parallel sides is called __________. <span class="opt">Answer: ______________________</span></div><div class="ptest-part-title">Part III — True or False</div><div class="ptest-q"><b>11.</b> A three-sided polygon is a triangle. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>12.</b> An obtuse triangle can be an isosceles triangle. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>13.</b> A scalene triangle can be an acute triangle. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>14.</b> An obtuse triangle can be a right triangle. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>15.</b> A right triangle can be an isosceles triangle. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>16.</b> A square is always a rectangle. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>17.</b> All parallelograms are quadrilaterals. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>18.</b> A quadrilateral is always a parallelogram. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>19.</b> A rhombus is always a square. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>20.</b> A trapezoid is a parallelogram. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>21.</b> An acute angle measures greater than 0° but less than 90°. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>22.</b> A right angle measures 180°. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>23.</b> An obtuse angle measures greater than 90° but less than 180°. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>24.</b> The perimeter of a polygon is the sum of the measures of its sides. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>25.</b> The formula for the perimeter of a rectangle is P = L × W. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>26.</b> A rhombus and a square use the same perimeter formula, P = 4a. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>27.</b> The perimeter of a kite is found using P = 2L + 2S. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>28.</b> To measure an angle, the vertex should align with the 0-point of the protractor. <span class="opt">Answer: ______________________</span></div><div class="ptest-part-title">Part IV — Classify the Angle</div><div class="ptest-q"><b>29.</b> An angle that measures 45°. Classify this angle.<br><span class="opt">a) Acute</span><span class="opt">b) Right</span><span class="opt">c) Obtuse</span></div><div class="ptest-q"><b>30.</b> An angle that measures 90°. Classify this angle.<br><span class="opt">a) Right</span><span class="opt">b) Acute</span><span class="opt">c) Obtuse</span></div><div class="ptest-q"><b>31.</b> An angle that measures 120°. Classify this angle.<br><span class="opt">a) Obtuse</span><span class="opt">b) Acute</span><span class="opt">c) Right</span></div><div class="ptest-q"><b>32.</b> An angle that measures 15°. Classify this angle.<br><span class="opt">a) Acute</span><span class="opt">b) Right</span><span class="opt">c) Obtuse</span></div><div class="ptest-q"><b>33.</b> An angle that measures 175°. Classify this angle.<br><span class="opt">a) Obtuse</span><span class="opt">b) Acute</span><span class="opt">c) Right</span></div><div class="ptest-q"><b>34.</b> An angle that measures 89°. Classify this angle.<br><span class="opt">a) Acute</span><span class="opt">b) Right</span><span class="opt">c) Obtuse</span></div><div class="ptest-part-title">Part V — Match Shape to Perimeter Formula</div><div class="ptest-q"><b>35.</b> Which formula gives the perimeter of an equilateral triangle?<br><span class="opt">a) P = 3 × a</span><span class="opt">b) P = 2 × (L + W)</span><span class="opt">c) P = 4 × a</span><span class="opt">d) P = 2L + 2S</span></div><div class="ptest-q"><b>36.</b> Which formula gives the perimeter of a rectangle?<br><span class="opt">a) P = 2 × (L + W)</span><span class="opt">b) P = 3 × a</span><span class="opt">c) P = 4 × a</span><span class="opt">d) P = a + b + c + d</span></div><div class="ptest-q"><b>37.</b> Which formula gives the perimeter of a square?<br><span class="opt">a) P = 4 × a</span><span class="opt">b) P = 3 × a</span><span class="opt">c) P = 2 × (L + W)</span><span class="opt">d) P = 2L + 2S</span></div><div class="ptest-q"><b>38.</b> Which formula gives the perimeter of a rhombus?<br><span class="opt">a) P = 4 × a</span><span class="opt">b) P = 3 × a</span><span class="opt">c) P = a + b + c + d</span><span class="opt">d) P = 2L + 2S</span></div><div class="ptest-q"><b>39.</b> Which formula gives the perimeter of a general quadrilateral or trapezoid?<br><span class="opt">a) P = a + b + c + d</span><span class="opt">b) P = 4 × a</span><span class="opt">c) P = 3 × a</span><span class="opt">d) P = 2L + 2S</span></div><div class="ptest-q"><b>40.</b> Which formula gives the perimeter of a kite?<br><span class="opt">a) P = (2 × L) + (2 × S)</span><span class="opt">b) P = 4 × a</span><span class="opt">c) P = 3 × a</span><span class="opt">d) P = a + b + c + d</span></div><div class="ptest-part-title">Part VI — Solve for the Perimeter</div><div class="ptest-q"><b>41.</b> Rectangle: L = 10 cm, W = 8 cm. Find P. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>42.</b> Square: S = 19 m. Find P. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>43.</b> Equilateral triangle: S = 12 m. Find P. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>44.</b> Kite with sides S = 6 cm, L = 8 cm. Find P. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>45.</b> Rhombus: S = 40 m. Find P. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>46.</b> Which has a greater perimeter: a square with side 7 m, or a rectangle with length 9 m and width 5 m? <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>47.</b> Willy wants to fence his 12 m by 8 m garden, leaving a 1 m gate opening. How many meters of fencing wire must he buy? <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>48.</b> A 9-meter lace will be sewn around a square tablecloth with a side of 2 meters. Is there enough lace? <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>49.</b> A 200 m roll of barbed wire is used to fence a rectangular lot 50 m long and 40 m wide. How many meters will be left? <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>50.</b> A trapezoid-shaped farm has a perimeter of 980 m, with three sides measuring 400 m, 260 m, and 150 m. What is the length of the fourth side? <span class="opt">Answer: ______________________</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-key">
+        <div class="notes-topic">
+<div class="notes-topic-title">Part I — Triangles</div><div class="key-grid"><div class="key-pill">1. <b>Acute</b></div><div class="key-pill">2. <b>Isosceles</b></div><div class="key-pill">3. <b>Equilateral</b></div><div class="key-pill">4. <b>Right</b></div><div class="key-pill">5. <b>Obtuse</b></div></div><div class="notes-topic-title">Part II — Quadrilaterals</div><div class="key-grid"><div class="key-pill">6. <b>Parallelogram</b></div><div class="key-pill">7. <b>Rectangle</b></div><div class="key-pill">8. <b>Square</b></div><div class="key-pill">9. <b>Rhombus</b></div><div class="key-pill">10. <b>Trapezoid</b></div></div><div class="notes-topic-title">Part III — True or False</div><div class="key-grid"><div class="key-pill">11. <b>True</b></div><div class="key-pill">12. <b>True</b></div><div class="key-pill">13. <b>True</b></div><div class="key-pill">14. <b>False</b></div><div class="key-pill">15. <b>True</b></div><div class="key-pill">16. <b>True</b></div><div class="key-pill">17. <b>True</b></div><div class="key-pill">18. <b>False</b></div><div class="key-pill">19. <b>False</b></div><div class="key-pill">20. <b>False</b></div><div class="key-pill">21. <b>True</b></div><div class="key-pill">22. <b>False</b></div><div class="key-pill">23. <b>True</b></div><div class="key-pill">24. <b>True</b></div><div class="key-pill">25. <b>False</b></div><div class="key-pill">26. <b>True</b></div><div class="key-pill">27. <b>True</b></div><div class="key-pill">28. <b>True</b></div></div><div class="notes-topic-title">Part IV — Classify the Angle</div><div class="key-grid"><div class="key-pill">29. <b>Acute</b></div><div class="key-pill">30. <b>Right</b></div><div class="key-pill">31. <b>Obtuse</b></div><div class="key-pill">32. <b>Acute</b></div><div class="key-pill">33. <b>Obtuse</b></div><div class="key-pill">34. <b>Acute</b></div></div><div class="notes-topic-title">Part V — Perimeter Formula</div><div class="key-grid"><div class="key-pill">35. <b>P = 3 × a</b></div><div class="key-pill">36. <b>P = 2 × (L + W)</b></div><div class="key-pill">37. <b>P = 4 × a</b></div><div class="key-pill">38. <b>P = 4 × a</b></div><div class="key-pill">39. <b>P = a + b + c + d</b></div><div class="key-pill">40. <b>P = (2 × L) + (2 × S)</b></div></div><div class="notes-topic-title">Part VI — Solve for the Perimeter</div><div class="ptest-q" style="margin-bottom:6px"><b>41.</b> 36 cm</div><div class="ptest-q" style="margin-bottom:6px"><b>42.</b> 76 m</div><div class="ptest-q" style="margin-bottom:6px"><b>43.</b> 36 m</div><div class="ptest-q" style="margin-bottom:6px"><b>44.</b> 28 cm</div><div class="ptest-q" style="margin-bottom:6px"><b>45.</b> 160 m</div><div class="ptest-q" style="margin-bottom:6px"><b>46.</b> Neither — both have a perimeter of 28 meters</div><div class="ptest-q" style="margin-bottom:6px"><b>47.</b> 39 meters</div><div class="ptest-q" style="margin-bottom:6px"><b>48.</b> Yes — only 8 meters are needed, so 1 meter will be left over</div><div class="ptest-q" style="margin-bottom:6px"><b>49.</b> 20 meters</div><div class="ptest-q" style="margin-bottom:6px"><b>50.</b> 170 meters</div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-raw">
+        <div class="rawnotes-intro">
+          📌 This is the original content of the uploaded lesson, unedited — for whenever you need to check the exact wording or an example not covered in the reviewer.
+        </div>
+        <div class="rawnotes-doc">
+<h3 class="doc-heading">Measuring Angles</h3>
+<p>The <strong>measure of an angle</strong> is the amount of opening of the sides in the angle. A <strong>protractor</strong> is a device that is used to measure an angle.</p>
+<p><strong>Example 1:</strong></p>
+<p>To measure an angle, place the protractor on one side of the angle, with the vertex at the <strong>0-point</strong>. Then, follow the markings on the protractor from 0 to the other side of the angle. In the figure on the right, the other side of the angle is at <strong>90°</strong>. So, the angle measures <strong>90 degrees (90°).</strong></p>
+<p><strong>Example 2:</strong></p>
+<p>Once again, measure the angle by placing the protractor on one side of the angle with the vertex at the <strong>0-point</strong>. Follow the markings on the protractor from 0 to the other side of the angle. Determine the measure of the angle by looking at the other side of the angle. Here, the other side of the angle is at <strong>60°</strong>. So, the angle measures <strong>60 degrees (60°).</strong></p>
+<p><strong>Example 3:</strong></p>
+<p>For the last example, again position the <strong>0-point</strong> of the protractor at the vertex. Then follow the markings on the protractor from 0 to the other side of the angle. In this example, the other side of the angle is at <strong>140°</strong>. So, the angle measures <strong>140 degrees (140°).</strong></p>
+<h3 class="doc-heading">Drawing Angles</h3>
+<p>To draw an angle, we use a protractor and a ruler. Study the following example:</p>
+<p><strong>Example:</strong> Draw an angle that measures <strong>50°</strong>.</p>
+<p><strong>Step 1:</strong> Draw a straight line using a ruler.</p>
+<p><strong>Step 2:</strong> Place the center of the protractor at one end of the line. This will become the vertex of the angle. Make sure the line is on the baseline of the protractor.</p>
+<p><strong>Step 3:</strong> Locate <strong>50°</strong> on the protractor. There are two sets of numbers on the protractor: the inner numbers and the outer numbers. Look for the zero that is on the same side as the line. It is on the left-hand side and on the outside. Make a mark where <strong>50°</strong> is on the outside scale.</p>
+<p><strong>Step 4:</strong> Remove the protractor. Using a ruler, connect the mark you made to the end of the line that was in the center of the protractor.</p>
+<h3 class="doc-heading">Kinds of Angles</h3>
+<p>Angles are classified according to their measures.</p>
+<p>An <strong>acute angle</strong> measures <strong>greater than 0° but less than 90°</strong>.</p>
+<p>Top of Form</p>
+<p>Bottom of Form</p>
+<p>A <strong>right angle</strong> measures <strong>90°</strong>. Notice that the square corner means that the angle is a right angle.</p>
+<p>An <strong>obtuse angle</strong> measures <strong>greater than 90° but less than 180°</strong>.</p>
+<p><strong>Angles are classified according to their measures.</strong></p>
+<p><strong><br />
+<br />
+Quadrilaterals</strong></p>
+<p>A <strong>four-sided polygon</strong> is called a <strong>quadrilateral</strong>. Some quadrilaterals have <strong>two pairs of parallel sides</strong>, and others have <strong>only one or no pair of parallel sides</strong>.</p>
+<h3 class="doc-heading">Classification of Quadrilaterals</h3>
+<p>Quadrilaterals can be classified as <strong>general quadrilateral, parallelogram, trapezoid, or kite</strong>.</p>
+<ul>
+<li><p>A <strong>general quadrilateral</strong> has <strong>no pairs of parallel sides</strong>.</p></li>
+<li><p>A <strong>trapezoid</strong> is a quadrilateral with <strong>only one pair of parallel sides</strong>.</p></li>
+<li><p>A <strong>parallelogram</strong> can be classified as a <strong>rectangle</strong> or a <strong>rhombus</strong>.</p></li>
+<li><p>A <strong>parallelogram</strong> is a quadrilateral with <strong>two pairs of opposite sides</strong> that are <strong>both parallel and of equal measure</strong>.</p></li>
+<li><p>A <strong>kite</strong> is a quadrilateral with <strong>two pairs of consecutive sides</strong> with the <strong>same measure</strong>.</p></li>
+</ul>
+<p>A <strong>rectangle</strong> is a parallelogram with <strong>four right angles</strong>.</p>
+<p>A <strong>rhombus</strong> is a parallelogram with <strong>four sides of the same measure</strong>.</p>
+<p>A <strong>special rectangle with four sides of the same measure is a square.</strong></p>
+<p><strong>A triangle is a polygon with the least number of sides.</strong></p>
+<h3 class="doc-heading">CHECK YOUR UNDERSTANDING</h3>
+<p><strong>Read and answer each question. Explain your answer.</strong></p>
+<ol type="1">
+<li><p>In a right triangle, how many of the angles are acute?</p></li>
+<li><p>What are the possible measurements of the sides of an equilateral triangle?</p></li>
+<li><p>Can a scalene triangle be an obtuse triangle?</p></li>
+<li><p>Can an obtuse triangle be an isosceles triangle?</p></li>
+<li><p>Are squares considered rectangles?</p></li>
+<li><p>Are rectangles considered squares?</p></li>
+<li><p>What is the difference between a square and a rhombus?</p></li>
+</ol>
+<h3 class="doc-heading">MATH AROUND US</h3>
+<p>You can see triangles and quadrilaterals everywhere. What kind of triangle and quadrilateral can you see in the pictures below?</p>
+<h3 class="doc-heading">PRACTICE</h3>
+<h3 class="doc-heading">A. Fill in the blanks to make the following statements about triangles true.</h3>
+<ol type="1">
+<li><p>A/An ____________________ triangle has three acute angles.</p></li>
+<li><p>A/An ____________________ triangle has two sides of the same measure.</p></li>
+<li><p>A/An ____________________ triangle has three sides of the same measure.</p></li>
+<li><p>A/An ____________________ triangle has one right angle.</p></li>
+<li><p>A/An ____________________ triangle has one obtuse angle.</p></li>
+</ol>
+<h3 class="doc-heading">B. Fill in the blanks to make the following statements about quadrilaterals true.</h3>
+<ol type="1">
+<li><p>A quadrilateral with two pairs of parallel sides is called ____________________.</p></li>
+<li><p>A parallelogram with four right angles is called ____________________.</p></li>
+<li><p>A rectangle with four sides of the same measure is called ____________________.</p></li>
+<li><p>A parallelogram with all sides of the same measure is called ____________________.</p></li>
+<li><p>A quadrilateral with one pair of parallel sides is called ____________________.</p></li>
+</ol>
+<h3 class="doc-heading">REMEMBER</h3>
+<ul>
+<li><p>Triangles can be classified according to the measurement of their sides and angles.</p></li>
+<li><p>According to the measurements of the sides, triangles can be classified as <strong>equilateral, isosceles, or scalene</strong>.</p></li>
+<li><p>According to the measurements of the angles, triangles can be classified as <strong>acute, right, or obtuse</strong>.</p></li>
+<li><p>Quadrilaterals can be classified as <strong>general quadrilateral, parallelogram, trapezoid, or kite</strong>.</p></li>
+<li><p>A <strong>parallelogram</strong> is a quadrilateral with two pairs of parallel sides. The opposite sides are parallel and of the same measure.</p></li>
+<li><p><strong>Rectangle, rhombus, and square are parallelograms.</strong></p></li>
+<li><p>A <strong>square</strong> is a special kind of <strong>rectangle</strong>.</p></li>
+</ul>
+<p>Tell whether each of the following statements is <strong>True</strong> or <strong>False</strong>. Write the answer in the space provided.</p>
+<p>______ <strong>1.</strong> A three-sided polygon is a triangle.</p>
+<p>______ <strong>2.</strong> An obtuse triangle can be an isosceles triangle.</p>
+<p>______ <strong>3.</strong> A scalene triangle can be an acute triangle.</p>
+<p>______ <strong>4.</strong> An obtuse triangle can be a right angle.</p>
+<p>______ <strong>5.</strong> A right triangle can be an isosceles triangle.</p>
+<p>______ <strong>6.</strong> A square is always a rectangle.</p>
+<p>______ <strong>7.</strong> All parallelograms are quadrilaterals.</p>
+<p>______ <strong>8.</strong> A quadrilateral is always a parallelogram.</p>
+<p>______ <strong>9.</strong> A rhombus is always a square.</p>
+<p>______ <strong>10.</strong> A trapezoid is a parallelogram.</p>
+<h3 class="doc-heading">Perimeter of a Polygon</h3>
+<p><strong>The perimeter of a polygon is the sum of the measures of its sides.</strong></p>
+<p>Specific formulas are used to find the perimeters of some polygons.</p>
+<h3 class="doc-heading">Perimeter of an Equilateral Triangle</h3>
+<p>The perimeter of an equilateral triangle can be found using the formula:</p>
+<p><strong>P = 3 × a</strong></p>
+<p>where <strong>a</strong> is the measure of its side.</p>
+<p><strong>Example</strong></p>
+<p><strong>Find the perimeter of an equilateral triangle whose side measures 12 cm.</strong></p>
+<p><strong>Solution:</strong></p>
+<p>Here, <strong>a = 12 cm</strong></p>
+<p>Therefore,</p>
+<p><strong>P = 3 × a</strong></p>
+<p><strong>= 3 × 12 cm</strong></p>
+<p><strong>= 36 cm</strong></p>
+<p><strong>Answer: 36 cm</strong></p>
+<h3 class="doc-heading">Perimeter of a Rectangle</h3>
+<p>The perimeter of a rectangle can be found using the formula:</p>
+<p><strong>P = (2 × L) + (2 × W)</strong></p>
+<p>or</p>
+<p><strong>P = 2 × (L + W)</strong></p>
+<p><strong>Example:</strong></p>
+<p><strong>Find the perimeter of the rectangle shown below.</strong></p>
+<p>Length = <strong>10</strong><br />
+Width = <strong>5</strong></p>
+<p><strong>Solution:</strong></p>
+<p>To find the perimeter, substitute the length, <strong>L = 10</strong>, and the width, <strong>W = 5</strong>, in the formula.</p>
+<p>Thus, the perimeter of the rectangle is:</p>
+<p><strong>P = 2 × (L + W)</strong></p>
+<p><strong>= 2 × (10 + 5)</strong></p>
+<p><strong>= 2 × 15</strong></p>
+<p><strong>= 30</strong></p>
+<p>Since there is no unit indicated, <strong>P = 30 units.</strong></p>
+<h3 class="doc-heading">Perimeter of a Square and Rhombus</h3>
+<p>The perimeter of a square is computed using the formula:</p>
+<p><strong>P = 4 × a,</strong></p>
+<p>where <strong>a</strong> is the measure of its side.</p>
+<p>The same formula can be used to find the perimeter of a rhombus because a rhombus also has four equal sides.</p>
+<p><strong>Example:</strong></p>
+<p><strong>Find the perimeter of the rhombus shown below.</strong></p>
+<p>Each side = <strong>8 cm</strong></p>
+<p><strong>Solution:</strong></p>
+<p>The perimeter of the rhombus can be found using the formula:</p>
+<p><strong>P = 4 × a</strong></p>
+<p>The length of a side is <strong>a = 8 cm</strong>.</p>
+<p><strong>P = 4 × a</strong></p>
+<p><strong>= 4 × 8 cm</strong></p>
+<p><strong>= 32 cm</strong></p>
+<h3 class="doc-heading">Perimeter of a General Quadrilateral</h3>
+<p>In finding the perimeter of a general quadrilateral, all you need to do is add all the lengths of its sides. You can use the formula:</p>
+<p><strong>P = a + b + c + d,</strong></p>
+<p>where <strong>a, b, c, and d</strong> are the measures of its sides.</p>
+<p><strong>Example:</strong></p>
+<p><strong>Find the perimeter of the quadrilateral shown below.</strong></p>
+<p>The sides are:</p>
+<ul>
+<li><p>4 cm</p></li>
+<li><p>5 cm</p></li>
+<li><p>7 cm</p></li>
+<li><p>9 cm</p></li>
+</ul>
+<p><strong>Solution:</strong></p>
+<p>The lengths of the sides of the given quadrilateral are:</p>
+<p><strong>a = 4 cm; b = 5 cm; c = 7 cm; and d = 9 cm.</strong></p>
+<p><strong>P = a + b + c + d</strong></p>
+<p><strong>P = 4 cm + 5 cm + 7 cm + 9 cm</strong></p>
+<p><strong>P = 25 cm</strong></p>
+<h3 class="doc-heading">Perimeter of a Trapezoid</h3>
+<p>In finding the perimeter of a trapezoid, all you need to do is add all the lengths of the sides of it. You can use the formula:</p>
+<p><strong>P = a + b + c + d,</strong></p>
+<p>where <strong>a, b, c, and d</strong> are the measures of its sides.</p>
+<p><strong>Example:</strong></p>
+<p><strong>Find the perimeter of the trapezoid shown below.</strong></p>
+<p>The sides are:</p>
+<ul>
+<li><p>3 cm</p></li>
+<li><p>4 cm</p></li>
+<li><p>5 cm</p></li>
+<li><p>8 cm</p></li>
+</ul>
+<p><strong>Solution:</strong></p>
+<p>The lengths of the sides of the given trapezoid are:</p>
+<p><strong>a = 3 cm; b = 4 cm; c = 5 cm; and d = 8 cm.</strong></p>
+<p><strong>P = a + b + c + d</strong></p>
+<p><strong>P = 3 cm + 4 cm + 5 cm + 8 cm</strong></p>
+<p><strong>P = 20 cm</strong></p>
+<h3 class="doc-heading">Perimeter of a Kite</h3>
+<p>Recall that a kite is a quadrilateral with two pairs of consecutive sides that are equal.</p>
+<p>In the figure, there are two longer sides <strong>(L)</strong> and two shorter sides <strong>(S)</strong>.</p>
+<p>To find the perimeter of a kite, use the formula:</p>
+<p><strong>P = (2 × L) + (2 × S),</strong></p>
+<p>where:</p>
+<p><strong>P = perimeter</strong></p>
+<p><strong>L = length of the longer side</strong></p>
+<p><strong>S = length of the shorter side</strong></p>
+<p><strong>Example:</strong></p>
+<p><strong>Find the perimeter of the kite shown below.</strong></p>
+<p>The longer side = <strong>12 cm</strong><br />
+The shorter side = <strong>7 cm</strong></p>
+<p><strong>Solution:</strong></p>
+<p>The figure shows that the length of the longer side is <strong>12 cm</strong> and the length of the shorter side is <strong>7 cm</strong>. Then, <strong>L = 12 cm</strong> and <strong>S = 7 cm</strong>. The perimeter of the kite is computed as follows:</p>
+<p><strong>P = (2 × L) + (2 × S)</strong></p>
+<p><strong>P = (2 × 12 cm) + (2 × 7 cm)</strong></p>
+<p><strong>P = 24 cm + 14 cm</strong></p>
+<p><strong>P = 38 cm</strong></p>
+<h3 class="doc-heading">Perimeter of a Composite Figure</h3>
+<p>A composite figure is made up of triangles, squares, rectangles, and other plane figures. Putting two rectangles or a rectangle and a triangle together forms composite figures. To find the perimeter of a composite figure, find the distance around the figure.</p>
+<p><strong>Example: Find the perimeter of the composite figure shown below.</strong></p>
+<p><strong>Solution:</strong></p>
+<p>Notice from the figure that there are two sides with unknown measures. You have to find the lengths of these sides first before you can determine the perimeter.</p>
+<p>To find the length of side <strong>A</strong>, look at the two rectangles that make up the figure. The opposite sides of the rectangles are of the same length. Thus,</p>
+<p><strong>A = 5 cm − 3 cm = 2 cm.</strong></p>
+<p>To find the length of side <strong>B</strong>, look at the two rectangles that make up the figure. The opposite sides of the rectangles are of the same length. Thus,</p>
+<p><strong>B = 8 cm − 4 cm = 4 cm.</strong></p>
+<p>The perimeter of the composite figure is the sum of the lengths of the sides. Therefore, the perimeter is:</p>
+<p><strong>P = 3 cm + 8 cm + 5 cm + 4 cm + 2 cm + 4 cm</strong></p>
+<p><strong>= 26 cm</strong></p>
+<h3 class="doc-heading">B. Illustrate and solve the following problems:</h3>
+<p><strong>1.</strong>The length of a rectangular field is <strong>200 m</strong>. If its perimeter is <strong>700 m</strong>, find its width.</p>
+<p><strong>2.</strong>The sides of a triangular park are <strong>14 m, 17 m, and 20 m</strong>. Find its perimeter.</p>
+<p><strong>3.</strong>The perimeter of a rectangular hall is <strong>24 m</strong>. If its length is <strong>8 m</strong>, find its width.</p>
+<p><strong>4.</strong>A triangular field has sides <strong>210 m, 180 m, and 230 m</strong> long. How many meters of wire are required to fence the field?</p>
+<p><strong>5.</strong>Japhet jogs around a rectangular park of length <strong>50 m</strong> and width <strong>30 m</strong>. If he takes <strong>10 rounds</strong> of the park each day, how much distance does he cover in a day in m?<br />
+<br />
+<strong>B. Illustrate and Solve the Following Problems</strong></p>
+<p><strong>1. Rectangular Field</strong></p>
+<p><strong>Given:</strong></p>
+<ul>
+<li><p>Length = 200 m</p></li>
+<li><p>Perimeter = 700 m</p></li>
+<li><p>Width = ?</p></li>
+</ul>
+<p>Formula:</p>
+<p><strong>P = 2(L + W)</strong></p>
+<p>Substitute:</p>
+<p>700 = 2(200 + W)</p>
+<p>Divide by 2:</p>
+<p>350 = 200 + W</p>
+<p>W = 350 − 200</p>
+<p><strong>W = 150 m</strong></p>
+<p>✅ <strong>Answer: 150 m</strong></p>
+<p><strong>2. Triangular Park</strong></p>
+<p><strong>Given:</strong></p>
+<ul>
+<li><p>Side 1 = 14 m</p></li>
+<li><p>Side 2 = 17 m</p></li>
+<li><p>Side 3 = 20 m</p></li>
+</ul>
+<p>Formula:</p>
+<p><strong>P = side 1 + side 2 + side 3</strong></p>
+<p>P = 14 + 17 + 20</p>
+<p>P = <strong>51 m</strong></p>
+<p>✅ <strong>Answer: 51 m</strong></p>
+<p><strong>3. Rectangular Hall</strong></p>
+<p><strong>Given:</strong></p>
+<ul>
+<li><p>Perimeter = 24 m</p></li>
+<li><p>Length = 8 m</p></li>
+<li><p>Width = ?</p></li>
+</ul>
+<p>Formula:</p>
+<p><strong>P = 2(L + W)</strong></p>
+<p>24 = 2(8 + W)</p>
+<p>Divide by 2:</p>
+<p>12 = 8 + W</p>
+<p>W = 12 − 8</p>
+<p><strong>W = 4 m</strong></p>
+<p>✅ <strong>Answer: 4 m</strong></p>
+<p><strong>4. Triangular Field</strong></p>
+<p><strong>Given:</strong></p>
+<ul>
+<li><p>Side 1 = 210 m</p></li>
+<li><p>Side 2 = 180 m</p></li>
+<li><p>Side 3 = 230 m</p></li>
+</ul>
+<p>The amount of wire needed is the <strong>perimeter</strong>.</p>
+<p>P = 210 + 180 + 230</p>
+<p>P = <strong>620 m</strong></p>
+<p>✅ <strong>Answer: 620 meters of wire</strong></p>
+<p><strong>5. Japhet's Jogging</strong></p>
+<p><strong>Given:</strong></p>
+<ul>
+<li><p>Length = 50 m</p></li>
+<li><p>Width = 30 m</p></li>
+<li><p>Number of rounds = 10</p></li>
+</ul>
+<p>First, find the perimeter of the park:</p>
+<p>P = 2(L + W)</p>
+<p>P = 2(50 + 30)</p>
+<p>P = 2(80)</p>
+<p>P = <strong>160 m</strong></p>
+<p>Japhet runs 10 rounds:</p>
+<p>160 × 10 = <strong>1,600 m</strong></p>
+<p>✅ <strong>Answer: 1,600 m</strong></p>
+<h3 class="doc-heading">REMEMBER</h3>
+<p><strong>Perimeter</strong> is the distance around a polygon. It is the total or sum of the lengths of all the sides of the polygon.</p>
+<h3 class="doc-heading">A. Solve for the perimeter of each polygon given the following dimensions or measurements:</h3>
+<p><strong>1. Rectangle: L = 10 cm, W = 8 cm</strong></p>
+<p><strong>P = ______</strong></p>
+<p><strong>2. Square: S = 19 m</strong></p>
+<p><strong>P = ______</strong></p>
+<p><strong>3. Equilateral triangle: S = 12 m</strong></p>
+<p><strong>P = ______</strong></p>
+<p><strong>4. Kite with sides: S = 6 cm, L = 8 cm</strong></p>
+<p><strong>P = ______</strong></p>
+<p><strong>5. Rhombus: S = 40 m</strong></p>
+<p><strong>P = ______<br />
+<br />
+Answers and Solutions</strong></p>
+<h3 class="doc-heading">A. Perimeter</h3>
+<p><strong>1. Rectangle</strong></p>
+<p>Formula:</p>
+<p><strong>P = 2(L + W)</strong></p>
+<p>P = 2(10 + 8)<br />
+P = 2(18)<br />
+<strong>P = 36 cm</strong></p>
+<p>✅ <strong>Answer: 36 cm</strong></p>
+<p><strong>2. Square</strong></p>
+<p>A square has 4 equal sides.</p>
+<p><strong>P = 4S</strong></p>
+<p>P = 4(19)<br />
+<strong>P = 76 m</strong></p>
+<p>✅ <strong>Answer: 76 m</strong></p>
+<p><strong>3. Equilateral Triangle</strong></p>
+<p>An equilateral triangle has 3 equal sides.</p>
+<p><strong>P = 3S</strong></p>
+<p>P = 3(12)<br />
+<strong>P = 36 m</strong></p>
+<p>✅ <strong>Answer: 36 m</strong></p>
+<p><strong>4. Kite</strong></p>
+<p>A kite has two pairs of equal sides.</p>
+<p><strong>P = 2S + 2L</strong></p>
+<p>P = 2(6) + 2(8)<br />
+P = 12 + 16<br />
+<strong>P = 28 cm</strong></p>
+<p>✅ <strong>Answer: 28 cm</strong></p>
+<p><strong>5. Rhombus</strong></p>
+<p>A rhombus has 4 equal sides.</p>
+<p><strong>P = 4S</strong></p>
+<p>P = 4(40)<br />
+<strong>P = 160 m</strong></p>
+<p>✅ <strong>Answer: 160 m</strong></p>
+<h3 class="doc-heading">B. Solve the following problems:</h3>
+<p><strong>1.</strong></p>
+<p>Which has a greater perimeter, a square whose side is <strong>7 meters</strong> or a rectangle whose length is <strong>9 meters</strong> and whose width is <strong>5 meters</strong>?</p>
+<p><strong>2.</strong></p>
+<p>Willy wants to fence his <strong>12-meter by 8-meter</strong> vegetable garden, leaving an opening of about <strong>1 meter</strong> for a gate. How many meters of fencing wire must he buy?</p>
+<p><strong>3.</strong></p>
+<p>I have a <strong>9-meter lace</strong>, which I will sew around a square tablecloth. One side of the tablecloth measures <strong>2 meters</strong>. Do I have enough lace to use? Explain.</p>
+<p><strong>4.</strong></p>
+<p>A roll of barbed wire has a length of <strong>200 meters</strong>. How many meters will be left after fencing a rectangular lot that is <strong>50 meters long and 40 meters wide</strong>?</p>
+<p><strong>5.</strong></p>
+<p>My grandma's farm has the shape of a trapezoid with a perimeter of <strong>980 meters</strong>. One side is <strong>400 m</strong>, and the opposite side is <strong>260 m</strong>. Another side is <strong>150 m</strong>. What is the length of the fourth side?</p>
+<h3 class="doc-heading">B. Solutions</h3>
+<p><strong>1. Square vs. Rectangle</strong></p>
+<p><strong>Square:</strong></p>
+<p>P = 4S<br />
+P = 4(7)<br />
+P = <strong>28 m</strong></p>
+<p><strong>Rectangle:</strong></p>
+<p>P = 2(L + W)<br />
+P = 2(9 + 5)<br />
+P = 2(14)<br />
+P = <strong>28 m</strong></p>
+<p>Therefore, both have the <strong>same perimeter</strong>.</p>
+<p>✅ <strong>Answer: Neither has a greater perimeter. Both have a perimeter of 28 meters.</strong></p>
+<p><strong>2. Vegetable Garden</strong></p>
+<p>Length = 12 m<br />
+Width = 8 m</p>
+<p>First, find the perimeter:</p>
+<p>P = 2(L + W)</p>
+<p>P = 2(12 + 8)<br />
+P = 2(20)<br />
+P = <strong>40 m</strong></p>
+<p>There is a 1-meter opening for the gate:</p>
+<p>40 − 1 = <strong>39 m</strong></p>
+<p>✅ <strong>Answer: Willy must buy 39 meters of fencing wire.</strong></p>
+<p><strong>3. Lace Around the Square Tablecloth</strong></p>
+<p>Side = 2 m</p>
+<p>Perimeter of the square:</p>
+<p>P = 4S<br />
+P = 4(2)<br />
+P = <strong>8 m</strong></p>
+<p>He has 9 m of lace.</p>
+<p>9 − 8 = <strong>1 m</strong></p>
+<p>✅ <strong>Answer: Yes, he has enough lace. He needs 8 meters and has 9 meters, so 1 meter will be left.</strong></p>
+<p><strong>4. Barbed Wire</strong></p>
+<p>Length of wire = 200 m</p>
+<p>Lot:</p>
+<ul>
+<li><p>Length = 50 m</p></li>
+<li><p>Width = 40 m</p></li>
+</ul>
+<p>Perimeter:</p>
+<p>P = 2(L + W)</p>
+<p>P = 2(50 + 40)<br />
+P = 2(90)<br />
+P = <strong>180 m</strong></p>
+<p>Wire remaining:</p>
+<p>200 − 180 = <strong>20 m</strong></p>
+<p>✅ <strong>Answer: 20 meters of barbed wire will be left.</strong></p>
+<p><strong>5. Grandma's Farm</strong></p>
+<p>Perimeter = 980 m</p>
+<p>Known sides:</p>
+<ul>
+<li><p>400 m</p></li>
+<li><p>260 m</p></li>
+<li><p>150 m</p></li>
+<li><p>Fourth side = ?</p></li>
+</ul>
+<p>Set up the equation:</p>
+<p>980 = 400 + 260 + 150 + x</p>
+<p>Add the known sides:</p>
+<p>400 + 260 + 150 = 810</p>
+<p>Therefore:</p>
+<p>x = 980 − 810</p>
+<p><strong>x = 170 m</strong></p>
+<p>✅ <strong>Answer: The fourth side is 170 meters.</strong></p>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ── Hidden Print Area (Practice Test + Answer Key) ── -->
+<div id="print-area">
+<div class="p-cover">
+    <div class="p-icon">📐</div>
+    <h1>Math 4 — Angles &amp; Perimeter Practice Test</h1>
+    <div class="p-sub">Measuring &amp; Drawing Angles · Kinds of Angles · Perimeter Formulas · Word Problems</div>
+    <div class="p-info-box">
+      <div><strong>Name:</strong> _____________________________________</div>
+      <div><strong>Section:</strong> ___________________ &nbsp; <strong>Date:</strong> ___________________</div>
+      <div><strong>Score:</strong> _______ / 50</div>
+    </div>
+    <div class="p-instructions">
+      <strong>Instructions:</strong> Read each item carefully. Write your answer on the blank provided (Parts I-III, VI), or write the letter of the correct answer (Parts IV-V). Good luck!
+    </div>
+  </div>
+
+  <h2 class="p-part-title">Part I — Fill in the Blank (Triangles)</h2><div class="p-q"><b>1.</b> A/An __________ triangle has three acute angles. <span class="p-blank"></span></div><div class="p-q"><b>2.</b> A/An __________ triangle has two sides of the same measure. <span class="p-blank"></span></div><div class="p-q"><b>3.</b> A/An __________ triangle has three sides of the same measure. <span class="p-blank"></span></div><div class="p-q"><b>4.</b> A/An __________ triangle has one right angle. <span class="p-blank"></span></div><div class="p-q"><b>5.</b> A/An __________ triangle has one obtuse angle. <span class="p-blank"></span></div><h2 class="p-part-title">Part II — Fill in the Blank (Quadrilaterals)</h2><div class="p-q"><b>6.</b> A quadrilateral with two pairs of parallel sides is called __________. <span class="p-blank"></span></div><div class="p-q"><b>7.</b> A parallelogram with four right angles is called __________. <span class="p-blank"></span></div><div class="p-q"><b>8.</b> A rectangle with four sides of the same measure is called __________. <span class="p-blank"></span></div><div class="p-q"><b>9.</b> A parallelogram with all sides of the same measure is called __________. <span class="p-blank"></span></div><div class="p-q"><b>10.</b> A quadrilateral with one pair of parallel sides is called __________. <span class="p-blank"></span></div><div class="p-break"></div><h2 class="p-part-title">Part III — True or False</h2><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>11.</b> A three-sided polygon is a triangle.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>12.</b> An obtuse triangle can be an isosceles triangle.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>13.</b> A scalene triangle can be an acute triangle.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>14.</b> An obtuse triangle can be a right triangle.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>15.</b> A right triangle can be an isosceles triangle.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>16.</b> A square is always a rectangle.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>17.</b> All parallelograms are quadrilaterals.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>18.</b> A quadrilateral is always a parallelogram.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>19.</b> A rhombus is always a square.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>20.</b> A trapezoid is a parallelogram.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>21.</b> An acute angle measures greater than 0° but less than 90°.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>22.</b> A right angle measures 180°.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>23.</b> An obtuse angle measures greater than 90° but less than 180°.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>24.</b> The perimeter of a polygon is the sum of the measures of its sides.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>25.</b> The formula for the perimeter of a rectangle is P = L × W.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>26.</b> A rhombus and a square use the same perimeter formula, P = 4a.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>27.</b> The perimeter of a kite is found using P = 2L + 2S.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>28.</b> To measure an angle, the vertex should align with the 0-point of the protractor.</div><div class="p-break"></div><h2 class="p-part-title">Part IV — Classify the Angle</h2><div class="p-q"><b>29.</b> An angle that measures 45°. Classify this angle.<br><span class="p-opt">a) Acute</span><span class="p-opt">b) Right</span><span class="p-opt">c) Obtuse</span></div><div class="p-q"><b>30.</b> An angle that measures 90°. Classify this angle.<br><span class="p-opt">a) Right</span><span class="p-opt">b) Acute</span><span class="p-opt">c) Obtuse</span></div><div class="p-q"><b>31.</b> An angle that measures 120°. Classify this angle.<br><span class="p-opt">a) Obtuse</span><span class="p-opt">b) Acute</span><span class="p-opt">c) Right</span></div><div class="p-q"><b>32.</b> An angle that measures 15°. Classify this angle.<br><span class="p-opt">a) Acute</span><span class="p-opt">b) Right</span><span class="p-opt">c) Obtuse</span></div><div class="p-q"><b>33.</b> An angle that measures 175°. Classify this angle.<br><span class="p-opt">a) Obtuse</span><span class="p-opt">b) Acute</span><span class="p-opt">c) Right</span></div><div class="p-q"><b>34.</b> An angle that measures 89°. Classify this angle.<br><span class="p-opt">a) Acute</span><span class="p-opt">b) Right</span><span class="p-opt">c) Obtuse</span></div><h2 class="p-part-title">Part V — Match Shape to Perimeter Formula</h2><div class="p-q"><b>35.</b> Which formula gives the perimeter of an equilateral triangle?<br><span class="p-opt">a) P = 3 × a</span><span class="p-opt">b) P = 2 × (L + W)</span><span class="p-opt">c) P = 4 × a</span><span class="p-opt">d) P = 2L + 2S</span></div><div class="p-q"><b>36.</b> Which formula gives the perimeter of a rectangle?<br><span class="p-opt">a) P = 2 × (L + W)</span><span class="p-opt">b) P = 3 × a</span><span class="p-opt">c) P = 4 × a</span><span class="p-opt">d) P = a + b + c + d</span></div><div class="p-q"><b>37.</b> Which formula gives the perimeter of a square?<br><span class="p-opt">a) P = 4 × a</span><span class="p-opt">b) P = 3 × a</span><span class="p-opt">c) P = 2 × (L + W)</span><span class="p-opt">d) P = 2L + 2S</span></div><div class="p-q"><b>38.</b> Which formula gives the perimeter of a rhombus?<br><span class="p-opt">a) P = 4 × a</span><span class="p-opt">b) P = 3 × a</span><span class="p-opt">c) P = a + b + c + d</span><span class="p-opt">d) P = 2L + 2S</span></div><div class="p-q"><b>39.</b> Which formula gives the perimeter of a general quadrilateral or trapezoid?<br><span class="p-opt">a) P = a + b + c + d</span><span class="p-opt">b) P = 4 × a</span><span class="p-opt">c) P = 3 × a</span><span class="p-opt">d) P = 2L + 2S</span></div><div class="p-q"><b>40.</b> Which formula gives the perimeter of a kite?<br><span class="p-opt">a) P = (2 × L) + (2 × S)</span><span class="p-opt">b) P = 4 × a</span><span class="p-opt">c) P = 3 × a</span><span class="p-opt">d) P = a + b + c + d</span></div><div class="p-break"></div><h2 class="p-part-title">Part VI — Solve for the Perimeter</h2><div class="p-q"><b>41.</b> Rectangle: L = 10 cm, W = 8 cm. Find P.<br><br>Solution / Answer: _________________________________________________</div><div class="p-q"><b>42.</b> Square: S = 19 m. Find P.<br><br>Solution / Answer: _________________________________________________</div><div class="p-q"><b>43.</b> Equilateral triangle: S = 12 m. Find P.<br><br>Solution / Answer: _________________________________________________</div><div class="p-q"><b>44.</b> Kite with sides S = 6 cm, L = 8 cm. Find P.<br><br>Solution / Answer: _________________________________________________</div><div class="p-q"><b>45.</b> Rhombus: S = 40 m. Find P.<br><br>Solution / Answer: _________________________________________________</div><div class="p-q"><b>46.</b> Which has a greater perimeter: a square with side 7 m, or a rectangle with length 9 m and width 5 m?<br><br>Solution / Answer: _________________________________________________</div><div class="p-q"><b>47.</b> Willy wants to fence his 12 m by 8 m garden, leaving a 1 m gate opening. How many meters of fencing wire must he buy?<br><br>Solution / Answer: _________________________________________________</div><div class="p-q"><b>48.</b> A 9-meter lace will be sewn around a square tablecloth with a side of 2 meters. Is there enough lace?<br><br>Solution / Answer: _________________________________________________</div><div class="p-q"><b>49.</b> A 200 m roll of barbed wire is used to fence a rectangular lot 50 m long and 40 m wide. How many meters will be left?<br><br>Solution / Answer: _________________________________________________</div><div class="p-q"><b>50.</b> A trapezoid-shaped farm has a perimeter of 980 m, with three sides measuring 400 m, 260 m, and 150 m. What is the length of the fourth side?<br><br>Solution / Answer: _________________________________________________</div><div class="p-break"></div><h2 class="p-part-title">✅ Complete Answer Key</h2>
+  <div class="p-key-part-title">Part I — Triangles</div><div class="p-key-grid"><div class="p-key-pill">1. <b>Acute</b></div><div class="p-key-pill">2. <b>Isosceles</b></div><div class="p-key-pill">3. <b>Equilateral</b></div><div class="p-key-pill">4. <b>Right</b></div><div class="p-key-pill">5. <b>Obtuse</b></div></div><div class="p-key-part-title">Part II — Quadrilaterals</div><div class="p-key-grid"><div class="p-key-pill">6. <b>Parallelogram</b></div><div class="p-key-pill">7. <b>Rectangle</b></div><div class="p-key-pill">8. <b>Square</b></div><div class="p-key-pill">9. <b>Rhombus</b></div><div class="p-key-pill">10. <b>Trapezoid</b></div></div><div class="p-key-part-title">Part III — True or False</div><div class="p-key-grid"><div class="p-key-pill">11. <b>True</b></div><div class="p-key-pill">12. <b>True</b></div><div class="p-key-pill">13. <b>True</b></div><div class="p-key-pill">14. <b>False</b></div><div class="p-key-pill">15. <b>True</b></div><div class="p-key-pill">16. <b>True</b></div><div class="p-key-pill">17. <b>True</b></div><div class="p-key-pill">18. <b>False</b></div><div class="p-key-pill">19. <b>False</b></div><div class="p-key-pill">20. <b>False</b></div><div class="p-key-pill">21. <b>True</b></div><div class="p-key-pill">22. <b>False</b></div><div class="p-key-pill">23. <b>True</b></div><div class="p-key-pill">24. <b>True</b></div><div class="p-key-pill">25. <b>False</b></div><div class="p-key-pill">26. <b>True</b></div><div class="p-key-pill">27. <b>True</b></div><div class="p-key-pill">28. <b>True</b></div></div><div class="p-key-part-title">Part IV — Classify the Angle</div><div class="p-key-grid"><div class="p-key-pill">29. <b>Acute</b></div><div class="p-key-pill">30. <b>Right</b></div><div class="p-key-pill">31. <b>Obtuse</b></div><div class="p-key-pill">32. <b>Acute</b></div><div class="p-key-pill">33. <b>Obtuse</b></div><div class="p-key-pill">34. <b>Acute</b></div></div><div class="p-key-part-title">Part V — Perimeter Formula</div><div class="p-key-grid"><div class="p-key-pill">35. <b>P = 3 × a</b></div><div class="p-key-pill">36. <b>P = 2 × (L + W)</b></div><div class="p-key-pill">37. <b>P = 4 × a</b></div><div class="p-key-pill">38. <b>P = 4 × a</b></div><div class="p-key-pill">39. <b>P = a + b + c + d</b></div><div class="p-key-pill">40. <b>P = (2 × L) + (2 × S)</b></div></div><div class="p-key-part-title">Part VI — Solve for the Perimeter</div><div class="p-q"><b>41.</b> 36 cm</div><div class="p-q"><b>42.</b> 76 m</div><div class="p-q"><b>43.</b> 36 m</div><div class="p-q"><b>44.</b> 28 cm</div><div class="p-q"><b>45.</b> 160 m</div><div class="p-q"><b>46.</b> Neither — both have a perimeter of 28 meters</div><div class="p-q"><b>47.</b> 39 meters</div><div class="p-q"><b>48.</b> Yes — only 8 meters are needed, so 1 meter will be left over</div><div class="p-q"><b>49.</b> 20 meters</div><div class="p-q"><b>50.</b> 170 meters</div>
+</div>
+
+</body>
+</html>
