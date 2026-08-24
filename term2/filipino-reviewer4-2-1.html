@@ -1,0 +1,2342 @@
+<!DOCTYPE html>
+<html lang="tl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>📚 Filipino: Panitikan at Gramatika Reviewer 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --gold: #f59e0b;
+  --gold-dark: #b45309;
+  --blue: #3b82f6;
+  --blue-dark: #1d4ed8;
+  --red: #ef4444;
+  --green: #22c55e;
+  --bg: #0c1a0e;
+  --surface: #132015;
+  --surface2: #1a2e1d;
+  --text: #f0fdf4;
+  --muted: #86efac;
+  --border: #166534;
+}
+
+body {
+  font-family: 'Baloo 2', cursive;
+  background: var(--bg);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--text);
+  background-image:
+    radial-gradient(ellipse at 10% 30%, rgba(245,158,11,.06) 0%, transparent 55%),
+    radial-gradient(ellipse at 90% 70%, rgba(59,130,246,.06) 0%, transparent 55%);
+}
+
+header {
+  width: 100%;
+  background: linear-gradient(135deg, #14532d, #1e3a5f);
+  border-bottom: 2px solid var(--gold-dark);
+  padding: 13px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 4px 30px rgba(0,0,0,.5);
+}
+.header-icon { font-size: 2rem; animation: float 3s ease-in-out infinite; }
+@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
+
+header h1 {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.45rem;
+  background: linear-gradient(90deg, var(--gold), #fde68a, var(--gold));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+header .sub { font-size: .72rem; color: var(--muted); margin-top: 1px; }
+
+.header-controls { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+.score-pill {
+  background: rgba(245,158,11,.15);
+  border: 1px solid rgba(245,158,11,.4);
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-weight: 800;
+  font-size: .85rem;
+  color: var(--gold);
+}
+.audio-btn {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  background: var(--surface2);
+  color: var(--text);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all .2s;
+  display: flex; align-items: center; justify-content: center;
+}
+.audio-btn:hover, .audio-btn.active { background: #14532d; border-color: var(--gold); }
+
+.chat-wrap {
+  width: 100%; max-width: 700px; flex: 1;
+  display: flex; flex-direction: column;
+  padding: 16px 14px 0;
+}
+
+#chat-box {
+  flex: 1; overflow-y: auto;
+  display: flex; flex-direction: column;
+  gap: 14px; padding-bottom: 10px;
+  max-height: calc(100vh - 200px);
+  scroll-behavior: smooth;
+}
+#chat-box::-webkit-scrollbar { width: 4px; }
+#chat-box::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+.msg { display: flex; gap: 8px; }
+.msg.user { flex-direction: row-reverse; }
+
+.avatar {
+  width: 34px; height: 34px; border-radius: 50%;
+  font-size: 1rem; display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 2px;
+}
+.msg.bot .avatar { background: linear-gradient(135deg, #14532d, #1e3a5f); border: 1.5px solid rgba(245,158,11,.4); }
+.msg.user .avatar { background: linear-gradient(135deg, #1e3a5f, #14532d); border: 1.5px solid rgba(59,130,246,.3); }
+
+.bubble {
+  max-width: 80%;
+  padding: 11px 16px;
+  border-radius: 18px;
+  font-size: .9rem;
+  line-height: 1.65;
+  animation: pop .22s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes pop { from{transform:scale(.88) translateY(6px);opacity:0} to{transform:scale(1) translateY(0);opacity:1} }
+
+.msg.bot .bubble {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-bottom-left-radius: 5px;
+}
+.msg.user .bubble {
+  background: linear-gradient(135deg, #1e3a5f, var(--blue-dark));
+  border-bottom-right-radius: 5px;
+}
+
+/* chips */
+.chip {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: rgba(245,158,11,.12);
+  border: 1.5px solid rgba(245,158,11,.4);
+  color: var(--gold);
+  border-radius: 30px;
+  padding: 5px 13px; margin: 5px 4px 0 0;
+  font-size: .8rem; font-weight: 700;
+  cursor: pointer; transition: all .15s;
+  user-select: none; font-family: 'Baloo 2', cursive;
+}
+.chip:hover {
+  background: var(--gold-dark); color: white;
+  border-color: var(--gold);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(245,158,11,.3);
+}
+
+/* topic tag */
+.topic-tag {
+  display: inline-block;
+  background: linear-gradient(135deg, #14532d, #166534);
+  border: 1px solid var(--gold-dark);
+  color: var(--gold);
+  font-size: .68rem; font-weight: 800;
+  border-radius: 20px; padding: 2px 10px;
+  margin-bottom: 5px; letter-spacing: .5px;
+  text-transform: uppercase;
+}
+
+/* multiple choice */
+.mc-options { display: flex; flex-direction: column; gap: 7px; margin-top: 10px; width: 100%; }
+.mc-btn {
+  display: flex; align-items: center; gap: 10px;
+  background: rgba(255,255,255,.03);
+  border: 1.5px solid var(--border);
+  border-radius: 12px; padding: 9px 14px;
+  color: var(--text); font-family: 'Baloo 2', cursive;
+  font-size: .87rem; font-weight: 600;
+  cursor: pointer; transition: all .15s; text-align: left; width: 100%;
+}
+.mc-btn:hover:not(:disabled) {
+  background: rgba(245,158,11,.12); border-color: var(--gold);
+  color: var(--gold); transform: translateX(3px);
+}
+.mc-btn .letter {
+  display: flex; align-items: center; justify-content: center;
+  width: 26px; height: 26px; border-radius: 8px;
+  background: rgba(245,158,11,.15); border: 1px solid rgba(245,158,11,.35);
+  color: var(--gold); font-size: .78rem; font-weight: 800;
+  flex-shrink: 0; transition: all .15s;
+}
+.mc-btn:hover:not(:disabled) .letter { background: var(--gold-dark); color: white; border-color: var(--gold-dark); }
+.mc-btn.correct { background: rgba(34,197,94,.15)!important; border-color: #22c55e!important; color: #22c55e!important; cursor: default; }
+.mc-btn.correct .letter { background: #22c55e!important; color: white!important; border-color: #22c55e!important; }
+.mc-btn.wrong { background: rgba(239,68,68,.12)!important; border-color: #ef4444!important; color: #ef4444!important; cursor: default; }
+.mc-btn.wrong .letter { background: #ef4444!important; color: white!important; border-color: #ef4444!important; }
+.mc-btn:disabled { cursor: default; transform: none!important; }
+
+/* speaker wave */
+.speaker-wave {
+  display: inline-flex; align-items: flex-end;
+  gap: 2px; height: 14px; margin-left: 6px; vertical-align: middle;
+}
+.speaker-wave span {
+  display: block; width: 3px; border-radius: 2px;
+  background: var(--gold); animation: wave 1s ease-in-out infinite;
+}
+.speaker-wave span:nth-child(1){height:4px;animation-delay:0s}
+.speaker-wave span:nth-child(2){height:10px;animation-delay:.1s}
+.speaker-wave span:nth-child(3){height:6px;animation-delay:.2s}
+.speaker-wave span:nth-child(4){height:12px;animation-delay:.15s}
+.speaker-wave span:nth-child(5){height:4px;animation-delay:.05s}
+@keyframes wave{0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.8)}}
+
+/* typing */
+.typing {
+  display: flex; gap: 4px; padding: 12px 16px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 18px; border-bottom-left-radius: 5px; width: fit-content;
+}
+.dot { width: 7px; height: 7px; border-radius: 50%; background: var(--gold); animation: bounce .9s infinite; }
+.dot:nth-child(2){animation-delay:.15s} .dot:nth-child(3){animation-delay:.3s}
+@keyframes bounce{0%,80%,100%{transform:translateY(0);opacity:.6}40%{transform:translateY(-7px);opacity:1}}
+
+/* input bar */
+.input-bar {
+  width: 100%; max-width: 700px;
+  padding: 10px 14px 18px;
+  display: flex; gap: 8px;
+  background: var(--bg); position: sticky; bottom: 0;
+}
+#user-input {
+  flex: 1; padding: 12px 18px;
+  border: 2px solid var(--border); border-radius: 30px;
+  font-family: 'Baloo 2', cursive; font-size: .92rem;
+  outline: none; background: var(--surface); color: var(--text);
+  transition: border-color .2s, box-shadow .2s;
+}
+#user-input::placeholder { color: var(--muted); }
+#user-input:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(245,158,11,.12); }
+
+#send-btn {
+  width: 48px; height: 48px; border-radius: 50%; border: none;
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  color: white; font-size: 1.1rem; cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 3px 14px rgba(245,158,11,.4); flex-shrink: 0;
+}
+#send-btn:hover { transform: scale(1.08); box-shadow: 0 5px 20px rgba(245,158,11,.55); }
+#send-btn:disabled { opacity: .5; transform: none; }
+
+/* result modal */
+.result-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.75); backdrop-filter: blur(6px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 100; opacity: 0; pointer-events: none; transition: opacity .3s;
+}
+.result-overlay.show { opacity: 1; pointer-events: all; }
+.result-card {
+  background: linear-gradient(135deg, #132015, #0c1a0e);
+  border: 2px solid var(--gold-dark);
+  border-radius: 24px; padding: 36px 40px;
+  text-align: center; max-width: 380px; width: 90%;
+  box-shadow: 0 20px 60px rgba(0,0,0,.6);
+  transform: scale(.9); transition: transform .3s cubic-bezier(.34,1.56,.64,1);
+}
+.result-overlay.show .result-card { transform: scale(1); }
+.result-emoji { font-size: 4rem; margin-bottom: 12px; display: block; }
+.result-title {
+  font-family: 'Fredoka One', cursive; font-size: 1.7rem; margin-bottom: 6px;
+  background: linear-gradient(90deg, var(--gold), #fde68a);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.result-score { font-size: 3rem; font-weight: 900; margin: 10px 0; color: white; }
+.result-msg { color: var(--muted); font-size: .9rem; margin-bottom: 22px; }
+.result-btn {
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  border: none; border-radius: 30px; padding: 12px 30px;
+  color: white; font-family: 'Baloo 2', cursive; font-weight: 800;
+  font-size: 1rem; cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+  box-shadow: 0 4px 16px rgba(245,158,11,.35);
+}
+.result-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 22px rgba(245,158,11,.5); }
+
+/* scenario card for identify questions */
+.scenario-card {
+  background: rgba(245,158,11,.07);
+  border: 1px solid rgba(245,158,11,.25);
+  border-radius: 12px; padding: 10px 14px;
+  margin: 8px 0 6px; font-style: italic;
+  font-size: .87rem; color: #fde68a; line-height: 1.5;
+}
+
+/* ── Notes Panel ─────────────────────────────────────────────── */
+.notes-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.78); backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 200; opacity: 0; pointer-events: none; transition: opacity .3s;
+}
+.notes-overlay.show { opacity: 1; pointer-events: all; }
+.notes-panel {
+  background: linear-gradient(160deg, #0c1a0e, #132015);
+  border: 2px solid var(--gold-dark);
+  border-radius: 20px;
+  width: 92%; max-width: 720px;
+  max-height: 88vh;
+  display: flex; flex-direction: column;
+  box-shadow: 0 24px 60px rgba(0,0,0,.7);
+  overflow: hidden;
+  transform: translateY(30px);
+  transition: transform .35s cubic-bezier(.34,1.2,.64,1);
+}
+.notes-overlay.show .notes-panel { transform: translateY(0); }
+.notes-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 22px; border-bottom: 1px solid var(--border);
+  background: linear-gradient(135deg, #14532d44, #1e3a5f44);
+}
+.notes-header h2 { font-family: 'Fredoka One', cursive; font-size: 1.3rem; color: var(--gold); }
+.notes-close {
+  width: 34px; height: 34px; border-radius: 50%;
+  border: 1.5px solid var(--border); background: var(--surface2);
+  color: var(--text); font-size: 1rem; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; transition: all .2s;
+}
+.notes-close:hover { background: #b91c1c; border-color: #ef4444; }
+.notes-body { overflow-y: auto; padding: 20px 22px; flex: 1; }
+.notes-body::-webkit-scrollbar { width: 4px; }
+.notes-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+.notes-topic { margin-bottom: 28px; }
+.notes-topic-title {
+  font-family: 'Fredoka One', cursive; font-size: 1.05rem;
+  color: var(--gold); margin-bottom: 10px;
+  padding-bottom: 6px; border-bottom: 1px solid var(--border);
+}
+.notes-item {
+  display: flex; gap: 10px; align-items: flex-start;
+  padding: 7px 0; border-bottom: 1px solid rgba(255,255,255,.04);
+  font-size: .87rem; line-height: 1.55;
+}
+.notes-item:last-child { border-bottom: none; }
+.notes-term { font-weight: 800; color: var(--gold); min-width: 150px; flex-shrink: 0; font-size: .84rem; }
+.notes-def { color: #d1fae5; }
+.notes-tabs {
+  display: flex; flex-wrap: wrap; gap: 8px; padding: 14px 22px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(0,0,0,.15);
+}
+.notes-tab {
+  padding: 12px 20px; border-radius: 10px;
+  border: 1.5px solid var(--border); 
+  background: rgba(255,255,255,.04); color: var(--muted);
+  font-family: 'Baloo 2', cursive; font-size: .9rem; font-weight: 700;
+  cursor: pointer; transition: all .15s; white-space: nowrap;
+  min-height: 48px; display: flex; align-items: center;
+}
+.notes-tab.active { background: var(--surface); color: var(--gold); border-color: var(--gold-dark); }
+.notes-tab:hover:not(.active) { color: var(--text); background: var(--surface2); }
+.notes-section { display: none; }
+.notes-section.active { display: block; }
+
+
+/* ── Print button in notes header ─────────────────────────────── */
+.notes-header-actions { display: flex; align-items: center; gap: 10px; }
+.print-btn {
+  display: flex; align-items: center; gap: 6px;
+  background: rgba(245,158,11,.12);
+  border: 1.5px solid rgba(245,158,11,.4);
+  color: var(--gold);
+  border-radius: 20px;
+  padding: 7px 14px;
+  font-family: 'Baloo 2', cursive;
+  font-size: .78rem;
+  font-weight: 800;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all .15s;
+}
+.print-btn:hover { background: var(--gold); color: #0c1a0e; border-color: var(--gold); }
+.print-btn.active { background: var(--gold); color: #0c1a0e; border-color: var(--gold); }
+
+/* ── On-screen Practice Test / Answer Key ─────────────────────── */
+.ptest-part-title {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1rem;
+  color: var(--gold);
+  margin: 22px 0 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+.ptest-part-title:first-child { margin-top: 0; }
+.ptest-q {
+  font-size: .87rem;
+  line-height: 1.6;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed rgba(255,255,255,.06);
+  color: #d1fae5;
+}
+.ptest-q b { color: var(--gold); }
+.ptest-q .opt { display: block; margin: 2px 0 2px 18px; color: #d1fae5; }
+.ptest-bank {
+  background: rgba(59,130,246,.08);
+  border: 1px solid rgba(59,130,246,.3);
+  border-radius: 10px;
+  padding: 10px 16px;
+  margin-bottom: 14px;
+  font-size: .82rem;
+  color: #dbeafe;
+  line-height: 1.6;
+}
+.key-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.key-pill {
+  background: rgba(245,158,11,.1);
+  border: 1px solid rgba(245,158,11,.25);
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: .78rem;
+  color: #fde68a;
+}
+.key-pill b { color: #34d399; }
+
+/* ── Print / Save-as-PDF styles ──────────────────────────────────
+   By default everything is hidden from print. When body carries
+   .printing-test, only #print-area (a light-themed clone of the
+   Practice Test + Answer Key) is shown, laid out for paper. ──── */
+@media print {
+  body * { visibility: hidden; }
+  #print-area, #print-area * { visibility: visible; }
+  #print-area {
+    display: block !important;
+    position: absolute; top: 0; left: 0; width: 100%;
+    background: #fff; color: #14290f;
+    font-family: 'Helvetica', Arial, sans-serif;
+    font-size: 10.5pt;
+    line-height: 1.5;
+  }
+  #print-area .p-cover { text-align: center; padding-top: 40px; }
+  #print-area .p-cover .p-icon { font-size: 34pt; }
+  #print-area .p-cover h1 { font-size: 19pt; color: #b45309; margin: 8px 0 4px; }
+  #print-area .p-cover .p-sub { font-size: 10.5pt; color: #166534; margin-bottom: 20px; }
+  #print-area .p-info-box {
+    border: 1.5px solid #fcd34d; border-radius: 10px;
+    max-width: 460px; margin: 0 auto 20px; padding: 14px 20px;
+    text-align: left; font-size: 10pt;
+  }
+  #print-area .p-info-box div { margin: 6px 0; border-bottom: 1px dotted #fde68a; padding-bottom: 6px; }
+  #print-area .p-instructions {
+    max-width: 460px; margin: 0 auto; text-align: left;
+    background: #fffbeb; border: 1px solid #fcd34d; border-radius: 10px;
+    padding: 12px 18px; font-size: 9.5pt; color: #78350f;
+  }
+  #print-area h2.p-part-title {
+    font-size: 12.5pt; color: #fff;
+    background: linear-gradient(135deg, #b45309, #14532d) !important;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    padding: 6px 12px; border-radius: 7px; margin: 18px 0 10px;
+    page-break-after: avoid;
+  }
+  #print-area .p-bank {
+    background: #f0fdf4 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    border: 1px solid #86efac; border-radius: 8px; padding: 8px 14px;
+    margin-bottom: 12px; font-size: 9.5pt; color: #14532d;
+  }
+  #print-area .p-q {
+    margin-bottom: 8px; padding-bottom: 8px;
+    border-bottom: 1px dotted #fde68a; font-size: 10pt;
+    page-break-inside: avoid; color: #14290f;
+  }
+  #print-area .p-q b { color: #b45309; }
+  #print-area .p-q .p-blank { display: inline-block; min-width: 65px; border-bottom: 1px solid #64748b; }
+  #print-area .p-q .p-opt { display: block; margin: 2px 0 0 20px; color: #365314; }
+  #print-area .p-break { page-break-before: always; }
+  #print-area .p-key-part-title {
+    font-size: 11pt; color: #b45309; font-weight: bold;
+    margin: 14px 0 8px; border-bottom: 2px solid #b45309; padding-bottom: 4px;
+  }
+  #print-area .p-key-grid {
+    display: grid; grid-template-columns: repeat(5, 1fr);
+    gap: 5px 8px; margin-bottom: 14px;
+  }
+  #print-area .p-key-pill {
+    background: #f0fdf4 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    border: 1px solid #86efac; border-radius: 6px;
+    padding: 4px 8px; font-size: 8.5pt; color: #166534;
+  }
+  #print-area .p-key-pill b { color: #b45309; }
+  @page { size: letter; margin: 1.5cm 1.8cm; }
+}
+#print-area { display: none; }
+
+
+/* ── Chapter Summary / Tandaan / Memory boxes (fix: previously missing) ── */
+.chapter-summary {
+  background: linear-gradient(135deg, rgba(59,130,246,.1), rgba(34,197,94,.08));
+  border: 1px solid rgba(59,130,246,.25);
+  border-left: 4px solid var(--blue);
+  border-radius: 12px;
+  padding: 14px 18px;
+  margin-bottom: 18px;
+  font-size: .88rem;
+  line-height: 1.65;
+  color: #dbeafe;
+}
+.tandaan-box {
+  background: rgba(245,158,11,.08);
+  border: 1px solid rgba(245,158,11,.3);
+  border-left: 4px solid var(--gold);
+  border-radius: 12px;
+  padding: 12px 18px;
+  margin: 14px 0;
+  font-size: .86rem;
+  line-height: 1.6;
+  color: #fde68a;
+}
+.tandaan-label {
+  display: block;
+  font-family: 'Baloo 2', cursive;
+  font-size: .8rem;
+  color: var(--gold);
+  letter-spacing: .5px;
+  margin-bottom: 5px;
+}
+.memory-box {
+  background: rgba(34,197,94,.08);
+  border: 1px solid rgba(34,197,94,.3);
+  border-left: 4px solid var(--green);
+  border-radius: 12px;
+  padding: 12px 18px;
+  margin: 14px 0 22px;
+  font-size: .86rem;
+  line-height: 1.6;
+  color: #bbf7d0;
+}
+.memory-label {
+  display: block;
+  font-family: 'Baloo 2', cursive;
+  font-size: .8rem;
+  color: var(--green);
+  letter-spacing: .5px;
+  margin-bottom: 5px;
+}
+.compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0 20px;
+  font-size: .82rem;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.compare-table th {
+  background: linear-gradient(135deg, var(--blue-dark), var(--gold-dark));
+  color: white;
+  text-align: left;
+  padding: 9px 12px;
+  font-size: .78rem;
+  text-transform: uppercase;
+  letter-spacing: .4px;
+}
+.compare-table td {
+  padding: 9px 12px;
+  border-top: 1px solid var(--border);
+  color: var(--text);
+  vertical-align: top;
+}
+.compare-table tr:nth-child(even) td { background: rgba(255,255,255,.02); }
+
+/* ── Story Box (for reading Bible stories aloud) ─────────────────── */
+.story-box {
+  background: rgba(255,255,255,.03);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px 20px;
+  margin-bottom: 16px;
+  font-size: .92rem;
+  line-height: 1.8;
+  color: var(--text);
+}
+.story-box p { margin-bottom: 10px; }
+.story-box p:last-child { margin-bottom: 0; }
+.story-ref {
+  display: block;
+  text-align: right;
+  font-style: italic;
+  color: var(--muted);
+  font-size: .8rem;
+  margin-top: 10px;
+}
+.story-label {
+  display: block;
+  font-family: 'Baloo 2', cursive;
+  font-size: .9rem;
+  color: var(--gold);
+  letter-spacing: .5px;
+  margin-bottom: 10px;
+}
+/* ── Raw Notes (original document view) ──────────────────────── */
+.rawnotes-intro {
+  font-size: .82rem;
+  color: var(--muted);
+  line-height: 1.6;
+  background: rgba(59,130,246,.1);
+  border: 1px solid rgba(59,130,246,.3);
+  border-left: 4px solid var(--blue);
+  border-radius: 10px;
+  padding: 12px 18px;
+  margin-bottom: 20px;
+}
+.rawnotes-doc {
+  font-family: 'Lora', Georgia, serif;
+  line-height: 1.75;
+}
+.rawnotes-doc p {
+  font-size: .95rem;
+  margin-bottom: 14px;
+  color: #e2f5e6;
+}
+.rawnotes-doc strong { color: var(--gold); font-weight: 700; }
+.rawnotes-doc em { color: var(--muted); font-style: italic; }
+.rawnotes-doc h3.doc-heading {
+  font-family: 'Baloo 2', cursive;
+  font-size: 1.05rem;
+  color: var(--gold);
+  margin: 26px 0 12px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid var(--border);
+}
+.rawnotes-doc h3.doc-heading:first-child { margin-top: 0; }
+.rawnotes-doc ul, .rawnotes-doc ol {
+  margin: 0 0 14px 26px;
+  color: #e2f5e6;
+}
+.rawnotes-doc li { margin-bottom: 6px; font-size: .95rem; }
+.rawnotes-doc table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0 20px;
+  font-size: .82rem;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.rawnotes-doc th {
+  background: linear-gradient(135deg, var(--blue-dark), var(--gold-dark));
+  color: white;
+  text-align: left;
+  padding: 9px 12px;
+  font-size: .78rem;
+}
+.rawnotes-doc td {
+  padding: 9px 12px;
+  border-top: 1px solid var(--border);
+  color: var(--text);
+  vertical-align: top;
+}
+.rawnotes-doc tr:nth-child(even) td { background: rgba(255,255,255,.02); }
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE: TABLET (≤820px)
+   ═══════════════════════════════════════════════════════════════ */
+@media (max-width: 820px) {
+  .notes-panel { width: 95%; max-height: 92vh; }
+  .notes-tabs { padding: 12px 16px; gap: 6px; }
+  .notes-tab { padding: 10px 14px; font-size: .82rem; min-height: 42px; }
+  .notes-body { padding: 16px; }
+  .notes-header { padding: 14px 16px; }
+  .chat-wrap { padding: 14px 10px 0; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE: MOBILE (≤600px)
+   ═══════════════════════════════════════════════════════════════ */
+@media (max-width: 600px) {
+  header {
+    padding: 10px 12px;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .header-icon { font-size: 1.5rem; }
+  header h1 { font-size: 1.05rem; line-height: 1.2; }
+  header .sub { font-size: .62rem; }
+  .header-controls { gap: 6px; margin-left: auto; }
+  .score-pill { padding: 4px 10px; font-size: .74rem; }
+  .audio-btn { width: 32px; height: 32px; font-size: .85rem; }
+
+  .chat-wrap { padding: 10px 6px 0; }
+  #chat-box { gap: 12px; }
+  .bubble { max-width: 88%; font-size: .88rem; padding: 10px 13px; }
+  .avatar { width: 30px; height: 30px; font-size: .85rem; }
+
+  .chip { font-size: .78rem; padding: 7px 12px; }
+  .mc-btn { font-size: .84rem; padding: 10px 12px; }
+  .mc-btn .letter { width: 22px; height: 22px; font-size: .74rem; }
+  .topic-tag { font-size: .68rem; }
+  .scenario-card { font-size: .88rem; padding: 10px 14px; }
+
+  .input-bar { padding: 8px 8px calc(8px + env(safe-area-inset-bottom)); gap: 8px; }
+  #user-input { font-size: .88rem; padding: 10px 14px; }
+  #send-btn { width: 40px; height: 40px; font-size: 1rem; }
+
+  .result-card { width: 92%; padding: 26px 20px; }
+  .result-emoji { font-size: 2.6rem; }
+  .result-title { font-size: 1.2rem; }
+  .result-score { font-size: 1.8rem; }
+
+  /* ── Notes panel: near-full-screen on phones ── */
+  .notes-overlay { align-items: flex-end; }
+  .notes-panel {
+    width: 100%; max-width: 100%;
+    max-height: 94vh;
+    border-radius: 20px 20px 0 0;
+    border-left: none; border-right: none; border-bottom: none;
+  }
+  .notes-header { padding: 12px 14px; flex-wrap: wrap; gap: 8px; }
+  .notes-header h2 { font-size: 1.05rem; flex: 1 1 100%; }
+  .notes-header-actions { flex-wrap: wrap; gap: 6px; width: 100%; justify-content: flex-start; }
+  .print-btn { font-size: .7rem; padding: 6px 11px; }
+  .notes-close { width: 30px; height: 30px; font-size: .9rem; margin-left: auto; }
+
+  .notes-tabs { padding: 10px 12px; gap: 5px; }
+  .notes-tab { padding: 8px 12px; font-size: .76rem; min-height: 38px; }
+  .notes-body { padding: 14px; }
+
+  .notes-item { flex-direction: column; gap: 2px; }
+  .notes-term { min-width: 0; font-size: .82rem; }
+  .notes-def { font-size: .84rem; }
+  .notes-topic-title { font-size: .95rem; }
+  .chapter-summary, .memory-box, .tandaan-box, .story-box, .verse-card { font-size: .82rem; padding: 12px 14px; }
+
+  /* ── Tables: allow horizontal scroll instead of squeezing ── */
+  .compare-table { display: block; overflow-x: auto; white-space: nowrap; }
+  .compare-table th, .compare-table td { white-space: normal; min-width: 110px; }
+
+  .key-grid { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 5px; }
+  .key-pill { font-size: .72rem; padding: 5px 8px; }
+  .ptest-part-title { font-size: .92rem; }
+  .ptest-q { font-size: .82rem; }
+  .ptest-bank { font-size: .78rem; padding: 8px 12px; }
+
+  .rawnotes-doc p, .rawnotes-doc li { font-size: .87rem; }
+  .rawnotes-doc h3.doc-heading { font-size: .95rem; }
+  .rawnotes-doc table { display: block; overflow-x: auto; white-space: nowrap; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE: VERY SMALL PHONES (≤380px)
+   ═══════════════════════════════════════════════════════════════ */
+@media (max-width: 380px) {
+  header h1 { font-size: .92rem; }
+  header .sub { display: none; }
+  .score-pill span { font-size: .7rem; }
+  .bubble { max-width: 92%; font-size: .84rem; }
+  .notes-tab { font-size: .7rem; padding: 7px 10px; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE: LANDSCAPE PHONES (short height)
+   ═══════════════════════════════════════════════════════════════ */
+@media (max-height: 480px) and (orientation: landscape) {
+  .notes-panel { max-height: 98vh; }
+  .notes-tabs { padding: 6px 12px; }
+  .notes-tab { min-height: 32px; padding: 6px 10px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-icon">📚</div>
+  <div>
+    <h1>Panitikan at Gramatika</h1>
+    <div class="sub">Mga Tauhan sa Panitikan · Bahagi ng Aklat · Gramatika · Diin ng Salita</div>
+  </div>
+  <div class="header-controls">
+    <div class="score-pill">⭐ <span id="score-val">0</span> / <span id="total-val">0</span></div>
+    <button class="audio-btn" id="notes-toggle" title="Basahin ang mga Tala" onclick="document.getElementById('notes-overlay').classList.add('show')">📖</button>
+    <button class="audio-btn active" id="audio-toggle" title="I-toggle ang Audio">🔊</button>
+  </div>
+</header>
+
+<div class="chat-wrap">
+  <div id="chat-box"></div>
+</div>
+
+<div class="input-bar">
+  <input type="text" id="user-input" placeholder="Isulat ang iyong sagot dito…" autocomplete="off" />
+  <button id="send-btn">➤</button>
+</div>
+
+<div class="result-overlay" id="result-overlay">
+  <div class="result-card">
+    <span class="result-emoji" id="res-emoji">🏆</span>
+    <div class="result-title">Tapos na!</div>
+    <div class="result-score"><span id="res-score">0</span>/<span id="res-total">0</span></div>
+    <div class="result-msg" id="res-msg">Magaling!</div>
+    <button class="result-btn" onclick="restartApp()">🔄 Maglaro Ulit</button>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+// QUESTION BANK
+// ═══════════════════════════════════════════════════════════════
+const topics = {
+
+  "Mga Tauhan sa Panitikang Pilipino": [
+    { q: "Sino ang itinuturing na ama ng lahing kayumanggi ayon sa alamat?", a: "Malakas", hint: "Galing siya sa isang biyak na kawayan." },
+    { q: "Sino ang itinuturing na ina ng lahing kayumanggi ayon sa alamat?", a: "Maganda", hint: "Kapareha niya si Malakas." },
+    { q: "Saan nagmula sina Malakas at Maganda ayon sa alamat?", a: "Sa kabiyak ng kawayan na tinukâ ng isang ibon", hint: "Isang kawayan ang biniyak." },
+    { q: "Sino ang nagbigay ng mga batas sa kanyang mga kalahi bilang isang pinuno?", a: "Raha Kalantiaw", hint: "Kilala siya sa pagbibigay ng batas." },
+    { q: "Sino ang engkantadang naninirahan sa Bundok ng Makiling?", a: "Mariang Makiling", hint: "Minamahal niya ang mabubuting tao." },
+    { q: "Sino ang naipit ng dalawang bundok ayon sa alamat, at pinaniniwalaang lalaya at lalakas muli balang araw?", a: "Bernardo Carpio", hint: "Siya ang pinakamalakas na tao sa daigdig." },
+    { q: "Sino ang naninirahan sa Bundok Arayat, tinawag dahil sa talas ng kanyang isip?", a: "Mariang Sinukuan", hint: "Ang pangalan niya ay may kaugnayan sa \"sinukuan.\"" },
+    { q: "Sino ang naging Simoun sa El Filibusterismo, matapos maging Crisostomo Ibarra sa Noli Me Tangere?", a: "Si Crisostomo Ibarra", hint: "Isa siyang tauhan sa dalawang nobela ni Rizal." },
+    { q: "Sino ang kasintahan ni Ibarra, na itinuturing na uliran ng babaeng Pilipina?", a: "Maria Clara", hint: "Kilala siya sa kanyang kahinhinan." },
+    { q: "Sino ang bayaning pumatay kay Ferdinand Magellan sa Pulo ng Mactan?", a: "Lapulapu", hint: "Kauna-unahang nagtanggol sa bayan." },
+    { q: "Sino ang hari ng Maynila noong dumating si Martin de Goiti?", a: "Raha Soliman", hint: "Tinanggap niya ang mga Kastila bilang kaibigan, hindi bilang panginoon." },
+    { q: "Sino ang namuno sa Ilocos laban sa mga Kastila kasama ang asawang si Josefa Gabriela?", a: "Diego Silang", hint: "Mag-asawang namuno sa Ilocos." },
+    { q: "Sino ang lumaban sa mga Kastila sa pamamagitan ng kanyang panulat?", a: "Marcelo del Pilar", hint: "Namatay siyang mahirap at malayo sa sariling bayan." },
+    { q: "Sino ang sumulat ng Noli Me Tangere at El Filibusterismo?", a: "Jose Rizal", hint: "Ang buhay niya'y inihandog niya sa bayan." },
+    { q: "Sino ang sumulat ng Sampung Utos ng Katipunan?", a: "Andres Bonifacio", hint: "Namuno siya sa Himagsikang Pilipino." },
+    { q: "Sino ang tinawag na \"Tandang Sora\" na tumulong sa mga sugatang Katipunero?", a: "Tandang Sora (Melchora Aquino)", hint: "Ipinatapon siya sa pulo ng Marianas." },
+    { q: "Sino ang bayaning nagtanggol sa Pasong Tirad?", a: "Gregorio del Pilar", hint: "Ligaya sa kanya ang mamatay para sa Inang Bayan." },
+  ],
+
+  "Mga Bahagi ng Aklat": [
+    { q: "Ano ang bahagi ng aklat na naglalaman ng pamagat at pangalan ng may-akda sa harapan, at karagdagang impormasyon sa likuran?", a: "Pabalat", hint: "Ito ang panlabas na takip ng aklat." },
+    { q: "Ano ang bahagi ng aklat na nagsasaad ng pamagat, may-akda, palimbagan, at taon ng paglimbag?", a: "Pahina ng Pamagat", hint: "Karaniwang pambungad na pahina ito." },
+    { q: "Saan matatagpuan ang impormasyon tungkol sa may karapatang-ari sa aklat?", a: "Sa Pahina ng Karapatang-ari", hint: "Dito rin makikita ang taon ng paglathala." },
+    { q: "Ano ang matatagpuan sa Talaan ng Nilalaman?", a: "Listahan ng mga aralin at paksang tinatalakay sa aklat at ang mga pahina nito", hint: "Dito mo makikita kung saang pahina makikita ang bawat aralin." },
+    { q: "Ano ang tinatalakay sa Paunang Salita o Panimula?", a: "Ang layunin ng aklat at mga nilalaman nito, at ang paraan ng paglalahad ng mga aralin", hint: "Dito ipinapaliwanag ang pangkalahatang balangkas ng aklat." },
+    { q: "Anong bahagi ng aklat ang dapat tingnan kung nais malaman ang kahulugan ng mahihirap na salita?", a: "Talahuluganan", hint: "Parang diksiyonaryo ito sa loob ng aklat." },
+  ],
+
+  "Pangatnig at Panlapi": [
+    { q: "Ano ang pangatnig?", a: "Mga kataga o salitang ginagamit sa pag-uugnay ng isang salita sa kapuwa salita, parirala sa kapuwa, at sugnay sa kapuwa sugnay", hint: "Ito ang tumutulay sa mga salita o pangungusap." },
+    { q: "Magbigay ng tatlong halimbawa ng pangatnig.", a: "dahil, nang, sapagkat, at, o, kaya, kapag, o upang (anumang tatlo)", hint: "Karaniwang ginagamit ang mga ito sa pang-araw-araw na usapan." },
+    { q: "Ano ang panlapi?", a: "Mga titik na ginagamit sa pagdurugtong ng salita upang makalikha ng ibang kahulugan", hint: "Idinurugtong ito sa salitang-ugat." },
+    { q: "Ano ang unlapi?", a: "Panlaping inilalagay sa unahan ng salitang-ugat", hint: "Nasa unahan ito." },
+    { q: "Magbigay ng halimbawa ng unlapi.", a: "ma-, na-, mag-, nag-, o pa- (hal. basa → magbasa)", hint: "Tingnan ang simula ng salita." },
+    { q: "Ano ang gitlapi?", a: "Panlaping inilalagay sa gitna ng salitang-ugat", hint: "Nasa gitna ito." },
+    { q: "Magbigay ng halimbawa ng gitlapi.", a: "-um- o -in- (hal. bumasa, binasa)", hint: "Hanapin ang idinagdag sa gitna ng salitang-ugat." },
+    { q: "Ano ang hulapi?", a: "Panlaping inilalagay sa hulihang bahagi ng salitang-ugat", hint: "Nasa hulihan ito." },
+    { q: "Magbigay ng halimbawa ng hulapi.", a: "-an, -in, -han, o -hin (hal. basa → basahin)", hint: "Tingnan ang dulo ng salita." },
+    { q: "Ano ang kabilaan?", a: "Panlaping karaniwang inilalagay sa unahan at hulihan o sa gitna ng salitang-ugat", hint: "Dalawang bahagi ng panlapi ang ginagamit nang sabay." },
+    { q: "Magbigay ng halimbawa ng kabilaan.", a: "basa → nagbasahan / binasahan", hint: "May idinagdag sa dalawang panig ng salitang-ugat." },
+  ],
+
+  "Pangngalan: Pantangi, Kongkreto, at Kasarian": [
+    { q: "Ano ang pangngalang pantangi?", a: "Tiyak na pangalan ng isang tao, lugar, o bagay", hint: "Nagsisimula ito sa malaking titik." },
+    { q: "Magbigay ng halimbawang pangngalang pantangi para sa \"bayani.\"", a: "Jose Rizal (o iba pang tiyak na pangalan ng bayani)", hint: "Tiyak na pangalan ng isang kilalang bayani." },
+    { q: "Ano ang pangngalang kongkreto?", a: "Pangngalang tumutukoy sa bagay na nasasalat o nakikita", hint: "Maaari itong hawakan o makita." },
+    { q: "Ano ang pangngalang di-kongkreto?", a: "Pangngalang tumutukoy sa bagay na hindi nasasalat o hindi nakikita", hint: "Hindi ito nahahawakan o nakikita." },
+    { q: "Kongkreto ba o di-kongkreto ang salitang \"kagitingan\"?", a: "Di-kongkreto", hint: "Hindi ito nasasalat." },
+    { q: "Kongkreto ba o di-kongkreto ang salitang \"hangin\"?", a: "Kongkreto", hint: "Nararamdaman ito kahit hindi nakikita." },
+    { q: "Ano ang apat na kasarian ng pangngalan?", a: "Panlalaki, pambabae, di-tiyak, at walang kasarian", hint: "Apat na uri, kabilang ang mga di-tiyak." },
+    { q: "Anong kasarian ang salitang \"senadora\"?", a: "Pambabae", hint: "Tingnan ang hulapi ng salita." },
+    { q: "Anong kasarian ang salitang \"tandang\"?", a: "Panlalaki", hint: "Isang uri ito ng manok." },
+    { q: "Anong kasarian ang salitang \"relo\"?", a: "Walang kasarian", hint: "Isang bagay ito, hindi tao o hayop." },
+    { q: "Anong kasarian ang salitang \"balikbayan\"?", a: "Di-tiyak", hint: "Maaaring lalaki o babae." },
+  ],
+
+  "Panghalip": [
+    { q: "Ano-ano ang apat na uri ng panghalip na tinalakay?", a: "Panao, pananong, pamatlig, at panaklaw", hint: "Apat na uri, may kani-kaniyang gamit." },
+    { q: "Ano ang panghalip na panao?", a: "Panghalip na humahalili sa pangalan ng tao", hint: "Halimbawa: ako, ikaw, kami." },
+    { q: "Ano ang panghalip na pananong?", a: "Panghalip na ginagamit sa pagtatanong", hint: "Halimbawa: sino, ano, alin." },
+    { q: "Ano ang panghalip na pamatlig?", a: "Panghalip na nagtuturo o pumapalit sa isang bagay o lugar", hint: "Halimbawa: ito, iyan, doon." },
+    { q: "Ano ang panghalip na panaklaw?", a: "Panghalip na tumutukoy sa lahat o kabuuan", hint: "Halimbawa: lahat, madla, sinuman." },
+    { q: "Ano-ano ang mga kaganapan ng panghalip na maaaring tukuyin?", a: "Isahan, dalawahan, at maramihan", hint: "Bilang ng tinutukoy — iisa, dalawa, o marami." },
+    { q: "Sa pangungusap na \"Mahilig akong makinig ng mga lumang awitin,\" anong panauhan at kaganapan ang ginamit?", a: "Unang panauhan, isahan", hint: "Tumutukoy ito sa nagsasalita, iisa lamang." },
+  ],
+
+  "Kayarian ng Salita at Pang-uring Pamilang": [
+    { q: "Ano-ano ang apat na kayarian ng salita?", a: "Payak, maylapi, inuulit, at tambalan", hint: "Apat na paraan ng pagbuo ng salita." },
+    { q: "Ano ang salitang payak?", a: "Salitang binubuo lamang ng salitang-ugat, walang idinugtong na anuman", hint: "Walang idinagdag na panlapi." },
+    { q: "Ano ang salitang maylapi?", a: "Salitang may idinugtong na unlapi, gitlapi, hulapi, o kabilaan", hint: "May idinagdag na panlapi." },
+    { q: "Ano ang salitang inuulit?", a: "Salitang inuulit ang isang bahagi o ang buong salita", hint: "May bahaging paulit-ulit." },
+    { q: "Ano ang salitang tambalan?", a: "Salitang binubuo ng dalawa o higit pang magkaibang salita", hint: "Dalawang magkaibang salita ang pinagsama." },
+    { q: "Anong kayarian ang salitang \"urong-sulong\"?", a: "Tambalan", hint: "Dalawang magkaibang salita ang pinagsama." },
+    { q: "Anong kayarian ang salitang \"kayang-kaya\"?", a: "Inuulit", hint: "Inulit ang buong salita." },
+    { q: "Ano ang pang-uring pamilang?", a: "Pang-uring nagsasaad ng bilang, halaga, o dami ng pangngalan o panghalip", hint: "Tumutukoy sa dami o bilang." },
+    { q: "Ano ang dalawang uri ng pang-uring pamilang?", a: "Tiyak at di-tiyak", hint: "Isa'y eksakto, isa'y hindi eksakto ang bilang." },
+    { q: "Magbigay ng halimbawa ng pang-uring pamilang na tiyak.", a: "dalawa, isa, tig-apat, ikaapat, o isandaan (anuman)", hint: "Eksaktong bilang." },
+    { q: "Magbigay ng halimbawa ng pang-uring pamilang na di-tiyak.", a: "mga, marami, kaunti, ilan, o wala (anuman)", hint: "Hindi eksaktong bilang." },
+  ],
+
+  "Diin ng mga Salita at Pagbibigay ng Hinuha": [
+    { q: "Ilan ang apat na diin ng mga salita sa wikang Filipino?", a: "Apat — malumay, malumi, mabilis, at maragsa", hint: "Apat na paraan ng pagbigkas." },
+    { q: "Ano ang malumay?", a: "Paraan ng pagbigkas ng salita na may lundo sa pantig bago ang huling pantig", hint: "Walang tuldik na kailangang isulat." },
+    { q: "Ano ang malumi?", a: "Katulad ng malumay ngunit may impit sa huling patinig; may tuldik na paiwa (`)", hint: "May tuldik na paiwa." },
+    { q: "Ano ang mabilis?", a: "Paraan ng pagbigkas na tuloy-tuloy hanggang huling pantig; may tuldik na pahilis (´)", hint: "May tuldik na pahilis." },
+    { q: "Ano ang maragsa?", a: "Katulad ng mabilis ngunit may impit sa huling patinig; may tuldik na pakupyâ (^)", hint: "May tuldik na pakupyâ." },
+    { q: "Ano ang hinuha?", a: "Pahayag ng inaakalang mangyayari o nangyayari batay sa nabasang sitwasyon", hint: "Isang pag-aakala batay sa pahiwatig." },
+    { q: "Ano-anong mga salita ang maaaring gamitin sa pagpapahayag ng hinuha?", a: "maaari, wari, tila, marahil, siguro, sa tingin ko, o sa palagay ko (anuman)", hint: "Mga salitang nagpapahiwatig ng hindi-katiyakan." },
+  ],
+
+};
+// ── TAMA O MALI ────────────────────────────────────────────────────────────
+const trueOrFalse = [
+  { q: "Si Malakas ang ama ng lahing kayumanggi ayon sa alamat.", a: "tama" },
+  { q: "Si Maria Clara ang kasintahan ni Lapulapu.", a: "mali" },
+  { q: "Ang Talaan ng Nilalaman ay naglalaman ng kahulugan ng mahihirap na salita.", a: "mali" },
+  { q: "Ang Pahina ng Karapatang-ari ay nagsasaad kung sino ang may karapatang-ari sa aklat.", a: "tama" },
+  { q: "Ang mga salitang \"dahil, sapagkat, upang\" ay halimbawa ng pangatnig.", a: "tama" },
+  { q: "Ang unlapi ay inilalagay sa hulihang bahagi ng salitang-ugat.", a: "mali" },
+  { q: "Ang salitang \"bumasa\" ay may gitlaping \"-um-.\"", a: "tama" },
+  { q: "Kongkreto ang salitang \"kagitingan.\"", a: "mali" },
+  { q: "Walang kasarian ang salitang \"relo.\"", a: "tama" },
+  { q: "Pambabae ang kasarian ng salitang \"tandang.\"", a: "mali" },
+  { q: "Ang panghalip na \"sino\" ay halimbawa ng panghalip na panao.", a: "mali" },
+  { q: "Ang salitang \"urong-sulong\" ay salitang tambalan.", a: "tama" },
+  { q: "Payak ang kayarian ng salitang \"natulog.\"", a: "mali" },
+  { q: "Tiyak ang pang-uring pamilang na \"marami.\"", a: "mali" },
+  { q: "May apat na diin ang mga salita sa Filipino: malumay, malumi, mabilis, at maragsa.", a: "tama" },
+  { q: "Ang salitang \"kutà\" ay halimbawa ng malumi.", a: "tama" },
+  { q: "Ang hinuha ay pahayag ng katotohanang napatunayan na.", a: "mali" },
+  { q: "Ang mga salitang \"wow\" at \"bye\" ay halimbawa ng salitang hiram.", a: "tama" },
+  { q: "Nagpaalam muna si Carla kay Inay bago siya pumunta sa kaarawan ni Patricia.", a: "tama" },
+  { q: "Si Noemi ay nakadalo sa kaarawan ni Patricia.", a: "mali" },
+];
+
+// ── KILALANIN: BAHAGI NG AKLAT · PANGATNIG · PANGHALIP ──────────────────────
+const identifyQuestions = [
+  { q: "Nais malaman ni Albert kung gaano nahahati ang aklat tungkol sa kanilang aralin sa Araling Panlipunan. Anong bahagi ng aklat ang dapat niyang tingnan?", a: "Talaan ng Nilalaman", choices: ["Talaan ng Nilalaman","Pahina ng Pamagat","Pahina ng Karapatang-ari","Paunang Salita"] },
+  { q: "Nagpapabili ng aklat ang ate ni Nina at ibinigay sa kaniya ang pamagat at pangalan ng may-akda. Anong bahagi ng aklat ang dapat niyang tingnan?", a: "Pahina ng Pamagat", choices: ["Pahina ng Pamagat","Talaan ng Nilalaman","Pabalat","Talahuluganan"] },
+  { q: "Ang ama ni Nelson ay mahusay gumuhit. Ibinabalita ni Nelson na ang kaniyang ama ang gumuhit ng mga larawan sa aklat nila. Anong bahagi ng aklat ang dapat tingnan ni Nelson?", a: "Pahina ng Karapatang-ari", choices: ["Pahina ng Karapatang-ari","Pahina ng Pamagat","Talaan ng Nilalaman","Pabalat"] },
+  { q: "Namimili ng aklat para sa Araling Panlipunan si Bb. Nicolas. Bago siya bumili, nais niyang malaman ang mga nilalaman at layunin ng aklat. Anong bahagi ng aklat ang dapat niyang basahin?", a: "Paunang Salita o Panimula", choices: ["Paunang Salita o Panimula","Pahina ng Pamagat","Talahuluganan","Pabalat"] },
+  { q: "Nais basahin ni Nelya ang paksa tungkol sa mga insekto. Binuksan niya ang aklat para makita kung saan nagsisimula ang pahinang matatagpuan ang paksang ito. Ano ang tawag sa pahinang babasahin ni Nelya?", a: "Talaan ng Nilalaman", choices: ["Talaan ng Nilalaman","Pahina ng Pamagat","Pabalat","Talahuluganan"] },
+  { q: "Nakalimutan ni Nelson na isulat ang pahina ng kanilang takdang-aralin ngunit alam niya kung ano ang paksa ng kanilang aralin. Anong bahagi ng aklat ang dapat niyang tingnan?", a: "Talaan ng Nilalaman", choices: ["Talaan ng Nilalaman","Talahuluganan","Pahina ng Pamagat","Paunang Salita"] },
+  { q: "Nais malaman ni Trina ang kahulugan ng mahihirap na salitang ginamit sa pagtatalakay ng paksa sa aklat. Anong bahagi ng aklat ang dapat niyang tingnan?", a: "Talahuluganan", choices: ["Talahuluganan","Talaan ng Nilalaman","Paunang Salita","Pabalat"] },
+  { q: "Nais ni Paulo na magbalik-aral sa mga araling tinalakay ng kanilang klase bilang paghahanda sa kanilang pagsusulit. Anong bahagi ng aklat ang dapat niyang tingnan?", a: "Talaan ng Nilalaman", choices: ["Talaan ng Nilalaman","Talahuluganan","Pahina ng Karapatang-ari","Pabalat"] },
+  { q: "Maingat si Nina sa kaniyang mga aklat kaya't binabalutan niya ang mga ito upang hindi masira. Anong bahagi ng aklat ang binabalutan niya?", a: "Pabalat", choices: ["Pabalat","Pahina ng Pamagat","Talaan ng Nilalaman","Talahuluganan"] },
+  { q: "Dumadagsa ang mga tao ______ marinig ang pag-awit ni Sarah Geronimo.", a: "upang", choices: ["upang","kung","kapag","sa"] },
+  { q: "Marami ang makikinig sa iyo ______ magiging mahusay kang mang-aawit.", a: "kung", choices: ["kung","upang","kapag","dahil"] },
+  { q: "Maaaring suspendihin ang pasok sa opisina ______ bumuhos ang malakas na ulan.", a: "kapag", choices: ["kapag","upang","kung","nang"] },
+  { q: "Unti-unting nakakalbo ang mga kabundukan ______ mga ilegal na pagtotroso.", a: "sa", choices: ["sa","kung","kapag","upang"] },
+  { q: "Kailangan nating mag-aral na mabuti ______ tayo ay makatapos ng pag-aaral.", a: "upang", choices: ["upang","kung","kapag","sapagkat"] },
+  { q: "Pupunta na kami roon sa simbahan. (Anong uri ng panghalip ang may salungguhit?)", a: "Panao", choices: ["Panao","Pananong","Pamatlig","Panaklaw"] },
+  { q: "Sino ang nais mong maligistang maiwang? (Anong uri ng panghalip ang may salungguhit?)", a: "Pananong", choices: ["Pananong","Panao","Pamatlig","Panaklaw"] },
+  { q: "Doon kami nakatira sa Malabon. (Anong uri ng panghalip ang may salungguhit?)", a: "Pamatlig", choices: ["Pamatlig","Panao","Pananong","Panaklaw"] },
+  { q: "Ang madla ay nabigla sa balitang kumakalat tungkol sa epidemya. (Anong uri ng panghalip ang may salungguhit?)", a: "Panaklaw", choices: ["Panaklaw","Panao","Pananong","Pamatlig"] },
+  { q: "Ikaw, nakarating ka na ba sa Batanes? (Anong uri ng panghalip ang may salungguhit?)", a: "Panao", choices: ["Panao","Pananong","Pamatlig","Panaklaw"] },
+  { q: "Nagsusumikap sa trabaho ang kaniyang mga magulang. (Anong uri ng panghalip ang may salungguhit?)", a: "Panao", choices: ["Panao","Pananong","Pamatlig","Panaklaw"] },
+];
+
+// ═══════════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════════
+let state = {
+  awaiting: 'menu',
+  mode: null,
+  questions: [],
+  allAnswers: [],
+  qIndex: 0,
+  score: 0,
+  total: 0,
+  hintUsed: false,
+  audioEnabled: true,
+};
+
+// ═══════════════════════════════════════════════════════════════
+// TTS (UPGRADED FOR TRUE FILIPINO ACCENT)
+// ═══════════════════════════════════════════════════════════════
+let currentAudioStream = null;
+
+function speak(text) {
+  if (!state.audioEnabled) return;
+  
+  // Linisin ang mga nakaraang audio task
+  window.speechSynthesis.cancel();
+  if (currentAudioStream) {
+    currentAudioStream.pause();
+    currentAudioStream = null;
+  }
+  
+  // Tanggalin ang HTML tags at emojis para hindi basahin nang paputol-putol
+  const clean = text.replace(/<[^>]+>/g,'').replace(/[🇵🇭🌟✅❌💡⏭️🏆😊💪🔄🔲📚👋⭐✕🧭📏🗺️]/g,'');
+  
+  // PRIMARY METHOD: Google Translation Engine cloud voice stream (May natural na Filipino accent)
+  const googleTtsUrl = `https://translate.google.com/translate_tts?ie=UTF-8&tl=tl&client=tw-ob&q=${encodeURIComponent(clean)}`;
+  
+  currentAudioStream = new Audio(googleTtsUrl);
+  currentAudioStream.onplaying = () => showWave(true);
+  currentAudioStream.onended = currentAudioStream.onerror = () => showWave(false);
+  
+  currentAudioStream.play().catch(err => {
+    // BACKUP METHOD: Web Speech API (Gagana kapag walang internet connection)
+    console.warn("Google TTS blocked or offline. Falling back to local system speech engine.");
+    
+    const streamFallback = new SpeechSynthesisUtterance(clean);
+    streamFallback.lang = 'fil-PH';
+    streamFallback.rate = 0.95; streamFallback.pitch = 1.05; streamFallback.volume = 1;
+    
+    const voices = window.speechSynthesis.getVoices();
+    const filVoice = voices.find(v => v.lang.startsWith('fil') || v.lang.startsWith('tl'));
+    const engVoice = voices.find(v => v.lang.startsWith('en') && v.name.toLowerCase().includes('female'))
+                   || voices.find(v => v.lang.startsWith('en'));
+              
+    if (filVoice) {
+      streamFallback.voice = filVoice;
+    } else if (engVoice) {
+      streamFallback.voice = engVoice; 
+      streamFallback.lang = 'en-US'; 
+    }
+    
+    streamFallback.onstart = () => showWave(true);
+    streamFallback.onend = streamFallback.onerror = () => showWave(false);
+    window.speechSynthesis.speak(streamFallback);
+  });
+}
+
+function showWave(on) {
+  document.querySelectorAll('.speaker-wave').forEach(w => w.style.display = on ? 'inline-flex' : 'none');
+}
+
+// I-initialize ang mga boses ng system
+let localSystemVoices = [];
+function lookupSystemVoices() {
+  localSystemVoices = window.speechSynthesis.getVoices();
+}
+lookupSystemVoices();
+if (window.speechSynthesis.onvoiceschanged !== undefined) {
+  window.speechSynthesis.onvoiceschanged = lookupSystemVoices;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// UI HELPERS
+// ═══════════════════════════════════════════════════════════════
+const chatBox = document.getElementById('chat-box');
+const input = document.getElementById('user-input');
+const sendBtn = document.getElementById('send-btn');
+
+function scrollBottom() { chatBox.scrollTop = chatBox.scrollHeight; }
+
+function addMessage(role, html, speakText) {
+  const div = document.createElement('div');
+  div.className = `msg ${role}`;
+  const av = document.createElement('div');
+  av.className = 'avatar';
+  av.textContent = role === 'bot' ? '🤖' : '🧑';
+  const bub = document.createElement('div');
+  bub.className = 'bubble';
+  bub.innerHTML = role === 'bot'
+    ? html + '<span class="speaker-wave" style="display:none"><span></span><span></span><span></span><span></span><span></span></span>'
+    : html;
+  div.appendChild(av); div.appendChild(bub);
+  chatBox.appendChild(div);
+  scrollBottom(); bindChips();
+  if (role === 'bot') {
+    const txt = speakText || html.replace(/<[^>]+>/g,' ');
+    setTimeout(() => speak(txt), 350);
+  }
+}
+
+function addTyping() {
+  const d = document.createElement('div');
+  d.className = 'msg bot'; d.id = 'typing';
+  d.innerHTML = '<div class="avatar">🤖</div><div class="typing"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>';
+  chatBox.appendChild(d); scrollBottom();
+}
+function removeTyping() { const t = document.getElementById('typing'); if(t) t.remove(); }
+
+function bindChips() {
+  document.querySelectorAll('.chip:not([data-bound])').forEach(c => {
+    c.dataset.bound = '1';
+    c.addEventListener('click', () => handleUserMessage(c.dataset.val));
+  });
+}
+
+function updateScore() {
+  document.getElementById('score-val').textContent = state.score;
+  document.getElementById('total-val').textContent = state.total;
+}
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length-1; i > 0; i--) {
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]] = [a[j],a[i]];
+  }
+  return a;
+}
+
+function normalize(s) { return s.toLowerCase().trim().replace(/\s+/g,' '); }
+
+function checkAnswer(user, correct) {
+  const u = normalize(user), c = normalize(correct);
+  if (u === c) return true;
+  if (c.includes(u) && u.length > 5) return true;
+  const parts = c.split(/[,;\/]/);
+  for (const p of parts) if (u.includes(p.trim()) && p.trim().length > 4) return true;
+  return false;
+}
+
+function showResult() {
+  const pct = Math.round((state.score/state.total)*100);
+  const emoji = pct>=90?'🏆':pct>=70?'🌟':pct>=50?'😊':'💪';
+  const msg = pct>=90?'Napakahusay! Alam mo ang lahat!':pct>=70?'Magaling! Patuloy ka lang!':pct>=50?'Mabuti! Pag-aralan pa nang kaunti!':'Huwag sumuko! Subukan ulit!';
+  document.getElementById('res-emoji').textContent = emoji;
+  document.getElementById('res-score').textContent = state.score;
+  document.getElementById('res-total').textContent = state.total;
+  document.getElementById('res-msg').textContent = msg;
+  document.getElementById('result-overlay').classList.add('show');
+  speak(`Tapos na! Ang iyong puntos ay ${state.score} sa ${state.total}. ${msg}`);
+}
+
+function restartApp() {
+  document.getElementById('result-overlay').classList.remove('show');
+  state = { awaiting:'menu', mode:null, questions:[], allAnswers:[], qIndex:0, score:0, total:0, hintUsed:false, audioEnabled:state.audioEnabled };
+  chatBox.innerHTML = '';
+  document.querySelector('.input-bar').style.display = 'flex';
+  updateScore();
+  showMenu();
+}
+
+// ═══════════════════════════════════════════════════════════════
+// MC HELPERS
+// ═══════════════════════════════════════════════════════════════
+function getAllAnswers() {
+  const ans = [];
+  for (const qs of Object.values(topics)) for (const q of qs) ans.push(q.a);
+  return ans;
+}
+
+function generateChoices(correct, pool) {
+  const distractors = shuffle(pool.filter(a => a !== correct)).slice(0,3);
+  return shuffle([correct, ...distractors]);
+}
+
+function buildMCBtns(choices, correctAnswer) {
+  const letters = ['A','B','C','D','E'];
+  return `<div class="mc-options">${choices.map((c,i)=>
+    `<button class="mc-btn" data-answer="${encodeURIComponent(c)}" data-correct="${encodeURIComponent(correctAnswer)}" onclick="handleMCClick(this)">
+      <span class="letter">${letters[i]}</span>${c}
+    </button>`
+  ).join('')}</div>`;
+}
+
+function handleMCClick(btn) {
+  const allBtns = btn.closest('.mc-options').querySelectorAll('.mc-btn');
+  allBtns.forEach(b => b.disabled = true);
+  const chosen = decodeURIComponent(btn.dataset.answer);
+  const correct = decodeURIComponent(btn.dataset.correct);
+  const isCorrect = chosen === correct;
+  allBtns.forEach(b => { if(decodeURIComponent(b.dataset.answer)===correct) b.classList.add('correct'); });
+  if (!isCorrect) btn.classList.add('wrong');
+  setTimeout(() => {
+    if (isCorrect) {
+      state.score++;
+      addMessage('bot', `✅ <strong>Tama!</strong> +1 puntos! Ang sagot ay: <strong>${correct}</strong>`, `Tama! Ang sagot ay: ${correct}`);
+    } else {
+      addMessage('bot', `❌ <strong>Hindi tama.</strong> Ang tamang sagot ay: <strong>${correct}</strong>`, `Hindi tama. Ang tamang sagot ay: ${correct}`);
+    }
+    state.qIndex++; updateScore();
+    if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+    else setTimeout(showResult, 900);
+  }, 650);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// NEXT QUESTION
+// ═══════════════════════════════════════════════════════════════
+function nextQuestion() {
+  const qi = state.qIndex;
+  const q = state.questions[qi];
+  const num = qi + 1;
+
+  if (state.mode === 'full' || state.mode === 'topic_mc') {
+    const choices = generateChoices(q.a, state.allAnswers);
+    const tag = q.topic ? `<span class="topic-tag">${q.topic}</span><br>` : '';
+    const html = `${tag}<strong>T${num} sa ${state.total}:</strong> ${q.q}${buildMCBtns(choices, q.a)}`;
+    addMessage('bot', html, `Tanong ${num}. ${q.q}`);
+    return;
+  }
+
+  if (state.mode === 'tf') {
+    const html = `<strong>T${num} sa ${state.total}:</strong> <div class="scenario-card">${q.q}</div>
+      <span class="chip" data-val="tama">✅ Tama</span><span class="chip" data-val="mali">❌ Mali</span>`;
+    addMessage('bot', html, `Tanong ${num}. Tama o Mali: ${q.q}`);
+    return;
+  }
+
+  if (state.mode === 'identify') {
+    const btns = buildMCBtns(q.choices, q.a);
+    const html = `<strong>T${num} sa ${state.total}:</strong> Kilalanin kung ano ang tinutukoy:<div class="scenario-card">${q.q}</div>${btns}`;
+    addMessage('bot', html, `Tanong ${num}. Kilalanin ang tinutukoy: ${q.q}`);
+    return;
+  }
+
+  // typed answer mode
+  const tag = q.topic ? `<span class="topic-tag">${q.topic}</span><br>` : '';
+  const html = `${tag}<strong>T${num} sa ${state.total}:</strong> ${q.q}<br><small style="color:var(--muted)">Isulat ang sagot · i-type ang <em>hint</em> para sa tulong · <em>skip</em> para lumipat</small>`;
+  addMessage('bot', html, `Tanong ${num}. ${q.q}`);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// MENU
+// ═══════════════════════════════════════════════════════════════
+function showMenu() {
+  addMessage('bot',
+    `👋 <strong>Kumusta! Ako ang iyong Filipino Reviewer!</strong><br>Pag-aaralan natin ang <em>Mga Tauhan sa Panitikang Pilipino</em>, ang <em>Mga Bahagi ng Aklat</em>, ang <em>Pangatnig at Panlapi</em>, ang <em>Pangngalan at Panghalip</em>, ang <em>Kayarian ng Salita</em>, at ang <em>Diin ng mga Salita</em>.<br><br>Ano ang gusto mong gawin?<br>
+    <span class="chip" data-val="1">📚 Pag-aralan ang Paksa</span>
+    <span class="chip" data-val="2">✅ Tama o Mali</span>
+    <span class="chip" data-val="3">🌐 Kilalanin: Aklat, Pangatnig, o Panghalip</span>
+    <span class="chip" data-val="4">🌟 Buong Review (Multiple Choice)</span>`,
+    "Kumusta! Ako ang iyong Filipino Reviewer tungkol sa Panitikan at Gramatika. Ano ang gusto mong gawin? Pag-aralan ang paksa, Tama o Mali, Kilalanin, o Buong Review na multiple choice?"
+  );
+  state.awaiting = 'menu';
+}
+
+// ═══════════════════════════════════════════════════════════════
+// PROCESS MESSAGE
+// ═══════════════════════════════════════════════════════════════
+function processMessage(msg) {
+  const aw = state.awaiting;
+
+  // ── MENU ──────────────────────────────────────────────────
+  if (aw === 'menu') {
+    if (msg === '1') {
+      state.awaiting = 'topic';
+      const keys = Object.keys(topics);
+      const chips = keys.map((t,i) => `<span class="chip" data-val="${i+1}">${i+1}. ${t}</span>`).join(' ');
+      addMessage('bot', `📚 Alin ang paksang gusto mong pag-aralan?<br>${chips}`, 'Alin ang paksang gusto mong pag-aralan?');
+
+    } else if (msg === '2') {
+      state.mode = 'tf';
+      state.questions = shuffle(trueOrFalse);
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'tf_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `✅ <strong>Tama o Mali!</strong> ${state.total} tanong. Simulan na!`, `Tama o Mali! ${state.total} tanong. Simulan na!`);
+      setTimeout(nextQuestion, 800);
+
+    } else if (msg === '3') {
+      state.mode = 'identify';
+      state.questions = shuffle(identifyQuestions);
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'mc_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `🌐 <strong>Kilalanin!</strong> Alamin kung anong bahagi ng aklat, anong pangatnig, o anong uri ng panghalip ang tinutukoy.`, 'Kilalanin! Alamin kung ano ang tinutukoy sa bawat pahayag.');
+      setTimeout(nextQuestion, 800);
+
+    } else if (msg === '4') {
+      state.mode = 'full';
+      const all = [];
+      for (const [topicName, qs] of Object.entries(topics)) {
+        qs.forEach(q => all.push({...q, topic: topicName}));
+      }
+      state.questions = shuffle(all);
+      state.allAnswers = getAllAnswers();
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'mc_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `🌟 <strong>Buong Review — Multiple Choice!</strong> ${state.total} tanong. Pag-isipang mabuti!`, `Buong Review! Multiple Choice! ${state.total} tanong. Pag-isipang mabuti!`);
+      setTimeout(nextQuestion, 800);
+
+    } else {
+      addMessage('bot',
+        `Pumili ng opsyon:<br>
+        <span class="chip" data-val="1">📚 Pag-aralan ang Paksa</span>
+        <span class="chip" data-val="2">✅ Tama o Mali</span>
+        <span class="chip" data-val="3">🌐 Kilalanin</span>
+        <span class="chip" data-val="4">🌟 Buong Review</span>`,
+        'Pumili ng opsyon.'
+      );
+    }
+    return;
+  }
+
+  // ── TOPIC SELECT ──────────────────────────────────────────
+  if (aw === 'topic') {
+    const keys = Object.keys(topics);
+    const idx = parseInt(msg) - 1;
+    if (keys[idx]) {
+      const topicName = keys[idx];
+      state.mode = 'topic_mc';
+      state.questions = shuffle(topics[topicName]);
+      state.allAnswers = getAllAnswers();
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'mc_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `📚 <strong>${topicName}</strong> — ${state.total} tanong. Handa ka na ba?`, `${topicName}. ${state.total} tanong. Handa ka na ba?`);
+      setTimeout(nextQuestion, 800);
+    } else {
+      const chips = Object.keys(topics).map((t,i) => `<span class="chip" data-val="${i+1}">${i+1}. ${t}</span>`).join(' ');
+      addMessage('bot', `Pumili ng wastong paksa:<br>${chips}`, 'Pumili ng wastong paksa.');
+    }
+    return;
+  }
+
+  // ── TYPED ANSWER ──────────────────────────────────────────
+  if (aw === 'answer') {
+    const q = state.questions[state.qIndex];
+    const m = normalize(msg);
+
+    if (m === 'hint') {
+      state.hintUsed = true;
+      addMessage('bot', `💡 <strong>Hint:</strong> ${q.hint}`, `Hint: ${q.hint}`);
+      return;
+    }
+    if (m === 'skip') {
+      addMessage('bot', `⏭️ Nilaktawan! Ang tamang sagot ay: <strong>${q.a}</strong>`, `Nilaktawan. Ang tamang sagot ay: ${q.a}`);
+      state.qIndex++; state.hintUsed = false;
+      if (state.qIndex < state.total) setTimeout(nextQuestion, 700);
+      else showResult();
+      return;
+    }
+
+    const correct = checkAnswer(msg, q.a);
+    if (correct) {
+      if (!state.hintUsed) state.score++;
+      const note = state.hintUsed ? ' <em>(ginamit ang hint — walang puntos)</em>' : ' +1 puntos!';
+      addMessage('bot', `✅ <strong>Tama!</strong>${note} Sagot: <strong>${q.a}</strong>`, `Tama! Ang sagot ay: ${q.a}`);
+    } else {
+      addMessage('bot', `❌ <strong>Hindi tama.</strong> Ang tamang sagot ay: <strong>${q.a}</strong>`, `Hindi tama. Ang tamang sagot ay: ${q.a}`);
+    }
+    state.qIndex++; state.hintUsed = false; updateScore();
+    if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+    else setTimeout(showResult, 900);
+    return;
+  }
+
+  // ── TRUE OR FALSE ─────────────────────────────────────────
+  if (aw === 'tf_answer') {
+    const q = state.questions[state.qIndex];
+    const ans = normalize(msg);
+    const valid = ans === 'tama' || ans === 'mali' || ans === 'true' || ans === 'false';
+    const mapped = (ans === 'true') ? 'tama' : (ans === 'false') ? 'mali' : ans;
+
+    if (valid) {
+      const correct = mapped === q.a;
+      if (correct) {
+        state.score++;
+        addMessage('bot', `✅ <strong>Tama!</strong> Ang sagot ay <strong>${q.a.toUpperCase()}</strong>.`, `Tama! Ang sagot ay ${q.a}.`);
+      } else {
+        addMessage('bot', `❌ <strong>Mali.</strong> Ang tamang sagot ay <strong>${q.a.toUpperCase()}</strong>.`, `Mali. Ang tamang sagot ay ${q.a}.`);
+      }
+      state.qIndex++; updateScore();
+      if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+      else setTimeout(showResult, 900);
+    } else {
+      addMessage('bot',
+        `Sagot: Tama o Mali?<br><span class="chip" data-val="tama">✅ Tama</span><span class="chip" data-val="mali">❌ Mali</span>`,
+        'Sagot: Tama o Mali?'
+      );
+    }
+    return;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// CONTROLS
+// ═══════════════════════════════════════════════════════════════
+function handleUserMessage(msg) {
+  if (!msg.trim()) return;
+  
+  // Ihinto nang malinis ang nagsasalitang audio kapag sumagot ang user
+  window.speechSynthesis.cancel();
+  if (currentAudioStream) {
+    currentAudioStream.pause();
+    currentAudioStream = null;
+    showWave(false);
+  }
+  
+  addMessage('user', msg.replace(/</g,'&lt;'));
+  input.value = '';
+  input.disabled = true; sendBtn.disabled = true;
+  addTyping();
+  setTimeout(() => {
+    removeTyping();
+    input.disabled = false; sendBtn.disabled = false;
+    input.focus();
+    processMessage(msg);
+  }, 480);
+}
+
+sendBtn.addEventListener('click', () => { handleUserMessage(input.value); });
+input.addEventListener('keydown', e => { if(e.key==='Enter') handleUserMessage(input.value); });
+
+document.getElementById('audio-toggle').addEventListener('click', function() {
+  state.audioEnabled = !state.audioEnabled;
+  this.textContent = state.audioEnabled ? '🔊' : '🔇';
+  this.classList.toggle('active', state.audioEnabled);
+  if (!state.audioEnabled) {
+    window.speechSynthesis.cancel();
+    if (currentAudioStream) {
+      currentAudioStream.pause();
+      currentAudioStream = null;
+      showWave(false);
+    }
+  }
+});
+
+// ═══════════════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════════════
+window.addEventListener('load', () => {
+  lookupSystemVoices();
+  showMenu();
+});
+
+function printPracticeTest() {
+  document.body.classList.add('printing-test');
+  window.print();
+}
+window.addEventListener('afterprint', () => {
+  document.body.classList.remove('printing-test');
+});
+
+// ═══════════════════════════════════════════════════════════════
+// BASAHIN ANG TALA (gumagamit ng boses ng browser — walang limitasyon
+// sa haba, hindi tulad ng maiikling audio clip ng Google TTS sa chat)
+// ═══════════════════════════════════════════════════════════════
+function getNotesText(section) {
+  const clone = section.cloneNode(true);
+  clone.querySelectorAll('button').forEach(b => b.remove());
+  let text = clone.innerText || clone.textContent || '';
+  text = text.replace(/\s+/g, ' ').trim();
+  return text;
+}
+
+function toggleNotesAudio() {
+  const btn = document.getElementById('notes-audio-btn');
+  if (!btn) return;
+
+  if (window.speechSynthesis.speaking || window.speechSynthesis.pending) {
+    window.speechSynthesis.cancel();
+    btn.innerHTML = '🔊 Basahin ang Tala';
+    btn.classList.remove('active');
+    return;
+  }
+
+  const activeSection = document.querySelector('.notes-section.active');
+  if (!activeSection) return;
+  const text = getNotesText(activeSection);
+  if (!text) return;
+
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.lang = 'fil-PH';
+  utter.rate = 0.95;
+  utter.pitch = 1.05;
+  utter.volume = 1;
+
+  const voices = window.speechSynthesis.getVoices();
+  const filVoice = voices.find(v => v.lang.startsWith('fil') || v.lang.startsWith('tl'));
+  const engVoice = voices.find(v => v.lang.startsWith('en') && v.name.toLowerCase().includes('female'))
+                 || voices.find(v => v.lang.startsWith('en'));
+  if (filVoice) {
+    utter.voice = filVoice;
+  } else if (engVoice) {
+    utter.voice = engVoice;
+    utter.lang = 'en-US';
+  }
+
+  utter.onstart = () => { btn.innerHTML = '⏹️ Ihinto ang Pagbasa'; btn.classList.add('active'); };
+  utter.onend = utter.onerror = () => { btn.innerHTML = '🔊 Basahin ang Tala'; btn.classList.remove('active'); };
+
+  window.speechSynthesis.speak(utter);
+}
+
+function switchTab(tabId, btn) {
+  window.speechSynthesis.cancel();
+  const audioBtn = document.getElementById('notes-audio-btn');
+  if (audioBtn) { audioBtn.innerHTML = '🔊 Basahin ang Tala'; audioBtn.classList.remove('active'); }
+  document.querySelectorAll('.notes-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.notes-tab').forEach(b => b.classList.remove('active'));
+  document.getElementById(tabId).classList.add('active');
+  btn.classList.add('active');
+}
+
+function closeNotesPanel() {
+  window.speechSynthesis.cancel();
+  const audioBtn = document.getElementById('notes-audio-btn');
+  if (audioBtn) { audioBtn.innerHTML = '🔊 Basahin ang Tala'; audioBtn.classList.remove('active'); }
+  document.getElementById('notes-overlay').classList.remove('show');
+}
+</script>
+
+<!-- ── Notes Panel ── -->
+<div class="notes-overlay" id="notes-overlay">
+  <div class="notes-panel">
+    <div class="notes-header">
+      <h2>📖 Panitikan at Gramatika — Mga Tala</h2>
+      <div class="notes-header-actions">
+        <button class="print-btn" id="notes-audio-btn" onclick="toggleNotesAudio()" title="Basahin nang malakas ang tab na ito">🔊 Basahin ang Tala</button>
+        <button class="print-btn" onclick="printPracticeTest()" title="I-print o i-save bilang PDF ang Practice Test at Answer Key">🖨️ I-print ang Test &amp; Key</button>
+        <button class="notes-close" onclick="closeNotesPanel()">✕</button>
+      </div>
+    </div>
+    <div class="notes-tabs">
+      <button class="notes-tab active" onclick="switchTab('tab-tauhan', this)">🎭 Mga Tauhan</button>
+      <button class="notes-tab" onclick="switchTab('tab-aklat', this)">📕 Bahagi ng Aklat</button>
+      <button class="notes-tab" onclick="switchTab('tab-panlapi', this)">🔤 Pangatnig &amp; Panlapi</button>
+      <button class="notes-tab" onclick="switchTab('tab-pangngalan', this)">🏷️ Pangngalan</button>
+      <button class="notes-tab" onclick="switchTab('tab-panghalip', this)">👤 Panghalip</button>
+      <button class="notes-tab" onclick="switchTab('tab-kayarian', this)">🧩 Kayarian &amp; Pamilang</button>
+      <button class="notes-tab" onclick="switchTab('tab-diin', this)">🔊 Diin &amp; Hinuha</button>
+      <button class="notes-tab" onclick="switchTab('tab-tamomali', this)">✅ Tama o Mali</button>
+      <button class="notes-tab" onclick="switchTab('tab-ptest', this)">📝 Practice Test</button>
+      <button class="notes-tab" onclick="switchTab('tab-key', this)">🔑 Answer Key</button>
+      <button class="notes-tab" onclick="switchTab('tab-raw', this)">📄 Raw Notes</button>
+    </div>
+    <div class="notes-body">
+
+      <div class="notes-section active" id="tab-tauhan">
+        <div class="chapter-summary">
+          📚 <strong>Buod:</strong> Ang dula na "Dula ng mga Tauhan sa Iba't Ibang Aklat" ay nagpapakilala sa mga kilalang tauhan mula sa alamat, kasaysayan, at panitikang Pilipino.
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">🎭 Mga Tauhan sa Alamat</div>
+          <div class="notes-item"><span class="notes-term">Malakas at Maganda</span><span class="notes-def">Ama at ina ng lahing kayumanggi, mula sa kabiyak ng kawayan</span></div>
+          <div class="notes-item"><span class="notes-term">Raha Kalantiaw</span><span class="notes-def">Nagbigay ng mga batas sa kanyang kalahi</span></div>
+          <div class="notes-item"><span class="notes-term">Mariang Makiling</span><span class="notes-def">Engkantada sa Bundok Makiling, Laguna</span></div>
+          <div class="notes-item"><span class="notes-term">Bernardo Carpio</span><span class="notes-def">Pinakamalakas na tao, naipit ng dalawang bundok</span></div>
+          <div class="notes-item"><span class="notes-term">Mariang Sinukuan</span><span class="notes-def">Nakatira sa Bundok Arayat, matalas ang isip</span></div>
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">✝️ Mga Tauhan sa Nobela ni Rizal</div>
+          <div class="notes-item"><span class="notes-term">Crisostomo Ibarra / Simoun</span><span class="notes-def">Bida sa Noli Me Tangere at El Filibusterismo</span></div>
+          <div class="notes-item"><span class="notes-term">Maria Clara</span><span class="notes-def">Kasintahan ni Ibarra, uliran ng babaeng Pilipina</span></div>
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">🇵🇭 Mga Bayani sa Kasaysayan</div>
+          <div class="notes-item"><span class="notes-term">Lapulapu</span><span class="notes-def">Pumatay kay Magellan sa Mactan</span></div>
+          <div class="notes-item"><span class="notes-term">Raha Soliman</span><span class="notes-def">Hari ng Maynila noong dumating si Martin de Goiti</span></div>
+          <div class="notes-item"><span class="notes-term">Diego Silang</span><span class="notes-def">Namuno sa Ilocos kasama si Josefa Gabriela</span></div>
+          <div class="notes-item"><span class="notes-term">Marcelo del Pilar</span><span class="notes-def">Lumaban sa pamamagitan ng panulat</span></div>
+          <div class="notes-item"><span class="notes-term">Jose Rizal</span><span class="notes-def">Sumulat ng Noli Me Tangere at El Filibusterismo</span></div>
+          <div class="notes-item"><span class="notes-term">Andres Bonifacio</span><span class="notes-def">Sumulat ng Sampung Utos ng Katipunan</span></div>
+          <div class="notes-item"><span class="notes-term">Tandang Sora</span><span class="notes-def">Tumulong sa mga sugatang Katipunero</span></div>
+          <div class="notes-item"><span class="notes-term">Gregorio del Pilar</span><span class="notes-def">Nagtanggol sa Pasong Tirad</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-aklat">
+        <div class="chapter-summary">
+          📚 <strong>Buod:</strong> Mahalagang malaman ang iba't ibang bahagi ng aklat upang mahanap agad ang impormasyong kailangan.
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 MADALING TANDAAN</span>
+          Sundan ang pagkakasunod-sunod ng aklat mula unahan hanggang loob: <strong>"Pabalat, Pamagat, Karapatang-ari, Nilalaman, Panimula"</strong> — ganito rin ang inaasahang pagkakasunod-sunod ng mga pahina sa loob ng aklat.
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">📕 Mga Bahagi ng Aklat</div>
+          <div class="notes-item"><span class="notes-term">Pabalat</span><span class="notes-def">Harapan: pamagat at may-akda; likuran: karagdagang impormasyon</span></div>
+          <div class="notes-item"><span class="notes-term">Pahina ng Pamagat</span><span class="notes-def">Pamagat, may-akda, palimbagan, taon ng paglimbag</span></div>
+          <div class="notes-item"><span class="notes-term">Pahina ng Karapatang-ari</span><span class="notes-def">May karapatang-ari, taon, lugar ng paglathala</span></div>
+          <div class="notes-item"><span class="notes-term">Talaan ng Nilalaman</span><span class="notes-def">Listahan ng mga aralin at pahina</span></div>
+          <div class="notes-item"><span class="notes-term">Paunang Salita</span><span class="notes-def">Layunin at nilalaman ng aklat</span></div>
+          <div class="notes-item"><span class="notes-term">Talahuluganan</span><span class="notes-def">Kahulugan ng mahihirap na salita</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-panlapi">
+        <div class="chapter-summary">
+          📚 <strong>Buod:</strong> Ang <strong>pangatnig</strong> ay nag-uugnay ng mga salita, parirala, o sugnay. Ang <strong>panlapi</strong> naman ay nagbabago ng kahulugan ng salita depende sa kinakabitan.
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 MADALING TANDAAN</span>
+          Alalahanin ang tatlong uri ng panlapi ayon sa posisyon: <strong>Un</strong>lapi = <strong>UN</strong>ahan, <strong>Git</strong>lapi = <strong>GIT</strong>na, <strong>Hu</strong>lapi = <strong>HU</strong>lihan!
+        </div>
+        <table class="compare-table">
+          <tr><th>Uri</th><th>Posisyon</th><th>Halimbawa</th></tr>
+          <tr><td>Unlapi</td><td>Unahan</td><td>basa → magbasa</td></tr>
+          <tr><td>Gitlapi</td><td>Gitna</td><td>basa → bumasa, binasa</td></tr>
+          <tr><td>Hulapi</td><td>Hulihan</td><td>basa → basahin</td></tr>
+          <tr><td>Kabilaan</td><td>Dalawang bahagi</td><td>basa → nagbasahan / binasahan</td></tr>
+        </table>
+      </div>
+
+      <div class="notes-section" id="tab-pangngalan">
+        <div class="chapter-summary">
+          📚 <strong>Buod:</strong> Ang pangngalan ay maaaring uriin bilang pantangi o pambalana, kongkreto o di-kongkreto, at ayon sa kasarian.
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">🏷️ Uri ng Pangngalan</div>
+          <div class="notes-item"><span class="notes-term">Pantangi</span><span class="notes-def">Tiyak na pangalan; may malaking titik (hal. Jose Rizal)</span></div>
+          <div class="notes-item"><span class="notes-term">Kongkreto</span><span class="notes-def">Nasasalat o nakikita (hal. mesa, hangin)</span></div>
+          <div class="notes-item"><span class="notes-term">Di-kongkreto</span><span class="notes-def">Hindi nasasalat o nakikita (hal. kagitingan, pangako)</span></div>
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 MADALING TANDAAN</span>
+          Apat na kasarian: <strong>"Lalaki, Babae, Di-tiyak, Wala"</strong> — tandang (PB), senadora (PL), balikbayan (DT), relo (WK).
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-panghalip">
+        <div class="chapter-summary">
+          📚 <strong>Buod:</strong> Ang panghalip ay humahalili sa pangngalan. May apat na uri: panao, pananong, pamatlig, at panaklaw.
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">👤 Apat na Uri ng Panghalip</div>
+          <div class="notes-item"><span class="notes-term">Panao</span><span class="notes-def">Humahalili sa tao (ako, ikaw, kami)</span></div>
+          <div class="notes-item"><span class="notes-term">Pananong</span><span class="notes-def">Ginagamit sa pagtatanong (sino, ano, alin)</span></div>
+          <div class="notes-item"><span class="notes-term">Pamatlig</span><span class="notes-def">Nagtuturo ng bagay o lugar (ito, iyan, doon)</span></div>
+          <div class="notes-item"><span class="notes-term">Panaklaw</span><span class="notes-def">Tumutukoy sa kabuuan (lahat, madla, sinuman)</span></div>
+        </div>
+        <div class="tandaan-box">
+          <span class="tandaan-label">TANDAAN</span>
+          May tatlong panauhan ang panghalip na panao: una (ako), ikalawa (ikaw), at ikatlo (siya) — at may isahan o maramihan pa ito.
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-kayarian">
+        <div class="chapter-summary">
+          📚 <strong>Buod:</strong> Ang salita ay may apat na kayarian, at ang pang-uring pamilang ay nagsasaad ng bilang o dami.
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 MADALING TANDAAN</span>
+          Apat na kayarian: <strong>"Payak, May-lapi, Inuulit, Tambalan"</strong> — tapang (payak), natulog (maylapi), kayang-kaya (inuulit), urong-sulong (tambalan).
+        </div>
+        <table class="compare-table">
+          <tr><th>Kayarian</th><th>Kahulugan</th><th>Halimbawa</th></tr>
+          <tr><td>Payak</td><td>Salitang-ugat lamang</td><td>tapang</td></tr>
+          <tr><td>Maylapi</td><td>May idinugtong na panlapi</td><td>natulog, umayaw</td></tr>
+          <tr><td>Inuulit</td><td>May bahaging inulit</td><td>kayang-kaya, tatawa-tawa</td></tr>
+          <tr><td>Tambalan</td><td>Dalawang magkaibang salita</td><td>urong-sulong, hawak-kamay</td></tr>
+        </table>
+        <div class="tandaan-box">
+          <span class="tandaan-label">TANDAAN</span>
+          Pang-uring pamilang: <strong>Tiyak</strong> (dalawa, isa, ikaapat) laban sa <strong>Di-tiyak</strong> (mga, marami, ilan, wala).
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-diin">
+        <div class="chapter-summary">
+          📚 <strong>Buod:</strong> May apat na diin ang mga salita sa Filipino, at ang hinuha ay pag-aakala batay sa nabasang sitwasyon.
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 MADALING TANDAAN</span>
+          Tandaan ang mga tuldik: <strong>Malumi</strong> = paiwa (`), <strong>Mabilis</strong> = pahilis (´), <strong>Maragsa</strong> = pakupyâ (^). Walang tuldik ang <strong>Malumay</strong>.
+        </div>
+        <table class="compare-table">
+          <tr><th>Diin</th><th>Tuldik</th><th>Halimbawa</th></tr>
+          <tr><td>Malumay</td><td>Wala</td><td>sabong, nanay</td></tr>
+          <tr><td>Malumi</td><td>Paiwa (`)</td><td>samò, batà</td></tr>
+          <tr><td>Mabilis</td><td>Pahilis (´)</td><td>talóng, marumí</td></tr>
+          <tr><td>Maragsa</td><td>Pakupyâ (^)</td><td>salitâ, dugô</td></tr>
+        </table>
+        <div class="tandaan-box">
+          <span class="tandaan-label">TANDAAN</span>
+          Ang hinuha ay ginagamitan ng mga salitang tulad ng: maaari, wari, tila, marahil, siguro, sa tingin ko, sa palagay ko.
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-tamomali">
+        <div class="notes-topic">
+          <div class="notes-topic-title">✅ Tama o Mali — Mga Paalala</div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">MALI</span><span class="notes-def">Si Maria Clara ang kasintahan ni Lapulapu → kay Ibarra siya kasintahan.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">MALI</span><span class="notes-def">Ang Talaan ng Nilalaman ay naglalaman ng kahulugan ng salita → Talahuluganan ang tama.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">MALI</span><span class="notes-def">Ang unlapi ay nasa hulihan ng salitang-ugat → nasa unahan ang unlapi.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">MALI</span><span class="notes-def">Kongkreto ang "kagitingan" → di-kongkreto ito.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">MALI</span><span class="notes-def">Pambabae ang kasarian ng "tandang" → panlalaki ito.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">MALI</span><span class="notes-def">Panao ang "sino" → pananong ito.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">MALI</span><span class="notes-def">Tiyak ang pang-uring pamilang na "marami" → di-tiyak ito.</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-ptest">
+        <div class="notes-topic">
+          <div class="notes-topic-title">📝 Practice Test</div>
+<div class="ptest-part-title">Part I — Bahagi ng Aklat</div><div class="ptest-q"><b>1.</b> Nais malaman ni Albert kung gaano nahahati ang aklat tungkol sa kanilang aralin sa Araling Panlipunan. Anong bahagi ng aklat ang dapat niyang tingnan? <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>2.</b> Nagpapabili ng aklat ang ate ni Nina at ibinigay sa kaniya ang pamagat at pangalan ng may-akda. Anong bahagi ng aklat ang dapat niyang tingnan? <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>3.</b> Ang ama ni Nelson ay mahusay gumuhit. Ibinabalita ni Nelson na ang kaniyang ama ang gumuhit ng mga larawan sa aklat nila. Anong bahagi ng aklat ang dapat tingnan ni Nelson? <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>4.</b> Namimili ng aklat para sa Araling Panlipunan si Bb. Nicolas. Bago siya bumili, nais niyang malaman ang mga nilalaman at layunin ng aklat. Anong bahagi ng aklat ang dapat niyang basahin? <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>5.</b> Nais basahin ni Nelya ang paksa tungkol sa mga insekto. Binuksan niya ang aklat para makita kung saan nagsisimula ang pahinang matatagpuan ang paksang ito. Ano ang tawag sa pahinang babasahin ni Nelya? <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>6.</b> Nakalimutan ni Nelson na isulat ang pahina ng kanilang takdang-aralin ngunit alam niya kung ano ang paksa ng kanilang aralin. Anong bahagi ng aklat ang dapat niyang tingnan? <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>7.</b> Nais malaman ni Trina ang kahulugan ng mahihirap na salitang ginamit sa pagtatalakay ng paksa sa aklat. Anong bahagi ng aklat ang dapat niyang tingnan? <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>8.</b> Nais ni Paulo na magbalik-aral sa mga araling tinalakay ng kanilang klase bilang paghahanda sa kanilang pagsusulit. Anong bahagi ng aklat ang dapat niyang tingnan? <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>9.</b> Maingat si Nina sa kaniyang mga aklat kaya't binabalutan niya ang mga ito upang hindi masira. Anong bahagi ng aklat ang binabalutan niya? <span class="opt">Sagot: ______________________</span></div><div class="ptest-part-title">Part II — Pangatnig</div><div class="ptest-q"><b>10.</b> Dumadagsa ang mga tao ______ marinig ang pag-awit ni Sarah Geronimo. <span class="opt">Sagot: ______</span></div><div class="ptest-q"><b>11.</b> Marami ang makikinig sa iyo ______ magiging mahusay kang mang-aawit. <span class="opt">Sagot: ______</span></div><div class="ptest-q"><b>12.</b> Maaaring suspendihin ang pasok sa opisina ______ bumuhos ang malakas na ulan. <span class="opt">Sagot: ______</span></div><div class="ptest-q"><b>13.</b> Unti-unting nakakalbo ang mga kabundukan ______ mga ilegal na pagtotroso. <span class="opt">Sagot: ______</span></div><div class="ptest-q"><b>14.</b> Kailangan nating mag-aral na mabuti ______ tayo ay makatapos ng pag-aaral. <span class="opt">Sagot: ______</span></div><div class="ptest-part-title">Part III — Tama o Mali</div><div class="ptest-q"><b>15.</b> Si Malakas ang ama ng lahing kayumanggi ayon sa alamat. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>16.</b> Si Maria Clara ang kasintahan ni Lapulapu. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>17.</b> Ang Talaan ng Nilalaman ay naglalaman ng kahulugan ng mahihirap na salita. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>18.</b> Ang Pahina ng Karapatang-ari ay nagsasaad kung sino ang may karapatang-ari sa aklat. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>19.</b> Ang mga salitang "dahil, sapagkat, upang" ay halimbawa ng pangatnig. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>20.</b> Ang unlapi ay inilalagay sa hulihang bahagi ng salitang-ugat. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>21.</b> Ang salitang "bumasa" ay may gitlaping "-um-." <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>22.</b> Kongkreto ang salitang "kagitingan." <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>23.</b> Walang kasarian ang salitang "relo." <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>24.</b> Pambabae ang kasarian ng salitang "tandang." <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>25.</b> Ang panghalip na "sino" ay halimbawa ng panghalip na panao. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>26.</b> Ang salitang "urong-sulong" ay salitang tambalan. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>27.</b> Payak ang kayarian ng salitang "natulog." <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>28.</b> Tiyak ang pang-uring pamilang na "marami." <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>29.</b> May apat na diin ang mga salita sa Filipino: malumay, malumi, mabilis, at maragsa. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>30.</b> Ang salitang "kutà" ay halimbawa ng malumi. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>31.</b> Ang hinuha ay pahayag ng katotohanang napatunayan na. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>32.</b> Ang mga salitang "wow" at "bye" ay halimbawa ng salitang hiram. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>33.</b> Nagpaalam muna si Carla kay Inay bago siya pumunta sa kaarawan ni Patricia. <span class="opt">Sagot: ______________________</span></div><div class="ptest-q"><b>34.</b> Si Noemi ay nakadalo sa kaarawan ni Patricia. <span class="opt">Sagot: ______________________</span></div><div class="ptest-part-title">Part IV — Panghalip: Panao, Pananong, Pamatlig, o Panaklaw</div><div class="ptest-q"><b>35.</b> Pupunta na kami roon sa simbahan. (Anong uri ng panghalip ang may salungguhit?)<br><span class="opt">a) Panao</span><span class="opt">b) Pananong</span><span class="opt">c) Pamatlig</span><span class="opt">d) Panaklaw</span></div><div class="ptest-q"><b>36.</b> Sino ang nais mong maligistang maiwang? (Anong uri ng panghalip ang may salungguhit?)<br><span class="opt">a) Pananong</span><span class="opt">b) Panao</span><span class="opt">c) Pamatlig</span><span class="opt">d) Panaklaw</span></div><div class="ptest-q"><b>37.</b> Doon kami nakatira sa Malabon. (Anong uri ng panghalip ang may salungguhit?)<br><span class="opt">a) Pamatlig</span><span class="opt">b) Panao</span><span class="opt">c) Pananong</span><span class="opt">d) Panaklaw</span></div><div class="ptest-q"><b>38.</b> Ang madla ay nabigla sa balitang kumakalat tungkol sa epidemya. (Anong uri ng panghalip ang may salungguhit?)<br><span class="opt">a) Panaklaw</span><span class="opt">b) Panao</span><span class="opt">c) Pananong</span><span class="opt">d) Pamatlig</span></div><div class="ptest-q"><b>39.</b> Ikaw, nakarating ka na ba sa Batanes? (Anong uri ng panghalip ang may salungguhit?)<br><span class="opt">a) Panao</span><span class="opt">b) Pananong</span><span class="opt">c) Pamatlig</span><span class="opt">d) Panaklaw</span></div><div class="ptest-q"><b>40.</b> Nagsusumikap sa trabaho ang kaniyang mga magulang. (Anong uri ng panghalip ang may salungguhit?)<br><span class="opt">a) Panao</span><span class="opt">b) Pananong</span><span class="opt">c) Pamatlig</span><span class="opt">d) Panaklaw</span></div><div class="ptest-part-title">Part V — Pang-uring Pamilang: Tiyak o Di-tiyak</div><div class="ptest-q"><b>41.</b> Humingi ng limang kendi ang bata sa kaniyang kaibigan. (limang) <span class="opt">Sagot: ______</span></div><div class="ptest-q"><b>42.</b> Nakapila ang mag-aaral sa ikaapat na baitang. (ikaapat) <span class="opt">Sagot: ______</span></div><div class="ptest-q"><b>43.</b> Binigyan ako ni Nanay ng limampung piso. (limampung) <span class="opt">Sagot: ______</span></div><div class="ptest-q"><b>44.</b> Nakaabang sa pinto ang tatlong aso ni Dino. (tatlong) <span class="opt">Sagot: ______</span></div><div class="ptest-q"><b>45.</b> Walang nakatanim na halaman sa bakuran ng bahay. (Walang) <span class="opt">Sagot: ______</span></div><div class="ptest-q"><b>46.</b> Humingi siya ng isandaang piso sa kaniyang ina. (isandaang) <span class="opt">Sagot: ______</span></div><div class="ptest-q"><b>47.</b> Ako ang unang mag-aaral na dumating para sa programa. (unang) <span class="opt">Sagot: ______</span></div><div class="ptest-q"><b>48.</b> Ilang kasangkapan lamang ang naisala ng pamilya mula sa pagbaha. (Ilang) <span class="opt">Sagot: ______</span></div><div class="ptest-q"><b>49.</b> Daan-daang itlog ang naibenta nina Aling Aida at Mang Manny. (Daan-daang) <span class="opt">Sagot: ______</span></div><div class="ptest-q"><b>50.</b> Nagsimula nang magdatingan ang mga bisita ni Patricia. (mga) <span class="opt">Sagot: ______</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-key">
+        <div class="notes-topic">
+<div class="notes-topic-title">Part I — Bahagi ng Aklat</div><div class="key-grid"><div class="key-pill">1. <b>Talaan ng Nilalaman</b></div><div class="key-pill">2. <b>Pahina ng Pamagat</b></div><div class="key-pill">3. <b>Pahina ng Karapatang-ari</b></div><div class="key-pill">4. <b>Paunang Salita o Panimula</b></div><div class="key-pill">5. <b>Talaan ng Nilalaman</b></div><div class="key-pill">6. <b>Talaan ng Nilalaman</b></div><div class="key-pill">7. <b>Talahuluganan</b></div><div class="key-pill">8. <b>Talaan ng Nilalaman</b></div><div class="key-pill">9. <b>Pabalat</b></div></div><div class="notes-topic-title">Part II — Pangatnig</div><div class="key-grid"><div class="key-pill">10. <b>upang</b></div><div class="key-pill">11. <b>kung</b></div><div class="key-pill">12. <b>kapag</b></div><div class="key-pill">13. <b>sa</b></div><div class="key-pill">14. <b>upang</b></div></div><div class="notes-topic-title">Part III — Tama o Mali</div><div class="key-grid"><div class="key-pill">15. <b>TAMA</b></div><div class="key-pill">16. <b>MALI</b></div><div class="key-pill">17. <b>MALI</b></div><div class="key-pill">18. <b>TAMA</b></div><div class="key-pill">19. <b>TAMA</b></div><div class="key-pill">20. <b>MALI</b></div><div class="key-pill">21. <b>TAMA</b></div><div class="key-pill">22. <b>MALI</b></div><div class="key-pill">23. <b>TAMA</b></div><div class="key-pill">24. <b>MALI</b></div><div class="key-pill">25. <b>MALI</b></div><div class="key-pill">26. <b>TAMA</b></div><div class="key-pill">27. <b>MALI</b></div><div class="key-pill">28. <b>MALI</b></div><div class="key-pill">29. <b>TAMA</b></div><div class="key-pill">30. <b>TAMA</b></div><div class="key-pill">31. <b>MALI</b></div><div class="key-pill">32. <b>TAMA</b></div><div class="key-pill">33. <b>TAMA</b></div><div class="key-pill">34. <b>MALI</b></div></div><div class="notes-topic-title">Part IV — Panghalip</div><div class="key-grid"><div class="key-pill">35. <b>Panao</b></div><div class="key-pill">36. <b>Pananong</b></div><div class="key-pill">37. <b>Pamatlig</b></div><div class="key-pill">38. <b>Panaklaw</b></div><div class="key-pill">39. <b>Panao</b></div><div class="key-pill">40. <b>Panao</b></div></div><div class="notes-topic-title">Part V — Pang-uring Pamilang</div><div class="key-grid"><div class="key-pill">41. <b>Tiyak</b></div><div class="key-pill">42. <b>Tiyak</b></div><div class="key-pill">43. <b>Tiyak</b></div><div class="key-pill">44. <b>Tiyak</b></div><div class="key-pill">45. <b>Di-tiyak</b></div><div class="key-pill">46. <b>Tiyak</b></div><div class="key-pill">47. <b>Tiyak</b></div><div class="key-pill">48. <b>Di-tiyak</b></div><div class="key-pill">49. <b>Di-tiyak</b></div><div class="key-pill">50. <b>Di-tiyak</b></div></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-raw">
+        <div class="rawnotes-intro">
+          📌 Ito ang orihinal na nilalaman ng dokumentong ini-upload, nang walang binago — para madali mong masangguni ang buong teksto kapag kailangan mo ng detalye na wala sa reviewer.
+        </div>
+        <div class="rawnotes-doc">
+<h3 class="doc-heading">Pagtuklas</h3>
+<p>Ipinagdiriwang tuwing Nobyembre ang Pambansang Buwan ng Pagbasa. Nilalayon nitong buhayin ang interes ng mga bata sa pagbabasa ng mga libro sa kabila ng mabilis na pagbabago sa teknolohiya.</p>
+<p><strong>Dula ng mga Tauhan sa Iba’t Ibang Aklat</strong></p>
+<p><strong>ni Genoveva E. Matute</strong></p>
+<p><strong>TAGPUAN:</strong></p>
+<p>Sa tanghalan, makikita ang malaking larawan ng mga aklat. Buhat sa mga bukas na dahon nito’y lalabas na isa-isa ang mga tauhan na may angkop na kasuotan.</p>
+<p><strong>MALAKAS:</strong></p>
+<p>Ako’y si Malakas. Ayon sa alamat ng mga Pilipino, ako ang ama ng lahing kayumanggi. Ako ay galing sa loob ng kawayan nabiyak nang tukaín ng isang ibon.</p>
+<p><strong>MAGANDA:</strong></p>
+<p>Ako’y si Maganda. Ako naman ang ina ng lahing kayumanggi, ayon sa alamat. Si Malakas ay galing sa kabiyak na kawayan, at ako nama’y mula sa kabilang kabiyak nito.</p>
+<p><strong>KALANTIAW:</strong></p>
+<p>Ako’y si Raha Kalantiaw, ang nagbigay ng mga batas sa aking mga kalahì. Sumunod ang marami sa aking mga batas. Mabigat ang parusa sa mga hindi sumusunod.</p>
+<p><strong>MARIANG MAKILING:</strong></p>
+<p>Sa Bundok ng Makiling, sa Laguna, ako ang engkantadang si Mariang Makiling. Minahal ko ang mga taong mabuti at may malinis na puso.</p>
+<p><strong>BERNARDO CARPIO:</strong></p>
+<p>Ako si Bernardo Carpio, ang pinakamalakas na tao sa buong daigdig. Ngunit naipit ako ng dalawang bundok. Gaya ng aking bayan, ako’y lalaya at muling lalakas.</p>
+<p><strong>MARIANG SINUKUAN:</strong></p>
+<p>Tinawag akong Mariang Sinukuan sapagkat ang talas ng aking isip ay sinukuan ng lahat. Ako ay nakatira sa Bundok ng Arayat.</p>
+<p><strong>CRISOSTOMO IBARRA:</strong></p>
+<p>Ako’y si Crisostomo Ibarra sa <em>Noli Me Tangere</em>. Minahal ko ang aking bayan nang higit sa sarili kong buhay. Ako’y naging si Simoun sa <em>El Filibusterismo</em>.</p>
+<p><strong>MARIA CLARA:</strong></p>
+<p>Ako si Maria Clara, ang kasintahan ni Ibarra. Ako’y sinasabing ulirang babaeng Pilipina sapagkat mahinhin ako at minsan lamang umibig.</p>
+<p><strong>LAPULAPU:</strong></p>
+<p>Sa Pulo ng Mactan, akong si Lapulapu ang unang naghahandog ng buhay upang ipagtanggol ang bayan. Sa mga kamay ko namatay si Magellan, ang unang puting nagtangkang sumakop sa aking bayan.</p>
+<p><strong>SOLIMAN:</strong></p>
+<p>Ako si Raha Soliman, ang hari ng Maynila nang dumating si Martin de Goiti. Tinanggap ko ang mga Kastila bilang kaibigan, ngunit hindi bilang panginoon. Namatai ako habang lumalaban sa kanila.</p>
+<p><strong>DIEGO SILANG:</strong></p>
+<p>Diego Silang ang aking pangalan. Kami ng asawa kong si Josefa Gabriela ay namuno sa Ilocos laban sa mga Kastila.</p>
+<p><strong>MARCELO DEL PILAR:</strong></p>
+<p>Lumaban ako sa mga Kastila sa tulong ng aking panulat. Namatay akong mahirap at malayo sa sariling bayan. Ako’y si Marcelo del Pilar.</p>
+<p><strong>JOSE RIZAL:</strong></p>
+<p>Isinulat ko ang <em>Noli Me Tangere</em> at <em>El Filibusterismo</em>. Ang buhay ko’y inihandog ko sa bayan. Ang pangalan ko’y Jose Rizal.</p>
+<p><strong>ANDRES BONIFACIO:</strong></p>
+<p>Ako’y si Andres Bonifacio. Isinulat ko ang <em>Sampung Utos ng Katipunan</em>. Kami ay nakipaglaban noong Himagsikang Pilipino upang lumaya ang bayan.</p>
+<p><strong>TANDANG SORA:</strong></p>
+<p>Pinakain ko’t tinulungan ang mga sugatang Katipunero. Hinuli ako’t ipinatapon sa pulo ng Marianas. Ang tawag nila sa akin ay Tandang Sora.</p>
+<p><strong>GREGORIO DEL PILAR:</strong></p>
+<p>Ligaya sa akin ang mamatay para sa Inang Bayan. Tinatawag akong bayaní’t maginoo ng mga nakalaban kong Amerikano. Ako si Gregorio del Pilar, ang nagtanggol sa Pasong Tirad.</p>
+<h3 class="doc-heading">Pagpapayaman ng Bokabularyo</h3>
+<p><strong>Tukuyin at ipaliwanag ang kahulugan ng mga salitang nasa aklat. Isulat sa patlang ang wastong sagot sa bawat bilang.</strong></p>
+<p><strong>Mga Salita:</strong></p>
+<ul>
+<li><p>tanghalan</p></li>
+<li><p>alamat</p></li>
+<li><p>kalahi</p></li>
+<li><p>matalas</p></li>
+<li><p>uliran</p></li>
+<li><p>naghahandog</p></li>
+<li><p>maginoo</p></li>
+<li><p>engkantada</p></li>
+<li><p>parusa</p></li>
+</ul>
+<h3 class="doc-heading">Activity – Mga Sagot</h3>
+<p><strong>1.</strong> Salaysay na karaniwang ay di-totoo tungkol sa pinagmulan ng isang bagay o pook. Ito ay <strong>alamat</strong>.</p>
+<p><strong>2.</strong> Isang lalaking magalang at mabuti ang kalooban. Siya ay <strong>maginoo</strong>.</p>
+<p><strong>3.</strong> Nauukol sa mabuting katangian, anopa’t karapat-dapat na pamarisan. Ito ay <strong>uliran</strong>.</p>
+<p><strong>4.</strong> Kalagayan ng isip ng sinoman na madaling makaanawa at makaintindi. Ito ay <strong>matalas</strong>.</p>
+<p><strong>5.</strong> Dito idinaraos ang palatuntunan, dula, talumpati, at iba pang kauuri ng mga ito. Tinatawag itong <strong>tanghalan</strong>.</p>
+<p><strong>6.</strong> Nabibilang sa isang lipi ang <strong>kalahi</strong>.</p>
+<p><strong>7.</strong> Ipinapataw ito sa taong hindi sumusunod sa batas. Ito ay <strong>parusa</strong>.</p>
+<p><strong>8.</strong> Isang nilalang na may kakaibang kapangyarihan o anyo. Tinatawag itong <strong>engkantada</strong>.</p>
+<p><strong>Note:</strong> Ang salitang <strong>naghahandog</strong> ay nasa word bank ngunit hindi ginamit sa 1–8. Ang ibig sabihin nito ay <strong>nagbibigay o nag-aalay</strong>.</p>
+<h3 class="doc-heading">Pagtukoy sa mga Bahagi ng Aklat para sa Akademikong Pangangailangan</h3>
+<h3 class="doc-heading">Pabalat</h3>
+<p>Ang <strong>pabalat</strong> ay tumutukoy sa harapang pabalat at likurang pabalat. Nakasaad sa harapan ang pamagat ng aklat gayundin ang pangalan ng mga may-akda. Sa likuran naman ay maaaring mabasa ang karagdagang impormasyon tungkol sa nilalaman o mga may-akda. Ang pabalat ng aklat ay laging may magandang disenyo.</p>
+<h3 class="doc-heading">Pahina ng Pamagat</h3>
+<p>Ito ay karaniwang pambungad na pahina na nagsasaad ng pamagat ng aklat, pangalan ng mga may-akda, pangalan ng palimbagan, at taon ng paglimbag.</p>
+<h3 class="doc-heading">Pahina ng Karapatang-ari</h3>
+<p>Sa bahaging ito matatagpuan kung sino ang may karapatang-ari sa aklat, na maaaring ang may-akda lamang o maging tagapaglathala. Karaniwang makikita sa bahaging ito kasama ang lugar at petsa ng pagkakalathala. Dito rin matatagpuan ang mga pangalan ng nagdisenyo ng pabalat at ang gumawa ng mga ilustrasyon.</p>
+<h3 class="doc-heading">Talaan ng Nilalaman</h3>
+<p>Sa bahaging ito mababasa ang listahan ng mga aralin at paksang tinatalakay sa aklat at kung saang pahina ito matatagpuan.</p>
+<h3 class="doc-heading">Paunang Salita o Panimula</h3>
+<p>Sa bahaging ito nakasulat ang disenyo at pangkalahatang pagpapaliwanag tungkol sa layunin ng aklat at mga nilalaman nito. Ipinapaliwanag dito ang paraan ng paglalahad ng mga aralin at pagkakahati-hati ng mga kabanata.</p>
+<h3 class="doc-heading">PAGTATAYA</h3>
+<p><strong>A. Anong bahagi ng aklat ang tinutukoy sa bawat bilang?</strong></p>
+<p><strong>Isulat sa patlang ang sagot.</strong></p>
+<p><strong>1.</strong> Nais malaman ni Albert kung gaano nahahati ang aklat tungkol sa kanilang aralin sa Araling Panlipunan. Anong bahagi ng aklat ang dapat niyang tingnan?</p>
+<p><strong>Sagot:</strong> __________________________</p>
+<p><strong>2.</strong> Nagpapabili ng aklat ang ate ni Nina at ibinigay sa kaniya ang pamagat at pangalan ng may-akda. Anong bahagi ng aklat ang dapat niyang tingnan?</p>
+<p><strong>Sagot:</strong> __________________________</p>
+<p><strong>3.</strong> Ang ama ni Nelson ay mahusay gumuhit. Ibinabala ni Nelson sa kaniyang mga kamag-aral na ang kaniyang ama ang gumuhit ng mga larawan sa aklat nila. Anong bahagi ng aklat ang dapat tingnan ni Nelson?</p>
+<p><strong>Sagot:</strong> __________________________</p>
+<p><strong>4.</strong> Namimili ng aklat para sa Araling Panlipunan si Bb. Nicolas. Ngunit bago siya bumili, nais niyang malaman ang mga nilalaman at layunin ng aklat. Anong bahagi ng aklat ang dapat niyang basahin?</p>
+<p><strong>Sagot:</strong> __________________________</p>
+<p><strong>5.</strong> Nais basahin ni Nelya ang paksa tungkol sa mga insekto. Binuksan niya ang aklat para makita kung saan nagsisimula ang pahinang matatagpuan ang paksang ito. Ano ang tawag sa pahinang babasahin ni Nelya?</p>
+<p><strong>Sagot:</strong> __________________________</p>
+<p><strong>6.</strong> Nalilmutan ni Nelson na isulat ang pahina ng kanilang takdang-aralin ngunit alam niya kung ano ang paksa ng kanilang aralin. Anong bahagi ng aklat ang dapat niyang tingnan?</p>
+<p><strong>Sagot:</strong> __________________________</p>
+<p><strong>7.</strong> Nais malaman ni Trina ang kahulugan ng mahihirap na salitang ginamit sa pagtatakay ng paksa sa aklat. Anong bahagi ng aklat ang dapat niyang tingnan?</p>
+<p><strong>Sagot:</strong> __________________________</p>
+<p><strong>8.</strong> Nais ni Paulo na magbalik-aral sa mga araling tinalakay ng kanilang klase bilang paghahanda sa kanilang pagsusulit. Anong bahagi ng aklat ang dapat niyang tingnan?</p>
+<p><strong>Sagot:</strong> __________________________</p>
+<p><strong>9.</strong> Maingat si Nina sa kaniyang mga aklat kaya’t binabalutan niya ang mga ito upang hindi masira. Anong bahagi ng aklat ang binabalutan niya?</p>
+<p><strong>Sagot:</strong> __________________________</p>
+<h3 class="doc-heading">Mga Sagot sa Pagtataya</h3>
+<ol type="1">
+<li><p><strong>Talaan ng Nilalaman</strong></p></li>
+<li><p><strong>Pahina ng Pamagat</strong></p></li>
+<li><p><strong>Pahina ng Karapatang-ari</strong></p></li>
+<li><p><strong>Paunang Salita o Panimula</strong></p></li>
+<li><p><strong>Talaan ng Nilalaman</strong></p></li>
+<li><p><strong>Talaan ng Nilalaman</strong></p></li>
+<li><p><strong>Talahuluganan</strong></p></li>
+<li><p><strong>Talaan ng Nilalaman</strong></p></li>
+<li><p><strong>Pabalat</strong></p></li>
+</ol>
+<h3 class="doc-heading">Paglinang sa Kasnayang Panggramatika</h3>
+<h3 class="doc-heading">A. Pangatnig</h3>
+<p>Ang <strong>pangatnig</strong> ay mga kataga o salitang ginagamit sa pag-uugnay ng isang salita sa kapuwa salita, parirala sa kapuwa, at sugnay sa kapuwa sugnay. Ang mga pang-ugnay na karaniwang ginagamit ay: <strong>dahil, nang, sapagkat, at, o, kaya, kapag, upang, at iba pa.</strong></p>
+<h3 class="doc-heading">B. Panlapi</h3>
+<p>Ang <strong>panlapi</strong> ay mga titik na ginagamit sa pagdurugtong ng salita upang makalikha ng ibang kahulugan.</p>
+<h3 class="doc-heading">Mga Gamit ng Panlapi</h3>
+<p><strong>1. Unlapi</strong> – ang tawag sa panlapi na ikinakabit o inilalagay sa unahan ng salitang-ugat. Ang mga unlaping ginagamit ay <strong>ma-, na-, mag-, nag-, at pa-</strong>.</p>
+<p><strong>Halimbawa:</strong></p>
+<ul>
+<li>basa – <strong>magbasa</strong></li>
+</ul>
+<p><strong>2. Gitlapi</strong> – ang tawag sa panlapi na ikinakabit o inilalagay sa gitna ng salitang-ugat. Ang mga gitlaping ginagamit ay <strong>-um-, -at-, at -in-</strong>.</p>
+<p><strong>Mga Halimbawa:</strong></p>
+<ul>
+<li><p>bumasa</p></li>
+<li><p>binasa</p></li>
+</ul>
+<p><strong>3. Hulapi</strong> – ang tawag sa panlapi na ikinakabit o inilalagay sa hulihang bahagi ng salitang-ugat. Ang mga hulaping ginagamit ay <strong>-an, -in, -han, at -hin</strong>.</p>
+<p><strong>Halimbawa:</strong></p>
+<ul>
+<li>basa – <strong>basahin</strong></li>
+</ul>
+<p><strong>4. Kabilaan</strong> – ito ay karaniwang inilalagay sa unahan at hulihan o sa gitna ng salitang-ugat.</p>
+<p><strong>Halimbawa:</strong></p>
+<ul>
+<li>basa – <strong>nagbasahan / binasahan</strong></li>
+</ul>
+<h3 class="doc-heading">PAGTATAYA</h3>
+<p><strong>A. Piliin at ikahon ang pangatnig na ginamit sa sumusunod na pangungusap.</strong></p>
+<p><strong>1.</strong> Dumadagsa ang mga tao <strong>upang</strong> marinig ang pag-awit ni Sarah Geronimo.<br />
+<strong>Sagot: upang</strong></p>
+<p><strong>2.</strong> Marami ang makikinig sa iyo <strong>kung</strong> magiging mahusay kang mang-aawit.<br />
+<strong>Sagot: kung</strong></p>
+<p><strong>3.</strong> Maaaring suspendihin ang pasok sa opisina <strong>kapag</strong> bumuhos ang malakas na ulan.<br />
+<strong>Sagot: kapag</strong></p>
+<p><strong>4.</strong> Unti-unting nakakalbo ang mga kabundukan <strong>sa</strong> mga ilegal na pagtotroso.<br />
+<strong>Sagot: sa</strong></p>
+<p><strong>5.</strong> Kailangan nating mag-aral na mabuti <strong>upang</strong> tayo ay makatapos ng pag-aaral.<br />
+<strong>Sagot: upang</strong></p>
+<h3 class="doc-heading">B. Panlapi</h3>
+<p><strong>Panuto:</strong> Tukuyin ang panlaping ginamit sa salita sa bawat bilang. Tukuyin din ang gamit nito.</p>
+<table style="width:98%;">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 31%" />
+<col style="width: 30%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>#</strong></th>
+<th style="text-align: left;"><strong>Salita</strong></th>
+<th style="text-align: left;"><strong>Panlapi</strong></th>
+<th style="text-align: left;"><strong>Gamit</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">nagsulat</td>
+<td style="text-align: left;"><strong>nag-</strong></td>
+<td style="text-align: left;">Unlapi</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">kumain</td>
+<td style="text-align: left;"><strong>-um-</strong></td>
+<td style="text-align: left;">Gitlapi</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">yakapin</td>
+<td style="text-align: left;"><strong>-in</strong></td>
+<td style="text-align: left;">Hulapi</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">4</td>
+<td style="text-align: left;">binasahan</td>
+<td style="text-align: left;"><strong>-in- at -an</strong></td>
+<td style="text-align: left;">Kabilaan</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">5</td>
+<td style="text-align: left;">linaban</td>
+<td style="text-align: left;"><strong>-in-</strong></td>
+<td style="text-align: left;">Gitlapi</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">6</td>
+<td style="text-align: left;">nag-awitan</td>
+<td style="text-align: left;"><strong>nag- at -an</strong></td>
+<td style="text-align: left;">Kabilaan</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">7</td>
+<td style="text-align: left;">minahal</td>
+<td style="text-align: left;"><strong>-in-</strong></td>
+<td style="text-align: left;">Gitlapi</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">8</td>
+<td style="text-align: left;">tumakbo</td>
+<td style="text-align: left;"><strong>-um-</strong></td>
+<td style="text-align: left;">Gitlapi</td>
+</tr>
+</tbody>
+</table>
+<h3 class="doc-heading">LAGUMANG PAGSUSULIT</h3>
+<p><strong>A. Magbigay ng pangngalang pantangi para sa sumusunod na mga pangngalang pambalana.</strong></p>
+<p><strong>1. gatas</strong> – <strong>Bear Brand</strong><br />
+<strong>2. bata</strong> – <strong>Juan</strong><br />
+<strong>3. lalawigan</strong> – <strong>Batangas</strong><br />
+<strong>4. bayani</strong> – <strong>Jose Rizal</strong><br />
+<strong>5. pangulo</strong> – <strong>Ferdinand Marcos Jr.</strong><br />
+<strong>6. aklat</strong> – <strong>Noli Me Tangere</strong><br />
+<strong>7. paaralan</strong> – <strong>Mabini Elementary School</strong><br />
+<strong>8. cellphone</strong> – <strong>Samsung</strong></p>
+<p>Maaari ring magkaroon ng ibang tamang sagot sa bahaging ito basta ang ibinigay ay wastong <strong>pangngalang pantangi</strong>.</p>
+<p><strong>B. Isulat sa kahon ang titik K kung kongkreto ang pangngalan at DK kung di-kongkreto.</strong></p>
+<p><strong>K = Kongkreto</strong><br />
+<strong>DK = Di-kongkreto</strong></p>
+<ol type="1">
+<li><p><strong>kagitingan</strong> — <strong>DK</strong></p></li>
+<li><p><strong>pangako</strong> — <strong>DK</strong></p></li>
+<li><p><strong>hangin</strong> — <strong>K</strong></p></li>
+<li><p><strong>radyo</strong> — <strong>K</strong></p></li>
+<li><p><strong>silya</strong> — <strong>K</strong></p></li>
+<li><p><strong>kooperasyon</strong> — <strong>DK</strong></p></li>
+<li><p><strong>mahal</strong> — <strong>DK</strong></p></li>
+<li><p><strong>mesa</strong> — <strong>K</strong></p></li>
+</ol>
+<p><strong>C. Isulat ang PB kung ang kasarian ay panlalaki, PL kung panlalaki, DT kung di-tiyak, at WK kung walang kasarian.</strong></p>
+<table style="width:97%;">
+<colgroup>
+<col style="width: 26%" />
+<col style="width: 44%" />
+<col style="width: 26%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>#</strong></th>
+<th style="text-align: left;"><strong>Salita</strong></th>
+<th style="text-align: left;"><strong>Sagot</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">balikbayan</td>
+<td style="text-align: left;"><strong>DT</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">relo</td>
+<td style="text-align: left;"><strong>WK</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">senadora</td>
+<td style="text-align: left;"><strong>PL</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">4</td>
+<td style="text-align: left;">tandang</td>
+<td style="text-align: left;"><strong>PB</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">5</td>
+<td style="text-align: left;">panauhin</td>
+<td style="text-align: left;"><strong>DT</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">6</td>
+<td style="text-align: left;">kabayo</td>
+<td style="text-align: left;"><strong>DT</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">7</td>
+<td style="text-align: left;">gusali</td>
+<td style="text-align: left;"><strong>WK</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">8</td>
+<td style="text-align: left;">komadrona</td>
+<td style="text-align: left;"><strong>PL</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">9</td>
+<td style="text-align: left;">kapitan</td>
+<td style="text-align: left;"><strong>DT</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">10</td>
+<td style="text-align: left;">dentista</td>
+<td style="text-align: left;"><strong>DT</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>D. Tukuyin kung ang panghalip na may salungguhit sa pangungusap ay panao, pananong, pamatlig, o panaklaw.</strong></p>
+<ol type="1">
+<li><p><strong>panao</strong> = Pupunta <strong>na kami</strong> roon sa simbahan.</p></li>
+<li><p><strong>panao</strong> =Manonood <strong>kami</strong> ng sine ng mga kaibigan ko mamayang hapon.</p></li>
+<li><p><strong>pananong</strong> =Sino <strong>ang nais</strong> mong maligistang maiwang?</p></li>
+<li><p><strong>panao</strong> =<strong>Ikaw</strong>, nakarating ka na ba sa Batanes?</p></li>
+<li><p><strong>panaklaw</strong> =Ang <strong>madla</strong> ay nabigla sa balitang kumakalat tungkol sa epidemya na nakaaapekto sa mga sanggol.</p></li>
+<li><p><strong>panao</strong> =Nag-aaral ako nang mabuti.</p></li>
+<li><p><strong>pamatlig</strong> =Doon kami nakatira sa Malabon.</p></li>
+<li><p><strong>panao</strong> =Nagsusumikap sa trabaho ang kaniyang mga magulang.</p></li>
+</ol>
+<p><strong>E. Tukuyin ang kaganapan ng panghalip sa pangungusap. Salungguhitan ang isa, ikahon ang dalawa, at bilugan ang maramihan. Pagkatapos, isulat sa patlang ang panauhan nito.</strong></p>
+<ol type="1">
+<li><p>________ Elsa, ikaw ba ang tutulong sa paggawa ng saranggola?<br />
+<strong>Ikalawang panauhan – isahan</strong></p></li>
+<li><p>________ Sina Amelia, Jacob, at Carmel ay mahuhusay gumawa ng saranggola kaya sila na ang napiling kinatawan sa gaganaping paligsahan.<br />
+<strong>Ikatlong panauhan – maramihan</strong></p></li>
+<li><p>________ Mahilig akong makinig ng mga lumang awitin sa radyo tuwing gabi.<br />
+<strong>Unang panauhan – isahan</strong></p></li>
+<li><p>________ Gerald, nais ka raw makausap ni Ginang Reyes.<br />
+<strong>Ikalawang panauhan – isahan</strong></p></li>
+<li><p>________ Si Ginang Marquez ay mahusay na guro at siya ay kinakiligian ng mga mag-aaral. <strong>Ikatlong panauhan – isahan</strong></p></li>
+<li><p>________ Sa paaralan, ako ay masaya at laging pumapasok.<br />
+<strong>Unang panauhan – isahan</strong></p></li>
+<li><p>________ Ang aking mga mag-aaral ay matatalino at mababait.<br />
+<strong>Unang panauhan – isahan</strong></p></li>
+<li><p>________ Sina Rose, Mark, at Ella ay magkakapatid at sila ay masisipag mag-aral ng leksiyon. <strong>Ikatlong panauhan – maramihan</strong></p></li>
+</ol>
+<p><strong>F. Tukuyin ang kayarian ng sumusunod na mga salita. Ilagay ang P kung ang salita ay payak, M kung maylapi, I kung inuulit, at T kung tambalan.</strong></p>
+<ol type="1">
+<li><p>I = kayang-kaya</p></li>
+<li><p>M = natulog</p></li>
+<li><p>M = umayaw</p></li>
+<li><p>T = urong-sulong</p></li>
+<li><p>P = tapang</p></li>
+<li><p>T = hawak-kamay</p></li>
+<li><p>M = pasayahin</p></li>
+<li><p>M = kinatawan</p></li>
+<li><p>I = tatawa-tawa</p></li>
+<li><p>M = pinaglanuan</p></li>
+</ol>
+<p><strong>Pagtuklas<br />
+Ang pagkakaroon ng kaarawaran sa Pilipinas ay may impluwensiyang galing sa Silangan at Kanluran. Karaniwang naghahanda ng pansit at simbolo ng mahabang buhay. Impluwensiya ito ng mga Tsino. Mula naman sa mga Amerikano ang cake, lobo, payaso, at pagbibigay ng regalo sa may kaarawan.</strong></p>
+<h3 class="doc-heading">Birthday na ni Patricia</h3>
+<p>Kagigising pa lamang ni Carla nang marinig niyang tumunog ang telepono. Tumungo siya sa sala upang sagutin ito.</p>
+<p><strong>Carla:</strong> Hello! Magandang umaga po.<br />
+<strong>Patricia:</strong> Hello, magandang umaga rin po. Maaari ko po bang makausap si Carla?<br />
+<strong>Carla:</strong> Ako nga po si Carla. Sino sila?<br />
+<strong>Patricia:</strong> Carla, si Patricia ito.<br />
+<strong>Carla:</strong> Kumusta ka na? Bakit ka napatawag?<br />
+<strong>Patricia:</strong> Imbitahin sana kita. Kaarawan ko na sa darating na Linggo.<br />
+<strong>Carla:</strong> Ay, oo nga pala, kaarawan mo na. <em>Happy Birthday!</em> Pero kailangan ko muna magpaalam kay Inay, Patricia.<br />
+<strong>Patricia:</strong> Sige, isama mo na rin siya. Darating din ang mga kaibigan at kamag-aral natin. Pero nagsabi si Noemi na hindi siya makadalo dahil mayroon silang pupuntahan.<br />
+<strong>Carla:</strong> Wow, natitiyak kong magiging masaya ang pagdiriwang. Saan mo ba ipagdiriwang ang kaarawan mo?<br />
+<strong>Patricia:</strong> Dito sa bahay namin. Magluluto raw si Nanay ng masasasarap na pagkain.<br />
+<strong>Carla:</strong> Naku! Tiyak na marami akong makakain! Masarap yatang magluto ang nanay mo! Anong oras nga pala ang simula ng pagdiriwang?<br />
+<strong>Patricia:</strong> Alas-dos ng hapon.<br />
+<strong>Carla:</strong> Sige, magpapaalam ako kay Inay at sasabihin ko na rin na imbitado rin siya. Maligayang kaarawan, Patricia!<br />
+<strong>Patricia:</strong> Salamat, Carla. Bye.<br />
+<strong>Carla:</strong> Bye, Patricia!</p>
+<h3 class="doc-heading">Pagpapayaman ng Bokabularyo</h3>
+<p>Marami sa ating salita ang mula sa mga dayuhan. Ang mga salitang ito ay naging bahagi na rin ng ating buhay at kultura. Mga salitang hiram ang tawag natin sa mga ito. Karamihan sa ginagamit nating salitang hiram ay walang katumbas sa Filipino.</p>
+<p><strong>Halimbawa:</strong><br />
+Salita: <strong>Hi; Hello</strong><br />
+Kahulugan: <strong>Pagpapahayag ng impormal na pagbati</strong></p>
+<p><strong>Panuto:</strong></p>
+<p><strong>Ibigay ang kahulugan ng salitang hiram sa bawat bilang. Isulat ito sa patlang. Pagkatapos, gamitin ito sa sariling pangungusap.</strong></p>
+<p><strong>1. bye</strong></p>
+<p><strong>Kahulugan:</strong> Paalam / pagpapahayag ng pamamaalam.</p>
+<p><strong>Pangungusap:</strong> <strong>Bye, Patricia!</strong></p>
+<p>Ito ay ginamit mismo sa kuwento nang magpaalam sina Carla at Patricia.</p>
+<p><strong>2. wow</strong></p>
+<p><strong>Kahulugan:</strong> Pagpapahayag ng paghanga, pagkagulat, o pagkabilib.</p>
+<p><strong>Pangungusap:</strong> <strong>Wow! Ang ganda ng regalo mo.</strong></p>
+<p><strong>3. alas-</strong></p>
+<p><strong>Kahulugan:</strong> Salitang ginagamit upang tukuyin ang <strong>oras</strong>.</p>
+<p><strong>Pangungusap:</strong> <strong>Alas-dos ng hapon ang simula ng pagdiriwang.</strong></p>
+<p><strong>4. telepono</strong></p>
+<p><strong>Kahulugan:</strong> Kagamitang ginagamit sa pakikipag-usap sa isang taong nasa ibang lugar.</p>
+<p><strong>Pangungusap:</strong> <strong>Tumunog ang telepono kaya agad itong sinagot ni Carla.<br />
+<br />
+<br />
+<br />
+</strong></p>
+<h3 class="doc-heading">Pagpapalawak ng Talasalitaan</h3>
+<p><strong>Iba’t Ibang Diin ng mga Salita</strong></p>
+<p><strong>Ang mga salita sa wikang Filipino ay may iba’t ibang diin. Binibigkas ang mga salita sa iba’t ibang paraan. May apat na diin ang ating mga salita—malumay, malumi, mabilis, at maragsa.</strong></p>
+<p><strong>Ang malumay ay paraan ng pagbigkas ng salita na may lundo sa pantig bago ang hulíng pantig.</strong></p>
+<p><strong>Mga Halimbawa:</strong></p>
+<ul>
+<li><p><strong>sabong</strong></p></li>
+<li><p><strong>amihan</strong></p></li>
+<li><p><strong>kulay</strong></p></li>
+<li><p><strong>dahon</strong></p></li>
+<li><p><strong>nanay</strong></p></li>
+<li><p><strong>lunas</strong></p></li>
+</ul>
+<p><strong>Ang malumi ay paraan ng pagbigkas ng salita na katulad ng malumay ngunit may impit sa hulíng patinig. Ang salitang malumi ay may tuldik na paiwa (`).</strong></p>
+<p><strong>Mga Halimbawa:</strong></p>
+<ul>
+<li><p><strong>samò</strong></p></li>
+<li><p><strong>kulanì</strong></p></li>
+<li><p><strong>kutà</strong></p></li>
+<li><p><strong>lahì</strong></p></li>
+<li><p><strong>balità</strong></p></li>
+<li><p><strong>batà</strong></p></li>
+</ul>
+<p><strong>Ang mabilis ay paraan ng pagbigkas ng salita na tuloy-tuloy hanggang hulíng pantig. Ang salitang mabilis ay may tuldik na pahilis (´).</strong></p>
+<p><strong>Mga Halimbawa:</strong></p>
+<ul>
+<li><p><strong>talóng</strong></p></li>
+<li><p><strong>tutubí</strong></p></li>
+<li><p><strong>marumí</strong></p></li>
+<li><p><strong>bulaklák</strong></p></li>
+<li><p><strong>bumilí</strong></p></li>
+</ul>
+<p><strong>Ang maragsa ay paraan ng pagbigkas ng salita na katulad ng mabilis ngunit may impit sa hulíng patinig. Ang salitang maragsa ay may tuldik na pakupyâ (^).</strong></p>
+<p><strong>Mga Halimbawa:</strong></p>
+<ul>
+<li><p><strong>salitâ</strong></p></li>
+<li><p><strong>salapî</strong></p></li>
+<li><p><strong>larô</strong></p></li>
+<li><p><strong>yugtô</strong></p></li>
+<li><p><strong>dugô</strong></p></li>
+<li><p><strong>butikî</strong></p></li>
+</ul>
+<p><strong>Piliin ang angkop na salita para sa pangungusap. Bilugan ang tamang sagot sa loob ng panaklong.</strong></p>
+<ol type="1">
+<li><p>Hangad ni Carla para kay Patricia na pagkalooban pa ito ng mahabang <strong>(buhay, búhay)</strong>.</p></li>
+<li><p>Nagtungo si Carla sa <strong>(salà, sala)</strong> ng bahay upang sagutin ang telepono.</p></li>
+<li><p>Sa bahay <strong>(palá, pala)</strong> nila gagawin ang pagdiriwang.</p></li>
+<li><p><strong>(Tilá, Tila)</strong> hindi makararating sa kaarawan ni Patricia ang isa nilang kaibigan.</p></li>
+<li><p><strong>(Pili, Pilì)</strong> ang mga kaibigang darating sa kaarawan ni Patricia.</p></li>
+<li><p><strong>(Kúlay, Kulay)</strong> nila ang napili niyang damit na susuotin.</p></li>
+<li><p>Maraming <strong>(bulaklák, bulaklak)</strong> ang nais niya sa kaniyang kaarawan.</p></li>
+<li><p>Isa itong <strong>(yugtó, yugto)</strong> ng kaniyang buhay.</p></li>
+</ol>
+<h3 class="doc-heading">Pag-unawa sa Binasa</h3>
+<p><strong>Sagutin ang mga tanong sa buong pangungusap.</strong></p>
+<p><strong>1. Bakit tumawag si Patricia kay Carla?</strong></p>
+<p><strong>Sagot:</strong> Tumawag si Patricia kay Carla upang imbitahan siya sa kaniyang kaarawan.</p>
+<p><strong>2. Saan ipagdiriwang ang kaniyang kaarawan?</strong></p>
+<p><strong>Sagot:</strong> Ipagdiriwang ni Patricia ang kaniyang kaarawan sa kanilang bahay.</p>
+<p><strong>3. Kailan at anong oras gaganapin ang pagdiriwang?</strong></p>
+<p><strong>Sagot:</strong> Gaganapin ang pagdiriwang sa darating na Linggo, alas-dos ng hapon.</p>
+<p><strong>4. Bakit hindi kaagad matiyak ni Carla na makararating siya?</strong></p>
+<p><strong>Sagot:</strong> Hindi kaagad matiyak ni Carla na makararating siya dahil kailangan muna niyang magpaalam kay Inay.</p>
+<p><strong>5. Sino ang hindi makararating sa pagdiriwang? Bakit?</strong></p>
+<p><strong>Sagot:</strong> Si Noemi ang hindi makararating sa pagdiriwang dahil mayroon silang pupuntahan.</p>
+<p><strong>6. Ano sa tingin mo ang magandang nangyari sa kaarawan ni Patricia? Iugnay ang pangyayari sa iyong karanasan sa pagdalo sa kaarawan ng isang kaibigan.</strong></p>
+<p><strong>Sagot:</strong> Sa tingin ko, magandang nangyari sa kaarawan ni Patricia ang pagdalo ng kaniyang mga kaibigan at kamag-aral. Masaya rin ang pagdiriwang dahil nagkasama-sama sila at naghanda ng masasarap na pagkain.</p>
+<p><strong>7. Anong kaugalian ng mga Pilipino ang ginagawa kapag kaarawan ng isang tao? Bakit?</strong></p>
+<p><strong>Sagot:</strong> Ang kaugalian ng mga Pilipino kapag kaarawan ng isang tao ay ang pagbati sa kaniya ng <strong>“Maligayang Kaarawan”</strong> at pagbibigay ng regalo. Ginagawa ito upang ipakita ang pagmamahal, pagpapahalaga, at pakikisaya sa kaniyang kaarawan.</p>
+<p><strong>8. Naniniwala ka ba sa kaugalian itong mga Pinoy? Patunayan ang sagot.</strong></p>
+<p><strong>Sagot:</strong> Oo, naniniwala ako sa kaugalian ng mga Pinoy na ipagdiwang ang kaarawan. Ipinapakita nito ang pagmamahal at pagpapahalaga sa isang tao at nagbibigay din ito ng pagkakataong magsama-sama ang pamilya at mga kaibigan.</p>
+<h3 class="doc-heading">Pagpapahalaga</h3>
+<p><strong>A. Lagyan ng tsek (✓) ang mga gawaing nararapat kapag nag-iimbita ng mga panauhin.</strong></p>
+<ol type="1">
+<li><p><strong>✓</strong> Maging magalang sa pakikipag-usap kapag nag-iimbita.</p></li>
+<li><p><strong>✓</strong> Piliitin ang inaanyayahan na pumunta sa okasyon.</p></li>
+<li><p><strong>✓</strong> Tiyakin ang petsa at pook na pagdarausan ng okasyon kapag nag-iimbita.</p></li>
+<li><p><strong>✗</strong> Kulitin o laging paalalahanang dumalo ang taong inimbitahan sa tuwing ito ay makikita o makakasalubong.</p></li>
+<li><p><strong>✗</strong> Magtampo sa taong inimbitahan na hindi tiyak na makadalo.</p></li>
+<li><p><strong>✓</strong> Sumagot nang maayos at wasto kapag may katanungan ang taong inaanyayahan.</p></li>
+<li><p><strong>✓</strong> Sabihin sa inaanyayahan na magdala ng regalo kapag dumalo sa okasyon.</p></li>
+<li><p><strong>✗</strong> Paalalahanan ang inaanyayahan na iwasang magsama ng kamag-anak o kakilala sa pagdalo.</p></li>
+</ol>
+<h3 class="doc-heading">Pagbibigay ng Hinuha</h3>
+<p>Ang <strong>hinuha</strong> ay pahayag ng inaakalang mangyayari o nangyayari batay sa nabasang sitwasyon. Madaling mahinuha ang mga posibleng susunod na pangyayari sa kuwento kung nauunawaan natin ang binabasang teksto. Malaki rin ang maitutulong ng sariling karanasan upang makabuo ng hinuha.</p>
+<p>Muling balikan ang binasang usapan na <strong>“Birthday na ni Patricia.”</strong></p>
+<p><strong>Ilang hinuha:</strong></p>
+<ol type="1">
+<li><p><strong>Marahil ay hindi makararating si Carla sa kaarawan ni Patricia sapagkat hindi siya pinayagan.</strong></p></li>
+<li><p><strong>Masayang-masaya siguro si Patricia sapagkat dumalo sa kaniyang kaarawan ang mga kaibigan at kamag-aral.</strong></p></li>
+<li><p><strong>Tila papayagan si Carla na dumalo sa kaarawan ni Patricia dahil nagpapaalam siya nang maayos sa ina.</strong></p></li>
+</ol>
+<p>May mga salitang maaaring gamitin sa pagpapahayag ng hinuha gaya ng <strong>maaari, wari, tila, marahil, siguro, sa tingin ko, sa palagay ko,</strong> at iba pa.</p>
+<h3 class="doc-heading">Pagpapayamang Gawain</h3>
+<p><strong>A. Dugtungan ang sumusunod na mga pangungusap sa pamamagitan ng pagbibigay ng hinuha.</strong></p>
+<ol type="1">
+<li><p>Malakas ang ihip ng hangin at makulimlim ang kalangitan, tila __________.</p></li>
+<li><p>Araw-araw ay nag-eensayo si David sa pagbigkas ng tula para makapaghanda sa patimpalak, kaya maaaring __________.</p></li>
+<li><p>Marahil ay laging kumakain ng masusustansiyang pagkain si Anthony, kaya __________.</p></li>
+<li><p>Tumaas ang presyo ng karne ng baboy at manok sa pamilihan, maaaring __________.</p></li>
+<li><p>Sumasakit ang tiyan ni Melissa, marahil ay __________.</p></li>
+<li><p>Hindi nakarating sa kaarawan ng kaibigan si Patricia, kaya maaaring __________.</p></li>
+<li><p>Umuulan nang malakas, tila __________.</p></li>
+<li><p>Nagkakasakit si Nanay, marahil ay __________.</p></li>
+</ol>
+<p><strong>Mga Sagot:</strong></p>
+<ol type="1">
+<li><p>Malakas ang ihip ng hangin at makulimlim ang kalangitan, tila <strong>uulan</strong>.</p></li>
+<li><p>Araw-araw ay nag-eensayo si David sa pagbigkas ng tula para makapaghanda sa patimpalak, kaya maaaring <strong>magaling siyang bumigkas ng tula</strong>.</p></li>
+<li><p>Marahil ay laging kumakain ng masusustansiyang pagkain si Anthony, kaya <strong>malusog ang kaniyang katawan</strong>.</p></li>
+<li><p>Tumaas ang presyo ng karne ng baboy at manok sa pamilihan, maaaring <strong>tumaas din ang presyo ng mga lutong pagkain</strong>.</p></li>
+<li><p>Sumasakit ang tiyan ni Melissa, marahil ay <strong>may nakain siyang hindi mabuti sa kaniyang tiyan</strong>.</p></li>
+<li><p>Hindi nakarating sa kaarawan ng kaibigan si Patricia, kaya maaaring <strong>may mahalaga siyang dahilan kung bakit hindi siya nakadalo</strong>.</p></li>
+<li><p>Umuulan nang malakas, tila <strong>babahain ang mga mabababang lugar</strong>.</p></li>
+<li><p>Nagkakasakit si Nanay, marahil ay <strong>kailangan niyang magpahinga at magpagamot</strong>.</p></li>
+</ol>
+<h3 class="doc-heading">Kayariang Pangwika</h3>
+<h3 class="doc-heading">Pang-uring Pamilang</h3>
+<p>Ang <strong>pang-uri</strong> ay ginagamit upang maglarawan ng pangngalan o panghalip. Nagagamit ito bilang panlarawan o pantangi. Bukod dito, ang pang-uri ay maaaring gamitin bilang <strong>pamilang</strong>.</p>
+<p>Ang <strong>pang-uring pamilang</strong> ay nagsasaad ng bilang, halaga, o dami ng pangngalan o panghalip na binibigyang-turing. Maaari ring tiyak o di-tiyak.</p>
+<p><strong>1. Tiyak</strong></p>
+<p><strong>tíyak</strong> – dalawa, isa, tig-apat, pansampu, wala</p>
+<p><strong>Mga Halimbawa:</strong></p>
+<ul>
+<li><p>May <strong>dalawang</strong> mansanas sa ibabaw ng mesa.</p></li>
+<li><p>Binigyan kami ni Ervic ng <strong>tig-apat</strong> na tsokolate.</p></li>
+</ul>
+<p><strong>2. Di-tiyak</strong></p>
+<p><strong>di-tiyak</strong> – mga, marami, kaunti, ilan, sobra</p>
+<p><strong>Mga Halimbawa:</strong></p>
+<ul>
+<li><p><strong>Kaunti</strong> lamang ang pagkaing natira sa salusalo.</p></li>
+<li><p>Lumikas ang <strong>maraming</strong> hayop dahil nasira ang kagubatan.</p></li>
+</ul>
+<h3 class="doc-heading">Pagtataya</h3>
+<p><strong>A. Basahin ang mga pangungusap. Tukuyin ang mga pang-uring pamilang na ginamit at ikahon ang mga ito.</strong></p>
+<ol type="1">
+<li><p>Humingi ng <strong>limang</strong> kendi ang bata sa kaniyang kaibigan.</p></li>
+<li><p>Nakapila ang mag-aaral sa <strong>ikaapat</strong> na baitang.</p></li>
+<li><p>Binigyan ako ni Nanay ng <strong>limampung</strong> piso.</p></li>
+<li><p>Nakaabang sa pinto ang <strong>tatlong</strong> aso ni Dino.</p></li>
+<li><p><strong>Walang</strong> nakatanim na halaman sa bakuran ng bahay.</p></li>
+<li><p>Humingi siya ng <strong>isandaang</strong> piso sa kaniyang ina.</p></li>
+<li><p>Ako ang <strong>unang</strong> mag-aaral na dumating para sa programa.</p></li>
+<li><p><strong>Ilang</strong> kasangkapan lamang ang naisala ng pamilya mula sa pagbaha.</p></li>
+<li><p><strong>Daan-daang</strong> itlog ang naibenta nina Aling Aida at Mang Manny mula sa kanilang manukan.</p></li>
+<li><p>Nagsimula nang magdatingan ang <strong>mga</strong> bisita ni Patricia.</p></li>
+</ol>
+<p><strong>Mga Sagot:</strong></p>
+<table style="width:97%;">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 61%" />
+<col style="width: 23%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>#</strong></th>
+<th style="text-align: left;"><strong>Pang-uring Pamilang</strong></th>
+<th style="text-align: left;"><strong>Uri</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">1</td>
+<td style="text-align: left;"><strong>limang</strong></td>
+<td style="text-align: left;">Tiyak</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2</td>
+<td style="text-align: left;"><strong>ikaapat</strong></td>
+<td style="text-align: left;">Tiyak</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">3</td>
+<td style="text-align: left;"><strong>limampung</strong></td>
+<td style="text-align: left;">Tiyak</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">4</td>
+<td style="text-align: left;"><strong>tatlong</strong></td>
+<td style="text-align: left;">Tiyak</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">5</td>
+<td style="text-align: left;"><strong>walang</strong></td>
+<td style="text-align: left;">Di-tiyak</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">6</td>
+<td style="text-align: left;"><strong>isandaang</strong></td>
+<td style="text-align: left;">Tiyak</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">7</td>
+<td style="text-align: left;"><strong>unang</strong></td>
+<td style="text-align: left;">Tiyak</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">8</td>
+<td style="text-align: left;"><strong>ilang</strong></td>
+<td style="text-align: left;">Di-tiyak</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">9</td>
+<td style="text-align: left;"><strong>daan-daang</strong></td>
+<td style="text-align: left;">Di-tiyak</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">10</td>
+<td style="text-align: left;"><strong>mga</strong></td>
+<td style="text-align: left;">Di-tiyak</td>
+</tr>
+</tbody>
+</table>
+<h3 class="doc-heading">Karagdagang Gawain</h3>
+<p><strong>Kompletuhin ang pangungusap. Piliin ang akmang pang-uring pamilang mula sa kahon. Isulat ito sa patlang.</strong></p>
+<p><strong>Mga pagpipilian:</strong><br />
+<strong>maraming | ilang | lahat | wala</strong></p>
+<p>1. <strong>maraming</strong><br />
+→ Ang <strong>maraming</strong> bata sa silid-aralan ay nagbabasa ng isang magandang kuwento.</p>
+<p>2. <strong>ilang</strong><br />
+→ Sa tindahan, bumili ako ng <strong>ilang</strong> pirasong kendi.</p>
+<p>3. <strong>lahat</strong><br />
+→ Sa park, naglaro kami ng tagu-taguan kasama ang <strong>lahat</strong> mga kaibigan.<br />
+<strong>Mas wastong anyo:</strong> <em>kasama ang lahat ng mga kaibigan.</em></p>
+<p>4. <strong>maraming</strong><br />
+→ Sa zoo, nakita namin ang <strong>maraming</strong> ibon na nagliliparan.</p>
+<p>5. <strong>maraming</strong><br />
+→ Sa bahay, binasa ko ang <strong>maraming</strong> pahinang libro.</p>
+<p>6. <strong>lahat</strong><br />
+→ Sa palengke, tiningnan namin ang <strong>lahat</strong> mga prutas at gulay.<br />
+<strong>Mas wastong anyo:</strong> <em>tiningnan namin ang lahat ng mga prutas at gulay.</em></p>
+<p>7. <strong>maraming</strong><br />
+→ Sa kusina, nagluto kami ng <strong>maraming</strong> pinggang <em>spaghetti</em>.</p>
+<p>8. <strong>ilang</strong><br />
+→ Sa sinehan, nanood kami ng <strong>ilang</strong> pelikulang pambata.</p>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ── Hidden Print Area (Practice Test + Answer Key) ── -->
+<div id="print-area">
+<div class="p-cover">
+    <div class="p-icon">📚</div>
+    <h1>Filipino 5 — Panitikan at Gramatika Practice Test</h1>
+    <div class="p-sub">Mga Tauhan sa Panitikan · Bahagi ng Aklat · Gramatika · Diin ng Salita</div>
+    <div class="p-info-box">
+      <div><strong>Pangalan:</strong> _____________________________________</div>
+      <div><strong>Baitang/Pangkat:</strong> ___________________ &nbsp; <strong>Petsa:</strong> ___________________</div>
+      <div><strong>Iskor:</strong> _______ / 50</div>
+    </div>
+    <div class="p-instructions">
+      <strong>Panuto:</strong> Basahing mabuti ang bawat aytem. Isulat ang sagot sa patlang na inilaan (Bahagi I-III, V), o piliin ang tamang letra (Bahagi IV). Good luck!
+    </div>
+  </div>
+
+  <h2 class="p-part-title">Bahagi I — Bahagi ng Aklat</h2><div class="p-q"><b>1.</b> Nais malaman ni Albert kung gaano nahahati ang aklat tungkol sa kanilang aralin sa Araling Panlipunan. Anong bahagi ng aklat ang dapat niyang tingnan? <span class="p-blank"></span></div><div class="p-q"><b>2.</b> Nagpapabili ng aklat ang ate ni Nina at ibinigay sa kaniya ang pamagat at pangalan ng may-akda. Anong bahagi ng aklat ang dapat niyang tingnan? <span class="p-blank"></span></div><div class="p-q"><b>3.</b> Ang ama ni Nelson ay mahusay gumuhit. Ibinabalita ni Nelson na ang kaniyang ama ang gumuhit ng mga larawan sa aklat nila. Anong bahagi ng aklat ang dapat tingnan ni Nelson? <span class="p-blank"></span></div><div class="p-q"><b>4.</b> Namimili ng aklat para sa Araling Panlipunan si Bb. Nicolas. Bago siya bumili, nais niyang malaman ang mga nilalaman at layunin ng aklat. Anong bahagi ng aklat ang dapat niyang basahin? <span class="p-blank"></span></div><div class="p-q"><b>5.</b> Nais basahin ni Nelya ang paksa tungkol sa mga insekto. Binuksan niya ang aklat para makita kung saan nagsisimula ang pahinang matatagpuan ang paksang ito. Ano ang tawag sa pahinang babasahin ni Nelya? <span class="p-blank"></span></div><div class="p-q"><b>6.</b> Nakalimutan ni Nelson na isulat ang pahina ng kanilang takdang-aralin ngunit alam niya kung ano ang paksa ng kanilang aralin. Anong bahagi ng aklat ang dapat niyang tingnan? <span class="p-blank"></span></div><div class="p-q"><b>7.</b> Nais malaman ni Trina ang kahulugan ng mahihirap na salitang ginamit sa pagtatalakay ng paksa sa aklat. Anong bahagi ng aklat ang dapat niyang tingnan? <span class="p-blank"></span></div><div class="p-q"><b>8.</b> Nais ni Paulo na magbalik-aral sa mga araling tinalakay ng kanilang klase bilang paghahanda sa kanilang pagsusulit. Anong bahagi ng aklat ang dapat niyang tingnan? <span class="p-blank"></span></div><div class="p-q"><b>9.</b> Maingat si Nina sa kaniyang mga aklat kaya't binabalutan niya ang mga ito upang hindi masira. Anong bahagi ng aklat ang binabalutan niya? <span class="p-blank"></span></div><h2 class="p-part-title">Bahagi II — Pangatnig</h2><div class="p-q"><b>10.</b> Dumadagsa ang mga tao ______ marinig ang pag-awit ni Sarah Geronimo. <span class="p-blank"></span></div><div class="p-q"><b>11.</b> Marami ang makikinig sa iyo ______ magiging mahusay kang mang-aawit. <span class="p-blank"></span></div><div class="p-q"><b>12.</b> Maaaring suspendihin ang pasok sa opisina ______ bumuhos ang malakas na ulan. <span class="p-blank"></span></div><div class="p-q"><b>13.</b> Unti-unting nakakalbo ang mga kabundukan ______ mga ilegal na pagtotroso. <span class="p-blank"></span></div><div class="p-q"><b>14.</b> Kailangan nating mag-aral na mabuti ______ tayo ay makatapos ng pag-aaral. <span class="p-blank"></span></div><div class="p-break"></div><h2 class="p-part-title">Bahagi III — Tama o Mali</h2><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>15.</b> Si Malakas ang ama ng lahing kayumanggi ayon sa alamat.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>16.</b> Si Maria Clara ang kasintahan ni Lapulapu.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>17.</b> Ang Talaan ng Nilalaman ay naglalaman ng kahulugan ng mahihirap na salita.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>18.</b> Ang Pahina ng Karapatang-ari ay nagsasaad kung sino ang may karapatang-ari sa aklat.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>19.</b> Ang mga salitang "dahil, sapagkat, upang" ay halimbawa ng pangatnig.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>20.</b> Ang unlapi ay inilalagay sa hulihang bahagi ng salitang-ugat.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>21.</b> Ang salitang "bumasa" ay may gitlaping "-um-."</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>22.</b> Kongkreto ang salitang "kagitingan."</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>23.</b> Walang kasarian ang salitang "relo."</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>24.</b> Pambabae ang kasarian ng salitang "tandang."</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>25.</b> Ang panghalip na "sino" ay halimbawa ng panghalip na panao.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>26.</b> Ang salitang "urong-sulong" ay salitang tambalan.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>27.</b> Payak ang kayarian ng salitang "natulog."</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>28.</b> Tiyak ang pang-uring pamilang na "marami."</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>29.</b> May apat na diin ang mga salita sa Filipino: malumay, malumi, mabilis, at maragsa.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>30.</b> Ang salitang "kutà" ay halimbawa ng malumi.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>31.</b> Ang hinuha ay pahayag ng katotohanang napatunayan na.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>32.</b> Ang mga salitang "wow" at "bye" ay halimbawa ng salitang hiram.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>33.</b> Nagpaalam muna si Carla kay Inay bago siya pumunta sa kaarawan ni Patricia.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>34.</b> Si Noemi ay nakadalo sa kaarawan ni Patricia.</div><div class="p-break"></div><h2 class="p-part-title">Bahagi IV — Panghalip</h2><div class="p-q"><b>35.</b> Pupunta na kami roon sa simbahan. (Anong uri ng panghalip ang may salungguhit?)<br><span class="p-opt">a) Panao</span><span class="p-opt">b) Pananong</span><span class="p-opt">c) Pamatlig</span><span class="p-opt">d) Panaklaw</span></div><div class="p-q"><b>36.</b> Sino ang nais mong maligistang maiwang? (Anong uri ng panghalip ang may salungguhit?)<br><span class="p-opt">a) Pananong</span><span class="p-opt">b) Panao</span><span class="p-opt">c) Pamatlig</span><span class="p-opt">d) Panaklaw</span></div><div class="p-q"><b>37.</b> Doon kami nakatira sa Malabon. (Anong uri ng panghalip ang may salungguhit?)<br><span class="p-opt">a) Pamatlig</span><span class="p-opt">b) Panao</span><span class="p-opt">c) Pananong</span><span class="p-opt">d) Panaklaw</span></div><div class="p-q"><b>38.</b> Ang madla ay nabigla sa balitang kumakalat tungkol sa epidemya. (Anong uri ng panghalip ang may salungguhit?)<br><span class="p-opt">a) Panaklaw</span><span class="p-opt">b) Panao</span><span class="p-opt">c) Pananong</span><span class="p-opt">d) Pamatlig</span></div><div class="p-q"><b>39.</b> Ikaw, nakarating ka na ba sa Batanes? (Anong uri ng panghalip ang may salungguhit?)<br><span class="p-opt">a) Panao</span><span class="p-opt">b) Pananong</span><span class="p-opt">c) Pamatlig</span><span class="p-opt">d) Panaklaw</span></div><div class="p-q"><b>40.</b> Nagsusumikap sa trabaho ang kaniyang mga magulang. (Anong uri ng panghalip ang may salungguhit?)<br><span class="p-opt">a) Panao</span><span class="p-opt">b) Pananong</span><span class="p-opt">c) Pamatlig</span><span class="p-opt">d) Panaklaw</span></div><h2 class="p-part-title">Bahagi V — Pang-uring Pamilang</h2><div class="p-q"><b>41.</b> Humingi ng limang kendi ang bata sa kaniyang kaibigan. (limang) <span class="p-blank"></span></div><div class="p-q"><b>42.</b> Nakapila ang mag-aaral sa ikaapat na baitang. (ikaapat) <span class="p-blank"></span></div><div class="p-q"><b>43.</b> Binigyan ako ni Nanay ng limampung piso. (limampung) <span class="p-blank"></span></div><div class="p-q"><b>44.</b> Nakaabang sa pinto ang tatlong aso ni Dino. (tatlong) <span class="p-blank"></span></div><div class="p-q"><b>45.</b> Walang nakatanim na halaman sa bakuran ng bahay. (Walang) <span class="p-blank"></span></div><div class="p-q"><b>46.</b> Humingi siya ng isandaang piso sa kaniyang ina. (isandaang) <span class="p-blank"></span></div><div class="p-q"><b>47.</b> Ako ang unang mag-aaral na dumating para sa programa. (unang) <span class="p-blank"></span></div><div class="p-q"><b>48.</b> Ilang kasangkapan lamang ang naisala ng pamilya mula sa pagbaha. (Ilang) <span class="p-blank"></span></div><div class="p-q"><b>49.</b> Daan-daang itlog ang naibenta nina Aling Aida at Mang Manny. (Daan-daang) <span class="p-blank"></span></div><div class="p-q"><b>50.</b> Nagsimula nang magdatingan ang mga bisita ni Patricia. (mga) <span class="p-blank"></span></div><div class="p-break"></div><h2 class="p-part-title">✅ Kumpletong Susi sa Pagwawasto</h2>
+  <div class="p-key-part-title">Bahagi I — Bahagi ng Aklat</div><div class="p-key-grid"><div class="p-key-pill">1. <b>Talaan ng Nilalaman</b></div><div class="p-key-pill">2. <b>Pahina ng Pamagat</b></div><div class="p-key-pill">3. <b>Pahina ng Karapatang-ari</b></div><div class="p-key-pill">4. <b>Paunang Salita o Panimula</b></div><div class="p-key-pill">5. <b>Talaan ng Nilalaman</b></div><div class="p-key-pill">6. <b>Talaan ng Nilalaman</b></div><div class="p-key-pill">7. <b>Talahuluganan</b></div><div class="p-key-pill">8. <b>Talaan ng Nilalaman</b></div><div class="p-key-pill">9. <b>Pabalat</b></div></div><div class="p-key-part-title">Bahagi II — Pangatnig</div><div class="p-key-grid"><div class="p-key-pill">10. <b>upang</b></div><div class="p-key-pill">11. <b>kung</b></div><div class="p-key-pill">12. <b>kapag</b></div><div class="p-key-pill">13. <b>sa</b></div><div class="p-key-pill">14. <b>upang</b></div></div><div class="p-key-part-title">Bahagi III — Tama o Mali</div><div class="p-key-grid"><div class="p-key-pill">15. <b>TAMA</b></div><div class="p-key-pill">16. <b>MALI</b></div><div class="p-key-pill">17. <b>MALI</b></div><div class="p-key-pill">18. <b>TAMA</b></div><div class="p-key-pill">19. <b>TAMA</b></div><div class="p-key-pill">20. <b>MALI</b></div><div class="p-key-pill">21. <b>TAMA</b></div><div class="p-key-pill">22. <b>MALI</b></div><div class="p-key-pill">23. <b>TAMA</b></div><div class="p-key-pill">24. <b>MALI</b></div><div class="p-key-pill">25. <b>MALI</b></div><div class="p-key-pill">26. <b>TAMA</b></div><div class="p-key-pill">27. <b>MALI</b></div><div class="p-key-pill">28. <b>MALI</b></div><div class="p-key-pill">29. <b>TAMA</b></div><div class="p-key-pill">30. <b>TAMA</b></div><div class="p-key-pill">31. <b>MALI</b></div><div class="p-key-pill">32. <b>TAMA</b></div><div class="p-key-pill">33. <b>TAMA</b></div><div class="p-key-pill">34. <b>MALI</b></div></div><div class="p-key-part-title">Bahagi IV — Panghalip</div><div class="p-key-grid"><div class="p-key-pill">35. <b>Panao</b></div><div class="p-key-pill">36. <b>Pananong</b></div><div class="p-key-pill">37. <b>Pamatlig</b></div><div class="p-key-pill">38. <b>Panaklaw</b></div><div class="p-key-pill">39. <b>Panao</b></div><div class="p-key-pill">40. <b>Panao</b></div></div><div class="p-key-part-title">Bahagi V — Pang-uring Pamilang</div><div class="p-key-grid"><div class="p-key-pill">41. <b>Tiyak</b></div><div class="p-key-pill">42. <b>Tiyak</b></div><div class="p-key-pill">43. <b>Tiyak</b></div><div class="p-key-pill">44. <b>Tiyak</b></div><div class="p-key-pill">45. <b>Di-tiyak</b></div><div class="p-key-pill">46. <b>Tiyak</b></div><div class="p-key-pill">47. <b>Tiyak</b></div><div class="p-key-pill">48. <b>Di-tiyak</b></div><div class="p-key-pill">49. <b>Di-tiyak</b></div><div class="p-key-pill">50. <b>Di-tiyak</b></div></div>
+</div>
+
+</body>
+</html>
