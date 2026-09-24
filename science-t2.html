@@ -1,0 +1,1906 @@
+<!DOCTYPE html>
+<html lang="tl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🌱 Science: Body Systems &amp; Plants Reviewer 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --gold: #f59e0b;
+  --gold-dark: #b45309;
+  --blue: #3b82f6;
+  --blue-dark: #1d4ed8;
+  --red: #ef4444;
+  --green: #22c55e;
+  --bg: #0c1a0e;
+  --surface: #132015;
+  --surface2: #1a2e1d;
+  --text: #f0fdf4;
+  --muted: #86efac;
+  --border: #166534;
+}
+
+body {
+  font-family: 'Baloo 2', cursive;
+  background: var(--bg);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--text);
+  background-image:
+    radial-gradient(ellipse at 10% 30%, rgba(245,158,11,.06) 0%, transparent 55%),
+    radial-gradient(ellipse at 90% 70%, rgba(59,130,246,.06) 0%, transparent 55%);
+}
+
+header {
+  width: 100%;
+  background: linear-gradient(135deg, #14532d, #1e3a5f);
+  border-bottom: 2px solid var(--gold-dark);
+  padding: 13px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 4px 30px rgba(0,0,0,.5);
+}
+.header-icon { font-size: 2rem; animation: float 3s ease-in-out infinite; }
+@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
+
+header h1 {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.45rem;
+  background: linear-gradient(90deg, var(--gold), #fde68a, var(--gold));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+header .sub { font-size: .72rem; color: var(--muted); margin-top: 1px; }
+
+.header-controls { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+.score-pill {
+  background: rgba(245,158,11,.15);
+  border: 1px solid rgba(245,158,11,.4);
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-weight: 800;
+  font-size: .85rem;
+  color: var(--gold);
+}
+.audio-btn {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  background: var(--surface2);
+  color: var(--text);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all .2s;
+  display: flex; align-items: center; justify-content: center;
+}
+.audio-btn:hover, .audio-btn.active { background: #14532d; border-color: var(--gold); }
+
+.chat-wrap {
+  width: 100%; max-width: 700px; flex: 1;
+  display: flex; flex-direction: column;
+  padding: 16px 14px 0;
+}
+
+#chat-box {
+  flex: 1; overflow-y: auto;
+  display: flex; flex-direction: column;
+  gap: 14px; padding-bottom: 10px;
+  max-height: calc(100vh - 200px);
+  scroll-behavior: smooth;
+}
+#chat-box::-webkit-scrollbar { width: 4px; }
+#chat-box::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+.msg { display: flex; gap: 8px; }
+.msg.user { flex-direction: row-reverse; }
+
+.avatar {
+  width: 34px; height: 34px; border-radius: 50%;
+  font-size: 1rem; display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 2px;
+}
+.msg.bot .avatar { background: linear-gradient(135deg, #14532d, #1e3a5f); border: 1.5px solid rgba(245,158,11,.4); }
+.msg.user .avatar { background: linear-gradient(135deg, #1e3a5f, #14532d); border: 1.5px solid rgba(59,130,246,.3); }
+
+.bubble {
+  max-width: 80%;
+  padding: 11px 16px;
+  border-radius: 18px;
+  font-size: .9rem;
+  line-height: 1.65;
+  animation: pop .22s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes pop { from{transform:scale(.88) translateY(6px);opacity:0} to{transform:scale(1) translateY(0);opacity:1} }
+
+.msg.bot .bubble {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-bottom-left-radius: 5px;
+}
+.msg.user .bubble {
+  background: linear-gradient(135deg, #1e3a5f, var(--blue-dark));
+  border-bottom-right-radius: 5px;
+}
+
+/* chips */
+.chip {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: rgba(245,158,11,.12);
+  border: 1.5px solid rgba(245,158,11,.4);
+  color: var(--gold);
+  border-radius: 30px;
+  padding: 5px 13px; margin: 5px 4px 0 0;
+  font-size: .8rem; font-weight: 700;
+  cursor: pointer; transition: all .15s;
+  user-select: none; font-family: 'Baloo 2', cursive;
+}
+.chip:hover {
+  background: var(--gold-dark); color: white;
+  border-color: var(--gold);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(245,158,11,.3);
+}
+
+/* topic tag */
+.topic-tag {
+  display: inline-block;
+  background: linear-gradient(135deg, #14532d, #166534);
+  border: 1px solid var(--gold-dark);
+  color: var(--gold);
+  font-size: .68rem; font-weight: 800;
+  border-radius: 20px; padding: 2px 10px;
+  margin-bottom: 5px; letter-spacing: .5px;
+  text-transform: uppercase;
+}
+
+/* multiple choice */
+.mc-options { display: flex; flex-direction: column; gap: 7px; margin-top: 10px; width: 100%; }
+.mc-btn {
+  display: flex; align-items: center; gap: 10px;
+  background: rgba(255,255,255,.03);
+  border: 1.5px solid var(--border);
+  border-radius: 12px; padding: 9px 14px;
+  color: var(--text); font-family: 'Baloo 2', cursive;
+  font-size: .87rem; font-weight: 600;
+  cursor: pointer; transition: all .15s; text-align: left; width: 100%;
+}
+.mc-btn:hover:not(:disabled) {
+  background: rgba(245,158,11,.12); border-color: var(--gold);
+  color: var(--gold); transform: translateX(3px);
+}
+.mc-btn .letter {
+  display: flex; align-items: center; justify-content: center;
+  width: 26px; height: 26px; border-radius: 8px;
+  background: rgba(245,158,11,.15); border: 1px solid rgba(245,158,11,.35);
+  color: var(--gold); font-size: .78rem; font-weight: 800;
+  flex-shrink: 0; transition: all .15s;
+}
+.mc-btn:hover:not(:disabled) .letter { background: var(--gold-dark); color: white; border-color: var(--gold-dark); }
+.mc-btn.correct { background: rgba(34,197,94,.15)!important; border-color: #22c55e!important; color: #22c55e!important; cursor: default; }
+.mc-btn.correct .letter { background: #22c55e!important; color: white!important; border-color: #22c55e!important; }
+.mc-btn.wrong { background: rgba(239,68,68,.12)!important; border-color: #ef4444!important; color: #ef4444!important; cursor: default; }
+.mc-btn.wrong .letter { background: #ef4444!important; color: white!important; border-color: #ef4444!important; }
+.mc-btn:disabled { cursor: default; transform: none!important; }
+
+/* speaker wave */
+.speaker-wave {
+  display: inline-flex; align-items: flex-end;
+  gap: 2px; height: 14px; margin-left: 6px; vertical-align: middle;
+}
+.speaker-wave span {
+  display: block; width: 3px; border-radius: 2px;
+  background: var(--gold); animation: wave 1s ease-in-out infinite;
+}
+.speaker-wave span:nth-child(1){height:4px;animation-delay:0s}
+.speaker-wave span:nth-child(2){height:10px;animation-delay:.1s}
+.speaker-wave span:nth-child(3){height:6px;animation-delay:.2s}
+.speaker-wave span:nth-child(4){height:12px;animation-delay:.15s}
+.speaker-wave span:nth-child(5){height:4px;animation-delay:.05s}
+@keyframes wave{0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.8)}}
+
+/* typing */
+.typing {
+  display: flex; gap: 4px; padding: 12px 16px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 18px; border-bottom-left-radius: 5px; width: fit-content;
+}
+.dot { width: 7px; height: 7px; border-radius: 50%; background: var(--gold); animation: bounce .9s infinite; }
+.dot:nth-child(2){animation-delay:.15s} .dot:nth-child(3){animation-delay:.3s}
+@keyframes bounce{0%,80%,100%{transform:translateY(0);opacity:.6}40%{transform:translateY(-7px);opacity:1}}
+
+/* input bar */
+.input-bar {
+  width: 100%; max-width: 700px;
+  padding: 10px 14px 18px;
+  display: flex; gap: 8px;
+  background: var(--bg); position: sticky; bottom: 0;
+}
+#user-input {
+  flex: 1; padding: 12px 18px;
+  border: 2px solid var(--border); border-radius: 30px;
+  font-family: 'Baloo 2', cursive; font-size: .92rem;
+  outline: none; background: var(--surface); color: var(--text);
+  transition: border-color .2s, box-shadow .2s;
+}
+#user-input::placeholder { color: var(--muted); }
+#user-input:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(245,158,11,.12); }
+
+#send-btn {
+  width: 48px; height: 48px; border-radius: 50%; border: none;
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  color: white; font-size: 1.1rem; cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 3px 14px rgba(245,158,11,.4); flex-shrink: 0;
+}
+#send-btn:hover { transform: scale(1.08); box-shadow: 0 5px 20px rgba(245,158,11,.55); }
+#send-btn:disabled { opacity: .5; transform: none; }
+
+/* result modal */
+.result-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.75); backdrop-filter: blur(6px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 100; opacity: 0; pointer-events: none; transition: opacity .3s;
+}
+.result-overlay.show { opacity: 1; pointer-events: all; }
+.result-card {
+  background: linear-gradient(135deg, #132015, #0c1a0e);
+  border: 2px solid var(--gold-dark);
+  border-radius: 24px; padding: 36px 40px;
+  text-align: center; max-width: 380px; width: 90%;
+  box-shadow: 0 20px 60px rgba(0,0,0,.6);
+  transform: scale(.9); transition: transform .3s cubic-bezier(.34,1.56,.64,1);
+}
+.result-overlay.show .result-card { transform: scale(1); }
+.result-emoji { font-size: 4rem; margin-bottom: 12px; display: block; }
+.result-title {
+  font-family: 'Fredoka One', cursive; font-size: 1.7rem; margin-bottom: 6px;
+  background: linear-gradient(90deg, var(--gold), #fde68a);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.result-score { font-size: 3rem; font-weight: 900; margin: 10px 0; color: white; }
+.result-msg { color: var(--muted); font-size: .9rem; margin-bottom: 22px; }
+.result-btn {
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  border: none; border-radius: 30px; padding: 12px 30px;
+  color: white; font-family: 'Baloo 2', cursive; font-weight: 800;
+  font-size: 1rem; cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+  box-shadow: 0 4px 16px rgba(245,158,11,.35);
+}
+.result-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 22px rgba(245,158,11,.5); }
+
+/* scenario card for identify questions */
+.scenario-card {
+  background: rgba(245,158,11,.07);
+  border: 1px solid rgba(245,158,11,.25);
+  border-radius: 12px; padding: 10px 14px;
+  margin: 8px 0 6px; font-style: italic;
+  font-size: .87rem; color: #fde68a; line-height: 1.5;
+}
+
+/* ── Notes Panel ─────────────────────────────────────────────── */
+.notes-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.78); backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 200; opacity: 0; pointer-events: none; transition: opacity .3s;
+}
+.notes-overlay.show { opacity: 1; pointer-events: all; }
+.notes-panel {
+  background: linear-gradient(160deg, #0c1a0e, #132015);
+  border: 2px solid var(--gold-dark);
+  border-radius: 20px;
+  width: 92%; max-width: 720px;
+  max-height: 88vh;
+  display: flex; flex-direction: column;
+  box-shadow: 0 24px 60px rgba(0,0,0,.7);
+  overflow: hidden;
+  transform: translateY(30px);
+  transition: transform .35s cubic-bezier(.34,1.2,.64,1);
+}
+.notes-overlay.show .notes-panel { transform: translateY(0); }
+.notes-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 22px; border-bottom: 1px solid var(--border);
+  background: linear-gradient(135deg, #14532d44, #1e3a5f44);
+}
+.notes-header h2 { font-family: 'Fredoka One', cursive; font-size: 1.3rem; color: var(--gold); }
+.notes-close {
+  width: 34px; height: 34px; border-radius: 50%;
+  border: 1.5px solid var(--border); background: var(--surface2);
+  color: var(--text); font-size: 1rem; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; transition: all .2s;
+}
+.notes-close:hover { background: #b91c1c; border-color: #ef4444; }
+.notes-body { overflow-y: auto; padding: 20px 22px; flex: 1; }
+.notes-body::-webkit-scrollbar { width: 4px; }
+.notes-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+.notes-topic { margin-bottom: 28px; }
+.notes-topic-title {
+  font-family: 'Fredoka One', cursive; font-size: 1.05rem;
+  color: var(--gold); margin-bottom: 10px;
+  padding-bottom: 6px; border-bottom: 1px solid var(--border);
+}
+.notes-item {
+  display: flex; gap: 10px; align-items: flex-start;
+  padding: 7px 0; border-bottom: 1px solid rgba(255,255,255,.04);
+  font-size: .87rem; line-height: 1.55;
+}
+.notes-item:last-child { border-bottom: none; }
+.notes-term { font-weight: 800; color: var(--gold); min-width: 150px; flex-shrink: 0; font-size: .84rem; }
+.notes-def { color: #d1fae5; }
+.notes-tabs {
+  display: flex; flex-wrap: wrap; gap: 8px; padding: 14px 22px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(0,0,0,.15);
+}
+.notes-tab {
+  padding: 12px 20px; border-radius: 10px;
+  border: 1.5px solid var(--border); 
+  background: rgba(255,255,255,.04); color: var(--muted);
+  font-family: 'Baloo 2', cursive; font-size: .9rem; font-weight: 700;
+  cursor: pointer; transition: all .15s; white-space: nowrap;
+  min-height: 48px; display: flex; align-items: center;
+}
+.notes-tab.active { background: var(--surface); color: var(--gold); border-color: var(--gold-dark); }
+.notes-tab:hover:not(.active) { color: var(--text); background: var(--surface2); }
+.notes-section { display: none; }
+.notes-section.active { display: block; }
+
+
+/* ── Print button in notes header ─────────────────────────────── */
+.notes-header-actions { display: flex; align-items: center; gap: 10px; }
+.print-btn {
+  display: flex; align-items: center; gap: 6px;
+  background: rgba(245,158,11,.12);
+  border: 1.5px solid rgba(245,158,11,.4);
+  color: var(--gold);
+  border-radius: 20px;
+  padding: 7px 14px;
+  font-family: 'Baloo 2', cursive;
+  font-size: .78rem;
+  font-weight: 800;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all .15s;
+}
+.print-btn:hover { background: var(--gold); color: #0c1a0e; border-color: var(--gold); }
+.print-btn.active { background: var(--gold); color: #0c1a0e; border-color: var(--gold); }
+
+/* ── On-screen Practice Test / Answer Key ─────────────────────── */
+.ptest-part-title {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1rem;
+  color: var(--gold);
+  margin: 22px 0 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+.ptest-part-title:first-child { margin-top: 0; }
+.ptest-q {
+  font-size: .87rem;
+  line-height: 1.6;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed rgba(255,255,255,.06);
+  color: #d1fae5;
+}
+.ptest-q b { color: var(--gold); }
+.ptest-q .opt { display: block; margin: 2px 0 2px 18px; color: #d1fae5; }
+.ptest-bank {
+  background: rgba(59,130,246,.08);
+  border: 1px solid rgba(59,130,246,.3);
+  border-radius: 10px;
+  padding: 10px 16px;
+  margin-bottom: 14px;
+  font-size: .82rem;
+  color: #dbeafe;
+  line-height: 1.6;
+}
+.key-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.key-pill {
+  background: rgba(245,158,11,.1);
+  border: 1px solid rgba(245,158,11,.25);
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: .78rem;
+  color: #fde68a;
+}
+.key-pill b { color: #34d399; }
+
+/* ── Print / Save-as-PDF styles ──────────────────────────────────
+   By default everything is hidden from print. When body carries
+   .printing-test, only #print-area (a light-themed clone of the
+   Practice Test + Answer Key) is shown, laid out for paper. ──── */
+@media print {
+  body * { visibility: hidden; }
+  #print-area, #print-area * { visibility: visible; }
+  #print-area {
+    display: block !important;
+    position: absolute; top: 0; left: 0; width: 100%;
+    background: #fff; color: #14290f;
+    font-family: 'Helvetica', Arial, sans-serif;
+    font-size: 10.5pt;
+    line-height: 1.5;
+  }
+  #print-area .p-cover { text-align: center; padding-top: 40px; }
+  #print-area .p-cover .p-icon { font-size: 34pt; }
+  #print-area .p-cover h1 { font-size: 19pt; color: #b45309; margin: 8px 0 4px; }
+  #print-area .p-cover .p-sub { font-size: 10.5pt; color: #166534; margin-bottom: 20px; }
+  #print-area .p-info-box {
+    border: 1.5px solid #fcd34d; border-radius: 10px;
+    max-width: 460px; margin: 0 auto 20px; padding: 14px 20px;
+    text-align: left; font-size: 10pt;
+  }
+  #print-area .p-info-box div { margin: 6px 0; border-bottom: 1px dotted #fde68a; padding-bottom: 6px; }
+  #print-area .p-instructions {
+    max-width: 460px; margin: 0 auto; text-align: left;
+    background: #fffbeb; border: 1px solid #fcd34d; border-radius: 10px;
+    padding: 12px 18px; font-size: 9.5pt; color: #78350f;
+  }
+  #print-area h2.p-part-title {
+    font-size: 12.5pt; color: #fff;
+    background: linear-gradient(135deg, #b45309, #14532d) !important;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    padding: 6px 12px; border-radius: 7px; margin: 18px 0 10px;
+    page-break-after: avoid;
+  }
+  #print-area .p-bank {
+    background: #f0fdf4 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    border: 1px solid #86efac; border-radius: 8px; padding: 8px 14px;
+    margin-bottom: 12px; font-size: 9.5pt; color: #14532d;
+  }
+  #print-area .p-q {
+    margin-bottom: 8px; padding-bottom: 8px;
+    border-bottom: 1px dotted #fde68a; font-size: 10pt;
+    page-break-inside: avoid; color: #14290f;
+  }
+  #print-area .p-q b { color: #b45309; }
+  #print-area .p-q .p-blank { display: inline-block; min-width: 65px; border-bottom: 1px solid #64748b; }
+  #print-area .p-q .p-opt { display: block; margin: 2px 0 0 20px; color: #365314; }
+  #print-area .p-break { page-break-before: always; }
+  #print-area .p-key-part-title {
+    font-size: 11pt; color: #b45309; font-weight: bold;
+    margin: 14px 0 8px; border-bottom: 2px solid #b45309; padding-bottom: 4px;
+  }
+  #print-area .p-key-grid {
+    display: grid; grid-template-columns: repeat(5, 1fr);
+    gap: 5px 8px; margin-bottom: 14px;
+  }
+  #print-area .p-key-pill {
+    background: #f0fdf4 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    border: 1px solid #86efac; border-radius: 6px;
+    padding: 4px 8px; font-size: 8.5pt; color: #166534;
+  }
+  #print-area .p-key-pill b { color: #b45309; }
+  @page { size: letter; margin: 1.5cm 1.8cm; }
+}
+#print-area { display: none; }
+
+
+/* ── Chapter Summary / Tandaan / Memory boxes (fix: previously missing) ── */
+.chapter-summary {
+  background: linear-gradient(135deg, rgba(59,130,246,.1), rgba(34,197,94,.08));
+  border: 1px solid rgba(59,130,246,.25);
+  border-left: 4px solid var(--blue);
+  border-radius: 12px;
+  padding: 14px 18px;
+  margin-bottom: 18px;
+  font-size: .88rem;
+  line-height: 1.65;
+  color: #dbeafe;
+}
+.tandaan-box {
+  background: rgba(245,158,11,.08);
+  border: 1px solid rgba(245,158,11,.3);
+  border-left: 4px solid var(--gold);
+  border-radius: 12px;
+  padding: 12px 18px;
+  margin: 14px 0;
+  font-size: .86rem;
+  line-height: 1.6;
+  color: #fde68a;
+}
+.tandaan-label {
+  display: block;
+  font-family: 'Baloo 2', cursive;
+  font-size: .8rem;
+  color: var(--gold);
+  letter-spacing: .5px;
+  margin-bottom: 5px;
+}
+.memory-box {
+  background: rgba(34,197,94,.08);
+  border: 1px solid rgba(34,197,94,.3);
+  border-left: 4px solid var(--green);
+  border-radius: 12px;
+  padding: 12px 18px;
+  margin: 14px 0 22px;
+  font-size: .86rem;
+  line-height: 1.6;
+  color: #bbf7d0;
+}
+.memory-label {
+  display: block;
+  font-family: 'Baloo 2', cursive;
+  font-size: .8rem;
+  color: var(--green);
+  letter-spacing: .5px;
+  margin-bottom: 5px;
+}
+.compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0 20px;
+  font-size: .82rem;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.compare-table th {
+  background: linear-gradient(135deg, var(--blue-dark), var(--gold-dark));
+  color: white;
+  text-align: left;
+  padding: 9px 12px;
+  font-size: .78rem;
+  text-transform: uppercase;
+  letter-spacing: .4px;
+}
+.compare-table td {
+  padding: 9px 12px;
+  border-top: 1px solid var(--border);
+  color: var(--text);
+  vertical-align: top;
+}
+.compare-table tr:nth-child(even) td { background: rgba(255,255,255,.02); }
+
+/* ── Story Box (for reading Bible stories aloud) ─────────────────── */
+.story-box {
+  background: rgba(255,255,255,.03);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px 20px;
+  margin-bottom: 16px;
+  font-size: .92rem;
+  line-height: 1.8;
+  color: var(--text);
+}
+.story-box p { margin-bottom: 10px; }
+.story-box p:last-child { margin-bottom: 0; }
+.story-ref {
+  display: block;
+  text-align: right;
+  font-style: italic;
+  color: var(--muted);
+  font-size: .8rem;
+  margin-top: 10px;
+}
+.story-label {
+  display: block;
+  font-family: 'Baloo 2', cursive;
+  font-size: .9rem;
+  color: var(--gold);
+  letter-spacing: .5px;
+  margin-bottom: 10px;
+}
+/* ── Raw Notes (original document view) ──────────────────────── */
+.rawnotes-intro {
+  font-size: .82rem;
+  color: var(--muted);
+  line-height: 1.6;
+  background: rgba(59,130,246,.1);
+  border: 1px solid rgba(59,130,246,.3);
+  border-left: 4px solid var(--blue);
+  border-radius: 10px;
+  padding: 12px 18px;
+  margin-bottom: 20px;
+}
+.rawnotes-doc {
+  font-family: 'Lora', Georgia, serif;
+  line-height: 1.75;
+}
+.rawnotes-doc p {
+  font-size: .95rem;
+  margin-bottom: 14px;
+  color: #e2f5e6;
+}
+.rawnotes-doc strong { color: var(--gold); font-weight: 700; }
+.rawnotes-doc em { color: var(--muted); font-style: italic; }
+.rawnotes-doc h3.doc-heading {
+  font-family: 'Baloo 2', cursive;
+  font-size: 1.05rem;
+  color: var(--gold);
+  margin: 26px 0 12px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid var(--border);
+}
+.rawnotes-doc h3.doc-heading:first-child { margin-top: 0; }
+.rawnotes-doc ul, .rawnotes-doc ol {
+  margin: 0 0 14px 26px;
+  color: #e2f5e6;
+}
+.rawnotes-doc li { margin-bottom: 6px; font-size: .95rem; }
+.rawnotes-doc table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0 20px;
+  font-size: .82rem;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.rawnotes-doc th {
+  background: linear-gradient(135deg, var(--blue-dark), var(--gold-dark));
+  color: white;
+  text-align: left;
+  padding: 9px 12px;
+  font-size: .78rem;
+}
+.rawnotes-doc td {
+  padding: 9px 12px;
+  border-top: 1px solid var(--border);
+  color: var(--text);
+  vertical-align: top;
+}
+.rawnotes-doc tr:nth-child(even) td { background: rgba(255,255,255,.02); }
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE: TABLET (≤820px)
+   ═══════════════════════════════════════════════════════════════ */
+@media (max-width: 820px) {
+  .notes-panel { width: 95%; max-height: 92vh; }
+  .notes-tabs { padding: 12px 16px; gap: 6px; }
+  .notes-tab { padding: 10px 14px; font-size: .82rem; min-height: 42px; }
+  .notes-body { padding: 16px; }
+  .notes-header { padding: 14px 16px; }
+  .chat-wrap { padding: 14px 10px 0; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE: MOBILE (≤600px)
+   ═══════════════════════════════════════════════════════════════ */
+@media (max-width: 600px) {
+  header {
+    padding: 10px 12px;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .header-icon { font-size: 1.5rem; }
+  header h1 { font-size: 1.05rem; line-height: 1.2; }
+  header .sub { font-size: .62rem; }
+  .header-controls { gap: 6px; margin-left: auto; }
+  .score-pill { padding: 4px 10px; font-size: .74rem; }
+  .audio-btn { width: 32px; height: 32px; font-size: .85rem; }
+
+  .chat-wrap { padding: 10px 6px 0; }
+  #chat-box { gap: 12px; }
+  .bubble { max-width: 88%; font-size: .88rem; padding: 10px 13px; }
+  .avatar { width: 30px; height: 30px; font-size: .85rem; }
+
+  .chip { font-size: .78rem; padding: 7px 12px; }
+  .mc-btn { font-size: .84rem; padding: 10px 12px; }
+  .mc-btn .letter { width: 22px; height: 22px; font-size: .74rem; }
+  .topic-tag { font-size: .68rem; }
+  .scenario-card { font-size: .88rem; padding: 10px 14px; }
+
+  .input-bar { padding: 8px 8px calc(8px + env(safe-area-inset-bottom)); gap: 8px; }
+  #user-input { font-size: .88rem; padding: 10px 14px; }
+  #send-btn { width: 40px; height: 40px; font-size: 1rem; }
+
+  .result-card { width: 92%; padding: 26px 20px; }
+  .result-emoji { font-size: 2.6rem; }
+  .result-title { font-size: 1.2rem; }
+  .result-score { font-size: 1.8rem; }
+
+  /* ── Notes panel: near-full-screen on phones ── */
+  .notes-overlay { align-items: flex-end; }
+  .notes-panel {
+    width: 100%; max-width: 100%;
+    max-height: 94vh;
+    border-radius: 20px 20px 0 0;
+    border-left: none; border-right: none; border-bottom: none;
+  }
+  .notes-header { padding: 12px 14px; flex-wrap: wrap; gap: 8px; }
+  .notes-header h2 { font-size: 1.05rem; flex: 1 1 100%; }
+  .notes-header-actions { flex-wrap: wrap; gap: 6px; width: 100%; justify-content: flex-start; }
+  .print-btn { font-size: .7rem; padding: 6px 11px; }
+  .notes-close { width: 30px; height: 30px; font-size: .9rem; margin-left: auto; }
+
+  .notes-tabs { padding: 10px 12px; gap: 5px; }
+  .notes-tab { padding: 8px 12px; font-size: .76rem; min-height: 38px; }
+  .notes-body { padding: 14px; }
+
+  .notes-item { flex-direction: column; gap: 2px; }
+  .notes-term { min-width: 0; font-size: .82rem; }
+  .notes-def { font-size: .84rem; }
+  .notes-topic-title { font-size: .95rem; }
+  .chapter-summary, .memory-box, .tandaan-box, .story-box, .verse-card { font-size: .82rem; padding: 12px 14px; }
+
+  /* ── Tables: allow horizontal scroll instead of squeezing ── */
+  .compare-table { display: block; overflow-x: auto; white-space: nowrap; }
+  .compare-table th, .compare-table td { white-space: normal; min-width: 110px; }
+
+  .key-grid { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 5px; }
+  .key-pill { font-size: .72rem; padding: 5px 8px; }
+  .ptest-part-title { font-size: .92rem; }
+  .ptest-q { font-size: .82rem; }
+  .ptest-bank { font-size: .78rem; padding: 8px 12px; }
+
+  .rawnotes-doc p, .rawnotes-doc li { font-size: .87rem; }
+  .rawnotes-doc h3.doc-heading { font-size: .95rem; }
+  .rawnotes-doc table { display: block; overflow-x: auto; white-space: nowrap; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE: VERY SMALL PHONES (≤380px)
+   ═══════════════════════════════════════════════════════════════ */
+@media (max-width: 380px) {
+  header h1 { font-size: .92rem; }
+  header .sub { display: none; }
+  .score-pill span { font-size: .7rem; }
+  .bubble { max-width: 92%; font-size: .84rem; }
+  .notes-tab { font-size: .7rem; padding: 7px 10px; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE: LANDSCAPE PHONES (short height)
+   ═══════════════════════════════════════════════════════════════ */
+@media (max-height: 480px) and (orientation: landscape) {
+  .notes-panel { max-height: 98vh; }
+  .notes-tabs { padding: 6px 12px; }
+  .notes-tab { min-height: 32px; padding: 6px 10px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-icon">🌱</div>
+  <div>
+    <h1>Body Systems &amp; Plants</h1>
+    <div class="sub">Nervous · Endocrine · Reproductive Systems · Root &amp; Shoot Systems · Flowers, Fruits &amp; Seeds</div>
+  </div>
+  <div class="header-controls">
+    <div class="score-pill">⭐ <span id="score-val">0</span> / <span id="total-val">0</span></div>
+    <button class="audio-btn" id="notes-toggle" title="Open Reviewer" onclick="document.getElementById('notes-overlay').classList.add('show')">📖</button>
+    <button class="audio-btn active" id="audio-toggle" title="Toggle Audio">🔊</button>
+  </div>
+</header>
+
+<div class="chat-wrap">
+  <div id="chat-box"></div>
+</div>
+
+<div class="input-bar">
+  <input type="text" id="user-input" placeholder="Type your answer here…" autocomplete="off" />
+  <button id="send-btn">➤</button>
+</div>
+
+<div class="result-overlay" id="result-overlay">
+  <div class="result-card">
+    <span class="result-emoji" id="res-emoji">🏆</span>
+    <div class="result-title">Quiz Complete!</div>
+    <div class="result-score"><span id="res-score">0</span>/<span id="res-total">0</span></div>
+    <div class="result-msg" id="res-msg">Great job!</div>
+    <button class="result-btn" onclick="restartApp()">🔄 Maglaro Ulit</button>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+// QUESTION BANK
+// ═══════════════════════════════════════════════════════════════
+const topics = {
+
+  "The Nervous System": [
+    { q: "What three major organs make up the nervous system?", a: "The brain, spinal cord, and nerves", hint: "The control center and its connections." },
+    { q: "What are the three major regions of the brain?", a: "Cerebrum, cerebellum, and brain stem", hint: "Each has a different role." },
+    { q: "What is the brain?", a: "The control center of the body in humans and most animals", hint: "It manages everything the body does." },
+    { q: "What connects to the brain and has nerve cells branching out to the body?", a: "The spinal cord", hint: "It's protected by the backbone." },
+    { q: "What is the largest part of the brain, and how is it divided?", a: "The cerebrum; the right half controls the left side of the body, and the left half controls the right side", hint: "It's split into two halves with a crossed-over control pattern." },
+    { q: "What makes nerve cells special?", a: "They are so sensitive that they can transmit messages rapidly to the brain", hint: "Speed and sensitivity are key." },
+    { q: "What does the brain do with messages from nerve cells?", a: "It interprets the message, which causes you to react", hint: "Interpretation leads to a response." },
+    { q: "What organ system is responsible for body movements, including involuntary actions that do not need thinking?", a: "The nervous system", hint: "It controls both voluntary and involuntary actions." },
+  ],
+
+  "The Endocrine System": [
+    { q: "What are hormones?", a: "Chemical messengers that tell certain organs what to do", hint: "They carry instructions through the blood." },
+    { q: "What is the endocrine system?", a: "A system composed of glands that produce hormones that regulate bodily functions", hint: "Made up of glands, not organs like the brain." },
+    { q: "What gland controls how you grow, and where is it located?", a: "The pituitary gland, located just below the brain", hint: "It affects height and body size." },
+    { q: "What are the adrenal glands, and where are they located?", a: "A pair of glands that sit on top of each kidney", hint: "Think of them as little caps on the kidneys." },
+    { q: "What hormone do the adrenal glands produce?", a: "Adrenaline", hint: "It's released when you're scared or excited." },
+    { q: "What does adrenaline help you do?", a: "Respond quickly when you are scared, excited, or facing a threat", hint: "It's part of the body's quick-reaction system." },
+    { q: "What hormone does the pancreas produce, and what does it regulate?", a: "Insulin, which regulates the amount of sugar in the body", hint: "It's important for managing blood sugar." },
+    { q: "What hormone do the testes produce?", a: "Testosterone", hint: "It facilitates male secondary characteristics." },
+    { q: "What hormones do the ovaries produce?", a: "Estrogen and progesterone", hint: "These facilitate female secondary sex characteristics." },
+  ],
+
+  "The Reproductive System": [
+    { q: "What is reproduction?", a: "The process by which an organism produces offspring of its own kind", hint: "It ensures a species continues." },
+    { q: "What are the two main ways living things can make new ones?", a: "Sexual reproduction and asexual reproduction", hint: "One needs two parents, the other needs one." },
+    { q: "What cell does the male parent contribute in sexual reproduction?", a: "A sperm cell", hint: "A special reproductive cell." },
+    { q: "What cell does the female parent contribute in sexual reproduction?", a: "An egg cell called an ovum", hint: "This cell joins with the sperm." },
+    { q: "What is fertilization?", a: "The process when a sperm meets and joins with an ovum, starting the growth of a new organism", hint: "The starting point of a new life." },
+    { q: "How many parents does asexual reproduction need?", a: "Only one", hint: "No sperm or egg is needed." },
+    { q: "What protects the testes and keeps them at a cooler temperature?", a: "The scrotum", hint: "A protective sac." },
+    { q: "What is semen?", a: "The mixture of fluids and sperm", hint: "It protects sperm and helps with transport." },
+    { q: "Where does sperm mature before traveling through the vas deferens?", a: "The epididymis", hint: "A structure near the testes." },
+    { q: "What hormone causes changes in the female body, and where is it produced?", a: "Estrogen, produced in the ovaries", hint: "The female counterpart to testosterone." },
+    { q: "What organ do the ovaries attach to on either side?", a: "The uterus", hint: "The muscular organ that houses a developing baby." },
+    { q: "What is a zygote?", a: "The fertilized egg, which moves to the uterus", hint: "This forms right after fertilization." },
+    { q: "What is menstruation?", a: "The process when an unfertilized egg cell is released through the vagina or birth canal", hint: "A monthly process in the female body." },
+  ],
+
+  "Plant Parts: The Root System": [
+    { q: "Into what two groups are plant parts divided?", a: "The root system and the shoot system", hint: "One is underground, one is above." },
+    { q: "What does the root system do for a plant?", a: "Anchors the plant in place, absorbs water and nutrients, and can act as storage of excess food", hint: "Three jobs in one system." },
+    { q: "What are fibrous roots?", a: "Roots that grow close to the surface and are soft and tiny", hint: "Shallow and delicate." },
+    { q: "Give an example of a plant with fibrous roots.", a: "Grasses", hint: "Very common all around us." },
+    { q: "What are taproots?", a: "Thick, fleshy, strong roots that grow deep in the soil with smaller rootlets that branch out", hint: "One big central root." },
+    { q: "Give examples of taproots people eat.", a: "Carrot, radish, gabi, or beet", hint: "Common root vegetables." },
+    { q: "What are epiphytes?", a: "Rain forest plants that grow high on trees, clinging to stems and branches of bigger plants", hint: "They don't grow rooted in soil." },
+    { q: "How do epiphyte roots get water and nutrients?", a: "Through aboveground roots capable of absorbing moisture and nutrients from the air", hint: "Their roots work differently from typical plants." },
+    { q: "Give examples of epiphytes.", a: "Orchids, bromeliads, and some ferns", hint: "Often seen growing on tree trunks." },
+    { q: "What are hydrophytes?", a: "Aquatic plants that grow in water environments such as ponds, paddies, rivers, lakes, and marshes", hint: "Water-loving plants." },
+    { q: "What structures let the lotus and water lily float on water?", a: "Flat leaves that serve as floating structures", hint: "Their leaves are shaped for a purpose." },
+  ],
+
+  "Plant Parts: The Shoot System": [
+    { q: "What does the shoot system of a plant consist of?", a: "The aboveground parts — stem, branches, leaves, flowers, fruits, and seeds", hint: "Everything you see above the soil." },
+    { q: "What is the shoot system important for?", a: "The food-making process and propagation", hint: "Two major jobs." },
+    { q: "What does the stem do?", a: "Supports the plant", hint: "Think of it as the plant's backbone." },
+    { q: "What two specialized tissues are found in the stem?", a: "Xylem and phloem", hint: "Both are types of transport tissue." },
+    { q: "What does the xylem do?", a: "Allows the transport of water from the roots to the upper parts of the plant", hint: "It carries water upward." },
+    { q: "What does the phloem do?", a: "Facilitates transport of food throughout the plant", hint: "It carries food, not water." },
+    { q: "What is the difference between woody and herbaceous stems?", a: "Woody stems are hard and strong, while herbaceous stems are soft", hint: "Think of a tree trunk versus a bean stalk." },
+    { q: "What is a tree's main stem called?", a: "The trunk", hint: "The thick central stem of a tree." },
+    { q: "How can you tell a tree's age?", a: "By counting the rings underneath the bark", hint: "Each ring often represents a year of growth." },
+    { q: "Why do bougainvillea plants have thorns?", a: "To prevent animals from eating them", hint: "A defense mechanism." },
+    { q: "What is a thorn?", a: "A modified branch or stem of a plant", hint: "It's a changed version of another plant part." },
+    { q: "What are spines?", a: "Protective modified leaves", hint: "Different from thorns, but with a similar purpose." },
+    { q: "Why do desert plants have thick succulent stems?", a: "To store large amounts of water, since water is scarce in their environment", hint: "Their stems act like water tanks." },
+    { q: "What is photosynthesis?", a: "The process by which leaves make food, using chlorophyll, carbon dioxide, sunlight, and water to produce sugar", hint: "The plant's food-making process." },
+    { q: "What other product is made during photosynthesis, besides sugar?", a: "Oxygen", hint: "This is what humans and animals need to breathe." },
+    { q: "What connects a leaf to the stem?", a: "The petiole", hint: "A small stalk-like connector." },
+    { q: "What is the midrib of a leaf?", a: "The central vein that provides structure and sends water and food to the rest of the leaf", hint: "It runs down the middle of the leaf." },
+    { q: "What is the leaf blade or lamina?", a: "The expanded, flat portion of the leaf", hint: "The wide, flat part you usually picture." },
+    { q: "What is the waxy outer layer of a leaf called, and what does it do?", a: "The cuticle; it helps regulate loss of water", hint: "It's a protective coating." },
+  ],
+
+  "Flowers, Fruits, and Seeds": [
+    { q: "Why are flowers colorful?", a: "To attract insects and some birds to gather nectar", hint: "Bright colors serve a purpose." },
+    { q: "What is nectar?", a: "A sugar-rich liquid", hint: "It's what attracts pollinators." },
+    { q: "What is pollination?", a: "The transfer of pollen grains from the anther to the stigma of a flower", hint: "A key step before seeds can form." },
+    { q: "What happens after the male sex cell from the pollen grain reaches the ovule?", a: "The cells unite to produce seeds", hint: "This is fertilization in plants." },
+    { q: "What is a fruit?", a: "The ripened ovary that encloses seeds", hint: "It grows to protect what's inside." },
+    { q: "Name ways seeds can be scattered.", a: "Through wind, water, animals, people, or special structures such as hooks and spines", hint: "Several different methods." },
+    { q: "What plant has spines that cling to animal skin and clothing to scatter its seeds?", a: "Amor seco", hint: "Its seeds hitch a ride." },
+    { q: "Name three plants with fruits that explode when dried to scatter seeds.", a: "Mahogany, ipil-ipil, and madre de cacao", hint: "Their fruits burst open on their own." },
+  ],
+
+};
+
+// ── TRUE OR FALSE ────────────────────────────────────────────────────────────
+const trueOrFalse = [
+  { q: "The nervous system is the control center of the body.", a: "true" },
+  { q: "The cerebrum is the smallest part of the brain.", a: "false" },
+  { q: "The right half of the brain controls the right side of the body.", a: "false" },
+  { q: "Hormones are chemical messengers produced by the endocrine system.", a: "true" },
+  { q: "The pituitary gland is located just below the brain.", a: "true" },
+  { q: "The adrenal glands produce insulin.", a: "false" },
+  { q: "The pancreas regulates the amount of sugar in the body through insulin.", a: "true" },
+  { q: "The testes produce estrogen.", a: "false" },
+  { q: "Sexual reproduction only needs one parent.", a: "false" },
+  { q: "Fertilization happens when a sperm meets and joins with an ovum.", a: "true" },
+  { q: "The scrotum protects the testes and keeps them warmer than the rest of the body.", a: "false" },
+  { q: "A zygote is an unfertilized egg cell.", a: "false" },
+  { q: "Plant parts are divided into the root system and the shoot system.", a: "true" },
+  { q: "Fibrous roots grow deep into the soil and are thick and fleshy.", a: "false" },
+  { q: "Epiphytes have aboveground roots that absorb moisture and nutrients from the air.", a: "true" },
+  { q: "The xylem transports food throughout the plant, while the phloem transports water.", a: "false" },
+  { q: "Woody stems are soft, while herbaceous stems are hard and strong.", a: "false" },
+  { q: "The rings underneath a tree's bark can indicate its age.", a: "true" },
+  { q: "Photosynthesis produces sugar and oxygen.", a: "true" },
+  { q: "Pollination is the transfer of pollen grains from the stigma to the anther.", a: "false" },
+  { q: "Fruits with explosive mechanisms help scatter seeds.", a: "true" },
+  { q: "The uterus is the organ that produces the egg cell each month.", a: "false" },
+];
+
+// ── IDENTIFY: ORGAN→SYSTEM · ROOT/SHOOT · PLANT PART · MULTIPLE CHOICE ──────
+const identifyQuestions = [
+  { q: "Adrenal glands", a: "Endocrine", choices: ["Endocrine","Nervous","Reproductive","Digestive"] },
+  { q: "Brain", a: "Nervous", choices: ["Nervous","Endocrine","Reproductive","Circulatory"] },
+  { q: "Pituitary gland", a: "Endocrine", choices: ["Endocrine","Nervous","Reproductive","Excretory"] },
+  { q: "Scrotum", a: "Reproductive", choices: ["Reproductive","Endocrine","Nervous","Excretory"] },
+  { q: "Spinal cord", a: "Nervous", choices: ["Nervous","Endocrine","Reproductive","Circulatory"] },
+  { q: "Uterus", a: "Reproductive", choices: ["Reproductive","Endocrine","Nervous","Digestive"] },
+  { q: "Anchors the plant to the soil.", a: "Root System", choices: ["Root System","Shoot System"] },
+  { q: "Produces food.", a: "Shoot System", choices: ["Shoot System","Root System"] },
+  { q: "Absorbs water from the soil.", a: "Root System", choices: ["Root System","Shoot System"] },
+  { q: "Contains colorful plant reproductive structures.", a: "Shoot System", choices: ["Shoot System","Root System"] },
+  { q: "Sends nutrients to the upper parts of the plant.", a: "Shoot System", choices: ["Shoot System","Root System"] },
+  { q: "Makes food through the green substance called chlorophyll.", a: "Leaf", choices: ["Leaf","Root","Stem","Flower"] },
+  { q: "Absorbs water and minerals from the soil.", a: "Root", choices: ["Root","Leaf","Stem","Seed"] },
+  { q: "Provides support and sends water and minerals to the upper parts of the plant.", a: "Stem", choices: ["Stem","Root","Leaf","Fruit"] },
+  { q: "Produced through the union of pollen grains and ovules.", a: "Seed", choices: ["Seed","Fruit","Flower","Leaf"] },
+  { q: "Most attractive part of a plant.", a: "Flower", choices: ["Flower","Fruit","Seed","Leaf"] },
+  { q: "Which organ system is responsible for body movements, including involuntary actions or actions that do not need thinking?", a: "nervous system", choices: ["integumentary system","digestive system","circulatory system","nervous system"] },
+  { q: "Which plant organ system is responsible for anchoring a plant to the soil?", a: "root system", choices: ["root system","shoot system","leaf system","soil system"] },
+  { q: "Which plant part produces food for the plant through photosynthesis?", a: "leaf", choices: ["flower","leaf","roots","stem"] },
+  { q: "Which vascular tissue sends water from the roots to the upper parts of the plant?", a: "xylem", choices: ["phloem","bark","xylem","capillaries"] },
+  { q: "How are insects important to plants?", a: "They are agents of pollination or plant reproduction.", choices: ["They are agents of pollination or plant reproduction.","They eat the leaves and flowers of plants.","They cut good leaves from the plant.","They lay eggs on leaves of plants."] },
+  { q: "Which plant part contains seeds that grow into new plants?", a: "fruit", choices: ["fruit","leaf","stem","root"] },
+  { q: "Why is it important for plants to be placed under the Sun?", a: "Plants need sunlight to make food.", choices: ["Plants grow only in a hot environment.","Plants dry up slower under the Sun.","Plants need sunlight to make food.","Plants absorb water through the leaves faster when planted under the Sun."] },
+  { q: "Which of the following can help you identify the age of a tree?", a: "number of rings in the trunk", choices: ["number of rings in the trunk","number of leaves","number of branches from the main stem","number of roots"] },
+];
+
+// ═══════════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════════
+let state = {
+  awaiting: 'menu',
+  mode: null,
+  questions: [],
+  allAnswers: [],
+  qIndex: 0,
+  score: 0,
+  total: 0,
+  hintUsed: false,
+  audioEnabled: true,
+};
+
+// ═══════════════════════════════════════════════════════════════
+// TTS (UPGRADED FOR TRUE FILIPINO ACCENT)
+// ═══════════════════════════════════════════════════════════════
+let currentAudioStream = null;
+
+function speak(text) {
+  if (!state.audioEnabled) return;
+  
+  // Linisin ang mga nakaraang audio task
+  window.speechSynthesis.cancel();
+  if (currentAudioStream) {
+    currentAudioStream.pause();
+    currentAudioStream = null;
+  }
+  
+  // Tanggalin ang HTML tags at emojis para hindi basahin nang paputol-putol
+  const clean = text.replace(/<[^>]+>/g,'').replace(/[🇵🇭🌟✅❌💡⏭️🏆😊💪🔄🔲📚👋⭐✕🧭📏🗺️]/g,'');
+  
+  // PRIMARY METHOD: Google Translation Engine cloud voice stream (May natural na Filipino accent)
+  const googleTtsUrl = `https://translate.google.com/translate_tts?ie=UTF-8&tl=tl&client=tw-ob&q=${encodeURIComponent(clean)}`;
+  
+  currentAudioStream = new Audio(googleTtsUrl);
+  currentAudioStream.onplaying = () => showWave(true);
+  currentAudioStream.onended = currentAudioStream.onerror = () => showWave(false);
+  
+  currentAudioStream.play().catch(err => {
+    // BACKUP METHOD: Web Speech API (works even without internet)
+    console.warn("Google TTS blocked or offline. Falling back to local system speech engine.");
+    
+    const streamFallback = new SpeechSynthesisUtterance(clean);
+    streamFallback.lang = 'fil-PH';
+    streamFallback.rate = 0.95; streamFallback.pitch = 1.05; streamFallback.volume = 1;
+    
+    const voices = window.speechSynthesis.getVoices();
+    const filVoice = voices.find(v => v.lang.startsWith('fil') || v.lang.startsWith('tl'));
+    const engVoice = voices.find(v => v.lang.startsWith('en') && v.name.toLowerCase().includes('female'))
+                   || voices.find(v => v.lang.startsWith('en'));
+              
+    if (filVoice) {
+      streamFallback.voice = filVoice;
+    } else if (engVoice) {
+      streamFallback.voice = engVoice; 
+      streamFallback.lang = 'en-US'; 
+    }
+    
+    streamFallback.onstart = () => showWave(true);
+    streamFallback.onend = streamFallback.onerror = () => showWave(false);
+    window.speechSynthesis.speak(streamFallback);
+  });
+}
+
+function showWave(on) {
+  document.querySelectorAll('.speaker-wave').forEach(w => w.style.display = on ? 'inline-flex' : 'none');
+}
+
+// I-initialize ang mga boses ng system
+let localSystemVoices = [];
+function lookupSystemVoices() {
+  localSystemVoices = window.speechSynthesis.getVoices();
+}
+lookupSystemVoices();
+if (window.speechSynthesis.onvoiceschanged !== undefined) {
+  window.speechSynthesis.onvoiceschanged = lookupSystemVoices;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// UI HELPERS
+// ═══════════════════════════════════════════════════════════════
+const chatBox = document.getElementById('chat-box');
+const input = document.getElementById('user-input');
+const sendBtn = document.getElementById('send-btn');
+
+function scrollBottom() { chatBox.scrollTop = chatBox.scrollHeight; }
+
+function addMessage(role, html, speakText) {
+  const div = document.createElement('div');
+  div.className = `msg ${role}`;
+  const av = document.createElement('div');
+  av.className = 'avatar';
+  av.textContent = role === 'bot' ? '🤖' : '🧑';
+  const bub = document.createElement('div');
+  bub.className = 'bubble';
+  bub.innerHTML = role === 'bot'
+    ? html + '<span class="speaker-wave" style="display:none"><span></span><span></span><span></span><span></span><span></span></span>'
+    : html;
+  div.appendChild(av); div.appendChild(bub);
+  chatBox.appendChild(div);
+  scrollBottom(); bindChips();
+  if (role === 'bot') {
+    const txt = speakText || html.replace(/<[^>]+>/g,' ');
+    setTimeout(() => speak(txt), 350);
+  }
+}
+
+function addTyping() {
+  const d = document.createElement('div');
+  d.className = 'msg bot'; d.id = 'typing';
+  d.innerHTML = '<div class="avatar">🤖</div><div class="typing"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>';
+  chatBox.appendChild(d); scrollBottom();
+}
+function removeTyping() { const t = document.getElementById('typing'); if(t) t.remove(); }
+
+function bindChips() {
+  document.querySelectorAll('.chip:not([data-bound])').forEach(c => {
+    c.dataset.bound = '1';
+    c.addEventListener('click', () => handleUserMessage(c.dataset.val));
+  });
+}
+
+function updateScore() {
+  document.getElementById('score-val').textContent = state.score;
+  document.getElementById('total-val').textContent = state.total;
+}
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length-1; i > 0; i--) {
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]] = [a[j],a[i]];
+  }
+  return a;
+}
+
+function normalize(s) { return s.toLowerCase().trim().replace(/\s+/g,' '); }
+
+function checkAnswer(user, correct) {
+  const u = normalize(user), c = normalize(correct);
+  if (u === c) return true;
+  if (c.includes(u) && u.length > 5) return true;
+  const parts = c.split(/[,;\/]/);
+  for (const p of parts) if (u.includes(p.trim()) && p.trim().length > 4) return true;
+  return false;
+}
+
+function showResult() {
+  const pct = Math.round((state.score/state.total)*100);
+  const emoji = pct>=90?'🏆':pct>=70?'🌟':pct>=50?'😊':'💪';
+  const msg = pct>=90?'Excellent! You know it all!':pct>=70?'Great job! Keep it up!':pct>=50?'Good! Study a little more!':"Don't give up! Try again!";
+  document.getElementById('res-emoji').textContent = emoji;
+  document.getElementById('res-score').textContent = state.score;
+  document.getElementById('res-total').textContent = state.total;
+  document.getElementById('res-msg').textContent = msg;
+  document.getElementById('result-overlay').classList.add('show');
+  speak(`All done! Your score is ${state.score} out of ${state.total}. ${msg}`);
+}
+
+function restartApp() {
+  document.getElementById('result-overlay').classList.remove('show');
+  state = { awaiting:'menu', mode:null, questions:[], allAnswers:[], qIndex:0, score:0, total:0, hintUsed:false, audioEnabled:state.audioEnabled };
+  chatBox.innerHTML = '';
+  document.querySelector('.input-bar').style.display = 'flex';
+  updateScore();
+  showMenu();
+}
+
+// ═══════════════════════════════════════════════════════════════
+// MC HELPERS
+// ═══════════════════════════════════════════════════════════════
+function getAllAnswers() {
+  const ans = [];
+  for (const qs of Object.values(topics)) for (const q of qs) ans.push(q.a);
+  return ans;
+}
+
+function generateChoices(correct, pool) {
+  const distractors = shuffle(pool.filter(a => a !== correct)).slice(0,3);
+  return shuffle([correct, ...distractors]);
+}
+
+function buildMCBtns(choices, correctAnswer) {
+  const letters = ['A','B','C','D','E'];
+  return `<div class="mc-options">${choices.map((c,i)=>
+    `<button class="mc-btn" data-answer="${encodeURIComponent(c)}" data-correct="${encodeURIComponent(correctAnswer)}" onclick="handleMCClick(this)">
+      <span class="letter">${letters[i]}</span>${c}
+    </button>`
+  ).join('')}</div>`;
+}
+
+function handleMCClick(btn) {
+  const allBtns = btn.closest('.mc-options').querySelectorAll('.mc-btn');
+  allBtns.forEach(b => b.disabled = true);
+  const chosen = decodeURIComponent(btn.dataset.answer);
+  const correct = decodeURIComponent(btn.dataset.correct);
+  const isCorrect = chosen === correct;
+  allBtns.forEach(b => { if(decodeURIComponent(b.dataset.answer)===correct) b.classList.add('correct'); });
+  if (!isCorrect) btn.classList.add('wrong');
+  setTimeout(() => {
+    if (isCorrect) {
+      state.score++;
+      addMessage('bot', `✅ <strong>Correct!</strong> +1 point! The answer is: <strong>${correct}</strong>`, `Correct! The answer is: ${correct}`);
+    } else {
+      addMessage('bot', `❌ <strong>Not quite.</strong> The correct answer is: <strong>${correct}</strong>`, `Not quite. The correct answer is: ${correct}`);
+    }
+    state.qIndex++; updateScore();
+    if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+    else setTimeout(showResult, 900);
+  }, 650);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// NEXT QUESTION
+// ═══════════════════════════════════════════════════════════════
+function nextQuestion() {
+  const qi = state.qIndex;
+  const q = state.questions[qi];
+  const num = qi + 1;
+
+  if (state.mode === 'full' || state.mode === 'topic_mc') {
+    const choices = generateChoices(q.a, state.allAnswers);
+    const tag = q.topic ? `<span class="topic-tag">${q.topic}</span><br>` : '';
+    const html = `${tag}<strong>Q${num} of ${state.total}:</strong> ${q.q}${buildMCBtns(choices, q.a)}`;
+    addMessage('bot', html, `Question ${num}. ${q.q}`);
+    return;
+  }
+
+  if (state.mode === 'tf') {
+    const html = `<strong>Q${num} of ${state.total}:</strong> <div class="scenario-card">${q.q}</div>
+      <span class="chip" data-val="true">✅ True</span><span class="chip" data-val="false">❌ False</span>`;
+    addMessage('bot', html, `Question ${num}. True or False: ${q.q}`);
+    return;
+  }
+
+  if (state.mode === 'identify') {
+    const btns = buildMCBtns(q.choices, q.a);
+    const html = `<strong>Q${num} of ${state.total}:</strong> Identify what is being described:<div class="scenario-card">${q.q}</div>${btns}`;
+    addMessage('bot', html, `Question ${num}. Identify: ${q.q}`);
+    return;
+  }
+
+  // typed answer mode
+  const tag = q.topic ? `<span class="topic-tag">${q.topic}</span><br>` : '';
+  const html = `${tag}<strong>Q${num} of ${state.total}:</strong> ${q.q}<br><small style="color:var(--muted)">Type your answer · type <em>hint</em> for help · <em>skip</em> to move on</small>`;
+  addMessage('bot', html, `Question ${num}. ${q.q}`);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// MENU
+// ═══════════════════════════════════════════════════════════════
+function showMenu() {
+  addMessage('bot',
+    `👋 <strong>Hi! I'm your Science Reviewer!</strong><br>Let's study <em>The Nervous System</em>, <em>The Endocrine System</em>, <em>The Reproductive System</em>, the <em>Root System</em> and <em>Shoot System</em> of plants, and <em>Flowers, Fruits, and Seeds</em>.<br><br>What would you like to do?<br>
+    <span class="chip" data-val="1">📚 Study by Topic</span>
+    <span class="chip" data-val="2">✅ True or False</span>
+    <span class="chip" data-val="3">🌐 Identify</span>
+    <span class="chip" data-val="4">🌟 Full Review (Multiple Choice)</span>`,
+    "Hi! I'm your Science Reviewer on Body Systems and Plants. What would you like to do? Study a topic, True or False, Identify, or a Full Review with multiple choice?"
+  );
+  state.awaiting = 'menu';
+}
+
+// ═══════════════════════════════════════════════════════════════
+// PROCESS MESSAGE
+// ═══════════════════════════════════════════════════════════════
+function processMessage(msg) {
+  const aw = state.awaiting;
+
+  // ── MENU ──────────────────────────────────────────────────
+  if (aw === 'menu') {
+    if (msg === '1') {
+      state.awaiting = 'topic';
+      const keys = Object.keys(topics);
+      const chips = keys.map((t,i) => `<span class="chip" data-val="${i+1}">${i+1}. ${t}</span>`).join(' ');
+      addMessage('bot', `📚 Which topic would you like to study?<br>${chips}`, 'Which topic would you like to study?');
+
+    } else if (msg === '2') {
+      state.mode = 'tf';
+      state.questions = shuffle(trueOrFalse);
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'tf_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `✅ <strong>True or False!</strong> ${state.total} questions. Let's start!`, `True or False! ${state.total} questions. Let's start!`);
+      setTimeout(nextQuestion, 800);
+
+    } else if (msg === '3') {
+      state.mode = 'identify';
+      state.questions = shuffle(identifyQuestions);
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'mc_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `🌐 <strong>Identify!</strong> Match organs to systems, classify root or shoot system parts, and answer plant and body-system questions.`, "Identify! Figure out what's being described in each item.");
+      setTimeout(nextQuestion, 800);
+
+    } else if (msg === '4') {
+      state.mode = 'full';
+      const all = [];
+      for (const [topicName, qs] of Object.entries(topics)) {
+        qs.forEach(q => all.push({...q, topic: topicName}));
+      }
+      state.questions = shuffle(all);
+      state.allAnswers = getAllAnswers();
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'mc_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `🌟 <strong>Full Review — Multiple Choice!</strong> ${state.total} questions. Think carefully!`, `Full Review! Multiple Choice! ${state.total} questions. Think carefully!`);
+      setTimeout(nextQuestion, 800);
+
+    } else {
+      addMessage('bot',
+        `Choose an option:<br>
+        <span class="chip" data-val="1">📚 Study by Topic</span>
+        <span class="chip" data-val="2">✅ True or False</span>
+        <span class="chip" data-val="3">🌐 Identify</span>
+        <span class="chip" data-val="4">🌟 Full Review</span>`,
+        'Choose an option.'
+      );
+    }
+    return;
+  }
+
+  // ── TOPIC SELECT ──────────────────────────────────────────
+  if (aw === 'topic') {
+    const keys = Object.keys(topics);
+    const idx = parseInt(msg) - 1;
+    if (keys[idx]) {
+      const topicName = keys[idx];
+      state.mode = 'topic_mc';
+      state.questions = shuffle(topics[topicName]);
+      state.allAnswers = getAllAnswers();
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'mc_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `📚 <strong>${topicName}</strong> — ${state.total} questions. Ready?`, `${topicName}. ${state.total} questions. Ready?`);
+      setTimeout(nextQuestion, 800);
+    } else {
+      const chips = Object.keys(topics).map((t,i) => `<span class="chip" data-val="${i+1}">${i+1}. ${t}</span>`).join(' ');
+      addMessage('bot', `Please choose a valid topic:<br>${chips}`, 'Please choose a valid topic.');
+    }
+    return;
+  }
+
+  // ── TYPED ANSWER ──────────────────────────────────────────
+  if (aw === 'answer') {
+    const q = state.questions[state.qIndex];
+    const m = normalize(msg);
+
+    if (m === 'hint') {
+      state.hintUsed = true;
+      addMessage('bot', `💡 <strong>Hint:</strong> ${q.hint}`, `Hint: ${q.hint}`);
+      return;
+    }
+    if (m === 'skip') {
+      addMessage('bot', `⏭️ Skipped! The correct answer is: <strong>${q.a}</strong>`, `Skipped. The correct answer is: ${q.a}`);
+      state.qIndex++; state.hintUsed = false;
+      if (state.qIndex < state.total) setTimeout(nextQuestion, 700);
+      else showResult();
+      return;
+    }
+
+    const correct = checkAnswer(msg, q.a);
+    if (correct) {
+      if (!state.hintUsed) state.score++;
+      const note = state.hintUsed ? ' <em>(hint used — no point)</em>' : ' +1 point!';
+      addMessage('bot', `✅ <strong>Correct!</strong>${note} Answer: <strong>${q.a}</strong>`, `Correct! The answer is: ${q.a}`);
+    } else {
+      addMessage('bot', `❌ <strong>Not quite.</strong> The correct answer is: <strong>${q.a}</strong>`, `Not quite. The correct answer is: ${q.a}`);
+    }
+    state.qIndex++; state.hintUsed = false; updateScore();
+    if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+    else setTimeout(showResult, 900);
+    return;
+  }
+
+  // ── TRUE OR FALSE ─────────────────────────────────────────
+  if (aw === 'tf_answer') {
+    const q = state.questions[state.qIndex];
+    const ans = normalize(msg);
+    const valid = ans === 'true' || ans === 'false';
+
+    if (valid) {
+      const correct = ans === q.a;
+      if (correct) {
+        state.score++;
+        addMessage('bot', `✅ <strong>Correct!</strong> The answer is <strong>${q.a.toUpperCase()}</strong>.`, `Correct! The answer is ${q.a}.`);
+      } else {
+        addMessage('bot', `❌ <strong>Incorrect.</strong> The correct answer is <strong>${q.a.toUpperCase()}</strong>.`, `Incorrect. The correct answer is ${q.a}.`);
+      }
+      state.qIndex++; updateScore();
+      if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+      else setTimeout(showResult, 900);
+    } else {
+      addMessage('bot',
+        `Answer: True or False?<br><span class="chip" data-val="true">✅ True</span><span class="chip" data-val="false">❌ False</span>`,
+        'Answer: True or False?'
+      );
+    }
+    return;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// CONTROLS
+// ═══════════════════════════════════════════════════════════════
+function handleUserMessage(msg) {
+  if (!msg.trim()) return;
+  
+  // Stop any speaking audio cleanly when the user answers
+  window.speechSynthesis.cancel();
+  if (currentAudioStream) {
+    currentAudioStream.pause();
+    currentAudioStream = null;
+    showWave(false);
+  }
+  
+  addMessage('user', msg.replace(/</g,'&lt;'));
+  input.value = '';
+  input.disabled = true; sendBtn.disabled = true;
+  addTyping();
+  setTimeout(() => {
+    removeTyping();
+    input.disabled = false; sendBtn.disabled = false;
+    input.focus();
+    processMessage(msg);
+  }, 480);
+}
+
+sendBtn.addEventListener('click', () => { handleUserMessage(input.value); });
+input.addEventListener('keydown', e => { if(e.key==='Enter') handleUserMessage(input.value); });
+
+document.getElementById('audio-toggle').addEventListener('click', function() {
+  state.audioEnabled = !state.audioEnabled;
+  this.textContent = state.audioEnabled ? '🔊' : '🔇';
+  this.classList.toggle('active', state.audioEnabled);
+  if (!state.audioEnabled) {
+    window.speechSynthesis.cancel();
+    if (currentAudioStream) {
+      currentAudioStream.pause();
+      currentAudioStream = null;
+      showWave(false);
+    }
+  }
+});
+
+// ═══════════════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════════════
+window.addEventListener('load', () => {
+  lookupSystemVoices();
+  showMenu();
+});
+
+function printPracticeTest() {
+  document.body.classList.add('printing-test');
+  window.print();
+}
+window.addEventListener('afterprint', () => {
+  document.body.classList.remove('printing-test');
+});
+
+// ═══════════════════════════════════════════════════════════════
+// READ NOTES ALOUD (uses the browser's own voice — no length limit,
+// unlike the short Google TTS clips used for chat messages)
+// ═══════════════════════════════════════════════════════════════
+function getNotesText(section) {
+  // Skip the Practice Test / Answer Key tabs — too long and not meant to be read aloud
+  const clone = section.cloneNode(true);
+  clone.querySelectorAll('button').forEach(b => b.remove());
+  let text = clone.innerText || clone.textContent || '';
+  text = text.replace(/\s+/g, ' ').trim();
+  return text;
+}
+
+function toggleNotesAudio() {
+  const btn = document.getElementById('notes-audio-btn');
+  if (!btn) return;
+
+  if (window.speechSynthesis.speaking || window.speechSynthesis.pending) {
+    window.speechSynthesis.cancel();
+    btn.innerHTML = '🔊 Read Notes Aloud';
+    btn.classList.remove('active');
+    return;
+  }
+
+  const activeSection = document.querySelector('.notes-section.active');
+  if (!activeSection) return;
+  const text = getNotesText(activeSection);
+  if (!text) return;
+
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.lang = 'en-US';
+  utter.rate = 0.95;
+  utter.pitch = 1.05;
+  utter.volume = 1;
+
+  const voices = window.speechSynthesis.getVoices();
+  const voice = voices.find(v => v.lang.startsWith('en') && v.name.toLowerCase().includes('female'))
+             || voices.find(v => v.lang.startsWith('en'));
+  if (voice) utter.voice = voice;
+
+  utter.onstart = () => { btn.innerHTML = '⏹️ Stop Reading'; btn.classList.add('active'); };
+  utter.onend = utter.onerror = () => { btn.innerHTML = '🔊 Read Notes Aloud'; btn.classList.remove('active'); };
+
+  window.speechSynthesis.speak(utter);
+}
+
+function switchTab(tabId, btn) {
+  window.speechSynthesis.cancel();
+  const audioBtn = document.getElementById('notes-audio-btn');
+  if (audioBtn) { audioBtn.innerHTML = '🔊 Read Notes Aloud'; audioBtn.classList.remove('active'); }
+  document.querySelectorAll('.notes-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.notes-tab').forEach(b => b.classList.remove('active'));
+  document.getElementById(tabId).classList.add('active');
+  btn.classList.add('active');
+}
+
+function closeNotesPanel() {
+  window.speechSynthesis.cancel();
+  const audioBtn = document.getElementById('notes-audio-btn');
+  if (audioBtn) { audioBtn.innerHTML = '🔊 Read Notes Aloud'; audioBtn.classList.remove('active'); }
+  document.getElementById('notes-overlay').classList.remove('show');
+}
+</script>
+
+<!-- ── Notes Panel ── -->
+<div class="notes-overlay" id="notes-overlay">
+  <div class="notes-panel">
+    <div class="notes-header">
+      <h2>📖 Body Systems &amp; Plants — Notes</h2>
+      <div class="notes-header-actions">
+        <button class="print-btn" id="notes-audio-btn" onclick="toggleNotesAudio()" title="Have this tab read aloud">🔊 Read Notes Aloud</button>
+        <button class="print-btn" onclick="printPracticeTest()" title="Print or save the Practice Test &amp; Answer Key as PDF">🖨️ Print Test &amp; Key</button>
+        <button class="notes-close" onclick="closeNotesPanel()">✕</button>
+      </div>
+    </div>
+    <div class="notes-tabs">
+      <button class="notes-tab active" onclick="switchTab('tab-nervous', this)">🧠 Nervous System</button>
+      <button class="notes-tab" onclick="switchTab('tab-endocrine', this)">⚡ Endocrine System</button>
+      <button class="notes-tab" onclick="switchTab('tab-reproductive', this)">👶 Reproductive System</button>
+      <button class="notes-tab" onclick="switchTab('tab-roots', this)">🌿 Root System</button>
+      <button class="notes-tab" onclick="switchTab('tab-shoots', this)">🌾 Shoot System</button>
+      <button class="notes-tab" onclick="switchTab('tab-flowers', this)">🌸 Flowers, Fruits &amp; Seeds</button>
+      <button class="notes-tab" onclick="switchTab('tab-tf', this)">✅ True or False</button>
+      <button class="notes-tab" onclick="switchTab('tab-ptest', this)">📝 Practice Test</button>
+      <button class="notes-tab" onclick="switchTab('tab-key', this)">🔑 Answer Key</button>
+      <button class="notes-tab" onclick="switchTab('tab-raw', this)">📄 Raw Notes</button>
+    </div>
+    <div class="notes-body">
+
+      <div class="notes-section active" id="tab-nervous">
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> The <strong>nervous system</strong> — brain, spinal cord, and nerves — is the body's control center, using fast, sensitive nerve cells to detect and respond to changes.
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 MEMORY TRICK</span>
+          Remember the 3 brain regions with: <strong>"Cats Chase Balls"</strong> — <strong>C</strong>erebrum (largest, thinking), <strong>C</strong>erebellum (balance), <strong>B</strong>rain Stem (breathing, heartbeat).
+        </div>
+        <div class="tandaan-box">
+          <span class="tandaan-label">REMEMBER</span>
+          The brain's control is "crossed": the right half of the brain controls the LEFT side of your body, and the left half controls the RIGHT side!
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-endocrine">
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> The <strong>endocrine system</strong> is made of glands that release <strong>hormones</strong> — chemical messengers that tell organs what to do.
+        </div>
+        <table class="compare-table">
+          <tr><th>Gland</th><th>Hormone</th><th>Job</th></tr>
+          <tr><td>Pituitary</td><td>Growth hormone</td><td>Controls height and body size</td></tr>
+          <tr><td>Adrenal</td><td>Adrenaline</td><td>Quick response to fear/excitement</td></tr>
+          <tr><td>Pancreas</td><td>Insulin</td><td>Regulates blood sugar</td></tr>
+          <tr><td>Testes</td><td>Testosterone</td><td>Male characteristics</td></tr>
+          <tr><td>Ovaries</td><td>Estrogen &amp; Progesterone</td><td>Female characteristics</td></tr>
+        </table>
+      </div>
+
+      <div class="notes-section" id="tab-reproductive">
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> Living things reproduce sexually (two parents) or asexually (one parent). Sexual reproduction requires fertilization — a sperm cell joining an egg cell (ovum).
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">👶 Key Structures</div>
+          <div class="notes-item"><span class="notes-term">Scrotum</span><span class="notes-def">Protects the testes, keeps them cooler</span></div>
+          <div class="notes-item"><span class="notes-term">Semen</span><span class="notes-def">Mixture of fluids and sperm</span></div>
+          <div class="notes-item"><span class="notes-term">Epididymis</span><span class="notes-def">Where sperm matures before the vas deferens</span></div>
+          <div class="notes-item"><span class="notes-term">Ovaries</span><span class="notes-def">Produce estrogen; release a mature egg cell each month</span></div>
+          <div class="notes-item"><span class="notes-term">Uterus</span><span class="notes-def">Houses and nourishes the fertilized egg (zygote)</span></div>
+          <div class="notes-item"><span class="notes-term">Menstruation</span><span class="notes-def">Release of an unfertilized egg through the vagina</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-roots">
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> The <strong>root system</strong> anchors the plant, absorbs water and nutrients, and can store extra food. Roots come in different types depending on the plant's environment.
+        </div>
+        <table class="compare-table">
+          <tr><th>Root Type</th><th>Description</th><th>Example</th></tr>
+          <tr><td>Fibrous</td><td>Close to surface, soft, tiny</td><td>Grasses</td></tr>
+          <tr><td>Taproot</td><td>Thick, fleshy, grows deep</td><td>Carrot, radish, gabi, beet</td></tr>
+          <tr><td>Epiphyte roots</td><td>Aboveground, absorb from air</td><td>Orchids, bromeliads, ferns</td></tr>
+          <tr><td>Hydrophyte roots</td><td>Hairy/feathery, in water</td><td>Lotus, water lily</td></tr>
+        </table>
+      </div>
+
+      <div class="notes-section" id="tab-shoots">
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> The <strong>shoot system</strong> — stem, branches, and leaves — handles food-making and support. Leaves make food through <strong>photosynthesis</strong>.
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 MEMORY TRICK</span>
+          Remember which tissue does what: <strong>"X marks the Xylem going up"</strong> — Xylem carries water UP from roots. Phloem (sounds like "flow-em") carries FOOD around the whole plant.
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">🌾 Leaf Parts</div>
+          <div class="notes-item"><span class="notes-term">Petiole</span><span class="notes-def">Connects the leaf to the stem</span></div>
+          <div class="notes-item"><span class="notes-term">Midrib</span><span class="notes-def">Central vein; provides structure, sends water/food</span></div>
+          <div class="notes-item"><span class="notes-term">Leaf Blade (Lamina)</span><span class="notes-def">The flat, expanded part of the leaf</span></div>
+          <div class="notes-item"><span class="notes-term">Cuticle</span><span class="notes-def">Waxy outer layer that regulates water loss</span></div>
+        </div>
+        <div class="tandaan-box">
+          <span class="tandaan-label">REMEMBER</span>
+          Photosynthesis = chlorophyll + carbon dioxide + sunlight + water → sugar + oxygen. Thorns (modified stems) and spines (modified leaves) protect plants from animals; succulent stems store water for dry environments.
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-flowers">
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> Colorful <strong>flowers</strong> attract pollinators using <strong>nectar</strong>. <strong>Pollination</strong> leads to seeds, which are enclosed in a <strong>fruit</strong> and scattered in many ways.
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">🌱 Seed Dispersal Methods</div>
+          <div class="notes-item"><span class="notes-term">Wind &amp; Water</span><span class="notes-def">Natural carriers of light seeds</span></div>
+          <div class="notes-item"><span class="notes-term">Hooks/Spines</span><span class="notes-def">Cling to animal skin or clothing (e.g. amor seco)</span></div>
+          <div class="notes-item"><span class="notes-term">Explosive Fruits</span><span class="notes-def">Burst open when dried (mahogany, ipil-ipil, madre de cacao)</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-tf">
+        <div class="notes-topic">
+          <div class="notes-topic-title">✅ True or False — Key Reminders</div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">The right half of the brain controls the right side of the body → it controls the LEFT side (crossed control).</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">The adrenal glands produce insulin → they produce adrenaline; the pancreas produces insulin.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">The scrotum keeps the testes warmer → it keeps them cooler than the rest of the body.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">A zygote is an unfertilized egg → it's the fertilized egg.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">Fibrous roots grow deep and are thick → that describes taproots; fibrous roots are shallow and thin.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">The xylem carries food and the phloem carries water → it's the reverse: xylem carries water, phloem carries food.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">Pollination is the transfer of pollen from stigma to anther → it's from the anther TO the stigma.</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-ptest">
+        <div class="notes-topic">
+          <div class="notes-topic-title">📝 Practice Test</div>
+<div class="ptest-part-title">Part I — Self-Check Quiz: Organ to System</div><div class="ptest-q"><b>1.</b> Adrenal glands <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>2.</b> Brain <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>3.</b> Pituitary gland <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>4.</b> Scrotum <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>5.</b> Spinal cord <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>6.</b> Uterus <span class="opt">Answer: ______________________</span></div><div class="ptest-part-title">Part II — Root System (RS) or Shoot System (SS)</div><div class="ptest-q"><b>7.</b> Anchors the plant to the soil. <span class="opt">Answer: ______</span></div><div class="ptest-q"><b>8.</b> Produces food. <span class="opt">Answer: ______</span></div><div class="ptest-q"><b>9.</b> Absorbs water from the soil. <span class="opt">Answer: ______</span></div><div class="ptest-q"><b>10.</b> Contains colorful plant reproductive structures. <span class="opt">Answer: ______</span></div><div class="ptest-q"><b>11.</b> Sends nutrients to the upper parts of the plant. <span class="opt">Answer: ______</span></div><div class="ptest-part-title">Part III — Matching: Plant Part to Description</div>
+<div class="ptest-bank">a. flower &middot; b. fruit &middot; c. leaf &middot; d. root &middot; e. seed &middot; f. stem</div><div class="ptest-q"><b>12.</b> Makes food through the green substance called chlorophyll. <span class="opt">Answer: ______</span></div><div class="ptest-q"><b>13.</b> Absorbs water and minerals from the soil. <span class="opt">Answer: ______</span></div><div class="ptest-q"><b>14.</b> Provides support and sends water and minerals to the upper parts of the plant. <span class="opt">Answer: ______</span></div><div class="ptest-q"><b>15.</b> Produced through the union of pollen grains and ovules. <span class="opt">Answer: ______</span></div><div class="ptest-q"><b>16.</b> Most attractive part of a plant. <span class="opt">Answer: ______</span></div><div class="ptest-part-title">Part IV — Multiple Choice</div><div class="ptest-q"><b>17.</b> Which organ system is responsible for body movements, including involuntary actions or actions that do not need thinking?<br><span class="opt">a) integumentary system</span><span class="opt">b) digestive system</span><span class="opt">c) circulatory system</span><span class="opt">d) nervous system</span></div><div class="ptest-q"><b>18.</b> Which plant organ system is responsible for anchoring a plant to the soil?<br><span class="opt">a) root system</span><span class="opt">b) shoot system</span><span class="opt">c) leaf system</span><span class="opt">d) soil system</span></div><div class="ptest-q"><b>19.</b> Which plant part produces food for the plant through photosynthesis?<br><span class="opt">a) flower</span><span class="opt">b) leaf</span><span class="opt">c) roots</span><span class="opt">d) stem</span></div><div class="ptest-q"><b>20.</b> Which vascular tissue sends water from the roots to the upper parts of the plant?<br><span class="opt">a) phloem</span><span class="opt">b) bark</span><span class="opt">c) xylem</span><span class="opt">d) capillaries</span></div><div class="ptest-q"><b>21.</b> How are insects important to plants?<br><span class="opt">a) They are agents of pollination or plant reproduction.</span><span class="opt">b) They eat the leaves and flowers of plants.</span><span class="opt">c) They cut good leaves from the plant.</span><span class="opt">d) They lay eggs on leaves of plants.</span></div><div class="ptest-q"><b>22.</b> Which plant part contains seeds that grow into new plants?<br><span class="opt">a) fruit</span><span class="opt">b) leaf</span><span class="opt">c) stem</span><span class="opt">d) root</span></div><div class="ptest-q"><b>23.</b> Why is it important for plants to be placed under the Sun?<br><span class="opt">a) Plants grow only in a hot environment.</span><span class="opt">b) Plants dry up slower under the Sun.</span><span class="opt">c) Plants need sunlight to make food.</span><span class="opt">d) Plants absorb water through the leaves faster when planted under the Sun.</span></div><div class="ptest-q"><b>24.</b> Which of the following can help you identify the age of a tree?<br><span class="opt">a) number of rings in the trunk</span><span class="opt">b) number of leaves</span><span class="opt">c) number of branches from the main stem</span><span class="opt">d) number of roots</span></div><div class="ptest-part-title">Part V — True or False</div><div class="ptest-q"><b>25.</b> The nervous system is the control center of the body. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>26.</b> The cerebrum is the smallest part of the brain. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>27.</b> The right half of the brain controls the right side of the body. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>28.</b> Hormones are chemical messengers produced by the endocrine system. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>29.</b> The pituitary gland is located just below the brain. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>30.</b> The adrenal glands produce insulin. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>31.</b> The pancreas regulates the amount of sugar in the body through insulin. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>32.</b> The testes produce estrogen. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>33.</b> Sexual reproduction only needs one parent. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>34.</b> Fertilization happens when a sperm meets and joins with an ovum. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>35.</b> The scrotum protects the testes and keeps them warmer than the rest of the body. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>36.</b> A zygote is an unfertilized egg cell. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>37.</b> Plant parts are divided into the root system and the shoot system. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>38.</b> Fibrous roots grow deep into the soil and are thick and fleshy. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>39.</b> Epiphytes have aboveground roots that absorb moisture and nutrients from the air. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>40.</b> The xylem transports food throughout the plant, while the phloem transports water. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>41.</b> Woody stems are soft, while herbaceous stems are hard and strong. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>42.</b> The rings underneath a tree's bark can indicate its age. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>43.</b> Photosynthesis produces sugar and oxygen. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>44.</b> Pollination is the transfer of pollen grains from the stigma to the anther. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>45.</b> Fruits with explosive mechanisms help scatter seeds. <span class="opt">Answer: ______________________</span></div><div class="ptest-q"><b>46.</b> The uterus is the organ that produces the egg cell each month. <span class="opt">Answer: ______________________</span></div><div class="ptest-part-title">Part VI — Short Answer</div><div class="ptest-q"><b>47.</b> What would happen if trees have a fibrous root system? Why?</div><div class="ptest-q"><b>48.</b> What characteristic helps flowering plants ensure pollination?</div><div class="ptest-q"><b>49.</b> How are spines, hooks, and the explosive mechanisms in seeds helpful in plant propagation?</div><div class="ptest-q"><b>50.</b> What happens if an organ in the human body fails to work?</div><div class="ptest-q"><b>51.</b> Why do doctors always recommend regular exercise and a balanced diet to their patients?</div><div class="ptest-q"><b>52.</b> What proves that food is stored in the roots, stems, leaves, and fruits of plants? Give examples.</div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-key">
+        <div class="notes-topic">
+<div class="notes-topic-title">Part I — Organ to System</div><div class="key-grid"><div class="key-pill">1. <b>Endocrine</b></div><div class="key-pill">2. <b>Nervous</b></div><div class="key-pill">3. <b>Endocrine</b></div><div class="key-pill">4. <b>Reproductive</b></div><div class="key-pill">5. <b>Nervous</b></div><div class="key-pill">6. <b>Reproductive</b></div></div><div class="notes-topic-title">Part II — Root/Shoot System</div><div class="key-grid"><div class="key-pill">7. <b>Root System</b></div><div class="key-pill">8. <b>Shoot System</b></div><div class="key-pill">9. <b>Root System</b></div><div class="key-pill">10. <b>Shoot System</b></div><div class="key-pill">11. <b>Shoot System</b></div></div><div class="notes-topic-title">Part III — Plant Part</div><div class="key-grid"><div class="key-pill">12. <b>Leaf</b></div><div class="key-pill">13. <b>Root</b></div><div class="key-pill">14. <b>Stem</b></div><div class="key-pill">15. <b>Seed</b></div><div class="key-pill">16. <b>Flower</b></div></div><div class="notes-topic-title">Part IV — Multiple Choice</div><div class="key-grid"><div class="key-pill">17. <b>nervous system</b></div><div class="key-pill">18. <b>root system</b></div><div class="key-pill">19. <b>leaf</b></div><div class="key-pill">20. <b>xylem</b></div><div class="key-pill">21. <b>They are agents of pollination or plant reproduction.</b></div><div class="key-pill">22. <b>fruit</b></div><div class="key-pill">23. <b>Plants need sunlight to make food.</b></div><div class="key-pill">24. <b>number of rings in the trunk</b></div></div><div class="notes-topic-title">Part V — True or False</div><div class="key-grid"><div class="key-pill">25. <b>True</b></div><div class="key-pill">26. <b>False</b></div><div class="key-pill">27. <b>False</b></div><div class="key-pill">28. <b>True</b></div><div class="key-pill">29. <b>True</b></div><div class="key-pill">30. <b>False</b></div><div class="key-pill">31. <b>True</b></div><div class="key-pill">32. <b>False</b></div><div class="key-pill">33. <b>False</b></div><div class="key-pill">34. <b>True</b></div><div class="key-pill">35. <b>False</b></div><div class="key-pill">36. <b>False</b></div><div class="key-pill">37. <b>True</b></div><div class="key-pill">38. <b>False</b></div><div class="key-pill">39. <b>True</b></div><div class="key-pill">40. <b>False</b></div><div class="key-pill">41. <b>False</b></div><div class="key-pill">42. <b>True</b></div><div class="key-pill">43. <b>True</b></div><div class="key-pill">44. <b>False</b></div><div class="key-pill">45. <b>True</b></div><div class="key-pill">46. <b>False</b></div></div><div class="notes-topic-title">Part VI — Short Answer (sample answers)</div><div class="ptest-q" style="margin-bottom:6px"><b>47.</b> The tree could easily fall over. Fibrous roots are short, soft, and tiny, and they grow close to the surface. A tree needs deep, strong roots like a taproot to hold it firmly in the ground, especially during strong winds and rains.</div><div class="ptest-q" style="margin-bottom:6px"><b>48.</b> Flowers are colorful and have nectar, a sweet liquid, which attracts insects and birds. When they visit to get the nectar, they carry pollen from one flower to another, helping pollination happen.</div><div class="ptest-q" style="margin-bottom:6px"><b>49.</b> They help scatter seeds to different places. Spines and hooks cling to animal skin and clothing, carrying seeds far away. Fruits with explosive mechanisms burst open when dried, throwing seeds out. When seeds land on fertile soil, they grow into new plants.</div><div class="ptest-q" style="margin-bottom:6px"><b>50.</b> The body will not work properly and the person can get sick. Organs and organ systems work together, so if one organ fails, others are affected too. If it's a vital organ like the heart, brain, or lungs, it can be dangerous to the person's life.</div><div class="ptest-q" style="margin-bottom:6px"><b>51.</b> Regular exercise and a balanced diet keep the body's organs healthy and strong. Exercise makes the heart, lungs, muscles, and bones stronger. A balanced diet gives the body nutrients for energy, growth, and fighting sickness.</div><div class="ptest-q" style="margin-bottom:6px"><b>52.</b> We can eat these plant parts, and they give us energy and nutrients. Examples: Roots (carrot, radish, gabi, beet), Stems (sugarcane, kangkong, potato), Leaves (pechay, malunggay, cabbage), Fruits (mango, banana, papaya).</div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-raw">
+        <div class="rawnotes-intro">
+          📌 This is the original content of the uploaded lesson, unedited — for whenever you need to check the exact wording or an example not covered in the reviewer.
+        </div>
+        <div class="rawnotes-doc">
+<h3 class="doc-heading">Organ Systems and Their Functions</h3>
+<p>For control and sensing</p>
+<ul>
+<li>Nervous</li>
+<li>Endocrine</li>
+</ul>
+<p>For reproduction</p>
+<ul>
+<li>Reproductive</li>
+</ul>
+<h3 class="doc-heading">The Nervous System</h3>
+<p>When you play and work, the different parts of your body move. This is because the different organ systems work with the nervous system.</p>
+<p>The nervous system consists of three major organs: the brain, spinal cord, and nerves.</p>
+<p>The brain is divided into three major regions: cerebrum, cerebellum, and brain stem.</p>
+<p>The brain is the control center of the body in humans and most animals. The spinal cord is the part of the nervous system connected to the brain. From the spinal cord are the nerve cells, which branch out to the different parts of the body. Each part of the brain has a specialized function. One part of the brain controls thinking and receives information from the different sense organs. Another part controls breathing, heartbeat, and digestion. The cerebrum, the largest part of the brain, is divided into two parts. The right half controls the left side of your body, while the left part controls your right side.</p>
+<p>Nerve cells are present throughout the body. These cells are so sensitive that they can transmit messages rapidly to the brain. The brain interprets the message which causes you to react. Some nerve cells allow you to feel cold temperatures. Others allow you to tell that something is warm. Some nerve cells let you feel pain and pressure.</p>
+<p>Together, the nerve cells and the different sense organs help you detect and understand changes in the environment.</p>
+<h3 class="doc-heading">The Endocrine System</h3>
+<p>Have you ever felt excited while watching a game? When this happens, your heart beats faster than usual. This is because of chemicals in the body called hormones. Hormones are chemical messengers that tell certain organs what to do. They are produced by the endocrine system. The endocrine system is composed of glands that produce hormones that regulate bodily functions.</p>
+<p>The pituitary gland controls the way you grow. This gland is located just below your brain. The hormones from this gland carry messages that tell your cells to grow. This gland is responsible for increases in height and body size.</p>
+<p>The adrenal glands are a pair of glands that sit on top of each kidney. These glands produce the hormone adrenaline, the hormone that helps you respond quickly when you are scared, excited, or facing a threat.</p>
+<p>The pancreas produces insulin, a hormone which regulates the amount of sugar in the body.</p>
+<p>The testes produce testosterone, the hormone that facilitates the development of male secondary characteristics, while the ovaries produce estrogen and progesterone, the hormones that facilitate the development of female secondary sex characteristics.</p>
+<h3 class="doc-heading">For Reproduction</h3>
+<p>Reproduction is the process by which an organism produces offspring of its own kind. Reproduction is important so that an organism will continue living its kind from one generation to generation.</p>
+<h3 class="doc-heading">The Reproductive System</h3>
+<p>There are two main ways living things can make new ones: sexual reproduction and asexual reproduction.</p>
+<p>Sexual reproduction involves two parents. The male parent contributes a special cell called a sperm, while the female parent contributes an egg cell called an ovum. When a sperm meets and joins with an ovum in a process called fertilization, it starts the growth of a new organism.</p>
+<p>Asexual reproduction only needs one parent. This parent can make a copy of itself in different ways, without needing a sperm or egg.</p>
+<h3 class="doc-heading">The Male Reproductive System</h3>
+<p>The testes produce a hormone known as testosterone. This hormone is responsible for the changes that take place in the male body. The scrotum protects the testes. This protective sac is important to maintain a cooler temperature compared to the rest of the body.</p>
+<p>Sperm cells are produced in the testes. Nutrient-rich fluids protect the sperm and at the same time provide a medium for transport. The mixture of fluids and sperm is called semen. Sperm matures in the epididymis before it travels through the vas deferens and then to the urethra of the penis, from where it is expelled.</p>
+<h3 class="doc-heading">The Female Reproductive System</h3>
+<p>Changes in the female body are caused by a hormone called estrogen. It is produced inside the ovaries.</p>
+<p>The ovaries are small, oval-shaped organs attached on either side of the uterus. Each month, one of the ovaries produces a mature egg cell. When the mature egg cell unites with a sperm cell, fertilization takes place. The fertilized egg, called a zygote, moves to the uterus.</p>
+<p>The uterus is the muscular organ that houses and nourishes the egg until it develops into a baby.</p>
+<p>Unfertilized egg cell is released through the vagina or birth canal, in a process called menstruation.</p>
+<h3 class="doc-heading">Biochemists</h3>
+<p>The average life span of humans has significantly increased over the last few centuries due to advancements in technology, healthcare, sanitation, nutrition, and public health measures. While new diseases have emerged, advancements in the field of medical science have also led to improved ways of treating diseases.</p>
+<p>Biochemists study the biochemical process in biological systems, such as human and animal organ systems. Their studies contribute to the overall improvement of medical treatments and techniques.</p>
+<h3 class="doc-heading">Key Points / Summary</h3>
+<ol type="1">
+<li>The nervous system is the control center of the body.</li>
+<li>The endocrine system controls the chemical signals that trigger different bodily functions.</li>
+<li>The reproductive system is responsible for the propagation of life.</li>
+</ol>
+<h3 class="doc-heading">C. Answer the Following Questions</h3>
+<ol start="2" type="1">
+<li>How do the organs of the nervous system work together so that collected messages are interpreted by the brain?</li>
+</ol>
+<p>Answer: The sense organs collect information from the environment and send messages through nerve cells and nerves to the spinal cord and brain. The brain receives and interprets these messages, allowing the body to respond to changes in the environment.</p>
+<h3 class="doc-heading">Self-Check Quiz</h3>
+<p>Which organ system is each organ part of? Cover the answer key below and test yourself.</p>
+<ul>
+<li>Adrenal glands — Endocrine</li>
+<li>Brain — Nervous</li>
+<li>Pituitary gland — Endocrine</li>
+<li>Scrotum — Reproductive</li>
+<li>Spinal cord — Nervous</li>
+<li>Uterus — Reproductive</li>
+</ul>
+<p>Plants are living things that can make their own food with the help of sunlight. They grow well in places where there is enough light, water, and nutrients. Plants have different structures or body parts that help them survive. Plant parts are divided into two groups: the root system and the shoot system. Each system has parts performing specific functions to help the plant survive.</p>
+<h3 class="doc-heading">Root System</h3>
+<p>The root system anchors a plant in place. Most grow underground and absorb water and nutrients. The root system holds plants firmly to the ground. Some keep plants in place, like orchids, which grow on trees. It can also act as a storage of excess food.</p>
+<p>Roots vary. Some roots are big, hard, and long. Some are short, soft, and tiny. Roots that grow close to the surface, and are soft and tiny are called fibrous roots. Grasses have fibrous roots.</p>
+<p>Some roots are thick, fleshy, and strong. They grow deep in the soil with smaller rootlets that branch out. These roots are called taproots. Sometimes taproots are used to store food. When you eat a carrot, radish, gabi, or beet, you are eating a taproot.</p>
+<p>Many rain forest plants such as epiphytes, grow high on trees. They cling to the stems and branches of other bigger plants. These plants have roots above the ground capable of absorbing moisture and nutrients from the air. Some aboveground roots start on the plant stem and grow down into the soil. Examples of these plants are orchids, bromeliads, and some ferns.</p>
+<h3 class="doc-heading">Shoot System</h3>
+<p>The shoot system of a plant consists of the aboveground parts of the plant. This includes the stem, branches, leaves, flowers, fruits, and seeds. The shoot system is important in the food-making process and in propagation.</p>
+<h3 class="doc-heading">Stem</h3>
+<p>The stem is a structure that supports the plant. It has specialized tissues called xylem and phloem. The xylem allows the transport of water from the roots to the upper parts of the plant, while the phloem facilitates transport of food throughout the plant.</p>
+<p>Stems can be woody or herbaceous. Woody stems are hard and strong. Most trees have woody stems and a main stem called trunk. The trunk can withstand strong winds and rains. Rings underneath the bark indicate a tree’s age. Herbaceous stems are soft. Beans and tomatoes have herbaceous stems.</p>
+<p>Some plants have ways to protect themselves in their respective environments. Bougainvillea plants have thorns in their stems to prevent animals from eating them. A thorn is a modified branch or stem of a plant. Some plants have stems with spines, which are protective modified leaves, and prickles. Most desert plants have thick succulent stems. Since water is scarce in these areas, these plants have stems capable of storing large amounts of water. The plants use the stored water in order to survive in a hot environment.</p>
+<p>Leaves are the parts of plants that make food through the process of photosynthesis. During this process, the green substance in the leaf called chlorophyll reacts with carbon dioxide, with the help of sunlight and water, to produce sugar. Another product of this process is the oxygen we breathe. Humans and animals survive because of the oxygen that plants provide.</p>
+<p>A leaf is attached to the stem by the petiole. The petiole connects to the midrib or primary vein, which is the central vein of the leaf that provides structure and sends water and food to the rest of the leaf through the secondary veins. The expanded, flat portion of the leaf is the leaf blade or lamina. The edge of the leaf is known as the margin, while its tip is known as the apex.</p>
+<p>Leaf shapes also vary among plants. Some plants such as pine trees and other coniferous plants have needlelike leaves. Other plants have broad, heart-shaped, oval leaves. The outer layer of a leaf is a waxy layer called cuticle. This layer helps plants in regulating loss of water.</p>
+<h3 class="doc-heading">Flowers, Fruits, and Seeds</h3>
+<p>Flowers are the most attractive parts of plants. They are so colorful that they attract insects and some birds to gather nectar, a sugar-rich liquid. Insects pollinate flowers. Pollination is the transfer of pollen grains from the anther to the stigma of a flower. The male sex cell from the pollen grain will travel along the style to reach the ovule in the ovary. These cells will unite to produce seeds. Seeds are then enclosed in a ripened ovary called fruit. Some fruits are edible.</p>
+<p>Fruits contain seeds that help plants propagate. Seeds are scattered in many ways. They can be scattered through wind, water, animals, and people, or through special structures such as hooks and spines. Plants like the amor seco have spines that cling to the skin of animals and to people’s clothes. Plants such as mahogany, ipil-ipil, and madre de cacao have fruits that explode when dried. The explosive mechanism causes the seeds to scatter. When seeds fall on fertile soil, they sprout and grow into new plants.</p>
+<h3 class="doc-heading">Structures That Help Aquatic Plants Survive</h3>
+<p>Aquatic plants grow in water environments such as ponds, paddies, rivers, lakes, and marshes. These plants are called hydrophytes. Many aquatic plants are either totally or partially submerged in water. Other hydrophytes such as the lotus and the water lily float on water. These plants have flat leaves that serve as floating structures. In some cases, aquatic plants have hairy or feathery root systems that enable them to absorb water continuously. The leaves require much water so the roots should be capable of absorbing water.</p>
+<h3 class="doc-heading">Key Points / Summary</h3>
+<ol type="1">
+<li>Plants possess certain structures or body parts that help them survive.</li>
+<li>Roots support and anchor plants into the soil. They absorb water and minerals from the soil, and store food in the form of starch.</li>
+<li>Fibrous roots branch out in all directions.</li>
+<li>A taproot is a thick main root that grows deep into the ground.</li>
+<li>Epiphytes have aboveground roots capable of absorbing nutrients and moisture from the air.</li>
+<li>Stems have vascular tissues called xylem and phloem which transport water and food, respectively.</li>
+<li>Plants have structures, such as thorns, spikes, and prickles, that protect them from animals.</li>
+<li>Photosynthesis is the food-making process in plants. During this process, sugar is produced while oxygen is given off.</li>
+<li>Pollination is the transfer of pollen grains from the anther to the stigma of a flower.</li>
+</ol>
+<h3 class="doc-heading">A. Write RS if the statement describes a function of the root system and SS if it is of the shoot system.</h3>
+<ol type="1">
+<li>anchors the plant to the soil</li>
+<li>produces food</li>
+<li>absorbs water from the soil</li>
+<li>contains colorful plant reproductive structures</li>
+<li>sends nutrients to the upper parts of the plant</li>
+</ol>
+<h3 class="doc-heading">B. Match the description in Column A with the plant part in Column B. Write only the letter on the given line.</h3>
+<p>Column A</p>
+<ol type="1">
+<li>makes food through the green substance called chlorophyll</li>
+<li>absorbs water and minerals from the soil</li>
+<li>provides support and sends water and minerals to the upper parts of the plant</li>
+<li>produced through the union of pollen grains and ovules</li>
+<li>most attractive part of a plant</li>
+</ol>
+<p>Column B</p>
+<ol type="a">
+<li>flower</li>
+<li>fruit</li>
+<li>leaf</li>
+<li>root</li>
+<li>seed</li>
+<li>stem</li>
+</ol>
+<h3 class="doc-heading">Answer:</h3>
+<h3 class="doc-heading">A. Root System (RS) or Shoot System (SS)</h3>
+<ol type="1">
+<li>RS: anchors the plant to the soil (roots hold the plant in place)</li>
+<li>SS: produces food (leaves make food through photosynthesis)</li>
+<li>RS: absorbs water from the soil (roots absorb water and nutrients)</li>
+<li>SS: contains colorful plant reproductive structures (flowers are part of the shoot system)</li>
+<li>SS: sends nutrients to the upper parts of the plant (the stem carries water and food)</li>
+</ol>
+<h3 class="doc-heading">B. Matching Type</h3>
+<ol type="1">
+<li>c (leaf): makes food using chlorophyll</li>
+<li>d (root): absorbs water and minerals from the soil</li>
+<li>f (stem): provides support and sends water and minerals upward</li>
+<li>e (seed): the lesson says the pollen cell and ovule “unite to produce seeds”</li>
+<li>a (flower): the most attractive part of a plant</li>
+</ol>
+<h3 class="doc-heading">C. Explain or discuss the following.</h3>
+<ol type="1">
+<li>What would happen if trees have a fibrous root system? Why?</li>
+</ol>
+<p>Answer: The tree could easily fall over. Fibrous roots are short, soft, and tiny, and they grow close to the surface. A tree is big and heavy, so it needs deep, strong roots like a taproot to hold it firmly in the ground, especially during strong winds and rains. Shallow roots also can’t reach water deep in the soil.</p>
+<ol start="2" type="1">
+<li>What characteristic helps flowering plants ensure pollination?</li>
+</ol>
+<p>Answer: Flowers are colorful and they have nectar, a sweet liquid. These attract insects and some birds. When the insects and birds visit to get the nectar, they carry pollen from one flower to another, which helps pollination happen.</p>
+<ol start="3" type="1">
+<li>How are spines, hooks, and the explosive mechanisms in seeds helpful in plant propagation?</li>
+</ol>
+<p>Answer: They help scatter the seeds to different places. Spines and hooks cling to the skin of animals and to people’s clothes, so the seeds are carried far away (like the amor seco). Fruits with explosive mechanisms burst open when dried and throw the seeds out (like mahogany, ipil-ipil, and madre de cacao). When the seeds land on fertile soil, they grow into new plants.</p>
+<h3 class="doc-heading">Key Points / Summary</h3>
+<p>The nervous system is the control center of the body. The endocrine system controls the chemical signals that trigger different bodily functions. The reproductive system is responsible for the propagation of life. A plant is made up of a root system and a shoot system. The root system of a plant can be taproot or fibrous. The shoot system contains the stem, branch, leaves, flowers, fruits, and seeds. Different processes take place within the root system and shoot system in plants.</p>
+<ol start="13" type="1">
+<li>Which organ system is responsible for body movements including involuntary actions or actions that do not need thinking?</li>
+</ol>
+<ol type="a">
+<li>integumentary system</li>
+<li>digestive system</li>
+<li>circulatory system</li>
+<li>nervous system</li>
+</ol>
+<p>Answer: d. nervous system</p>
+<ol start="14" type="1">
+<li>Which plant organ system is responsible for anchoring a plant to the soil?</li>
+</ol>
+<ol type="a">
+<li>root system</li>
+<li>shoot system</li>
+<li>leaf system</li>
+<li>soil system</li>
+</ol>
+<p>Answer: a. root system</p>
+<ol start="15" type="1">
+<li>Which plant part produces food for the plant through photosynthesis?</li>
+</ol>
+<ol type="a">
+<li>flower</li>
+<li>leaf</li>
+<li>roots</li>
+<li>stem</li>
+</ol>
+<p>Answer: b. leaf</p>
+<ol start="16" type="1">
+<li>Which vascular tissue sends water from the roots to the upper parts of the plant?</li>
+</ol>
+<ol type="a">
+<li>phloem</li>
+<li>bark</li>
+<li>xylem</li>
+<li>capillaries</li>
+</ol>
+<p>Answer: c. xylem</p>
+<ol start="17" type="1">
+<li>How are insects important to plants?</li>
+</ol>
+<ol type="a">
+<li>They are agents of pollination or plant reproduction.</li>
+<li>They eat the leaves and flowers of plants.</li>
+<li>They cut good leaves from the plant.</li>
+<li>They lay eggs on leaves of plants.</li>
+</ol>
+<p>Answer: a. They are agents of pollination or plant reproduction.</p>
+<ol start="18" type="1">
+<li>Which plant part contains seeds that grow into new plants?</li>
+</ol>
+<ol type="a">
+<li>fruit</li>
+<li>leaf</li>
+<li>stem</li>
+<li>root</li>
+</ol>
+<p>Answer: a. fruit</p>
+<ol start="19" type="1">
+<li>Why is it important for plants to be placed under the Sun?</li>
+</ol>
+<ol type="a">
+<li>Plants grow only in a hot environment.</li>
+<li>Plants dry up slower under the Sun.</li>
+<li>Plants need sunlight to make food.</li>
+<li>Plants absorb water through the leaves faster when planted under the Sun.</li>
+</ol>
+<p>Answer: c. Plants need sunlight to make food.</p>
+<ol start="20" type="1">
+<li>Which of the following can help you identify the age of a tree?</li>
+</ol>
+<ol type="a">
+<li>number of rings in the trunk</li>
+<li>number of leaves</li>
+<li>number of branches from the main stem</li>
+<li>number of roots</li>
+</ol>
+<p>Answer: a. number of rings in the trunk</p>
+<h3 class="doc-heading">D. Answer the following questions.</h3>
+<ol type="1">
+<li>What happens if an organ in the human body fails to work?</li>
+</ol>
+<p>Answer: The body will not work properly and the person can get sick. The organs and organ systems work together, so if one organ fails, the other organs are affected too. If it is a very important organ like the heart, brain, or lungs, it can be dangerous to the person’s life.</p>
+<ol start="2" type="1">
+<li>Why do doctors always recommend to have regular exercise and a balanced diet to their patients?</li>
+</ol>
+<p>Answer: Regular exercise and a balanced diet keep the body’s organs healthy and strong. Exercise makes the heart, lungs, muscles, and bones stronger. A balanced diet gives the body the nutrients it needs for energy, growth, and fighting sickness. Together they help prevent diseases.</p>
+<ol start="3" type="1">
+<li>What proves that food is stored in the roots, stems, leaves, and fruits of plants? Give examples to prove your answer.</li>
+</ol>
+<p>Answer: We can eat these plant parts, and they give us energy and nutrients. That shows the plant stored its extra food in them. Examples: Roots: carrot, radish, gabi, beet. Stems: sugarcane, kangkong, potato. Leaves: pechay, malunggay, cabbage. Fruits: mango, banana, papaya.</p>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ── Hidden Print Area (Practice Test + Answer Key) ── -->
+<div id="print-area">
+<div class="p-cover">
+    <div class="p-icon">🌱</div>
+    <h1>Science 6 — Body Systems &amp; Plants Practice Test</h1>
+    <div class="p-sub">Nervous · Endocrine · Reproductive Systems · Root &amp; Shoot Systems · Flowers, Fruits &amp; Seeds</div>
+    <div class="p-info-box">
+      <div><strong>Name:</strong> _____________________________________</div>
+      <div><strong>Section:</strong> ___________________ &nbsp; <strong>Date:</strong> ___________________</div>
+      <div><strong>Score:</strong> _______ / 52</div>
+    </div>
+    <div class="p-instructions">
+      <strong>Instructions:</strong> Read each item carefully. Write your answer on the blank provided (Parts I-III, V), write the letter of the correct answer (Part IV), or answer in complete sentences (Part VI). Good luck!
+    </div>
+  </div>
+
+  <h2 class="p-part-title">Part I — Self-Check Quiz: Organ to System</h2><div class="p-q"><b>1.</b> Adrenal glands <span class="p-blank"></span></div><div class="p-q"><b>2.</b> Brain <span class="p-blank"></span></div><div class="p-q"><b>3.</b> Pituitary gland <span class="p-blank"></span></div><div class="p-q"><b>4.</b> Scrotum <span class="p-blank"></span></div><div class="p-q"><b>5.</b> Spinal cord <span class="p-blank"></span></div><div class="p-q"><b>6.</b> Uterus <span class="p-blank"></span></div><h2 class="p-part-title">Part II — Root System (RS) or Shoot System (SS)</h2><div class="p-q"><b>7.</b> Anchors the plant to the soil. <span class="p-blank" style="min-width:40px"></span></div><div class="p-q"><b>8.</b> Produces food. <span class="p-blank" style="min-width:40px"></span></div><div class="p-q"><b>9.</b> Absorbs water from the soil. <span class="p-blank" style="min-width:40px"></span></div><div class="p-q"><b>10.</b> Contains colorful plant reproductive structures. <span class="p-blank" style="min-width:40px"></span></div><div class="p-q"><b>11.</b> Sends nutrients to the upper parts of the plant. <span class="p-blank" style="min-width:40px"></span></div><div class="p-break"></div><h2 class="p-part-title">Part III — Matching: Plant Part to Description</h2>
+  <div class="p-bank">a. flower &middot; b. fruit &middot; c. leaf &middot; d. root &middot; e. seed &middot; f. stem</div><div class="p-q"><b>12.</b> Makes food through the green substance called chlorophyll. <span class="p-blank" style="min-width:40px"></span></div><div class="p-q"><b>13.</b> Absorbs water and minerals from the soil. <span class="p-blank" style="min-width:40px"></span></div><div class="p-q"><b>14.</b> Provides support and sends water and minerals to the upper parts of the plant. <span class="p-blank" style="min-width:40px"></span></div><div class="p-q"><b>15.</b> Produced through the union of pollen grains and ovules. <span class="p-blank" style="min-width:40px"></span></div><div class="p-q"><b>16.</b> Most attractive part of a plant. <span class="p-blank" style="min-width:40px"></span></div><h2 class="p-part-title">Part IV — Multiple Choice</h2><div class="p-q"><b>17.</b> Which organ system is responsible for body movements, including involuntary actions or actions that do not need thinking?<br><span class="p-opt">a) integumentary system</span><span class="p-opt">b) digestive system</span><span class="p-opt">c) circulatory system</span><span class="p-opt">d) nervous system</span></div><div class="p-q"><b>18.</b> Which plant organ system is responsible for anchoring a plant to the soil?<br><span class="p-opt">a) root system</span><span class="p-opt">b) shoot system</span><span class="p-opt">c) leaf system</span><span class="p-opt">d) soil system</span></div><div class="p-q"><b>19.</b> Which plant part produces food for the plant through photosynthesis?<br><span class="p-opt">a) flower</span><span class="p-opt">b) leaf</span><span class="p-opt">c) roots</span><span class="p-opt">d) stem</span></div><div class="p-q"><b>20.</b> Which vascular tissue sends water from the roots to the upper parts of the plant?<br><span class="p-opt">a) phloem</span><span class="p-opt">b) bark</span><span class="p-opt">c) xylem</span><span class="p-opt">d) capillaries</span></div><div class="p-q"><b>21.</b> How are insects important to plants?<br><span class="p-opt">a) They are agents of pollination or plant reproduction.</span><span class="p-opt">b) They eat the leaves and flowers of plants.</span><span class="p-opt">c) They cut good leaves from the plant.</span><span class="p-opt">d) They lay eggs on leaves of plants.</span></div><div class="p-q"><b>22.</b> Which plant part contains seeds that grow into new plants?<br><span class="p-opt">a) fruit</span><span class="p-opt">b) leaf</span><span class="p-opt">c) stem</span><span class="p-opt">d) root</span></div><div class="p-q"><b>23.</b> Why is it important for plants to be placed under the Sun?<br><span class="p-opt">a) Plants grow only in a hot environment.</span><span class="p-opt">b) Plants dry up slower under the Sun.</span><span class="p-opt">c) Plants need sunlight to make food.</span><span class="p-opt">d) Plants absorb water through the leaves faster when planted under the Sun.</span></div><div class="p-q"><b>24.</b> Which of the following can help you identify the age of a tree?<br><span class="p-opt">a) number of rings in the trunk</span><span class="p-opt">b) number of leaves</span><span class="p-opt">c) number of branches from the main stem</span><span class="p-opt">d) number of roots</span></div><div class="p-break"></div><h2 class="p-part-title">Part V — True or False</h2><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>25.</b> The nervous system is the control center of the body.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>26.</b> The cerebrum is the smallest part of the brain.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>27.</b> The right half of the brain controls the right side of the body.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>28.</b> Hormones are chemical messengers produced by the endocrine system.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>29.</b> The pituitary gland is located just below the brain.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>30.</b> The adrenal glands produce insulin.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>31.</b> The pancreas regulates the amount of sugar in the body through insulin.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>32.</b> The testes produce estrogen.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>33.</b> Sexual reproduction only needs one parent.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>34.</b> Fertilization happens when a sperm meets and joins with an ovum.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>35.</b> The scrotum protects the testes and keeps them warmer than the rest of the body.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>36.</b> A zygote is an unfertilized egg cell.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>37.</b> Plant parts are divided into the root system and the shoot system.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>38.</b> Fibrous roots grow deep into the soil and are thick and fleshy.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>39.</b> Epiphytes have aboveground roots that absorb moisture and nutrients from the air.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>40.</b> The xylem transports food throughout the plant, while the phloem transports water.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>41.</b> Woody stems are soft, while herbaceous stems are hard and strong.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>42.</b> The rings underneath a tree's bark can indicate its age.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>43.</b> Photosynthesis produces sugar and oxygen.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>44.</b> Pollination is the transfer of pollen grains from the stigma to the anther.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>45.</b> Fruits with explosive mechanisms help scatter seeds.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>46.</b> The uterus is the organ that produces the egg cell each month.</div><div class="p-break"></div><h2 class="p-part-title">Part VI — Short Answer</h2><div class="p-q"><b>47.</b> What would happen if trees have a fibrous root system? Why?<br><br>_________________________________________________<br><br>_________________________________________________<br><br>_________________________________________________</div><div class="p-q"><b>48.</b> What characteristic helps flowering plants ensure pollination?<br><br>_________________________________________________<br><br>_________________________________________________<br><br>_________________________________________________</div><div class="p-q"><b>49.</b> How are spines, hooks, and the explosive mechanisms in seeds helpful in plant propagation?<br><br>_________________________________________________<br><br>_________________________________________________<br><br>_________________________________________________</div><div class="p-q"><b>50.</b> What happens if an organ in the human body fails to work?<br><br>_________________________________________________<br><br>_________________________________________________<br><br>_________________________________________________</div><div class="p-q"><b>51.</b> Why do doctors always recommend regular exercise and a balanced diet to their patients?<br><br>_________________________________________________<br><br>_________________________________________________<br><br>_________________________________________________</div><div class="p-q"><b>52.</b> What proves that food is stored in the roots, stems, leaves, and fruits of plants? Give examples.<br><br>_________________________________________________<br><br>_________________________________________________<br><br>_________________________________________________</div><div class="p-break"></div><h2 class="p-part-title">✅ Complete Answer Key</h2>
+  <div class="p-key-part-title">Part I — Organ to System</div><div class="p-key-grid"><div class="p-key-pill">1. <b>Endocrine</b></div><div class="p-key-pill">2. <b>Nervous</b></div><div class="p-key-pill">3. <b>Endocrine</b></div><div class="p-key-pill">4. <b>Reproductive</b></div><div class="p-key-pill">5. <b>Nervous</b></div><div class="p-key-pill">6. <b>Reproductive</b></div></div><div class="p-key-part-title">Part II — Root/Shoot System</div><div class="p-key-grid"><div class="p-key-pill">7. <b>Root System</b></div><div class="p-key-pill">8. <b>Shoot System</b></div><div class="p-key-pill">9. <b>Root System</b></div><div class="p-key-pill">10. <b>Shoot System</b></div><div class="p-key-pill">11. <b>Shoot System</b></div></div><div class="p-key-part-title">Part III — Plant Part</div><div class="p-key-grid"><div class="p-key-pill">12. <b>Leaf</b></div><div class="p-key-pill">13. <b>Root</b></div><div class="p-key-pill">14. <b>Stem</b></div><div class="p-key-pill">15. <b>Seed</b></div><div class="p-key-pill">16. <b>Flower</b></div></div><div class="p-key-part-title">Part IV — Multiple Choice</div><div class="p-key-grid"><div class="p-key-pill">17. <b>nervous system</b></div><div class="p-key-pill">18. <b>root system</b></div><div class="p-key-pill">19. <b>leaf</b></div><div class="p-key-pill">20. <b>xylem</b></div><div class="p-key-pill">21. <b>They are agents of pollination or plant reproduction.</b></div><div class="p-key-pill">22. <b>fruit</b></div><div class="p-key-pill">23. <b>Plants need sunlight to make food.</b></div><div class="p-key-pill">24. <b>number of rings in the trunk</b></div></div><div class="p-key-part-title">Part V — True or False</div><div class="p-key-grid"><div class="p-key-pill">25. <b>True</b></div><div class="p-key-pill">26. <b>False</b></div><div class="p-key-pill">27. <b>False</b></div><div class="p-key-pill">28. <b>True</b></div><div class="p-key-pill">29. <b>True</b></div><div class="p-key-pill">30. <b>False</b></div><div class="p-key-pill">31. <b>True</b></div><div class="p-key-pill">32. <b>False</b></div><div class="p-key-pill">33. <b>False</b></div><div class="p-key-pill">34. <b>True</b></div><div class="p-key-pill">35. <b>False</b></div><div class="p-key-pill">36. <b>False</b></div><div class="p-key-pill">37. <b>True</b></div><div class="p-key-pill">38. <b>False</b></div><div class="p-key-pill">39. <b>True</b></div><div class="p-key-pill">40. <b>False</b></div><div class="p-key-pill">41. <b>False</b></div><div class="p-key-pill">42. <b>True</b></div><div class="p-key-pill">43. <b>True</b></div><div class="p-key-pill">44. <b>False</b></div><div class="p-key-pill">45. <b>True</b></div><div class="p-key-pill">46. <b>False</b></div></div><div class="p-key-part-title">Part VI — Short Answer (sample answers)</div><div class="p-q"><b>47.</b> The tree could easily fall over. Fibrous roots are short, soft, and tiny, and they grow close to the surface. A tree needs deep, strong roots like a taproot to hold it firmly in the ground, especially during strong winds and rains.</div><div class="p-q"><b>48.</b> Flowers are colorful and have nectar, a sweet liquid, which attracts insects and birds. When they visit to get the nectar, they carry pollen from one flower to another, helping pollination happen.</div><div class="p-q"><b>49.</b> They help scatter seeds to different places. Spines and hooks cling to animal skin and clothing, carrying seeds far away. Fruits with explosive mechanisms burst open when dried, throwing seeds out. When seeds land on fertile soil, they grow into new plants.</div><div class="p-q"><b>50.</b> The body will not work properly and the person can get sick. Organs and organ systems work together, so if one organ fails, others are affected too. If it's a vital organ like the heart, brain, or lungs, it can be dangerous to the person's life.</div><div class="p-q"><b>51.</b> Regular exercise and a balanced diet keep the body's organs healthy and strong. Exercise makes the heart, lungs, muscles, and bones stronger. A balanced diet gives the body nutrients for energy, growth, and fighting sickness.</div><div class="p-q"><b>52.</b> We can eat these plant parts, and they give us energy and nutrients. Examples: Roots (carrot, radish, gabi, beet), Stems (sugarcane, kangkong, potato), Leaves (pechay, malunggay, cabbage), Fruits (mango, banana, papaya).</div>
+</div>
+
+</body>
+</html>
