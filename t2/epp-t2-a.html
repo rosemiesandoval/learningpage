@@ -1,0 +1,1755 @@
+<!DOCTYPE html>
+<html lang="tl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🧺 EPP: Paglilinis, Paglalaba, at Pamamalantsa Reviewer 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --gold: #f59e0b;
+  --gold-dark: #b45309;
+  --blue: #3b82f6;
+  --blue-dark: #1d4ed8;
+  --red: #ef4444;
+  --green: #22c55e;
+  --bg: #0c1a0e;
+  --surface: #132015;
+  --surface2: #1a2e1d;
+  --text: #f0fdf4;
+  --muted: #86efac;
+  --border: #166534;
+}
+
+body {
+  font-family: 'Baloo 2', cursive;
+  background: var(--bg);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--text);
+  background-image:
+    radial-gradient(ellipse at 10% 30%, rgba(245,158,11,.06) 0%, transparent 55%),
+    radial-gradient(ellipse at 90% 70%, rgba(59,130,246,.06) 0%, transparent 55%);
+}
+
+header {
+  width: 100%;
+  background: linear-gradient(135deg, #14532d, #1e3a5f);
+  border-bottom: 2px solid var(--gold-dark);
+  padding: 13px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 4px 30px rgba(0,0,0,.5);
+}
+.header-icon { font-size: 2rem; animation: float 3s ease-in-out infinite; }
+@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
+
+header h1 {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.45rem;
+  background: linear-gradient(90deg, var(--gold), #fde68a, var(--gold));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+header .sub { font-size: .72rem; color: var(--muted); margin-top: 1px; }
+
+.header-controls { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+.score-pill {
+  background: rgba(245,158,11,.15);
+  border: 1px solid rgba(245,158,11,.4);
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-weight: 800;
+  font-size: .85rem;
+  color: var(--gold);
+}
+.audio-btn {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  background: var(--surface2);
+  color: var(--text);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all .2s;
+  display: flex; align-items: center; justify-content: center;
+}
+.audio-btn:hover, .audio-btn.active { background: #14532d; border-color: var(--gold); }
+
+.chat-wrap {
+  width: 100%; max-width: 700px; flex: 1;
+  display: flex; flex-direction: column;
+  padding: 16px 14px 0;
+}
+
+#chat-box {
+  flex: 1; overflow-y: auto;
+  display: flex; flex-direction: column;
+  gap: 14px; padding-bottom: 10px;
+  max-height: calc(100vh - 200px);
+  scroll-behavior: smooth;
+}
+#chat-box::-webkit-scrollbar { width: 4px; }
+#chat-box::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+.msg { display: flex; gap: 8px; }
+.msg.user { flex-direction: row-reverse; }
+
+.avatar {
+  width: 34px; height: 34px; border-radius: 50%;
+  font-size: 1rem; display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 2px;
+}
+.msg.bot .avatar { background: linear-gradient(135deg, #14532d, #1e3a5f); border: 1.5px solid rgba(245,158,11,.4); }
+.msg.user .avatar { background: linear-gradient(135deg, #1e3a5f, #14532d); border: 1.5px solid rgba(59,130,246,.3); }
+
+.bubble {
+  max-width: 80%;
+  padding: 11px 16px;
+  border-radius: 18px;
+  font-size: .9rem;
+  line-height: 1.65;
+  animation: pop .22s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes pop { from{transform:scale(.88) translateY(6px);opacity:0} to{transform:scale(1) translateY(0);opacity:1} }
+
+.msg.bot .bubble {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-bottom-left-radius: 5px;
+}
+.msg.user .bubble {
+  background: linear-gradient(135deg, #1e3a5f, var(--blue-dark));
+  border-bottom-right-radius: 5px;
+}
+
+/* chips */
+.chip {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: rgba(245,158,11,.12);
+  border: 1.5px solid rgba(245,158,11,.4);
+  color: var(--gold);
+  border-radius: 30px;
+  padding: 5px 13px; margin: 5px 4px 0 0;
+  font-size: .8rem; font-weight: 700;
+  cursor: pointer; transition: all .15s;
+  user-select: none; font-family: 'Baloo 2', cursive;
+}
+.chip:hover {
+  background: var(--gold-dark); color: white;
+  border-color: var(--gold);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(245,158,11,.3);
+}
+
+/* topic tag */
+.topic-tag {
+  display: inline-block;
+  background: linear-gradient(135deg, #14532d, #166534);
+  border: 1px solid var(--gold-dark);
+  color: var(--gold);
+  font-size: .68rem; font-weight: 800;
+  border-radius: 20px; padding: 2px 10px;
+  margin-bottom: 5px; letter-spacing: .5px;
+  text-transform: uppercase;
+}
+
+/* multiple choice */
+.mc-options { display: flex; flex-direction: column; gap: 7px; margin-top: 10px; width: 100%; }
+.mc-btn {
+  display: flex; align-items: center; gap: 10px;
+  background: rgba(255,255,255,.03);
+  border: 1.5px solid var(--border);
+  border-radius: 12px; padding: 9px 14px;
+  color: var(--text); font-family: 'Baloo 2', cursive;
+  font-size: .87rem; font-weight: 600;
+  cursor: pointer; transition: all .15s; text-align: left; width: 100%;
+}
+.mc-btn:hover:not(:disabled) {
+  background: rgba(245,158,11,.12); border-color: var(--gold);
+  color: var(--gold); transform: translateX(3px);
+}
+.mc-btn .letter {
+  display: flex; align-items: center; justify-content: center;
+  width: 26px; height: 26px; border-radius: 8px;
+  background: rgba(245,158,11,.15); border: 1px solid rgba(245,158,11,.35);
+  color: var(--gold); font-size: .78rem; font-weight: 800;
+  flex-shrink: 0; transition: all .15s;
+}
+.mc-btn:hover:not(:disabled) .letter { background: var(--gold-dark); color: white; border-color: var(--gold-dark); }
+.mc-btn.correct { background: rgba(34,197,94,.15)!important; border-color: #22c55e!important; color: #22c55e!important; cursor: default; }
+.mc-btn.correct .letter { background: #22c55e!important; color: white!important; border-color: #22c55e!important; }
+.mc-btn.wrong { background: rgba(239,68,68,.12)!important; border-color: #ef4444!important; color: #ef4444!important; cursor: default; }
+.mc-btn.wrong .letter { background: #ef4444!important; color: white!important; border-color: #ef4444!important; }
+.mc-btn:disabled { cursor: default; transform: none!important; }
+
+/* speaker wave */
+.speaker-wave {
+  display: inline-flex; align-items: flex-end;
+  gap: 2px; height: 14px; margin-left: 6px; vertical-align: middle;
+}
+.speaker-wave span {
+  display: block; width: 3px; border-radius: 2px;
+  background: var(--gold); animation: wave 1s ease-in-out infinite;
+}
+.speaker-wave span:nth-child(1){height:4px;animation-delay:0s}
+.speaker-wave span:nth-child(2){height:10px;animation-delay:.1s}
+.speaker-wave span:nth-child(3){height:6px;animation-delay:.2s}
+.speaker-wave span:nth-child(4){height:12px;animation-delay:.15s}
+.speaker-wave span:nth-child(5){height:4px;animation-delay:.05s}
+@keyframes wave{0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.8)}}
+
+/* typing */
+.typing {
+  display: flex; gap: 4px; padding: 12px 16px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 18px; border-bottom-left-radius: 5px; width: fit-content;
+}
+.dot { width: 7px; height: 7px; border-radius: 50%; background: var(--gold); animation: bounce .9s infinite; }
+.dot:nth-child(2){animation-delay:.15s} .dot:nth-child(3){animation-delay:.3s}
+@keyframes bounce{0%,80%,100%{transform:translateY(0);opacity:.6}40%{transform:translateY(-7px);opacity:1}}
+
+/* input bar */
+.input-bar {
+  width: 100%; max-width: 700px;
+  padding: 10px 14px 18px;
+  display: flex; gap: 8px;
+  background: var(--bg); position: sticky; bottom: 0;
+}
+#user-input {
+  flex: 1; padding: 12px 18px;
+  border: 2px solid var(--border); border-radius: 30px;
+  font-family: 'Baloo 2', cursive; font-size: .92rem;
+  outline: none; background: var(--surface); color: var(--text);
+  transition: border-color .2s, box-shadow .2s;
+}
+#user-input::placeholder { color: var(--muted); }
+#user-input:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(245,158,11,.12); }
+
+#send-btn {
+  width: 48px; height: 48px; border-radius: 50%; border: none;
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  color: white; font-size: 1.1rem; cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 3px 14px rgba(245,158,11,.4); flex-shrink: 0;
+}
+#send-btn:hover { transform: scale(1.08); box-shadow: 0 5px 20px rgba(245,158,11,.55); }
+#send-btn:disabled { opacity: .5; transform: none; }
+
+/* result modal */
+.result-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.75); backdrop-filter: blur(6px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 100; opacity: 0; pointer-events: none; transition: opacity .3s;
+}
+.result-overlay.show { opacity: 1; pointer-events: all; }
+.result-card {
+  background: linear-gradient(135deg, #132015, #0c1a0e);
+  border: 2px solid var(--gold-dark);
+  border-radius: 24px; padding: 36px 40px;
+  text-align: center; max-width: 380px; width: 90%;
+  box-shadow: 0 20px 60px rgba(0,0,0,.6);
+  transform: scale(.9); transition: transform .3s cubic-bezier(.34,1.56,.64,1);
+}
+.result-overlay.show .result-card { transform: scale(1); }
+.result-emoji { font-size: 4rem; margin-bottom: 12px; display: block; }
+.result-title {
+  font-family: 'Fredoka One', cursive; font-size: 1.7rem; margin-bottom: 6px;
+  background: linear-gradient(90deg, var(--gold), #fde68a);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.result-score { font-size: 3rem; font-weight: 900; margin: 10px 0; color: white; }
+.result-msg { color: var(--muted); font-size: .9rem; margin-bottom: 22px; }
+.result-btn {
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  border: none; border-radius: 30px; padding: 12px 30px;
+  color: white; font-family: 'Baloo 2', cursive; font-weight: 800;
+  font-size: 1rem; cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+  box-shadow: 0 4px 16px rgba(245,158,11,.35);
+}
+.result-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 22px rgba(245,158,11,.5); }
+
+/* scenario card for identify questions */
+.scenario-card {
+  background: rgba(245,158,11,.07);
+  border: 1px solid rgba(245,158,11,.25);
+  border-radius: 12px; padding: 10px 14px;
+  margin: 8px 0 6px; font-style: italic;
+  font-size: .87rem; color: #fde68a; line-height: 1.5;
+}
+
+/* ── Notes Panel ─────────────────────────────────────────────── */
+.notes-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.78); backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 200; opacity: 0; pointer-events: none; transition: opacity .3s;
+}
+.notes-overlay.show { opacity: 1; pointer-events: all; }
+.notes-panel {
+  background: linear-gradient(160deg, #0c1a0e, #132015);
+  border: 2px solid var(--gold-dark);
+  border-radius: 20px;
+  width: 92%; max-width: 720px;
+  max-height: 88vh;
+  display: flex; flex-direction: column;
+  box-shadow: 0 24px 60px rgba(0,0,0,.7);
+  overflow: hidden;
+  transform: translateY(30px);
+  transition: transform .35s cubic-bezier(.34,1.2,.64,1);
+}
+.notes-overlay.show .notes-panel { transform: translateY(0); }
+.notes-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 22px; border-bottom: 1px solid var(--border);
+  background: linear-gradient(135deg, #14532d44, #1e3a5f44);
+}
+.notes-header h2 { font-family: 'Fredoka One', cursive; font-size: 1.3rem; color: var(--gold); }
+.notes-close {
+  width: 34px; height: 34px; border-radius: 50%;
+  border: 1.5px solid var(--border); background: var(--surface2);
+  color: var(--text); font-size: 1rem; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; transition: all .2s;
+}
+.notes-close:hover { background: #b91c1c; border-color: #ef4444; }
+.notes-body { overflow-y: auto; padding: 20px 22px; flex: 1; }
+.notes-body::-webkit-scrollbar { width: 4px; }
+.notes-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+.notes-topic { margin-bottom: 28px; }
+.notes-topic-title {
+  font-family: 'Fredoka One', cursive; font-size: 1.05rem;
+  color: var(--gold); margin-bottom: 10px;
+  padding-bottom: 6px; border-bottom: 1px solid var(--border);
+}
+.notes-item {
+  display: flex; gap: 10px; align-items: flex-start;
+  padding: 7px 0; border-bottom: 1px solid rgba(255,255,255,.04);
+  font-size: .87rem; line-height: 1.55;
+}
+.notes-item:last-child { border-bottom: none; }
+.notes-term { font-weight: 800; color: var(--gold); min-width: 150px; flex-shrink: 0; font-size: .84rem; }
+.notes-def { color: #d1fae5; }
+.notes-tabs {
+  display: flex; flex-wrap: wrap; gap: 8px; padding: 14px 22px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(0,0,0,.15);
+}
+.notes-tab {
+  padding: 12px 20px; border-radius: 10px;
+  border: 1.5px solid var(--border); 
+  background: rgba(255,255,255,.04); color: var(--muted);
+  font-family: 'Baloo 2', cursive; font-size: .9rem; font-weight: 700;
+  cursor: pointer; transition: all .15s; white-space: nowrap;
+  min-height: 48px; display: flex; align-items: center;
+}
+.notes-tab.active { background: var(--surface); color: var(--gold); border-color: var(--gold-dark); }
+.notes-tab:hover:not(.active) { color: var(--text); background: var(--surface2); }
+.notes-section { display: none; }
+.notes-section.active { display: block; }
+
+
+/* ── Print button in notes header ─────────────────────────────── */
+.notes-header-actions { display: flex; align-items: center; gap: 10px; }
+.print-btn {
+  display: flex; align-items: center; gap: 6px;
+  background: rgba(245,158,11,.12);
+  border: 1.5px solid rgba(245,158,11,.4);
+  color: var(--gold);
+  border-radius: 20px;
+  padding: 7px 14px;
+  font-family: 'Baloo 2', cursive;
+  font-size: .78rem;
+  font-weight: 800;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all .15s;
+}
+.print-btn:hover { background: var(--gold); color: #0c1a0e; border-color: var(--gold); }
+.print-btn.active { background: var(--gold); color: #0c1a0e; border-color: var(--gold); }
+
+/* ── On-screen Practice Test / Answer Key ─────────────────────── */
+.ptest-part-title {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1rem;
+  color: var(--gold);
+  margin: 22px 0 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+.ptest-part-title:first-child { margin-top: 0; }
+.ptest-q {
+  font-size: .87rem;
+  line-height: 1.6;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed rgba(255,255,255,.06);
+  color: #d1fae5;
+}
+.ptest-q b { color: var(--gold); }
+.ptest-q .opt { display: block; margin: 2px 0 2px 18px; color: #d1fae5; }
+.ptest-bank {
+  background: rgba(59,130,246,.08);
+  border: 1px solid rgba(59,130,246,.3);
+  border-radius: 10px;
+  padding: 10px 16px;
+  margin-bottom: 14px;
+  font-size: .82rem;
+  color: #dbeafe;
+  line-height: 1.6;
+}
+.key-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.key-pill {
+  background: rgba(245,158,11,.1);
+  border: 1px solid rgba(245,158,11,.25);
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: .78rem;
+  color: #fde68a;
+}
+.key-pill b { color: #34d399; }
+
+/* ── Print / Save-as-PDF styles ──────────────────────────────────
+   By default everything is hidden from print. When body carries
+   .printing-test, only #print-area (a light-themed clone of the
+   Practice Test + Answer Key) is shown, laid out for paper. ──── */
+@media print {
+  body * { visibility: hidden; }
+  #print-area, #print-area * { visibility: visible; }
+  #print-area {
+    display: block !important;
+    position: absolute; top: 0; left: 0; width: 100%;
+    background: #fff; color: #14290f;
+    font-family: 'Helvetica', Arial, sans-serif;
+    font-size: 10.5pt;
+    line-height: 1.5;
+  }
+  #print-area .p-cover { text-align: center; padding-top: 40px; }
+  #print-area .p-cover .p-icon { font-size: 34pt; }
+  #print-area .p-cover h1 { font-size: 19pt; color: #b45309; margin: 8px 0 4px; }
+  #print-area .p-cover .p-sub { font-size: 10.5pt; color: #166534; margin-bottom: 20px; }
+  #print-area .p-info-box {
+    border: 1.5px solid #fcd34d; border-radius: 10px;
+    max-width: 460px; margin: 0 auto 20px; padding: 14px 20px;
+    text-align: left; font-size: 10pt;
+  }
+  #print-area .p-info-box div { margin: 6px 0; border-bottom: 1px dotted #fde68a; padding-bottom: 6px; }
+  #print-area .p-instructions {
+    max-width: 460px; margin: 0 auto; text-align: left;
+    background: #fffbeb; border: 1px solid #fcd34d; border-radius: 10px;
+    padding: 12px 18px; font-size: 9.5pt; color: #78350f;
+  }
+  #print-area h2.p-part-title {
+    font-size: 12.5pt; color: #fff;
+    background: linear-gradient(135deg, #b45309, #14532d) !important;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    padding: 6px 12px; border-radius: 7px; margin: 18px 0 10px;
+    page-break-after: avoid;
+  }
+  #print-area .p-bank {
+    background: #f0fdf4 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    border: 1px solid #86efac; border-radius: 8px; padding: 8px 14px;
+    margin-bottom: 12px; font-size: 9.5pt; color: #14532d;
+  }
+  #print-area .p-q {
+    margin-bottom: 8px; padding-bottom: 8px;
+    border-bottom: 1px dotted #fde68a; font-size: 10pt;
+    page-break-inside: avoid; color: #14290f;
+  }
+  #print-area .p-q b { color: #b45309; }
+  #print-area .p-q .p-blank { display: inline-block; min-width: 65px; border-bottom: 1px solid #64748b; }
+  #print-area .p-q .p-opt { display: block; margin: 2px 0 0 20px; color: #365314; }
+  #print-area .p-break { page-break-before: always; }
+  #print-area .p-key-part-title {
+    font-size: 11pt; color: #b45309; font-weight: bold;
+    margin: 14px 0 8px; border-bottom: 2px solid #b45309; padding-bottom: 4px;
+  }
+  #print-area .p-key-grid {
+    display: grid; grid-template-columns: repeat(5, 1fr);
+    gap: 5px 8px; margin-bottom: 14px;
+  }
+  #print-area .p-key-pill {
+    background: #f0fdf4 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    border: 1px solid #86efac; border-radius: 6px;
+    padding: 4px 8px; font-size: 8.5pt; color: #166534;
+  }
+  #print-area .p-key-pill b { color: #b45309; }
+  @page { size: letter; margin: 1.5cm 1.8cm; }
+}
+#print-area { display: none; }
+
+
+/* ── Chapter Summary / Tandaan / Memory boxes (fix: previously missing) ── */
+.chapter-summary {
+  background: linear-gradient(135deg, rgba(59,130,246,.1), rgba(34,197,94,.08));
+  border: 1px solid rgba(59,130,246,.25);
+  border-left: 4px solid var(--blue);
+  border-radius: 12px;
+  padding: 14px 18px;
+  margin-bottom: 18px;
+  font-size: .88rem;
+  line-height: 1.65;
+  color: #dbeafe;
+}
+.tandaan-box {
+  background: rgba(245,158,11,.08);
+  border: 1px solid rgba(245,158,11,.3);
+  border-left: 4px solid var(--gold);
+  border-radius: 12px;
+  padding: 12px 18px;
+  margin: 14px 0;
+  font-size: .86rem;
+  line-height: 1.6;
+  color: #fde68a;
+}
+.tandaan-label {
+  display: block;
+  font-family: 'Baloo 2', cursive;
+  font-size: .8rem;
+  color: var(--gold);
+  letter-spacing: .5px;
+  margin-bottom: 5px;
+}
+.memory-box {
+  background: rgba(34,197,94,.08);
+  border: 1px solid rgba(34,197,94,.3);
+  border-left: 4px solid var(--green);
+  border-radius: 12px;
+  padding: 12px 18px;
+  margin: 14px 0 22px;
+  font-size: .86rem;
+  line-height: 1.6;
+  color: #bbf7d0;
+}
+.memory-label {
+  display: block;
+  font-family: 'Baloo 2', cursive;
+  font-size: .8rem;
+  color: var(--green);
+  letter-spacing: .5px;
+  margin-bottom: 5px;
+}
+.compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0 20px;
+  font-size: .82rem;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.compare-table th {
+  background: linear-gradient(135deg, var(--blue-dark), var(--gold-dark));
+  color: white;
+  text-align: left;
+  padding: 9px 12px;
+  font-size: .78rem;
+  text-transform: uppercase;
+  letter-spacing: .4px;
+}
+.compare-table td {
+  padding: 9px 12px;
+  border-top: 1px solid var(--border);
+  color: var(--text);
+  vertical-align: top;
+}
+.compare-table tr:nth-child(even) td { background: rgba(255,255,255,.02); }
+
+/* ── Story Box (for reading Bible stories aloud) ─────────────────── */
+.story-box {
+  background: rgba(255,255,255,.03);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px 20px;
+  margin-bottom: 16px;
+  font-size: .92rem;
+  line-height: 1.8;
+  color: var(--text);
+}
+.story-box p { margin-bottom: 10px; }
+.story-box p:last-child { margin-bottom: 0; }
+.story-ref {
+  display: block;
+  text-align: right;
+  font-style: italic;
+  color: var(--muted);
+  font-size: .8rem;
+  margin-top: 10px;
+}
+.story-label {
+  display: block;
+  font-family: 'Baloo 2', cursive;
+  font-size: .9rem;
+  color: var(--gold);
+  letter-spacing: .5px;
+  margin-bottom: 10px;
+}
+/* ── Raw Notes (original document view) ──────────────────────── */
+.rawnotes-intro {
+  font-size: .82rem;
+  color: var(--muted);
+  line-height: 1.6;
+  background: rgba(59,130,246,.1);
+  border: 1px solid rgba(59,130,246,.3);
+  border-left: 4px solid var(--blue);
+  border-radius: 10px;
+  padding: 12px 18px;
+  margin-bottom: 20px;
+}
+.rawnotes-doc {
+  font-family: 'Lora', Georgia, serif;
+  line-height: 1.75;
+}
+.rawnotes-doc p {
+  font-size: .95rem;
+  margin-bottom: 14px;
+  color: #e2f5e6;
+}
+.rawnotes-doc strong { color: var(--gold); font-weight: 700; }
+.rawnotes-doc em { color: var(--muted); font-style: italic; }
+.rawnotes-doc h3.doc-heading {
+  font-family: 'Baloo 2', cursive;
+  font-size: 1.05rem;
+  color: var(--gold);
+  margin: 26px 0 12px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid var(--border);
+}
+.rawnotes-doc h3.doc-heading:first-child { margin-top: 0; }
+.rawnotes-doc ul, .rawnotes-doc ol {
+  margin: 0 0 14px 26px;
+  color: #e2f5e6;
+}
+.rawnotes-doc li { margin-bottom: 6px; font-size: .95rem; }
+.rawnotes-doc table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0 20px;
+  font-size: .82rem;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.rawnotes-doc th {
+  background: linear-gradient(135deg, var(--blue-dark), var(--gold-dark));
+  color: white;
+  text-align: left;
+  padding: 9px 12px;
+  font-size: .78rem;
+}
+.rawnotes-doc td {
+  padding: 9px 12px;
+  border-top: 1px solid var(--border);
+  color: var(--text);
+  vertical-align: top;
+}
+.rawnotes-doc tr:nth-child(even) td { background: rgba(255,255,255,.02); }
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE: TABLET (≤820px)
+   ═══════════════════════════════════════════════════════════════ */
+@media (max-width: 820px) {
+  .notes-panel { width: 95%; max-height: 92vh; }
+  .notes-tabs { padding: 12px 16px; gap: 6px; }
+  .notes-tab { padding: 10px 14px; font-size: .82rem; min-height: 42px; }
+  .notes-body { padding: 16px; }
+  .notes-header { padding: 14px 16px; }
+  .chat-wrap { padding: 14px 10px 0; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE: MOBILE (≤600px)
+   ═══════════════════════════════════════════════════════════════ */
+@media (max-width: 600px) {
+  header {
+    padding: 10px 12px;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .header-icon { font-size: 1.5rem; }
+  header h1 { font-size: 1.05rem; line-height: 1.2; }
+  header .sub { font-size: .62rem; }
+  .header-controls { gap: 6px; margin-left: auto; }
+  .score-pill { padding: 4px 10px; font-size: .74rem; }
+  .audio-btn { width: 32px; height: 32px; font-size: .85rem; }
+
+  .chat-wrap { padding: 10px 6px 0; }
+  #chat-box { gap: 12px; }
+  .bubble { max-width: 88%; font-size: .88rem; padding: 10px 13px; }
+  .avatar { width: 30px; height: 30px; font-size: .85rem; }
+
+  .chip { font-size: .78rem; padding: 7px 12px; }
+  .mc-btn { font-size: .84rem; padding: 10px 12px; }
+  .mc-btn .letter { width: 22px; height: 22px; font-size: .74rem; }
+  .topic-tag { font-size: .68rem; }
+  .scenario-card { font-size: .88rem; padding: 10px 14px; }
+
+  .input-bar { padding: 8px 8px calc(8px + env(safe-area-inset-bottom)); gap: 8px; }
+  #user-input { font-size: .88rem; padding: 10px 14px; }
+  #send-btn { width: 40px; height: 40px; font-size: 1rem; }
+
+  .result-card { width: 92%; padding: 26px 20px; }
+  .result-emoji { font-size: 2.6rem; }
+  .result-title { font-size: 1.2rem; }
+  .result-score { font-size: 1.8rem; }
+
+  /* ── Notes panel: near-full-screen on phones ── */
+  .notes-overlay { align-items: flex-end; }
+  .notes-panel {
+    width: 100%; max-width: 100%;
+    max-height: 94vh;
+    border-radius: 20px 20px 0 0;
+    border-left: none; border-right: none; border-bottom: none;
+  }
+  .notes-header { padding: 12px 14px; flex-wrap: wrap; gap: 8px; }
+  .notes-header h2 { font-size: 1.05rem; flex: 1 1 100%; }
+  .notes-header-actions { flex-wrap: wrap; gap: 6px; width: 100%; justify-content: flex-start; }
+  .print-btn { font-size: .7rem; padding: 6px 11px; }
+  .notes-close { width: 30px; height: 30px; font-size: .9rem; margin-left: auto; }
+
+  .notes-tabs { padding: 10px 12px; gap: 5px; }
+  .notes-tab { padding: 8px 12px; font-size: .76rem; min-height: 38px; }
+  .notes-body { padding: 14px; }
+
+  .notes-item { flex-direction: column; gap: 2px; }
+  .notes-term { min-width: 0; font-size: .82rem; }
+  .notes-def { font-size: .84rem; }
+  .notes-topic-title { font-size: .95rem; }
+  .chapter-summary, .memory-box, .tandaan-box, .story-box, .verse-card { font-size: .82rem; padding: 12px 14px; }
+
+  /* ── Tables: allow horizontal scroll instead of squeezing ── */
+  .compare-table { display: block; overflow-x: auto; white-space: nowrap; }
+  .compare-table th, .compare-table td { white-space: normal; min-width: 110px; }
+
+  .key-grid { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 5px; }
+  .key-pill { font-size: .72rem; padding: 5px 8px; }
+  .ptest-part-title { font-size: .92rem; }
+  .ptest-q { font-size: .82rem; }
+  .ptest-bank { font-size: .78rem; padding: 8px 12px; }
+
+  .rawnotes-doc p, .rawnotes-doc li { font-size: .87rem; }
+  .rawnotes-doc h3.doc-heading { font-size: .95rem; }
+  .rawnotes-doc table { display: block; overflow-x: auto; white-space: nowrap; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE: VERY SMALL PHONES (≤380px)
+   ═══════════════════════════════════════════════════════════════ */
+@media (max-width: 380px) {
+  header h1 { font-size: .92rem; }
+  header .sub { display: none; }
+  .score-pill span { font-size: .7rem; }
+  .bubble { max-width: 92%; font-size: .84rem; }
+  .notes-tab { font-size: .7rem; padding: 7px 10px; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE: LANDSCAPE PHONES (short height)
+   ═══════════════════════════════════════════════════════════════ */
+@media (max-height: 480px) and (orientation: landscape) {
+  .notes-panel { max-height: 98vh; }
+  .notes-tabs { padding: 6px 12px; }
+  .notes-tab { min-height: 32px; padding: 6px 10px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-icon">🧺</div>
+  <div>
+    <h1>Paglilinis, Paglalaba, at Pamamalantsa</h1>
+    <div class="sub">Paglilinis ng Bahay · Kaligtasan · Paglalaba · Pamamalantsa</div>
+  </div>
+  <div class="header-controls">
+    <div class="score-pill">⭐ <span id="score-val">0</span> / <span id="total-val">0</span></div>
+    <button class="audio-btn" id="notes-toggle" title="Basahin ang mga Tala" onclick="document.getElementById('notes-overlay').classList.add('show')">📖</button>
+    <button class="audio-btn active" id="audio-toggle" title="I-toggle ang Audio">🔊</button>
+  </div>
+</header>
+
+<div class="chat-wrap">
+  <div id="chat-box"></div>
+</div>
+
+<div class="input-bar">
+  <input type="text" id="user-input" placeholder="Isulat ang iyong sagot dito…" autocomplete="off" />
+  <button id="send-btn">➤</button>
+</div>
+
+<div class="result-overlay" id="result-overlay">
+  <div class="result-card">
+    <span class="result-emoji" id="res-emoji">🏆</span>
+    <div class="result-title">Tapos na!</div>
+    <div class="result-score"><span id="res-score">0</span>/<span id="res-total">0</span></div>
+    <div class="result-msg" id="res-msg">Magaling!</div>
+    <button class="result-btn" onclick="restartApp()">🔄 Maglaro Ulit</button>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+// QUESTION BANK
+// ═══════════════════════════════════════════════════════════════
+const topics = {
+
+  "Paglilinis ng Silid-Tulugan at Sala": [
+    { q: "Gaano kadalas dapat labhan ang kortina sa silid-tulugan?", a: "Tuwing tatlo hanggang anim na buwan", hint: "Hindi ito linggo-linggo, kundi bawat ilang buwan." },
+    { q: "Gaano kadalas dapat palitan ang punda ng unan at ang kubrekama?", a: "Tuwing isang linggo", hint: "Mas madalas ito kaysa sa kortina." },
+    { q: "Bakit ibinibilad sa araw ang mga unan at kutson?", a: "Upang mawala ang kulob na amoy", hint: "Nakatutulong ang init at hangin ng araw." },
+    { q: "Ano ang agiw?", a: "Maruming sapot na matatagpuan sa kisame, pader, at sahig", hint: "Karaniwan itong nasa mga sulok ng kisame." },
+    { q: "Ano ang dapat gawin pagkatapos magwalis ng sahig sa silid-tulugan?", a: "Maglampaso ng sahig at mag-spray ng des-impektante sa mga kagamitan", hint: "Dalawang gawain ang sumusunod sa pagwawalis." },
+    { q: "Ano ang unang nililinis sa sala?", a: "Ang kisame at pader", hint: "Nagsisimula ang paglilinis sa itaas." },
+    { q: "Bakit itinatabi muna ang mga kagamitan sa sala bago walisan ang sahig?", a: "Upang madaling malinis ang mga bahagi ng sahig na natatakpan ng mga kagamitan", hint: "May dumi rin sa ilalim ng mga kasangkapan." },
+    { q: "Bakit ibinibilad sa araw ang mga kutson ng upuan sa sala?", a: "Upang mamatay ang mikrobyo at mawala ang kulob na amoy", hint: "Dalawang layunin ang pagbibilad." },
+    { q: "Ano ang ginagamit sa paglilinis ng salamin sa sala?", a: "Diyaryong may suka", hint: "Dalawang karaniwang gamit sa bahay." },
+    { q: "Ano ang ginagamit sa paghigop ng dumi at alikabok ng pader at upuan sa sala?", a: "Vacuum cleaner", hint: "Isang de-koryenteng panlinis." },
+    { q: "Ano ang maaaring gamitin sa pagpapakintab ng sahig depende sa uri nito?", a: "Floor wax at pagbubunot", hint: "Dalawang paraan ng pagpapakintab." },
+  ],
+
+  "Paglilinis ng Kusina at Bakuran": [
+    { q: "Ano ang unang gawain sa paglilinis ng kusina?", a: "Hugasan ang mga pinagkainan at iba pang maruruming kagamitan sa kusina", hint: "Mga maruruming kasangkapan muna ang aasikasuhin." },
+    { q: "Bakit pinupunasan ang exhaust fan sa kusina?", a: "Dahil naiipon dito ang ilang dumi mula sa kusina na inilalabas nito", hint: "Sinasala nito ang usok at dumi mula sa pagluluto." },
+    { q: "Ano ang ginagamit sa paglilinis ng lababo?", a: "Eskoba, kasama ang tubig at sabon", hint: "Isang pangkuskos na may sabon." },
+    { q: "Bakit gumagamit ng tubig at sabon sa paglilinis ng lababo?", a: "Upang matanggal ang mga nanuot na dumi at tumigas na mantika", hint: "Mahirap tanggalin ang mantika kung walang sabon." },
+    { q: "Paano dapat isalansan ang mga kagamitan sa kusina?", a: "Nang maayos at ayon sa uri at gamit nito", hint: "Pinagsasama ang magkakauri." },
+    { q: "Ano-ano ang mga gawain sa paglilinis ng bakuran?", a: "Magwalis ng tuyong dahon, magbunot ng ligaw na damo, magdilig ng halaman, maglinis ng daluyan ng tubig, at magtapon nang maayos ng basura", hint: "May limang gawain sa listahan." },
+    { q: "Ano ang dapat iwasan sa pagtatapon ng basura sa bakuran?", a: "Ang pagsunog sa mga ito", hint: "Masama ang usok para sa kalusugan at kalikasan." },
+  ],
+
+  "Mga Panukalang Pangkaligtasan at Pangkalusugan sa Paglilinis": [
+    { q: "Ano ang dapat gawin bago magsimulang maglinis?", a: "Ihanda muna ang mga kagamitan sa paglilinis", hint: "Mapapabilis nito ang gawain." },
+    { q: "Bakit dapat maglagay ng face mask sa paglilinis?", a: "Upang hindi makalanghap ng alikabok", hint: "Pantakip ito sa ilong." },
+    { q: "Ano ang dapat gawin kung mahaba ang buhok sa paglilinis?", a: "Itali ito upang hindi makasagabal", hint: "Para hindi sagabal sa kilos." },
+    { q: "Bakit tinatakpan muna ang tirang pagkain sa mesa o kusina bago maglinis?", a: "Upang hindi malagyan ng dumi", hint: "Iniiwasan ang pagkalat ng alikabok sa pagkain." },
+    { q: "Saan dapat magsimulang maglinis ng bahay?", a: "Sa itaas na bahagi ng bahay, mga pader, at ibabaw ng mga kagamitan bago magwalis ng sahig", hint: "Mula itaas pababa." },
+    { q: "Ano ang dapat iwasan kung basa ang kamay?", a: "Ang magsaksak o magbunot ng anumang saksakan ng appliance", hint: "Delikado ito dahil sa koryente." },
+    { q: "Saan dapat itago ang mga kagamitang may matatapang na kemikal tulad ng bleach at muriatic acid?", a: "Sa tamang lalagyan, sa ligtas na lugar na hindi maaabot ng mga bata", hint: "Panganib ito sa mga bata." },
+    { q: "Saan dapat itago ang mga kagamitang matalas at matulis?", a: "Sa ligtas na lugar", hint: "Upang walang masugatan." },
+    { q: "Paano dapat itapon ang mga basura?", a: "Ihiwalay ang nabubulok at hindi nabubulok; ang nareresiklo ay maaaring ibenta sa mga magbobote", hint: "May dalawang pangkat ng basura." },
+    { q: "Ano ang dapat panatilihin kapag nagbubuhat ng mabibigat na bagay?", a: "Ang maayos na tindig at kilos", hint: "Para hindi masaktan ang katawan." },
+  ],
+
+  "Paglalaba: Kagamitan at Karaniwang Paraan": [
+    { q: "Magbigay ng limang kagamitan sa paglalaba.", a: "Tabla at palopalo, eskoba, pangkuskos, palanggana o batya, timba, basket, washing machine, sabong bareta, sabong pulbos, bleach, fabric conditioner, o likidong sabon (anumang lima)", hint: "Marami ang nasa listahan ng aralin." },
+    { q: "Ano ang unang gawain sa paglalaba?", a: "Ihanda ang mga kagamitan sa paglalaba, kabilang na ang mga labahang damit", hint: "Laging may paghahanda muna." },
+    { q: "Paano dapat paghiwalayin ang mga labahan?", a: "Ihiwalay ang puti sa de-kolor, at ihiwalay rin ang may mantsa upang hindi makahawa", hint: "Para hindi mahawa ng kulay o mantsa." },
+    { q: "Ano ang dapat tingnan sa bulsa ng mga damit bago labhan?", a: "Kung may papel, pera, at matatalas na bagay na maaaring makasugat", hint: "Tatlong bagay ang binanggit." },
+    { q: "Ano ang dapat gawin sa damit na may tastas o punit bago labhan?", a: "Tahiin muna", hint: "Para hindi lumala ang punit." },
+    { q: "Bakit binabasa muna ang mga damit bago sabunan?", a: "Upang humambot ang mga dumi na nakakapit dito", hint: "Mas madaling tanggalin ang malambot na dumi." },
+    { q: "Alin ang unang ibabad sa palanggana, puti o de-kolor?", a: "Ang mga puti", hint: "Para hindi mahawa ng kulay." },
+    { q: "Anong mga bahagi ng damit ang dapat bigyan ng tuon sa pagkusot?", a: "Kuwelyo, laylayan, at bandang kilikili", hint: "Madaling kapitan ng dumi ang mga bahaging ito." },
+    { q: "Ano ang pagkukula?", a: "Paglalagay ng sabon sa maruruming bahagi ng puting damit at pagbibilad nito sa init ng araw upang pumuti", hint: "Likas na nagpapaputi ang araw." },
+    { q: "Ilang beses dapat magbanlaw ng damit?", a: "Tatlong beses o higit pa, hanggang sa wala nang nakikitang bula sa tubig", hint: "Hanggang mawala ang sabon at bula." },
+    { q: "Ano ang kagamitang makatutulong sa mabilis na pagtanggal ng sabon at bula sa pagbabanlaw?", a: "Palopalo", hint: "Kasama ito ng tabla sa mga kagamitan." },
+    { q: "Saan dapat isampay ang mga de-kolor na damit?", a: "Sa may lilim, upang hindi kumupas ang kulay", hint: "Nakasisira sa kulay ang matinding sikat ng araw." },
+    { q: "Ano ang ginagamit sa pagsasampay ng nilabhang damit?", a: "Hanger at sipit", hint: "Dalawang kagamitan." },
+  ],
+
+  "Paglalaba: Makabagong Paraan": [
+    { q: "Ano ang dapat gawin sa damit na may kumapit na mantsa bago ilagay sa washing machine?", a: "Lagyan muna ng solusyon (tulad ng bleach) ang bahaging namantsahan upang mapalambot ito", hint: "Pinapalambot ang mantsa nang maaga." },
+    { q: "Bakit dapat suriing mabuti ang mga bulsa bago maglaba gamit ang washing machine?", a: "Upang matiyak na walang papel, pera, at mga bagay na maaaring makasira sa washing machine", hint: "Maaaring masira ang makina." },
+    { q: "Ano ang tinutunaw sa tubig ng washing machine?", a: "Pulbos na sabon o likidong sabon (detergente)", hint: "Dalawang uri ng sabon." },
+    { q: "Anong mode ang itinatakda sa awtomatikong washing machine?", a: "\"Soak-wash-rinse at spin\"", hint: "Apat na yugto sa isang mode." },
+    { q: "Ano ang gagawin sa ordinaryong washing machine matapos paikutin ang mga damit?", a: "Hanguin ang mga damit at banlawan nang mano-mano sa palanggana, o maglagay ng bagong malinis na tubig at muling ipaikot", hint: "May dalawang paraan ng pagbabanlaw." },
+    { q: "Ilang beses dapat magbanlaw sa makabagong paraan ng paglalaba?", a: "Tatlong beses o hanggang sa wala nang nakikitang bula sa tubig", hint: "Hanggang mawala ang bula." },
+    { q: "Kailan inilalagay ang fabric conditioner?", a: "Sa huling pagbabanlaw; ibabad nang limang minuto saka hanguin", hint: "Hindi ito inilalagay sa simula." },
+    { q: "Ano ang gamit ng spinner o dryer ng washing machine?", a: "Mapiga pa nang husto ang mga damit", hint: "Para mabawasan ang tubig sa damit." },
+  ],
+
+  "Pamamalantsa": [
+    { q: "Ano ang pamamalantsa?", a: "Pagpapainit sa tela ng damit upang tanggalin ang gusot, lukot, at tupi", hint: "Gumagamit ng init ang prosesong ito." },
+    { q: "Ano-ano ang mga bentahe ng pamamalantsa?", a: "Mas presentable ang damit, mas pinahahaba ang buhay nito, pinatitibay ang hibla ng damit, at pinapatay ang mikrobyo at bakterya", hint: "May apat na benepisyo." },
+    { q: "Magbigay ng mga kagamitan sa pamamalantsa.", a: "Hanger, plantsa, garment steamer, ironing spray, at kabayo", hint: "Limang kagamitan ang nasa listahan." },
+    { q: "Paano pinipili ang init ng plantsa?", a: "Ayon sa uri ng damit, ayon sa paalala sa etiketa; hinahating temperatura sa manipis na tela at mainit na temperatura sa makapal", hint: "Tingnan ang etiketa ng damit." },
+    { q: "Alin ang dapat unang plantsahin, malalaking damit o maliliit?", a: "Malalaking damit muna, at ihuli ang maliliit", hint: "Malaki muna, maliit huli." },
+    { q: "Ano ang unang padaanan ng plantsa kapag nakabaligtad ang damit?", a: "Ang mga kuwelyo, bulsa, tagiliran ng damit, at mga laylayan", hint: "Apat na bahagi." },
+    { q: "Paano plantsahin ang pantalon at palda?", a: "Baligtarin ang mga ito at unang plantsahin ang bahagi ng bulsa; saka ibalik sa harapang bahagi at plantsahin mula sa laylayan paitaas", hint: "Bulsa muna." },
+    { q: "Ano ang ginagawa sa mga naplantsang damit?", a: "Inilalagay sa hanger at isinasabit sa aparador", hint: "Para manatiling maayos." },
+    { q: "Ano ang dapat suriin sa plantsa bago gamitin?", a: "Kung nasa maayos na kondisyon ito, lalo na ang kordon", hint: "Isang bahaging may kinalaman sa koryente." },
+    { q: "Ano ang dapat gawin sa kamay bago magsaksak ng plug ng plantsa?", a: "Tiyaking tuyo ang mga kamay", hint: "Para maiwasan ang kuryente." },
+    { q: "Dapat ba plantsahin ang damit kapag basa pa ito?", a: "Hindi; huwag plantsahin ang damit kapag basa pa ito", hint: "Hintayin munang matuyo." },
+    { q: "Saan itinatabi ang plantsa kapag hindi pa inilalapat sa damit?", a: "Sa dulong lagayan ng kabayo o nang nakatayo", hint: "Huwag itong ilapat nang matagal sa damit." },
+    { q: "Ano ang dapat gawin sa plantsa bago ito itago?", a: "Palamigin muna ito", hint: "Mainit ito pagkatapos gamitin." },
+    { q: "Ano ang hindi dapat gawin sa kordon habang pinalalamig ang plantsa?", a: "Huwag itong iikot sa plantsa", hint: "Maaaring masira ang kordon." },
+  ],
+
+};
+
+// ── TAMA O MALI ────────────────────────────────────────────────────────────
+const trueOrFalse = [
+  { q: "Dapat labhan ang kortina sa silid-tulugan tuwing tatlo hanggang anim na buwan.", a: "tama" },
+  { q: "Pinapalitan ang punda ng unan at kubrekama tuwing isang buwan.", a: "mali" },
+  { q: "Ibinibilad sa araw ang mga unan at kutson upang mawala ang kulob na amoy.", a: "tama" },
+  { q: "Sa sala, ang sahig muna ang unang nililinis bago ang kisame at pader.", a: "mali" },
+  { q: "Nililinis ang salamin gamit ang diyaryong may suka.", a: "tama" },
+  { q: "Nililinis ang lababo gamit ang eskoba, tubig, at sabon.", a: "tama" },
+  { q: "Maaaring sunugin ang mga basura sa bakuran.", a: "mali" },
+  { q: "Dapat magsuot ng face mask sa paglilinis upang hindi makalanghap ng alikabok.", a: "tama" },
+  { q: "Dapat itali ang mahabang buhok sa paglilinis.", a: "tama" },
+  { q: "Maaaring magsaksak ng appliance kahit basa ang kamay.", a: "mali" },
+  { q: "Ang bleach at muriatic acid ay dapat itago sa lugar na abot ng mga bata.", a: "mali" },
+  { q: "Dapat ihiwalay ang nabubulok sa hindi nabubulok na basura.", a: "tama" },
+  { q: "Ang pagkukula ay ginagawa sa mga puting damit na sobrang dumi.", a: "tama" },
+  { q: "Dapat unang ibabad ang de-kolor na damit bago ang puti.", a: "mali" },
+  { q: "Isinasampay sa lilim ang de-kolor na damit upang hindi kumupas ang kulay.", a: "tama" },
+  { q: "Dapat magbanlaw nang tatlong beses o higit pa.", a: "tama" },
+  { q: "Inilalagay ang fabric conditioner sa unang paghuhugas ng damit.", a: "mali" },
+  { q: "Sa awtomatikong washing machine, itinatakda ang mode na \"soak-wash-rinse at spin.\"", a: "tama" },
+  { q: "Pinahahaba ng pamamalantsa ang buhay ng damit.", a: "tama" },
+  { q: "Dapat plantsahin ang damit habang basa pa ito.", a: "mali" },
+  { q: "Unang plantsahin ang maliliit na damit at ihuli ang malalaki.", a: "mali" },
+  { q: "Dapat palamigin muna ang plantsa bago itago.", a: "tama" },
+  { q: "Maaaring ikutin ang kordon sa plantsa habang pinalalamig ito.", a: "mali" },
+  { q: "Mainit na temperatura ang ginagamit sa maninipis na tela.", a: "mali" },
+];
+
+// ── KILALANIN: BAHAGI NG BAHAY · PAGLALABA · PAMAMALANTSA ───────────────────
+const identifyQuestions = [
+  { q: "Labhan ang kortina tuwing tatlo hanggang anim na buwan.", a: "Silid-Tulugan", choices: ["Silid-Tulugan","Sala","Kusina","Bakuran"] },
+  { q: "Palitan ang punda ng unan at ang kubrekama tuwing isang linggo.", a: "Silid-Tulugan", choices: ["Silid-Tulugan","Sala","Kusina","Bakuran"] },
+  { q: "Linisin ang salamin gamit ang diyaryong may suka.", a: "Sala", choices: ["Sala","Silid-Tulugan","Kusina","Bakuran"] },
+  { q: "Gamit ang vacuum cleaner, higupin ang dumi at alikabok ng pader at upuan.", a: "Sala", choices: ["Sala","Silid-Tulugan","Kusina","Bakuran"] },
+  { q: "Punasan ang exhaust fan, kung mayroon.", a: "Kusina", choices: ["Kusina","Sala","Silid-Tulugan","Bakuran"] },
+  { q: "Linisin ang lababo gamit ang eskoba, tubig, at sabon.", a: "Kusina", choices: ["Kusina","Sala","Silid-Tulugan","Bakuran"] },
+  { q: "Bunutin ang mga ligaw na damo.", a: "Bakuran", choices: ["Bakuran","Kusina","Sala","Silid-Tulugan"] },
+  { q: "Diligan ang mga halaman at linisin ang mga daluyan ng tubig.", a: "Bakuran", choices: ["Bakuran","Kusina","Sala","Silid-Tulugan"] },
+  { q: "Kagamitang nakatutulong upang mabilis na matanggal ang sabon at bula sa pagbabanlaw ng damit.", a: "Palopalo", choices: ["Palopalo","Sipit","Hanger","Timba"] },
+  { q: "Ginagamit kasama ng hanger sa pagsasampay ng nilabhang damit.", a: "Sipit", choices: ["Sipit","Palopalo","Eskoba","Basket"] },
+  { q: "Kagamitan sa makabagong paraan ng paglalaba.", a: "Washing machine", choices: ["Washing machine","Tabla","Palanggana","Sabong bareta"] },
+  { q: "Inilalagay sa huling pagbabanlaw at ibinababad nang limang minuto.", a: "Fabric conditioner", choices: ["Fabric conditioner","Bleach","Sabong pulbos","Likidong sabon"] },
+  { q: "Paglalagay ng sabon sa maruruming bahagi ng puting damit at pagbibilad sa init ng araw.", a: "Pagkukula", choices: ["Pagkukula","Pagbabanlaw","Pagsasampay","Pamamalantsa"] },
+  { q: "Patungan ng damit sa pamamalantsa; dapat malinis at makapal ang sapin nito.", a: "Kabayo", choices: ["Kabayo","Hanger","Plantsa","Garment steamer"] },
+  { q: "Kagamitang nagpapainit sa tela upang tanggalin ang gusot, lukot, at tupi.", a: "Plantsa", choices: ["Plantsa","Kabayo","Hanger","Ironing spray"] },
+  { q: "Pinagsasabitan ng naplantsang damit bago ilagay sa aparador.", a: "Hanger", choices: ["Hanger","Kabayo","Plantsa","Kordon"] },
+  { q: "Makikita rito ang paalala kung gaano kainit ang plantsa para sa isang damit.", a: "Etiketa ng damit", choices: ["Etiketa ng damit","Kabayo","Kordon","Hanger"] },
+  { q: "Bahagi ng plantsang dapat suriin kung nasa maayos na kondisyon bago gamitin.", a: "Kordon", choices: ["Kordon","Kabayo","Hanger","Etiketa ng damit"] },
+];
+
+// ═══════════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════════
+let state = {
+  awaiting: 'menu',
+  mode: null,
+  questions: [],
+  allAnswers: [],
+  qIndex: 0,
+  score: 0,
+  total: 0,
+  hintUsed: false,
+  audioEnabled: true,
+};
+
+// ═══════════════════════════════════════════════════════════════
+// TTS (UPGRADED FOR TRUE FILIPINO ACCENT)
+// ═══════════════════════════════════════════════════════════════
+let currentAudioStream = null;
+
+function speak(text) {
+  if (!state.audioEnabled) return;
+  
+  // Linisin ang mga nakaraang audio task
+  window.speechSynthesis.cancel();
+  if (currentAudioStream) {
+    currentAudioStream.pause();
+    currentAudioStream = null;
+  }
+  
+  // Tanggalin ang HTML tags at emojis para hindi basahin nang paputol-putol
+  const clean = text.replace(/<[^>]+>/g,'').replace(/[🇵🇭🌟✅❌💡⏭️🏆😊💪🔄🔲📚👋⭐✕🧭📏🗺️]/g,'');
+  
+  // PRIMARY METHOD: Google Translation Engine cloud voice stream (May natural na Filipino accent)
+  const googleTtsUrl = `https://translate.google.com/translate_tts?ie=UTF-8&tl=tl&client=tw-ob&q=${encodeURIComponent(clean)}`;
+  
+  currentAudioStream = new Audio(googleTtsUrl);
+  currentAudioStream.onplaying = () => showWave(true);
+  currentAudioStream.onended = currentAudioStream.onerror = () => showWave(false);
+  
+  currentAudioStream.play().catch(err => {
+    // BACKUP METHOD: Web Speech API (Gagana kapag walang internet connection)
+    console.warn("Google TTS blocked or offline. Falling back to local system speech engine.");
+    
+    const streamFallback = new SpeechSynthesisUtterance(clean);
+    streamFallback.lang = 'fil-PH';
+    streamFallback.rate = 0.95; streamFallback.pitch = 1.05; streamFallback.volume = 1;
+    
+    const voices = window.speechSynthesis.getVoices();
+    const filVoice = voices.find(v => v.lang.startsWith('fil') || v.lang.startsWith('tl'));
+    const engVoice = voices.find(v => v.lang.startsWith('en') && v.name.toLowerCase().includes('female'))
+                   || voices.find(v => v.lang.startsWith('en'));
+              
+    if (filVoice) {
+      streamFallback.voice = filVoice;
+    } else if (engVoice) {
+      streamFallback.voice = engVoice; 
+      streamFallback.lang = 'en-US'; 
+    }
+    
+    streamFallback.onstart = () => showWave(true);
+    streamFallback.onend = streamFallback.onerror = () => showWave(false);
+    window.speechSynthesis.speak(streamFallback);
+  });
+}
+
+function showWave(on) {
+  document.querySelectorAll('.speaker-wave').forEach(w => w.style.display = on ? 'inline-flex' : 'none');
+}
+
+// I-initialize ang mga boses ng system
+let localSystemVoices = [];
+function lookupSystemVoices() {
+  localSystemVoices = window.speechSynthesis.getVoices();
+}
+lookupSystemVoices();
+if (window.speechSynthesis.onvoiceschanged !== undefined) {
+  window.speechSynthesis.onvoiceschanged = lookupSystemVoices;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// UI HELPERS
+// ═══════════════════════════════════════════════════════════════
+const chatBox = document.getElementById('chat-box');
+const input = document.getElementById('user-input');
+const sendBtn = document.getElementById('send-btn');
+
+function scrollBottom() { chatBox.scrollTop = chatBox.scrollHeight; }
+
+function addMessage(role, html, speakText) {
+  const div = document.createElement('div');
+  div.className = `msg ${role}`;
+  const av = document.createElement('div');
+  av.className = 'avatar';
+  av.textContent = role === 'bot' ? '🤖' : '🧑';
+  const bub = document.createElement('div');
+  bub.className = 'bubble';
+  bub.innerHTML = role === 'bot'
+    ? html + '<span class="speaker-wave" style="display:none"><span></span><span></span><span></span><span></span><span></span></span>'
+    : html;
+  div.appendChild(av); div.appendChild(bub);
+  chatBox.appendChild(div);
+  scrollBottom(); bindChips();
+  if (role === 'bot') {
+    const txt = speakText || html.replace(/<[^>]+>/g,' ');
+    setTimeout(() => speak(txt), 350);
+  }
+}
+
+function addTyping() {
+  const d = document.createElement('div');
+  d.className = 'msg bot'; d.id = 'typing';
+  d.innerHTML = '<div class="avatar">🤖</div><div class="typing"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>';
+  chatBox.appendChild(d); scrollBottom();
+}
+function removeTyping() { const t = document.getElementById('typing'); if(t) t.remove(); }
+
+function bindChips() {
+  document.querySelectorAll('.chip:not([data-bound])').forEach(c => {
+    c.dataset.bound = '1';
+    c.addEventListener('click', () => handleUserMessage(c.dataset.val));
+  });
+}
+
+function updateScore() {
+  document.getElementById('score-val').textContent = state.score;
+  document.getElementById('total-val').textContent = state.total;
+}
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length-1; i > 0; i--) {
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]] = [a[j],a[i]];
+  }
+  return a;
+}
+
+function normalize(s) { return s.toLowerCase().trim().replace(/\s+/g,' '); }
+
+function checkAnswer(user, correct) {
+  const u = normalize(user), c = normalize(correct);
+  if (u === c) return true;
+  if (c.includes(u) && u.length > 5) return true;
+  const parts = c.split(/[,;\/]/);
+  for (const p of parts) if (u.includes(p.trim()) && p.trim().length > 4) return true;
+  return false;
+}
+
+function showResult() {
+  const pct = Math.round((state.score/state.total)*100);
+  const emoji = pct>=90?'🏆':pct>=70?'🌟':pct>=50?'😊':'💪';
+  const msg = pct>=90?'Napakahusay! Alam mo ang lahat!':pct>=70?'Magaling! Patuloy ka lang!':pct>=50?'Mabuti! Pag-aralan pa nang kaunti!':'Huwag sumuko! Subukan ulit!';
+  document.getElementById('res-emoji').textContent = emoji;
+  document.getElementById('res-score').textContent = state.score;
+  document.getElementById('res-total').textContent = state.total;
+  document.getElementById('res-msg').textContent = msg;
+  document.getElementById('result-overlay').classList.add('show');
+  speak(`Tapos na! Ang iyong puntos ay ${state.score} sa ${state.total}. ${msg}`);
+}
+
+function restartApp() {
+  document.getElementById('result-overlay').classList.remove('show');
+  state = { awaiting:'menu', mode:null, questions:[], allAnswers:[], qIndex:0, score:0, total:0, hintUsed:false, audioEnabled:state.audioEnabled };
+  chatBox.innerHTML = '';
+  document.querySelector('.input-bar').style.display = 'flex';
+  updateScore();
+  showMenu();
+}
+
+// ═══════════════════════════════════════════════════════════════
+// MC HELPERS
+// ═══════════════════════════════════════════════════════════════
+function getAllAnswers() {
+  const ans = [];
+  for (const qs of Object.values(topics)) for (const q of qs) ans.push(q.a);
+  return ans;
+}
+
+function generateChoices(correct, pool) {
+  const distractors = shuffle(pool.filter(a => a !== correct)).slice(0,3);
+  return shuffle([correct, ...distractors]);
+}
+
+function buildMCBtns(choices, correctAnswer) {
+  const letters = ['A','B','C','D','E'];
+  return `<div class="mc-options">${choices.map((c,i)=>
+    `<button class="mc-btn" data-answer="${encodeURIComponent(c)}" data-correct="${encodeURIComponent(correctAnswer)}" onclick="handleMCClick(this)">
+      <span class="letter">${letters[i]}</span>${c}
+    </button>`
+  ).join('')}</div>`;
+}
+
+function handleMCClick(btn) {
+  const allBtns = btn.closest('.mc-options').querySelectorAll('.mc-btn');
+  allBtns.forEach(b => b.disabled = true);
+  const chosen = decodeURIComponent(btn.dataset.answer);
+  const correct = decodeURIComponent(btn.dataset.correct);
+  const isCorrect = chosen === correct;
+  allBtns.forEach(b => { if(decodeURIComponent(b.dataset.answer)===correct) b.classList.add('correct'); });
+  if (!isCorrect) btn.classList.add('wrong');
+  setTimeout(() => {
+    if (isCorrect) {
+      state.score++;
+      addMessage('bot', `✅ <strong>Tama!</strong> +1 puntos! Ang sagot ay: <strong>${correct}</strong>`, `Tama! Ang sagot ay: ${correct}`);
+    } else {
+      addMessage('bot', `❌ <strong>Hindi tama.</strong> Ang tamang sagot ay: <strong>${correct}</strong>`, `Hindi tama. Ang tamang sagot ay: ${correct}`);
+    }
+    state.qIndex++; updateScore();
+    if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+    else setTimeout(showResult, 900);
+  }, 650);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// NEXT QUESTION
+// ═══════════════════════════════════════════════════════════════
+function nextQuestion() {
+  const qi = state.qIndex;
+  const q = state.questions[qi];
+  const num = qi + 1;
+
+  if (state.mode === 'full' || state.mode === 'topic_mc') {
+    const choices = generateChoices(q.a, state.allAnswers);
+    const tag = q.topic ? `<span class="topic-tag">${q.topic}</span><br>` : '';
+    const html = `${tag}<strong>T${num} sa ${state.total}:</strong> ${q.q}${buildMCBtns(choices, q.a)}`;
+    addMessage('bot', html, `Tanong ${num}. ${q.q}`);
+    return;
+  }
+
+  if (state.mode === 'tf') {
+    const html = `<strong>T${num} sa ${state.total}:</strong> <div class="scenario-card">${q.q}</div>
+      <span class="chip" data-val="tama">✅ Tama</span><span class="chip" data-val="mali">❌ Mali</span>`;
+    addMessage('bot', html, `Tanong ${num}. Tama o Mali: ${q.q}`);
+    return;
+  }
+
+  if (state.mode === 'identify') {
+    const btns = buildMCBtns(q.choices, q.a);
+    const html = `<strong>T${num} sa ${state.total}:</strong> Kilalanin kung ano ang tinutukoy:<div class="scenario-card">${q.q}</div>${btns}`;
+    addMessage('bot', html, `Tanong ${num}. Kilalanin ang tinutukoy: ${q.q}`);
+    return;
+  }
+
+  // typed answer mode
+  const tag = q.topic ? `<span class="topic-tag">${q.topic}</span><br>` : '';
+  const html = `${tag}<strong>T${num} sa ${state.total}:</strong> ${q.q}<br><small style="color:var(--muted)">Isulat ang sagot · i-type ang <em>hint</em> para sa tulong · <em>skip</em> para lumipat</small>`;
+  addMessage('bot', html, `Tanong ${num}. ${q.q}`);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// MENU
+// ═══════════════════════════════════════════════════════════════
+function showMenu() {
+  addMessage('bot',
+    `👋 <strong>Kumusta! Ako ang iyong EPP Reviewer!</strong><br>Pag-aaralan natin ang <em>Paglilinis ng Bahay</em>, ang <em>Mga Panukalang Pangkaligtasan</em>, ang <em>Paglalaba</em> (karaniwan at makabagong paraan), at ang <em>Pamamalantsa</em>.<br><br>Ano ang gusto mong gawin?<br>
+    <span class="chip" data-val="1">📚 Pag-aralan ang Paksa</span>
+    <span class="chip" data-val="2">✅ Tama o Mali</span>
+    <span class="chip" data-val="3">🌐 Kilalanin: Bahagi ng Bahay at Kagamitan</span>
+    <span class="chip" data-val="4">🌟 Buong Review (Multiple Choice)</span>`,
+    "Kumusta! Ako ang iyong EPP Reviewer tungkol sa Paglilinis, Paglalaba, at Pamamalantsa. Ano ang gusto mong gawin? Pag-aralan ang paksa, Tama o Mali, Kilalanin, o Buong Review na multiple choice?"
+  );
+  state.awaiting = 'menu';
+}
+
+// ═══════════════════════════════════════════════════════════════
+// PROCESS MESSAGE
+// ═══════════════════════════════════════════════════════════════
+function processMessage(msg) {
+  const aw = state.awaiting;
+
+  // ── MENU ──────────────────────────────────────────────────
+  if (aw === 'menu') {
+    if (msg === '1') {
+      state.awaiting = 'topic';
+      const keys = Object.keys(topics);
+      const chips = keys.map((t,i) => `<span class="chip" data-val="${i+1}">${i+1}. ${t}</span>`).join(' ');
+      addMessage('bot', `📚 Alin ang paksang gusto mong pag-aralan?<br>${chips}`, 'Alin ang paksang gusto mong pag-aralan?');
+
+    } else if (msg === '2') {
+      state.mode = 'tf';
+      state.questions = shuffle(trueOrFalse);
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'tf_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `✅ <strong>Tama o Mali!</strong> ${state.total} tanong. Simulan na!`, `Tama o Mali! ${state.total} tanong. Simulan na!`);
+      setTimeout(nextQuestion, 800);
+
+    } else if (msg === '3') {
+      state.mode = 'identify';
+      state.questions = shuffle(identifyQuestions);
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'mc_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `🌐 <strong>Kilalanin!</strong> Alamin kung anong bahagi ng bahay, kagamitan, o gawain ang tinutukoy.`, 'Kilalanin! Alamin kung ano ang tinutukoy sa bawat pahayag.');
+      setTimeout(nextQuestion, 800);
+
+    } else if (msg === '4') {
+      state.mode = 'full';
+      const all = [];
+      for (const [topicName, qs] of Object.entries(topics)) {
+        qs.forEach(q => all.push({...q, topic: topicName}));
+      }
+      state.questions = shuffle(all);
+      state.allAnswers = getAllAnswers();
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'mc_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `🌟 <strong>Buong Review — Multiple Choice!</strong> ${state.total} tanong. Pag-isipang mabuti!`, `Buong Review! Multiple Choice! ${state.total} tanong. Pag-isipang mabuti!`);
+      setTimeout(nextQuestion, 800);
+
+    } else {
+      addMessage('bot',
+        `Pumili ng opsyon:<br>
+        <span class="chip" data-val="1">📚 Pag-aralan ang Paksa</span>
+        <span class="chip" data-val="2">✅ Tama o Mali</span>
+        <span class="chip" data-val="3">🌐 Kilalanin</span>
+        <span class="chip" data-val="4">🌟 Buong Review</span>`,
+        'Pumili ng opsyon.'
+      );
+    }
+    return;
+  }
+
+  // ── TOPIC SELECT ──────────────────────────────────────────
+  if (aw === 'topic') {
+    const keys = Object.keys(topics);
+    const idx = parseInt(msg) - 1;
+    if (keys[idx]) {
+      const topicName = keys[idx];
+      state.mode = 'topic_mc';
+      state.questions = shuffle(topics[topicName]);
+      state.allAnswers = getAllAnswers();
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'mc_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `📚 <strong>${topicName}</strong> — ${state.total} tanong. Handa ka na ba?`, `${topicName}. ${state.total} tanong. Handa ka na ba?`);
+      setTimeout(nextQuestion, 800);
+    } else {
+      const chips = Object.keys(topics).map((t,i) => `<span class="chip" data-val="${i+1}">${i+1}. ${t}</span>`).join(' ');
+      addMessage('bot', `Pumili ng wastong paksa:<br>${chips}`, 'Pumili ng wastong paksa.');
+    }
+    return;
+  }
+
+  // ── TYPED ANSWER ──────────────────────────────────────────
+  if (aw === 'answer') {
+    const q = state.questions[state.qIndex];
+    const m = normalize(msg);
+
+    if (m === 'hint') {
+      state.hintUsed = true;
+      addMessage('bot', `💡 <strong>Hint:</strong> ${q.hint}`, `Hint: ${q.hint}`);
+      return;
+    }
+    if (m === 'skip') {
+      addMessage('bot', `⏭️ Nilaktawan! Ang tamang sagot ay: <strong>${q.a}</strong>`, `Nilaktawan. Ang tamang sagot ay: ${q.a}`);
+      state.qIndex++; state.hintUsed = false;
+      if (state.qIndex < state.total) setTimeout(nextQuestion, 700);
+      else showResult();
+      return;
+    }
+
+    const correct = checkAnswer(msg, q.a);
+    if (correct) {
+      if (!state.hintUsed) state.score++;
+      const note = state.hintUsed ? ' <em>(ginamit ang hint — walang puntos)</em>' : ' +1 puntos!';
+      addMessage('bot', `✅ <strong>Tama!</strong>${note} Sagot: <strong>${q.a}</strong>`, `Tama! Ang sagot ay: ${q.a}`);
+    } else {
+      addMessage('bot', `❌ <strong>Hindi tama.</strong> Ang tamang sagot ay: <strong>${q.a}</strong>`, `Hindi tama. Ang tamang sagot ay: ${q.a}`);
+    }
+    state.qIndex++; state.hintUsed = false; updateScore();
+    if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+    else setTimeout(showResult, 900);
+    return;
+  }
+
+  // ── TRUE OR FALSE ─────────────────────────────────────────
+  if (aw === 'tf_answer') {
+    const q = state.questions[state.qIndex];
+    const ans = normalize(msg);
+    const valid = ans === 'tama' || ans === 'mali' || ans === 'true' || ans === 'false';
+    const mapped = (ans === 'true') ? 'tama' : (ans === 'false') ? 'mali' : ans;
+
+    if (valid) {
+      const correct = mapped === q.a;
+      if (correct) {
+        state.score++;
+        addMessage('bot', `✅ <strong>Tama!</strong> Ang sagot ay <strong>${q.a.toUpperCase()}</strong>.`, `Tama! Ang sagot ay ${q.a}.`);
+      } else {
+        addMessage('bot', `❌ <strong>Mali.</strong> Ang tamang sagot ay <strong>${q.a.toUpperCase()}</strong>.`, `Mali. Ang tamang sagot ay ${q.a}.`);
+      }
+      state.qIndex++; updateScore();
+      if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+      else setTimeout(showResult, 900);
+    } else {
+      addMessage('bot',
+        `Sagot: Tama o Mali?<br><span class="chip" data-val="tama">✅ Tama</span><span class="chip" data-val="mali">❌ Mali</span>`,
+        'Sagot: Tama o Mali?'
+      );
+    }
+    return;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// CONTROLS
+// ═══════════════════════════════════════════════════════════════
+function handleUserMessage(msg) {
+  if (!msg.trim()) return;
+  
+  // Ihinto nang malinis ang nagsasalitang audio kapag sumagot ang user
+  window.speechSynthesis.cancel();
+  if (currentAudioStream) {
+    currentAudioStream.pause();
+    currentAudioStream = null;
+    showWave(false);
+  }
+  
+  addMessage('user', msg.replace(/</g,'&lt;'));
+  input.value = '';
+  input.disabled = true; sendBtn.disabled = true;
+  addTyping();
+  setTimeout(() => {
+    removeTyping();
+    input.disabled = false; sendBtn.disabled = false;
+    input.focus();
+    processMessage(msg);
+  }, 480);
+}
+
+sendBtn.addEventListener('click', () => { handleUserMessage(input.value); });
+input.addEventListener('keydown', e => { if(e.key==='Enter') handleUserMessage(input.value); });
+
+document.getElementById('audio-toggle').addEventListener('click', function() {
+  state.audioEnabled = !state.audioEnabled;
+  this.textContent = state.audioEnabled ? '🔊' : '🔇';
+  this.classList.toggle('active', state.audioEnabled);
+  if (!state.audioEnabled) {
+    window.speechSynthesis.cancel();
+    if (currentAudioStream) {
+      currentAudioStream.pause();
+      currentAudioStream = null;
+      showWave(false);
+    }
+  }
+});
+
+// ═══════════════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════════════
+window.addEventListener('load', () => {
+  lookupSystemVoices();
+  showMenu();
+});
+
+function printPracticeTest() {
+  document.body.classList.add('printing-test');
+  window.print();
+}
+window.addEventListener('afterprint', () => {
+  document.body.classList.remove('printing-test');
+});
+
+// ═══════════════════════════════════════════════════════════════
+// BASAHIN ANG TALA (gumagamit ng boses ng browser — walang limitasyon
+// sa haba, hindi tulad ng maiikling audio clip ng Google TTS sa chat)
+// ═══════════════════════════════════════════════════════════════
+function getNotesText(section) {
+  const clone = section.cloneNode(true);
+  clone.querySelectorAll('button').forEach(b => b.remove());
+  let text = clone.innerText || clone.textContent || '';
+  text = text.replace(/\s+/g, ' ').trim();
+  return text;
+}
+
+function toggleNotesAudio() {
+  const btn = document.getElementById('notes-audio-btn');
+  if (!btn) return;
+
+  if (window.speechSynthesis.speaking || window.speechSynthesis.pending) {
+    window.speechSynthesis.cancel();
+    btn.innerHTML = '🔊 Basahin ang Tala';
+    btn.classList.remove('active');
+    return;
+  }
+
+  const activeSection = document.querySelector('.notes-section.active');
+  if (!activeSection) return;
+  const text = getNotesText(activeSection);
+  if (!text) return;
+
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.lang = 'fil-PH';
+  utter.rate = 0.95;
+  utter.pitch = 1.05;
+  utter.volume = 1;
+
+  const voices = window.speechSynthesis.getVoices();
+  const filVoice = voices.find(v => v.lang.startsWith('fil') || v.lang.startsWith('tl'));
+  const engVoice = voices.find(v => v.lang.startsWith('en') && v.name.toLowerCase().includes('female'))
+                 || voices.find(v => v.lang.startsWith('en'));
+  if (filVoice) {
+    utter.voice = filVoice;
+  } else if (engVoice) {
+    utter.voice = engVoice;
+    utter.lang = 'en-US';
+  }
+
+  utter.onstart = () => { btn.innerHTML = '⏹️ Ihinto ang Pagbasa'; btn.classList.add('active'); };
+  utter.onend = utter.onerror = () => { btn.innerHTML = '🔊 Basahin ang Tala'; btn.classList.remove('active'); };
+
+  window.speechSynthesis.speak(utter);
+}
+
+function switchTab(tabId, btn) {
+  window.speechSynthesis.cancel();
+  const audioBtn = document.getElementById('notes-audio-btn');
+  if (audioBtn) { audioBtn.innerHTML = '🔊 Basahin ang Tala'; audioBtn.classList.remove('active'); }
+  document.querySelectorAll('.notes-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.notes-tab').forEach(b => b.classList.remove('active'));
+  document.getElementById(tabId).classList.add('active');
+  btn.classList.add('active');
+}
+
+function closeNotesPanel() {
+  window.speechSynthesis.cancel();
+  const audioBtn = document.getElementById('notes-audio-btn');
+  if (audioBtn) { audioBtn.innerHTML = '🔊 Basahin ang Tala'; audioBtn.classList.remove('active'); }
+  document.getElementById('notes-overlay').classList.remove('show');
+}
+</script>
+
+<!-- ── Notes Panel ── -->
+<div class="notes-overlay" id="notes-overlay">
+  <div class="notes-panel">
+    <div class="notes-header">
+      <h2>📖 Paglilinis, Paglalaba, at Pamamalantsa — Mga Tala</h2>
+      <div class="notes-header-actions">
+        <button class="print-btn" id="notes-audio-btn" onclick="toggleNotesAudio()" title="Basahin nang malakas ang tab na ito">🔊 Basahin ang Tala</button>
+        <button class="print-btn" onclick="printPracticeTest()" title="I-print o i-save bilang PDF ang Practice Test at Answer Key">🖨️ I-print ang Test &amp; Key</button>
+        <button class="notes-close" onclick="closeNotesPanel()">✕</button>
+      </div>
+    </div>
+    <div class="notes-tabs">
+      <button class="notes-tab active" onclick="switchTab('tab-bahay', this)">🏠 Paglilinis ng Bahay</button>
+      <button class="notes-tab" onclick="switchTab('tab-kaligtasan', this)">🦺 Kaligtasan</button>
+      <button class="notes-tab" onclick="switchTab('tab-laba', this)">🧺 Paglalaba</button>
+      <button class="notes-tab" onclick="switchTab('tab-plantsa', this)">👔 Pamamalantsa</button>
+      <button class="notes-tab" onclick="switchTab('tab-tamomali', this)">✅ Tama o Mali</button>
+      <button class="notes-tab" onclick="switchTab('tab-ptest', this)">📝 Practice Test</button>
+      <button class="notes-tab" onclick="switchTab('tab-key', this)">🔑 Answer Key</button>
+      <button class="notes-tab" onclick="switchTab('tab-raw', this)">📄 Raw Notes</button>
+    </div>
+    <div class="notes-body">
+
+      <div class="notes-section active" id="tab-bahay">
+        <div class="chapter-summary">
+          📚 <strong>Buod:</strong> May kani-kaniyang gawain sa paglilinis ang bawat bahagi ng bahay: silid-tulugan, sala, kusina, at bakuran.
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 PAMPADALING TANDAAN</span>
+          <strong>"Taas muna, baba pagkatapos."</strong> Laging simulan sa kisame at pader (tanggalin ang agiw at alikabok), bago magwalis ng sahig.
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">🏠 Mahahalagang Gawain</div>
+          <div class="notes-item"><span class="notes-term">Silid-Tulugan</span><span class="notes-def">Labhan ang kortina tuwing 3–6 buwan; palitan ang punda at kubrekama tuwing isang linggo; ibilad ang unan at kutson</span></div>
+          <div class="notes-item"><span class="notes-term">Sala</span><span class="notes-def">Linisin ang kisame at pader muna; salamin = diyaryong may suka; vacuum cleaner para sa alikabok; floor wax at bunot sa sahig</span></div>
+          <div class="notes-item"><span class="notes-term">Kusina</span><span class="notes-def">Hugasan ang pinagkainan; punasan ang exhaust fan; lababo = eskoba, tubig, at sabon; isalansan ayon sa uri at gamit</span></div>
+          <div class="notes-item"><span class="notes-term">Bakuran</span><span class="notes-def">Walisin ang tuyong dahon, bunutin ang damo, diligan ang halaman, linisin ang daluyan ng tubig; huwag sunugin ang basura</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-kaligtasan">
+        <div class="chapter-summary">
+          📚 <strong>Buod:</strong> Mahalaga ang mga panukalang pangkaligtasan at pangkalusugan upang hindi masaktan o magkasakit habang naglilinis.
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 PAMPADALING TANDAAN</span>
+          <strong>"Mask, Itali, Tuyo, Itago"</strong> — <strong>Mask</strong> sa ilong; <strong>Itali</strong> ang mahabang buhok; <strong>Tuyo</strong> ang kamay bago humawak sa saksakan; <strong>Itago</strong> ang kemikal at matatalas na bagay sa ligtas na lugar.
+        </div>
+        <div class="tandaan-box">
+          <span class="tandaan-label">TANDAAN</span>
+          Ihiwalay ang nabubulok sa hindi nabubulok na basura. Ang nareresiklo ay maaaring ibenta sa mga magbobote.
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-laba">
+        <div class="chapter-summary">
+          📚 <strong>Buod:</strong> May karaniwang paraan (mano-mano) at makabagong paraan (washing machine) ng paglalaba.
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 PAMPADALING TANDAAN</span>
+          <strong>"Puti muna, Kulay sunod, Banlaw ng tatlo, Sampay sa lilim."</strong> Ihiwalay ang puti sa de-kolor, ibabad muna ang puti, banlawan nang tatlong beses o higit pa, at isampay sa lilim ang de-kolor.
+        </div>
+        <table class="compare-table">
+          <tr><th>Hakbang</th><th>Karaniwang Paraan</th><th>Makabagong Paraan</th></tr>
+          <tr><td>Paghahanda</td><td>Ihanda ang kagamitan at labahan</td><td>Ihanda ang washing machine at sabon</td></tr>
+          <tr><td>Mantsa</td><td>Pagkukula sa puting damit na sobrang dumi</td><td>Lagyan muna ng bleach ang namantsahan</td></tr>
+          <tr><td>Paglalaba</td><td>Ibabad at kusutin sa palanggana</td><td>Mode na "soak-wash-rinse at spin"</td></tr>
+          <tr><td>Pagbabanlaw</td><td>Tatlong beses o higit pa; maaaring gumamit ng palopalo</td><td>Tatlong beses; fabric conditioner sa huling banlaw</td></tr>
+          <tr><td>Pagsasampay</td><td>Hanger at sipit; de-kolor sa lilim</td><td>Hanger at sipit; de-kolor sa lilim</td></tr>
+        </table>
+      </div>
+
+      <div class="notes-section" id="tab-plantsa">
+        <div class="chapter-summary">
+          📚 <strong>Buod:</strong> Ang pamamalantsa ay pagpapainit sa tela upang tanggalin ang gusot, lukot, at tupi. Pinahahaba rin nito ang buhay ng damit at pinapatay ang mikrobyo.
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 PAMPADALING TANDAAN</span>
+          <strong>"Malaki muna, maliit huli. Tuyo ang kamay, tuyo ang damit."</strong> Una ang malalaking damit; tiyaking tuyo ang kamay sa pagsasaksak at tuyo ang damit bago plantsahin.
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">👔 Mga Dapat Tandaan</div>
+          <div class="notes-item"><span class="notes-term">Init</span><span class="notes-def">Ayon sa etiketa: hinahating init sa manipis na tela, mainit sa makapal</span></div>
+          <div class="notes-item"><span class="notes-term">Kabayo</span><span class="notes-def">Malinis at may makapal na sapin</span></div>
+          <div class="notes-item"><span class="notes-term">Kordon</span><span class="notes-def">Suriin ang kondisyon; huwag iikot sa plantsa habang pinalalamig</span></div>
+          <div class="notes-item"><span class="notes-term">Pag-iimbak</span><span class="notes-def">Palamigin muna ang plantsa bago itago; ilagay ang damit sa hanger</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-tamomali">
+        <div class="notes-topic">
+          <div class="notes-topic-title">✅ Tama o Mali — Mga Paalala</div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">MALI</span><span class="notes-def">Pinapalitan ang punda tuwing isang buwan → tuwing isang linggo.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">MALI</span><span class="notes-def">Sahig muna ang nililinis sa sala → kisame at pader muna.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">MALI</span><span class="notes-def">Maaaring sunugin ang basura sa bakuran → iwasan ang pagsunog.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">MALI</span><span class="notes-def">Maaaring magsaksak kahit basa ang kamay → iwasan ito.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">MALI</span><span class="notes-def">De-kolor ang unang ibabad → puti ang unang ibabad.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">MALI</span><span class="notes-def">Fabric conditioner sa unang hugas → sa huling pagbabanlaw.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">MALI</span><span class="notes-def">Plantsahin ang damit habang basa → huwag, hintaying matuyo.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">MALI</span><span class="notes-def">Mainit na init sa manipis na tela → hinahating init lamang.</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-ptest">
+        <div class="notes-topic">
+          <div class="notes-topic-title">📝 Practice Test</div>
+<div class="ptest-part-title">Part I — Aling Bahagi ng Bahay?</div><div class="ptest-bank">Silid-Tulugan &middot; Sala &middot; Kusina &middot; Bakuran</div><div class="ptest-q"><b>1.</b> Labhan ang kortina tuwing tatlo hanggang anim na buwan. <span class="opt">Sagot: ______________</span></div><div class="ptest-q"><b>2.</b> Palitan ang punda ng unan at ang kubrekama tuwing isang linggo. <span class="opt">Sagot: ______________</span></div><div class="ptest-q"><b>3.</b> Linisin ang salamin gamit ang diyaryong may suka. <span class="opt">Sagot: ______________</span></div><div class="ptest-q"><b>4.</b> Gamit ang vacuum cleaner, higupin ang dumi at alikabok ng pader at upuan. <span class="opt">Sagot: ______________</span></div><div class="ptest-q"><b>5.</b> Punasan ang exhaust fan, kung mayroon. <span class="opt">Sagot: ______________</span></div><div class="ptest-q"><b>6.</b> Linisin ang lababo gamit ang eskoba, tubig, at sabon. <span class="opt">Sagot: ______________</span></div><div class="ptest-q"><b>7.</b> Bunutin ang mga ligaw na damo. <span class="opt">Sagot: ______________</span></div><div class="ptest-q"><b>8.</b> Diligan ang mga halaman at linisin ang mga daluyan ng tubig. <span class="opt">Sagot: ______________</span></div><div class="ptest-part-title">Part II — Paglalaba</div><div class="ptest-bank"><strong>Word Bank:</strong> Palopalo &middot; Sipit &middot; Washing machine &middot; Fabric conditioner &middot; Pagkukula</div><div class="ptest-q"><b>9.</b> Kagamitang nakatutulong upang mabilis na matanggal ang sabon at bula sa pagbabanlaw ng damit. <span class="opt">Sagot: ______________</span></div><div class="ptest-q"><b>10.</b> Ginagamit kasama ng hanger sa pagsasampay ng nilabhang damit. <span class="opt">Sagot: ______________</span></div><div class="ptest-q"><b>11.</b> Kagamitan sa makabagong paraan ng paglalaba. <span class="opt">Sagot: ______________</span></div><div class="ptest-q"><b>12.</b> Inilalagay sa huling pagbabanlaw at ibinababad nang limang minuto. <span class="opt">Sagot: ______________</span></div><div class="ptest-q"><b>13.</b> Paglalagay ng sabon sa maruruming bahagi ng puting damit at pagbibilad sa init ng araw. <span class="opt">Sagot: ______________</span></div><div class="ptest-part-title">Part III — Pamamalantsa</div><div class="ptest-bank"><strong>Word Bank:</strong> Kabayo &middot; Plantsa &middot; Hanger &middot; Etiketa ng damit &middot; Kordon</div><div class="ptest-q"><b>14.</b> Patungan ng damit sa pamamalantsa; dapat malinis at makapal ang sapin nito. <span class="opt">Sagot: ______________</span></div><div class="ptest-q"><b>15.</b> Kagamitang nagpapainit sa tela upang tanggalin ang gusot, lukot, at tupi. <span class="opt">Sagot: ______________</span></div><div class="ptest-q"><b>16.</b> Pinagsasabitan ng naplantsang damit bago ilagay sa aparador. <span class="opt">Sagot: ______________</span></div><div class="ptest-q"><b>17.</b> Makikita rito ang paalala kung gaano kainit ang plantsa para sa isang damit. <span class="opt">Sagot: ______________</span></div><div class="ptest-q"><b>18.</b> Bahagi ng plantsang dapat suriin kung nasa maayos na kondisyon bago gamitin. <span class="opt">Sagot: ______________</span></div><div class="ptest-part-title">Part IV — Tama o Mali</div><div class="ptest-q"><b>19.</b> Dapat labhan ang kortina sa silid-tulugan tuwing tatlo hanggang anim na buwan. <span class="opt">Sagot: ______________</span></div><div class="ptest-q"><b>20.</b> Pinapalitan ang punda ng unan at kubrekama tuwing isang buwan. <span class="opt">Sagot: ______________</span></div><div class="ptest-q"><b>21.</b> Ibinibilad sa araw ang mga unan at kutson upang mawala ang kulob na amoy. <span class="opt">Sagot: ______________</span></div><div class="ptest-q"><b>22.</b> Sa sala, ang sahig muna ang unang nililinis bago ang kisame at pader. <span class="opt">Sagot: ______________</span></div><div class="ptest-q"><b>23.</b> Nililinis ang salamin gamit ang diyaryong may suka. <span class="opt">Sagot: ______________</span></div><div class="ptest-q"><b>24.</b> Nililinis ang lababo gamit ang eskoba, tubig, at sabon. <span class="opt">Sagot: ______________</span></div><div class="ptest-q"><b>25.</b> Maaaring sunugin ang mga basura sa bakuran. <span class="opt">Sagot: ______________</span></div><div class="ptest-q"><b>26.</b> Dapat magsuot ng face mask sa paglilinis upang hindi makalanghap ng alikabok. <span class="opt">Sagot: ______________</span></div><div class="ptest-q"><b>27.</b> Dapat itali ang mahabang buhok sa paglilinis. <span class="opt">Sagot: ______________</span></div><div class="ptest-q"><b>28.</b> Maaaring magsaksak ng appliance kahit basa ang kamay. <span class="opt">Sagot: ______________</span></div><div class="ptest-q"><b>29.</b> Ang bleach at muriatic acid ay dapat itago sa lugar na abot ng mga bata. <span class="opt">Sagot: ______________</span></div><div class="ptest-q"><b>30.</b> Dapat ihiwalay ang nabubulok sa hindi nabubulok na basura. <span class="opt">Sagot: ______________</span></div><div class="ptest-q"><b>31.</b> Ang pagkukula ay ginagawa sa mga puting damit na sobrang dumi. <span class="opt">Sagot: ______________</span></div><div class="ptest-q"><b>32.</b> Dapat unang ibabad ang de-kolor na damit bago ang puti. <span class="opt">Sagot: ______________</span></div><div class="ptest-q"><b>33.</b> Isinasampay sa lilim ang de-kolor na damit upang hindi kumupas ang kulay. <span class="opt">Sagot: ______________</span></div><div class="ptest-q"><b>34.</b> Dapat magbanlaw nang tatlong beses o higit pa. <span class="opt">Sagot: ______________</span></div><div class="ptest-q"><b>35.</b> Inilalagay ang fabric conditioner sa unang paghuhugas ng damit. <span class="opt">Sagot: ______________</span></div><div class="ptest-q"><b>36.</b> Sa awtomatikong washing machine, itinatakda ang mode na "soak-wash-rinse at spin." <span class="opt">Sagot: ______________</span></div><div class="ptest-q"><b>37.</b> Pinahahaba ng pamamalantsa ang buhay ng damit. <span class="opt">Sagot: ______________</span></div><div class="ptest-q"><b>38.</b> Dapat plantsahin ang damit habang basa pa ito. <span class="opt">Sagot: ______________</span></div><div class="ptest-q"><b>39.</b> Unang plantsahin ang maliliit na damit at ihuli ang malalaki. <span class="opt">Sagot: ______________</span></div><div class="ptest-q"><b>40.</b> Dapat palamigin muna ang plantsa bago itago. <span class="opt">Sagot: ______________</span></div><div class="ptest-q"><b>41.</b> Maaaring ikutin ang kordon sa plantsa habang pinalalamig ito. <span class="opt">Sagot: ______________</span></div><div class="ptest-q"><b>42.</b> Mainit na temperatura ang ginagamit sa maninipis na tela. <span class="opt">Sagot: ______________</span></div><div class="ptest-part-title">Part V — Maikling Sagot</div><div class="ptest-q"><b>43.</b> Ilista ang apat na bahagi ng bahay na nililinis at magbigay ng isang gawain sa bawat isa.</div><div class="ptest-q"><b>44.</b> Ano-ano ang mga pangunahing hakbang sa karaniwang paraan ng paglalaba?</div><div class="ptest-q"><b>45.</b> Bakit mahalaga ang pamamalantsa?</div><div class="ptest-q"><b>46.</b> Magbigay ng apat na panukalang pangkaligtasan sa paglilinis ng bahay.</div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-key">
+        <div class="notes-topic">
+<div class="notes-topic-title">Part I — Bahagi ng Bahay</div><div class="key-grid"><div class="key-pill">1. <b>Silid-Tulugan</b></div><div class="key-pill">2. <b>Silid-Tulugan</b></div><div class="key-pill">3. <b>Sala</b></div><div class="key-pill">4. <b>Sala</b></div><div class="key-pill">5. <b>Kusina</b></div><div class="key-pill">6. <b>Kusina</b></div><div class="key-pill">7. <b>Bakuran</b></div><div class="key-pill">8. <b>Bakuran</b></div></div><div class="notes-topic-title">Part II — Paglalaba</div><div class="key-grid"><div class="key-pill">9. <b>Palopalo</b></div><div class="key-pill">10. <b>Sipit</b></div><div class="key-pill">11. <b>Washing machine</b></div><div class="key-pill">12. <b>Fabric conditioner</b></div><div class="key-pill">13. <b>Pagkukula</b></div></div><div class="notes-topic-title">Part III — Pamamalantsa</div><div class="key-grid"><div class="key-pill">14. <b>Kabayo</b></div><div class="key-pill">15. <b>Plantsa</b></div><div class="key-pill">16. <b>Hanger</b></div><div class="key-pill">17. <b>Etiketa ng damit</b></div><div class="key-pill">18. <b>Kordon</b></div></div><div class="notes-topic-title">Part IV — Tama o Mali</div><div class="key-grid"><div class="key-pill">19. <b>TAMA</b></div><div class="key-pill">20. <b>MALI</b></div><div class="key-pill">21. <b>TAMA</b></div><div class="key-pill">22. <b>MALI</b></div><div class="key-pill">23. <b>TAMA</b></div><div class="key-pill">24. <b>TAMA</b></div><div class="key-pill">25. <b>MALI</b></div><div class="key-pill">26. <b>TAMA</b></div><div class="key-pill">27. <b>TAMA</b></div><div class="key-pill">28. <b>MALI</b></div><div class="key-pill">29. <b>MALI</b></div><div class="key-pill">30. <b>TAMA</b></div><div class="key-pill">31. <b>TAMA</b></div><div class="key-pill">32. <b>MALI</b></div><div class="key-pill">33. <b>TAMA</b></div><div class="key-pill">34. <b>TAMA</b></div><div class="key-pill">35. <b>MALI</b></div><div class="key-pill">36. <b>TAMA</b></div><div class="key-pill">37. <b>TAMA</b></div><div class="key-pill">38. <b>MALI</b></div><div class="key-pill">39. <b>MALI</b></div><div class="key-pill">40. <b>TAMA</b></div><div class="key-pill">41. <b>MALI</b></div><div class="key-pill">42. <b>MALI</b></div></div><div class="notes-topic-title">Part V — Maikling Sagot (mga halimbawang sagot)</div><div class="ptest-q" style="margin-bottom:6px"><b>43.</b> Silid-Tulugan (labhan ang kortina), Sala (linisin ang salamin gamit ang diyaryong may suka), Kusina (linisin ang lababo gamit ang eskoba, tubig, at sabon), at Bakuran (bunutin ang ligaw na damo). Maaaring iba ang halimbawa.</div><div class="ptest-q" style="margin-bottom:6px"><b>44.</b> Ihanda ang kagamitan; ihiwalay ang puti sa de-kolor; suriin ang bulsa at tahiin ang punit; basain ang damit; tunawin ang sabon; ibabad at kusutin muna ang puti, sunod ang de-kolor; banlawan nang tatlong beses o higit pa; isampay (sa lilim ang de-kolor).</div><div class="ptest-q" style="margin-bottom:6px"><b>45.</b> Tinatanggal nito ang gusot, lukot, at tupi; mas presentable ang damit; mas humahaba ang buhay ng damit; napatitibay ang hibla; at napapatay ang mikrobyo at bakterya.</div><div class="ptest-q" style="margin-bottom:6px"><b>46.</b> Magsuot ng face mask; itali ang mahabang buhok; huwag magsaksak ng appliance kung basa ang kamay; itago ang bleach at matatalas na bagay sa ligtas na lugar na hindi maaabot ng bata. (Anumang apat mula sa aralin.)</div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-raw">
+        <div class="rawnotes-intro">
+          📌 Ito ang orihinal na nilalaman ng dokumentong ini-upload, nang walang binago — para madali mong masangguni ang buong teksto kapag kailangan mo ng detalye na wala sa reviewer.
+        </div>
+        <div class="rawnotes-doc">
+<h3 class="doc-heading">Mga Gawain sa Paglilinis ng Bahay</h3>
+<h3 class="doc-heading">Silid-Tulugan</h3>
+<ol type="1">
+<li><p>Tanggalin ang mga agiw (maruming sapot) at alikabok sa kisame, pader, at sahig.</p></li>
+<li><p>Punasan ang ibabaw ng mga aparador at iba pang lalagyan at kasangkapan.</p></li>
+<li><p>Iligpit ang mga kalat at ilagay sa basurahan.</p></li>
+<li><p>Punasan ang mga bintana.</p></li>
+<li><p>Labhan ang kortina tuwing tatlo hanggang anim na buwan.</p></li>
+<li><p>Palitan ang punda ng unan at ang kubrekama tuwing isang linggo.</p></li>
+<li><p>Maaaring ibilad sa araw ang mga unan at kutson upang mawala ang kulob na amoy.</p></li>
+<li><p>Punasan ng basahang tuyo ang papag ng kutson pati na rin ang iba pang kagamitan.</p></li>
+<li><p>Walisan ang sahig upang matanggal ang mga natirang alikabok.</p></li>
+<li><p>Maglampaso ng sahig at mag-spray ng des-impoktante sa mga kagamitan.</p></li>
+</ol>
+<h3 class="doc-heading">Sala</h3>
+<ol type="1">
+<li><p>Unahing linisin ang kisame at pader. Tanggalan ito ng agiw at alikabok.</p></li>
+<li><p>Tanggalan din ng alikabok ang ibabaw ng aparador, mesa, at upuan. Punasan ito ng basahang pagkatapos.</p></li>
+<li><p>Itabi muna ang mga kagamitan sa sala bago walisan ang sahig. Mainam ito upang madaling alisin ang mga bahaging pinaghahandaan ng mga kagamitan.</p></li>
+<li><p>Ibilad sa araw ang mga kutson ng upuan upang mamatay ang mikrobyo at mawala ang kulob na amoy.</p></li>
+<li><p>Linisin ang salamin gamit ang diyaryo na may suka.</p></li>
+<li><p>Mag-spray ng des-impoktante sa mga kasangkapan.</p></li>
+<li><p>Gamit ang vacuum cleaner, higupin ang mga dumi at alikabok ng pader, upuan, at iba pa.</p></li>
+<li><p>Depende sa uri ng sahig, maaaring pakintabin ito gamit ang floor wax at pagbubunot.</p></li>
+</ol>
+<h3 class="doc-heading">Kusina</h3>
+<ol type="1">
+<li><p>Hugasan ang mga pinagkainan at iba pang maruruming kagamitan sa kusina.</p></li>
+<li><p>Linisin ang itaas na bahagi ng kusina gaya ng kisame at nakasabit na kabinet.</p></li>
+<li><p>Punasan ang exhaust fan, kung mayroon. Naiipon dito ang ilang dumi mula sa kusina na inilalabas nito.</p></li>
+<li><p>Linisin ang lababo gamit ang eskoba. Maiging gamitan ito ng tubig at sabon upang matanggal ang mga nanuot na dumi at tumigas na mantika.</p></li>
+<li><p>Ilagay sa tamang lalagyan ang mga kagamitan. Isalansan ang mga ito nang maayos at ayon sa uri at gamit nito.</p></li>
+</ol>
+<h3 class="doc-heading">Bakuran</h3>
+<ol type="1">
+<li><p>Walisin ang mga tuyong dahon sa harap at likod ng bakuran.</p></li>
+<li><p>Bunutin ang mga ligaw na damo.</p></li>
+<li><p>Diligan ang mga halaman.</p></li>
+<li><p>Linisin ang mga daluyan ng tubig.</p></li>
+<li><p>Itapon nang maayos ang mga basura. Iwasan ang pagsunog sa mga ito.</p></li>
+</ol>
+<h3 class="doc-heading">Mga Panukalang Pangkaligtasan at Pangkalusugan sa Paglilinis ng Bahay</h3>
+<ol type="1">
+<li><p>Laging tandaan na ihanda muna ang mga kagamitan sa paglilinis bago magsimula upang mapabilis ang gawain.</p></li>
+<li><p>Pumili ng komportableng kasuotan para sa maginhawang pagkilos.</p></li>
+<li><p>Maglagay ng pantakip sa ilong, gaya ng face mask, upang hindi makalanghap ng alikabok.</p></li>
+<li><p>Kung mahaba ang buhok, itali ito upang hindi makasagabal sa paglilinis.</p></li>
+<li><p>Panatilihin ang maayos na tindig at kilos sa paglilinis, lalo na sa pagbubuhat ng mabibigat na bagay.</p></li>
+<li><p>Takpan muna ang tirang pagkain sa mesa o kusina bago magsimulang maglinis upang hindi malagyan ng dumi.</p></li>
+<li><p>Linisin mula ang itaas na bahagi ng bahay, mga pader, at ibabaw ng mga kagamitan bago magwalis ng sahig.</p></li>
+<li><p>Iwasan ang magsaksak o magbunot ng anumang saksakan ng appliance kung basa ang kamay.</p></li>
+<li><p>Iligpit sa tamang lalagyan ang mga kagamitang may matatapang na kemikal tulad ng bleach at asido muriatiko (muriatic acid). Tiyaking nasa ligtas itong lugar na hindi maaabot ng mga bata.</p></li>
+<li><p>Iligpit din sa ligtas na lugar ang mga kagamitan na matalas at matulis.</p></li>
+<li><p>Itapon nang maayos ang mga basura. Ihiwalay ang mga nabubulok at hindi nabubulok na basura. Maaaring ibenta sa mga magbobote ang mga nareresiklong basura.</p></li>
+</ol>
+<p><strong>Kagamitan sa Paglalaba:</strong><br />
+Tabla at palopalo<br />
+eskoba<br />
+pangkuskos<br />
+palanggana o batya<br />
+timba<br />
+basket<br />
+washing machine<br />
+sabong bareta<br />
+sabong pulbos<br />
+bleach<br />
+fabric conditioner<br />
+likidong sabon</p>
+<h3 class="doc-heading">Mga Hakbang sa Paglalaba</h3>
+<h3 class="doc-heading">Karaniwang Paraan</h3>
+<ol type="1">
+<li><p>Ihanda ang mga kagamitan sa paglalaba, kabilang na ang mga labahang damit.</p></li>
+<li><p>Ihiwalay ang mga puti sa de-kolor na damit. Ihiwalay rin ang mga damit na may mantsa upang hindi na makahawa.</p></li>
+<li><p>Suriin ang mga damit. Tingnan ang bulsa kung may papel, pera, at matatalas na bagay na maaaring makasugat. Tahiin muna ang mga damit na may tastas o punit bago labhan.</p></li>
+<li><p>Basain muna ang mga damit upang humambot ang mga dumi na nakakapit dito.</p></li>
+<li><p>Tunawin ang pulbos na sabon sa palanggana.</p></li>
+<li><p>Unahing ilagay sa palanggana ang mga puti upang ibabad. Kusutin itong maigi. Bigyan ng tuon ang mga bahaging madaling kapitan ng dumi tulad ng kuwelyo, laylayan, at sa bandang kilikili. Maaaring sabunan pa gamit ng bareta ang mga damit. (Para sa mga puting damit na sobrang dumi, kailangang gawin dito ang pagkukula. Sa pagkukula, nilalagyan ng sabon ang maruruming bahagi at ibinibilad sa init ng araw. Likas na nakapagpapaputi o nagpapakupas ng damit ang araw.)</p></li>
+<li><p>Sunod na labhan ang mga de-kolor na damit sa parehong palanggana.</p></li>
+<li><p>Banlawan ang mga damit. Maaaring gumamit ng palopalo upang mabilis na matanggal ang mga sabon at bulang nakapit sa damit. Gawin ito nang tatlong beses o higit pa hanggang mabulat at malabo pa ang tubig sa palanggana.</p></li>
+<li><p>Gamit ang hanger at sipit, isampay ang mga damit na nilabhan. Isampay sa may lilim ang mga damit na de-kolor upang hindi kumupas ang kulay nito.</p></li>
+</ol>
+<h3 class="doc-heading">Makabagong Paraan</h3>
+<ol type="1">
+<li><p>Ihanda ang washing machine o labadora at sabon.</p></li>
+<li><p>Ihiwalay ang mga puti sa de-kolor. Para sa mga damit na may kumapit na mantsa, lagyan muna ng solusyon (tulad ng bleach) ang bahaging namantsahan upang mapalambot ito.</p></li>
+<li><p>Suriing mabuti ang mga bulsa ng damit at tiyaking walang papel, pera, at mga bagay na maaaring makasira sa washing machine.</p></li>
+<li><p>Tunawin ang pulbos na sabon o ang likidong sabon (detergente) sa tubig na nasa washing machine. Saglit itong paikutin para bumuo ng bula at maikalat ang sabon sa tubig.</p></li>
+<li><p>Kung gagamit ng ordinaryong washing machine, ibabad muna ang mga damit sa tubig bago ito paikutin. Kung awtomatiko naman ang washing machine, i-set ito sa modang “soak-wash-rinse at spin” saka paandarin.</p></li>
+<li><p>Sa ordinaryong washing machine, kailangang hanguin ang mga damit at banlawan nang mano-mano sa palanggana. Maaari din namang maglagay ng bagong malinis na tubig sa washing machine at muling ipaikot dito ang mga damit upang mabanlawan. Gawin ang pagbababanlaw nang tatlong beses o hanggang sa wala nang nakikitang bula sa tubig.</p></li>
+<li><p>Kung nais lagyan ng fabric conditioner ang damit, gawin ito sa huling pagbababanlaw. Ibabad nang limang minuto saka hanguin.</p></li>
+<li><p>Kung may spinner o dryer ang washing machine, ilagay rito ang pinigang mga damit upang mapiga pa nang husto ang damit.</p></li>
+<li><p>Gamit ang hanger at sipit, isampay ang mga damit na nilabhan. Isampay sa may lilim ang mga damit na de-kolor upang hindi kumupas ang kulay nito.</p></li>
+</ol>
+<blockquote>
+<h3 class="doc-heading">Pamamalantsa</h3>
+<p>Sa pamamalantsa, pinaiinitan ang tela ng damit upang tanggalin ang gusot, lukot, at tupi. Mas nagmumukhang presentable ang damit na pinlantsa. Sinasabi ring mas pinahahaba ng pagpaplantsa ang buhay ng damit dahil naiiwasan nito ang pagkapunit ng damit dahil sa matutulis na tupi. Dagdag pa, pinatitibay nito ang hibla ng damit sa pamamagitan ng pagpaparaan ng tela sa init ng plantsa. Pinapatay rin nito ang mikrobyo at bakterya na maaaring nakakapit pa rin sa damit.</p>
+<p>Narito ang ilang kagamitan sa pamamalantsa:</p>
+</blockquote>
+<ul>
+<li><p>hanger</p></li>
+<li><p>plantsa</p></li>
+<li><p>garment steamer</p></li>
+<li><p>ironing spray</p></li>
+<li><p>kabayo</p></li>
+</ul>
+<blockquote>
+<h3 class="doc-heading">Mga Hakbang sa Pamamalantsa</h3>
+</blockquote>
+<ol type="1">
+<li><p><strong>Ihanda ang mga kagamitan sa pamamalantsa.</strong></p></li>
+<li><p><strong>Tiyaking malinis ang kabayo o plantsahan at makapal ang sapin nito.</strong> Gayundin, dapat na malinis din ang plantsa. Tiyaking ang ilalim nito ay walang nakadikit na dumi, natuyong anuman, o kalawang. Maaaring maglagay ng sapin sa sahig na kinatatayuan ng kabayo upang hindi marumihan ang damit na sasayad dito.</p></li>
+<li><p><strong>Layon ang init ng plantsa sa uri ng damit.</strong> Makikita ang mga paalala ito sa etiketa ng damit. Karaniwang may hinahating temperatura lamang ang ginagamit sa maninipis na tela at mainit na temperatura naman sa makakapal.</p></li>
+<li><p><strong>Magwisik o mag-spray ng kaunting tubig sa damit upang mapadali ang pagtanggal ng gusot nito.</strong></p></li>
+<li><p><strong>Unang plantsahin ang malalaking damit at ihuli ang maliliit.</strong></p></li>
+<li><p><strong>Baligtarin ang damit</strong> (loob na bahagi ang nasa labas) at unang padaanan ng plantsa ang mga kuwelyo, bulsa, tagiliran ng damit, at mga laylayan.</p></li>
+<li><p><strong>Pagkatapos ay baligtarin itong muli at unahin ang kuwelyo, bandang balikat, at manggas.</strong> Isunod ang likod at harap ng damit.</p></li>
+<li><p><strong>Sa pantalon at palda naman, baligtarin din ang mga ito at unang plantsahin ang bahagi ng bulsa.</strong> Pagkatapos ay ibalik sa harapang bahagi at plantsahin ito mula sa laylayan paitaas.</p></li>
+<li><p><strong>Ilagay sa hanger ang mga naplantsang damit saka isabit sa aparador.</strong></p></li>
+<li><p><strong>Iligpit nang maayos ang mga kagamitang ginamit sa pamamalantsa.</strong></p></li>
+</ol>
+<blockquote>
+<h3 class="doc-heading">Mga Dapat Tandaan sa Pamamalantsa</h3>
+</blockquote>
+<ol type="1">
+<li><p><strong>Suriing mabuti kung ang plantsang gagamitin ay nasa maayos na kondisyon, lalo na ang kordon nito.</strong></p></li>
+<li><p><strong>Tiyaking tuyo ang mga kamay kapag magsasaksak ng plug ng plantsa.</strong></p></li>
+<li><p><strong>Huwag plantsahin ang damit kapag basa pa ito.</strong></p></li>
+<li><p><strong>Maiging gumamit ng kabayo kapag namamalantsa.</strong> Kung wala nito, gumamit ng patag na mesa at hindi nasusunog (gawa sa plastik); lagyan ito ng makapal na sapin.</p></li>
+<li><p><strong>Kapag hindi pa inilalapat ang plantsa sa damit, itabi ito sa dulong lagayan ng kabayo o nang nakatayo.</strong> Huwag hayaan nakalapat ang plantsa sa damit nang matagal.</p></li>
+<li><p><strong>Magplantsa nang hindi malayo sa saksakan ng koryente upang hindi mahila nang husto ang kordon.</strong></p></li>
+<li><p><strong>Mag-ingat na huwag hawakan o dumampi sa anumang mainit na bahagi ng plantsa upang hindi mapaso.</strong></p></li>
+<li><p><strong>Palamigin muna ang plantsa bago ito itago.</strong></p></li>
+<li><p><strong>Huwag iikot ang kordon sa plantsa habang pinalalamig ito.</strong></p></li>
+<li><p><strong>Itago nang maayos ang mga kagamitan sa tamang taguan.</strong></p></li>
+</ol>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ── Hidden Print Area (Practice Test + Answer Key) ── -->
+<div id="print-area">
+<div class="p-cover"><div class="p-icon">🧺</div><h1>EPP 5 — Paglilinis, Paglalaba, at Pamamalantsa Practice Test</h1><div class="p-sub">Paglilinis ng Bahay · Kaligtasan · Paglalaba · Pamamalantsa</div>
+<div class="p-info-box"><div><strong>Pangalan:</strong> _____________________________________</div><div><strong>Baitang/Pangkat:</strong> ___________________ &nbsp; <strong>Petsa:</strong> ___________________</div><div><strong>Iskor:</strong> _______ / 46</div></div>
+<div class="p-instructions"><strong>Panuto:</strong> Basahing mabuti ang bawat aytem. Isulat ang sagot sa patlang na inilaan (Bahagi I-IV), o sagutin sa buong pangungusap (Bahagi V). Good luck!</div></div><h2 class="p-part-title">Bahagi I — Aling Bahagi ng Bahay?</h2><div class="p-bank">Silid-Tulugan &middot; Sala &middot; Kusina &middot; Bakuran</div><div class="p-q"><b>1.</b> Labhan ang kortina tuwing tatlo hanggang anim na buwan. <span class="p-blank"></span></div><div class="p-q"><b>2.</b> Palitan ang punda ng unan at ang kubrekama tuwing isang linggo. <span class="p-blank"></span></div><div class="p-q"><b>3.</b> Linisin ang salamin gamit ang diyaryong may suka. <span class="p-blank"></span></div><div class="p-q"><b>4.</b> Gamit ang vacuum cleaner, higupin ang dumi at alikabok ng pader at upuan. <span class="p-blank"></span></div><div class="p-q"><b>5.</b> Punasan ang exhaust fan, kung mayroon. <span class="p-blank"></span></div><div class="p-q"><b>6.</b> Linisin ang lababo gamit ang eskoba, tubig, at sabon. <span class="p-blank"></span></div><div class="p-q"><b>7.</b> Bunutin ang mga ligaw na damo. <span class="p-blank"></span></div><div class="p-q"><b>8.</b> Diligan ang mga halaman at linisin ang mga daluyan ng tubig. <span class="p-blank"></span></div><h2 class="p-part-title">Bahagi II — Paglalaba</h2><div class="p-bank"><strong>Word Bank:</strong> Palopalo &middot; Sipit &middot; Washing machine &middot; Fabric conditioner &middot; Pagkukula</div><div class="p-q"><b>9.</b> Kagamitang nakatutulong upang mabilis na matanggal ang sabon at bula sa pagbabanlaw ng damit. <span class="p-blank"></span></div><div class="p-q"><b>10.</b> Ginagamit kasama ng hanger sa pagsasampay ng nilabhang damit. <span class="p-blank"></span></div><div class="p-q"><b>11.</b> Kagamitan sa makabagong paraan ng paglalaba. <span class="p-blank"></span></div><div class="p-q"><b>12.</b> Inilalagay sa huling pagbabanlaw at ibinababad nang limang minuto. <span class="p-blank"></span></div><div class="p-q"><b>13.</b> Paglalagay ng sabon sa maruruming bahagi ng puting damit at pagbibilad sa init ng araw. <span class="p-blank"></span></div><div class="p-break"></div><h2 class="p-part-title">Bahagi III — Pamamalantsa</h2><div class="p-bank"><strong>Word Bank:</strong> Kabayo &middot; Plantsa &middot; Hanger &middot; Etiketa ng damit &middot; Kordon</div><div class="p-q"><b>14.</b> Patungan ng damit sa pamamalantsa; dapat malinis at makapal ang sapin nito. <span class="p-blank"></span></div><div class="p-q"><b>15.</b> Kagamitang nagpapainit sa tela upang tanggalin ang gusot, lukot, at tupi. <span class="p-blank"></span></div><div class="p-q"><b>16.</b> Pinagsasabitan ng naplantsang damit bago ilagay sa aparador. <span class="p-blank"></span></div><div class="p-q"><b>17.</b> Makikita rito ang paalala kung gaano kainit ang plantsa para sa isang damit. <span class="p-blank"></span></div><div class="p-q"><b>18.</b> Bahagi ng plantsang dapat suriin kung nasa maayos na kondisyon bago gamitin. <span class="p-blank"></span></div><h2 class="p-part-title">Bahagi IV — Tama o Mali</h2><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>19.</b> Dapat labhan ang kortina sa silid-tulugan tuwing tatlo hanggang anim na buwan.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>20.</b> Pinapalitan ang punda ng unan at kubrekama tuwing isang buwan.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>21.</b> Ibinibilad sa araw ang mga unan at kutson upang mawala ang kulob na amoy.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>22.</b> Sa sala, ang sahig muna ang unang nililinis bago ang kisame at pader.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>23.</b> Nililinis ang salamin gamit ang diyaryong may suka.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>24.</b> Nililinis ang lababo gamit ang eskoba, tubig, at sabon.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>25.</b> Maaaring sunugin ang mga basura sa bakuran.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>26.</b> Dapat magsuot ng face mask sa paglilinis upang hindi makalanghap ng alikabok.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>27.</b> Dapat itali ang mahabang buhok sa paglilinis.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>28.</b> Maaaring magsaksak ng appliance kahit basa ang kamay.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>29.</b> Ang bleach at muriatic acid ay dapat itago sa lugar na abot ng mga bata.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>30.</b> Dapat ihiwalay ang nabubulok sa hindi nabubulok na basura.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>31.</b> Ang pagkukula ay ginagawa sa mga puting damit na sobrang dumi.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>32.</b> Dapat unang ibabad ang de-kolor na damit bago ang puti.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>33.</b> Isinasampay sa lilim ang de-kolor na damit upang hindi kumupas ang kulay.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>34.</b> Dapat magbanlaw nang tatlong beses o higit pa.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>35.</b> Inilalagay ang fabric conditioner sa unang paghuhugas ng damit.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>36.</b> Sa awtomatikong washing machine, itinatakda ang mode na "soak-wash-rinse at spin."</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>37.</b> Pinahahaba ng pamamalantsa ang buhay ng damit.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>38.</b> Dapat plantsahin ang damit habang basa pa ito.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>39.</b> Unang plantsahin ang maliliit na damit at ihuli ang malalaki.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>40.</b> Dapat palamigin muna ang plantsa bago itago.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>41.</b> Maaaring ikutin ang kordon sa plantsa habang pinalalamig ito.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>42.</b> Mainit na temperatura ang ginagamit sa maninipis na tela.</div><div class="p-break"></div><h2 class="p-part-title">Bahagi V — Maikling Sagot</h2><div class="p-q"><b>43.</b> Ilista ang apat na bahagi ng bahay na nililinis at magbigay ng isang gawain sa bawat isa.<br><br>_________________________________________________<br><br>_________________________________________________</div><div class="p-q"><b>44.</b> Ano-ano ang mga pangunahing hakbang sa karaniwang paraan ng paglalaba?<br><br>_________________________________________________<br><br>_________________________________________________</div><div class="p-q"><b>45.</b> Bakit mahalaga ang pamamalantsa?<br><br>_________________________________________________<br><br>_________________________________________________</div><div class="p-q"><b>46.</b> Magbigay ng apat na panukalang pangkaligtasan sa paglilinis ng bahay.<br><br>_________________________________________________<br><br>_________________________________________________</div><div class="p-break"></div><h2 class="p-part-title">✅ Kumpletong Susi sa Pagwawasto</h2><div class="p-key-part-title">Bahagi I — Bahagi ng Bahay</div><div class="p-key-grid"><div class="p-key-pill">1. <b>Silid-Tulugan</b></div><div class="p-key-pill">2. <b>Silid-Tulugan</b></div><div class="p-key-pill">3. <b>Sala</b></div><div class="p-key-pill">4. <b>Sala</b></div><div class="p-key-pill">5. <b>Kusina</b></div><div class="p-key-pill">6. <b>Kusina</b></div><div class="p-key-pill">7. <b>Bakuran</b></div><div class="p-key-pill">8. <b>Bakuran</b></div></div><div class="p-key-part-title">Bahagi II — Paglalaba</div><div class="p-key-grid"><div class="p-key-pill">9. <b>Palopalo</b></div><div class="p-key-pill">10. <b>Sipit</b></div><div class="p-key-pill">11. <b>Washing machine</b></div><div class="p-key-pill">12. <b>Fabric conditioner</b></div><div class="p-key-pill">13. <b>Pagkukula</b></div></div><div class="p-key-part-title">Bahagi III — Pamamalantsa</div><div class="p-key-grid"><div class="p-key-pill">14. <b>Kabayo</b></div><div class="p-key-pill">15. <b>Plantsa</b></div><div class="p-key-pill">16. <b>Hanger</b></div><div class="p-key-pill">17. <b>Etiketa ng damit</b></div><div class="p-key-pill">18. <b>Kordon</b></div></div><div class="p-key-part-title">Bahagi IV — Tama o Mali</div><div class="p-key-grid"><div class="p-key-pill">19. <b>TAMA</b></div><div class="p-key-pill">20. <b>MALI</b></div><div class="p-key-pill">21. <b>TAMA</b></div><div class="p-key-pill">22. <b>MALI</b></div><div class="p-key-pill">23. <b>TAMA</b></div><div class="p-key-pill">24. <b>TAMA</b></div><div class="p-key-pill">25. <b>MALI</b></div><div class="p-key-pill">26. <b>TAMA</b></div><div class="p-key-pill">27. <b>TAMA</b></div><div class="p-key-pill">28. <b>MALI</b></div><div class="p-key-pill">29. <b>MALI</b></div><div class="p-key-pill">30. <b>TAMA</b></div><div class="p-key-pill">31. <b>TAMA</b></div><div class="p-key-pill">32. <b>MALI</b></div><div class="p-key-pill">33. <b>TAMA</b></div><div class="p-key-pill">34. <b>TAMA</b></div><div class="p-key-pill">35. <b>MALI</b></div><div class="p-key-pill">36. <b>TAMA</b></div><div class="p-key-pill">37. <b>TAMA</b></div><div class="p-key-pill">38. <b>MALI</b></div><div class="p-key-pill">39. <b>MALI</b></div><div class="p-key-pill">40. <b>TAMA</b></div><div class="p-key-pill">41. <b>MALI</b></div><div class="p-key-pill">42. <b>MALI</b></div></div><div class="p-key-part-title">Bahagi V — Maikling Sagot (mga halimbawang sagot)</div><div class="p-q"><b>43.</b> Silid-Tulugan (labhan ang kortina), Sala (linisin ang salamin gamit ang diyaryong may suka), Kusina (linisin ang lababo gamit ang eskoba, tubig, at sabon), at Bakuran (bunutin ang ligaw na damo). Maaaring iba ang halimbawa.</div><div class="p-q"><b>44.</b> Ihanda ang kagamitan; ihiwalay ang puti sa de-kolor; suriin ang bulsa at tahiin ang punit; basain ang damit; tunawin ang sabon; ibabad at kusutin muna ang puti, sunod ang de-kolor; banlawan nang tatlong beses o higit pa; isampay (sa lilim ang de-kolor).</div><div class="p-q"><b>45.</b> Tinatanggal nito ang gusot, lukot, at tupi; mas presentable ang damit; mas humahaba ang buhay ng damit; napatitibay ang hibla; at napapatay ang mikrobyo at bakterya.</div><div class="p-q"><b>46.</b> Magsuot ng face mask; itali ang mahabang buhok; huwag magsaksak ng appliance kung basa ang kamay; itago ang bleach at matatalas na bagay sa ligtas na lugar na hindi maaabot ng bata. (Anumang apat mula sa aralin.)</div>
+</div>
+
+</body>
+</html>
