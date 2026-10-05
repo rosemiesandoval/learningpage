@@ -1,0 +1,1640 @@
+<!DOCTYPE html>
+<html lang="tl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>✝️ Religion: Holy Eucharist &amp; Mother Teresa Reviewer 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --gold: #f59e0b;
+  --gold-dark: #b45309;
+  --blue: #3b82f6;
+  --blue-dark: #1d4ed8;
+  --red: #ef4444;
+  --green: #22c55e;
+  --bg: #0c1a0e;
+  --surface: #132015;
+  --surface2: #1a2e1d;
+  --text: #f0fdf4;
+  --muted: #86efac;
+  --border: #166534;
+}
+
+body {
+  font-family: 'Baloo 2', cursive;
+  background: var(--bg);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--text);
+  background-image:
+    radial-gradient(ellipse at 10% 30%, rgba(245,158,11,.06) 0%, transparent 55%),
+    radial-gradient(ellipse at 90% 70%, rgba(59,130,246,.06) 0%, transparent 55%);
+}
+
+header {
+  width: 100%;
+  background: linear-gradient(135deg, #14532d, #1e3a5f);
+  border-bottom: 2px solid var(--gold-dark);
+  padding: 13px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 4px 30px rgba(0,0,0,.5);
+}
+.header-icon { font-size: 2rem; animation: float 3s ease-in-out infinite; }
+@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
+
+header h1 {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.45rem;
+  background: linear-gradient(90deg, var(--gold), #fde68a, var(--gold));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+header .sub { font-size: .72rem; color: var(--muted); margin-top: 1px; }
+
+.header-controls { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+.score-pill {
+  background: rgba(245,158,11,.15);
+  border: 1px solid rgba(245,158,11,.4);
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-weight: 800;
+  font-size: .85rem;
+  color: var(--gold);
+}
+.audio-btn {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  background: var(--surface2);
+  color: var(--text);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all .2s;
+  display: flex; align-items: center; justify-content: center;
+}
+.audio-btn:hover, .audio-btn.active { background: #14532d; border-color: var(--gold); }
+
+.chat-wrap {
+  width: 100%; max-width: 700px; flex: 1;
+  display: flex; flex-direction: column;
+  padding: 16px 14px 0;
+}
+
+#chat-box {
+  flex: 1; overflow-y: auto;
+  display: flex; flex-direction: column;
+  gap: 14px; padding-bottom: 10px;
+  max-height: calc(100vh - 200px);
+  scroll-behavior: smooth;
+}
+#chat-box::-webkit-scrollbar { width: 4px; }
+#chat-box::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+.msg { display: flex; gap: 8px; }
+.msg.user { flex-direction: row-reverse; }
+
+.avatar {
+  width: 34px; height: 34px; border-radius: 50%;
+  font-size: 1rem; display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 2px;
+}
+.msg.bot .avatar { background: linear-gradient(135deg, #14532d, #1e3a5f); border: 1.5px solid rgba(245,158,11,.4); }
+.msg.user .avatar { background: linear-gradient(135deg, #1e3a5f, #14532d); border: 1.5px solid rgba(59,130,246,.3); }
+
+.bubble {
+  max-width: 80%;
+  padding: 11px 16px;
+  border-radius: 18px;
+  font-size: .9rem;
+  line-height: 1.65;
+  animation: pop .22s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes pop { from{transform:scale(.88) translateY(6px);opacity:0} to{transform:scale(1) translateY(0);opacity:1} }
+
+.msg.bot .bubble {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-bottom-left-radius: 5px;
+}
+.msg.user .bubble {
+  background: linear-gradient(135deg, #1e3a5f, var(--blue-dark));
+  border-bottom-right-radius: 5px;
+}
+
+/* chips */
+.chip {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: rgba(245,158,11,.12);
+  border: 1.5px solid rgba(245,158,11,.4);
+  color: var(--gold);
+  border-radius: 30px;
+  padding: 5px 13px; margin: 5px 4px 0 0;
+  font-size: .8rem; font-weight: 700;
+  cursor: pointer; transition: all .15s;
+  user-select: none; font-family: 'Baloo 2', cursive;
+}
+.chip:hover {
+  background: var(--gold-dark); color: white;
+  border-color: var(--gold);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(245,158,11,.3);
+}
+
+/* topic tag */
+.topic-tag {
+  display: inline-block;
+  background: linear-gradient(135deg, #14532d, #166534);
+  border: 1px solid var(--gold-dark);
+  color: var(--gold);
+  font-size: .68rem; font-weight: 800;
+  border-radius: 20px; padding: 2px 10px;
+  margin-bottom: 5px; letter-spacing: .5px;
+  text-transform: uppercase;
+}
+
+/* multiple choice */
+.mc-options { display: flex; flex-direction: column; gap: 7px; margin-top: 10px; width: 100%; }
+.mc-btn {
+  display: flex; align-items: center; gap: 10px;
+  background: rgba(255,255,255,.03);
+  border: 1.5px solid var(--border);
+  border-radius: 12px; padding: 9px 14px;
+  color: var(--text); font-family: 'Baloo 2', cursive;
+  font-size: .87rem; font-weight: 600;
+  cursor: pointer; transition: all .15s; text-align: left; width: 100%;
+}
+.mc-btn:hover:not(:disabled) {
+  background: rgba(245,158,11,.12); border-color: var(--gold);
+  color: var(--gold); transform: translateX(3px);
+}
+.mc-btn .letter {
+  display: flex; align-items: center; justify-content: center;
+  width: 26px; height: 26px; border-radius: 8px;
+  background: rgba(245,158,11,.15); border: 1px solid rgba(245,158,11,.35);
+  color: var(--gold); font-size: .78rem; font-weight: 800;
+  flex-shrink: 0; transition: all .15s;
+}
+.mc-btn:hover:not(:disabled) .letter { background: var(--gold-dark); color: white; border-color: var(--gold-dark); }
+.mc-btn.correct { background: rgba(34,197,94,.15)!important; border-color: #22c55e!important; color: #22c55e!important; cursor: default; }
+.mc-btn.correct .letter { background: #22c55e!important; color: white!important; border-color: #22c55e!important; }
+.mc-btn.wrong { background: rgba(239,68,68,.12)!important; border-color: #ef4444!important; color: #ef4444!important; cursor: default; }
+.mc-btn.wrong .letter { background: #ef4444!important; color: white!important; border-color: #ef4444!important; }
+.mc-btn:disabled { cursor: default; transform: none!important; }
+
+/* speaker wave */
+.speaker-wave {
+  display: inline-flex; align-items: flex-end;
+  gap: 2px; height: 14px; margin-left: 6px; vertical-align: middle;
+}
+.speaker-wave span {
+  display: block; width: 3px; border-radius: 2px;
+  background: var(--gold); animation: wave 1s ease-in-out infinite;
+}
+.speaker-wave span:nth-child(1){height:4px;animation-delay:0s}
+.speaker-wave span:nth-child(2){height:10px;animation-delay:.1s}
+.speaker-wave span:nth-child(3){height:6px;animation-delay:.2s}
+.speaker-wave span:nth-child(4){height:12px;animation-delay:.15s}
+.speaker-wave span:nth-child(5){height:4px;animation-delay:.05s}
+@keyframes wave{0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.8)}}
+
+/* typing */
+.typing {
+  display: flex; gap: 4px; padding: 12px 16px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 18px; border-bottom-left-radius: 5px; width: fit-content;
+}
+.dot { width: 7px; height: 7px; border-radius: 50%; background: var(--gold); animation: bounce .9s infinite; }
+.dot:nth-child(2){animation-delay:.15s} .dot:nth-child(3){animation-delay:.3s}
+@keyframes bounce{0%,80%,100%{transform:translateY(0);opacity:.6}40%{transform:translateY(-7px);opacity:1}}
+
+/* input bar */
+.input-bar {
+  width: 100%; max-width: 700px;
+  padding: 10px 14px 18px;
+  display: flex; gap: 8px;
+  background: var(--bg); position: sticky; bottom: 0;
+}
+#user-input {
+  flex: 1; padding: 12px 18px;
+  border: 2px solid var(--border); border-radius: 30px;
+  font-family: 'Baloo 2', cursive; font-size: .92rem;
+  outline: none; background: var(--surface); color: var(--text);
+  transition: border-color .2s, box-shadow .2s;
+}
+#user-input::placeholder { color: var(--muted); }
+#user-input:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(245,158,11,.12); }
+
+#send-btn {
+  width: 48px; height: 48px; border-radius: 50%; border: none;
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  color: white; font-size: 1.1rem; cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 3px 14px rgba(245,158,11,.4); flex-shrink: 0;
+}
+#send-btn:hover { transform: scale(1.08); box-shadow: 0 5px 20px rgba(245,158,11,.55); }
+#send-btn:disabled { opacity: .5; transform: none; }
+
+/* result modal */
+.result-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.75); backdrop-filter: blur(6px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 100; opacity: 0; pointer-events: none; transition: opacity .3s;
+}
+.result-overlay.show { opacity: 1; pointer-events: all; }
+.result-card {
+  background: linear-gradient(135deg, #132015, #0c1a0e);
+  border: 2px solid var(--gold-dark);
+  border-radius: 24px; padding: 36px 40px;
+  text-align: center; max-width: 380px; width: 90%;
+  box-shadow: 0 20px 60px rgba(0,0,0,.6);
+  transform: scale(.9); transition: transform .3s cubic-bezier(.34,1.56,.64,1);
+}
+.result-overlay.show .result-card { transform: scale(1); }
+.result-emoji { font-size: 4rem; margin-bottom: 12px; display: block; }
+.result-title {
+  font-family: 'Fredoka One', cursive; font-size: 1.7rem; margin-bottom: 6px;
+  background: linear-gradient(90deg, var(--gold), #fde68a);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.result-score { font-size: 3rem; font-weight: 900; margin: 10px 0; color: white; }
+.result-msg { color: var(--muted); font-size: .9rem; margin-bottom: 22px; }
+.result-btn {
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  border: none; border-radius: 30px; padding: 12px 30px;
+  color: white; font-family: 'Baloo 2', cursive; font-weight: 800;
+  font-size: 1rem; cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+  box-shadow: 0 4px 16px rgba(245,158,11,.35);
+}
+.result-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 22px rgba(245,158,11,.5); }
+
+/* scenario card for identify questions */
+.scenario-card {
+  background: rgba(245,158,11,.07);
+  border: 1px solid rgba(245,158,11,.25);
+  border-radius: 12px; padding: 10px 14px;
+  margin: 8px 0 6px; font-style: italic;
+  font-size: .87rem; color: #fde68a; line-height: 1.5;
+}
+
+/* ── Notes Panel ─────────────────────────────────────────────── */
+.notes-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.78); backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 200; opacity: 0; pointer-events: none; transition: opacity .3s;
+}
+.notes-overlay.show { opacity: 1; pointer-events: all; }
+.notes-panel {
+  background: linear-gradient(160deg, #0c1a0e, #132015);
+  border: 2px solid var(--gold-dark);
+  border-radius: 20px;
+  width: 92%; max-width: 720px;
+  max-height: 88vh;
+  display: flex; flex-direction: column;
+  box-shadow: 0 24px 60px rgba(0,0,0,.7);
+  overflow: hidden;
+  transform: translateY(30px);
+  transition: transform .35s cubic-bezier(.34,1.2,.64,1);
+}
+.notes-overlay.show .notes-panel { transform: translateY(0); }
+.notes-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 22px; border-bottom: 1px solid var(--border);
+  background: linear-gradient(135deg, #14532d44, #1e3a5f44);
+}
+.notes-header h2 { font-family: 'Fredoka One', cursive; font-size: 1.3rem; color: var(--gold); }
+.notes-close {
+  width: 34px; height: 34px; border-radius: 50%;
+  border: 1.5px solid var(--border); background: var(--surface2);
+  color: var(--text); font-size: 1rem; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; transition: all .2s;
+}
+.notes-close:hover { background: #b91c1c; border-color: #ef4444; }
+.notes-body { overflow-y: auto; padding: 20px 22px; flex: 1; }
+.notes-body::-webkit-scrollbar { width: 4px; }
+.notes-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+.notes-topic { margin-bottom: 28px; }
+.notes-topic-title {
+  font-family: 'Fredoka One', cursive; font-size: 1.05rem;
+  color: var(--gold); margin-bottom: 10px;
+  padding-bottom: 6px; border-bottom: 1px solid var(--border);
+}
+.notes-item {
+  display: flex; gap: 10px; align-items: flex-start;
+  padding: 7px 0; border-bottom: 1px solid rgba(255,255,255,.04);
+  font-size: .87rem; line-height: 1.55;
+}
+.notes-item:last-child { border-bottom: none; }
+.notes-term { font-weight: 800; color: var(--gold); min-width: 150px; flex-shrink: 0; font-size: .84rem; }
+.notes-def { color: #d1fae5; }
+.notes-tabs {
+  display: flex; flex-wrap: wrap; gap: 8px; padding: 14px 22px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(0,0,0,.15);
+}
+.notes-tab {
+  padding: 12px 20px; border-radius: 10px;
+  border: 1.5px solid var(--border); 
+  background: rgba(255,255,255,.04); color: var(--muted);
+  font-family: 'Baloo 2', cursive; font-size: .9rem; font-weight: 700;
+  cursor: pointer; transition: all .15s; white-space: nowrap;
+  min-height: 48px; display: flex; align-items: center;
+}
+.notes-tab.active { background: var(--surface); color: var(--gold); border-color: var(--gold-dark); }
+.notes-tab:hover:not(.active) { color: var(--text); background: var(--surface2); }
+.notes-section { display: none; }
+.notes-section.active { display: block; }
+
+
+/* ── Print button in notes header ─────────────────────────────── */
+.notes-header-actions { display: flex; align-items: center; gap: 10px; }
+.print-btn {
+  display: flex; align-items: center; gap: 6px;
+  background: rgba(245,158,11,.12);
+  border: 1.5px solid rgba(245,158,11,.4);
+  color: var(--gold);
+  border-radius: 20px;
+  padding: 7px 14px;
+  font-family: 'Baloo 2', cursive;
+  font-size: .78rem;
+  font-weight: 800;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all .15s;
+}
+.print-btn:hover { background: var(--gold); color: #0c1a0e; border-color: var(--gold); }
+.print-btn.active { background: var(--gold); color: #0c1a0e; border-color: var(--gold); }
+
+/* ── On-screen Practice Test / Answer Key ─────────────────────── */
+.ptest-part-title {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1rem;
+  color: var(--gold);
+  margin: 22px 0 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+.ptest-part-title:first-child { margin-top: 0; }
+.ptest-q {
+  font-size: .87rem;
+  line-height: 1.6;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed rgba(255,255,255,.06);
+  color: #d1fae5;
+}
+.ptest-q b { color: var(--gold); }
+.ptest-q .opt { display: block; margin: 2px 0 2px 18px; color: #d1fae5; }
+.ptest-bank {
+  background: rgba(59,130,246,.08);
+  border: 1px solid rgba(59,130,246,.3);
+  border-radius: 10px;
+  padding: 10px 16px;
+  margin-bottom: 14px;
+  font-size: .82rem;
+  color: #dbeafe;
+  line-height: 1.6;
+}
+.key-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.key-pill {
+  background: rgba(245,158,11,.1);
+  border: 1px solid rgba(245,158,11,.25);
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: .78rem;
+  color: #fde68a;
+}
+.key-pill b { color: #34d399; }
+
+/* ── Print / Save-as-PDF styles ──────────────────────────────────
+   By default everything is hidden from print. When body carries
+   .printing-test, only #print-area (a light-themed clone of the
+   Practice Test + Answer Key) is shown, laid out for paper. ──── */
+@media print {
+  body * { visibility: hidden; }
+  #print-area, #print-area * { visibility: visible; }
+  #print-area {
+    display: block !important;
+    position: absolute; top: 0; left: 0; width: 100%;
+    background: #fff; color: #14290f;
+    font-family: 'Helvetica', Arial, sans-serif;
+    font-size: 10.5pt;
+    line-height: 1.5;
+  }
+  #print-area .p-cover { text-align: center; padding-top: 40px; }
+  #print-area .p-cover .p-icon { font-size: 34pt; }
+  #print-area .p-cover h1 { font-size: 19pt; color: #b45309; margin: 8px 0 4px; }
+  #print-area .p-cover .p-sub { font-size: 10.5pt; color: #166534; margin-bottom: 20px; }
+  #print-area .p-info-box {
+    border: 1.5px solid #fcd34d; border-radius: 10px;
+    max-width: 460px; margin: 0 auto 20px; padding: 14px 20px;
+    text-align: left; font-size: 10pt;
+  }
+  #print-area .p-info-box div { margin: 6px 0; border-bottom: 1px dotted #fde68a; padding-bottom: 6px; }
+  #print-area .p-instructions {
+    max-width: 460px; margin: 0 auto; text-align: left;
+    background: #fffbeb; border: 1px solid #fcd34d; border-radius: 10px;
+    padding: 12px 18px; font-size: 9.5pt; color: #78350f;
+  }
+  #print-area h2.p-part-title {
+    font-size: 12.5pt; color: #fff;
+    background: linear-gradient(135deg, #b45309, #14532d) !important;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    padding: 6px 12px; border-radius: 7px; margin: 18px 0 10px;
+    page-break-after: avoid;
+  }
+  #print-area .p-bank {
+    background: #f0fdf4 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    border: 1px solid #86efac; border-radius: 8px; padding: 8px 14px;
+    margin-bottom: 12px; font-size: 9.5pt; color: #14532d;
+  }
+  #print-area .p-q {
+    margin-bottom: 8px; padding-bottom: 8px;
+    border-bottom: 1px dotted #fde68a; font-size: 10pt;
+    page-break-inside: avoid; color: #14290f;
+  }
+  #print-area .p-q b { color: #b45309; }
+  #print-area .p-q .p-blank { display: inline-block; min-width: 65px; border-bottom: 1px solid #64748b; }
+  #print-area .p-q .p-opt { display: block; margin: 2px 0 0 20px; color: #365314; }
+  #print-area .p-break { page-break-before: always; }
+  #print-area .p-key-part-title {
+    font-size: 11pt; color: #b45309; font-weight: bold;
+    margin: 14px 0 8px; border-bottom: 2px solid #b45309; padding-bottom: 4px;
+  }
+  #print-area .p-key-grid {
+    display: grid; grid-template-columns: repeat(5, 1fr);
+    gap: 5px 8px; margin-bottom: 14px;
+  }
+  #print-area .p-key-pill {
+    background: #f0fdf4 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    border: 1px solid #86efac; border-radius: 6px;
+    padding: 4px 8px; font-size: 8.5pt; color: #166534;
+  }
+  #print-area .p-key-pill b { color: #b45309; }
+  @page { size: letter; margin: 1.5cm 1.8cm; }
+}
+#print-area { display: none; }
+
+
+/* ── Chapter Summary / Tandaan / Memory boxes (fix: previously missing) ── */
+.chapter-summary {
+  background: linear-gradient(135deg, rgba(59,130,246,.1), rgba(34,197,94,.08));
+  border: 1px solid rgba(59,130,246,.25);
+  border-left: 4px solid var(--blue);
+  border-radius: 12px;
+  padding: 14px 18px;
+  margin-bottom: 18px;
+  font-size: .88rem;
+  line-height: 1.65;
+  color: #dbeafe;
+}
+.tandaan-box {
+  background: rgba(245,158,11,.08);
+  border: 1px solid rgba(245,158,11,.3);
+  border-left: 4px solid var(--gold);
+  border-radius: 12px;
+  padding: 12px 18px;
+  margin: 14px 0;
+  font-size: .86rem;
+  line-height: 1.6;
+  color: #fde68a;
+}
+.tandaan-label {
+  display: block;
+  font-family: 'Baloo 2', cursive;
+  font-size: .8rem;
+  color: var(--gold);
+  letter-spacing: .5px;
+  margin-bottom: 5px;
+}
+.memory-box {
+  background: rgba(34,197,94,.08);
+  border: 1px solid rgba(34,197,94,.3);
+  border-left: 4px solid var(--green);
+  border-radius: 12px;
+  padding: 12px 18px;
+  margin: 14px 0 22px;
+  font-size: .86rem;
+  line-height: 1.6;
+  color: #bbf7d0;
+}
+.memory-label {
+  display: block;
+  font-family: 'Baloo 2', cursive;
+  font-size: .8rem;
+  color: var(--green);
+  letter-spacing: .5px;
+  margin-bottom: 5px;
+}
+.compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0 20px;
+  font-size: .82rem;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.compare-table th {
+  background: linear-gradient(135deg, var(--blue-dark), var(--gold-dark));
+  color: white;
+  text-align: left;
+  padding: 9px 12px;
+  font-size: .78rem;
+  text-transform: uppercase;
+  letter-spacing: .4px;
+}
+.compare-table td {
+  padding: 9px 12px;
+  border-top: 1px solid var(--border);
+  color: var(--text);
+  vertical-align: top;
+}
+.compare-table tr:nth-child(even) td { background: rgba(255,255,255,.02); }
+
+/* ── Story Box (for reading Bible stories aloud) ─────────────────── */
+.story-box {
+  background: rgba(255,255,255,.03);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px 20px;
+  margin-bottom: 16px;
+  font-size: .92rem;
+  line-height: 1.8;
+  color: var(--text);
+}
+.story-box p { margin-bottom: 10px; }
+.story-box p:last-child { margin-bottom: 0; }
+.story-ref {
+  display: block;
+  text-align: right;
+  font-style: italic;
+  color: var(--muted);
+  font-size: .8rem;
+  margin-top: 10px;
+}
+.story-label {
+  display: block;
+  font-family: 'Baloo 2', cursive;
+  font-size: .9rem;
+  color: var(--gold);
+  letter-spacing: .5px;
+  margin-bottom: 10px;
+}
+/* ── Raw Notes (original document view) ──────────────────────── */
+.rawnotes-intro {
+  font-size: .82rem;
+  color: var(--muted);
+  line-height: 1.6;
+  background: rgba(59,130,246,.1);
+  border: 1px solid rgba(59,130,246,.3);
+  border-left: 4px solid var(--blue);
+  border-radius: 10px;
+  padding: 12px 18px;
+  margin-bottom: 20px;
+}
+.rawnotes-doc {
+  font-family: 'Lora', Georgia, serif;
+  line-height: 1.75;
+}
+.rawnotes-doc p {
+  font-size: .95rem;
+  margin-bottom: 14px;
+  color: #e2f5e6;
+}
+.rawnotes-doc strong { color: var(--gold); font-weight: 700; }
+.rawnotes-doc em { color: var(--muted); font-style: italic; }
+.rawnotes-doc h3.doc-heading {
+  font-family: 'Baloo 2', cursive;
+  font-size: 1.05rem;
+  color: var(--gold);
+  margin: 26px 0 12px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid var(--border);
+}
+.rawnotes-doc h3.doc-heading:first-child { margin-top: 0; }
+.rawnotes-doc ul, .rawnotes-doc ol {
+  margin: 0 0 14px 26px;
+  color: #e2f5e6;
+}
+.rawnotes-doc li { margin-bottom: 6px; font-size: .95rem; }
+.rawnotes-doc table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0 20px;
+  font-size: .82rem;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.rawnotes-doc th {
+  background: linear-gradient(135deg, var(--blue-dark), var(--gold-dark));
+  color: white;
+  text-align: left;
+  padding: 9px 12px;
+  font-size: .78rem;
+}
+.rawnotes-doc td {
+  padding: 9px 12px;
+  border-top: 1px solid var(--border);
+  color: var(--text);
+  vertical-align: top;
+}
+.rawnotes-doc tr:nth-child(even) td { background: rgba(255,255,255,.02); }
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE: TABLET (≤820px)
+   ═══════════════════════════════════════════════════════════════ */
+@media (max-width: 820px) {
+  .notes-panel { width: 95%; max-height: 92vh; }
+  .notes-tabs { padding: 12px 16px; gap: 6px; }
+  .notes-tab { padding: 10px 14px; font-size: .82rem; min-height: 42px; }
+  .notes-body { padding: 16px; }
+  .notes-header { padding: 14px 16px; }
+  .chat-wrap { padding: 14px 10px 0; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE: MOBILE (≤600px)
+   ═══════════════════════════════════════════════════════════════ */
+@media (max-width: 600px) {
+  header {
+    padding: 10px 12px;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .header-icon { font-size: 1.5rem; }
+  header h1 { font-size: 1.05rem; line-height: 1.2; }
+  header .sub { font-size: .62rem; }
+  .header-controls { gap: 6px; margin-left: auto; }
+  .score-pill { padding: 4px 10px; font-size: .74rem; }
+  .audio-btn { width: 32px; height: 32px; font-size: .85rem; }
+
+  .chat-wrap { padding: 10px 6px 0; }
+  #chat-box { gap: 12px; }
+  .bubble { max-width: 88%; font-size: .88rem; padding: 10px 13px; }
+  .avatar { width: 30px; height: 30px; font-size: .85rem; }
+
+  .chip { font-size: .78rem; padding: 7px 12px; }
+  .mc-btn { font-size: .84rem; padding: 10px 12px; }
+  .mc-btn .letter { width: 22px; height: 22px; font-size: .74rem; }
+  .topic-tag { font-size: .68rem; }
+  .scenario-card { font-size: .88rem; padding: 10px 14px; }
+
+  .input-bar { padding: 8px 8px calc(8px + env(safe-area-inset-bottom)); gap: 8px; }
+  #user-input { font-size: .88rem; padding: 10px 14px; }
+  #send-btn { width: 40px; height: 40px; font-size: 1rem; }
+
+  .result-card { width: 92%; padding: 26px 20px; }
+  .result-emoji { font-size: 2.6rem; }
+  .result-title { font-size: 1.2rem; }
+  .result-score { font-size: 1.8rem; }
+
+  /* ── Notes panel: near-full-screen on phones ── */
+  .notes-overlay { align-items: flex-end; }
+  .notes-panel {
+    width: 100%; max-width: 100%;
+    max-height: 94vh;
+    border-radius: 20px 20px 0 0;
+    border-left: none; border-right: none; border-bottom: none;
+  }
+  .notes-header { padding: 12px 14px; flex-wrap: wrap; gap: 8px; }
+  .notes-header h2 { font-size: 1.05rem; flex: 1 1 100%; }
+  .notes-header-actions { flex-wrap: wrap; gap: 6px; width: 100%; justify-content: flex-start; }
+  .print-btn { font-size: .7rem; padding: 6px 11px; }
+  .notes-close { width: 30px; height: 30px; font-size: .9rem; margin-left: auto; }
+
+  .notes-tabs { padding: 10px 12px; gap: 5px; }
+  .notes-tab { padding: 8px 12px; font-size: .76rem; min-height: 38px; }
+  .notes-body { padding: 14px; }
+
+  .notes-item { flex-direction: column; gap: 2px; }
+  .notes-term { min-width: 0; font-size: .82rem; }
+  .notes-def { font-size: .84rem; }
+  .notes-topic-title { font-size: .95rem; }
+  .chapter-summary, .memory-box, .tandaan-box, .story-box, .verse-card { font-size: .82rem; padding: 12px 14px; }
+
+  /* ── Tables: allow horizontal scroll instead of squeezing ── */
+  .compare-table { display: block; overflow-x: auto; white-space: nowrap; }
+  .compare-table th, .compare-table td { white-space: normal; min-width: 110px; }
+
+  .key-grid { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 5px; }
+  .key-pill { font-size: .72rem; padding: 5px 8px; }
+  .ptest-part-title { font-size: .92rem; }
+  .ptest-q { font-size: .82rem; }
+  .ptest-bank { font-size: .78rem; padding: 8px 12px; }
+
+  .rawnotes-doc p, .rawnotes-doc li { font-size: .87rem; }
+  .rawnotes-doc h3.doc-heading { font-size: .95rem; }
+  .rawnotes-doc table { display: block; overflow-x: auto; white-space: nowrap; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE: VERY SMALL PHONES (≤380px)
+   ═══════════════════════════════════════════════════════════════ */
+@media (max-width: 380px) {
+  header h1 { font-size: .92rem; }
+  header .sub { display: none; }
+  .score-pill span { font-size: .7rem; }
+  .bubble { max-width: 92%; font-size: .84rem; }
+  .notes-tab { font-size: .7rem; padding: 7px 10px; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE: LANDSCAPE PHONES (short height)
+   ═══════════════════════════════════════════════════════════════ */
+@media (max-height: 480px) and (orientation: landscape) {
+  .notes-panel { max-height: 98vh; }
+  .notes-tabs { padding: 6px 12px; }
+  .notes-tab { min-height: 32px; padding: 6px 10px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-icon">🍞</div>
+  <div>
+    <h1>Holy Eucharist &amp; Mother Teresa</h1>
+    <div class="sub">The Last Supper · The Holy Eucharist · Symbols of the Mass · Saint Teresa of Calcutta</div>
+  </div>
+  <div class="header-controls">
+    <div class="score-pill">⭐ <span id="score-val">0</span> / <span id="total-val">0</span></div>
+    <button class="audio-btn" id="notes-toggle" title="Open Reviewer" onclick="document.getElementById('notes-overlay').classList.add('show')">📖</button>
+    <button class="audio-btn active" id="audio-toggle" title="Toggle Audio">🔊</button>
+  </div>
+</header>
+
+<div class="chat-wrap">
+  <div id="chat-box"></div>
+</div>
+
+<div class="input-bar">
+  <input type="text" id="user-input" placeholder="Type your answer here…" autocomplete="off" />
+  <button id="send-btn">➤</button>
+</div>
+
+<div class="result-overlay" id="result-overlay">
+  <div class="result-card">
+    <span class="result-emoji" id="res-emoji">🏆</span>
+    <div class="result-title">Quiz Complete!</div>
+    <div class="result-score"><span id="res-score">0</span>/<span id="res-total">0</span></div>
+    <div class="result-msg" id="res-msg">Great job!</div>
+    <button class="result-btn" onclick="restartApp()">🔄 Maglaro Ulit</button>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+// QUESTION BANK
+// ═══════════════════════════════════════════════════════════════
+const topics = {
+
+  "The Last Supper": [
+    { q: "On what night did the Lord Jesus take bread, give thanks, and break it?", a: "On the night he was betrayed", hint: "It was the night before his death." },
+    { q: "What did Jesus say about the bread at the Last Supper?", a: "\"This is my body, which is for you; do this in remembrance of me.\"", hint: "He spoke of his body." },
+    { q: "What did Jesus say about the cup at the Last Supper?", a: "\"This cup is the new covenant in my blood; do this, whenever you drink it, in remembrance of me.\"", hint: "He spoke of a new covenant." },
+    { q: "According to St. Paul, what do we proclaim whenever we eat this bread and drink this cup?", a: "The Lord's death until he comes", hint: "It looks forward to his coming." },
+    { q: "In which Bible passage is this account found?", a: "1 Corinthians 11:23-26", hint: "A letter of St. Paul." },
+    { q: "What sacrament did Jesus establish at the Last Supper?", a: "The Holy Eucharist", hint: "A sacrament of Christ's Body and Blood." },
+    { q: "Who did Jesus gather around him to celebrate the Last Supper?", a: "The apostles", hint: "His closest followers." },
+  ],
+
+  "The Holy Eucharist": [
+    { q: "What is the sacrament of the Holy Eucharist?", a: "A community celebration of unity and love with Christ", hint: "It brings the community together." },
+    { q: "What is unity?", a: "Working together to achieve a common goal, setting aside differences and self-centeredness, sharing ideas, talents, gifts, and resources, and working together in harmony", hint: "Working together as one." },
+    { q: "Which sacrament of initiation is the Holy Eucharist?", a: "The third sacrament of initiation", hint: "It comes after the first two." },
+    { q: "What does Jesus Christ give us in the Holy Eucharist?", a: "His Body and Blood", hint: "A gift of himself." },
+    { q: "What does Jesus teach us to do in Holy Communion?", a: "To give ourselves to Him in love and to be united with Him", hint: "A response of love." },
+    { q: "Into what are we joined through Holy Communion?", a: "The one Body of Christ, the Church", hint: "We become one community." },
+    { q: "How is the Eucharist described in relation to the Christian life?", a: "It is the source and summit of the Christian life", hint: "Both where it begins and where it peaks." },
+    { q: "When did Jesus institute the Holy Eucharist?", a: "\"On the night He was betrayed,\" at the Last Supper", hint: "While gathered with his apostles." },
+    { q: "Why is the Eucharist sometimes called the Holy Sacrifice and the Holy Mass?", a: "By offering ourselves with Christ in the Holy Mass, we unite ourselves with Christ", hint: "We offer ourselves together with him." },
+    { q: "Why is the Eucharist also called the Lord's Supper?", a: "Every celebration commemorates the supper Christ celebrated with His disciples, and it anticipates the banquet the Lord will celebrate at the end of time", hint: "Looks back and looks ahead." },
+    { q: "What is the Breaking of the Bread?", a: "The New Testament name for the Eucharist; an old Jewish ritual at meals which Jesus used at the Last Supper to express His gift of self", hint: "Romans 8:32." },
+  ],
+
+  "Symbols and Parts of the Mass": [
+    { q: "What is the primary symbol in the Eucharist?", a: "The community, the people who are assembled or gathered together", hint: "It is not an object." },
+    { q: "Whom does the assembled community represent?", a: "The Body of Christ", hint: "The Church." },
+    { q: "What three rituals does the Mass consist of?", a: "Breaking the Bread, Sharing the Cup of Wine, and Proclaiming the Word of God", hint: "Bread, wine, and word." },
+    { q: "What is bread made from?", a: "Wheat that has been ground, kneaded, and baked", hint: "A grain." },
+    { q: "Bread is both the gift of God and what?", a: "The work of human hands", hint: "People help make it." },
+    { q: "What does the bread become in the Eucharist?", a: "The Body of Christ, offered up, broken, and given to His people", hint: "Three actions." },
+    { q: "What are we meant to be as we partake of the Bread?", a: "Offered up, broken, and given for others", hint: "Just like the bread." },
+    { q: "What does the wine symbolize in the Eucharist?", a: "The blood of Christ", hint: "Part of the new covenant." },
+    { q: "What do we commit ourselves to when we partake of the wine?", a: "Pouring out our lives for others", hint: "A life of giving." },
+    { q: "What does Hebrews 4:12 say about the Word of God?", a: "The Word of God is alive", hint: "It is not just old writing." },
+    { q: "Where is Jesus present in the Mass besides the bread and wine?", a: "In the Scriptures and in the community of Christians gathered together", hint: "Two other places." },
+  ],
+
+  "Mother Teresa": [
+    { q: "During what years did Mother Teresa live?", a: "1910-1997", hint: "She was born in 1910." },
+    { q: "What was Mother Teresa's birth name?", a: "Agnes Gonxha Bojaxhiu", hint: "Her name before becoming a nun." },
+    { q: "Where was Mother Teresa born?", a: "Skopje, North Macedonia", hint: "Not in India." },
+    { q: "At what age did Agnes travel to Ireland to become a nun?", a: "18", hint: "Just becoming an adult." },
+    { q: "What name did she become known as after becoming a nun?", a: "Sister Teresa", hint: "Before she was called Mother Teresa." },
+    { q: "In 1929, where did the convent send Sister Teresa as a missionary?", a: "India", hint: "To promote the Catholic faith." },
+    { q: "Which languages did she learn in India?", a: "Hindi and Bengali", hint: "Two languages." },
+    { q: "What happened in 1937?", a: "She took her final vows and became known as Mother Teresa", hint: "A lifelong promise." },
+    { q: "What is Mother Teresa remembered for?", a: "Devoting her life to helping the sick, poor, and those in need", hint: "Service to others." },
+    { q: "What is her famous quote about small things?", a: "\"Not all of us can do great things, but we can all do small things with great love.\"", hint: "Great love in small things." },
+    { q: "What did Mother Teresa believe God told her in 1946?", a: "To leave teaching and go to Calcutta to help those most in need", hint: "A message from God." },
+    { q: "What did she set up in 1948?", a: "A school for the poor", hint: "For education." },
+    { q: "What did she open in the 1950s for homeless children?", a: "An orphanage", hint: "A home for children." },
+    { q: "What did she found in 1963?", a: "The \"Missionaries of Charity Brothers\"", hint: "To help very poor people not being cared for." },
+    { q: "Name other things she set up in the 1950s and 1960s.", a: "A leper colony, several mobile health clinics, a family clinic, and a nursing home", hint: "Care for the sick and elderly." },
+    { q: "What prize did she receive in 1979?", a: "The Nobel Peace Prize", hint: "A world-famous prize." },
+    { q: "What did she receive in 1980?", a: "The Bharat Ratna, India's highest civilian award", hint: "An Indian honor." },
+    { q: "What happened in 2016?", a: "She was declared a saint, known as Saint Teresa of Calcutta", hint: "A special title in the Church." },
+  ],
+
+};
+
+// ── TRUE OR FALSE ────────────────────────────────────────────────────────────
+const trueOrFalse = [
+  { q: "Jesus took bread and gave thanks on the night he was betrayed.", a: "true" },
+  { q: "At the Last Supper, Jesus said the bread is his blood.", a: "false" },
+  { q: "Jesus said the cup is the new covenant in his blood.", a: "true" },
+  { q: "The account of the Last Supper in this lesson is from 1 Corinthians 11:23-26.", a: "true" },
+  { q: "The Holy Eucharist is the first sacrament of initiation.", a: "false" },
+  { q: "Unity means working together to achieve a common goal.", a: "true" },
+  { q: "The Eucharist is the source and summit of the Christian life.", a: "true" },
+  { q: "The Eucharist is also called the Lord's Supper.", a: "true" },
+  { q: "The Breaking of the Bread is the Old Testament name for the Eucharist.", a: "false" },
+  { q: "The primary symbol in the Eucharist is the bread.", a: "false" },
+  { q: "The Mass consists of three rituals.", a: "true" },
+  { q: "Bread in the Eucharist is made from rice.", a: "false" },
+  { q: "Wine is a symbol of the blood of Christ.", a: "true" },
+  { q: "The Word of God is alive, according to Hebrews 4:12.", a: "true" },
+  { q: "Jesus is present only in the bread and wine, not in the Scriptures.", a: "false" },
+  { q: "Mother Teresa was born in Skopje, North Macedonia.", a: "true" },
+  { q: "Mother Teresa was born in India.", a: "false" },
+  { q: "Sister Teresa was sent to India as a missionary in 1929.", a: "true" },
+  { q: "Mother Teresa took her final vows in 1937.", a: "true" },
+  { q: "Mother Teresa founded the Missionaries of Charity Brothers in 1963.", a: "true" },
+  { q: "Mother Teresa received the Nobel Peace Prize in 1990.", a: "false" },
+  { q: "The Bharat Ratna is India's highest civilian award.", a: "true" },
+  { q: "Mother Teresa was declared a saint in 2016.", a: "true" },
+];
+
+// ── IDENTIFY: NAMES · SYMBOLS · MOTHER TERESA TIMELINE ──────────────────────
+const identifyQuestions = [
+  { q: "It commemorates the supper Christ celebrated with His disciples and anticipates the banquet at the end of time.", a: "Lord's Supper", choices: ["Lord's Supper","Breaking of the Bread","Holy Sacrifice / Holy Mass","Baptism"] },
+  { q: "The New Testament name for the Eucharist; an old Jewish ritual at meals.", a: "Breaking of the Bread", choices: ["Breaking of the Bread","Lord's Supper","Holy Sacrifice / Holy Mass","Baptism"] },
+  { q: "By offering ourselves with Christ in this, we unite ourselves with Christ.", a: "Holy Sacrifice / Holy Mass", choices: ["Holy Sacrifice / Holy Mass","Lord's Supper","Breaking of the Bread","Baptism"] },
+  { q: "The primary symbol in the Eucharist.", a: "The community", choices: ["The community","The bread","The wine","The candle"] },
+  { q: "Made from wheat that is ground, kneaded, and baked; it becomes the Body of Christ.", a: "Bread", choices: ["Bread","Wine","The Word of God","Unity"] },
+  { q: "A symbol of the blood of Christ.", a: "Wine", choices: ["Wine","Bread","The Word of God","Unity"] },
+  { q: "It is alive (Hebrews 4:12), and Jesus is present in the Scriptures.", a: "The Word of God", choices: ["The Word of God","Bread","Wine","Unity"] },
+  { q: "Working together to achieve a common goal and setting aside our differences.", a: "Unity", choices: ["Unity","Bread","Wine","The Word of God"] },
+  { q: "Sister Teresa was sent to India as a missionary.", a: "1929", choices: ["1929","1937","1946","1963"] },
+  { q: "She took her final vows and became known as Mother Teresa.", a: "1937", choices: ["1937","1929","1948","1979"] },
+  { q: "She believed God sent her a message to go to Calcutta to help those most in need.", a: "1946", choices: ["1946","1937","1948","1963"] },
+  { q: "She set up a school for the poor.", a: "1948", choices: ["1948","1946","1963","1980"] },
+  { q: "She founded the \"Missionaries of Charity Brothers.\"", a: "1963", choices: ["1963","1948","1979","2016"] },
+  { q: "She was awarded the Nobel Peace Prize.", a: "1979", choices: ["1979","1980","1963","2016"] },
+  { q: "She was awarded the Bharat Ratna, India's highest civilian award.", a: "1980", choices: ["1980","1979","1937","2016"] },
+  { q: "She was declared a saint, known as Saint Teresa of Calcutta.", a: "2016", choices: ["2016","1980","1979","1997"] },
+];
+
+// ═══════════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════════
+let state = {
+  awaiting: 'menu',
+  mode: null,
+  questions: [],
+  allAnswers: [],
+  qIndex: 0,
+  score: 0,
+  total: 0,
+  hintUsed: false,
+  audioEnabled: true,
+};
+
+// ═══════════════════════════════════════════════════════════════
+// TTS (UPGRADED FOR TRUE FILIPINO ACCENT)
+// ═══════════════════════════════════════════════════════════════
+let currentAudioStream = null;
+
+function speak(text) {
+  if (!state.audioEnabled) return;
+  
+  // Linisin ang mga nakaraang audio task
+  window.speechSynthesis.cancel();
+  if (currentAudioStream) {
+    currentAudioStream.pause();
+    currentAudioStream = null;
+  }
+  
+  // Tanggalin ang HTML tags at emojis para hindi basahin nang paputol-putol
+  const clean = text.replace(/<[^>]+>/g,'').replace(/[🇵🇭🌟✅❌💡⏭️🏆😊💪🔄🔲📚👋⭐✕🧭📏🗺️]/g,'');
+  
+  // PRIMARY METHOD: Google Translation Engine cloud voice stream (May natural na Filipino accent)
+  const googleTtsUrl = `https://translate.google.com/translate_tts?ie=UTF-8&tl=tl&client=tw-ob&q=${encodeURIComponent(clean)}`;
+  
+  currentAudioStream = new Audio(googleTtsUrl);
+  currentAudioStream.onplaying = () => showWave(true);
+  currentAudioStream.onended = currentAudioStream.onerror = () => showWave(false);
+  
+  currentAudioStream.play().catch(err => {
+    // BACKUP METHOD: Web Speech API (works even without internet)
+    console.warn("Google TTS blocked or offline. Falling back to local system speech engine.");
+    
+    const streamFallback = new SpeechSynthesisUtterance(clean);
+    streamFallback.lang = 'fil-PH';
+    streamFallback.rate = 0.95; streamFallback.pitch = 1.05; streamFallback.volume = 1;
+    
+    const voices = window.speechSynthesis.getVoices();
+    const filVoice = voices.find(v => v.lang.startsWith('fil') || v.lang.startsWith('tl'));
+    const engVoice = voices.find(v => v.lang.startsWith('en') && v.name.toLowerCase().includes('female'))
+                   || voices.find(v => v.lang.startsWith('en'));
+              
+    if (filVoice) {
+      streamFallback.voice = filVoice;
+    } else if (engVoice) {
+      streamFallback.voice = engVoice; 
+      streamFallback.lang = 'en-US'; 
+    }
+    
+    streamFallback.onstart = () => showWave(true);
+    streamFallback.onend = streamFallback.onerror = () => showWave(false);
+    window.speechSynthesis.speak(streamFallback);
+  });
+}
+
+function showWave(on) {
+  document.querySelectorAll('.speaker-wave').forEach(w => w.style.display = on ? 'inline-flex' : 'none');
+}
+
+// I-initialize ang mga boses ng system
+let localSystemVoices = [];
+function lookupSystemVoices() {
+  localSystemVoices = window.speechSynthesis.getVoices();
+}
+lookupSystemVoices();
+if (window.speechSynthesis.onvoiceschanged !== undefined) {
+  window.speechSynthesis.onvoiceschanged = lookupSystemVoices;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// UI HELPERS
+// ═══════════════════════════════════════════════════════════════
+const chatBox = document.getElementById('chat-box');
+const input = document.getElementById('user-input');
+const sendBtn = document.getElementById('send-btn');
+
+function scrollBottom() { chatBox.scrollTop = chatBox.scrollHeight; }
+
+function addMessage(role, html, speakText) {
+  const div = document.createElement('div');
+  div.className = `msg ${role}`;
+  const av = document.createElement('div');
+  av.className = 'avatar';
+  av.textContent = role === 'bot' ? '🤖' : '🧑';
+  const bub = document.createElement('div');
+  bub.className = 'bubble';
+  bub.innerHTML = role === 'bot'
+    ? html + '<span class="speaker-wave" style="display:none"><span></span><span></span><span></span><span></span><span></span></span>'
+    : html;
+  div.appendChild(av); div.appendChild(bub);
+  chatBox.appendChild(div);
+  scrollBottom(); bindChips();
+  if (role === 'bot') {
+    const txt = speakText || html.replace(/<[^>]+>/g,' ');
+    setTimeout(() => speak(txt), 350);
+  }
+}
+
+function addTyping() {
+  const d = document.createElement('div');
+  d.className = 'msg bot'; d.id = 'typing';
+  d.innerHTML = '<div class="avatar">🤖</div><div class="typing"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>';
+  chatBox.appendChild(d); scrollBottom();
+}
+function removeTyping() { const t = document.getElementById('typing'); if(t) t.remove(); }
+
+function bindChips() {
+  document.querySelectorAll('.chip:not([data-bound])').forEach(c => {
+    c.dataset.bound = '1';
+    c.addEventListener('click', () => handleUserMessage(c.dataset.val));
+  });
+}
+
+function updateScore() {
+  document.getElementById('score-val').textContent = state.score;
+  document.getElementById('total-val').textContent = state.total;
+}
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length-1; i > 0; i--) {
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]] = [a[j],a[i]];
+  }
+  return a;
+}
+
+function normalize(s) { return s.toLowerCase().trim().replace(/\s+/g,' '); }
+
+function checkAnswer(user, correct) {
+  const u = normalize(user), c = normalize(correct);
+  if (u === c) return true;
+  if (c.includes(u) && u.length > 5) return true;
+  const parts = c.split(/[,;\/]/);
+  for (const p of parts) if (u.includes(p.trim()) && p.trim().length > 4) return true;
+  return false;
+}
+
+function showResult() {
+  const pct = Math.round((state.score/state.total)*100);
+  const emoji = pct>=90?'🏆':pct>=70?'🌟':pct>=50?'😊':'💪';
+  const msg = pct>=90?'Excellent! You know it all!':pct>=70?'Great job! Keep it up!':pct>=50?'Good! Study a little more!':"Don't give up! Try again!";
+  document.getElementById('res-emoji').textContent = emoji;
+  document.getElementById('res-score').textContent = state.score;
+  document.getElementById('res-total').textContent = state.total;
+  document.getElementById('res-msg').textContent = msg;
+  document.getElementById('result-overlay').classList.add('show');
+  speak(`All done! Your score is ${state.score} out of ${state.total}. ${msg}`);
+}
+
+function restartApp() {
+  document.getElementById('result-overlay').classList.remove('show');
+  state = { awaiting:'menu', mode:null, questions:[], allAnswers:[], qIndex:0, score:0, total:0, hintUsed:false, audioEnabled:state.audioEnabled };
+  chatBox.innerHTML = '';
+  document.querySelector('.input-bar').style.display = 'flex';
+  updateScore();
+  showMenu();
+}
+
+// ═══════════════════════════════════════════════════════════════
+// MC HELPERS
+// ═══════════════════════════════════════════════════════════════
+function getAllAnswers() {
+  const ans = [];
+  for (const qs of Object.values(topics)) for (const q of qs) ans.push(q.a);
+  return ans;
+}
+
+function generateChoices(correct, pool) {
+  const distractors = shuffle(pool.filter(a => a !== correct)).slice(0,3);
+  return shuffle([correct, ...distractors]);
+}
+
+function buildMCBtns(choices, correctAnswer) {
+  const letters = ['A','B','C','D','E'];
+  return `<div class="mc-options">${choices.map((c,i)=>
+    `<button class="mc-btn" data-answer="${encodeURIComponent(c)}" data-correct="${encodeURIComponent(correctAnswer)}" onclick="handleMCClick(this)">
+      <span class="letter">${letters[i]}</span>${c}
+    </button>`
+  ).join('')}</div>`;
+}
+
+function handleMCClick(btn) {
+  const allBtns = btn.closest('.mc-options').querySelectorAll('.mc-btn');
+  allBtns.forEach(b => b.disabled = true);
+  const chosen = decodeURIComponent(btn.dataset.answer);
+  const correct = decodeURIComponent(btn.dataset.correct);
+  const isCorrect = chosen === correct;
+  allBtns.forEach(b => { if(decodeURIComponent(b.dataset.answer)===correct) b.classList.add('correct'); });
+  if (!isCorrect) btn.classList.add('wrong');
+  setTimeout(() => {
+    if (isCorrect) {
+      state.score++;
+      addMessage('bot', `✅ <strong>Correct!</strong> +1 point! The answer is: <strong>${correct}</strong>`, `Correct! The answer is: ${correct}`);
+    } else {
+      addMessage('bot', `❌ <strong>Not quite.</strong> The correct answer is: <strong>${correct}</strong>`, `Not quite. The correct answer is: ${correct}`);
+    }
+    state.qIndex++; updateScore();
+    if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+    else setTimeout(showResult, 900);
+  }, 650);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// NEXT QUESTION
+// ═══════════════════════════════════════════════════════════════
+function nextQuestion() {
+  const qi = state.qIndex;
+  const q = state.questions[qi];
+  const num = qi + 1;
+
+  if (state.mode === 'full' || state.mode === 'topic_mc') {
+    const choices = generateChoices(q.a, state.allAnswers);
+    const tag = q.topic ? `<span class="topic-tag">${q.topic}</span><br>` : '';
+    const html = `${tag}<strong>Q${num} of ${state.total}:</strong> ${q.q}${buildMCBtns(choices, q.a)}`;
+    addMessage('bot', html, `Question ${num}. ${q.q}`);
+    return;
+  }
+
+  if (state.mode === 'tf') {
+    const html = `<strong>Q${num} of ${state.total}:</strong> <div class="scenario-card">${q.q}</div>
+      <span class="chip" data-val="true">✅ True</span><span class="chip" data-val="false">❌ False</span>`;
+    addMessage('bot', html, `Question ${num}. True or False: ${q.q}`);
+    return;
+  }
+
+  if (state.mode === 'identify') {
+    const btns = buildMCBtns(q.choices, q.a);
+    const html = `<strong>Q${num} of ${state.total}:</strong> Identify what is being described:<div class="scenario-card">${q.q}</div>${btns}`;
+    addMessage('bot', html, `Question ${num}. Identify: ${q.q}`);
+    return;
+  }
+
+  // typed answer mode
+  const tag = q.topic ? `<span class="topic-tag">${q.topic}</span><br>` : '';
+  const html = `${tag}<strong>Q${num} of ${state.total}:</strong> ${q.q}<br><small style="color:var(--muted)">Type your answer · type <em>hint</em> for help · <em>skip</em> to move on</small>`;
+  addMessage('bot', html, `Question ${num}. ${q.q}`);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// MENU
+// ═══════════════════════════════════════════════════════════════
+function showMenu() {
+  addMessage('bot',
+    `👋 <strong>Hi! I'm your Religion Reviewer!</strong><br>Let's study <em>The Last Supper</em>, <em>The Holy Eucharist</em>, the <em>Symbols and Parts of the Mass</em>, and the life of <em>Mother Teresa</em>.<br><br>What would you like to do?<br>
+    <span class="chip" data-val="1">📚 Study by Topic</span>
+    <span class="chip" data-val="2">✅ True or False</span>
+    <span class="chip" data-val="3">🌐 Identify</span>
+    <span class="chip" data-val="4">🌟 Full Review (Multiple Choice)</span>`,
+    "Hi! I'm your Religion Reviewer on the Holy Eucharist and Mother Teresa. What would you like to do? Study a topic, True or False, Identify, or a Full Review with multiple choice?"
+  );
+  state.awaiting = 'menu';
+}
+
+// ═══════════════════════════════════════════════════════════════
+// PROCESS MESSAGE
+// ═══════════════════════════════════════════════════════════════
+function processMessage(msg) {
+  const aw = state.awaiting;
+
+  // ── MENU ──────────────────────────────────────────────────
+  if (aw === 'menu') {
+    if (msg === '1') {
+      state.awaiting = 'topic';
+      const keys = Object.keys(topics);
+      const chips = keys.map((t,i) => `<span class="chip" data-val="${i+1}">${i+1}. ${t}</span>`).join(' ');
+      addMessage('bot', `📚 Which topic would you like to study?<br>${chips}`, 'Which topic would you like to study?');
+
+    } else if (msg === '2') {
+      state.mode = 'tf';
+      state.questions = shuffle(trueOrFalse);
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'tf_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `✅ <strong>True or False!</strong> ${state.total} questions. Let's start!`, `True or False! ${state.total} questions. Let's start!`);
+      setTimeout(nextQuestion, 800);
+
+    } else if (msg === '3') {
+      state.mode = 'identify';
+      state.questions = shuffle(identifyQuestions);
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'mc_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `🌐 <strong>Identify!</strong> Match the names, symbols, and Mother Teresa timeline to what is being described.`, "Identify! Figure out what's being described in each item.");
+      setTimeout(nextQuestion, 800);
+
+    } else if (msg === '4') {
+      state.mode = 'full';
+      const all = [];
+      for (const [topicName, qs] of Object.entries(topics)) {
+        qs.forEach(q => all.push({...q, topic: topicName}));
+      }
+      state.questions = shuffle(all);
+      state.allAnswers = getAllAnswers();
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'mc_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `🌟 <strong>Full Review — Multiple Choice!</strong> ${state.total} questions. Think carefully!`, `Full Review! Multiple Choice! ${state.total} questions. Think carefully!`);
+      setTimeout(nextQuestion, 800);
+
+    } else {
+      addMessage('bot',
+        `Choose an option:<br>
+        <span class="chip" data-val="1">📚 Study by Topic</span>
+        <span class="chip" data-val="2">✅ True or False</span>
+        <span class="chip" data-val="3">🌐 Identify</span>
+        <span class="chip" data-val="4">🌟 Full Review</span>`,
+        'Choose an option.'
+      );
+    }
+    return;
+  }
+
+  // ── TOPIC SELECT ──────────────────────────────────────────
+  if (aw === 'topic') {
+    const keys = Object.keys(topics);
+    const idx = parseInt(msg) - 1;
+    if (keys[idx]) {
+      const topicName = keys[idx];
+      state.mode = 'topic_mc';
+      state.questions = shuffle(topics[topicName]);
+      state.allAnswers = getAllAnswers();
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'mc_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `📚 <strong>${topicName}</strong> — ${state.total} questions. Ready?`, `${topicName}. ${state.total} questions. Ready?`);
+      setTimeout(nextQuestion, 800);
+    } else {
+      const chips = Object.keys(topics).map((t,i) => `<span class="chip" data-val="${i+1}">${i+1}. ${t}</span>`).join(' ');
+      addMessage('bot', `Please choose a valid topic:<br>${chips}`, 'Please choose a valid topic.');
+    }
+    return;
+  }
+
+  // ── TYPED ANSWER ──────────────────────────────────────────
+  if (aw === 'answer') {
+    const q = state.questions[state.qIndex];
+    const m = normalize(msg);
+
+    if (m === 'hint') {
+      state.hintUsed = true;
+      addMessage('bot', `💡 <strong>Hint:</strong> ${q.hint}`, `Hint: ${q.hint}`);
+      return;
+    }
+    if (m === 'skip') {
+      addMessage('bot', `⏭️ Skipped! The correct answer is: <strong>${q.a}</strong>`, `Skipped. The correct answer is: ${q.a}`);
+      state.qIndex++; state.hintUsed = false;
+      if (state.qIndex < state.total) setTimeout(nextQuestion, 700);
+      else showResult();
+      return;
+    }
+
+    const correct = checkAnswer(msg, q.a);
+    if (correct) {
+      if (!state.hintUsed) state.score++;
+      const note = state.hintUsed ? ' <em>(hint used — no point)</em>' : ' +1 point!';
+      addMessage('bot', `✅ <strong>Correct!</strong>${note} Answer: <strong>${q.a}</strong>`, `Correct! The answer is: ${q.a}`);
+    } else {
+      addMessage('bot', `❌ <strong>Not quite.</strong> The correct answer is: <strong>${q.a}</strong>`, `Not quite. The correct answer is: ${q.a}`);
+    }
+    state.qIndex++; state.hintUsed = false; updateScore();
+    if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+    else setTimeout(showResult, 900);
+    return;
+  }
+
+  // ── TRUE OR FALSE ─────────────────────────────────────────
+  if (aw === 'tf_answer') {
+    const q = state.questions[state.qIndex];
+    const ans = normalize(msg);
+    const valid = ans === 'true' || ans === 'false';
+
+    if (valid) {
+      const correct = ans === q.a;
+      if (correct) {
+        state.score++;
+        addMessage('bot', `✅ <strong>Correct!</strong> The answer is <strong>${q.a.toUpperCase()}</strong>.`, `Correct! The answer is ${q.a}.`);
+      } else {
+        addMessage('bot', `❌ <strong>Incorrect.</strong> The correct answer is <strong>${q.a.toUpperCase()}</strong>.`, `Incorrect. The correct answer is ${q.a}.`);
+      }
+      state.qIndex++; updateScore();
+      if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+      else setTimeout(showResult, 900);
+    } else {
+      addMessage('bot',
+        `Answer: True or False?<br><span class="chip" data-val="true">✅ True</span><span class="chip" data-val="false">❌ False</span>`,
+        'Answer: True or False?'
+      );
+    }
+    return;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// CONTROLS
+// ═══════════════════════════════════════════════════════════════
+function handleUserMessage(msg) {
+  if (!msg.trim()) return;
+  
+  // Stop any speaking audio cleanly when the user answers
+  window.speechSynthesis.cancel();
+  if (currentAudioStream) {
+    currentAudioStream.pause();
+    currentAudioStream = null;
+    showWave(false);
+  }
+  
+  addMessage('user', msg.replace(/</g,'&lt;'));
+  input.value = '';
+  input.disabled = true; sendBtn.disabled = true;
+  addTyping();
+  setTimeout(() => {
+    removeTyping();
+    input.disabled = false; sendBtn.disabled = false;
+    input.focus();
+    processMessage(msg);
+  }, 480);
+}
+
+sendBtn.addEventListener('click', () => { handleUserMessage(input.value); });
+input.addEventListener('keydown', e => { if(e.key==='Enter') handleUserMessage(input.value); });
+
+document.getElementById('audio-toggle').addEventListener('click', function() {
+  state.audioEnabled = !state.audioEnabled;
+  this.textContent = state.audioEnabled ? '🔊' : '🔇';
+  this.classList.toggle('active', state.audioEnabled);
+  if (!state.audioEnabled) {
+    window.speechSynthesis.cancel();
+    if (currentAudioStream) {
+      currentAudioStream.pause();
+      currentAudioStream = null;
+      showWave(false);
+    }
+  }
+});
+
+// ═══════════════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════════════
+window.addEventListener('load', () => {
+  lookupSystemVoices();
+  showMenu();
+});
+
+function printPracticeTest() {
+  document.body.classList.add('printing-test');
+  window.print();
+}
+window.addEventListener('afterprint', () => {
+  document.body.classList.remove('printing-test');
+});
+
+// ═══════════════════════════════════════════════════════════════
+// READ NOTES ALOUD (uses the browser's own voice — no length limit,
+// unlike the short Google TTS clips used for chat messages)
+// ═══════════════════════════════════════════════════════════════
+function getNotesText(section) {
+  // Skip the Practice Test / Answer Key tabs — too long and not meant to be read aloud
+  const clone = section.cloneNode(true);
+  clone.querySelectorAll('button').forEach(b => b.remove());
+  let text = clone.innerText || clone.textContent || '';
+  text = text.replace(/\s+/g, ' ').trim();
+  return text;
+}
+
+function toggleNotesAudio() {
+  const btn = document.getElementById('notes-audio-btn');
+  if (!btn) return;
+
+  if (window.speechSynthesis.speaking || window.speechSynthesis.pending) {
+    window.speechSynthesis.cancel();
+    btn.innerHTML = '🔊 Read Notes Aloud';
+    btn.classList.remove('active');
+    return;
+  }
+
+  const activeSection = document.querySelector('.notes-section.active');
+  if (!activeSection) return;
+  const text = getNotesText(activeSection);
+  if (!text) return;
+
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.lang = 'en-US';
+  utter.rate = 0.95;
+  utter.pitch = 1.05;
+  utter.volume = 1;
+
+  const voices = window.speechSynthesis.getVoices();
+  const voice = voices.find(v => v.lang.startsWith('en') && v.name.toLowerCase().includes('female'))
+             || voices.find(v => v.lang.startsWith('en'));
+  if (voice) utter.voice = voice;
+
+  utter.onstart = () => { btn.innerHTML = '⏹️ Stop Reading'; btn.classList.add('active'); };
+  utter.onend = utter.onerror = () => { btn.innerHTML = '🔊 Read Notes Aloud'; btn.classList.remove('active'); };
+
+  window.speechSynthesis.speak(utter);
+}
+
+function switchTab(tabId, btn) {
+  window.speechSynthesis.cancel();
+  const audioBtn = document.getElementById('notes-audio-btn');
+  if (audioBtn) { audioBtn.innerHTML = '🔊 Read Notes Aloud'; audioBtn.classList.remove('active'); }
+  document.querySelectorAll('.notes-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.notes-tab').forEach(b => b.classList.remove('active'));
+  document.getElementById(tabId).classList.add('active');
+  btn.classList.add('active');
+}
+
+function closeNotesPanel() {
+  window.speechSynthesis.cancel();
+  const audioBtn = document.getElementById('notes-audio-btn');
+  if (audioBtn) { audioBtn.innerHTML = '🔊 Read Notes Aloud'; audioBtn.classList.remove('active'); }
+  document.getElementById('notes-overlay').classList.remove('show');
+}
+</script>
+
+<!-- ── Notes Panel ── -->
+<div class="notes-overlay" id="notes-overlay">
+  <div class="notes-panel">
+    <div class="notes-header">
+      <h2>📖 Holy Eucharist &amp; Mother Teresa — Notes</h2>
+      <div class="notes-header-actions">
+        <button class="print-btn" id="notes-audio-btn" onclick="toggleNotesAudio()" title="Have this tab read aloud">🔊 Read Notes Aloud</button>
+        <button class="print-btn" onclick="printPracticeTest()" title="Print or save the Practice Test &amp; Answer Key as PDF">🖨️ Print Test &amp; Key</button>
+        <button class="notes-close" onclick="closeNotesPanel()">✕</button>
+      </div>
+    </div>
+    <div class="notes-tabs">
+      <button class="notes-tab active" onclick="switchTab('tab-supper', this)">🍷 The Last Supper</button>
+      <button class="notes-tab" onclick="switchTab('tab-eucharist', this)">🍞 The Holy Eucharist</button>
+      <button class="notes-tab" onclick="switchTab('tab-mass', this)">⛪ Symbols of the Mass</button>
+      <button class="notes-tab" onclick="switchTab('tab-teresa', this)">🕊️ Mother Teresa</button>
+      <button class="notes-tab" onclick="switchTab('tab-tf', this)">✅ True or False</button>
+      <button class="notes-tab" onclick="switchTab('tab-ptest', this)">📝 Practice Test</button>
+      <button class="notes-tab" onclick="switchTab('tab-key', this)">🔑 Answer Key</button>
+      <button class="notes-tab" onclick="switchTab('tab-raw', this)">📄 Raw Notes</button>
+    </div>
+    <div class="notes-body">
+
+      <div class="notes-section active" id="tab-supper">
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> On the night he was betrayed, Jesus took bread and the cup, gave thanks, and asked his followers to "do this in remembrance of me." <em>(1 Corinthians 11:23-26)</em>
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">🍷 Jesus' Words</div>
+          <div class="notes-item"><span class="notes-term">Over the bread</span><span class="notes-def">"This is my body, which is for you; do this in remembrance of me."</span></div>
+          <div class="notes-item"><span class="notes-term">Over the cup</span><span class="notes-def">"This cup is the new covenant in my blood; do this, whenever you drink it, in remembrance of me."</span></div>
+          <div class="notes-item"><span class="notes-term">What we proclaim</span><span class="notes-def">The Lord's death until he comes</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-eucharist">
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> The <strong>Holy Eucharist</strong> is the third sacrament of initiation, a community celebration of unity and love with Christ, in which Jesus gives His Body and Blood for us.
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 MEMORY TRICK</span>
+          Remember the three other names of the Eucharist with: <strong>"Sacrifice, Supper, Sharing of Bread."</strong> Holy <strong>Sacrifice</strong>/Mass (we offer ourselves with Christ), Lord's <strong>Supper</strong> (remembers the Last Supper and looks to the banquet at the end of time), and <strong>Breaking of the Bread</strong> (the New Testament name).
+        </div>
+        <table class="compare-table">
+          <tr><th>Name</th><th>Meaning</th></tr>
+          <tr><td>Holy Sacrifice / Holy Mass</td><td>By offering ourselves with Christ, we unite ourselves with Him</td></tr>
+          <tr><td>Lord's Supper</td><td>Commemorates the supper with His disciples; anticipates the banquet at the end of time</td></tr>
+          <tr><td>Breaking of the Bread</td><td>The New Testament name; an old Jewish meal ritual Jesus used to express His gift of self</td></tr>
+        </table>
+        <div class="tandaan-box">
+          <span class="tandaan-label">REMEMBER</span>
+          <strong>Unity</strong> means working together to achieve a common goal: setting aside differences and self-centeredness, and sharing ideas, talents, gifts, and resources. The Eucharist is the source and summit of the Christian life.
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-mass">
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> The primary symbol of the Eucharist is the <strong>community</strong> gathered together, representing the Body of Christ. The Mass has three rituals: Breaking the Bread, Sharing the Cup of Wine, and Proclaiming the Word of God.
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 MEMORY TRICK</span>
+          <strong>"Bread, Wine, Word"</strong>: <strong>Bread</strong> is broken, <strong>Wine</strong> is poured out, and the <strong>Word</strong> is alive. Each one asks us to give ourselves for others.
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">⛪ The Three Rituals</div>
+          <div class="notes-item"><span class="notes-term">Bread</span><span class="notes-def">Gift of God and work of human hands, made from ground, kneaded, baked wheat; becomes the Body of Christ offered up, broken, and given. We, too, are meant to be offered up, broken, and given for others.</span></div>
+          <div class="notes-item"><span class="notes-term">Wine</span><span class="notes-def">Also a gift of God and the work of human hands; a symbol of the blood of Christ. We commit to pouring out our lives for others.</span></div>
+          <div class="notes-item"><span class="notes-term">The Word of God</span><span class="notes-def">Alive (Hebrews 4:12); Jesus is present in the Scriptures and in the community gathered together.</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-teresa">
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> Mother Teresa (1910-1997), born Agnes Gonxha Bojaxhiu in Skopje, North Macedonia, devoted her life to helping the sick, the poor, and those in need. She is now Saint Teresa of Calcutta.
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 MEMORY TRICK</span>
+          Follow her life in order: <strong>29</strong> sent to India → <strong>37</strong> final vows → <strong>46</strong> God's message → <strong>48</strong> school for the poor → <strong>63</strong> Missionaries of Charity Brothers → <strong>79</strong> Nobel Peace Prize → <strong>80</strong> Bharat Ratna → <strong>2016</strong> declared a saint.
+        </div>
+        <table class="compare-table">
+          <tr><th>Year</th><th>Event</th></tr>
+          <tr><td>1929</td><td>Sent to India as a missionary; learned Hindi and Bengali</td></tr>
+          <tr><td>1937</td><td>Took her final vows; became Mother Teresa</td></tr>
+          <tr><td>1946</td><td>Believed God told her to go to Calcutta to help those most in need</td></tr>
+          <tr><td>1948</td><td>Set up a school for the poor</td></tr>
+          <tr><td>1950s</td><td>Opened an orphanage for homeless children</td></tr>
+          <tr><td>1963</td><td>Founded the "Missionaries of Charity Brothers"</td></tr>
+          <tr><td>1979</td><td>Awarded the Nobel Peace Prize</td></tr>
+          <tr><td>1980</td><td>Awarded the Bharat Ratna, India's highest civilian award</td></tr>
+          <tr><td>2016</td><td>Declared a saint</td></tr>
+        </table>
+        <div class="tandaan-box">
+          <span class="tandaan-label">REMEMBER</span>
+          "Not all of us can do great things, but we can all do small things with great love."
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-tf">
+        <div class="notes-topic">
+          <div class="notes-topic-title">✅ True or False — Key Reminders</div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">The bread is Jesus' blood → the bread is his body; the cup is the new covenant in his blood.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">The Eucharist is the first sacrament of initiation → it is the third.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">Breaking of the Bread is the Old Testament name → it is the New Testament name.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">The primary symbol is the bread → the primary symbol is the community.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">Bread is made from rice → it is made from wheat.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">Jesus is present only in the bread and wine → also in the Scriptures and in the gathered community.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">Mother Teresa was born in India → she was born in Skopje, North Macedonia.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">She received the Nobel Peace Prize in 1990 → in 1979.</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-ptest">
+        <div class="notes-topic">
+          <div class="notes-topic-title">📝 Practice Test</div>
+<div class="ptest-part-title">Part I — Names, Symbols, and Terms</div><div class="ptest-bank"><strong>Word Bank:</strong> Lord's Supper &middot; Breaking of the Bread &middot; Holy Sacrifice / Holy Mass &middot; The community &middot; Bread &middot; Wine &middot; The Word of God &middot; Unity</div><div class="ptest-q"><b>1.</b> It commemorates the supper Christ celebrated with His disciples and anticipates the banquet at the end of time. <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>2.</b> The New Testament name for the Eucharist; an old Jewish ritual at meals. <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>3.</b> By offering ourselves with Christ in this, we unite ourselves with Christ. <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>4.</b> The primary symbol in the Eucharist. <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>5.</b> Made from wheat that is ground, kneaded, and baked; it becomes the Body of Christ. <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>6.</b> A symbol of the blood of Christ. <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>7.</b> It is alive (Hebrews 4:12), and Jesus is present in the Scriptures. <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>8.</b> Working together to achieve a common goal and setting aside our differences. <span class="opt">Answer: ______________</span></div><div class="ptest-part-title">Part II — Mother Teresa Timeline (Year)</div><div class="ptest-bank"><strong>Word Bank:</strong> 1929 &middot; 1937 &middot; 1946 &middot; 1948 &middot; 1963 &middot; 1979 &middot; 1980 &middot; 2016</div><div class="ptest-q"><b>9.</b> Sister Teresa was sent to India as a missionary. <span class="opt">Answer: ______</span></div><div class="ptest-q"><b>10.</b> She took her final vows and became known as Mother Teresa. <span class="opt">Answer: ______</span></div><div class="ptest-q"><b>11.</b> She believed God sent her a message to go to Calcutta to help those most in need. <span class="opt">Answer: ______</span></div><div class="ptest-q"><b>12.</b> She set up a school for the poor. <span class="opt">Answer: ______</span></div><div class="ptest-q"><b>13.</b> She founded the "Missionaries of Charity Brothers." <span class="opt">Answer: ______</span></div><div class="ptest-q"><b>14.</b> She was awarded the Nobel Peace Prize. <span class="opt">Answer: ______</span></div><div class="ptest-q"><b>15.</b> She was awarded the Bharat Ratna, India's highest civilian award. <span class="opt">Answer: ______</span></div><div class="ptest-q"><b>16.</b> She was declared a saint, known as Saint Teresa of Calcutta. <span class="opt">Answer: ______</span></div><div class="ptest-part-title">Part III — True or False</div><div class="ptest-q"><b>17.</b> Jesus took bread and gave thanks on the night he was betrayed. <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>18.</b> At the Last Supper, Jesus said the bread is his blood. <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>19.</b> Jesus said the cup is the new covenant in his blood. <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>20.</b> The account of the Last Supper in this lesson is from 1 Corinthians 11:23-26. <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>21.</b> The Holy Eucharist is the first sacrament of initiation. <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>22.</b> Unity means working together to achieve a common goal. <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>23.</b> The Eucharist is the source and summit of the Christian life. <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>24.</b> The Eucharist is also called the Lord's Supper. <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>25.</b> The Breaking of the Bread is the Old Testament name for the Eucharist. <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>26.</b> The primary symbol in the Eucharist is the bread. <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>27.</b> The Mass consists of three rituals. <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>28.</b> Bread in the Eucharist is made from rice. <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>29.</b> Wine is a symbol of the blood of Christ. <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>30.</b> The Word of God is alive, according to Hebrews 4:12. <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>31.</b> Jesus is present only in the bread and wine, not in the Scriptures. <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>32.</b> Mother Teresa was born in Skopje, North Macedonia. <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>33.</b> Mother Teresa was born in India. <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>34.</b> Sister Teresa was sent to India as a missionary in 1929. <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>35.</b> Mother Teresa took her final vows in 1937. <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>36.</b> Mother Teresa founded the Missionaries of Charity Brothers in 1963. <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>37.</b> Mother Teresa received the Nobel Peace Prize in 1990. <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>38.</b> The Bharat Ratna is India's highest civilian award. <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>39.</b> Mother Teresa was declared a saint in 2016. <span class="opt">Answer: ______________</span></div><div class="ptest-part-title">Part IV — Short Answer</div><div class="ptest-q"><b>40.</b> What did Jesus tell the apostles about the bread and the wine?</div><div class="ptest-q"><b>41.</b> What sacrament did Jesus establish at the Last Supper?</div><div class="ptest-q"><b>42.</b> Name the three rituals of the Mass.</div><div class="ptest-q"><b>43.</b> What does it mean for us to partake of the Bread and the Wine?</div><div class="ptest-q"><b>44.</b> How can you live out Mother Teresa's words, "We can all do small things with great love"? Give an example.</div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-key">
+        <div class="notes-topic">
+<div class="notes-topic-title">Part I — Names, Symbols, and Terms</div><div class="key-grid"><div class="key-pill">1. <b>Lord's Supper</b></div><div class="key-pill">2. <b>Breaking of the Bread</b></div><div class="key-pill">3. <b>Holy Sacrifice / Holy Mass</b></div><div class="key-pill">4. <b>The community</b></div><div class="key-pill">5. <b>Bread</b></div><div class="key-pill">6. <b>Wine</b></div><div class="key-pill">7. <b>The Word of God</b></div><div class="key-pill">8. <b>Unity</b></div></div><div class="notes-topic-title">Part II — Timeline</div><div class="key-grid"><div class="key-pill">9. <b>1929</b></div><div class="key-pill">10. <b>1937</b></div><div class="key-pill">11. <b>1946</b></div><div class="key-pill">12. <b>1948</b></div><div class="key-pill">13. <b>1963</b></div><div class="key-pill">14. <b>1979</b></div><div class="key-pill">15. <b>1980</b></div><div class="key-pill">16. <b>2016</b></div></div><div class="notes-topic-title">Part III — True or False</div><div class="key-grid"><div class="key-pill">17. <b>True</b></div><div class="key-pill">18. <b>False</b></div><div class="key-pill">19. <b>True</b></div><div class="key-pill">20. <b>True</b></div><div class="key-pill">21. <b>False</b></div><div class="key-pill">22. <b>True</b></div><div class="key-pill">23. <b>True</b></div><div class="key-pill">24. <b>True</b></div><div class="key-pill">25. <b>False</b></div><div class="key-pill">26. <b>False</b></div><div class="key-pill">27. <b>True</b></div><div class="key-pill">28. <b>False</b></div><div class="key-pill">29. <b>True</b></div><div class="key-pill">30. <b>True</b></div><div class="key-pill">31. <b>False</b></div><div class="key-pill">32. <b>True</b></div><div class="key-pill">33. <b>False</b></div><div class="key-pill">34. <b>True</b></div><div class="key-pill">35. <b>True</b></div><div class="key-pill">36. <b>True</b></div><div class="key-pill">37. <b>False</b></div><div class="key-pill">38. <b>True</b></div><div class="key-pill">39. <b>True</b></div></div><div class="notes-topic-title">Part IV — Short Answer (sample answers)</div><div class="ptest-q" style="margin-bottom:6px"><b>40.</b> Jesus said of the bread, "This is my body, which is for you; do this in remembrance of me," and of the cup, "This cup is the new covenant in my blood; do this, whenever you drink it, in remembrance of me."</div><div class="ptest-q" style="margin-bottom:6px"><b>41.</b> The Holy Eucharist, a community celebration of unity and love with Christ, in which Jesus gives His Body and Blood for us.</div><div class="ptest-q" style="margin-bottom:6px"><b>42.</b> Breaking the Bread, Sharing the Cup of Wine, and Proclaiming the Word of God.</div><div class="ptest-q" style="margin-bottom:6px"><b>43.</b> As we partake of the Bread, we are meant to be offered up, broken, and given for others. As we partake of the Wine, we commit ourselves to pouring out our lives for others.</div><div class="ptest-q" style="margin-bottom:6px"><b>44.</b> Answers will vary, e.g., helping a classmate, sharing food with someone in need, visiting a sick neighbor, or praying for others, all done with love.</div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-raw">
+        <div class="rawnotes-intro">
+          📌 This is the original content of the uploaded lesson, unedited — for whenever you need to check the exact wording or an example not covered in the reviewer.
+        </div>
+        <div class="rawnotes-doc">
+<h3 class="doc-heading">The Last Supper</h3>
+<p>The Lord Jesus, on the night he was betrayed, took bread, and when he had given thanks, he broke it and said, <strong>“This is my body, which is for you; do this in remembrance of me.”</strong> In the same way, after supper he took the cup, saying, <strong>“This cup is the new covenant in my blood; do this, whenever you drink it, in remembrance of me.”</strong></p>
+<p>For whenever you eat this bread and drink this cup, you proclaim the Lord’s death until he comes. <strong>(1 Corinthians 11:23–26)</strong></p>
+<h3 class="doc-heading">B. Answer these questions.</h3>
+<p><strong>1. What did Jesus tell the apostles about the bread and the wine?</strong></p>
+<p><strong>2. What sacrament did Jesus establish at the Last Supper?</strong></p>
+<p>The sacrament of the <strong>Holy Eucharist</strong> is a community celebration of unity and love with Christ.</p>
+<p><strong>Unity</strong> means working together to achieve a common goal. It is setting aside our differences and self-centeredness; sharing our ideas, talents, gifts, and resources; and working together in harmony.</p>
+<p>The Holy Eucharist is the third sacrament of initiation in which Jesus Christ gives His Body and Blood for us. He teaches us to give ourselves to Him in love and to be united with Him in Holy Communion. In this way, we are joined with the one Body of Christ, the Church. It is the source and summit of the Christian life. <strong>(LG 11; CCC 1322, 1324, 1325, 1409, 1413)</strong></p>
+<p>Jesus instituted the Holy Eucharist <strong>“on the night He was betrayed”</strong> when He gathered the apostles around Him and celebrated the Last Supper with them. <strong>(CCC 1323, 1337, 1340)</strong></p>
+<p>The Eucharist is sometimes referred to as <strong>Holy Sacrifice</strong> and <strong>Holy Mass</strong>. By offering ourselves with Christ in the Holy Mass, we unite ourselves with Christ.</p>
+<p>The Eucharist is also referred to as the <strong>Lord’s Supper</strong> because every celebration of the Eucharist commemorates the supper that Christ celebrated with His disciples. At the same time, it is also the anticipation of the banquet that the Lord will celebrate at the end of time.</p>
+<p>Similarly, the Eucharist is known as the <strong>Breaking of the Bread</strong>. It is the New Testament name for the Eucharist. It was an old Jewish ritual at meals, which Jesus employed at the Last Supper to express His gift of self for us <strong>(Romans 8:32).</strong></p>
+<p>The primary symbol in the Eucharist is the <strong>community</strong> or the people who are assembled or gathered together. They represent the Body of Christ.</p>
+<p>The Mass consists of three rituals, namely <strong>Breaking the Bread, Sharing the Cup of Wine, and Proclaiming the Word of God.</strong></p>
+<h3 class="doc-heading">1. Bread</h3>
+<p><strong>Bread</strong> is the basic food for most people. It is both the gift of God and the work of human hands. It is made from wheat that has been ground, kneaded, and baked. In the Eucharist, the bread becomes the Body of Christ offered up, broken, and given to His people. As we partake of this Bread, we, too, are meant to be offered up, broken, and given for others.</p>
+<h3 class="doc-heading">2. Wine</h3>
+<p><strong>Wine</strong> is also both the gift of God and the work of human hands. In the Eucharist, it is a symbol of the blood of Christ. When we partake of the wine, we celebrate the life-giving sacrament of Christ. We commit ourselves to pouring out our lives for others.</p>
+<h3 class="doc-heading">3. The Word of God</h3>
+<p><strong>The Word of God is alive</strong> (Hebrews 4:12) and Jesus is present in the Scriptures. He is also present in the community of Christians gathered together. He comes alive to us whenever we hear the Word of God.</p>
+<h3 class="doc-heading">Mother Teresa (1910–1997)</h3>
+<p><strong>Blessed Teresa of Calcutta once said:</strong></p>
+<p>“Your life must be woven around the Eucharist. Direct your eyes to Him, bring your hearts very close to His divine heart, ask Him for the grace to know Him, for the charity to love Him, for the courage to serve Him.”</p>
+<p>With this reminder, ask for Christ’s grace and love. Recite the prayer together in class.</p>
+<h3 class="doc-heading">Early Life</h3>
+<p>Agnes Gonxha Bojaxhiu was born in Skopje, North Macedonia. Her family were Catholics and she was involved in the church from a young age. When she was 18, Agnes travelled to Ireland to become a nun and became known as Sister Teresa.</p>
+<h3 class="doc-heading">Becoming a Missionary</h3>
+<p>In 1929, the convent sent Sister Teresa to India as a missionary to promote the Catholic faith. She learned Hindi and Bengali and began teaching. In 1937, she took her final vows and became known as Mother Teresa.</p>
+<p>Mother Teresa is remembered for devoting her life to helping the sick, poor and those in need.</p>
+<p><strong>“Not all of us can do great things, but we can all do small things with great love.”</strong></p>
+<h3 class="doc-heading">A Message from God</h3>
+<p>In 1946, Mother Teresa believed God sent her a message telling her to leave teaching and go to Calcutta to help those most in need. She went to the poorest areas of the city to help the people who were overlooked by the rest of society. She and her group of fellow nuns had very little money or food for themselves and often had to beg.</p>
+<p>In 1948, Mother Teresa set up a school for the poor and in the 1950s, she opened an orphanage for homeless children. In 1963, she founded the <strong>“Missionaries of Charity Brothers”</strong> to help very poor people who were not being cared for. During the 1950s and 1960s she also set up:</p>
+<ul>
+<li><p>a leper colony</p></li>
+<li><p>several mobile health clinics</p></li>
+<li><p>a family clinic</p></li>
+<li><p>a nursing home</p></li>
+</ul>
+<h3 class="doc-heading">Awards and Achievements</h3>
+<p>Mother Teresa was awarded the <strong>Nobel Peace Prize</strong> in 1979. In 1980, she was awarded the <strong>Bharat Ratna</strong>, India’s highest civilian award.</p>
+<p>She was declared a saint in 2016 and is known as <strong>Saint Teresa of Calcutta</strong>.</p>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ── Hidden Print Area (Practice Test + Answer Key) ── -->
+<div id="print-area">
+<div class="p-cover"><div class="p-icon">🍞</div><h1>Religion 5 — Holy Eucharist &amp; Mother Teresa Practice Test</h1><div class="p-sub">The Last Supper · The Holy Eucharist · Symbols of the Mass · Saint Teresa of Calcutta</div>
+<div class="p-info-box"><div><strong>Name:</strong> _____________________________________</div><div><strong>Section:</strong> ___________________ &nbsp; <strong>Date:</strong> ___________________</div><div><strong>Score:</strong> _______ / 44</div></div>
+<div class="p-instructions"><strong>Instructions:</strong> Read each item carefully. Write your answer on the blank provided (Parts I-III), or answer in complete sentences (Part IV). Good luck!</div></div><h2 class="p-part-title">Part I — Names, Symbols, and Terms</h2><div class="p-bank"><strong>Word Bank:</strong> Lord's Supper &middot; Breaking of the Bread &middot; Holy Sacrifice / Holy Mass &middot; The community &middot; Bread &middot; Wine &middot; The Word of God &middot; Unity</div><div class="p-q"><b>1.</b> It commemorates the supper Christ celebrated with His disciples and anticipates the banquet at the end of time. <span class="p-blank"></span></div><div class="p-q"><b>2.</b> The New Testament name for the Eucharist; an old Jewish ritual at meals. <span class="p-blank"></span></div><div class="p-q"><b>3.</b> By offering ourselves with Christ in this, we unite ourselves with Christ. <span class="p-blank"></span></div><div class="p-q"><b>4.</b> The primary symbol in the Eucharist. <span class="p-blank"></span></div><div class="p-q"><b>5.</b> Made from wheat that is ground, kneaded, and baked; it becomes the Body of Christ. <span class="p-blank"></span></div><div class="p-q"><b>6.</b> A symbol of the blood of Christ. <span class="p-blank"></span></div><div class="p-q"><b>7.</b> It is alive (Hebrews 4:12), and Jesus is present in the Scriptures. <span class="p-blank"></span></div><div class="p-q"><b>8.</b> Working together to achieve a common goal and setting aside our differences. <span class="p-blank"></span></div><h2 class="p-part-title">Part II — Mother Teresa Timeline (Year)</h2><div class="p-bank"><strong>Word Bank:</strong> 1929 &middot; 1937 &middot; 1946 &middot; 1948 &middot; 1963 &middot; 1979 &middot; 1980 &middot; 2016</div><div class="p-q"><b>9.</b> Sister Teresa was sent to India as a missionary. <span class="p-blank"></span></div><div class="p-q"><b>10.</b> She took her final vows and became known as Mother Teresa. <span class="p-blank"></span></div><div class="p-q"><b>11.</b> She believed God sent her a message to go to Calcutta to help those most in need. <span class="p-blank"></span></div><div class="p-q"><b>12.</b> She set up a school for the poor. <span class="p-blank"></span></div><div class="p-q"><b>13.</b> She founded the "Missionaries of Charity Brothers." <span class="p-blank"></span></div><div class="p-q"><b>14.</b> She was awarded the Nobel Peace Prize. <span class="p-blank"></span></div><div class="p-q"><b>15.</b> She was awarded the Bharat Ratna, India's highest civilian award. <span class="p-blank"></span></div><div class="p-q"><b>16.</b> She was declared a saint, known as Saint Teresa of Calcutta. <span class="p-blank"></span></div><div class="p-break"></div><h2 class="p-part-title">Part III — True or False</h2><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>17.</b> Jesus took bread and gave thanks on the night he was betrayed.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>18.</b> At the Last Supper, Jesus said the bread is his blood.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>19.</b> Jesus said the cup is the new covenant in his blood.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>20.</b> The account of the Last Supper in this lesson is from 1 Corinthians 11:23-26.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>21.</b> The Holy Eucharist is the first sacrament of initiation.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>22.</b> Unity means working together to achieve a common goal.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>23.</b> The Eucharist is the source and summit of the Christian life.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>24.</b> The Eucharist is also called the Lord's Supper.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>25.</b> The Breaking of the Bread is the Old Testament name for the Eucharist.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>26.</b> The primary symbol in the Eucharist is the bread.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>27.</b> The Mass consists of three rituals.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>28.</b> Bread in the Eucharist is made from rice.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>29.</b> Wine is a symbol of the blood of Christ.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>30.</b> The Word of God is alive, according to Hebrews 4:12.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>31.</b> Jesus is present only in the bread and wine, not in the Scriptures.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>32.</b> Mother Teresa was born in Skopje, North Macedonia.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>33.</b> Mother Teresa was born in India.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>34.</b> Sister Teresa was sent to India as a missionary in 1929.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>35.</b> Mother Teresa took her final vows in 1937.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>36.</b> Mother Teresa founded the Missionaries of Charity Brothers in 1963.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>37.</b> Mother Teresa received the Nobel Peace Prize in 1990.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>38.</b> The Bharat Ratna is India's highest civilian award.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>39.</b> Mother Teresa was declared a saint in 2016.</div><div class="p-break"></div><h2 class="p-part-title">Part IV — Short Answer</h2><div class="p-q"><b>40.</b> What did Jesus tell the apostles about the bread and the wine?<br><br>_________________________________________________<br><br>_________________________________________________</div><div class="p-q"><b>41.</b> What sacrament did Jesus establish at the Last Supper?<br><br>_________________________________________________<br><br>_________________________________________________</div><div class="p-q"><b>42.</b> Name the three rituals of the Mass.<br><br>_________________________________________________<br><br>_________________________________________________</div><div class="p-q"><b>43.</b> What does it mean for us to partake of the Bread and the Wine?<br><br>_________________________________________________<br><br>_________________________________________________</div><div class="p-q"><b>44.</b> How can you live out Mother Teresa's words, "We can all do small things with great love"? Give an example.<br><br>_________________________________________________<br><br>_________________________________________________</div><div class="p-break"></div><h2 class="p-part-title">✅ Complete Answer Key</h2><div class="p-key-part-title">Part I — Names, Symbols, and Terms</div><div class="p-key-grid"><div class="p-key-pill">1. <b>Lord's Supper</b></div><div class="p-key-pill">2. <b>Breaking of the Bread</b></div><div class="p-key-pill">3. <b>Holy Sacrifice / Holy Mass</b></div><div class="p-key-pill">4. <b>The community</b></div><div class="p-key-pill">5. <b>Bread</b></div><div class="p-key-pill">6. <b>Wine</b></div><div class="p-key-pill">7. <b>The Word of God</b></div><div class="p-key-pill">8. <b>Unity</b></div></div><div class="p-key-part-title">Part II — Timeline</div><div class="p-key-grid"><div class="p-key-pill">9. <b>1929</b></div><div class="p-key-pill">10. <b>1937</b></div><div class="p-key-pill">11. <b>1946</b></div><div class="p-key-pill">12. <b>1948</b></div><div class="p-key-pill">13. <b>1963</b></div><div class="p-key-pill">14. <b>1979</b></div><div class="p-key-pill">15. <b>1980</b></div><div class="p-key-pill">16. <b>2016</b></div></div><div class="p-key-part-title">Part III — True or False</div><div class="p-key-grid"><div class="p-key-pill">17. <b>True</b></div><div class="p-key-pill">18. <b>False</b></div><div class="p-key-pill">19. <b>True</b></div><div class="p-key-pill">20. <b>True</b></div><div class="p-key-pill">21. <b>False</b></div><div class="p-key-pill">22. <b>True</b></div><div class="p-key-pill">23. <b>True</b></div><div class="p-key-pill">24. <b>True</b></div><div class="p-key-pill">25. <b>False</b></div><div class="p-key-pill">26. <b>False</b></div><div class="p-key-pill">27. <b>True</b></div><div class="p-key-pill">28. <b>False</b></div><div class="p-key-pill">29. <b>True</b></div><div class="p-key-pill">30. <b>True</b></div><div class="p-key-pill">31. <b>False</b></div><div class="p-key-pill">32. <b>True</b></div><div class="p-key-pill">33. <b>False</b></div><div class="p-key-pill">34. <b>True</b></div><div class="p-key-pill">35. <b>True</b></div><div class="p-key-pill">36. <b>True</b></div><div class="p-key-pill">37. <b>False</b></div><div class="p-key-pill">38. <b>True</b></div><div class="p-key-pill">39. <b>True</b></div></div><div class="p-key-part-title">Part IV — Short Answer (sample answers)</div><div class="p-q"><b>40.</b> Jesus said of the bread, "This is my body, which is for you; do this in remembrance of me," and of the cup, "This cup is the new covenant in my blood; do this, whenever you drink it, in remembrance of me."</div><div class="p-q"><b>41.</b> The Holy Eucharist, a community celebration of unity and love with Christ, in which Jesus gives His Body and Blood for us.</div><div class="p-q"><b>42.</b> Breaking the Bread, Sharing the Cup of Wine, and Proclaiming the Word of God.</div><div class="p-q"><b>43.</b> As we partake of the Bread, we are meant to be offered up, broken, and given for others. As we partake of the Wine, we commit ourselves to pouring out our lives for others.</div><div class="p-q"><b>44.</b> Answers will vary, e.g., helping a classmate, sharing food with someone in need, visiting a sick neighbor, or praying for others, all done with love.</div>
+</div>
+
+</body>
+</html>
