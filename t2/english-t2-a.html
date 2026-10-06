@@ -1,0 +1,1809 @@
+<!DOCTYPE html>
+<html lang="tl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>✉️ English: Letters &amp; Pronouns Reviewer 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --gold: #f59e0b;
+  --gold-dark: #b45309;
+  --blue: #3b82f6;
+  --blue-dark: #1d4ed8;
+  --red: #ef4444;
+  --green: #22c55e;
+  --bg: #0c1a0e;
+  --surface: #132015;
+  --surface2: #1a2e1d;
+  --text: #f0fdf4;
+  --muted: #86efac;
+  --border: #166534;
+}
+
+body {
+  font-family: 'Baloo 2', cursive;
+  background: var(--bg);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--text);
+  background-image:
+    radial-gradient(ellipse at 10% 30%, rgba(245,158,11,.06) 0%, transparent 55%),
+    radial-gradient(ellipse at 90% 70%, rgba(59,130,246,.06) 0%, transparent 55%);
+}
+
+header {
+  width: 100%;
+  background: linear-gradient(135deg, #14532d, #1e3a5f);
+  border-bottom: 2px solid var(--gold-dark);
+  padding: 13px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 4px 30px rgba(0,0,0,.5);
+}
+.header-icon { font-size: 2rem; animation: float 3s ease-in-out infinite; }
+@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
+
+header h1 {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.45rem;
+  background: linear-gradient(90deg, var(--gold), #fde68a, var(--gold));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+header .sub { font-size: .72rem; color: var(--muted); margin-top: 1px; }
+
+.header-controls { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+.score-pill {
+  background: rgba(245,158,11,.15);
+  border: 1px solid rgba(245,158,11,.4);
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-weight: 800;
+  font-size: .85rem;
+  color: var(--gold);
+}
+.audio-btn {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  background: var(--surface2);
+  color: var(--text);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all .2s;
+  display: flex; align-items: center; justify-content: center;
+}
+.audio-btn:hover, .audio-btn.active { background: #14532d; border-color: var(--gold); }
+
+.chat-wrap {
+  width: 100%; max-width: 700px; flex: 1;
+  display: flex; flex-direction: column;
+  padding: 16px 14px 0;
+}
+
+#chat-box {
+  flex: 1; overflow-y: auto;
+  display: flex; flex-direction: column;
+  gap: 14px; padding-bottom: 10px;
+  max-height: calc(100vh - 200px);
+  scroll-behavior: smooth;
+}
+#chat-box::-webkit-scrollbar { width: 4px; }
+#chat-box::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+.msg { display: flex; gap: 8px; }
+.msg.user { flex-direction: row-reverse; }
+
+.avatar {
+  width: 34px; height: 34px; border-radius: 50%;
+  font-size: 1rem; display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 2px;
+}
+.msg.bot .avatar { background: linear-gradient(135deg, #14532d, #1e3a5f); border: 1.5px solid rgba(245,158,11,.4); }
+.msg.user .avatar { background: linear-gradient(135deg, #1e3a5f, #14532d); border: 1.5px solid rgba(59,130,246,.3); }
+
+.bubble {
+  max-width: 80%;
+  padding: 11px 16px;
+  border-radius: 18px;
+  font-size: .9rem;
+  line-height: 1.65;
+  animation: pop .22s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes pop { from{transform:scale(.88) translateY(6px);opacity:0} to{transform:scale(1) translateY(0);opacity:1} }
+
+.msg.bot .bubble {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-bottom-left-radius: 5px;
+}
+.msg.user .bubble {
+  background: linear-gradient(135deg, #1e3a5f, var(--blue-dark));
+  border-bottom-right-radius: 5px;
+}
+
+/* chips */
+.chip {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: rgba(245,158,11,.12);
+  border: 1.5px solid rgba(245,158,11,.4);
+  color: var(--gold);
+  border-radius: 30px;
+  padding: 5px 13px; margin: 5px 4px 0 0;
+  font-size: .8rem; font-weight: 700;
+  cursor: pointer; transition: all .15s;
+  user-select: none; font-family: 'Baloo 2', cursive;
+}
+.chip:hover {
+  background: var(--gold-dark); color: white;
+  border-color: var(--gold);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(245,158,11,.3);
+}
+
+/* topic tag */
+.topic-tag {
+  display: inline-block;
+  background: linear-gradient(135deg, #14532d, #166534);
+  border: 1px solid var(--gold-dark);
+  color: var(--gold);
+  font-size: .68rem; font-weight: 800;
+  border-radius: 20px; padding: 2px 10px;
+  margin-bottom: 5px; letter-spacing: .5px;
+  text-transform: uppercase;
+}
+
+/* multiple choice */
+.mc-options { display: flex; flex-direction: column; gap: 7px; margin-top: 10px; width: 100%; }
+.mc-btn {
+  display: flex; align-items: center; gap: 10px;
+  background: rgba(255,255,255,.03);
+  border: 1.5px solid var(--border);
+  border-radius: 12px; padding: 9px 14px;
+  color: var(--text); font-family: 'Baloo 2', cursive;
+  font-size: .87rem; font-weight: 600;
+  cursor: pointer; transition: all .15s; text-align: left; width: 100%;
+}
+.mc-btn:hover:not(:disabled) {
+  background: rgba(245,158,11,.12); border-color: var(--gold);
+  color: var(--gold); transform: translateX(3px);
+}
+.mc-btn .letter {
+  display: flex; align-items: center; justify-content: center;
+  width: 26px; height: 26px; border-radius: 8px;
+  background: rgba(245,158,11,.15); border: 1px solid rgba(245,158,11,.35);
+  color: var(--gold); font-size: .78rem; font-weight: 800;
+  flex-shrink: 0; transition: all .15s;
+}
+.mc-btn:hover:not(:disabled) .letter { background: var(--gold-dark); color: white; border-color: var(--gold-dark); }
+.mc-btn.correct { background: rgba(34,197,94,.15)!important; border-color: #22c55e!important; color: #22c55e!important; cursor: default; }
+.mc-btn.correct .letter { background: #22c55e!important; color: white!important; border-color: #22c55e!important; }
+.mc-btn.wrong { background: rgba(239,68,68,.12)!important; border-color: #ef4444!important; color: #ef4444!important; cursor: default; }
+.mc-btn.wrong .letter { background: #ef4444!important; color: white!important; border-color: #ef4444!important; }
+.mc-btn:disabled { cursor: default; transform: none!important; }
+
+/* speaker wave */
+.speaker-wave {
+  display: inline-flex; align-items: flex-end;
+  gap: 2px; height: 14px; margin-left: 6px; vertical-align: middle;
+}
+.speaker-wave span {
+  display: block; width: 3px; border-radius: 2px;
+  background: var(--gold); animation: wave 1s ease-in-out infinite;
+}
+.speaker-wave span:nth-child(1){height:4px;animation-delay:0s}
+.speaker-wave span:nth-child(2){height:10px;animation-delay:.1s}
+.speaker-wave span:nth-child(3){height:6px;animation-delay:.2s}
+.speaker-wave span:nth-child(4){height:12px;animation-delay:.15s}
+.speaker-wave span:nth-child(5){height:4px;animation-delay:.05s}
+@keyframes wave{0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.8)}}
+
+/* typing */
+.typing {
+  display: flex; gap: 4px; padding: 12px 16px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 18px; border-bottom-left-radius: 5px; width: fit-content;
+}
+.dot { width: 7px; height: 7px; border-radius: 50%; background: var(--gold); animation: bounce .9s infinite; }
+.dot:nth-child(2){animation-delay:.15s} .dot:nth-child(3){animation-delay:.3s}
+@keyframes bounce{0%,80%,100%{transform:translateY(0);opacity:.6}40%{transform:translateY(-7px);opacity:1}}
+
+/* input bar */
+.input-bar {
+  width: 100%; max-width: 700px;
+  padding: 10px 14px 18px;
+  display: flex; gap: 8px;
+  background: var(--bg); position: sticky; bottom: 0;
+}
+#user-input {
+  flex: 1; padding: 12px 18px;
+  border: 2px solid var(--border); border-radius: 30px;
+  font-family: 'Baloo 2', cursive; font-size: .92rem;
+  outline: none; background: var(--surface); color: var(--text);
+  transition: border-color .2s, box-shadow .2s;
+}
+#user-input::placeholder { color: var(--muted); }
+#user-input:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(245,158,11,.12); }
+
+#send-btn {
+  width: 48px; height: 48px; border-radius: 50%; border: none;
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  color: white; font-size: 1.1rem; cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 3px 14px rgba(245,158,11,.4); flex-shrink: 0;
+}
+#send-btn:hover { transform: scale(1.08); box-shadow: 0 5px 20px rgba(245,158,11,.55); }
+#send-btn:disabled { opacity: .5; transform: none; }
+
+/* result modal */
+.result-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.75); backdrop-filter: blur(6px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 100; opacity: 0; pointer-events: none; transition: opacity .3s;
+}
+.result-overlay.show { opacity: 1; pointer-events: all; }
+.result-card {
+  background: linear-gradient(135deg, #132015, #0c1a0e);
+  border: 2px solid var(--gold-dark);
+  border-radius: 24px; padding: 36px 40px;
+  text-align: center; max-width: 380px; width: 90%;
+  box-shadow: 0 20px 60px rgba(0,0,0,.6);
+  transform: scale(.9); transition: transform .3s cubic-bezier(.34,1.56,.64,1);
+}
+.result-overlay.show .result-card { transform: scale(1); }
+.result-emoji { font-size: 4rem; margin-bottom: 12px; display: block; }
+.result-title {
+  font-family: 'Fredoka One', cursive; font-size: 1.7rem; margin-bottom: 6px;
+  background: linear-gradient(90deg, var(--gold), #fde68a);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.result-score { font-size: 3rem; font-weight: 900; margin: 10px 0; color: white; }
+.result-msg { color: var(--muted); font-size: .9rem; margin-bottom: 22px; }
+.result-btn {
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  border: none; border-radius: 30px; padding: 12px 30px;
+  color: white; font-family: 'Baloo 2', cursive; font-weight: 800;
+  font-size: 1rem; cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+  box-shadow: 0 4px 16px rgba(245,158,11,.35);
+}
+.result-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 22px rgba(245,158,11,.5); }
+
+/* scenario card for identify questions */
+.scenario-card {
+  background: rgba(245,158,11,.07);
+  border: 1px solid rgba(245,158,11,.25);
+  border-radius: 12px; padding: 10px 14px;
+  margin: 8px 0 6px; font-style: italic;
+  font-size: .87rem; color: #fde68a; line-height: 1.5;
+}
+
+/* ── Notes Panel ─────────────────────────────────────────────── */
+.notes-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.78); backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 200; opacity: 0; pointer-events: none; transition: opacity .3s;
+}
+.notes-overlay.show { opacity: 1; pointer-events: all; }
+.notes-panel {
+  background: linear-gradient(160deg, #0c1a0e, #132015);
+  border: 2px solid var(--gold-dark);
+  border-radius: 20px;
+  width: 92%; max-width: 720px;
+  max-height: 88vh;
+  display: flex; flex-direction: column;
+  box-shadow: 0 24px 60px rgba(0,0,0,.7);
+  overflow: hidden;
+  transform: translateY(30px);
+  transition: transform .35s cubic-bezier(.34,1.2,.64,1);
+}
+.notes-overlay.show .notes-panel { transform: translateY(0); }
+.notes-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 22px; border-bottom: 1px solid var(--border);
+  background: linear-gradient(135deg, #14532d44, #1e3a5f44);
+}
+.notes-header h2 { font-family: 'Fredoka One', cursive; font-size: 1.3rem; color: var(--gold); }
+.notes-close {
+  width: 34px; height: 34px; border-radius: 50%;
+  border: 1.5px solid var(--border); background: var(--surface2);
+  color: var(--text); font-size: 1rem; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; transition: all .2s;
+}
+.notes-close:hover { background: #b91c1c; border-color: #ef4444; }
+.notes-body { overflow-y: auto; padding: 20px 22px; flex: 1; }
+.notes-body::-webkit-scrollbar { width: 4px; }
+.notes-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+.notes-topic { margin-bottom: 28px; }
+.notes-topic-title {
+  font-family: 'Fredoka One', cursive; font-size: 1.05rem;
+  color: var(--gold); margin-bottom: 10px;
+  padding-bottom: 6px; border-bottom: 1px solid var(--border);
+}
+.notes-item {
+  display: flex; gap: 10px; align-items: flex-start;
+  padding: 7px 0; border-bottom: 1px solid rgba(255,255,255,.04);
+  font-size: .87rem; line-height: 1.55;
+}
+.notes-item:last-child { border-bottom: none; }
+.notes-term { font-weight: 800; color: var(--gold); min-width: 150px; flex-shrink: 0; font-size: .84rem; }
+.notes-def { color: #d1fae5; }
+.notes-tabs {
+  display: flex; flex-wrap: wrap; gap: 8px; padding: 14px 22px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(0,0,0,.15);
+}
+.notes-tab {
+  padding: 12px 20px; border-radius: 10px;
+  border: 1.5px solid var(--border); 
+  background: rgba(255,255,255,.04); color: var(--muted);
+  font-family: 'Baloo 2', cursive; font-size: .9rem; font-weight: 700;
+  cursor: pointer; transition: all .15s; white-space: nowrap;
+  min-height: 48px; display: flex; align-items: center;
+}
+.notes-tab.active { background: var(--surface); color: var(--gold); border-color: var(--gold-dark); }
+.notes-tab:hover:not(.active) { color: var(--text); background: var(--surface2); }
+.notes-section { display: none; }
+.notes-section.active { display: block; }
+
+
+/* ── Print button in notes header ─────────────────────────────── */
+.notes-header-actions { display: flex; align-items: center; gap: 10px; }
+.print-btn {
+  display: flex; align-items: center; gap: 6px;
+  background: rgba(245,158,11,.12);
+  border: 1.5px solid rgba(245,158,11,.4);
+  color: var(--gold);
+  border-radius: 20px;
+  padding: 7px 14px;
+  font-family: 'Baloo 2', cursive;
+  font-size: .78rem;
+  font-weight: 800;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all .15s;
+}
+.print-btn:hover { background: var(--gold); color: #0c1a0e; border-color: var(--gold); }
+.print-btn.active { background: var(--gold); color: #0c1a0e; border-color: var(--gold); }
+
+/* ── On-screen Practice Test / Answer Key ─────────────────────── */
+.ptest-part-title {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1rem;
+  color: var(--gold);
+  margin: 22px 0 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+.ptest-part-title:first-child { margin-top: 0; }
+.ptest-q {
+  font-size: .87rem;
+  line-height: 1.6;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed rgba(255,255,255,.06);
+  color: #d1fae5;
+}
+.ptest-q b { color: var(--gold); }
+.ptest-q .opt { display: block; margin: 2px 0 2px 18px; color: #d1fae5; }
+.ptest-bank {
+  background: rgba(59,130,246,.08);
+  border: 1px solid rgba(59,130,246,.3);
+  border-radius: 10px;
+  padding: 10px 16px;
+  margin-bottom: 14px;
+  font-size: .82rem;
+  color: #dbeafe;
+  line-height: 1.6;
+}
+.key-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.key-pill {
+  background: rgba(245,158,11,.1);
+  border: 1px solid rgba(245,158,11,.25);
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: .78rem;
+  color: #fde68a;
+}
+.key-pill b { color: #34d399; }
+
+/* ── Print / Save-as-PDF styles ──────────────────────────────────
+   By default everything is hidden from print. When body carries
+   .printing-test, only #print-area (a light-themed clone of the
+   Practice Test + Answer Key) is shown, laid out for paper. ──── */
+@media print {
+  body * { visibility: hidden; }
+  #print-area, #print-area * { visibility: visible; }
+  #print-area {
+    display: block !important;
+    position: absolute; top: 0; left: 0; width: 100%;
+    background: #fff; color: #14290f;
+    font-family: 'Helvetica', Arial, sans-serif;
+    font-size: 10.5pt;
+    line-height: 1.5;
+  }
+  #print-area .p-cover { text-align: center; padding-top: 40px; }
+  #print-area .p-cover .p-icon { font-size: 34pt; }
+  #print-area .p-cover h1 { font-size: 19pt; color: #b45309; margin: 8px 0 4px; }
+  #print-area .p-cover .p-sub { font-size: 10.5pt; color: #166534; margin-bottom: 20px; }
+  #print-area .p-info-box {
+    border: 1.5px solid #fcd34d; border-radius: 10px;
+    max-width: 460px; margin: 0 auto 20px; padding: 14px 20px;
+    text-align: left; font-size: 10pt;
+  }
+  #print-area .p-info-box div { margin: 6px 0; border-bottom: 1px dotted #fde68a; padding-bottom: 6px; }
+  #print-area .p-instructions {
+    max-width: 460px; margin: 0 auto; text-align: left;
+    background: #fffbeb; border: 1px solid #fcd34d; border-radius: 10px;
+    padding: 12px 18px; font-size: 9.5pt; color: #78350f;
+  }
+  #print-area h2.p-part-title {
+    font-size: 12.5pt; color: #fff;
+    background: linear-gradient(135deg, #b45309, #14532d) !important;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    padding: 6px 12px; border-radius: 7px; margin: 18px 0 10px;
+    page-break-after: avoid;
+  }
+  #print-area .p-bank {
+    background: #f0fdf4 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    border: 1px solid #86efac; border-radius: 8px; padding: 8px 14px;
+    margin-bottom: 12px; font-size: 9.5pt; color: #14532d;
+  }
+  #print-area .p-q {
+    margin-bottom: 8px; padding-bottom: 8px;
+    border-bottom: 1px dotted #fde68a; font-size: 10pt;
+    page-break-inside: avoid; color: #14290f;
+  }
+  #print-area .p-q b { color: #b45309; }
+  #print-area .p-q .p-blank { display: inline-block; min-width: 65px; border-bottom: 1px solid #64748b; }
+  #print-area .p-q .p-opt { display: block; margin: 2px 0 0 20px; color: #365314; }
+  #print-area .p-break { page-break-before: always; }
+  #print-area .p-key-part-title {
+    font-size: 11pt; color: #b45309; font-weight: bold;
+    margin: 14px 0 8px; border-bottom: 2px solid #b45309; padding-bottom: 4px;
+  }
+  #print-area .p-key-grid {
+    display: grid; grid-template-columns: repeat(5, 1fr);
+    gap: 5px 8px; margin-bottom: 14px;
+  }
+  #print-area .p-key-pill {
+    background: #f0fdf4 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    border: 1px solid #86efac; border-radius: 6px;
+    padding: 4px 8px; font-size: 8.5pt; color: #166534;
+  }
+  #print-area .p-key-pill b { color: #b45309; }
+  @page { size: letter; margin: 1.5cm 1.8cm; }
+}
+#print-area { display: none; }
+
+
+/* ── Chapter Summary / Tandaan / Memory boxes (fix: previously missing) ── */
+.chapter-summary {
+  background: linear-gradient(135deg, rgba(59,130,246,.1), rgba(34,197,94,.08));
+  border: 1px solid rgba(59,130,246,.25);
+  border-left: 4px solid var(--blue);
+  border-radius: 12px;
+  padding: 14px 18px;
+  margin-bottom: 18px;
+  font-size: .88rem;
+  line-height: 1.65;
+  color: #dbeafe;
+}
+.tandaan-box {
+  background: rgba(245,158,11,.08);
+  border: 1px solid rgba(245,158,11,.3);
+  border-left: 4px solid var(--gold);
+  border-radius: 12px;
+  padding: 12px 18px;
+  margin: 14px 0;
+  font-size: .86rem;
+  line-height: 1.6;
+  color: #fde68a;
+}
+.tandaan-label {
+  display: block;
+  font-family: 'Baloo 2', cursive;
+  font-size: .8rem;
+  color: var(--gold);
+  letter-spacing: .5px;
+  margin-bottom: 5px;
+}
+.memory-box {
+  background: rgba(34,197,94,.08);
+  border: 1px solid rgba(34,197,94,.3);
+  border-left: 4px solid var(--green);
+  border-radius: 12px;
+  padding: 12px 18px;
+  margin: 14px 0 22px;
+  font-size: .86rem;
+  line-height: 1.6;
+  color: #bbf7d0;
+}
+.memory-label {
+  display: block;
+  font-family: 'Baloo 2', cursive;
+  font-size: .8rem;
+  color: var(--green);
+  letter-spacing: .5px;
+  margin-bottom: 5px;
+}
+.compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0 20px;
+  font-size: .82rem;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.compare-table th {
+  background: linear-gradient(135deg, var(--blue-dark), var(--gold-dark));
+  color: white;
+  text-align: left;
+  padding: 9px 12px;
+  font-size: .78rem;
+  text-transform: uppercase;
+  letter-spacing: .4px;
+}
+.compare-table td {
+  padding: 9px 12px;
+  border-top: 1px solid var(--border);
+  color: var(--text);
+  vertical-align: top;
+}
+.compare-table tr:nth-child(even) td { background: rgba(255,255,255,.02); }
+
+/* ── Story Box (for reading Bible stories aloud) ─────────────────── */
+.story-box {
+  background: rgba(255,255,255,.03);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px 20px;
+  margin-bottom: 16px;
+  font-size: .92rem;
+  line-height: 1.8;
+  color: var(--text);
+}
+.story-box p { margin-bottom: 10px; }
+.story-box p:last-child { margin-bottom: 0; }
+.story-ref {
+  display: block;
+  text-align: right;
+  font-style: italic;
+  color: var(--muted);
+  font-size: .8rem;
+  margin-top: 10px;
+}
+.story-label {
+  display: block;
+  font-family: 'Baloo 2', cursive;
+  font-size: .9rem;
+  color: var(--gold);
+  letter-spacing: .5px;
+  margin-bottom: 10px;
+}
+/* ── Raw Notes (original document view) ──────────────────────── */
+.rawnotes-intro {
+  font-size: .82rem;
+  color: var(--muted);
+  line-height: 1.6;
+  background: rgba(59,130,246,.1);
+  border: 1px solid rgba(59,130,246,.3);
+  border-left: 4px solid var(--blue);
+  border-radius: 10px;
+  padding: 12px 18px;
+  margin-bottom: 20px;
+}
+.rawnotes-doc {
+  font-family: 'Lora', Georgia, serif;
+  line-height: 1.75;
+}
+.rawnotes-doc p {
+  font-size: .95rem;
+  margin-bottom: 14px;
+  color: #e2f5e6;
+}
+.rawnotes-doc strong { color: var(--gold); font-weight: 700; }
+.rawnotes-doc em { color: var(--muted); font-style: italic; }
+.rawnotes-doc h3.doc-heading {
+  font-family: 'Baloo 2', cursive;
+  font-size: 1.05rem;
+  color: var(--gold);
+  margin: 26px 0 12px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid var(--border);
+}
+.rawnotes-doc h3.doc-heading:first-child { margin-top: 0; }
+.rawnotes-doc ul, .rawnotes-doc ol {
+  margin: 0 0 14px 26px;
+  color: #e2f5e6;
+}
+.rawnotes-doc li { margin-bottom: 6px; font-size: .95rem; }
+.rawnotes-doc table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0 20px;
+  font-size: .82rem;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.rawnotes-doc th {
+  background: linear-gradient(135deg, var(--blue-dark), var(--gold-dark));
+  color: white;
+  text-align: left;
+  padding: 9px 12px;
+  font-size: .78rem;
+}
+.rawnotes-doc td {
+  padding: 9px 12px;
+  border-top: 1px solid var(--border);
+  color: var(--text);
+  vertical-align: top;
+}
+.rawnotes-doc tr:nth-child(even) td { background: rgba(255,255,255,.02); }
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE: TABLET (≤820px)
+   ═══════════════════════════════════════════════════════════════ */
+@media (max-width: 820px) {
+  .notes-panel { width: 95%; max-height: 92vh; }
+  .notes-tabs { padding: 12px 16px; gap: 6px; }
+  .notes-tab { padding: 10px 14px; font-size: .82rem; min-height: 42px; }
+  .notes-body { padding: 16px; }
+  .notes-header { padding: 14px 16px; }
+  .chat-wrap { padding: 14px 10px 0; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE: MOBILE (≤600px)
+   ═══════════════════════════════════════════════════════════════ */
+@media (max-width: 600px) {
+  header {
+    padding: 10px 12px;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .header-icon { font-size: 1.5rem; }
+  header h1 { font-size: 1.05rem; line-height: 1.2; }
+  header .sub { font-size: .62rem; }
+  .header-controls { gap: 6px; margin-left: auto; }
+  .score-pill { padding: 4px 10px; font-size: .74rem; }
+  .audio-btn { width: 32px; height: 32px; font-size: .85rem; }
+
+  .chat-wrap { padding: 10px 6px 0; }
+  #chat-box { gap: 12px; }
+  .bubble { max-width: 88%; font-size: .88rem; padding: 10px 13px; }
+  .avatar { width: 30px; height: 30px; font-size: .85rem; }
+
+  .chip { font-size: .78rem; padding: 7px 12px; }
+  .mc-btn { font-size: .84rem; padding: 10px 12px; }
+  .mc-btn .letter { width: 22px; height: 22px; font-size: .74rem; }
+  .topic-tag { font-size: .68rem; }
+  .scenario-card { font-size: .88rem; padding: 10px 14px; }
+
+  .input-bar { padding: 8px 8px calc(8px + env(safe-area-inset-bottom)); gap: 8px; }
+  #user-input { font-size: .88rem; padding: 10px 14px; }
+  #send-btn { width: 40px; height: 40px; font-size: 1rem; }
+
+  .result-card { width: 92%; padding: 26px 20px; }
+  .result-emoji { font-size: 2.6rem; }
+  .result-title { font-size: 1.2rem; }
+  .result-score { font-size: 1.8rem; }
+
+  /* ── Notes panel: near-full-screen on phones ── */
+  .notes-overlay { align-items: flex-end; }
+  .notes-panel {
+    width: 100%; max-width: 100%;
+    max-height: 94vh;
+    border-radius: 20px 20px 0 0;
+    border-left: none; border-right: none; border-bottom: none;
+  }
+  .notes-header { padding: 12px 14px; flex-wrap: wrap; gap: 8px; }
+  .notes-header h2 { font-size: 1.05rem; flex: 1 1 100%; }
+  .notes-header-actions { flex-wrap: wrap; gap: 6px; width: 100%; justify-content: flex-start; }
+  .print-btn { font-size: .7rem; padding: 6px 11px; }
+  .notes-close { width: 30px; height: 30px; font-size: .9rem; margin-left: auto; }
+
+  .notes-tabs { padding: 10px 12px; gap: 5px; }
+  .notes-tab { padding: 8px 12px; font-size: .76rem; min-height: 38px; }
+  .notes-body { padding: 14px; }
+
+  .notes-item { flex-direction: column; gap: 2px; }
+  .notes-term { min-width: 0; font-size: .82rem; }
+  .notes-def { font-size: .84rem; }
+  .notes-topic-title { font-size: .95rem; }
+  .chapter-summary, .memory-box, .tandaan-box, .story-box, .verse-card { font-size: .82rem; padding: 12px 14px; }
+
+  /* ── Tables: allow horizontal scroll instead of squeezing ── */
+  .compare-table { display: block; overflow-x: auto; white-space: nowrap; }
+  .compare-table th, .compare-table td { white-space: normal; min-width: 110px; }
+
+  .key-grid { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 5px; }
+  .key-pill { font-size: .72rem; padding: 5px 8px; }
+  .ptest-part-title { font-size: .92rem; }
+  .ptest-q { font-size: .82rem; }
+  .ptest-bank { font-size: .78rem; padding: 8px 12px; }
+
+  .rawnotes-doc p, .rawnotes-doc li { font-size: .87rem; }
+  .rawnotes-doc h3.doc-heading { font-size: .95rem; }
+  .rawnotes-doc table { display: block; overflow-x: auto; white-space: nowrap; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE: VERY SMALL PHONES (≤380px)
+   ═══════════════════════════════════════════════════════════════ */
+@media (max-width: 380px) {
+  header h1 { font-size: .92rem; }
+  header .sub { display: none; }
+  .score-pill span { font-size: .7rem; }
+  .bubble { max-width: 92%; font-size: .84rem; }
+  .notes-tab { font-size: .7rem; padding: 7px 10px; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE: LANDSCAPE PHONES (short height)
+   ═══════════════════════════════════════════════════════════════ */
+@media (max-height: 480px) and (orientation: landscape) {
+  .notes-panel { max-height: 98vh; }
+  .notes-tabs { padding: 6px 12px; }
+  .notes-tab { min-height: 32px; padding: 6px 10px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-icon">✉️</div>
+  <div>
+    <h1>Letters &amp; Pronouns</h1>
+    <div class="sub">Parts of a Letter · Personal Pronouns and Case · Indefinite Pronouns</div>
+  </div>
+  <div class="header-controls">
+    <div class="score-pill">⭐ <span id="score-val">0</span> / <span id="total-val">0</span></div>
+    <button class="audio-btn" id="notes-toggle" title="Open Reviewer" onclick="document.getElementById('notes-overlay').classList.add('show')">📖</button>
+    <button class="audio-btn active" id="audio-toggle" title="Toggle Audio">🔊</button>
+  </div>
+</header>
+
+<div class="chat-wrap">
+  <div id="chat-box"></div>
+</div>
+
+<div class="input-bar">
+  <input type="text" id="user-input" placeholder="Type your answer here…" autocomplete="off" />
+  <button id="send-btn">➤</button>
+</div>
+
+<div class="result-overlay" id="result-overlay">
+  <div class="result-card">
+    <span class="result-emoji" id="res-emoji">🏆</span>
+    <div class="result-title">Quiz Complete!</div>
+    <div class="result-score"><span id="res-score">0</span>/<span id="res-total">0</span></div>
+    <div class="result-msg" id="res-msg">Great job!</div>
+    <button class="result-btn" onclick="restartApp()">🔄 Maglaro Ulit</button>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+// QUESTION BANK
+// ═══════════════════════════════════════════════════════════════
+const topics = {
+
+  "Parts of a Letter": [
+    { q: "What is a letter?", a: "A handwritten message by a sender to a receiver", hint: "It goes from one person to another." },
+    { q: "Before texting, chats, and emails, how did most people communicate?", a: "Through writing letters", hint: "Handwritten messages." },
+    { q: "Name some purposes of writing a letter.", a: "To make a request, say thanks or an apology, inquire about something, file a complaint, or simply connect with each other", hint: "Many different reasons." },
+    { q: "What are the five basic parts of a letter?", a: "Heading, greeting, body, closing, and signature", hint: "From top to bottom of the letter." },
+    { q: "What does the heading of a letter tell?", a: "The date when the sender wrote the letter; it may also include the place where it was written", hint: "It answers \"when?\"" },
+    { q: "What does the greeting of a letter do?", a: "It mentions the name of the receiver; it starts with \"Dear\" and ends with a comma", hint: "It begins with a polite word." },
+    { q: "What does the body of a letter contain?", a: "The message", hint: "The main part." },
+    { q: "What does the closing of a letter do?", a: "It signals the end of the letter and ends with a comma", hint: "For example, \"Sincerely,\"." },
+    { q: "What does the signature of a letter show?", a: "The handwritten name of the sender", hint: "It comes last." },
+    { q: "Why did Sonia's grandmother write to her?", a: "To ask how she was doing, since they lived far away from each other", hint: "They could not talk face to face." },
+  ],
+
+  "Personal Pronouns and Case": [
+    { q: "What is a pronoun?", a: "A word used to replace a noun", hint: "It takes the place of a name." },
+    { q: "Why do we use pronouns?", a: "So we do not use the same nouns over and over in a sentence", hint: "It avoids repetition." },
+    { q: "What do personal pronouns refer to?", a: "Persons, animals, or things", hint: "Three kinds of things." },
+    { q: "What does the case of a pronoun deal with?", a: "How the pronoun is used in a sentence", hint: "Its job in the sentence." },
+    { q: "What are the two cases of personal pronouns in this lesson?", a: "Subject and object", hint: "Doing or receiving the action." },
+    { q: "When is a pronoun in the subject case?", a: "When the pronoun is doing the action", hint: "It performs the verb." },
+    { q: "When is a pronoun in the object case?", a: "When the action is done to the pronoun", hint: "It receives the action." },
+    { q: "How can you tell if a pronoun acts as an object?", a: "Look for the action verb that acts upon it", hint: "Find the verb first." },
+    { q: "In \"The father asked one of them to bring him a bundle of sticks,\" which pronouns are objects?", a: "them and him", hint: "Both receive an action." },
+    { q: "In \"They broke the sticks very easily,\" is \"They\" a subject or an object?", a: "Subject", hint: "Who did the breaking?" },
+    { q: "In \"Cassie's mother brought her a bag,\" is \"her\" a subject or an object?", a: "Object", hint: "Who received the bag?" },
+    { q: "In \"Nello only says good things about you,\" is \"you\" a subject or an object?", a: "Object", hint: "It follows the word \"about.\"" },
+  ],
+
+  "Indefinite Pronouns": [
+    { q: "What are indefinite pronouns?", a: "Pronouns that do not identify clearly what they are referring to", hint: "They are not specific." },
+    { q: "What are indefinite pronouns used for?", a: "General subjects in a sentence, or those that are not specified", hint: "Not a particular person or thing." },
+    { q: "Name five indefinite pronouns from the lesson.", a: "all, another, any, anybody, anyone, anything, each, everybody, everyone, everything, few, many, nobody, none, several, some, somebody, someone, something (any five)", hint: "Many end in -body, -one, or -thing." },
+    { q: "How do personal pronouns differ from indefinite pronouns?", a: "Personal pronouns replace specific persons, animals, or things; indefinite pronouns do not specify what they refer to", hint: "Specific versus general." },
+    { q: "In \"Everyone is required to be on time,\" what is the indefinite pronoun?", a: "Everyone", hint: "It refers to people in general." },
+    { q: "In \"Nobody believed that he was the son of the president,\" what is the indefinite pronoun?", a: "Nobody", hint: "It refers to no one in particular." },
+    { q: "In \"Some boys stayed after class to clean the classroom,\" what is the indefinite pronoun?", a: "Some", hint: "It tells an unspecified number." },
+    { q: "In \"I will eat anything when I am hungry,\" what is the indefinite pronoun?", a: "anything", hint: "Not one specific food." },
+  ],
+
+};
+
+// ── TRUE OR FALSE ────────────────────────────────────────────────────────────
+const trueOrFalse = [
+  { q: "A letter is a handwritten message by a sender to a receiver.", a: "true" },
+  { q: "The greeting of a letter ends with a period.", a: "false" },
+  { q: "The greeting of a letter starts with \"Dear.\"", a: "true" },
+  { q: "The heading of a letter tells the date when the sender wrote it.", a: "true" },
+  { q: "The signature shows the typed name of the sender.", a: "false" },
+  { q: "The closing signals the end of the letter and ends with a comma.", a: "true" },
+  { q: "The body of a letter contains the message.", a: "true" },
+  { q: "Pronouns are words used to replace a noun.", a: "true" },
+  { q: "Personal pronouns refer to persons, animals, or things.", a: "true" },
+  { q: "The case of a pronoun deals with how the pronoun is spelled.", a: "false" },
+  { q: "A subject pronoun is doing the action in a sentence.", a: "true" },
+  { q: "An object pronoun is the one doing the action.", a: "false" },
+  { q: "In \"Cassie's mother brought her a bag,\" the pronoun \"her\" is an object.", a: "true" },
+  { q: "In \"They are going to watch a movie tonight,\" the pronoun \"They\" is an object.", a: "false" },
+  { q: "Indefinite pronouns identify clearly what they are referring to.", a: "false" },
+  { q: "\"Everyone\" is an indefinite pronoun.", a: "true" },
+  { q: "\"Nobody\" is a personal pronoun.", a: "false" },
+  { q: "\"Some\" and \"none\" are indefinite pronouns.", a: "true" },
+  { q: "\"We\" is an object pronoun.", a: "false" },
+  { q: "In \"Winning the championship game is the best prize for us,\" the pronoun \"us\" is an object.", a: "true" },
+];
+
+// ── IDENTIFY: LETTER PARTS · SUBJECT/OBJECT · PRONOUN FIT · INDEFINITE ──────
+const identifyQuestions = [
+  { q: "Tells the date when the sender wrote the letter.", a: "Heading", choices: ["Heading","Greeting","Closing","Signature"] },
+  { q: "Mentions the name of the receiver; starts with \"Dear\" and ends with a comma.", a: "Greeting", choices: ["Greeting","Heading","Body","Closing"] },
+  { q: "Contains the message of the letter.", a: "Body", choices: ["Body","Heading","Greeting","Signature"] },
+  { q: "Signals the end of the letter and ends with a comma.", a: "Closing", choices: ["Closing","Body","Greeting","Signature"] },
+  { q: "Shows the handwritten name of the sender.", a: "Signature", choices: ["Signature","Closing","Heading","Body"] },
+  { q: "\"They are going to watch a movie tonight.\" The pronoun \"They\" is used as a:", a: "Subject", choices: ["Subject","Object"] },
+  { q: "\"Cassie's mother brought her a bag on this special day.\" The pronoun \"her\" is used as a:", a: "Object", choices: ["Object","Subject"] },
+  { q: "\"A while ago, it was not yet raining.\" The pronoun \"it\" is used as a:", a: "Subject", choices: ["Subject","Object"] },
+  { q: "\"At the end of the day, only you have the authority to decide.\" The pronoun \"you\" is used as a:", a: "Subject", choices: ["Subject","Object"] },
+  { q: "\"Nello only says good things about you.\" The pronoun \"you\" is used as a:", a: "Object", choices: ["Object","Subject"] },
+  { q: "Aunt Emy is going soon. Please wish ____ to have a safe trip.", a: "her", choices: ["her","it"] },
+  { q: "____ work well as a team.", a: "They", choices: ["They","Them"] },
+  { q: "Did you hear an update if ____ was selected as the captain of the team?", a: "I", choices: ["I","you"] },
+  { q: "The teacher told ____ to get ready for a quiz.", a: "them", choices: ["them","we"] },
+  { q: "Winning the championship game is the best prize for ____.", a: "us", choices: ["us","we"] },
+  { q: "Which word is the indefinite pronoun? \"We had our trip last summer in Davao and everyone enjoyed it.\"", a: "everyone", choices: ["everyone","We","our","it"] },
+  { q: "Which word is the indefinite pronoun? \"Because of what happened, many are unwilling to follow her.\"", a: "many", choices: ["many","her","what","unwilling"] },
+  { q: "Which word is the indefinite pronoun? \"Ms. Constantino asked someone to go to the office.\"", a: "someone", choices: ["someone","Constantino","office","asked"] },
+  { q: "Which word is the indefinite pronoun? \"Only a few got low scores.\"", a: "a few", choices: ["a few","Only","low","scores"] },
+  { q: "Which word is the indefinite pronoun? \"Anything can happen when you believe.\"", a: "Anything", choices: ["Anything","you","happen","believe"] },
+  { q: "Which word is the indefinite pronoun? \"Nobody found the missing dog.\"", a: "Nobody", choices: ["Nobody","found","missing","dog"] },
+  { q: "Which word is the indefinite pronoun? \"Omar wondered if something was wrong with the internet connection.\"", a: "something", choices: ["something","Omar","wrong","connection"] },
+  { q: "Which word is the indefinite pronoun? \"Martina asked me to tell everybody that she would be ready soon.\"", a: "everybody", choices: ["everybody","me","she","Martina"] },
+];
+
+// ═══════════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════════
+let state = {
+  awaiting: 'menu',
+  mode: null,
+  questions: [],
+  allAnswers: [],
+  qIndex: 0,
+  score: 0,
+  total: 0,
+  hintUsed: false,
+  audioEnabled: true,
+};
+
+// ═══════════════════════════════════════════════════════════════
+// TTS (UPGRADED FOR TRUE FILIPINO ACCENT)
+// ═══════════════════════════════════════════════════════════════
+let currentAudioStream = null;
+
+function speak(text) {
+  if (!state.audioEnabled) return;
+  
+  // Linisin ang mga nakaraang audio task
+  window.speechSynthesis.cancel();
+  if (currentAudioStream) {
+    currentAudioStream.pause();
+    currentAudioStream = null;
+  }
+  
+  // Tanggalin ang HTML tags at emojis para hindi basahin nang paputol-putol
+  const clean = text.replace(/<[^>]+>/g,'').replace(/[🇵🇭🌟✅❌💡⏭️🏆😊💪🔄🔲📚👋⭐✕🧭📏🗺️]/g,'');
+  
+  // PRIMARY METHOD: Google Translation Engine cloud voice stream (May natural na Filipino accent)
+  const googleTtsUrl = `https://translate.google.com/translate_tts?ie=UTF-8&tl=tl&client=tw-ob&q=${encodeURIComponent(clean)}`;
+  
+  currentAudioStream = new Audio(googleTtsUrl);
+  currentAudioStream.onplaying = () => showWave(true);
+  currentAudioStream.onended = currentAudioStream.onerror = () => showWave(false);
+  
+  currentAudioStream.play().catch(err => {
+    // BACKUP METHOD: Web Speech API (works even without internet)
+    console.warn("Google TTS blocked or offline. Falling back to local system speech engine.");
+    
+    const streamFallback = new SpeechSynthesisUtterance(clean);
+    streamFallback.lang = 'fil-PH';
+    streamFallback.rate = 0.95; streamFallback.pitch = 1.05; streamFallback.volume = 1;
+    
+    const voices = window.speechSynthesis.getVoices();
+    const filVoice = voices.find(v => v.lang.startsWith('fil') || v.lang.startsWith('tl'));
+    const engVoice = voices.find(v => v.lang.startsWith('en') && v.name.toLowerCase().includes('female'))
+                   || voices.find(v => v.lang.startsWith('en'));
+              
+    if (filVoice) {
+      streamFallback.voice = filVoice;
+    } else if (engVoice) {
+      streamFallback.voice = engVoice; 
+      streamFallback.lang = 'en-US'; 
+    }
+    
+    streamFallback.onstart = () => showWave(true);
+    streamFallback.onend = streamFallback.onerror = () => showWave(false);
+    window.speechSynthesis.speak(streamFallback);
+  });
+}
+
+function showWave(on) {
+  document.querySelectorAll('.speaker-wave').forEach(w => w.style.display = on ? 'inline-flex' : 'none');
+}
+
+// I-initialize ang mga boses ng system
+let localSystemVoices = [];
+function lookupSystemVoices() {
+  localSystemVoices = window.speechSynthesis.getVoices();
+}
+lookupSystemVoices();
+if (window.speechSynthesis.onvoiceschanged !== undefined) {
+  window.speechSynthesis.onvoiceschanged = lookupSystemVoices;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// UI HELPERS
+// ═══════════════════════════════════════════════════════════════
+const chatBox = document.getElementById('chat-box');
+const input = document.getElementById('user-input');
+const sendBtn = document.getElementById('send-btn');
+
+function scrollBottom() { chatBox.scrollTop = chatBox.scrollHeight; }
+
+function addMessage(role, html, speakText) {
+  const div = document.createElement('div');
+  div.className = `msg ${role}`;
+  const av = document.createElement('div');
+  av.className = 'avatar';
+  av.textContent = role === 'bot' ? '🤖' : '🧑';
+  const bub = document.createElement('div');
+  bub.className = 'bubble';
+  bub.innerHTML = role === 'bot'
+    ? html + '<span class="speaker-wave" style="display:none"><span></span><span></span><span></span><span></span><span></span></span>'
+    : html;
+  div.appendChild(av); div.appendChild(bub);
+  chatBox.appendChild(div);
+  scrollBottom(); bindChips();
+  if (role === 'bot') {
+    const txt = speakText || html.replace(/<[^>]+>/g,' ');
+    setTimeout(() => speak(txt), 350);
+  }
+}
+
+function addTyping() {
+  const d = document.createElement('div');
+  d.className = 'msg bot'; d.id = 'typing';
+  d.innerHTML = '<div class="avatar">🤖</div><div class="typing"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>';
+  chatBox.appendChild(d); scrollBottom();
+}
+function removeTyping() { const t = document.getElementById('typing'); if(t) t.remove(); }
+
+function bindChips() {
+  document.querySelectorAll('.chip:not([data-bound])').forEach(c => {
+    c.dataset.bound = '1';
+    c.addEventListener('click', () => handleUserMessage(c.dataset.val));
+  });
+}
+
+function updateScore() {
+  document.getElementById('score-val').textContent = state.score;
+  document.getElementById('total-val').textContent = state.total;
+}
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length-1; i > 0; i--) {
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]] = [a[j],a[i]];
+  }
+  return a;
+}
+
+function normalize(s) { return s.toLowerCase().trim().replace(/\s+/g,' '); }
+
+function checkAnswer(user, correct) {
+  const u = normalize(user), c = normalize(correct);
+  if (u === c) return true;
+  if (c.includes(u) && u.length > 5) return true;
+  const parts = c.split(/[,;\/]/);
+  for (const p of parts) if (u.includes(p.trim()) && p.trim().length > 4) return true;
+  return false;
+}
+
+function showResult() {
+  const pct = Math.round((state.score/state.total)*100);
+  const emoji = pct>=90?'🏆':pct>=70?'🌟':pct>=50?'😊':'💪';
+  const msg = pct>=90?'Excellent! You know it all!':pct>=70?'Great job! Keep it up!':pct>=50?'Good! Study a little more!':"Don't give up! Try again!";
+  document.getElementById('res-emoji').textContent = emoji;
+  document.getElementById('res-score').textContent = state.score;
+  document.getElementById('res-total').textContent = state.total;
+  document.getElementById('res-msg').textContent = msg;
+  document.getElementById('result-overlay').classList.add('show');
+  speak(`All done! Your score is ${state.score} out of ${state.total}. ${msg}`);
+}
+
+function restartApp() {
+  document.getElementById('result-overlay').classList.remove('show');
+  state = { awaiting:'menu', mode:null, questions:[], allAnswers:[], qIndex:0, score:0, total:0, hintUsed:false, audioEnabled:state.audioEnabled };
+  chatBox.innerHTML = '';
+  document.querySelector('.input-bar').style.display = 'flex';
+  updateScore();
+  showMenu();
+}
+
+// ═══════════════════════════════════════════════════════════════
+// MC HELPERS
+// ═══════════════════════════════════════════════════════════════
+function getAllAnswers() {
+  const ans = [];
+  for (const qs of Object.values(topics)) for (const q of qs) ans.push(q.a);
+  return ans;
+}
+
+function generateChoices(correct, pool) {
+  const distractors = shuffle(pool.filter(a => a !== correct)).slice(0,3);
+  return shuffle([correct, ...distractors]);
+}
+
+function buildMCBtns(choices, correctAnswer) {
+  const letters = ['A','B','C','D','E'];
+  return `<div class="mc-options">${choices.map((c,i)=>
+    `<button class="mc-btn" data-answer="${encodeURIComponent(c)}" data-correct="${encodeURIComponent(correctAnswer)}" onclick="handleMCClick(this)">
+      <span class="letter">${letters[i]}</span>${c}
+    </button>`
+  ).join('')}</div>`;
+}
+
+function handleMCClick(btn) {
+  const allBtns = btn.closest('.mc-options').querySelectorAll('.mc-btn');
+  allBtns.forEach(b => b.disabled = true);
+  const chosen = decodeURIComponent(btn.dataset.answer);
+  const correct = decodeURIComponent(btn.dataset.correct);
+  const isCorrect = chosen === correct;
+  allBtns.forEach(b => { if(decodeURIComponent(b.dataset.answer)===correct) b.classList.add('correct'); });
+  if (!isCorrect) btn.classList.add('wrong');
+  setTimeout(() => {
+    if (isCorrect) {
+      state.score++;
+      addMessage('bot', `✅ <strong>Correct!</strong> +1 point! The answer is: <strong>${correct}</strong>`, `Correct! The answer is: ${correct}`);
+    } else {
+      addMessage('bot', `❌ <strong>Not quite.</strong> The correct answer is: <strong>${correct}</strong>`, `Not quite. The correct answer is: ${correct}`);
+    }
+    state.qIndex++; updateScore();
+    if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+    else setTimeout(showResult, 900);
+  }, 650);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// NEXT QUESTION
+// ═══════════════════════════════════════════════════════════════
+function nextQuestion() {
+  const qi = state.qIndex;
+  const q = state.questions[qi];
+  const num = qi + 1;
+
+  if (state.mode === 'full' || state.mode === 'topic_mc') {
+    const choices = generateChoices(q.a, state.allAnswers);
+    const tag = q.topic ? `<span class="topic-tag">${q.topic}</span><br>` : '';
+    const html = `${tag}<strong>Q${num} of ${state.total}:</strong> ${q.q}${buildMCBtns(choices, q.a)}`;
+    addMessage('bot', html, `Question ${num}. ${q.q}`);
+    return;
+  }
+
+  if (state.mode === 'tf') {
+    const html = `<strong>Q${num} of ${state.total}:</strong> <div class="scenario-card">${q.q}</div>
+      <span class="chip" data-val="true">✅ True</span><span class="chip" data-val="false">❌ False</span>`;
+    addMessage('bot', html, `Question ${num}. True or False: ${q.q}`);
+    return;
+  }
+
+  if (state.mode === 'identify') {
+    const btns = buildMCBtns(q.choices, q.a);
+    const html = `<strong>Q${num} of ${state.total}:</strong> Identify what is being described:<div class="scenario-card">${q.q}</div>${btns}`;
+    addMessage('bot', html, `Question ${num}. Identify: ${q.q}`);
+    return;
+  }
+
+  // typed answer mode
+  const tag = q.topic ? `<span class="topic-tag">${q.topic}</span><br>` : '';
+  const html = `${tag}<strong>Q${num} of ${state.total}:</strong> ${q.q}<br><small style="color:var(--muted)">Type your answer · type <em>hint</em> for help · <em>skip</em> to move on</small>`;
+  addMessage('bot', html, `Question ${num}. ${q.q}`);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// MENU
+// ═══════════════════════════════════════════════════════════════
+function showMenu() {
+  addMessage('bot',
+    `👋 <strong>Hi! I'm your English Reviewer!</strong><br>Let's study the <em>Parts of a Letter</em>, <em>Personal Pronouns and Case</em>, and <em>Indefinite Pronouns</em>.<br><br>What would you like to do?<br>
+    <span class="chip" data-val="1">📚 Study by Topic</span>
+    <span class="chip" data-val="2">✅ True or False</span>
+    <span class="chip" data-val="3">🌐 Identify</span>
+    <span class="chip" data-val="4">🌟 Full Review (Multiple Choice)</span>`,
+    "Hi! I'm your English Reviewer on Letters and Pronouns. What would you like to do? Study a topic, True or False, Identify, or a Full Review with multiple choice?"
+  );
+  state.awaiting = 'menu';
+}
+
+// ═══════════════════════════════════════════════════════════════
+// PROCESS MESSAGE
+// ═══════════════════════════════════════════════════════════════
+function processMessage(msg) {
+  const aw = state.awaiting;
+
+  // ── MENU ──────────────────────────────────────────────────
+  if (aw === 'menu') {
+    if (msg === '1') {
+      state.awaiting = 'topic';
+      const keys = Object.keys(topics);
+      const chips = keys.map((t,i) => `<span class="chip" data-val="${i+1}">${i+1}. ${t}</span>`).join(' ');
+      addMessage('bot', `📚 Which topic would you like to study?<br>${chips}`, 'Which topic would you like to study?');
+
+    } else if (msg === '2') {
+      state.mode = 'tf';
+      state.questions = shuffle(trueOrFalse);
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'tf_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `✅ <strong>True or False!</strong> ${state.total} questions. Let's start!`, `True or False! ${state.total} questions. Let's start!`);
+      setTimeout(nextQuestion, 800);
+
+    } else if (msg === '3') {
+      state.mode = 'identify';
+      state.questions = shuffle(identifyQuestions);
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'mc_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `🌐 <strong>Identify!</strong> Identify letter parts, decide if a pronoun is a subject or an object, choose the right pronoun, and spot indefinite pronouns.`, "Identify! Figure out what's being described in each item.");
+      setTimeout(nextQuestion, 800);
+
+    } else if (msg === '4') {
+      state.mode = 'full';
+      const all = [];
+      for (const [topicName, qs] of Object.entries(topics)) {
+        qs.forEach(q => all.push({...q, topic: topicName}));
+      }
+      state.questions = shuffle(all);
+      state.allAnswers = getAllAnswers();
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'mc_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `🌟 <strong>Full Review — Multiple Choice!</strong> ${state.total} questions. Think carefully!`, `Full Review! Multiple Choice! ${state.total} questions. Think carefully!`);
+      setTimeout(nextQuestion, 800);
+
+    } else {
+      addMessage('bot',
+        `Choose an option:<br>
+        <span class="chip" data-val="1">📚 Study by Topic</span>
+        <span class="chip" data-val="2">✅ True or False</span>
+        <span class="chip" data-val="3">🌐 Identify</span>
+        <span class="chip" data-val="4">🌟 Full Review</span>`,
+        'Choose an option.'
+      );
+    }
+    return;
+  }
+
+  // ── TOPIC SELECT ──────────────────────────────────────────
+  if (aw === 'topic') {
+    const keys = Object.keys(topics);
+    const idx = parseInt(msg) - 1;
+    if (keys[idx]) {
+      const topicName = keys[idx];
+      state.mode = 'topic_mc';
+      state.questions = shuffle(topics[topicName]);
+      state.allAnswers = getAllAnswers();
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'mc_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `📚 <strong>${topicName}</strong> — ${state.total} questions. Ready?`, `${topicName}. ${state.total} questions. Ready?`);
+      setTimeout(nextQuestion, 800);
+    } else {
+      const chips = Object.keys(topics).map((t,i) => `<span class="chip" data-val="${i+1}">${i+1}. ${t}</span>`).join(' ');
+      addMessage('bot', `Please choose a valid topic:<br>${chips}`, 'Please choose a valid topic.');
+    }
+    return;
+  }
+
+  // ── TYPED ANSWER ──────────────────────────────────────────
+  if (aw === 'answer') {
+    const q = state.questions[state.qIndex];
+    const m = normalize(msg);
+
+    if (m === 'hint') {
+      state.hintUsed = true;
+      addMessage('bot', `💡 <strong>Hint:</strong> ${q.hint}`, `Hint: ${q.hint}`);
+      return;
+    }
+    if (m === 'skip') {
+      addMessage('bot', `⏭️ Skipped! The correct answer is: <strong>${q.a}</strong>`, `Skipped. The correct answer is: ${q.a}`);
+      state.qIndex++; state.hintUsed = false;
+      if (state.qIndex < state.total) setTimeout(nextQuestion, 700);
+      else showResult();
+      return;
+    }
+
+    const correct = checkAnswer(msg, q.a);
+    if (correct) {
+      if (!state.hintUsed) state.score++;
+      const note = state.hintUsed ? ' <em>(hint used — no point)</em>' : ' +1 point!';
+      addMessage('bot', `✅ <strong>Correct!</strong>${note} Answer: <strong>${q.a}</strong>`, `Correct! The answer is: ${q.a}`);
+    } else {
+      addMessage('bot', `❌ <strong>Not quite.</strong> The correct answer is: <strong>${q.a}</strong>`, `Not quite. The correct answer is: ${q.a}`);
+    }
+    state.qIndex++; state.hintUsed = false; updateScore();
+    if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+    else setTimeout(showResult, 900);
+    return;
+  }
+
+  // ── TRUE OR FALSE ─────────────────────────────────────────
+  if (aw === 'tf_answer') {
+    const q = state.questions[state.qIndex];
+    const ans = normalize(msg);
+    const valid = ans === 'true' || ans === 'false';
+
+    if (valid) {
+      const correct = ans === q.a;
+      if (correct) {
+        state.score++;
+        addMessage('bot', `✅ <strong>Correct!</strong> The answer is <strong>${q.a.toUpperCase()}</strong>.`, `Correct! The answer is ${q.a}.`);
+      } else {
+        addMessage('bot', `❌ <strong>Incorrect.</strong> The correct answer is <strong>${q.a.toUpperCase()}</strong>.`, `Incorrect. The correct answer is ${q.a}.`);
+      }
+      state.qIndex++; updateScore();
+      if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+      else setTimeout(showResult, 900);
+    } else {
+      addMessage('bot',
+        `Answer: True or False?<br><span class="chip" data-val="true">✅ True</span><span class="chip" data-val="false">❌ False</span>`,
+        'Answer: True or False?'
+      );
+    }
+    return;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// CONTROLS
+// ═══════════════════════════════════════════════════════════════
+function handleUserMessage(msg) {
+  if (!msg.trim()) return;
+  
+  // Stop any speaking audio cleanly when the user answers
+  window.speechSynthesis.cancel();
+  if (currentAudioStream) {
+    currentAudioStream.pause();
+    currentAudioStream = null;
+    showWave(false);
+  }
+  
+  addMessage('user', msg.replace(/</g,'&lt;'));
+  input.value = '';
+  input.disabled = true; sendBtn.disabled = true;
+  addTyping();
+  setTimeout(() => {
+    removeTyping();
+    input.disabled = false; sendBtn.disabled = false;
+    input.focus();
+    processMessage(msg);
+  }, 480);
+}
+
+sendBtn.addEventListener('click', () => { handleUserMessage(input.value); });
+input.addEventListener('keydown', e => { if(e.key==='Enter') handleUserMessage(input.value); });
+
+document.getElementById('audio-toggle').addEventListener('click', function() {
+  state.audioEnabled = !state.audioEnabled;
+  this.textContent = state.audioEnabled ? '🔊' : '🔇';
+  this.classList.toggle('active', state.audioEnabled);
+  if (!state.audioEnabled) {
+    window.speechSynthesis.cancel();
+    if (currentAudioStream) {
+      currentAudioStream.pause();
+      currentAudioStream = null;
+      showWave(false);
+    }
+  }
+});
+
+// ═══════════════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════════════
+window.addEventListener('load', () => {
+  lookupSystemVoices();
+  showMenu();
+});
+
+function printPracticeTest() {
+  document.body.classList.add('printing-test');
+  window.print();
+}
+window.addEventListener('afterprint', () => {
+  document.body.classList.remove('printing-test');
+});
+
+// ═══════════════════════════════════════════════════════════════
+// READ NOTES ALOUD (uses the browser's own voice — no length limit,
+// unlike the short Google TTS clips used for chat messages)
+// ═══════════════════════════════════════════════════════════════
+function getNotesText(section) {
+  // Skip the Practice Test / Answer Key tabs — too long and not meant to be read aloud
+  const clone = section.cloneNode(true);
+  clone.querySelectorAll('button').forEach(b => b.remove());
+  let text = clone.innerText || clone.textContent || '';
+  text = text.replace(/\s+/g, ' ').trim();
+  return text;
+}
+
+function toggleNotesAudio() {
+  const btn = document.getElementById('notes-audio-btn');
+  if (!btn) return;
+
+  if (window.speechSynthesis.speaking || window.speechSynthesis.pending) {
+    window.speechSynthesis.cancel();
+    btn.innerHTML = '🔊 Read Notes Aloud';
+    btn.classList.remove('active');
+    return;
+  }
+
+  const activeSection = document.querySelector('.notes-section.active');
+  if (!activeSection) return;
+  const text = getNotesText(activeSection);
+  if (!text) return;
+
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.lang = 'en-US';
+  utter.rate = 0.95;
+  utter.pitch = 1.05;
+  utter.volume = 1;
+
+  const voices = window.speechSynthesis.getVoices();
+  const voice = voices.find(v => v.lang.startsWith('en') && v.name.toLowerCase().includes('female'))
+             || voices.find(v => v.lang.startsWith('en'));
+  if (voice) utter.voice = voice;
+
+  utter.onstart = () => { btn.innerHTML = '⏹️ Stop Reading'; btn.classList.add('active'); };
+  utter.onend = utter.onerror = () => { btn.innerHTML = '🔊 Read Notes Aloud'; btn.classList.remove('active'); };
+
+  window.speechSynthesis.speak(utter);
+}
+
+function switchTab(tabId, btn) {
+  window.speechSynthesis.cancel();
+  const audioBtn = document.getElementById('notes-audio-btn');
+  if (audioBtn) { audioBtn.innerHTML = '🔊 Read Notes Aloud'; audioBtn.classList.remove('active'); }
+  document.querySelectorAll('.notes-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.notes-tab').forEach(b => b.classList.remove('active'));
+  document.getElementById(tabId).classList.add('active');
+  btn.classList.add('active');
+}
+
+function closeNotesPanel() {
+  window.speechSynthesis.cancel();
+  const audioBtn = document.getElementById('notes-audio-btn');
+  if (audioBtn) { audioBtn.innerHTML = '🔊 Read Notes Aloud'; audioBtn.classList.remove('active'); }
+  document.getElementById('notes-overlay').classList.remove('show');
+}
+</script>
+
+<!-- ── Notes Panel ── -->
+<div class="notes-overlay" id="notes-overlay">
+  <div class="notes-panel">
+    <div class="notes-header">
+      <h2>📖 Letters &amp; Pronouns — Notes</h2>
+      <div class="notes-header-actions">
+        <button class="print-btn" id="notes-audio-btn" onclick="toggleNotesAudio()" title="Have this tab read aloud">🔊 Read Notes Aloud</button>
+        <button class="print-btn" onclick="printPracticeTest()" title="Print or save the Practice Test &amp; Answer Key as PDF">🖨️ Print Test &amp; Key</button>
+        <button class="notes-close" onclick="closeNotesPanel()">✕</button>
+      </div>
+    </div>
+    <div class="notes-tabs">
+      <button class="notes-tab active" onclick="switchTab('tab-letter', this)">✉️ Parts of a Letter</button>
+      <button class="notes-tab" onclick="switchTab('tab-case', this)">🔤 Pronoun Case</button>
+      <button class="notes-tab" onclick="switchTab('tab-indef', this)">❓ Indefinite Pronouns</button>
+      <button class="notes-tab" onclick="switchTab('tab-tf', this)">✅ True or False</button>
+      <button class="notes-tab" onclick="switchTab('tab-ptest', this)">📝 Practice Test</button>
+      <button class="notes-tab" onclick="switchTab('tab-key', this)">🔑 Answer Key</button>
+      <button class="notes-tab" onclick="switchTab('tab-raw', this)">📄 Raw Notes</button>
+    </div>
+    <div class="notes-body">
+
+      <div class="notes-section active" id="tab-letter">
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> A letter is a handwritten message by a sender to a receiver. It can be used to make a request, say thanks or an apology, inquire, file a complaint, or simply connect with someone.
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 MEMORY TRICK</span>
+          Remember the five parts, top to bottom, with: <strong>"Happy Grandmas Bake Cookies Sweetly."</strong> <strong>H</strong>eading, <strong>G</strong>reeting, <strong>B</strong>ody, <strong>C</strong>losing, <strong>S</strong>ignature.
+        </div>
+        <table class="compare-table">
+          <tr><th>Part</th><th>What It Does</th></tr>
+          <tr><td>Heading</td><td>Tells the date the letter was written; may include the place</td></tr>
+          <tr><td>Greeting</td><td>Names the receiver; starts with "Dear" and ends with a comma</td></tr>
+          <tr><td>Body</td><td>Contains the message</td></tr>
+          <tr><td>Closing</td><td>Signals the end of the letter; ends with a comma</td></tr>
+          <tr><td>Signature</td><td>The handwritten name of the sender</td></tr>
+        </table>
+      </div>
+
+      <div class="notes-section" id="tab-case">
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> Pronouns replace nouns so we do not repeat the same nouns. <strong>Personal pronouns</strong> refer to persons, animals, or things. Their <strong>case</strong> tells whether they are used as a <strong>subject</strong> (doing the action) or an <strong>object</strong> (the action is done to them).
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 MEMORY TRICK</span>
+          <strong>Subject = Starts the action. Object = Obtains the action.</strong> To check for an object, find the action verb and ask what it acts upon: "The father asked <u>them</u> to bring <u>him</u> a bundle of sticks."
+        </div>
+        <table class="compare-table">
+          <tr><th>Subject (does the action)</th><th>Object (receives the action)</th></tr>
+          <tr><td>I</td><td>me</td></tr>
+          <tr><td>we</td><td>us</td></tr>
+          <tr><td>you</td><td>you</td></tr>
+          <tr><td>he / she / it</td><td>him / her / it</td></tr>
+          <tr><td>they</td><td>them</td></tr>
+        </table>
+        <div class="tandaan-box">
+          <span class="tandaan-label">REMEMBER</span>
+          "You" and "it" stay the same in both cases, so read the sentence to decide: "Only <strong>you</strong> have the authority" (subject) but "Nello says good things about <strong>you</strong>" (object).
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-indef">
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> <strong>Indefinite pronouns</strong> do not identify clearly what they refer to. They are used for general or unspecified subjects.
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 MEMORY TRICK</span>
+          Many indefinite pronouns end in <strong>-body, -one, or -thing</strong>: <strong>some</strong>body, <strong>any</strong>one, <strong>every</strong>thing, <strong>no</strong>body. If you cannot point to one particular person or thing, it is probably indefinite.
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">❓ Indefinite Pronouns from the Lesson</div>
+          <div class="notes-item"><span class="notes-term">All, another, any</span><span class="notes-def">anybody, anyone, anything</span></div>
+          <div class="notes-item"><span class="notes-term">Each, every</span><span class="notes-def">each, everybody, everyone, everything</span></div>
+          <div class="notes-item"><span class="notes-term">Few, many</span><span class="notes-def">few, many, several</span></div>
+          <div class="notes-item"><span class="notes-term">None, no</span><span class="notes-def">nobody, none</span></div>
+          <div class="notes-item"><span class="notes-term">Some</span><span class="notes-def">some, somebody, someone, something</span></div>
+        </div>
+        <div class="tandaan-box">
+          <span class="tandaan-label">REMEMBER</span>
+          Personal pronouns replace specific persons, animals, or things. Indefinite pronouns do not specify what they refer to.
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-tf">
+        <div class="notes-topic">
+          <div class="notes-topic-title">✅ True or False — Key Reminders</div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">The greeting ends with a period → it ends with a comma.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">The signature is the typed name → it is the handwritten name of the sender.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">Pronoun case deals with spelling → it deals with how the pronoun is used in a sentence.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">An object pronoun does the action → a subject pronoun does the action.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">"They" in "They are going to watch a movie" is an object → it is a subject.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">Indefinite pronouns identify clearly what they refer to → they do not.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">"Nobody" is a personal pronoun → it is an indefinite pronoun.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">"We" is an object pronoun → "us" is the object form.</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-ptest">
+        <div class="notes-topic">
+          <div class="notes-topic-title">📝 Practice Test</div>
+<div class="ptest-part-title">Part I — Parts of a Letter</div><div class="ptest-bank"><strong>Word Bank:</strong> Heading &middot; Greeting &middot; Body &middot; Closing &middot; Signature</div><div class="ptest-q"><b>1.</b> Tells the date when the sender wrote the letter. <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>2.</b> Mentions the name of the receiver; starts with "Dear" and ends with a comma. <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>3.</b> Contains the message of the letter. <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>4.</b> Signals the end of the letter and ends with a comma. <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>5.</b> Shows the handwritten name of the sender. <span class="opt">Answer: ______________</span></div><div class="ptest-part-title">Part II — Subject (S) or Object (O)?</div><div class="ptest-q"><b>6.</b> "They are going to watch a movie tonight." The pronoun "They" is used as a: <span class="opt">Answer: ______</span></div><div class="ptest-q"><b>7.</b> "Cassie's mother brought her a bag on this special day." The pronoun "her" is used as a: <span class="opt">Answer: ______</span></div><div class="ptest-q"><b>8.</b> "A while ago, it was not yet raining." The pronoun "it" is used as a: <span class="opt">Answer: ______</span></div><div class="ptest-q"><b>9.</b> "At the end of the day, only you have the authority to decide." The pronoun "you" is used as a: <span class="opt">Answer: ______</span></div><div class="ptest-q"><b>10.</b> "Nello only says good things about you." The pronoun "you" is used as a: <span class="opt">Answer: ______</span></div><div class="ptest-part-title">Part III — Choose the Pronoun That Best Fits</div><div class="ptest-q"><b>11.</b> Aunt Emy is going soon. Please wish ____ to have a safe trip.<br><span class="opt">a) her</span><span class="opt">b) it</span></div><div class="ptest-q"><b>12.</b> ____ work well as a team.<br><span class="opt">a) They</span><span class="opt">b) Them</span></div><div class="ptest-q"><b>13.</b> Did you hear an update if ____ was selected as the captain of the team?<br><span class="opt">a) I</span><span class="opt">b) you</span></div><div class="ptest-q"><b>14.</b> The teacher told ____ to get ready for a quiz.<br><span class="opt">a) them</span><span class="opt">b) we</span></div><div class="ptest-q"><b>15.</b> Winning the championship game is the best prize for ____.<br><span class="opt">a) us</span><span class="opt">b) we</span></div><div class="ptest-part-title">Part IV — Find the Indefinite Pronoun</div><div class="ptest-q"><b>16.</b> Which word is the indefinite pronoun? "We had our trip last summer in Davao and everyone enjoyed it."<br><span class="opt">a) everyone</span><span class="opt">b) We</span><span class="opt">c) our</span><span class="opt">d) it</span></div><div class="ptest-q"><b>17.</b> Which word is the indefinite pronoun? "Because of what happened, many are unwilling to follow her."<br><span class="opt">a) many</span><span class="opt">b) her</span><span class="opt">c) what</span><span class="opt">d) unwilling</span></div><div class="ptest-q"><b>18.</b> Which word is the indefinite pronoun? "Ms. Constantino asked someone to go to the office."<br><span class="opt">a) someone</span><span class="opt">b) Constantino</span><span class="opt">c) office</span><span class="opt">d) asked</span></div><div class="ptest-q"><b>19.</b> Which word is the indefinite pronoun? "Only a few got low scores."<br><span class="opt">a) a few</span><span class="opt">b) Only</span><span class="opt">c) low</span><span class="opt">d) scores</span></div><div class="ptest-q"><b>20.</b> Which word is the indefinite pronoun? "Anything can happen when you believe."<br><span class="opt">a) Anything</span><span class="opt">b) you</span><span class="opt">c) happen</span><span class="opt">d) believe</span></div><div class="ptest-q"><b>21.</b> Which word is the indefinite pronoun? "Nobody found the missing dog."<br><span class="opt">a) Nobody</span><span class="opt">b) found</span><span class="opt">c) missing</span><span class="opt">d) dog</span></div><div class="ptest-q"><b>22.</b> Which word is the indefinite pronoun? "Omar wondered if something was wrong with the internet connection."<br><span class="opt">a) something</span><span class="opt">b) Omar</span><span class="opt">c) wrong</span><span class="opt">d) connection</span></div><div class="ptest-q"><b>23.</b> Which word is the indefinite pronoun? "Martina asked me to tell everybody that she would be ready soon."<br><span class="opt">a) everybody</span><span class="opt">b) me</span><span class="opt">c) she</span><span class="opt">d) Martina</span></div><div class="ptest-part-title">Part V — True or False</div><div class="ptest-q"><b>24.</b> A letter is a handwritten message by a sender to a receiver. <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>25.</b> The greeting of a letter ends with a period. <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>26.</b> The greeting of a letter starts with "Dear." <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>27.</b> The heading of a letter tells the date when the sender wrote it. <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>28.</b> The signature shows the typed name of the sender. <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>29.</b> The closing signals the end of the letter and ends with a comma. <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>30.</b> The body of a letter contains the message. <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>31.</b> Pronouns are words used to replace a noun. <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>32.</b> Personal pronouns refer to persons, animals, or things. <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>33.</b> The case of a pronoun deals with how the pronoun is spelled. <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>34.</b> A subject pronoun is doing the action in a sentence. <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>35.</b> An object pronoun is the one doing the action. <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>36.</b> In "Cassie's mother brought her a bag," the pronoun "her" is an object. <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>37.</b> In "They are going to watch a movie tonight," the pronoun "They" is an object. <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>38.</b> Indefinite pronouns identify clearly what they are referring to. <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>39.</b> "Everyone" is an indefinite pronoun. <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>40.</b> "Nobody" is a personal pronoun. <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>41.</b> "Some" and "none" are indefinite pronouns. <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>42.</b> "We" is an object pronoun. <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>43.</b> In "Winning the championship game is the best prize for us," the pronoun "us" is an object. <span class="opt">Answer: ______________</span></div><div class="ptest-part-title">Part VI — Compose a Sentence Using the Pronoun</div><div class="ptest-q"><b>44.</b> we</div><div class="ptest-q"><b>45.</b> me</div><div class="ptest-q"><b>46.</b> you (as object)</div><div class="ptest-q"><b>47.</b> some</div><div class="ptest-q"><b>48.</b> none</div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-key">
+        <div class="notes-topic">
+<div class="notes-topic-title">Part I — Parts of a Letter</div><div class="key-grid"><div class="key-pill">1. <b>Heading</b></div><div class="key-pill">2. <b>Greeting</b></div><div class="key-pill">3. <b>Body</b></div><div class="key-pill">4. <b>Closing</b></div><div class="key-pill">5. <b>Signature</b></div></div><div class="notes-topic-title">Part II — Subject or Object</div><div class="key-grid"><div class="key-pill">6. <b>Subject</b></div><div class="key-pill">7. <b>Object</b></div><div class="key-pill">8. <b>Subject</b></div><div class="key-pill">9. <b>Subject</b></div><div class="key-pill">10. <b>Object</b></div></div><div class="notes-topic-title">Part III — Pronoun</div><div class="key-grid"><div class="key-pill">11. <b>her</b></div><div class="key-pill">12. <b>They</b></div><div class="key-pill">13. <b>I</b></div><div class="key-pill">14. <b>them</b></div><div class="key-pill">15. <b>us</b></div></div><div class="notes-topic-title">Part IV — Indefinite Pronoun</div><div class="key-grid"><div class="key-pill">16. <b>everyone</b></div><div class="key-pill">17. <b>many</b></div><div class="key-pill">18. <b>someone</b></div><div class="key-pill">19. <b>a few</b></div><div class="key-pill">20. <b>Anything</b></div><div class="key-pill">21. <b>Nobody</b></div><div class="key-pill">22. <b>something</b></div><div class="key-pill">23. <b>everybody</b></div></div><div class="notes-topic-title">Part V — True or False</div><div class="key-grid"><div class="key-pill">24. <b>True</b></div><div class="key-pill">25. <b>False</b></div><div class="key-pill">26. <b>True</b></div><div class="key-pill">27. <b>True</b></div><div class="key-pill">28. <b>False</b></div><div class="key-pill">29. <b>True</b></div><div class="key-pill">30. <b>True</b></div><div class="key-pill">31. <b>True</b></div><div class="key-pill">32. <b>True</b></div><div class="key-pill">33. <b>False</b></div><div class="key-pill">34. <b>True</b></div><div class="key-pill">35. <b>False</b></div><div class="key-pill">36. <b>True</b></div><div class="key-pill">37. <b>False</b></div><div class="key-pill">38. <b>False</b></div><div class="key-pill">39. <b>True</b></div><div class="key-pill">40. <b>False</b></div><div class="key-pill">41. <b>True</b></div><div class="key-pill">42. <b>False</b></div><div class="key-pill">43. <b>True</b></div></div><div class="notes-topic-title">Part VI — Sample Sentences</div><div class="ptest-q" style="margin-bottom:6px"><b>44.</b> We are going to school today.</div><div class="ptest-q" style="margin-bottom:6px"><b>45.</b> My mother asked me to clean my room.</div><div class="ptest-q" style="margin-bottom:6px"><b>46.</b> I will help you with your homework.</div><div class="ptest-q" style="margin-bottom:6px"><b>47.</b> Some of the students brought their books.</div><div class="ptest-q" style="margin-bottom:6px"><b>48.</b> None of the students were absent today.</div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-raw">
+        <div class="rawnotes-intro">
+          📌 This is the original content of the uploaded lesson, unedited — for whenever you need to check the exact wording or an example not covered in the reviewer.
+        </div>
+        <div class="rawnotes-doc">
+<h3 class="doc-heading">Parts of a Letter</h3>
+<p>In the story you have read, Sonia’s grandmother wrote to her to ask her about how she was doing. Since they lived far away from each other, they had to communicate. Before texting through cell phones and sending chats and emails through the internet, most people communicated through writing letters.</p>
+<p>A letter is a handwritten message by a sender to a receiver. Letters have many purposes. You can write letters to make a request, say thanks or an apology, inquire about something, file a complaint, or simply connect with each other.</p>
+<p>Below are the basic parts of a letter:</p>
+<ul>
+<li><p><strong>Heading</strong> – tells the date when the sender wrote the letter; may also include the place where the letter was written</p></li>
+<li><p><strong>Greeting</strong> – mentions the name of the receiver; starts with “Dear” and ends with a comma</p></li>
+<li><p><strong>Body</strong> – contains the message</p></li>
+<li><p><strong>Closing</strong> – signals the end of the letter; ends with a comma</p></li>
+<li><p><strong>Signature</strong> – shows the handwritten name of the sender</p></li>
+</ul>
+<h3 class="doc-heading">Case of Personal Pronouns</h3>
+<p>You have already learned that pronouns are words used to replace a noun. If pronouns are not used, you will end up using the same nouns over and over in a sentence. Read this paragraph with no pronouns:</p>
+<p>One day when the quarreling had been much more violent than usual and each of the sons was moping in a surly manner, the father asked one of the sons to bring the father a bundle of sticks. Then handing the bundle to each of his sons in turn the father told the sons to try to break the bundle. But although each one tried his best, none was able to do so.</p>
+<p>What did you notice? Aren’t the nouns so many to read? Now read the paragraph again, this time with pronouns.</p>
+<p>One day when the quarreling had been much more violent than usual and each of the sons was moping in a surly manner, the father asked one of them to bring him a bundle of sticks. Then handing the bundle to each of his sons in turn he told them to try to break it. But although each one tried his best, none was able to do so.</p>
+<p>The underlined words are <strong>personal pronouns</strong>, which refer to persons, animals, or things. The case of a pronoun deals with how it is used in a sentence. It can be as a <strong>subject</strong> (the pronoun is doing the action) or as an <strong>object</strong> (the action is done to the pronoun).</p>
+<h3 class="doc-heading">Study these examples:</h3>
+<ul>
+<li><p>The father asked one of <strong>them</strong> to bring <strong>him</strong> a bundle of sticks.</p></li>
+<li><p><strong>They</strong> broke the sticks very easily.</p></li>
+<li><p>If <strong>you</strong> agree with each other, enemies cannot injure <strong>you</strong>.</p></li>
+</ul>
+<p>To tell if a pronoun acts as an <strong>object</strong>, look for the action verb that acts upon it.</p>
+<h3 class="doc-heading">Indefinite Pronouns</h3>
+<p>Another type of pronoun is <strong>indefinite pronouns</strong>, which do not identify clearly what it is referring to. They are used for general subjects in a sentence or those that are not specified. Below are some examples:</p>
+<p><strong>all</strong><br />
+<strong>another</strong><br />
+<strong>any</strong><br />
+<strong>anybody</strong><br />
+<strong>anyone</strong></p>
+<p><strong>anything</strong><br />
+<strong>each</strong><br />
+<strong>everybody</strong><br />
+<strong>everyone</strong><br />
+<strong>everything</strong></p>
+<p><strong>few</strong><br />
+<strong>many</strong><br />
+<strong>nobody</strong><br />
+<strong>none</strong><br />
+<strong>several</strong></p>
+<p><strong>some</strong><br />
+<strong>somebody</strong><br />
+<strong>someone</strong><br />
+<strong>something</strong></p>
+<h3 class="doc-heading">Personal Pronouns and Indefinite Pronouns</h3>
+<h3 class="doc-heading">Study these sentences:</h3>
+<ul>
+<li><p><strong>Everyone</strong> is required to be on time.</p></li>
+<li><p><strong>Nobody</strong> believed that he was the son of the president.</p></li>
+<li><p><strong>Some</strong> boys stayed after class to clean the classroom.</p></li>
+<li><p>I will eat <strong>anything</strong> when I am hungry.</p></li>
+</ul>
+<h3 class="doc-heading">Build New Knowledge</h3>
+<ul>
+<li><p>Personal pronouns replace specific persons, animals, or things.</p></li>
+<li><p>Pronoun case tells if a pronoun is used as a subject or an object.</p></li>
+<li><p>Indefinite pronouns do not identify or specify what they are referring to.</p></li>
+</ul>
+<h3 class="doc-heading">Upgrade Your Equipment</h3>
+<h3 class="doc-heading">Task 1</h3>
+<p><strong>With a partner, circle the personal pronouns and box the indefinite pronouns.</strong></p>
+<ol type="1">
+<li><p>We had our trip last summer in Davao and everyone enjoyed it.</p></li>
+<li><p>Because of what happened, many are unwilling to follow her.</p></li>
+<li><p>These blankets helped us sleep soundly during the bus trip because they were comfortable.</p></li>
+<li><p>In Davao, my grandmother prepared durian and it was really delicious.</p></li>
+<li><p>Ms. Constantino asked someone to go to the office.</p></li>
+<li><p>Only a few got low scores.</p></li>
+<li><p>Anything can happen when you believe.</p></li>
+<li><p>Nobody found the missing dog.</p></li>
+<li><p>Omar wondered if something was wrong with the internet connection.</p></li>
+<li><p>Martina asked me to tell everybody that she would be ready soon.</p></li>
+</ol>
+<h3 class="doc-heading">Task 2</h3>
+<p><strong>Underline the personal pronoun in each sentence. Identify if it is used as a subject or an object. Write S for subject and O for object.</strong></p>
+<ol type="1">
+<li><p>They are going to watch a movie tonight.</p></li>
+<li><p>Cassie’s mother brought her a bag on this special day.</p></li>
+<li><p>A while ago, it was not yet raining.</p></li>
+<li><p>At the end of the day, only you have the authority to decide.</p></li>
+<li><p>Nello only says good things about you.</p></li>
+</ol>
+<h3 class="doc-heading">Task 3</h3>
+<p><strong>Circle the personal pronoun that best fits each sentence.</strong></p>
+<ol type="1">
+<li><p>Aunt Emy is going soon. Please wish <strong>(it, her)</strong> to have a safe trip.</p></li>
+<li><p><strong>(They, Them)</strong> work well as a team.</p></li>
+<li><p>Did you hear an update if <strong>(you, I)</strong> was selected as the captain of the team?</p></li>
+<li><p>The teacher told <strong>(we, them)</strong> to get ready for a quiz.</p></li>
+<li><p>Winning the championship game is the best prize for <strong>(we, us)</strong>.</p></li>
+</ol>
+<h3 class="doc-heading">Task 4</h3>
+<p><strong>Compose a meaningful sentence using the following personal and indefinite pronouns.</strong></p>
+<ol type="1">
+<li><p><strong>we</strong></p></li>
+<li><p><strong>me</strong></p></li>
+<li><p><strong>you (as object)</strong></p></li>
+<li><p><strong>some</strong></p></li>
+<li><p><strong>none</strong></p></li>
+</ol>
+<blockquote>
+<h3 class="doc-heading">ANSWER KEY</h3>
+<h3 class="doc-heading">Task 1</h3>
+<p><strong>Circle the personal pronouns and box the indefinite pronouns.</strong></p>
+</blockquote>
+<ol type="1">
+<li><p><strong>We</strong> had our trip last summer in Davao and <strong>[everyone]</strong> enjoyed <strong>it</strong>.</p>
+<ul>
+<li><p>Personal pronouns: <strong>We, it</strong></p></li>
+<li><p>Indefinite pronoun: <strong>everyone</strong></p></li>
+</ul></li>
+<li><p>Because of what happened, <strong>[many]</strong> are unwilling to follow <strong>her</strong>.</p>
+<ul>
+<li><p>Personal pronoun: <strong>her</strong></p></li>
+<li><p>Indefinite pronoun: <strong>many</strong></p></li>
+</ul></li>
+<li><p>These blankets helped <strong>us</strong> sleep soundly during the bus trip because <strong>they</strong> were comfortable.</p>
+<ul>
+<li>Personal pronouns: <strong>us, they</strong></li>
+</ul></li>
+<li><p>In Davao, my grandmother prepared durian and <strong>it</strong> was really delicious.</p>
+<ul>
+<li>Personal pronoun: <strong>it</strong></li>
+</ul></li>
+<li><p>Ms. Constantino asked <strong>[someone]</strong> to go to the office.</p>
+<ul>
+<li>Indefinite pronoun: <strong>someone</strong></li>
+</ul></li>
+<li><p>Only <strong>[a few]</strong> got low scores.</p>
+<ul>
+<li>Indefinite pronoun: <strong>a few</strong></li>
+</ul></li>
+<li><p><strong>[Anything]</strong> can happen when <strong>you</strong> believe.</p>
+<ul>
+<li><p>Personal pronoun: <strong>you</strong></p></li>
+<li><p>Indefinite pronoun: <strong>anything</strong></p></li>
+</ul></li>
+<li><p><strong>[Nobody]</strong> found the missing dog.</p>
+<ul>
+<li>Indefinite pronoun: <strong>Nobody</strong></li>
+</ul></li>
+<li><p>Omar wondered if <strong>[something]</strong> was wrong with the internet connection.</p>
+<ul>
+<li>Indefinite pronoun: <strong>something</strong></li>
+</ul></li>
+<li><p>Martina asked <strong>me</strong> to tell <strong>[everybody]</strong> that <strong>she</strong> would be ready soon.</p></li>
+</ol>
+<ul>
+<li><p>Personal pronouns: <strong>me, she</strong></p></li>
+<li><p>Indefinite pronoun: <strong>everybody</strong></p></li>
+</ul>
+<blockquote>
+<h3 class="doc-heading">Task 2</h3>
+<p><strong>Underline the personal pronoun in each sentence. Identify if it is used as a subject or an object. Write S for subject and O for object.</strong></p>
+</blockquote>
+<ol type="1">
+<li><p><strong>They</strong> are going to watch a movie tonight.<br />
+<strong>Answer: S – They</strong></p></li>
+<li><p>Cassie’s mother brought <strong>her</strong> a bag on this special day.<br />
+<strong>Answer: O – her</strong></p></li>
+<li><p>A while ago, <strong>it</strong> was not yet raining.<br />
+<strong>Answer: S – it</strong></p></li>
+<li><p>At the end of the day, only <strong>you</strong> have the authority to decide.<br />
+<strong>Answer: S – you</strong></p></li>
+<li><p>Nello only says good things about <strong>you</strong>.<br />
+<strong>Answer: O – you</strong></p></li>
+</ol>
+<blockquote>
+<h3 class="doc-heading">Task 2 Answer Sheet:</h3>
+</blockquote>
+<ol type="1">
+<li><p><strong>S</strong></p></li>
+<li><p><strong>O</strong></p></li>
+<li><p><strong>S</strong></p></li>
+<li><p><strong>S</strong></p></li>
+<li><p><strong>O</strong></p></li>
+</ol>
+<blockquote>
+<h3 class="doc-heading">Task 3</h3>
+<p><strong>Circle the personal pronoun that best fits each sentence.</strong></p>
+</blockquote>
+<ol type="1">
+<li><p>Aunt Emy is going soon. Please wish <strong>(her)</strong> to have a safe trip.</p>
+<ul>
+<li><strong>Answer: her</strong></li>
+</ul></li>
+<li><p><strong>(They)</strong> work well as a team.</p>
+<ul>
+<li><strong>Answer: They</strong></li>
+</ul></li>
+<li><p>Did you hear an update if <strong>(I)</strong> was selected as the captain of the team?</p>
+<ul>
+<li><strong>Answer: I</strong></li>
+</ul></li>
+<li><p>The teacher told <strong>(them)</strong> to get ready for a quiz.</p>
+<ul>
+<li><strong>Answer: them</strong></li>
+</ul></li>
+<li><p>Winning the championship game is the best prize for <strong>(us)</strong>.</p>
+<ul>
+<li><strong>Answer: us</strong></li>
+</ul></li>
+</ol>
+<blockquote>
+<h3 class="doc-heading">Task 3 Answer Sheet:</h3>
+</blockquote>
+<ol type="1">
+<li><p><strong>her</strong></p></li>
+<li><p><strong>They</strong></p></li>
+<li><p><strong>I</strong></p></li>
+<li><p><strong>them</strong></p></li>
+<li><p><strong>us</strong></p></li>
+</ol>
+<blockquote>
+<h3 class="doc-heading">Task 4</h3>
+<p><strong>Compose a meaningful sentence using the following personal and indefinite pronouns.</strong></p>
+<p>These are sample answers. Other grammatically correct sentences should also be acceptable.</p>
+</blockquote>
+<ol type="1">
+<li><p><strong>we</strong><br />
+→ <strong>We</strong> are going to school today.</p></li>
+<li><p><strong>me</strong><br />
+→ My mother asked <strong>me</strong> to clean my room.</p></li>
+<li><p><strong>you (as object)</strong><br />
+→ I will help <strong>you</strong> with your homework.</p></li>
+<li><p><strong>some</strong><br />
+→ <strong>Some</strong> of the students brought their books.</p></li>
+<li><p><strong>none</strong><br />
+→ <strong>None</strong> of the students were absent today.</p></li>
+</ol>
+<blockquote>
+<h3 class="doc-heading">Task 4 Answer Sheet:</h3>
+</blockquote>
+<ol type="1">
+<li><p><strong>We are going to school today.</strong></p></li>
+<li><p><strong>My mother asked me to clean my room.</strong></p></li>
+<li><p><strong>I will help you with your homework.</strong></p></li>
+<li><p><strong>Some of the students brought their books.</strong></p></li>
+<li><p><strong>None of the students were absent today.</strong></p></li>
+</ol>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ── Hidden Print Area (Practice Test + Answer Key) ── -->
+<div id="print-area">
+<div class="p-cover"><div class="p-icon">✉️</div><h1>English 5 — Letters &amp; Pronouns Practice Test</h1><div class="p-sub">Parts of a Letter · Personal Pronouns and Case · Indefinite Pronouns</div>
+<div class="p-info-box"><div><strong>Name:</strong> _____________________________________</div><div><strong>Section:</strong> ___________________ &nbsp; <strong>Date:</strong> ___________________</div><div><strong>Score:</strong> _______ / 48</div></div>
+<div class="p-instructions"><strong>Instructions:</strong> Read each item carefully. Write your answer on the blank provided (Parts I, II, V), write the letter of the correct answer (Parts III-IV), or write a complete sentence (Part VI). Good luck!</div></div><h2 class="p-part-title">Part I — Parts of a Letter</h2><div class="p-bank"><strong>Word Bank:</strong> Heading &middot; Greeting &middot; Body &middot; Closing &middot; Signature</div><div class="p-q"><b>1.</b> Tells the date when the sender wrote the letter. <span class="p-blank"></span></div><div class="p-q"><b>2.</b> Mentions the name of the receiver; starts with "Dear" and ends with a comma. <span class="p-blank"></span></div><div class="p-q"><b>3.</b> Contains the message of the letter. <span class="p-blank"></span></div><div class="p-q"><b>4.</b> Signals the end of the letter and ends with a comma. <span class="p-blank"></span></div><div class="p-q"><b>5.</b> Shows the handwritten name of the sender. <span class="p-blank"></span></div><h2 class="p-part-title">Part II — Subject (S) or Object (O)?</h2><div class="p-q"><b>6.</b> "They are going to watch a movie tonight." The pronoun "They" is used as a: <span class="p-blank" style="min-width:40px"></span></div><div class="p-q"><b>7.</b> "Cassie's mother brought her a bag on this special day." The pronoun "her" is used as a: <span class="p-blank" style="min-width:40px"></span></div><div class="p-q"><b>8.</b> "A while ago, it was not yet raining." The pronoun "it" is used as a: <span class="p-blank" style="min-width:40px"></span></div><div class="p-q"><b>9.</b> "At the end of the day, only you have the authority to decide." The pronoun "you" is used as a: <span class="p-blank" style="min-width:40px"></span></div><div class="p-q"><b>10.</b> "Nello only says good things about you." The pronoun "you" is used as a: <span class="p-blank" style="min-width:40px"></span></div><div class="p-break"></div><h2 class="p-part-title">Part III — Choose the Pronoun That Best Fits</h2><div class="p-q"><b>11.</b> Aunt Emy is going soon. Please wish ____ to have a safe trip.<br><span class="p-opt">a) her</span><span class="p-opt">b) it</span></div><div class="p-q"><b>12.</b> ____ work well as a team.<br><span class="p-opt">a) They</span><span class="p-opt">b) Them</span></div><div class="p-q"><b>13.</b> Did you hear an update if ____ was selected as the captain of the team?<br><span class="p-opt">a) I</span><span class="p-opt">b) you</span></div><div class="p-q"><b>14.</b> The teacher told ____ to get ready for a quiz.<br><span class="p-opt">a) them</span><span class="p-opt">b) we</span></div><div class="p-q"><b>15.</b> Winning the championship game is the best prize for ____.<br><span class="p-opt">a) us</span><span class="p-opt">b) we</span></div><h2 class="p-part-title">Part IV — Find the Indefinite Pronoun</h2><div class="p-q"><b>16.</b> Which word is the indefinite pronoun? "We had our trip last summer in Davao and everyone enjoyed it."<br><span class="p-opt">a) everyone</span><span class="p-opt">b) We</span><span class="p-opt">c) our</span><span class="p-opt">d) it</span></div><div class="p-q"><b>17.</b> Which word is the indefinite pronoun? "Because of what happened, many are unwilling to follow her."<br><span class="p-opt">a) many</span><span class="p-opt">b) her</span><span class="p-opt">c) what</span><span class="p-opt">d) unwilling</span></div><div class="p-q"><b>18.</b> Which word is the indefinite pronoun? "Ms. Constantino asked someone to go to the office."<br><span class="p-opt">a) someone</span><span class="p-opt">b) Constantino</span><span class="p-opt">c) office</span><span class="p-opt">d) asked</span></div><div class="p-q"><b>19.</b> Which word is the indefinite pronoun? "Only a few got low scores."<br><span class="p-opt">a) a few</span><span class="p-opt">b) Only</span><span class="p-opt">c) low</span><span class="p-opt">d) scores</span></div><div class="p-q"><b>20.</b> Which word is the indefinite pronoun? "Anything can happen when you believe."<br><span class="p-opt">a) Anything</span><span class="p-opt">b) you</span><span class="p-opt">c) happen</span><span class="p-opt">d) believe</span></div><div class="p-q"><b>21.</b> Which word is the indefinite pronoun? "Nobody found the missing dog."<br><span class="p-opt">a) Nobody</span><span class="p-opt">b) found</span><span class="p-opt">c) missing</span><span class="p-opt">d) dog</span></div><div class="p-q"><b>22.</b> Which word is the indefinite pronoun? "Omar wondered if something was wrong with the internet connection."<br><span class="p-opt">a) something</span><span class="p-opt">b) Omar</span><span class="p-opt">c) wrong</span><span class="p-opt">d) connection</span></div><div class="p-q"><b>23.</b> Which word is the indefinite pronoun? "Martina asked me to tell everybody that she would be ready soon."<br><span class="p-opt">a) everybody</span><span class="p-opt">b) me</span><span class="p-opt">c) she</span><span class="p-opt">d) Martina</span></div><div class="p-break"></div><h2 class="p-part-title">Part V — True or False</h2><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>24.</b> A letter is a handwritten message by a sender to a receiver.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>25.</b> The greeting of a letter ends with a period.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>26.</b> The greeting of a letter starts with "Dear."</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>27.</b> The heading of a letter tells the date when the sender wrote it.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>28.</b> The signature shows the typed name of the sender.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>29.</b> The closing signals the end of the letter and ends with a comma.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>30.</b> The body of a letter contains the message.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>31.</b> Pronouns are words used to replace a noun.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>32.</b> Personal pronouns refer to persons, animals, or things.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>33.</b> The case of a pronoun deals with how the pronoun is spelled.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>34.</b> A subject pronoun is doing the action in a sentence.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>35.</b> An object pronoun is the one doing the action.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>36.</b> In "Cassie's mother brought her a bag," the pronoun "her" is an object.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>37.</b> In "They are going to watch a movie tonight," the pronoun "They" is an object.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>38.</b> Indefinite pronouns identify clearly what they are referring to.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>39.</b> "Everyone" is an indefinite pronoun.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>40.</b> "Nobody" is a personal pronoun.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>41.</b> "Some" and "none" are indefinite pronouns.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>42.</b> "We" is an object pronoun.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>43.</b> In "Winning the championship game is the best prize for us," the pronoun "us" is an object.</div><div class="p-break"></div><h2 class="p-part-title">Part VI — Compose a Sentence Using the Pronoun</h2><div class="p-q"><b>44.</b> we<br><br>_________________________________________________</div><div class="p-q"><b>45.</b> me<br><br>_________________________________________________</div><div class="p-q"><b>46.</b> you (as object)<br><br>_________________________________________________</div><div class="p-q"><b>47.</b> some<br><br>_________________________________________________</div><div class="p-q"><b>48.</b> none<br><br>_________________________________________________</div><div class="p-break"></div><h2 class="p-part-title">✅ Complete Answer Key</h2><div class="p-key-part-title">Part I — Parts of a Letter</div><div class="p-key-grid"><div class="p-key-pill">1. <b>Heading</b></div><div class="p-key-pill">2. <b>Greeting</b></div><div class="p-key-pill">3. <b>Body</b></div><div class="p-key-pill">4. <b>Closing</b></div><div class="p-key-pill">5. <b>Signature</b></div></div><div class="p-key-part-title">Part II — Subject or Object</div><div class="p-key-grid"><div class="p-key-pill">6. <b>Subject</b></div><div class="p-key-pill">7. <b>Object</b></div><div class="p-key-pill">8. <b>Subject</b></div><div class="p-key-pill">9. <b>Subject</b></div><div class="p-key-pill">10. <b>Object</b></div></div><div class="p-key-part-title">Part III — Pronoun</div><div class="p-key-grid"><div class="p-key-pill">11. <b>her</b></div><div class="p-key-pill">12. <b>They</b></div><div class="p-key-pill">13. <b>I</b></div><div class="p-key-pill">14. <b>them</b></div><div class="p-key-pill">15. <b>us</b></div></div><div class="p-key-part-title">Part IV — Indefinite Pronoun</div><div class="p-key-grid"><div class="p-key-pill">16. <b>everyone</b></div><div class="p-key-pill">17. <b>many</b></div><div class="p-key-pill">18. <b>someone</b></div><div class="p-key-pill">19. <b>a few</b></div><div class="p-key-pill">20. <b>Anything</b></div><div class="p-key-pill">21. <b>Nobody</b></div><div class="p-key-pill">22. <b>something</b></div><div class="p-key-pill">23. <b>everybody</b></div></div><div class="p-key-part-title">Part V — True or False</div><div class="p-key-grid"><div class="p-key-pill">24. <b>True</b></div><div class="p-key-pill">25. <b>False</b></div><div class="p-key-pill">26. <b>True</b></div><div class="p-key-pill">27. <b>True</b></div><div class="p-key-pill">28. <b>False</b></div><div class="p-key-pill">29. <b>True</b></div><div class="p-key-pill">30. <b>True</b></div><div class="p-key-pill">31. <b>True</b></div><div class="p-key-pill">32. <b>True</b></div><div class="p-key-pill">33. <b>False</b></div><div class="p-key-pill">34. <b>True</b></div><div class="p-key-pill">35. <b>False</b></div><div class="p-key-pill">36. <b>True</b></div><div class="p-key-pill">37. <b>False</b></div><div class="p-key-pill">38. <b>False</b></div><div class="p-key-pill">39. <b>True</b></div><div class="p-key-pill">40. <b>False</b></div><div class="p-key-pill">41. <b>True</b></div><div class="p-key-pill">42. <b>False</b></div><div class="p-key-pill">43. <b>True</b></div></div><div class="p-key-part-title">Part VI — Sample Sentences (other correct sentences are acceptable)</div><div class="p-q"><b>44.</b> We are going to school today.</div><div class="p-q"><b>45.</b> My mother asked me to clean my room.</div><div class="p-q"><b>46.</b> I will help you with your homework.</div><div class="p-q"><b>47.</b> Some of the students brought their books.</div><div class="p-q"><b>48.</b> None of the students were absent today.</div>
+</div>
+
+</body>
+</html>
