@@ -1,0 +1,1720 @@
+<!DOCTYPE html>
+<html lang="tl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🎭 MAPEH: BMI, Dance, Drama &amp; Visual Arts Reviewer 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --gold: #f59e0b;
+  --gold-dark: #b45309;
+  --blue: #3b82f6;
+  --blue-dark: #1d4ed8;
+  --red: #ef4444;
+  --green: #22c55e;
+  --bg: #0c1a0e;
+  --surface: #132015;
+  --surface2: #1a2e1d;
+  --text: #f0fdf4;
+  --muted: #86efac;
+  --border: #166534;
+}
+
+body {
+  font-family: 'Baloo 2', cursive;
+  background: var(--bg);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--text);
+  background-image:
+    radial-gradient(ellipse at 10% 30%, rgba(245,158,11,.06) 0%, transparent 55%),
+    radial-gradient(ellipse at 90% 70%, rgba(59,130,246,.06) 0%, transparent 55%);
+}
+
+header {
+  width: 100%;
+  background: linear-gradient(135deg, #14532d, #1e3a5f);
+  border-bottom: 2px solid var(--gold-dark);
+  padding: 13px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 4px 30px rgba(0,0,0,.5);
+}
+.header-icon { font-size: 2rem; animation: float 3s ease-in-out infinite; }
+@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
+
+header h1 {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.45rem;
+  background: linear-gradient(90deg, var(--gold), #fde68a, var(--gold));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+header .sub { font-size: .72rem; color: var(--muted); margin-top: 1px; }
+
+.header-controls { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+.score-pill {
+  background: rgba(245,158,11,.15);
+  border: 1px solid rgba(245,158,11,.4);
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-weight: 800;
+  font-size: .85rem;
+  color: var(--gold);
+}
+.audio-btn {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  background: var(--surface2);
+  color: var(--text);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all .2s;
+  display: flex; align-items: center; justify-content: center;
+}
+.audio-btn:hover, .audio-btn.active { background: #14532d; border-color: var(--gold); }
+
+.chat-wrap {
+  width: 100%; max-width: 700px; flex: 1;
+  display: flex; flex-direction: column;
+  padding: 16px 14px 0;
+}
+
+#chat-box {
+  flex: 1; overflow-y: auto;
+  display: flex; flex-direction: column;
+  gap: 14px; padding-bottom: 10px;
+  max-height: calc(100vh - 200px);
+  scroll-behavior: smooth;
+}
+#chat-box::-webkit-scrollbar { width: 4px; }
+#chat-box::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+.msg { display: flex; gap: 8px; }
+.msg.user { flex-direction: row-reverse; }
+
+.avatar {
+  width: 34px; height: 34px; border-radius: 50%;
+  font-size: 1rem; display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 2px;
+}
+.msg.bot .avatar { background: linear-gradient(135deg, #14532d, #1e3a5f); border: 1.5px solid rgba(245,158,11,.4); }
+.msg.user .avatar { background: linear-gradient(135deg, #1e3a5f, #14532d); border: 1.5px solid rgba(59,130,246,.3); }
+
+.bubble {
+  max-width: 80%;
+  padding: 11px 16px;
+  border-radius: 18px;
+  font-size: .9rem;
+  line-height: 1.65;
+  animation: pop .22s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes pop { from{transform:scale(.88) translateY(6px);opacity:0} to{transform:scale(1) translateY(0);opacity:1} }
+
+.msg.bot .bubble {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-bottom-left-radius: 5px;
+}
+.msg.user .bubble {
+  background: linear-gradient(135deg, #1e3a5f, var(--blue-dark));
+  border-bottom-right-radius: 5px;
+}
+
+/* chips */
+.chip {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: rgba(245,158,11,.12);
+  border: 1.5px solid rgba(245,158,11,.4);
+  color: var(--gold);
+  border-radius: 30px;
+  padding: 5px 13px; margin: 5px 4px 0 0;
+  font-size: .8rem; font-weight: 700;
+  cursor: pointer; transition: all .15s;
+  user-select: none; font-family: 'Baloo 2', cursive;
+}
+.chip:hover {
+  background: var(--gold-dark); color: white;
+  border-color: var(--gold);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(245,158,11,.3);
+}
+
+/* topic tag */
+.topic-tag {
+  display: inline-block;
+  background: linear-gradient(135deg, #14532d, #166534);
+  border: 1px solid var(--gold-dark);
+  color: var(--gold);
+  font-size: .68rem; font-weight: 800;
+  border-radius: 20px; padding: 2px 10px;
+  margin-bottom: 5px; letter-spacing: .5px;
+  text-transform: uppercase;
+}
+
+/* multiple choice */
+.mc-options { display: flex; flex-direction: column; gap: 7px; margin-top: 10px; width: 100%; }
+.mc-btn {
+  display: flex; align-items: center; gap: 10px;
+  background: rgba(255,255,255,.03);
+  border: 1.5px solid var(--border);
+  border-radius: 12px; padding: 9px 14px;
+  color: var(--text); font-family: 'Baloo 2', cursive;
+  font-size: .87rem; font-weight: 600;
+  cursor: pointer; transition: all .15s; text-align: left; width: 100%;
+}
+.mc-btn:hover:not(:disabled) {
+  background: rgba(245,158,11,.12); border-color: var(--gold);
+  color: var(--gold); transform: translateX(3px);
+}
+.mc-btn .letter {
+  display: flex; align-items: center; justify-content: center;
+  width: 26px; height: 26px; border-radius: 8px;
+  background: rgba(245,158,11,.15); border: 1px solid rgba(245,158,11,.35);
+  color: var(--gold); font-size: .78rem; font-weight: 800;
+  flex-shrink: 0; transition: all .15s;
+}
+.mc-btn:hover:not(:disabled) .letter { background: var(--gold-dark); color: white; border-color: var(--gold-dark); }
+.mc-btn.correct { background: rgba(34,197,94,.15)!important; border-color: #22c55e!important; color: #22c55e!important; cursor: default; }
+.mc-btn.correct .letter { background: #22c55e!important; color: white!important; border-color: #22c55e!important; }
+.mc-btn.wrong { background: rgba(239,68,68,.12)!important; border-color: #ef4444!important; color: #ef4444!important; cursor: default; }
+.mc-btn.wrong .letter { background: #ef4444!important; color: white!important; border-color: #ef4444!important; }
+.mc-btn:disabled { cursor: default; transform: none!important; }
+
+/* speaker wave */
+.speaker-wave {
+  display: inline-flex; align-items: flex-end;
+  gap: 2px; height: 14px; margin-left: 6px; vertical-align: middle;
+}
+.speaker-wave span {
+  display: block; width: 3px; border-radius: 2px;
+  background: var(--gold); animation: wave 1s ease-in-out infinite;
+}
+.speaker-wave span:nth-child(1){height:4px;animation-delay:0s}
+.speaker-wave span:nth-child(2){height:10px;animation-delay:.1s}
+.speaker-wave span:nth-child(3){height:6px;animation-delay:.2s}
+.speaker-wave span:nth-child(4){height:12px;animation-delay:.15s}
+.speaker-wave span:nth-child(5){height:4px;animation-delay:.05s}
+@keyframes wave{0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.8)}}
+
+/* typing */
+.typing {
+  display: flex; gap: 4px; padding: 12px 16px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 18px; border-bottom-left-radius: 5px; width: fit-content;
+}
+.dot { width: 7px; height: 7px; border-radius: 50%; background: var(--gold); animation: bounce .9s infinite; }
+.dot:nth-child(2){animation-delay:.15s} .dot:nth-child(3){animation-delay:.3s}
+@keyframes bounce{0%,80%,100%{transform:translateY(0);opacity:.6}40%{transform:translateY(-7px);opacity:1}}
+
+/* input bar */
+.input-bar {
+  width: 100%; max-width: 700px;
+  padding: 10px 14px 18px;
+  display: flex; gap: 8px;
+  background: var(--bg); position: sticky; bottom: 0;
+}
+#user-input {
+  flex: 1; padding: 12px 18px;
+  border: 2px solid var(--border); border-radius: 30px;
+  font-family: 'Baloo 2', cursive; font-size: .92rem;
+  outline: none; background: var(--surface); color: var(--text);
+  transition: border-color .2s, box-shadow .2s;
+}
+#user-input::placeholder { color: var(--muted); }
+#user-input:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(245,158,11,.12); }
+
+#send-btn {
+  width: 48px; height: 48px; border-radius: 50%; border: none;
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  color: white; font-size: 1.1rem; cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 3px 14px rgba(245,158,11,.4); flex-shrink: 0;
+}
+#send-btn:hover { transform: scale(1.08); box-shadow: 0 5px 20px rgba(245,158,11,.55); }
+#send-btn:disabled { opacity: .5; transform: none; }
+
+/* result modal */
+.result-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.75); backdrop-filter: blur(6px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 100; opacity: 0; pointer-events: none; transition: opacity .3s;
+}
+.result-overlay.show { opacity: 1; pointer-events: all; }
+.result-card {
+  background: linear-gradient(135deg, #132015, #0c1a0e);
+  border: 2px solid var(--gold-dark);
+  border-radius: 24px; padding: 36px 40px;
+  text-align: center; max-width: 380px; width: 90%;
+  box-shadow: 0 20px 60px rgba(0,0,0,.6);
+  transform: scale(.9); transition: transform .3s cubic-bezier(.34,1.56,.64,1);
+}
+.result-overlay.show .result-card { transform: scale(1); }
+.result-emoji { font-size: 4rem; margin-bottom: 12px; display: block; }
+.result-title {
+  font-family: 'Fredoka One', cursive; font-size: 1.7rem; margin-bottom: 6px;
+  background: linear-gradient(90deg, var(--gold), #fde68a);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.result-score { font-size: 3rem; font-weight: 900; margin: 10px 0; color: white; }
+.result-msg { color: var(--muted); font-size: .9rem; margin-bottom: 22px; }
+.result-btn {
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  border: none; border-radius: 30px; padding: 12px 30px;
+  color: white; font-family: 'Baloo 2', cursive; font-weight: 800;
+  font-size: 1rem; cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+  box-shadow: 0 4px 16px rgba(245,158,11,.35);
+}
+.result-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 22px rgba(245,158,11,.5); }
+
+/* scenario card for identify questions */
+.scenario-card {
+  background: rgba(245,158,11,.07);
+  border: 1px solid rgba(245,158,11,.25);
+  border-radius: 12px; padding: 10px 14px;
+  margin: 8px 0 6px; font-style: italic;
+  font-size: .87rem; color: #fde68a; line-height: 1.5;
+}
+
+/* ── Notes Panel ─────────────────────────────────────────────── */
+.notes-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.78); backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 200; opacity: 0; pointer-events: none; transition: opacity .3s;
+}
+.notes-overlay.show { opacity: 1; pointer-events: all; }
+.notes-panel {
+  background: linear-gradient(160deg, #0c1a0e, #132015);
+  border: 2px solid var(--gold-dark);
+  border-radius: 20px;
+  width: 92%; max-width: 720px;
+  max-height: 88vh;
+  display: flex; flex-direction: column;
+  box-shadow: 0 24px 60px rgba(0,0,0,.7);
+  overflow: hidden;
+  transform: translateY(30px);
+  transition: transform .35s cubic-bezier(.34,1.2,.64,1);
+}
+.notes-overlay.show .notes-panel { transform: translateY(0); }
+.notes-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 22px; border-bottom: 1px solid var(--border);
+  background: linear-gradient(135deg, #14532d44, #1e3a5f44);
+}
+.notes-header h2 { font-family: 'Fredoka One', cursive; font-size: 1.3rem; color: var(--gold); }
+.notes-close {
+  width: 34px; height: 34px; border-radius: 50%;
+  border: 1.5px solid var(--border); background: var(--surface2);
+  color: var(--text); font-size: 1rem; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; transition: all .2s;
+}
+.notes-close:hover { background: #b91c1c; border-color: #ef4444; }
+.notes-body { overflow-y: auto; padding: 20px 22px; flex: 1; }
+.notes-body::-webkit-scrollbar { width: 4px; }
+.notes-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+.notes-topic { margin-bottom: 28px; }
+.notes-topic-title {
+  font-family: 'Fredoka One', cursive; font-size: 1.05rem;
+  color: var(--gold); margin-bottom: 10px;
+  padding-bottom: 6px; border-bottom: 1px solid var(--border);
+}
+.notes-item {
+  display: flex; gap: 10px; align-items: flex-start;
+  padding: 7px 0; border-bottom: 1px solid rgba(255,255,255,.04);
+  font-size: .87rem; line-height: 1.55;
+}
+.notes-item:last-child { border-bottom: none; }
+.notes-term { font-weight: 800; color: var(--gold); min-width: 150px; flex-shrink: 0; font-size: .84rem; }
+.notes-def { color: #d1fae5; }
+.notes-tabs {
+  display: flex; flex-wrap: wrap; gap: 8px; padding: 14px 22px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(0,0,0,.15);
+}
+.notes-tab {
+  padding: 12px 20px; border-radius: 10px;
+  border: 1.5px solid var(--border); 
+  background: rgba(255,255,255,.04); color: var(--muted);
+  font-family: 'Baloo 2', cursive; font-size: .9rem; font-weight: 700;
+  cursor: pointer; transition: all .15s; white-space: nowrap;
+  min-height: 48px; display: flex; align-items: center;
+}
+.notes-tab.active { background: var(--surface); color: var(--gold); border-color: var(--gold-dark); }
+.notes-tab:hover:not(.active) { color: var(--text); background: var(--surface2); }
+.notes-section { display: none; }
+.notes-section.active { display: block; }
+
+
+/* ── Print button in notes header ─────────────────────────────── */
+.notes-header-actions { display: flex; align-items: center; gap: 10px; }
+.print-btn {
+  display: flex; align-items: center; gap: 6px;
+  background: rgba(245,158,11,.12);
+  border: 1.5px solid rgba(245,158,11,.4);
+  color: var(--gold);
+  border-radius: 20px;
+  padding: 7px 14px;
+  font-family: 'Baloo 2', cursive;
+  font-size: .78rem;
+  font-weight: 800;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all .15s;
+}
+.print-btn:hover { background: var(--gold); color: #0c1a0e; border-color: var(--gold); }
+.print-btn.active { background: var(--gold); color: #0c1a0e; border-color: var(--gold); }
+
+/* ── On-screen Practice Test / Answer Key ─────────────────────── */
+.ptest-part-title {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1rem;
+  color: var(--gold);
+  margin: 22px 0 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+.ptest-part-title:first-child { margin-top: 0; }
+.ptest-q {
+  font-size: .87rem;
+  line-height: 1.6;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed rgba(255,255,255,.06);
+  color: #d1fae5;
+}
+.ptest-q b { color: var(--gold); }
+.ptest-q .opt { display: block; margin: 2px 0 2px 18px; color: #d1fae5; }
+.ptest-bank {
+  background: rgba(59,130,246,.08);
+  border: 1px solid rgba(59,130,246,.3);
+  border-radius: 10px;
+  padding: 10px 16px;
+  margin-bottom: 14px;
+  font-size: .82rem;
+  color: #dbeafe;
+  line-height: 1.6;
+}
+.key-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.key-pill {
+  background: rgba(245,158,11,.1);
+  border: 1px solid rgba(245,158,11,.25);
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: .78rem;
+  color: #fde68a;
+}
+.key-pill b { color: #34d399; }
+
+/* ── Print / Save-as-PDF styles ──────────────────────────────────
+   By default everything is hidden from print. When body carries
+   .printing-test, only #print-area (a light-themed clone of the
+   Practice Test + Answer Key) is shown, laid out for paper. ──── */
+@media print {
+  body * { visibility: hidden; }
+  #print-area, #print-area * { visibility: visible; }
+  #print-area {
+    display: block !important;
+    position: absolute; top: 0; left: 0; width: 100%;
+    background: #fff; color: #14290f;
+    font-family: 'Helvetica', Arial, sans-serif;
+    font-size: 10.5pt;
+    line-height: 1.5;
+  }
+  #print-area .p-cover { text-align: center; padding-top: 40px; }
+  #print-area .p-cover .p-icon { font-size: 34pt; }
+  #print-area .p-cover h1 { font-size: 19pt; color: #b45309; margin: 8px 0 4px; }
+  #print-area .p-cover .p-sub { font-size: 10.5pt; color: #166534; margin-bottom: 20px; }
+  #print-area .p-info-box {
+    border: 1.5px solid #fcd34d; border-radius: 10px;
+    max-width: 460px; margin: 0 auto 20px; padding: 14px 20px;
+    text-align: left; font-size: 10pt;
+  }
+  #print-area .p-info-box div { margin: 6px 0; border-bottom: 1px dotted #fde68a; padding-bottom: 6px; }
+  #print-area .p-instructions {
+    max-width: 460px; margin: 0 auto; text-align: left;
+    background: #fffbeb; border: 1px solid #fcd34d; border-radius: 10px;
+    padding: 12px 18px; font-size: 9.5pt; color: #78350f;
+  }
+  #print-area h2.p-part-title {
+    font-size: 12.5pt; color: #fff;
+    background: linear-gradient(135deg, #b45309, #14532d) !important;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    padding: 6px 12px; border-radius: 7px; margin: 18px 0 10px;
+    page-break-after: avoid;
+  }
+  #print-area .p-bank {
+    background: #f0fdf4 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    border: 1px solid #86efac; border-radius: 8px; padding: 8px 14px;
+    margin-bottom: 12px; font-size: 9.5pt; color: #14532d;
+  }
+  #print-area .p-q {
+    margin-bottom: 8px; padding-bottom: 8px;
+    border-bottom: 1px dotted #fde68a; font-size: 10pt;
+    page-break-inside: avoid; color: #14290f;
+  }
+  #print-area .p-q b { color: #b45309; }
+  #print-area .p-q .p-blank { display: inline-block; min-width: 65px; border-bottom: 1px solid #64748b; }
+  #print-area .p-q .p-opt { display: block; margin: 2px 0 0 20px; color: #365314; }
+  #print-area .p-break { page-break-before: always; }
+  #print-area .p-key-part-title {
+    font-size: 11pt; color: #b45309; font-weight: bold;
+    margin: 14px 0 8px; border-bottom: 2px solid #b45309; padding-bottom: 4px;
+  }
+  #print-area .p-key-grid {
+    display: grid; grid-template-columns: repeat(5, 1fr);
+    gap: 5px 8px; margin-bottom: 14px;
+  }
+  #print-area .p-key-pill {
+    background: #f0fdf4 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    border: 1px solid #86efac; border-radius: 6px;
+    padding: 4px 8px; font-size: 8.5pt; color: #166534;
+  }
+  #print-area .p-key-pill b { color: #b45309; }
+  @page { size: letter; margin: 1.5cm 1.8cm; }
+}
+#print-area { display: none; }
+
+
+/* ── Chapter Summary / Tandaan / Memory boxes (fix: previously missing) ── */
+.chapter-summary {
+  background: linear-gradient(135deg, rgba(59,130,246,.1), rgba(34,197,94,.08));
+  border: 1px solid rgba(59,130,246,.25);
+  border-left: 4px solid var(--blue);
+  border-radius: 12px;
+  padding: 14px 18px;
+  margin-bottom: 18px;
+  font-size: .88rem;
+  line-height: 1.65;
+  color: #dbeafe;
+}
+.tandaan-box {
+  background: rgba(245,158,11,.08);
+  border: 1px solid rgba(245,158,11,.3);
+  border-left: 4px solid var(--gold);
+  border-radius: 12px;
+  padding: 12px 18px;
+  margin: 14px 0;
+  font-size: .86rem;
+  line-height: 1.6;
+  color: #fde68a;
+}
+.tandaan-label {
+  display: block;
+  font-family: 'Baloo 2', cursive;
+  font-size: .8rem;
+  color: var(--gold);
+  letter-spacing: .5px;
+  margin-bottom: 5px;
+}
+.memory-box {
+  background: rgba(34,197,94,.08);
+  border: 1px solid rgba(34,197,94,.3);
+  border-left: 4px solid var(--green);
+  border-radius: 12px;
+  padding: 12px 18px;
+  margin: 14px 0 22px;
+  font-size: .86rem;
+  line-height: 1.6;
+  color: #bbf7d0;
+}
+.memory-label {
+  display: block;
+  font-family: 'Baloo 2', cursive;
+  font-size: .8rem;
+  color: var(--green);
+  letter-spacing: .5px;
+  margin-bottom: 5px;
+}
+.compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0 20px;
+  font-size: .82rem;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.compare-table th {
+  background: linear-gradient(135deg, var(--blue-dark), var(--gold-dark));
+  color: white;
+  text-align: left;
+  padding: 9px 12px;
+  font-size: .78rem;
+  text-transform: uppercase;
+  letter-spacing: .4px;
+}
+.compare-table td {
+  padding: 9px 12px;
+  border-top: 1px solid var(--border);
+  color: var(--text);
+  vertical-align: top;
+}
+.compare-table tr:nth-child(even) td { background: rgba(255,255,255,.02); }
+
+/* ── Story Box (for reading Bible stories aloud) ─────────────────── */
+.story-box {
+  background: rgba(255,255,255,.03);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px 20px;
+  margin-bottom: 16px;
+  font-size: .92rem;
+  line-height: 1.8;
+  color: var(--text);
+}
+.story-box p { margin-bottom: 10px; }
+.story-box p:last-child { margin-bottom: 0; }
+.story-ref {
+  display: block;
+  text-align: right;
+  font-style: italic;
+  color: var(--muted);
+  font-size: .8rem;
+  margin-top: 10px;
+}
+.story-label {
+  display: block;
+  font-family: 'Baloo 2', cursive;
+  font-size: .9rem;
+  color: var(--gold);
+  letter-spacing: .5px;
+  margin-bottom: 10px;
+}
+/* ── Raw Notes (original document view) ──────────────────────── */
+.rawnotes-intro {
+  font-size: .82rem;
+  color: var(--muted);
+  line-height: 1.6;
+  background: rgba(59,130,246,.1);
+  border: 1px solid rgba(59,130,246,.3);
+  border-left: 4px solid var(--blue);
+  border-radius: 10px;
+  padding: 12px 18px;
+  margin-bottom: 20px;
+}
+.rawnotes-doc {
+  font-family: 'Lora', Georgia, serif;
+  line-height: 1.75;
+}
+.rawnotes-doc p {
+  font-size: .95rem;
+  margin-bottom: 14px;
+  color: #e2f5e6;
+}
+.rawnotes-doc strong { color: var(--gold); font-weight: 700; }
+.rawnotes-doc em { color: var(--muted); font-style: italic; }
+.rawnotes-doc h3.doc-heading {
+  font-family: 'Baloo 2', cursive;
+  font-size: 1.05rem;
+  color: var(--gold);
+  margin: 26px 0 12px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid var(--border);
+}
+.rawnotes-doc h3.doc-heading:first-child { margin-top: 0; }
+.rawnotes-doc ul, .rawnotes-doc ol {
+  margin: 0 0 14px 26px;
+  color: #e2f5e6;
+}
+.rawnotes-doc li { margin-bottom: 6px; font-size: .95rem; }
+.rawnotes-doc table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0 20px;
+  font-size: .82rem;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.rawnotes-doc th {
+  background: linear-gradient(135deg, var(--blue-dark), var(--gold-dark));
+  color: white;
+  text-align: left;
+  padding: 9px 12px;
+  font-size: .78rem;
+}
+.rawnotes-doc td {
+  padding: 9px 12px;
+  border-top: 1px solid var(--border);
+  color: var(--text);
+  vertical-align: top;
+}
+.rawnotes-doc tr:nth-child(even) td { background: rgba(255,255,255,.02); }
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE: TABLET (≤820px)
+   ═══════════════════════════════════════════════════════════════ */
+@media (max-width: 820px) {
+  .notes-panel { width: 95%; max-height: 92vh; }
+  .notes-tabs { padding: 12px 16px; gap: 6px; }
+  .notes-tab { padding: 10px 14px; font-size: .82rem; min-height: 42px; }
+  .notes-body { padding: 16px; }
+  .notes-header { padding: 14px 16px; }
+  .chat-wrap { padding: 14px 10px 0; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE: MOBILE (≤600px)
+   ═══════════════════════════════════════════════════════════════ */
+@media (max-width: 600px) {
+  header {
+    padding: 10px 12px;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .header-icon { font-size: 1.5rem; }
+  header h1 { font-size: 1.05rem; line-height: 1.2; }
+  header .sub { font-size: .62rem; }
+  .header-controls { gap: 6px; margin-left: auto; }
+  .score-pill { padding: 4px 10px; font-size: .74rem; }
+  .audio-btn { width: 32px; height: 32px; font-size: .85rem; }
+
+  .chat-wrap { padding: 10px 6px 0; }
+  #chat-box { gap: 12px; }
+  .bubble { max-width: 88%; font-size: .88rem; padding: 10px 13px; }
+  .avatar { width: 30px; height: 30px; font-size: .85rem; }
+
+  .chip { font-size: .78rem; padding: 7px 12px; }
+  .mc-btn { font-size: .84rem; padding: 10px 12px; }
+  .mc-btn .letter { width: 22px; height: 22px; font-size: .74rem; }
+  .topic-tag { font-size: .68rem; }
+  .scenario-card { font-size: .88rem; padding: 10px 14px; }
+
+  .input-bar { padding: 8px 8px calc(8px + env(safe-area-inset-bottom)); gap: 8px; }
+  #user-input { font-size: .88rem; padding: 10px 14px; }
+  #send-btn { width: 40px; height: 40px; font-size: 1rem; }
+
+  .result-card { width: 92%; padding: 26px 20px; }
+  .result-emoji { font-size: 2.6rem; }
+  .result-title { font-size: 1.2rem; }
+  .result-score { font-size: 1.8rem; }
+
+  /* ── Notes panel: near-full-screen on phones ── */
+  .notes-overlay { align-items: flex-end; }
+  .notes-panel {
+    width: 100%; max-width: 100%;
+    max-height: 94vh;
+    border-radius: 20px 20px 0 0;
+    border-left: none; border-right: none; border-bottom: none;
+  }
+  .notes-header { padding: 12px 14px; flex-wrap: wrap; gap: 8px; }
+  .notes-header h2 { font-size: 1.05rem; flex: 1 1 100%; }
+  .notes-header-actions { flex-wrap: wrap; gap: 6px; width: 100%; justify-content: flex-start; }
+  .print-btn { font-size: .7rem; padding: 6px 11px; }
+  .notes-close { width: 30px; height: 30px; font-size: .9rem; margin-left: auto; }
+
+  .notes-tabs { padding: 10px 12px; gap: 5px; }
+  .notes-tab { padding: 8px 12px; font-size: .76rem; min-height: 38px; }
+  .notes-body { padding: 14px; }
+
+  .notes-item { flex-direction: column; gap: 2px; }
+  .notes-term { min-width: 0; font-size: .82rem; }
+  .notes-def { font-size: .84rem; }
+  .notes-topic-title { font-size: .95rem; }
+  .chapter-summary, .memory-box, .tandaan-box, .story-box, .verse-card { font-size: .82rem; padding: 12px 14px; }
+
+  /* ── Tables: allow horizontal scroll instead of squeezing ── */
+  .compare-table { display: block; overflow-x: auto; white-space: nowrap; }
+  .compare-table th, .compare-table td { white-space: normal; min-width: 110px; }
+
+  .key-grid { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 5px; }
+  .key-pill { font-size: .72rem; padding: 5px 8px; }
+  .ptest-part-title { font-size: .92rem; }
+  .ptest-q { font-size: .82rem; }
+  .ptest-bank { font-size: .78rem; padding: 8px 12px; }
+
+  .rawnotes-doc p, .rawnotes-doc li { font-size: .87rem; }
+  .rawnotes-doc h3.doc-heading { font-size: .95rem; }
+  .rawnotes-doc table { display: block; overflow-x: auto; white-space: nowrap; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE: VERY SMALL PHONES (≤380px)
+   ═══════════════════════════════════════════════════════════════ */
+@media (max-width: 380px) {
+  header h1 { font-size: .92rem; }
+  header .sub { display: none; }
+  .score-pill span { font-size: .7rem; }
+  .bubble { max-width: 92%; font-size: .84rem; }
+  .notes-tab { font-size: .7rem; padding: 7px 10px; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE: LANDSCAPE PHONES (short height)
+   ═══════════════════════════════════════════════════════════════ */
+@media (max-height: 480px) and (orientation: landscape) {
+  .notes-panel { max-height: 98vh; }
+  .notes-tabs { padding: 6px 12px; }
+  .notes-tab { min-height: 32px; padding: 6px 10px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-icon">🎭</div>
+  <div>
+    <h1>BMI, Dance, Drama &amp; Visual Arts</h1>
+    <div class="sub">Body Mass Index · Sinulog, Ati-Atihan &amp; Subli · Senakulo &amp; Panunuluyan · Palaspas &amp; Parol</div>
+  </div>
+  <div class="header-controls">
+    <div class="score-pill">⭐ <span id="score-val">0</span> / <span id="total-val">0</span></div>
+    <button class="audio-btn" id="notes-toggle" title="Open Reviewer" onclick="document.getElementById('notes-overlay').classList.add('show')">📖</button>
+    <button class="audio-btn active" id="audio-toggle" title="Toggle Audio">🔊</button>
+  </div>
+</header>
+
+<div class="chat-wrap">
+  <div id="chat-box"></div>
+</div>
+
+<div class="input-bar">
+  <input type="text" id="user-input" placeholder="Type your answer here…" autocomplete="off" />
+  <button id="send-btn">➤</button>
+</div>
+
+<div class="result-overlay" id="result-overlay">
+  <div class="result-card">
+    <span class="result-emoji" id="res-emoji">🏆</span>
+    <div class="result-title">Quiz Complete!</div>
+    <div class="result-score"><span id="res-score">0</span>/<span id="res-total">0</span></div>
+    <div class="result-msg" id="res-msg">Great job!</div>
+    <button class="result-btn" onclick="restartApp()">🔄 Maglaro Ulit</button>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+// QUESTION BANK
+// ═══════════════════════════════════════════════════════════════
+const topics = {
+
+  "Body Mass Index (BMI)": [
+    { q: "What is the formula for Body Mass Index (BMI)?", a: "BMI = Weight (kg) ÷ Height² (m²)", hint: "Weight divided by height squared." },
+    { q: "In what units must weight and height be written to compute BMI?", a: "Weight in kilograms (kg) and height in meters (m)", hint: "Not centimeters." },
+    { q: "How do you change a height in centimeters to meters?", a: "Divide by 100; for example, 156 cm = 1.56 m", hint: "There are 100 cm in a meter." },
+    { q: "Which BMI range is underweight?", a: "18.4 and below", hint: "The lowest category." },
+    { q: "Which BMI range is normal?", a: "18.5 to 24.9", hint: "The healthy middle." },
+    { q: "Which BMI range is overweight?", a: "25 to 29.9", hint: "Just above normal." },
+    { q: "Which BMI range is obese?", a: "30 and above", hint: "The highest category." },
+    { q: "In the lesson's example, what is the BMI of a person who weighs 54 kg and is 156 cm tall?", a: "22.19, which is Normal", hint: "Convert 156 cm to 1.56 m first." },
+    { q: "In the lesson's example, what is 1.56 × 1.56?", a: "2.4336", hint: "This is the height squared." },
+    { q: "Compute the BMI of a person who weighs 40 kg and is 150 cm tall.", a: "17.78, which is Underweight", hint: "40 ÷ (1.5 × 1.5) = 40 ÷ 2.25." },
+    { q: "Compute the BMI of a person who weighs 62 kg and is 155 cm tall.", a: "25.81, which is Overweight", hint: "62 ÷ (1.55 × 1.55) = 62 ÷ 2.4025." },
+    { q: "Compute the BMI of a person who weighs 90 kg and is 160 cm tall.", a: "35.16, which is Obese", hint: "90 ÷ (1.6 × 1.6) = 90 ÷ 2.56." },
+  ],
+
+  "Rhythm, Pattern, and Movement in Dance": [
+    { q: "What guides the dancers in many local dances performed with live music?", a: "A strong, steady beat from drums or other percussion instruments", hint: "It helps them move in sync." },
+    { q: "How is rhythm evident in dance?", a: "In the precise timing of steps and how movements align with the music's pulse", hint: "Steps match the beat." },
+    { q: "What is pattern in dance?", a: "Repeated steps, formations, and group arrangements", hint: "Something repeated and visible." },
+    { q: "How are rhythm and pattern related in dance?", a: "When dancers follow a rhythm consistently, they create a visible pattern", hint: "Consistency creates a pattern." },
+    { q: "What is movement in dance?", a: "All the actions the dancers perform, such as stepping, turning, swaying, or jumping", hint: "Everything the dancers do." },
+    { q: "What shapes dance movements and lets a dance tell a story or show emotions?", a: "Both rhythm and pattern", hint: "Two elements together." },
+  ],
+
+  "Sinulog, Ati-Atihan, and Subli": [
+    { q: "Where does the sinulog originate?", a: "Cebu, Philippines", hint: "A province in the Visayas." },
+    { q: "Which festival features the sinulog, and whom does it honor?", a: "The Sinulog Festival, which honors the Santo Niño (the Child Jesus)", hint: "A Christ-child devotion." },
+    { q: "What is the distinctive pattern of the sinulog?", a: "One step forward, two steps backward, which mimics the flow of water currents", hint: "Like the movement of the sea." },
+    { q: "What is the sinulog pattern called, and what does its root word mean?", a: "Sinug, from the Cebuano word sug, meaning \"the sea\"", hint: "A Cebuano word." },
+    { q: "What kind of dance is the sinulog usually?", a: "A dance-prayer performed before the image of the Santo Niño", hint: "Both a dance and a prayer." },
+    { q: "Where does the ati-atihan dance come from?", a: "The Ati-Atihan Festival of Kalibo, Aklan", hint: "A province in Panay." },
+    { q: "Whom does the Ati-Atihan Festival also honor?", a: "The Santo Niño", hint: "The same as the Sinulog Festival." },
+    { q: "How are the movements of the ati-atihan described?", a: "Bigger and more energetic, with foot stomping, marching, and expansive arm motions", hint: "Large and lively." },
+    { q: "How does the ati-atihan differ from the sinulog in terms of pattern?", a: "It has more free movement and lacks a single unifying pattern across all performances", hint: "Sinulog has the sinug pattern." },
+    { q: "What stays the same in the ati-atihan despite its free movement?", a: "All movements remain strongly synchronized with the music's beat", hint: "Rhythm still guides the dancers." },
+    { q: "Where does the subli come from?", a: "Batangas, specifically the towns of Bauan and Alitagtag", hint: "A province in Southern Luzon." },
+    { q: "What was the subli originally?", a: "A sacred dance ritual dedicated to the Holy Cross of Alitagtag", hint: "A religious ritual." },
+    { q: "Where does the name \"subli\" come from?", a: "The Tagalog words subsob (to stoop or bend over) and bali (broken)", hint: "Two Tagalog words." },
+    { q: "How is the subli different from the sinulog and ati-atihan?", a: "It is a partner dance, while the sinulog and ati-atihan are group-oriented", hint: "Number of dancers." },
+    { q: "What posture is a defining characteristic of the subli?", a: "The male dancers' stooped or bent-over posture", hint: "Think of the word \"subsob.\"" },
+    { q: "What other movements are in the subli?", a: "Bowing and stepping, with dancers turning and moving in circles", hint: "Graceful movements." },
+  ],
+
+  "Rhythm, Pattern, and Movement in Drama": [
+    { q: "How is rhythm evident in drama?", a: "In the way actors deliver their lines, whether spoken or sung, sometimes in a slow, chant-like manner", hint: "How the lines sound." },
+    { q: "How does background music contribute to a scene?", a: "It sets the emotional tone, slow and serious for sad moments, or faster and more intense for exciting scenes", hint: "Music matches the mood." },
+    { q: "How are patterns seen in drama?", a: "In the organization of scenes in a clear sequence, the actors' formations and repeated actions, and recurring costumes and positioning", hint: "Think of chapters in a book." },
+    { q: "What does movement in drama refer to?", a: "How actors use their bodies to convey the story, often carefully planned and symbolic", hint: "Kneeling, raising arms, turning." },
+    { q: "Name some symbolic movements in drama.", a: "Kneeling, expressing respect, raising arms to show praise or sadness, or turning toward the audience to deliver a powerful line", hint: "Gestures with meaning." },
+  ],
+
+  "Senakulo and Panunuluyan": [
+    { q: "What is the senakulo?", a: "A theatrical drama that dramatizes the suffering, death, and resurrection of Jesus Christ", hint: "A Holy Week drama." },
+    { q: "When did the senakulo originate?", a: "In the mid-18th century in the Philippines", hint: "The 1700s." },
+    { q: "When is the senakulo typically performed?", a: "During Holy Week or Lent", hint: "Before Easter." },
+    { q: "How long can a full staged senakulo last in some regions?", a: "Seven to eight days", hint: "More than a week almost." },
+    { q: "When are shortened versions of the senakulo often performed?", a: "On Good Friday, focusing on scenes from the agony of Jesus Christ", hint: "A solemn day." },
+    { q: "How are the lines delivered in a senakulo?", a: "In a poetic, chant-like way, with clarity and strong emotion", hint: "Rhythmic delivery." },
+    { q: "What is the senakulo's pattern?", a: "A fixed sequence: Jesus' life, death, and resurrection in the same order each year", hint: "The order never changes." },
+    { q: "Give an example of a symbolic movement in the senakulo.", a: "Falling to the ground to depict pain, raising hands toward the heavens in prayer, or turning to the audience with a powerful gesture", hint: "Movements that show emotion." },
+    { q: "What is the panunuluyan?", a: "A dramatic and musical performance reenacting Joseph and Mary's search for shelter in Bethlehem on the night Jesus was born", hint: "A Christmas story." },
+    { q: "What does the Tagalog word \"panunuluyan\" mean?", a: "\"To seek shelter\" or \"to seek entry\"", hint: "Looking for a place to stay." },
+    { q: "When is the panunuluyan traditionally performed?", a: "On Christmas Eve, 24 December", hint: "The night before Christmas." },
+    { q: "What happens in the panunuluyan?", a: "Actors portraying Joseph and Mary go from house to house asking for a place to stay; they are turned away until they are offered a simple stable", hint: "A journey from door to door." },
+    { q: "What is the rhythm of the music in the panunuluyan?", a: "Slow, peaceful, calm, and repetitive", hint: "Gentle." },
+    { q: "What is the pattern of the panunuluyan?", a: "Joseph and Mary knock on several doors and are repeatedly refused; only the final house welcomes them", hint: "Repeated refusals." },
+    { q: "What do the movements in the panunuluyan look like?", a: "Simple yet meaningful; actors walk and knock deliberately and respectfully, bow politely, or raise their hands in supplication", hint: "Respectful gestures." },
+  ],
+
+  "Visual Arts: Palaspas and Parol": [
+    { q: "What is rhythm in visual art?", a: "The repetition of elements like shapes, lines, or colors, creating a visual \"beat\" or flow", hint: "Repeating elements." },
+    { q: "What is pattern in visual art?", a: "Repeated elements arranged in an organized and predictable way", hint: "It makes the art feel balanced." },
+    { q: "What is movement in visual art?", a: "The way the artwork directs your eyes around the composition; the picture does not actually move", hint: "A visual journey." },
+    { q: "What are palaspas?", a: "Intricately woven palm fronds seen in Catholic churches on Palm Sunday", hint: "Related to Palm Sunday." },
+    { q: "Why do Catholics bring palaspas to church on Palm Sunday?", a: "To reenact the scene where Jesus arrived in Jerusalem and was greeted by believers waving palm leaves", hint: "A scene from Jesus' entry." },
+    { q: "What repeated shapes are common in palaspas designs?", a: "Triangles, diamonds, and leaf-like forms", hint: "Three shapes." },
+    { q: "What kinds of lines do palaspas have?", a: "Straight, zigzag, and curved lines", hint: "Three types." },
+    { q: "What is a parol?", a: "A traditional Filipino Christmas decoration, a star-shaped lantern that symbolizes the Star of Bethlehem", hint: "A Christmas lantern." },
+    { q: "What materials are traditionally used to make a parol?", a: "Bamboo sticks and colorful Japanese paper", hint: "A frame and a covering." },
+    { q: "What materials do modern parols often use?", a: "Capiz shells, plastic, or metal, often with lights", hint: "Newer materials." },
+    { q: "How is rhythm seen in a parol?", a: "In the repetition of shapes like the star's points or rays, and in blinking lights in modern parols", hint: "Repeated points and lights." },
+    { q: "What pattern do most parol designs have?", a: "A central five-pointed star surrounded by repeating triangles, diamonds, or circles", hint: "A star in the middle." },
+    { q: "How do lines shape a parol?", a: "The bamboo frame gives strong straight lines, while cut paper, capiz, or plastic create smooth curves and delicate edges", hint: "Straight and curved lines." },
+  ],
+
+};
+
+// ── TRUE OR FALSE ────────────────────────────────────────────────────────────
+const trueOrFalse = [
+  { q: "BMI is computed as weight in kilograms divided by height in meters squared.", a: "true" },
+  { q: "A BMI of 18.4 or below is underweight.", a: "true" },
+  { q: "A BMI of 22 is in the overweight range.", a: "false" },
+  { q: "A BMI of 30 and above is obese.", a: "true" },
+  { q: "To compute BMI, height should be in centimeters.", a: "false" },
+  { q: "The sinulog originates from Cebu.", a: "true" },
+  { q: "The key pattern of the sinulog is two steps forward and one step backward.", a: "false" },
+  { q: "The word \"sug\" means \"the sea.\"", a: "true" },
+  { q: "The ati-atihan dance comes from Kalibo, Aklan.", a: "true" },
+  { q: "The ati-atihan has a single unifying pattern in every performance.", a: "false" },
+  { q: "The subli is a local dance from Batangas.", a: "true" },
+  { q: "The subli is a group dance like the sinulog and ati-atihan.", a: "false" },
+  { q: "The name \"subli\" comes from the Tagalog words subsob and bali.", a: "true" },
+  { q: "Male subli dancers often keep a stooped or bent-over posture.", a: "true" },
+  { q: "The senakulo originated in the mid-18th century in the Philippines.", a: "true" },
+  { q: "The senakulo is typically performed during Christmas.", a: "false" },
+  { q: "The scenes of the senakulo follow a fixed sequence.", a: "true" },
+  { q: "The panunuluyan is traditionally performed on Christmas Eve.", a: "true" },
+  { q: "In the panunuluyan, the first house welcomes Joseph and Mary.", a: "false" },
+  { q: "\"Panunuluyan\" means \"to seek shelter\" or \"to seek entry.\"", a: "true" },
+  { q: "Palaspas are woven palm fronds seen in churches on Palm Sunday.", a: "true" },
+  { q: "Movement in visual art means that the picture actually moves.", a: "false" },
+  { q: "A parol is traditionally made with bamboo sticks and colorful Japanese paper.", a: "true" },
+  { q: "In visual art, rhythm refers to the repetition of elements like shapes, lines, or colors.", a: "true" },
+];
+
+// ── IDENTIFY: DANCE/DRAMA/ART · ELEMENTS · BMI ──────────────────────────────
+const identifyQuestions = [
+  { q: "Its pattern of one step forward and two steps backward comes from a dance ritual usually performed to honor the Santo Niño.", a: "Sinulog", choices: ["Sinulog","Ati-Atihan","Subli","Senakulo"] },
+  { q: "This dance hails from Kalibo, Aklan, and is performed in honor of the Santo Niño.", a: "Ati-Atihan", choices: ["Ati-Atihan","Sinulog","Subli","Panunuluyan"] },
+  { q: "The name of this dance comes from the Tagalog words subsob and bali.", a: "Subli", choices: ["Subli","Sinulog","Ati-Atihan","Senakulo"] },
+  { q: "This drama is a play about the suffering, death, and resurrection of Jesus Christ that came about in the mid-18th century in the Philippines.", a: "Senakulo", choices: ["Senakulo","Panunuluyan","Subli","Sinulog"] },
+  { q: "This form of drama is typically performed on Christmas Eve in the Philippines.", a: "Panunuluyan", choices: ["Panunuluyan","Senakulo","Ati-Atihan","Subli"] },
+  { q: "A festival dance with bigger, more energetic movements, such as foot stomping and marching, and no single unifying pattern.", a: "Ati-Atihan", choices: ["Ati-Atihan","Sinulog","Subli","Senakulo"] },
+  { q: "A partner dance in which the male dancers keep a stooped or bent-over posture.", a: "Subli", choices: ["Subli","Sinulog","Ati-Atihan","Panunuluyan"] },
+  { q: "A drama in which actors go from house to house asking for a place to stay.", a: "Panunuluyan", choices: ["Panunuluyan","Senakulo","Sinulog","Subli"] },
+  { q: "Woven palm fronds brought to church on Palm Sunday.", a: "Palaspas", choices: ["Palaspas","Parol","Senakulo","Subli"] },
+  { q: "A star-shaped Christmas lantern that symbolizes the Star of Bethlehem.", a: "Parol", choices: ["Parol","Palaspas","Panunuluyan","Sinulog"] },
+  { q: "The repetition of shapes, lines, or colors that creates a visual \"beat\" or flow.", a: "Rhythm", choices: ["Rhythm","Pattern","Movement"] },
+  { q: "Repeated elements arranged in an organized and predictable way.", a: "Pattern", choices: ["Pattern","Rhythm","Movement"] },
+  { q: "The way an artwork directs your eyes around the composition.", a: "Movement", choices: ["Movement","Rhythm","Pattern"] },
+  { q: "A person has a BMI of 17.5. Which category is this?", a: "Underweight", choices: ["Underweight","Normal","Overweight","Obese"] },
+  { q: "A person has a BMI of 22.19. Which category is this?", a: "Normal", choices: ["Normal","Underweight","Overweight","Obese"] },
+  { q: "A person has a BMI of 18.5. Which category is this?", a: "Normal", choices: ["Normal","Underweight","Overweight","Obese"] },
+  { q: "A person has a BMI of 27.3. Which category is this?", a: "Overweight", choices: ["Overweight","Normal","Underweight","Obese"] },
+  { q: "A person has a BMI of 31. Which category is this?", a: "Obese", choices: ["Obese","Overweight","Normal","Underweight"] },
+  { q: "A person weighs 40 kg and is 150 cm tall. What is the BMI and category?", a: "17.78 (Underweight)", choices: ["17.78 (Underweight)","26.67 (Overweight)","22.22 (Normal)","31.11 (Obese)"] },
+  { q: "A person weighs 62 kg and is 155 cm tall. What is the BMI and category?", a: "25.81 (Overweight)", choices: ["25.81 (Overweight)","22.19 (Normal)","17.78 (Underweight)","35.16 (Obese)"] },
+  { q: "A person weighs 90 kg and is 160 cm tall. What is the BMI and category?", a: "35.16 (Obese)", choices: ["35.16 (Obese)","25.81 (Overweight)","22.86 (Normal)","17.78 (Underweight)"] },
+];
+
+// ═══════════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════════
+let state = {
+  awaiting: 'menu',
+  mode: null,
+  questions: [],
+  allAnswers: [],
+  qIndex: 0,
+  score: 0,
+  total: 0,
+  hintUsed: false,
+  audioEnabled: true,
+};
+
+// ═══════════════════════════════════════════════════════════════
+// TTS (UPGRADED FOR TRUE FILIPINO ACCENT)
+// ═══════════════════════════════════════════════════════════════
+let currentAudioStream = null;
+
+function speak(text) {
+  if (!state.audioEnabled) return;
+  
+  // Linisin ang mga nakaraang audio task
+  window.speechSynthesis.cancel();
+  if (currentAudioStream) {
+    currentAudioStream.pause();
+    currentAudioStream = null;
+  }
+  
+  // Tanggalin ang HTML tags at emojis para hindi basahin nang paputol-putol
+  const clean = text.replace(/<[^>]+>/g,'').replace(/[🇵🇭🌟✅❌💡⏭️🏆😊💪🔄🔲📚👋⭐✕🧭📏🗺️]/g,'');
+  
+  // PRIMARY METHOD: Google Translation Engine cloud voice stream (May natural na Filipino accent)
+  const googleTtsUrl = `https://translate.google.com/translate_tts?ie=UTF-8&tl=tl&client=tw-ob&q=${encodeURIComponent(clean)}`;
+  
+  currentAudioStream = new Audio(googleTtsUrl);
+  currentAudioStream.onplaying = () => showWave(true);
+  currentAudioStream.onended = currentAudioStream.onerror = () => showWave(false);
+  
+  currentAudioStream.play().catch(err => {
+    // BACKUP METHOD: Web Speech API (works even without internet)
+    console.warn("Google TTS blocked or offline. Falling back to local system speech engine.");
+    
+    const streamFallback = new SpeechSynthesisUtterance(clean);
+    streamFallback.lang = 'fil-PH';
+    streamFallback.rate = 0.95; streamFallback.pitch = 1.05; streamFallback.volume = 1;
+    
+    const voices = window.speechSynthesis.getVoices();
+    const filVoice = voices.find(v => v.lang.startsWith('fil') || v.lang.startsWith('tl'));
+    const engVoice = voices.find(v => v.lang.startsWith('en') && v.name.toLowerCase().includes('female'))
+                   || voices.find(v => v.lang.startsWith('en'));
+              
+    if (filVoice) {
+      streamFallback.voice = filVoice;
+    } else if (engVoice) {
+      streamFallback.voice = engVoice; 
+      streamFallback.lang = 'en-US'; 
+    }
+    
+    streamFallback.onstart = () => showWave(true);
+    streamFallback.onend = streamFallback.onerror = () => showWave(false);
+    window.speechSynthesis.speak(streamFallback);
+  });
+}
+
+function showWave(on) {
+  document.querySelectorAll('.speaker-wave').forEach(w => w.style.display = on ? 'inline-flex' : 'none');
+}
+
+// I-initialize ang mga boses ng system
+let localSystemVoices = [];
+function lookupSystemVoices() {
+  localSystemVoices = window.speechSynthesis.getVoices();
+}
+lookupSystemVoices();
+if (window.speechSynthesis.onvoiceschanged !== undefined) {
+  window.speechSynthesis.onvoiceschanged = lookupSystemVoices;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// UI HELPERS
+// ═══════════════════════════════════════════════════════════════
+const chatBox = document.getElementById('chat-box');
+const input = document.getElementById('user-input');
+const sendBtn = document.getElementById('send-btn');
+
+function scrollBottom() { chatBox.scrollTop = chatBox.scrollHeight; }
+
+function addMessage(role, html, speakText) {
+  const div = document.createElement('div');
+  div.className = `msg ${role}`;
+  const av = document.createElement('div');
+  av.className = 'avatar';
+  av.textContent = role === 'bot' ? '🤖' : '🧑';
+  const bub = document.createElement('div');
+  bub.className = 'bubble';
+  bub.innerHTML = role === 'bot'
+    ? html + '<span class="speaker-wave" style="display:none"><span></span><span></span><span></span><span></span><span></span></span>'
+    : html;
+  div.appendChild(av); div.appendChild(bub);
+  chatBox.appendChild(div);
+  scrollBottom(); bindChips();
+  if (role === 'bot') {
+    const txt = speakText || html.replace(/<[^>]+>/g,' ');
+    setTimeout(() => speak(txt), 350);
+  }
+}
+
+function addTyping() {
+  const d = document.createElement('div');
+  d.className = 'msg bot'; d.id = 'typing';
+  d.innerHTML = '<div class="avatar">🤖</div><div class="typing"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>';
+  chatBox.appendChild(d); scrollBottom();
+}
+function removeTyping() { const t = document.getElementById('typing'); if(t) t.remove(); }
+
+function bindChips() {
+  document.querySelectorAll('.chip:not([data-bound])').forEach(c => {
+    c.dataset.bound = '1';
+    c.addEventListener('click', () => handleUserMessage(c.dataset.val));
+  });
+}
+
+function updateScore() {
+  document.getElementById('score-val').textContent = state.score;
+  document.getElementById('total-val').textContent = state.total;
+}
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length-1; i > 0; i--) {
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]] = [a[j],a[i]];
+  }
+  return a;
+}
+
+function normalize(s) { return s.toLowerCase().trim().replace(/\s+/g,' '); }
+
+function checkAnswer(user, correct) {
+  const u = normalize(user), c = normalize(correct);
+  if (u === c) return true;
+  if (c.includes(u) && u.length > 5) return true;
+  const parts = c.split(/[,;\/]/);
+  for (const p of parts) if (u.includes(p.trim()) && p.trim().length > 4) return true;
+  return false;
+}
+
+function showResult() {
+  const pct = Math.round((state.score/state.total)*100);
+  const emoji = pct>=90?'🏆':pct>=70?'🌟':pct>=50?'😊':'💪';
+  const msg = pct>=90?'Excellent! You know it all!':pct>=70?'Great job! Keep it up!':pct>=50?'Good! Study a little more!':"Don't give up! Try again!";
+  document.getElementById('res-emoji').textContent = emoji;
+  document.getElementById('res-score').textContent = state.score;
+  document.getElementById('res-total').textContent = state.total;
+  document.getElementById('res-msg').textContent = msg;
+  document.getElementById('result-overlay').classList.add('show');
+  speak(`All done! Your score is ${state.score} out of ${state.total}. ${msg}`);
+}
+
+function restartApp() {
+  document.getElementById('result-overlay').classList.remove('show');
+  state = { awaiting:'menu', mode:null, questions:[], allAnswers:[], qIndex:0, score:0, total:0, hintUsed:false, audioEnabled:state.audioEnabled };
+  chatBox.innerHTML = '';
+  document.querySelector('.input-bar').style.display = 'flex';
+  updateScore();
+  showMenu();
+}
+
+// ═══════════════════════════════════════════════════════════════
+// MC HELPERS
+// ═══════════════════════════════════════════════════════════════
+function getAllAnswers() {
+  const ans = [];
+  for (const qs of Object.values(topics)) for (const q of qs) ans.push(q.a);
+  return ans;
+}
+
+function generateChoices(correct, pool) {
+  const distractors = shuffle(pool.filter(a => a !== correct)).slice(0,3);
+  return shuffle([correct, ...distractors]);
+}
+
+function buildMCBtns(choices, correctAnswer) {
+  const letters = ['A','B','C','D','E'];
+  return `<div class="mc-options">${choices.map((c,i)=>
+    `<button class="mc-btn" data-answer="${encodeURIComponent(c)}" data-correct="${encodeURIComponent(correctAnswer)}" onclick="handleMCClick(this)">
+      <span class="letter">${letters[i]}</span>${c}
+    </button>`
+  ).join('')}</div>`;
+}
+
+function handleMCClick(btn) {
+  const allBtns = btn.closest('.mc-options').querySelectorAll('.mc-btn');
+  allBtns.forEach(b => b.disabled = true);
+  const chosen = decodeURIComponent(btn.dataset.answer);
+  const correct = decodeURIComponent(btn.dataset.correct);
+  const isCorrect = chosen === correct;
+  allBtns.forEach(b => { if(decodeURIComponent(b.dataset.answer)===correct) b.classList.add('correct'); });
+  if (!isCorrect) btn.classList.add('wrong');
+  setTimeout(() => {
+    if (isCorrect) {
+      state.score++;
+      addMessage('bot', `✅ <strong>Correct!</strong> +1 point! The answer is: <strong>${correct}</strong>`, `Correct! The answer is: ${correct}`);
+    } else {
+      addMessage('bot', `❌ <strong>Not quite.</strong> The correct answer is: <strong>${correct}</strong>`, `Not quite. The correct answer is: ${correct}`);
+    }
+    state.qIndex++; updateScore();
+    if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+    else setTimeout(showResult, 900);
+  }, 650);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// NEXT QUESTION
+// ═══════════════════════════════════════════════════════════════
+function nextQuestion() {
+  const qi = state.qIndex;
+  const q = state.questions[qi];
+  const num = qi + 1;
+
+  if (state.mode === 'full' || state.mode === 'topic_mc') {
+    const choices = generateChoices(q.a, state.allAnswers);
+    const tag = q.topic ? `<span class="topic-tag">${q.topic}</span><br>` : '';
+    const html = `${tag}<strong>Q${num} of ${state.total}:</strong> ${q.q}${buildMCBtns(choices, q.a)}`;
+    addMessage('bot', html, `Question ${num}. ${q.q}`);
+    return;
+  }
+
+  if (state.mode === 'tf') {
+    const html = `<strong>Q${num} of ${state.total}:</strong> <div class="scenario-card">${q.q}</div>
+      <span class="chip" data-val="true">✅ True</span><span class="chip" data-val="false">❌ False</span>`;
+    addMessage('bot', html, `Question ${num}. True or False: ${q.q}`);
+    return;
+  }
+
+  if (state.mode === 'identify') {
+    const btns = buildMCBtns(q.choices, q.a);
+    const html = `<strong>Q${num} of ${state.total}:</strong> Identify what is being described:<div class="scenario-card">${q.q}</div>${btns}`;
+    addMessage('bot', html, `Question ${num}. Identify: ${q.q}`);
+    return;
+  }
+
+  // typed answer mode
+  const tag = q.topic ? `<span class="topic-tag">${q.topic}</span><br>` : '';
+  const html = `${tag}<strong>Q${num} of ${state.total}:</strong> ${q.q}<br><small style="color:var(--muted)">Type your answer · type <em>hint</em> for help · <em>skip</em> to move on</small>`;
+  addMessage('bot', html, `Question ${num}. ${q.q}`);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// MENU
+// ═══════════════════════════════════════════════════════════════
+function showMenu() {
+  addMessage('bot',
+    `👋 <strong>Hi! I'm your MAPEH Reviewer!</strong><br>Let's study <em>Body Mass Index (BMI)</em>, <em>Rhythm, Pattern, and Movement</em> in <em>Dance</em>, <em>Drama</em>, and <em>Visual Arts</em>.<br><br>What would you like to do?<br>
+    <span class="chip" data-val="1">📚 Study by Topic</span>
+    <span class="chip" data-val="2">✅ True or False</span>
+    <span class="chip" data-val="3">🌐 Identify</span>
+    <span class="chip" data-val="4">🌟 Full Review (Multiple Choice)</span>`,
+    "Hi! I'm your MAPEH Reviewer on BMI, Dance, Drama, and Visual Arts. What would you like to do? Study a topic, True or False, Identify, or a Full Review with multiple choice?"
+  );
+  state.awaiting = 'menu';
+}
+
+// ═══════════════════════════════════════════════════════════════
+// PROCESS MESSAGE
+// ═══════════════════════════════════════════════════════════════
+function processMessage(msg) {
+  const aw = state.awaiting;
+
+  // ── MENU ──────────────────────────────────────────────────
+  if (aw === 'menu') {
+    if (msg === '1') {
+      state.awaiting = 'topic';
+      const keys = Object.keys(topics);
+      const chips = keys.map((t,i) => `<span class="chip" data-val="${i+1}">${i+1}. ${t}</span>`).join(' ');
+      addMessage('bot', `📚 Which topic would you like to study?<br>${chips}`, 'Which topic would you like to study?');
+
+    } else if (msg === '2') {
+      state.mode = 'tf';
+      state.questions = shuffle(trueOrFalse);
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'tf_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `✅ <strong>True or False!</strong> ${state.total} questions. Let's start!`, `True or False! ${state.total} questions. Let's start!`);
+      setTimeout(nextQuestion, 800);
+
+    } else if (msg === '3') {
+      state.mode = 'identify';
+      state.questions = shuffle(identifyQuestions);
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'mc_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `🌐 <strong>Identify!</strong> Name the dance, drama, or artwork, spot rhythm, pattern, or movement, and classify BMI results.`, "Identify! Figure out what's being described in each item.");
+      setTimeout(nextQuestion, 800);
+
+    } else if (msg === '4') {
+      state.mode = 'full';
+      const all = [];
+      for (const [topicName, qs] of Object.entries(topics)) {
+        qs.forEach(q => all.push({...q, topic: topicName}));
+      }
+      state.questions = shuffle(all);
+      state.allAnswers = getAllAnswers();
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'mc_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `🌟 <strong>Full Review — Multiple Choice!</strong> ${state.total} questions. Think carefully!`, `Full Review! Multiple Choice! ${state.total} questions. Think carefully!`);
+      setTimeout(nextQuestion, 800);
+
+    } else {
+      addMessage('bot',
+        `Choose an option:<br>
+        <span class="chip" data-val="1">📚 Study by Topic</span>
+        <span class="chip" data-val="2">✅ True or False</span>
+        <span class="chip" data-val="3">🌐 Identify</span>
+        <span class="chip" data-val="4">🌟 Full Review</span>`,
+        'Choose an option.'
+      );
+    }
+    return;
+  }
+
+  // ── TOPIC SELECT ──────────────────────────────────────────
+  if (aw === 'topic') {
+    const keys = Object.keys(topics);
+    const idx = parseInt(msg) - 1;
+    if (keys[idx]) {
+      const topicName = keys[idx];
+      state.mode = 'topic_mc';
+      state.questions = shuffle(topics[topicName]);
+      state.allAnswers = getAllAnswers();
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'mc_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `📚 <strong>${topicName}</strong> — ${state.total} questions. Ready?`, `${topicName}. ${state.total} questions. Ready?`);
+      setTimeout(nextQuestion, 800);
+    } else {
+      const chips = Object.keys(topics).map((t,i) => `<span class="chip" data-val="${i+1}">${i+1}. ${t}</span>`).join(' ');
+      addMessage('bot', `Please choose a valid topic:<br>${chips}`, 'Please choose a valid topic.');
+    }
+    return;
+  }
+
+  // ── TYPED ANSWER ──────────────────────────────────────────
+  if (aw === 'answer') {
+    const q = state.questions[state.qIndex];
+    const m = normalize(msg);
+
+    if (m === 'hint') {
+      state.hintUsed = true;
+      addMessage('bot', `💡 <strong>Hint:</strong> ${q.hint}`, `Hint: ${q.hint}`);
+      return;
+    }
+    if (m === 'skip') {
+      addMessage('bot', `⏭️ Skipped! The correct answer is: <strong>${q.a}</strong>`, `Skipped. The correct answer is: ${q.a}`);
+      state.qIndex++; state.hintUsed = false;
+      if (state.qIndex < state.total) setTimeout(nextQuestion, 700);
+      else showResult();
+      return;
+    }
+
+    const correct = checkAnswer(msg, q.a);
+    if (correct) {
+      if (!state.hintUsed) state.score++;
+      const note = state.hintUsed ? ' <em>(hint used — no point)</em>' : ' +1 point!';
+      addMessage('bot', `✅ <strong>Correct!</strong>${note} Answer: <strong>${q.a}</strong>`, `Correct! The answer is: ${q.a}`);
+    } else {
+      addMessage('bot', `❌ <strong>Not quite.</strong> The correct answer is: <strong>${q.a}</strong>`, `Not quite. The correct answer is: ${q.a}`);
+    }
+    state.qIndex++; state.hintUsed = false; updateScore();
+    if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+    else setTimeout(showResult, 900);
+    return;
+  }
+
+  // ── TRUE OR FALSE ─────────────────────────────────────────
+  if (aw === 'tf_answer') {
+    const q = state.questions[state.qIndex];
+    const ans = normalize(msg);
+    const valid = ans === 'true' || ans === 'false';
+
+    if (valid) {
+      const correct = ans === q.a;
+      if (correct) {
+        state.score++;
+        addMessage('bot', `✅ <strong>Correct!</strong> The answer is <strong>${q.a.toUpperCase()}</strong>.`, `Correct! The answer is ${q.a}.`);
+      } else {
+        addMessage('bot', `❌ <strong>Incorrect.</strong> The correct answer is <strong>${q.a.toUpperCase()}</strong>.`, `Incorrect. The correct answer is ${q.a}.`);
+      }
+      state.qIndex++; updateScore();
+      if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+      else setTimeout(showResult, 900);
+    } else {
+      addMessage('bot',
+        `Answer: True or False?<br><span class="chip" data-val="true">✅ True</span><span class="chip" data-val="false">❌ False</span>`,
+        'Answer: True or False?'
+      );
+    }
+    return;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// CONTROLS
+// ═══════════════════════════════════════════════════════════════
+function handleUserMessage(msg) {
+  if (!msg.trim()) return;
+  
+  // Stop any speaking audio cleanly when the user answers
+  window.speechSynthesis.cancel();
+  if (currentAudioStream) {
+    currentAudioStream.pause();
+    currentAudioStream = null;
+    showWave(false);
+  }
+  
+  addMessage('user', msg.replace(/</g,'&lt;'));
+  input.value = '';
+  input.disabled = true; sendBtn.disabled = true;
+  addTyping();
+  setTimeout(() => {
+    removeTyping();
+    input.disabled = false; sendBtn.disabled = false;
+    input.focus();
+    processMessage(msg);
+  }, 480);
+}
+
+sendBtn.addEventListener('click', () => { handleUserMessage(input.value); });
+input.addEventListener('keydown', e => { if(e.key==='Enter') handleUserMessage(input.value); });
+
+document.getElementById('audio-toggle').addEventListener('click', function() {
+  state.audioEnabled = !state.audioEnabled;
+  this.textContent = state.audioEnabled ? '🔊' : '🔇';
+  this.classList.toggle('active', state.audioEnabled);
+  if (!state.audioEnabled) {
+    window.speechSynthesis.cancel();
+    if (currentAudioStream) {
+      currentAudioStream.pause();
+      currentAudioStream = null;
+      showWave(false);
+    }
+  }
+});
+
+// ═══════════════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════════════
+window.addEventListener('load', () => {
+  lookupSystemVoices();
+  showMenu();
+});
+
+function printPracticeTest() {
+  document.body.classList.add('printing-test');
+  window.print();
+}
+window.addEventListener('afterprint', () => {
+  document.body.classList.remove('printing-test');
+});
+
+// ═══════════════════════════════════════════════════════════════
+// READ NOTES ALOUD (uses the browser's own voice — no length limit,
+// unlike the short Google TTS clips used for chat messages)
+// ═══════════════════════════════════════════════════════════════
+function getNotesText(section) {
+  // Skip the Practice Test / Answer Key tabs — too long and not meant to be read aloud
+  const clone = section.cloneNode(true);
+  clone.querySelectorAll('button').forEach(b => b.remove());
+  let text = clone.innerText || clone.textContent || '';
+  text = text.replace(/\s+/g, ' ').trim();
+  return text;
+}
+
+function toggleNotesAudio() {
+  const btn = document.getElementById('notes-audio-btn');
+  if (!btn) return;
+
+  if (window.speechSynthesis.speaking || window.speechSynthesis.pending) {
+    window.speechSynthesis.cancel();
+    btn.innerHTML = '🔊 Read Notes Aloud';
+    btn.classList.remove('active');
+    return;
+  }
+
+  const activeSection = document.querySelector('.notes-section.active');
+  if (!activeSection) return;
+  const text = getNotesText(activeSection);
+  if (!text) return;
+
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.lang = 'en-US';
+  utter.rate = 0.95;
+  utter.pitch = 1.05;
+  utter.volume = 1;
+
+  const voices = window.speechSynthesis.getVoices();
+  const voice = voices.find(v => v.lang.startsWith('en') && v.name.toLowerCase().includes('female'))
+             || voices.find(v => v.lang.startsWith('en'));
+  if (voice) utter.voice = voice;
+
+  utter.onstart = () => { btn.innerHTML = '⏹️ Stop Reading'; btn.classList.add('active'); };
+  utter.onend = utter.onerror = () => { btn.innerHTML = '🔊 Read Notes Aloud'; btn.classList.remove('active'); };
+
+  window.speechSynthesis.speak(utter);
+}
+
+function switchTab(tabId, btn) {
+  window.speechSynthesis.cancel();
+  const audioBtn = document.getElementById('notes-audio-btn');
+  if (audioBtn) { audioBtn.innerHTML = '🔊 Read Notes Aloud'; audioBtn.classList.remove('active'); }
+  document.querySelectorAll('.notes-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.notes-tab').forEach(b => b.classList.remove('active'));
+  document.getElementById(tabId).classList.add('active');
+  btn.classList.add('active');
+}
+
+function closeNotesPanel() {
+  window.speechSynthesis.cancel();
+  const audioBtn = document.getElementById('notes-audio-btn');
+  if (audioBtn) { audioBtn.innerHTML = '🔊 Read Notes Aloud'; audioBtn.classList.remove('active'); }
+  document.getElementById('notes-overlay').classList.remove('show');
+}
+</script>
+
+<!-- ── Notes Panel ── -->
+<div class="notes-overlay" id="notes-overlay">
+  <div class="notes-panel">
+    <div class="notes-header">
+      <h2>📖 BMI, Dance, Drama &amp; Visual Arts — Notes</h2>
+      <div class="notes-header-actions">
+        <button class="print-btn" id="notes-audio-btn" onclick="toggleNotesAudio()" title="Have this tab read aloud">🔊 Read Notes Aloud</button>
+        <button class="print-btn" onclick="printPracticeTest()" title="Print or save the Practice Test &amp; Answer Key as PDF">🖨️ Print Test &amp; Key</button>
+        <button class="notes-close" onclick="closeNotesPanel()">✕</button>
+      </div>
+    </div>
+    <div class="notes-tabs">
+      <button class="notes-tab active" onclick="switchTab('tab-bmi', this)">⚖️ BMI</button>
+      <button class="notes-tab" onclick="switchTab('tab-dance', this)">💃 Dance</button>
+      <button class="notes-tab" onclick="switchTab('tab-drama', this)">🎭 Drama</button>
+      <button class="notes-tab" onclick="switchTab('tab-visual', this)">🎨 Visual Arts</button>
+      <button class="notes-tab" onclick="switchTab('tab-tf', this)">✅ True or False</button>
+      <button class="notes-tab" onclick="switchTab('tab-ptest', this)">📝 Practice Test</button>
+      <button class="notes-tab" onclick="switchTab('tab-key', this)">🔑 Answer Key</button>
+      <button class="notes-tab" onclick="switchTab('tab-raw', this)">📄 Raw Notes</button>
+    </div>
+    <div class="notes-body">
+
+      <div class="notes-section active" id="tab-bmi">
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> <strong>Body Mass Index (BMI)</strong> compares weight to height to show if a person is underweight, normal, overweight, or obese.
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 MEMORY TRICK</span>
+          <strong>"Weight over Height times Height."</strong> BMI = kg ÷ (m × m). Always change centimeters to <strong>meters</strong> first by dividing by 100 (156 cm = 1.56 m).
+        </div>
+        <table class="compare-table">
+          <tr><th>Category</th><th>BMI</th></tr>
+          <tr><td>Underweight</td><td>18.4 and below</td></tr>
+          <tr><td>Normal</td><td>18.5 – 24.9</td></tr>
+          <tr><td>Overweight</td><td>25 – 29.9</td></tr>
+          <tr><td>Obese</td><td>30 and above</td></tr>
+        </table>
+        <div class="tandaan-box">
+          <span class="tandaan-label">WORKED EXAMPLE</span>
+          54 kg and 156 cm → 156 cm = 1.56 m → 54 ÷ (1.56 × 1.56) = 54 ÷ 2.4336 = 22.1893 → round off to <strong>22.19 (Normal)</strong>.
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-dance">
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> In dance, <strong>rhythm</strong> is the timing of steps with the beat, <strong>pattern</strong> is repeated steps and formations, and <strong>movement</strong> is all the actions dancers perform.
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 MEMORY TRICK</span>
+          <strong>"Cebu = Sea, Aklan = Active, Batangas = Bent."</strong> Sinulog (sug = the sea), Ati-Atihan (big, active stomping), Subli (stooped, from subsob + bali).
+        </div>
+        <table class="compare-table">
+          <tr><th>Dance</th><th>Origin</th><th>Key Features</th></tr>
+          <tr><td>Sinulog</td><td>Cebu; honors the Santo Niño</td><td>Sinug pattern: one step forward, two steps backward, like water currents; a dance-prayer</td></tr>
+          <tr><td>Ati-Atihan</td><td>Kalibo, Aklan; honors the Santo Niño</td><td>Bigger, energetic movements (stomping, marching, wide arms); no single unifying pattern</td></tr>
+          <tr><td>Subli</td><td>Batangas (Bauan and Alitagtag); Holy Cross of Alitagtag</td><td>Partner dance; stooped posture of male dancers; bowing, stepping, turning in circles</td></tr>
+        </table>
+      </div>
+
+      <div class="notes-section" id="tab-drama">
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> In drama, rhythm is how lines are delivered and how music sets the mood, patterns are the organized scenes and repeated actions, and movement is how actors use their bodies to tell the story.
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 MEMORY TRICK</span>
+          <strong>"Senakulo = Suffering; Panunuluyan = Place to stay."</strong> Senakulo is about Jesus' suffering, death, and resurrection (Holy Week). Panunuluyan is Joseph and Mary seeking a place to stay (Christmas Eve).
+        </div>
+        <table class="compare-table">
+          <tr><th></th><th>Senakulo</th><th>Panunuluyan</th></tr>
+          <tr><td>Story</td><td>Suffering, death, and resurrection of Jesus</td><td>Joseph and Mary seek shelter in Bethlehem</td></tr>
+          <tr><td>When</td><td>Holy Week or Lent; mid-18th century origin</td><td>Christmas Eve, 24 December</td></tr>
+          <tr><td>Rhythm</td><td>Poetic, chant-like lines; music matches the mood</td><td>Slow, peaceful, calm, repetitive music</td></tr>
+          <tr><td>Pattern</td><td>Fixed sequence of scenes each year</td><td>Repeated refusals; only the last house welcomes them</td></tr>
+          <tr><td>Movement</td><td>Highly symbolic (falling, raised hands, turning to the audience)</td><td>Simple and respectful (walking, knocking, bowing)</td></tr>
+        </table>
+      </div>
+
+      <div class="notes-section" id="tab-visual">
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> In visual art, <strong>rhythm</strong> is repetition of shapes, lines, or colors; <strong>pattern</strong> is repeated elements arranged in an organized way; <strong>movement</strong> is how the design leads your eyes around the artwork.
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 MEMORY TRICK</span>
+          <strong>"Repeat, Predict, Point."</strong> Rhythm = <strong>repeat</strong>; Pattern = <strong>predictable</strong> arrangement; Movement = <strong>points</strong> your eyes where to go.
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">🎨 Palaspas and Parol</div>
+          <div class="notes-item"><span class="notes-term">Palaspas</span><span class="notes-def">Woven palm fronds brought to church on Palm Sunday; repeated triangles, diamonds, and leaf-like forms; straight, zigzag, and curved lines</span></div>
+          <div class="notes-item"><span class="notes-term">Parol</span><span class="notes-def">Star-shaped Christmas lantern symbolizing the Star of Bethlehem; traditionally bamboo and Japanese paper, now also capiz, plastic, metal, and lights</span></div>
+          <div class="notes-item"><span class="notes-term">Parol Pattern</span><span class="notes-def">A central five-pointed star surrounded by repeating triangles, diamonds, or circles</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-tf">
+        <div class="notes-topic">
+          <div class="notes-topic-title">✅ True or False — Key Reminders</div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">A BMI of 22 is overweight → it is normal (18.5 to 24.9).</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">Use height in centimeters for BMI → convert to meters first.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">Sinulog is two steps forward, one step back → it is one step forward and two steps backward.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">Ati-atihan has one unifying pattern → it lacks a single pattern across performances.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">Subli is a group dance → it is a partner dance.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">Senakulo is performed at Christmas → during Holy Week or Lent.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">The first house welcomes Joseph and Mary in the panunuluyan → they are refused until the last house.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">FALSE</span><span class="notes-def">Movement in visual art means the picture actually moves → it means the design leads your eyes around the artwork.</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-ptest">
+        <div class="notes-topic">
+          <div class="notes-topic-title">📝 Practice Test</div>
+<div class="ptest-part-title">Part I — Identify the Dance, Drama, or Artwork</div><div class="ptest-bank"><strong>Word Bank:</strong> Sinulog &middot; Ati-Atihan &middot; Subli &middot; Senakulo &middot; Panunuluyan &middot; Palaspas &middot; Parol</div><div class="ptest-q"><b>1.</b> Its pattern of one step forward and two steps backward comes from a dance ritual usually performed to honor the Santo Niño. <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>2.</b> This dance hails from Kalibo, Aklan, and is performed in honor of the Santo Niño. <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>3.</b> The name of this dance comes from the Tagalog words subsob and bali. <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>4.</b> This drama is a play about the suffering, death, and resurrection of Jesus Christ that came about in the mid-18th century in the Philippines. <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>5.</b> This form of drama is typically performed on Christmas Eve in the Philippines. <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>6.</b> A festival dance with bigger, more energetic movements, such as foot stomping and marching, and no single unifying pattern. <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>7.</b> A partner dance in which the male dancers keep a stooped or bent-over posture. <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>8.</b> A drama in which actors go from house to house asking for a place to stay. <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>9.</b> Woven palm fronds brought to church on Palm Sunday. <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>10.</b> A star-shaped Christmas lantern that symbolizes the Star of Bethlehem. <span class="opt">Answer: ______________</span></div><div class="ptest-part-title">Part II — Rhythm, Pattern, or Movement?</div><div class="ptest-bank"><strong>Word Bank:</strong> Rhythm &middot; Pattern &middot; Movement</div><div class="ptest-q"><b>11.</b> The repetition of shapes, lines, or colors that creates a visual "beat" or flow. <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>12.</b> Repeated elements arranged in an organized and predictable way. <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>13.</b> The way an artwork directs your eyes around the composition. <span class="opt">Answer: ______________</span></div><div class="ptest-part-title">Part III — BMI Category</div><div class="ptest-bank"><strong>Word Bank:</strong> Underweight &middot; Normal &middot; Overweight &middot; Obese</div><div class="ptest-q"><b>14.</b> A person has a BMI of 17.5. Which category is this? <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>15.</b> A person has a BMI of 22.19. Which category is this? <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>16.</b> A person has a BMI of 18.5. Which category is this? <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>17.</b> A person has a BMI of 27.3. Which category is this? <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>18.</b> A person has a BMI of 31. Which category is this? <span class="opt">Answer: ______________</span></div><div class="ptest-part-title">Part IV — Compute the BMI (BMI = Weight in kg ÷ Height² in m²)</div><div class="ptest-q"><b>19.</b> Weight: 54 kg; Height: 156 cm. Find the BMI and category. <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>20.</b> Weight: 40 kg; Height: 150 cm. Find the BMI and category. <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>21.</b> Weight: 62 kg; Height: 155 cm. Find the BMI and category. <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>22.</b> Weight: 90 kg; Height: 160 cm. Find the BMI and category. <span class="opt">Answer: ______________</span></div><div class="ptest-part-title">Part V — True or False</div><div class="ptest-q"><b>23.</b> BMI is computed as weight in kilograms divided by height in meters squared. <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>24.</b> A BMI of 18.4 or below is underweight. <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>25.</b> A BMI of 22 is in the overweight range. <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>26.</b> A BMI of 30 and above is obese. <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>27.</b> To compute BMI, height should be in centimeters. <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>28.</b> The sinulog originates from Cebu. <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>29.</b> The key pattern of the sinulog is two steps forward and one step backward. <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>30.</b> The word "sug" means "the sea." <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>31.</b> The ati-atihan dance comes from Kalibo, Aklan. <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>32.</b> The ati-atihan has a single unifying pattern in every performance. <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>33.</b> The subli is a local dance from Batangas. <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>34.</b> The subli is a group dance like the sinulog and ati-atihan. <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>35.</b> The name "subli" comes from the Tagalog words subsob and bali. <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>36.</b> Male subli dancers often keep a stooped or bent-over posture. <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>37.</b> The senakulo originated in the mid-18th century in the Philippines. <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>38.</b> The senakulo is typically performed during Christmas. <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>39.</b> The scenes of the senakulo follow a fixed sequence. <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>40.</b> The panunuluyan is traditionally performed on Christmas Eve. <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>41.</b> In the panunuluyan, the first house welcomes Joseph and Mary. <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>42.</b> "Panunuluyan" means "to seek shelter" or "to seek entry." <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>43.</b> Palaspas are woven palm fronds seen in churches on Palm Sunday. <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>44.</b> Movement in visual art means that the picture actually moves. <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>45.</b> A parol is traditionally made with bamboo sticks and colorful Japanese paper. <span class="opt">Answer: ______________</span></div><div class="ptest-q"><b>46.</b> In visual art, rhythm refers to the repetition of elements like shapes, lines, or colors. <span class="opt">Answer: ______________</span></div><div class="ptest-part-title">Part VI — Short Answer</div><div class="ptest-q"><b>47.</b> Describe how rhythm, pattern, and movement can be seen in the sinulog.</div><div class="ptest-q"><b>48.</b> How is the subli different from the sinulog and the ati-atihan?</div><div class="ptest-q"><b>49.</b> Describe the patterns you can find in a parol.</div><div class="ptest-q"><b>50.</b> How does the story of the panunuluyan unfold, and what pattern does it follow?</div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-key">
+        <div class="notes-topic">
+<div class="notes-topic-title">Part I — Dance, Drama, or Artwork</div><div class="key-grid"><div class="key-pill">1. <b>Sinulog</b></div><div class="key-pill">2. <b>Ati-Atihan</b></div><div class="key-pill">3. <b>Subli</b></div><div class="key-pill">4. <b>Senakulo</b></div><div class="key-pill">5. <b>Panunuluyan</b></div><div class="key-pill">6. <b>Ati-Atihan</b></div><div class="key-pill">7. <b>Subli</b></div><div class="key-pill">8. <b>Panunuluyan</b></div><div class="key-pill">9. <b>Palaspas</b></div><div class="key-pill">10. <b>Parol</b></div></div><div class="notes-topic-title">Part II — Rhythm, Pattern, or Movement</div><div class="key-grid"><div class="key-pill">11. <b>Rhythm</b></div><div class="key-pill">12. <b>Pattern</b></div><div class="key-pill">13. <b>Movement</b></div></div><div class="notes-topic-title">Part III — BMI Category</div><div class="key-grid"><div class="key-pill">14. <b>Underweight</b></div><div class="key-pill">15. <b>Normal</b></div><div class="key-pill">16. <b>Normal</b></div><div class="key-pill">17. <b>Overweight</b></div><div class="key-pill">18. <b>Obese</b></div></div><div class="notes-topic-title">Part IV — Compute the BMI</div><div class="key-grid"><div class="key-pill">19. <b>22.19 (Normal)</b></div><div class="key-pill">20. <b>17.78 (Underweight)</b></div><div class="key-pill">21. <b>25.81 (Overweight)</b></div><div class="key-pill">22. <b>35.16 (Obese)</b></div></div><div class="notes-topic-title">Part V — True or False</div><div class="key-grid"><div class="key-pill">23. <b>True</b></div><div class="key-pill">24. <b>True</b></div><div class="key-pill">25. <b>False</b></div><div class="key-pill">26. <b>True</b></div><div class="key-pill">27. <b>False</b></div><div class="key-pill">28. <b>True</b></div><div class="key-pill">29. <b>False</b></div><div class="key-pill">30. <b>True</b></div><div class="key-pill">31. <b>True</b></div><div class="key-pill">32. <b>False</b></div><div class="key-pill">33. <b>True</b></div><div class="key-pill">34. <b>False</b></div><div class="key-pill">35. <b>True</b></div><div class="key-pill">36. <b>True</b></div><div class="key-pill">37. <b>True</b></div><div class="key-pill">38. <b>False</b></div><div class="key-pill">39. <b>True</b></div><div class="key-pill">40. <b>True</b></div><div class="key-pill">41. <b>False</b></div><div class="key-pill">42. <b>True</b></div><div class="key-pill">43. <b>True</b></div><div class="key-pill">44. <b>False</b></div><div class="key-pill">45. <b>True</b></div><div class="key-pill">46. <b>True</b></div></div><div class="notes-topic-title">Part VI — Short Answer (sample answers)</div><div class="ptest-q" style="margin-bottom:6px"><b>47.</b> Rhythm: the dancers' steps follow the steady beat of the drums. Pattern: the sinug, one step forward and two steps backward, like the flow of water currents. Movement: stepping and flowing, graceful arm movements, all synchronized with the beat.</div><div class="ptest-q" style="margin-bottom:6px"><b>48.</b> The subli is a partner dance from Batangas (Bauan and Alitagtag), while the sinulog and ati-atihan are group-oriented. The male dancers keep a stooped posture, and the dance includes bowing, stepping, and turning in circles.</div><div class="ptest-q" style="margin-bottom:6px"><b>49.</b> A central five-pointed star surrounded by repeating triangles, diamonds, or circles. Modern parols add lights that twinkle in set sequences, and the pattern draws the eye outward from the center.</div><div class="ptest-q" style="margin-bottom:6px"><b>50.</b> Joseph and Mary go from house to house on Christmas Eve asking for shelter. They knock on several doors and are repeatedly refused; only the final house welcomes them, representing the humble stable where Jesus is born.</div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-raw">
+        <div class="rawnotes-intro">
+          📌 This is the original content of the uploaded lesson, unedited — for whenever you need to check the exact wording or an example not covered in the reviewer.
+        </div>
+        <div class="rawnotes-doc">
+<h3 class="doc-heading">BMI CHART</h3>
+<h3 class="doc-heading">Category</h3>
+<p><strong>Underweight:</strong> 18.4 and below</p>
+<p><strong>Normal:</strong> 18.5 – 24.9</p>
+<p><strong>Overweight:</strong> 25 – 29.9</p>
+<p><strong>Obese:</strong> 30 and above</p>
+<h3 class="doc-heading">BMI Formula</h3>
+<p><strong>BMI = Weight (kg) ÷ Height² (m²)</strong></p>
+<h3 class="doc-heading">Example:</h3>
+<p><strong>Weight:</strong> 54 kg<br />
+<strong>Height:</strong> 156 cm</p>
+<p>156 cm = <strong>1.56 m</strong></p>
+<p><strong>BMI = 54 ÷ (1.56 m)²</strong></p>
+<p><strong>= 54 ÷ (1.56 × 1.56)</strong></p>
+<p><strong>= 54 kg ÷ 2.4336</strong></p>
+<p><strong>= 22.1893</strong> <em>(round off)</em></p>
+<p><strong>BMI = 22.19 — Normal</strong></p>
+<h3 class="doc-heading">Dance: Rhythm, Pattern, and Movement in Action</h3>
+<p>Let us begin with dance. Just as in music, rhythm is fundamental to dance. Many of our local dances are performed with live music, often featuring drums or other percussion instruments that establish a strong, steady beat. This beat guides the dancers, helping them to move together in sync. <strong>Rhythm</strong> is evident in the precise timing of steps and how movements align with the music's pulse.</p>
+<p><strong>Pattern</strong> in dance is closely linked to rhythm. It is expressed through repeated steps, formations, and group arrangements. When dancers follow a rhythm consistently, they create a visible and palpable pattern.</p>
+<p><strong>Movement</strong> in dance encompasses all the actions the dancers perform, such as stepping, turning, swaying, or jumping. These movements are shaped by both rhythm and pattern, allowing the dance to tell a story or convey emotions effectively.</p>
+<p>Let us examine some well-known local dances to see how rhythm, pattern, and movement combine to bring these traditions to life!</p>
+<h3 class="doc-heading">Sinulog</h3>
+<p>As we know, this dance <strong>originates from Cebu, Philippines</strong>. It is performed during the Sinulog Festival, a celebration honoring the Santo Niño, or the Child Jesus. As you learned earlier, the sinulog features a distinctive one-step forward, two-steps backward movement that mimics the flow of water currents. This pattern, called <strong>sinug</strong> (from the Cebuano word <em>sug</em>, meaning “the sea”), is a dance-prayer typically performed before the image of the Santo Niño. This key pattern distinguishes the sinulog dance from other traditional dances.</p>
+<p>Watch again the video of the sinulog dance. (Refer to the QR code in <em>I Can Construct</em>.) Pay close attention to the rhythm of the music. Can you hear the steady beat of the drums? Try tapping your fingers or clapping softly in time with it. Now, observe the dancers’ feet. Do you see how their steps coordinate with the beat?</p>
+<p>Next, notice how the dancers’ movements align with the music. Their steps, particularly the Sinug pattern, closely follow the beat. Even the flowing and graceful arm movements are synchronized with the rhythm.</p>
+<h3 class="doc-heading">Ati-Atihan</h3>
+<p>The ati-atihan dance comes from the Ati-Atihan Festival of Kalibo, Aklan, which also honors the Santo Niño.</p>
+<p>Watch a clip of this dance. Again, focus on the rhythm and overall feel of the music. How does it compare to the sinulog music? What similarities do you notice?</p>
+<p>Now, observe the dancers’ movements. How would you describe them? What shapes, lines, or patterns do they create with their bodies?</p>
+<p>You will likely notice that the ati-atihan dance movements are “bigger” and more energetic, featuring a lot of foot stomping, marching, and expansive arm motions. Unlike the sinulog, the ati-atihan incorporates more freely movement, lacking a single unifying pattern across all performances. However, all movements remain strongly synchronized with the music’s beat.</p>
+<h3 class="doc-heading">Subli</h3>
+<p>The subli is a local dance from <strong>Batangas, Philippines</strong>, specifically from the towns of <strong>Bauan and Alitagtag</strong>. It originated as a sacred dance ritual dedicated to the Holy Cross of Alitagtag. The dance’s name comes from the Tagalog words <em>subsob</em>, meaning “to stoop or bend over,” and <em>bali</em>, meaning “broken.”</p>
+<p>Watch a clip of this unique dance. Listen to the music, paying attention to the rhythm and beat. Does it sound different from the music of the previous two dances? What is the overall feel of the music? Can you identify any similarities to the sinulog and ati-atihan music?</p>
+<p>Observe the dancers’ movements. Are there any particular shapes they create with their arms and bodies? What patterns do you notice? This partner dance differs from the group-oriented sinulog and ati-atihan.</p>
+<p>Let us revisit the Tagalog origins of the dance’s name. Do you see any movements that relate to those words?</p>
+<p>If you observed that the male dancers often maintain a stooped or bent-over posture, you have a keen eye! This posture is a defining characteristic of the subli dance.</p>
+<p>The dance also includes bowing and stepping movements, with dancers gracefully turning and moving in circles. All movements are synchronized with the music’s beat.</p>
+<h3 class="doc-heading">Drama: Rhythm, Pattern, and Movement in Performance</h3>
+<p>Just like in music and dance, rhythm, pattern, and movement are essential elements in dramatic or theatrical performances. These elements enhance the storytelling and make the performance more engaging and easier to follow.</p>
+<p><strong>Rhythm</strong> in drama is evident in the way actors deliver their lines, whether spoken or sung. Sometimes, lines are delivered in a slow, chant-like manner, creating a specific cadence. Other times, they are sung with a steady beat, similar to a song. Background music also contributes to the rhythm of a scene, setting the emotional tone—slow and serious for sad moments, or faster and more intense for exciting scenes.</p>
+<p><strong>Patterns</strong> in drama are seen in the organization of the scenes, which usually follow a clear sequence, much like chapters in a book. Patterns also emerge in the actors’ movements on stage—they might march in formation, create lines, or repeat actions together for emphasis. Even the costumes and actors’ positioning can create recurring visual patterns.</p>
+<p><strong>Movement</strong> refers to how actors use their bodies to convey the story. These movements are often carefully planned and symbolic, such as kneeling, expressing respect, raising arms to show praise or sadness, or turning towards the audience to deliver a powerful line. Some dramas also incorporate choreography, including simple dance steps or staged combat, which are rehearsed to match the narrative.</p>
+<p>Let us explore some traditional Filipino dramas, such as the <strong>senakulo</strong> and <strong>panunuluyan</strong>, to see how rhythm, pattern, and movement combine to bring these cultural stories to life!</p>
+<h3 class="doc-heading">Senakulo</h3>
+<p>The <strong>senakulo</strong> is a theatrical drama that originated in the mid-18th century in the Philippines. It dramatizes the suffering, death, and resurrection of Jesus Christ and is typically performed during Holy Week or Lent. It can be staged in a theater or presented on the streets of a town or city. In some regions of the Philippines, the full staged version of the senakulo can extend over seven to eight days! However, shortened versions are also performed, often on Good Friday, focusing on scenes from the agony of Jesus Christ.</p>
+<p>Watch this excerpt from a staged senakulo performance. What stands out in this senakulo excerpt in terms of rhythm, pattern, and movements?</p>
+<p>You may have noticed the <strong>rhythmic delivery of the lines</strong>. They are often poetic and chant-like, spoken with clarity and strong emotion. This rhythm helps the actors connect with the audience on an emotional level. The accompanying music also reflects the mood of each scene—slower for solemn or sorrowful moments, and more intense for dramatic scenes.</p>
+<p>The senakulo’s <strong>pattern follows a fixed sequence</strong>. It consistently narrates the story of Jesus—His life, death, and resurrection—and this order remains unchanged. Each year, the same key scenes are performed in the same sequence, creating a sense of tradition and familiarity.</p>
+<p>The <strong>movements in the senakulo are highly symbolic</strong>. Each action is deliberate, designed to convey the emotions of the story. For example, an actor might fall to the ground to depict pain, raise their hands toward the heavens in prayer, or turn to the audience with a powerful gesture to emphasize a point. These movements help to make the story more vivid and emotionally resonant.</p>
+<h3 class="doc-heading">Panunuluyan</h3>
+<p><strong>Panunuluyan</strong> is a dramatic and musical performance that reenacts Joseph and Mary’s search for shelter in Bethlehem on the night Jesus was born. The Tagalog word <em>panunuluyan</em> literally means “to seek shelter” or “to seek entry.”</p>
+<p>Panunuluyan is traditionally performed on <strong>Christmas Eve, 24 December</strong>. In this dramatic reenactment, actors portraying Joseph and Mary go from house to house, asking for a place to stay so Mary can give birth to Jesus. Each time, they are turned away. Finally, they are offered a simple stable, which becomes the birthplace of Jesus.</p>
+<p>Watch this excerpt of a panunuluyan performance. What stands out in this panunuluyan excerpt in terms of rhythm, pattern, and movements?</p>
+<p>You will likely notice the <strong>gentle rhythm of the music</strong>. The panunuluyan uses slow, peaceful music that complements the narrative. As Mary and Joseph travel from house to house, the music maintains a calm, repetitive rhythm, underscoring the quiet determination of their journey.</p>
+<p>Similar to the senakulo, the panunuluyan follows a <strong>clear and consistent pattern</strong>. The story always unfolds in the same way—Joseph and Mary knock on several doors seeking shelter, and they are repeatedly refused. Only the final house welcomes them, representing the humble stable where Jesus is born.</p>
+<p>The <strong>movements in the panunuluyan are simple yet meaningful</strong>. The actors move deliberately and respectfully as they walk and knock on doors. They may bow politely or raise their hands in supplication. Each gesture is imbued with emotion, helping the audience to connect with the feelings of the characters.</p>
+<h3 class="doc-heading">My Checkpoint 2.1</h3>
+<p><strong>Identify the dance or drama being described. Write your answer on the blank.</strong></p>
+<ol type="1">
+<li><p>This dance pattern that you can find in the <strong>sinulog</strong> dance comes from a dance ritual that is usually performed to honor the <strong>Santo Niño</strong>.</p></li>
+<li><p>This dance hails from <strong>Kalibo, Aklan</strong>, and is performed in honor of the <strong>Santo Niño</strong>.</p></li>
+<li><p>The name of this dance is derived from the Tagalog words <strong>subsob</strong> and <strong>bali</strong>.</p></li>
+<li><p>This drama is a play about the suffering, death, and resurrection of Jesus Christ which came about in the <strong>mid-18th century in the Philippines</strong>.</p></li>
+<li><p>This form of drama is typically performed during <strong>Christmas Eve in the Philippines</strong>.</p></li>
+</ol>
+<h3 class="doc-heading">Answers</h3>
+<ol type="1">
+<li><p><strong>Sinulog</strong></p></li>
+<li><p><strong>Ati-Atihan</strong></p></li>
+<li><p><strong>Subli</strong></p></li>
+<li><p><strong>Senakulo</strong></p></li>
+<li><p><strong>Panunuluyan</strong></p></li>
+</ol>
+<h3 class="doc-heading">Visual Arts: Rhythm, Pattern, and Movement in Design</h3>
+<p>Now let us talk about visual arts! Just like in performing arts, we can also find <strong>rhythm, pattern, and movement</strong> in drawings, paintings, sculptures, and other forms of visual expression. These elements help to organize the artwork and guide the viewer’s eye.</p>
+<p>In visual art, <strong>rhythm</strong> refers to the repetition of elements like shapes, lines, or colors, which creates a visual “beat” or flow. This repetition makes your eyes move across the artwork, creating a feeling of motion or continuity.</p>
+<p><strong>Pattern</strong> occurs when these repeated elements—such as lines, colors, or shapes—are arranged in an organized and predictable way. Patterns help to make the artwork feel balanced, harmonious, and visually connected.</p>
+<p><strong>Movement</strong> in art does not mean the picture is actually moving. Instead, it is the way the artwork is designed to direct your eyes around the composition. Artists use various elements like lines, curves, shapes, and the arrangement of objects (space) to lead your gaze from one part of the artwork to another, creating a sense of visual journey.</p>
+<p>Let us explore how these elements appear in some real works of art from our own country!</p>
+<h3 class="doc-heading">Palaspas</h3>
+<p><strong>Palaspas</strong> are intricately woven palm fronds you often see in Catholic churches on Palm Sunday. Catholics bring these to church to reenact the scene where Jesus arrived in Jerusalem and was greeted by believers waving palm leaves. Some palaspas are simple, while others are ornately decorated with elaborate patterns and weaving.</p>
+<p>Watch the video and learn about how to make different designs of palaspas. What do you notice about the designs of the palaspas? You will likely observe that there are many different styles, each one unique!</p>
+<p>One common feature is the <strong>repetitive nature of the designs</strong>. The way the palm leaves are folded and woven often follows a steady, flowing sequence, much like a beat in music. Your eyes can follow the curves, loops, and various shapes, which gives the entire design a calm and balanced feel.</p>
+<p>You will also easily spot <strong>clear patterns</strong>. The same shapes—like triangles, diamonds, or leaf-like forms—are used repeatedly. Some patterns are woven and dense, while others are more open and airy. These repeated shapes provide the palaspas with its distinct structure and intricate beauty.</p>
+<p>Even though a palaspas doesn't physically move, some designs can evoke a sense of movement. The folds and lines might appear to swirl, flow, or point upward, guiding your eyes through the design, similar to how you follow steps in a dance.</p>
+<p>Another important aspect to notice is the use of <strong>lines</strong>. The natural shape of the palm leaves, combined with how they are cut and folded, creates various types of lines—straight, zigzag, and curved. All these lines come together to form the intricate details and the overall shape of the design.</p>
+<h3 class="doc-heading">Parol</h3>
+<p>The <strong>parol</strong> is a traditional Filipino Christmas decoration. It is a star-shaped lantern that symbolizes the Star of Bethlehem and is widely displayed during the Christmas season.</p>
+<p>Traditionally, the parol is made using bamboo sticks and colorful Japanese paper, but modern versions often use materials like capiz shells, plastic, or metal. Many contemporary parols also incorporate lights, allowing them to glow brightly at night.</p>
+<p>A parol is more than just a Christmas decoration—it is a vibrant example of how <strong>rhythm, pattern, movement, and lines</strong> come together in visual art.</p>
+<p><strong>Rhythm</strong> in a parol can be seen in the repetition of shapes, such as the star’s points or the rays extending from its center. In modern parols, blinking lights also create a steady visual rhythm, making the lantern feel dynamic and full of life, perfectly capturing the festive spirit of Christmas.</p>
+<p>This repetition also creates <strong>patterns</strong>. Most parol designs feature a central five-pointed star, surrounded by repeating elements like triangles, diamonds, or circles. Modern parols enhance this with lights that twinkle in set sequences, giving the design even more structure and visual interest. These patterns naturally guide your eye’s movement across the design. For example, a well-crafted parol often draws your gaze outward from its central point.</p>
+<p>Finally, <strong>lines</strong> play a crucial role in shaping the parol. The bamboo frame provides strong, straight lines, while the cut paper, capiz shells, or plastic decorations create smooth curves and delicate edges. In a lighted parol, the glowing lines of the lights form new shapes and patterns, making the entire design appear almost magical.</p>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ── Hidden Print Area (Practice Test + Answer Key) ── -->
+<div id="print-area">
+<div class="p-cover"><div class="p-icon">🎭</div><h1>MAPEH 5 — BMI, Dance, Drama &amp; Visual Arts Practice Test</h1><div class="p-sub">Body Mass Index · Sinulog, Ati-Atihan &amp; Subli · Senakulo &amp; Panunuluyan · Palaspas &amp; Parol</div>
+<div class="p-info-box"><div><strong>Name:</strong> _____________________________________</div><div><strong>Section:</strong> ___________________ &nbsp; <strong>Date:</strong> ___________________</div><div><strong>Score:</strong> _______ / 50</div></div>
+<div class="p-instructions"><strong>Instructions:</strong> Read each item carefully. Write your answer on the blank provided (Parts I-V), or answer in complete sentences (Part VI). Show your solution for Part IV. Good luck!</div></div><h2 class="p-part-title">Part I — Identify the Dance, Drama, or Artwork</h2><div class="p-bank"><strong>Word Bank:</strong> Sinulog &middot; Ati-Atihan &middot; Subli &middot; Senakulo &middot; Panunuluyan &middot; Palaspas &middot; Parol</div><div class="p-q"><b>1.</b> Its pattern of one step forward and two steps backward comes from a dance ritual usually performed to honor the Santo Niño. <span class="p-blank"></span></div><div class="p-q"><b>2.</b> This dance hails from Kalibo, Aklan, and is performed in honor of the Santo Niño. <span class="p-blank"></span></div><div class="p-q"><b>3.</b> The name of this dance comes from the Tagalog words subsob and bali. <span class="p-blank"></span></div><div class="p-q"><b>4.</b> This drama is a play about the suffering, death, and resurrection of Jesus Christ that came about in the mid-18th century in the Philippines. <span class="p-blank"></span></div><div class="p-q"><b>5.</b> This form of drama is typically performed on Christmas Eve in the Philippines. <span class="p-blank"></span></div><div class="p-q"><b>6.</b> A festival dance with bigger, more energetic movements, such as foot stomping and marching, and no single unifying pattern. <span class="p-blank"></span></div><div class="p-q"><b>7.</b> A partner dance in which the male dancers keep a stooped or bent-over posture. <span class="p-blank"></span></div><div class="p-q"><b>8.</b> A drama in which actors go from house to house asking for a place to stay. <span class="p-blank"></span></div><div class="p-q"><b>9.</b> Woven palm fronds brought to church on Palm Sunday. <span class="p-blank"></span></div><div class="p-q"><b>10.</b> A star-shaped Christmas lantern that symbolizes the Star of Bethlehem. <span class="p-blank"></span></div><h2 class="p-part-title">Part II — Rhythm, Pattern, or Movement?</h2><div class="p-bank"><strong>Word Bank:</strong> Rhythm &middot; Pattern &middot; Movement</div><div class="p-q"><b>11.</b> The repetition of shapes, lines, or colors that creates a visual "beat" or flow. <span class="p-blank"></span></div><div class="p-q"><b>12.</b> Repeated elements arranged in an organized and predictable way. <span class="p-blank"></span></div><div class="p-q"><b>13.</b> The way an artwork directs your eyes around the composition. <span class="p-blank"></span></div><div class="p-break"></div><h2 class="p-part-title">Part III — BMI Category</h2><div class="p-bank"><strong>Word Bank:</strong> Underweight &middot; Normal &middot; Overweight &middot; Obese</div><div class="p-q"><b>14.</b> A person has a BMI of 17.5. Which category is this? <span class="p-blank"></span></div><div class="p-q"><b>15.</b> A person has a BMI of 22.19. Which category is this? <span class="p-blank"></span></div><div class="p-q"><b>16.</b> A person has a BMI of 18.5. Which category is this? <span class="p-blank"></span></div><div class="p-q"><b>17.</b> A person has a BMI of 27.3. Which category is this? <span class="p-blank"></span></div><div class="p-q"><b>18.</b> A person has a BMI of 31. Which category is this? <span class="p-blank"></span></div><h2 class="p-part-title">Part IV — Compute the BMI</h2><div class="p-q"><b>19.</b> Weight: 54 kg; Height: 156 cm. Find the BMI and category.<br><br>Solution / Answer: _________________________________________</div><div class="p-q"><b>20.</b> Weight: 40 kg; Height: 150 cm. Find the BMI and category.<br><br>Solution / Answer: _________________________________________</div><div class="p-q"><b>21.</b> Weight: 62 kg; Height: 155 cm. Find the BMI and category.<br><br>Solution / Answer: _________________________________________</div><div class="p-q"><b>22.</b> Weight: 90 kg; Height: 160 cm. Find the BMI and category.<br><br>Solution / Answer: _________________________________________</div><div class="p-break"></div><h2 class="p-part-title">Part V — True or False</h2><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>23.</b> BMI is computed as weight in kilograms divided by height in meters squared.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>24.</b> A BMI of 18.4 or below is underweight.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>25.</b> A BMI of 22 is in the overweight range.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>26.</b> A BMI of 30 and above is obese.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>27.</b> To compute BMI, height should be in centimeters.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>28.</b> The sinulog originates from Cebu.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>29.</b> The key pattern of the sinulog is two steps forward and one step backward.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>30.</b> The word "sug" means "the sea."</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>31.</b> The ati-atihan dance comes from Kalibo, Aklan.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>32.</b> The ati-atihan has a single unifying pattern in every performance.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>33.</b> The subli is a local dance from Batangas.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>34.</b> The subli is a group dance like the sinulog and ati-atihan.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>35.</b> The name "subli" comes from the Tagalog words subsob and bali.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>36.</b> Male subli dancers often keep a stooped or bent-over posture.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>37.</b> The senakulo originated in the mid-18th century in the Philippines.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>38.</b> The senakulo is typically performed during Christmas.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>39.</b> The scenes of the senakulo follow a fixed sequence.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>40.</b> The panunuluyan is traditionally performed on Christmas Eve.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>41.</b> In the panunuluyan, the first house welcomes Joseph and Mary.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>42.</b> "Panunuluyan" means "to seek shelter" or "to seek entry."</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>43.</b> Palaspas are woven palm fronds seen in churches on Palm Sunday.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>44.</b> Movement in visual art means that the picture actually moves.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>45.</b> A parol is traditionally made with bamboo sticks and colorful Japanese paper.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>46.</b> In visual art, rhythm refers to the repetition of elements like shapes, lines, or colors.</div><div class="p-break"></div><h2 class="p-part-title">Part VI — Short Answer</h2><div class="p-q"><b>47.</b> Describe how rhythm, pattern, and movement can be seen in the sinulog.<br><br>_________________________________________________<br><br>_________________________________________________</div><div class="p-q"><b>48.</b> How is the subli different from the sinulog and the ati-atihan?<br><br>_________________________________________________<br><br>_________________________________________________</div><div class="p-q"><b>49.</b> Describe the patterns you can find in a parol.<br><br>_________________________________________________<br><br>_________________________________________________</div><div class="p-q"><b>50.</b> How does the story of the panunuluyan unfold, and what pattern does it follow?<br><br>_________________________________________________<br><br>_________________________________________________</div><div class="p-break"></div><h2 class="p-part-title">✅ Complete Answer Key</h2><div class="p-key-part-title">Part I — Dance, Drama, or Artwork</div><div class="p-key-grid"><div class="p-key-pill">1. <b>Sinulog</b></div><div class="p-key-pill">2. <b>Ati-Atihan</b></div><div class="p-key-pill">3. <b>Subli</b></div><div class="p-key-pill">4. <b>Senakulo</b></div><div class="p-key-pill">5. <b>Panunuluyan</b></div><div class="p-key-pill">6. <b>Ati-Atihan</b></div><div class="p-key-pill">7. <b>Subli</b></div><div class="p-key-pill">8. <b>Panunuluyan</b></div><div class="p-key-pill">9. <b>Palaspas</b></div><div class="p-key-pill">10. <b>Parol</b></div></div><div class="p-key-part-title">Part II — Rhythm, Pattern, or Movement</div><div class="p-key-grid"><div class="p-key-pill">11. <b>Rhythm</b></div><div class="p-key-pill">12. <b>Pattern</b></div><div class="p-key-pill">13. <b>Movement</b></div></div><div class="p-key-part-title">Part III — BMI Category</div><div class="p-key-grid"><div class="p-key-pill">14. <b>Underweight</b></div><div class="p-key-pill">15. <b>Normal</b></div><div class="p-key-pill">16. <b>Normal</b></div><div class="p-key-pill">17. <b>Overweight</b></div><div class="p-key-pill">18. <b>Obese</b></div></div><div class="p-key-part-title">Part IV — Compute the BMI</div><div class="p-key-grid"><div class="p-key-pill">19. <b>22.19 (Normal)</b></div><div class="p-key-pill">20. <b>17.78 (Underweight)</b></div><div class="p-key-pill">21. <b>25.81 (Overweight)</b></div><div class="p-key-pill">22. <b>35.16 (Obese)</b></div></div><div class="p-key-part-title">Part V — True or False</div><div class="p-key-grid"><div class="p-key-pill">23. <b>True</b></div><div class="p-key-pill">24. <b>True</b></div><div class="p-key-pill">25. <b>False</b></div><div class="p-key-pill">26. <b>True</b></div><div class="p-key-pill">27. <b>False</b></div><div class="p-key-pill">28. <b>True</b></div><div class="p-key-pill">29. <b>False</b></div><div class="p-key-pill">30. <b>True</b></div><div class="p-key-pill">31. <b>True</b></div><div class="p-key-pill">32. <b>False</b></div><div class="p-key-pill">33. <b>True</b></div><div class="p-key-pill">34. <b>False</b></div><div class="p-key-pill">35. <b>True</b></div><div class="p-key-pill">36. <b>True</b></div><div class="p-key-pill">37. <b>True</b></div><div class="p-key-pill">38. <b>False</b></div><div class="p-key-pill">39. <b>True</b></div><div class="p-key-pill">40. <b>True</b></div><div class="p-key-pill">41. <b>False</b></div><div class="p-key-pill">42. <b>True</b></div><div class="p-key-pill">43. <b>True</b></div><div class="p-key-pill">44. <b>False</b></div><div class="p-key-pill">45. <b>True</b></div><div class="p-key-pill">46. <b>True</b></div></div><div class="p-key-part-title">Part VI — Short Answer (sample answers)</div><div class="p-q"><b>47.</b> Rhythm: the dancers' steps follow the steady beat of the drums. Pattern: the sinug, one step forward and two steps backward, like the flow of water currents. Movement: stepping and flowing, graceful arm movements, all synchronized with the beat.</div><div class="p-q"><b>48.</b> The subli is a partner dance from Batangas (Bauan and Alitagtag), while the sinulog and ati-atihan are group-oriented. The male dancers keep a stooped posture, and the dance includes bowing, stepping, and turning in circles.</div><div class="p-q"><b>49.</b> A central five-pointed star surrounded by repeating triangles, diamonds, or circles. Modern parols add lights that twinkle in set sequences, and the pattern draws the eye outward from the center.</div><div class="p-q"><b>50.</b> Joseph and Mary go from house to house on Christmas Eve asking for shelter. They knock on several doors and are repeatedly refused; only the final house welcomes them, representing the humble stable where Jesus is born.</div>
+</div>
+
+</body>
+</html>
