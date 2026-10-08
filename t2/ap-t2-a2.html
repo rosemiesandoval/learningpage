@@ -1,0 +1,2131 @@
+<!DOCTYPE html>
+<html lang="tl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🎎 AP: Pangkat sa Visayas at Mindanao Reviewer 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --gold: #f59e0b;
+  --gold-dark: #b45309;
+  --blue: #3b82f6;
+  --blue-dark: #1d4ed8;
+  --red: #ef4444;
+  --green: #22c55e;
+  --bg: #0c1a0e;
+  --surface: #132015;
+  --surface2: #1a2e1d;
+  --text: #f0fdf4;
+  --muted: #86efac;
+  --border: #166534;
+}
+
+body {
+  font-family: 'Baloo 2', cursive;
+  background: var(--bg);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--text);
+  background-image:
+    radial-gradient(ellipse at 10% 30%, rgba(245,158,11,.06) 0%, transparent 55%),
+    radial-gradient(ellipse at 90% 70%, rgba(59,130,246,.06) 0%, transparent 55%);
+}
+
+header {
+  width: 100%;
+  background: linear-gradient(135deg, #14532d, #1e3a5f);
+  border-bottom: 2px solid var(--gold-dark);
+  padding: 13px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 4px 30px rgba(0,0,0,.5);
+}
+.header-icon { font-size: 2rem; animation: float 3s ease-in-out infinite; }
+@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
+
+header h1 {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.45rem;
+  background: linear-gradient(90deg, var(--gold), #fde68a, var(--gold));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+header .sub { font-size: .72rem; color: var(--muted); margin-top: 1px; }
+
+.header-controls { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+.score-pill {
+  background: rgba(245,158,11,.15);
+  border: 1px solid rgba(245,158,11,.4);
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-weight: 800;
+  font-size: .85rem;
+  color: var(--gold);
+}
+.audio-btn {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  background: var(--surface2);
+  color: var(--text);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all .2s;
+  display: flex; align-items: center; justify-content: center;
+}
+.audio-btn:hover, .audio-btn.active { background: #14532d; border-color: var(--gold); }
+
+.chat-wrap {
+  width: 100%; max-width: 700px; flex: 1;
+  display: flex; flex-direction: column;
+  padding: 16px 14px 0;
+}
+
+#chat-box {
+  flex: 1; overflow-y: auto;
+  display: flex; flex-direction: column;
+  gap: 14px; padding-bottom: 10px;
+  max-height: calc(100vh - 200px);
+  scroll-behavior: smooth;
+}
+#chat-box::-webkit-scrollbar { width: 4px; }
+#chat-box::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+.msg { display: flex; gap: 8px; }
+.msg.user { flex-direction: row-reverse; }
+
+.avatar {
+  width: 34px; height: 34px; border-radius: 50%;
+  font-size: 1rem; display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 2px;
+}
+.msg.bot .avatar { background: linear-gradient(135deg, #14532d, #1e3a5f); border: 1.5px solid rgba(245,158,11,.4); }
+.msg.user .avatar { background: linear-gradient(135deg, #1e3a5f, #14532d); border: 1.5px solid rgba(59,130,246,.3); }
+
+.bubble {
+  max-width: 80%;
+  padding: 11px 16px;
+  border-radius: 18px;
+  font-size: .9rem;
+  line-height: 1.65;
+  animation: pop .22s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes pop { from{transform:scale(.88) translateY(6px);opacity:0} to{transform:scale(1) translateY(0);opacity:1} }
+
+.msg.bot .bubble {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-bottom-left-radius: 5px;
+}
+.msg.user .bubble {
+  background: linear-gradient(135deg, #1e3a5f, var(--blue-dark));
+  border-bottom-right-radius: 5px;
+}
+
+/* chips */
+.chip {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: rgba(245,158,11,.12);
+  border: 1.5px solid rgba(245,158,11,.4);
+  color: var(--gold);
+  border-radius: 30px;
+  padding: 5px 13px; margin: 5px 4px 0 0;
+  font-size: .8rem; font-weight: 700;
+  cursor: pointer; transition: all .15s;
+  user-select: none; font-family: 'Baloo 2', cursive;
+}
+.chip:hover {
+  background: var(--gold-dark); color: white;
+  border-color: var(--gold);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(245,158,11,.3);
+}
+
+/* topic tag */
+.topic-tag {
+  display: inline-block;
+  background: linear-gradient(135deg, #14532d, #166534);
+  border: 1px solid var(--gold-dark);
+  color: var(--gold);
+  font-size: .68rem; font-weight: 800;
+  border-radius: 20px; padding: 2px 10px;
+  margin-bottom: 5px; letter-spacing: .5px;
+  text-transform: uppercase;
+}
+
+/* multiple choice */
+.mc-options { display: flex; flex-direction: column; gap: 7px; margin-top: 10px; width: 100%; }
+.mc-btn {
+  display: flex; align-items: center; gap: 10px;
+  background: rgba(255,255,255,.03);
+  border: 1.5px solid var(--border);
+  border-radius: 12px; padding: 9px 14px;
+  color: var(--text); font-family: 'Baloo 2', cursive;
+  font-size: .87rem; font-weight: 600;
+  cursor: pointer; transition: all .15s; text-align: left; width: 100%;
+}
+.mc-btn:hover:not(:disabled) {
+  background: rgba(245,158,11,.12); border-color: var(--gold);
+  color: var(--gold); transform: translateX(3px);
+}
+.mc-btn .letter {
+  display: flex; align-items: center; justify-content: center;
+  width: 26px; height: 26px; border-radius: 8px;
+  background: rgba(245,158,11,.15); border: 1px solid rgba(245,158,11,.35);
+  color: var(--gold); font-size: .78rem; font-weight: 800;
+  flex-shrink: 0; transition: all .15s;
+}
+.mc-btn:hover:not(:disabled) .letter { background: var(--gold-dark); color: white; border-color: var(--gold-dark); }
+.mc-btn.correct { background: rgba(34,197,94,.15)!important; border-color: #22c55e!important; color: #22c55e!important; cursor: default; }
+.mc-btn.correct .letter { background: #22c55e!important; color: white!important; border-color: #22c55e!important; }
+.mc-btn.wrong { background: rgba(239,68,68,.12)!important; border-color: #ef4444!important; color: #ef4444!important; cursor: default; }
+.mc-btn.wrong .letter { background: #ef4444!important; color: white!important; border-color: #ef4444!important; }
+.mc-btn:disabled { cursor: default; transform: none!important; }
+
+/* speaker wave */
+.speaker-wave {
+  display: inline-flex; align-items: flex-end;
+  gap: 2px; height: 14px; margin-left: 6px; vertical-align: middle;
+}
+.speaker-wave span {
+  display: block; width: 3px; border-radius: 2px;
+  background: var(--gold); animation: wave 1s ease-in-out infinite;
+}
+.speaker-wave span:nth-child(1){height:4px;animation-delay:0s}
+.speaker-wave span:nth-child(2){height:10px;animation-delay:.1s}
+.speaker-wave span:nth-child(3){height:6px;animation-delay:.2s}
+.speaker-wave span:nth-child(4){height:12px;animation-delay:.15s}
+.speaker-wave span:nth-child(5){height:4px;animation-delay:.05s}
+@keyframes wave{0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.8)}}
+
+/* typing */
+.typing {
+  display: flex; gap: 4px; padding: 12px 16px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 18px; border-bottom-left-radius: 5px; width: fit-content;
+}
+.dot { width: 7px; height: 7px; border-radius: 50%; background: var(--gold); animation: bounce .9s infinite; }
+.dot:nth-child(2){animation-delay:.15s} .dot:nth-child(3){animation-delay:.3s}
+@keyframes bounce{0%,80%,100%{transform:translateY(0);opacity:.6}40%{transform:translateY(-7px);opacity:1}}
+
+/* input bar */
+.input-bar {
+  width: 100%; max-width: 700px;
+  padding: 10px 14px 18px;
+  display: flex; gap: 8px;
+  background: var(--bg); position: sticky; bottom: 0;
+}
+#user-input {
+  flex: 1; padding: 12px 18px;
+  border: 2px solid var(--border); border-radius: 30px;
+  font-family: 'Baloo 2', cursive; font-size: .92rem;
+  outline: none; background: var(--surface); color: var(--text);
+  transition: border-color .2s, box-shadow .2s;
+}
+#user-input::placeholder { color: var(--muted); }
+#user-input:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(245,158,11,.12); }
+
+#send-btn {
+  width: 48px; height: 48px; border-radius: 50%; border: none;
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  color: white; font-size: 1.1rem; cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 3px 14px rgba(245,158,11,.4); flex-shrink: 0;
+}
+#send-btn:hover { transform: scale(1.08); box-shadow: 0 5px 20px rgba(245,158,11,.55); }
+#send-btn:disabled { opacity: .5; transform: none; }
+
+/* result modal */
+.result-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.75); backdrop-filter: blur(6px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 100; opacity: 0; pointer-events: none; transition: opacity .3s;
+}
+.result-overlay.show { opacity: 1; pointer-events: all; }
+.result-card {
+  background: linear-gradient(135deg, #132015, #0c1a0e);
+  border: 2px solid var(--gold-dark);
+  border-radius: 24px; padding: 36px 40px;
+  text-align: center; max-width: 380px; width: 90%;
+  box-shadow: 0 20px 60px rgba(0,0,0,.6);
+  transform: scale(.9); transition: transform .3s cubic-bezier(.34,1.56,.64,1);
+}
+.result-overlay.show .result-card { transform: scale(1); }
+.result-emoji { font-size: 4rem; margin-bottom: 12px; display: block; }
+.result-title {
+  font-family: 'Fredoka One', cursive; font-size: 1.7rem; margin-bottom: 6px;
+  background: linear-gradient(90deg, var(--gold), #fde68a);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.result-score { font-size: 3rem; font-weight: 900; margin: 10px 0; color: white; }
+.result-msg { color: var(--muted); font-size: .9rem; margin-bottom: 22px; }
+.result-btn {
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  border: none; border-radius: 30px; padding: 12px 30px;
+  color: white; font-family: 'Baloo 2', cursive; font-weight: 800;
+  font-size: 1rem; cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+  box-shadow: 0 4px 16px rgba(245,158,11,.35);
+}
+.result-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 22px rgba(245,158,11,.5); }
+
+/* scenario card for identify questions */
+.scenario-card {
+  background: rgba(245,158,11,.07);
+  border: 1px solid rgba(245,158,11,.25);
+  border-radius: 12px; padding: 10px 14px;
+  margin: 8px 0 6px; font-style: italic;
+  font-size: .87rem; color: #fde68a; line-height: 1.5;
+}
+
+/* ── Notes Panel ─────────────────────────────────────────────── */
+.notes-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.78); backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 200; opacity: 0; pointer-events: none; transition: opacity .3s;
+}
+.notes-overlay.show { opacity: 1; pointer-events: all; }
+.notes-panel {
+  background: linear-gradient(160deg, #0c1a0e, #132015);
+  border: 2px solid var(--gold-dark);
+  border-radius: 20px;
+  width: 92%; max-width: 720px;
+  max-height: 88vh;
+  display: flex; flex-direction: column;
+  box-shadow: 0 24px 60px rgba(0,0,0,.7);
+  overflow: hidden;
+  transform: translateY(30px);
+  transition: transform .35s cubic-bezier(.34,1.2,.64,1);
+}
+.notes-overlay.show .notes-panel { transform: translateY(0); }
+.notes-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 22px; border-bottom: 1px solid var(--border);
+  background: linear-gradient(135deg, #14532d44, #1e3a5f44);
+}
+.notes-header h2 { font-family: 'Fredoka One', cursive; font-size: 1.3rem; color: var(--gold); }
+.notes-close {
+  width: 34px; height: 34px; border-radius: 50%;
+  border: 1.5px solid var(--border); background: var(--surface2);
+  color: var(--text); font-size: 1rem; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; transition: all .2s;
+}
+.notes-close:hover { background: #b91c1c; border-color: #ef4444; }
+.notes-body { overflow-y: auto; padding: 20px 22px; flex: 1; }
+.notes-body::-webkit-scrollbar { width: 4px; }
+.notes-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+.notes-topic { margin-bottom: 28px; }
+.notes-topic-title {
+  font-family: 'Fredoka One', cursive; font-size: 1.05rem;
+  color: var(--gold); margin-bottom: 10px;
+  padding-bottom: 6px; border-bottom: 1px solid var(--border);
+}
+.notes-item {
+  display: flex; gap: 10px; align-items: flex-start;
+  padding: 7px 0; border-bottom: 1px solid rgba(255,255,255,.04);
+  font-size: .87rem; line-height: 1.55;
+}
+.notes-item:last-child { border-bottom: none; }
+.notes-term { font-weight: 800; color: var(--gold); min-width: 150px; flex-shrink: 0; font-size: .84rem; }
+.notes-def { color: #d1fae5; }
+.notes-tabs {
+  display: flex; flex-wrap: wrap; gap: 8px; padding: 14px 22px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(0,0,0,.15);
+}
+.notes-tab {
+  padding: 12px 20px; border-radius: 10px;
+  border: 1.5px solid var(--border); 
+  background: rgba(255,255,255,.04); color: var(--muted);
+  font-family: 'Baloo 2', cursive; font-size: .9rem; font-weight: 700;
+  cursor: pointer; transition: all .15s; white-space: nowrap;
+  min-height: 48px; display: flex; align-items: center;
+}
+.notes-tab.active { background: var(--surface); color: var(--gold); border-color: var(--gold-dark); }
+.notes-tab:hover:not(.active) { color: var(--text); background: var(--surface2); }
+.notes-section { display: none; }
+.notes-section.active { display: block; }
+
+
+/* ── Print button in notes header ─────────────────────────────── */
+.notes-header-actions { display: flex; align-items: center; gap: 10px; }
+.print-btn {
+  display: flex; align-items: center; gap: 6px;
+  background: rgba(245,158,11,.12);
+  border: 1.5px solid rgba(245,158,11,.4);
+  color: var(--gold);
+  border-radius: 20px;
+  padding: 7px 14px;
+  font-family: 'Baloo 2', cursive;
+  font-size: .78rem;
+  font-weight: 800;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all .15s;
+}
+.print-btn:hover { background: var(--gold); color: #0c1a0e; border-color: var(--gold); }
+.print-btn.active { background: var(--gold); color: #0c1a0e; border-color: var(--gold); }
+
+/* ── On-screen Practice Test / Answer Key ─────────────────────── */
+.ptest-part-title {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1rem;
+  color: var(--gold);
+  margin: 22px 0 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+.ptest-part-title:first-child { margin-top: 0; }
+.ptest-q {
+  font-size: .87rem;
+  line-height: 1.6;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed rgba(255,255,255,.06);
+  color: #d1fae5;
+}
+.ptest-q b { color: var(--gold); }
+.ptest-q .opt { display: block; margin: 2px 0 2px 18px; color: #d1fae5; }
+.ptest-bank {
+  background: rgba(59,130,246,.08);
+  border: 1px solid rgba(59,130,246,.3);
+  border-radius: 10px;
+  padding: 10px 16px;
+  margin-bottom: 14px;
+  font-size: .82rem;
+  color: #dbeafe;
+  line-height: 1.6;
+}
+.key-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.key-pill {
+  background: rgba(245,158,11,.1);
+  border: 1px solid rgba(245,158,11,.25);
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: .78rem;
+  color: #fde68a;
+}
+.key-pill b { color: #34d399; }
+
+/* ── Print / Save-as-PDF styles ──────────────────────────────────
+   By default everything is hidden from print. When body carries
+   .printing-test, only #print-area (a light-themed clone of the
+   Practice Test + Answer Key) is shown, laid out for paper. ──── */
+@media print {
+  body * { visibility: hidden; }
+  #print-area, #print-area * { visibility: visible; }
+  #print-area {
+    display: block !important;
+    position: absolute; top: 0; left: 0; width: 100%;
+    background: #fff; color: #14290f;
+    font-family: 'Helvetica', Arial, sans-serif;
+    font-size: 10.5pt;
+    line-height: 1.5;
+  }
+  #print-area .p-cover { text-align: center; padding-top: 40px; }
+  #print-area .p-cover .p-icon { font-size: 34pt; }
+  #print-area .p-cover h1 { font-size: 19pt; color: #b45309; margin: 8px 0 4px; }
+  #print-area .p-cover .p-sub { font-size: 10.5pt; color: #166534; margin-bottom: 20px; }
+  #print-area .p-info-box {
+    border: 1.5px solid #fcd34d; border-radius: 10px;
+    max-width: 460px; margin: 0 auto 20px; padding: 14px 20px;
+    text-align: left; font-size: 10pt;
+  }
+  #print-area .p-info-box div { margin: 6px 0; border-bottom: 1px dotted #fde68a; padding-bottom: 6px; }
+  #print-area .p-instructions {
+    max-width: 460px; margin: 0 auto; text-align: left;
+    background: #fffbeb; border: 1px solid #fcd34d; border-radius: 10px;
+    padding: 12px 18px; font-size: 9.5pt; color: #78350f;
+  }
+  #print-area h2.p-part-title {
+    font-size: 12.5pt; color: #fff;
+    background: linear-gradient(135deg, #b45309, #14532d) !important;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    padding: 6px 12px; border-radius: 7px; margin: 18px 0 10px;
+    page-break-after: avoid;
+  }
+  #print-area .p-bank {
+    background: #f0fdf4 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    border: 1px solid #86efac; border-radius: 8px; padding: 8px 14px;
+    margin-bottom: 12px; font-size: 9.5pt; color: #14532d;
+  }
+  #print-area .p-q {
+    margin-bottom: 8px; padding-bottom: 8px;
+    border-bottom: 1px dotted #fde68a; font-size: 10pt;
+    page-break-inside: avoid; color: #14290f;
+  }
+  #print-area .p-q b { color: #b45309; }
+  #print-area .p-q .p-blank { display: inline-block; min-width: 65px; border-bottom: 1px solid #64748b; }
+  #print-area .p-q .p-opt { display: block; margin: 2px 0 0 20px; color: #365314; }
+  #print-area .p-break { page-break-before: always; }
+  #print-area .p-key-part-title {
+    font-size: 11pt; color: #b45309; font-weight: bold;
+    margin: 14px 0 8px; border-bottom: 2px solid #b45309; padding-bottom: 4px;
+  }
+  #print-area .p-key-grid {
+    display: grid; grid-template-columns: repeat(5, 1fr);
+    gap: 5px 8px; margin-bottom: 14px;
+  }
+  #print-area .p-key-pill {
+    background: #f0fdf4 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    border: 1px solid #86efac; border-radius: 6px;
+    padding: 4px 8px; font-size: 8.5pt; color: #166534;
+  }
+  #print-area .p-key-pill b { color: #b45309; }
+  @page { size: letter; margin: 1.5cm 1.8cm; }
+}
+#print-area { display: none; }
+
+
+/* ── Chapter Summary / Tandaan / Memory boxes (fix: previously missing) ── */
+.chapter-summary {
+  background: linear-gradient(135deg, rgba(59,130,246,.1), rgba(34,197,94,.08));
+  border: 1px solid rgba(59,130,246,.25);
+  border-left: 4px solid var(--blue);
+  border-radius: 12px;
+  padding: 14px 18px;
+  margin-bottom: 18px;
+  font-size: .88rem;
+  line-height: 1.65;
+  color: #dbeafe;
+}
+.tandaan-box {
+  background: rgba(245,158,11,.08);
+  border: 1px solid rgba(245,158,11,.3);
+  border-left: 4px solid var(--gold);
+  border-radius: 12px;
+  padding: 12px 18px;
+  margin: 14px 0;
+  font-size: .86rem;
+  line-height: 1.6;
+  color: #fde68a;
+}
+.tandaan-label {
+  display: block;
+  font-family: 'Baloo 2', cursive;
+  font-size: .8rem;
+  color: var(--gold);
+  letter-spacing: .5px;
+  margin-bottom: 5px;
+}
+.memory-box {
+  background: rgba(34,197,94,.08);
+  border: 1px solid rgba(34,197,94,.3);
+  border-left: 4px solid var(--green);
+  border-radius: 12px;
+  padding: 12px 18px;
+  margin: 14px 0 22px;
+  font-size: .86rem;
+  line-height: 1.6;
+  color: #bbf7d0;
+}
+.memory-label {
+  display: block;
+  font-family: 'Baloo 2', cursive;
+  font-size: .8rem;
+  color: var(--green);
+  letter-spacing: .5px;
+  margin-bottom: 5px;
+}
+.compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0 20px;
+  font-size: .82rem;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.compare-table th {
+  background: linear-gradient(135deg, var(--blue-dark), var(--gold-dark));
+  color: white;
+  text-align: left;
+  padding: 9px 12px;
+  font-size: .78rem;
+  text-transform: uppercase;
+  letter-spacing: .4px;
+}
+.compare-table td {
+  padding: 9px 12px;
+  border-top: 1px solid var(--border);
+  color: var(--text);
+  vertical-align: top;
+}
+.compare-table tr:nth-child(even) td { background: rgba(255,255,255,.02); }
+
+/* ── Story Box (for reading Bible stories aloud) ─────────────────── */
+.story-box {
+  background: rgba(255,255,255,.03);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px 20px;
+  margin-bottom: 16px;
+  font-size: .92rem;
+  line-height: 1.8;
+  color: var(--text);
+}
+.story-box p { margin-bottom: 10px; }
+.story-box p:last-child { margin-bottom: 0; }
+.story-ref {
+  display: block;
+  text-align: right;
+  font-style: italic;
+  color: var(--muted);
+  font-size: .8rem;
+  margin-top: 10px;
+}
+.story-label {
+  display: block;
+  font-family: 'Baloo 2', cursive;
+  font-size: .9rem;
+  color: var(--gold);
+  letter-spacing: .5px;
+  margin-bottom: 10px;
+}
+/* ── Raw Notes (original document view) ──────────────────────── */
+.rawnotes-intro {
+  font-size: .82rem;
+  color: var(--muted);
+  line-height: 1.6;
+  background: rgba(59,130,246,.1);
+  border: 1px solid rgba(59,130,246,.3);
+  border-left: 4px solid var(--blue);
+  border-radius: 10px;
+  padding: 12px 18px;
+  margin-bottom: 20px;
+}
+.rawnotes-doc {
+  font-family: 'Lora', Georgia, serif;
+  line-height: 1.75;
+}
+.rawnotes-doc p {
+  font-size: .95rem;
+  margin-bottom: 14px;
+  color: #e2f5e6;
+}
+.rawnotes-doc strong { color: var(--gold); font-weight: 700; }
+.rawnotes-doc em { color: var(--muted); font-style: italic; }
+.rawnotes-doc h3.doc-heading {
+  font-family: 'Baloo 2', cursive;
+  font-size: 1.05rem;
+  color: var(--gold);
+  margin: 26px 0 12px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid var(--border);
+}
+.rawnotes-doc h3.doc-heading:first-child { margin-top: 0; }
+.rawnotes-doc ul, .rawnotes-doc ol {
+  margin: 0 0 14px 26px;
+  color: #e2f5e6;
+}
+.rawnotes-doc li { margin-bottom: 6px; font-size: .95rem; }
+.rawnotes-doc table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0 20px;
+  font-size: .82rem;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.rawnotes-doc th {
+  background: linear-gradient(135deg, var(--blue-dark), var(--gold-dark));
+  color: white;
+  text-align: left;
+  padding: 9px 12px;
+  font-size: .78rem;
+}
+.rawnotes-doc td {
+  padding: 9px 12px;
+  border-top: 1px solid var(--border);
+  color: var(--text);
+  vertical-align: top;
+}
+.rawnotes-doc tr:nth-child(even) td { background: rgba(255,255,255,.02); }
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE: TABLET (≤820px)
+   ═══════════════════════════════════════════════════════════════ */
+@media (max-width: 820px) {
+  .notes-panel { width: 95%; max-height: 92vh; }
+  .notes-tabs { padding: 12px 16px; gap: 6px; }
+  .notes-tab { padding: 10px 14px; font-size: .82rem; min-height: 42px; }
+  .notes-body { padding: 16px; }
+  .notes-header { padding: 14px 16px; }
+  .chat-wrap { padding: 14px 10px 0; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE: MOBILE (≤600px)
+   ═══════════════════════════════════════════════════════════════ */
+@media (max-width: 600px) {
+  header {
+    padding: 10px 12px;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .header-icon { font-size: 1.5rem; }
+  header h1 { font-size: 1.05rem; line-height: 1.2; }
+  header .sub { font-size: .62rem; }
+  .header-controls { gap: 6px; margin-left: auto; }
+  .score-pill { padding: 4px 10px; font-size: .74rem; }
+  .audio-btn { width: 32px; height: 32px; font-size: .85rem; }
+
+  .chat-wrap { padding: 10px 6px 0; }
+  #chat-box { gap: 12px; }
+  .bubble { max-width: 88%; font-size: .88rem; padding: 10px 13px; }
+  .avatar { width: 30px; height: 30px; font-size: .85rem; }
+
+  .chip { font-size: .78rem; padding: 7px 12px; }
+  .mc-btn { font-size: .84rem; padding: 10px 12px; }
+  .mc-btn .letter { width: 22px; height: 22px; font-size: .74rem; }
+  .topic-tag { font-size: .68rem; }
+  .scenario-card { font-size: .88rem; padding: 10px 14px; }
+
+  .input-bar { padding: 8px 8px calc(8px + env(safe-area-inset-bottom)); gap: 8px; }
+  #user-input { font-size: .88rem; padding: 10px 14px; }
+  #send-btn { width: 40px; height: 40px; font-size: 1rem; }
+
+  .result-card { width: 92%; padding: 26px 20px; }
+  .result-emoji { font-size: 2.6rem; }
+  .result-title { font-size: 1.2rem; }
+  .result-score { font-size: 1.8rem; }
+
+  /* ── Notes panel: near-full-screen on phones ── */
+  .notes-overlay { align-items: flex-end; }
+  .notes-panel {
+    width: 100%; max-width: 100%;
+    max-height: 94vh;
+    border-radius: 20px 20px 0 0;
+    border-left: none; border-right: none; border-bottom: none;
+  }
+  .notes-header { padding: 12px 14px; flex-wrap: wrap; gap: 8px; }
+  .notes-header h2 { font-size: 1.05rem; flex: 1 1 100%; }
+  .notes-header-actions { flex-wrap: wrap; gap: 6px; width: 100%; justify-content: flex-start; }
+  .print-btn { font-size: .7rem; padding: 6px 11px; }
+  .notes-close { width: 30px; height: 30px; font-size: .9rem; margin-left: auto; }
+
+  .notes-tabs { padding: 10px 12px; gap: 5px; }
+  .notes-tab { padding: 8px 12px; font-size: .76rem; min-height: 38px; }
+  .notes-body { padding: 14px; }
+
+  .notes-item { flex-direction: column; gap: 2px; }
+  .notes-term { min-width: 0; font-size: .82rem; }
+  .notes-def { font-size: .84rem; }
+  .notes-topic-title { font-size: .95rem; }
+  .chapter-summary, .memory-box, .tandaan-box, .story-box, .verse-card { font-size: .82rem; padding: 12px 14px; }
+
+  /* ── Tables: allow horizontal scroll instead of squeezing ── */
+  .compare-table { display: block; overflow-x: auto; white-space: nowrap; }
+  .compare-table th, .compare-table td { white-space: normal; min-width: 110px; }
+
+  .key-grid { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 5px; }
+  .key-pill { font-size: .72rem; padding: 5px 8px; }
+  .ptest-part-title { font-size: .92rem; }
+  .ptest-q { font-size: .82rem; }
+  .ptest-bank { font-size: .78rem; padding: 8px 12px; }
+
+  .rawnotes-doc p, .rawnotes-doc li { font-size: .87rem; }
+  .rawnotes-doc h3.doc-heading { font-size: .95rem; }
+  .rawnotes-doc table { display: block; overflow-x: auto; white-space: nowrap; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE: VERY SMALL PHONES (≤380px)
+   ═══════════════════════════════════════════════════════════════ */
+@media (max-width: 380px) {
+  header h1 { font-size: .92rem; }
+  header .sub { display: none; }
+  .score-pill span { font-size: .7rem; }
+  .bubble { max-width: 92%; font-size: .84rem; }
+  .notes-tab { font-size: .7rem; padding: 7px 10px; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE: LANDSCAPE PHONES (short height)
+   ═══════════════════════════════════════════════════════════════ */
+@media (max-height: 480px) and (orientation: landscape) {
+  .notes-panel { max-height: 98vh; }
+  .notes-tabs { padding: 6px 12px; }
+  .notes-tab { min-height: 32px; padding: 6px 10px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-icon">🎎</div>
+  <div>
+    <h1>Pangkat sa Visayas at Mindanao</h1>
+    <div class="sub">Mga Pangkat sa Visayas · Muslim · Kristiyano · Lumad · IPRA</div>
+  </div>
+  <div class="header-controls">
+    <div class="score-pill">⭐ <span id="score-val">0</span> / <span id="total-val">0</span></div>
+    <button class="audio-btn" id="notes-toggle" title="Basahin ang mga Tala" onclick="document.getElementById('notes-overlay').classList.add('show')">📖</button>
+    <button class="audio-btn active" id="audio-toggle" title="I-toggle ang Audio">🔊</button>
+  </div>
+</header>
+
+<div class="chat-wrap">
+  <div id="chat-box"></div>
+</div>
+
+<div class="input-bar">
+  <input type="text" id="user-input" placeholder="Isulat ang iyong sagot dito…" autocomplete="off" />
+  <button id="send-btn">➤</button>
+</div>
+
+<div class="result-overlay" id="result-overlay">
+  <div class="result-card">
+    <span class="result-emoji" id="res-emoji">🏆</span>
+    <div class="result-title">Tapos na!</div>
+    <div class="result-score"><span id="res-score">0</span>/<span id="res-total">0</span></div>
+    <div class="result-msg" id="res-msg">Magaling!</div>
+    <button class="result-btn" onclick="restartApp()">🔄 Maglaro Ulit</button>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+// QUESTION BANK
+// ═══════════════════════════════════════════════════════════════
+const topics = {
+
+  "Mga Pangkat sa Visayas: Aklanon, Kinaray-a, Sulod, Ilonggo, at Ati": [
+    { q: "Ano-ano ang mga pangunahing pangkat etnolingguwistiko sa Visayas ayon sa aralin?", a: "Aklanon, Kinaray-a, Ilonggo, Boholano, Cebuano, at Waray", hint: "Anim na pangunahing pangkat." },
+    { q: "Saan matatagpuan ang mga Aklanon?", a: "Sa lalawigan ng Aklan, at may ilang pamayanan sa Iloilo, Antique, Capiz, at Romblon", hint: "Ang pangalan ng pangkat ay hango sa lalawigan." },
+    { q: "Anong wika ang dayalekto ng Aklanon?", a: "Malaynon", hint: "Isang dayalekto ng wikang Aklanon." },
+    { q: "Saan matatagpuan ang mga Kinaray-a?", a: "Sa lalawigan ng Antique at Iloilo", hint: "Dalawang lalawigan sa Panay." },
+    { q: "Ano ang tawag sa mga Kinaray-a mula sa Antique?", a: "Hamtiknon", hint: "Isang espesyal na tawag sa taga-Antique." },
+    { q: "Ano ang ibig sabihin ng pangalang Sulod?", a: "\"Loob\" o \"looban\"", hint: "Nakatira sila sa kaloob-looban ng mga bundok." },
+    { q: "Bakit tinawag na Sulod ang pangkat na ito?", a: "Dahil nakatira sila sa kaloob-looban ng mga bundok at ilog", hint: "Ginamit ito ng mga katabing tribo." },
+    { q: "Saan nakatira ang mga Sulod?", a: "Sa mga kabundukan ng Gitnang Panay: Tapaz sa Capiz, Lambunao sa Iloilo, at Valderrama sa Antique", hint: "Tatlong bayan sa tatlong lalawigan." },
+    { q: "Anong paraan ng pagsasaka ang ginagamit ng mga Sulod, katulad ng mga Mangyan?", a: "Kaingin", hint: "Pagsasaka sa pamamagitan ng pagsusunog at paglilinis ng gubat." },
+    { q: "Ano ang Hinilawod?", a: "Isang epiko ng mga Sulod na naipapasa nang pasalita; isinasalaysay nito ang kuwento ni Labaw Donggon at ang kaniyang paglalakbay upang makamit ang pag-ibig ni Nagmalitong Yawa", hint: "Isang akdang pampanitikan." },
+    { q: "Anong mga instrumento ang ginagawa ng mga Sulod?", a: "Plawtang yari sa kawayan, tambol, at gitara", hint: "Mahilig sila sa musika." },
+    { q: "Saan matatagpuan ang mga Ilonggo o Hiligaynon?", a: "Sa mga lalawigan ng Iloilo, Capiz, Aklan, Guimaras, at Negros Occidental", hint: "Limang lalawigan." },
+    { q: "Sa paghahabi ng ano kilala ang mga Ilonggo?", a: "Jusi, piña, at sinamay; mahusay rin sila sa paggawa ng Barong Tagalog", hint: "Mga telang hinahabi." },
+    { q: "Anong mga pista ang kilala sa mga Ilonggo?", a: "Dinagyang sa Iloilo at MassKara sa Negros Occidental", hint: "Dalawang kapistahan." },
+    { q: "Ano ang ibang tawag sa mga Aeta sa Panay, Negros, at Boracay?", a: "Agta, Atta, o Ati", hint: "Tatlong pangalan." },
+  ],
+
+  "Mga Pangkat sa Visayas: Boholano, Cebuano, Abaknon, at Waray": [
+    { q: "Anong wika ang ginagamit ng mga Boholano?", a: "Boholano, isang dayalekto ng Cebuano", hint: "Isang dayalekto ng wika ng kalapit na pangkat." },
+    { q: "Ano ang pangunahing kabuhayan ng mga Boholano?", a: "Pagsasaka at paggawa ng mga basket at palamuti", hint: "Dalawang kabuhayan." },
+    { q: "Saan matatagpuan ang mga Cebuano?", a: "Sa mga lalawigan ng Cebu, Bohol, Negros Oriental, at Kanlurang Leyte", hint: "Apat na lugar." },
+    { q: "Ano ang pangunahing ikinabubuhay ng mga Cebuano?", a: "Pagsasaka at pangingisda; ang iba ay nagmimina o nagdadaing ng isda, at mahalaga rin ang paggawa ng gitara", hint: "May kaugnayan sa musika ang isa sa mga kabuhayan." },
+    { q: "Kanino may matinding pananalig ang mga Cebuano?", a: "Sa Santo Niño", hint: "Ang Batang Hesus." },
+    { q: "Ano ang ginagawa ng mga tao sa Sinulog Festival?", a: "Nagdarasal at sumasayaw sila sa kalsada habang hawak ang imahen ng Santo Niño; may paputok at parada rin", hint: "Pagdarasal at pagsasayaw." },
+    { q: "Saan matatagpuan ang mga Abaknon?", a: "Sa hilagang-silangang Samar, sa isla ng Capul", hint: "Isang isla sa Samar." },
+    { q: "Ano-ano ang ibang pangalan ng mga Abaknon?", a: "Capul, Capuleño, at Sama Capul", hint: "Hango sa isla." },
+    { q: "Bakit naiiba ang wikang Abaknon sa mga wika sa Visayas?", a: "Dahil ito ay nauugnay sa mga wika ng mga pangkat ng Sama mula sa Sulu at Tawi-Tawi", hint: "May koneksiyon ito sa Mindanao." },
+    { q: "Saan matatagpuan ang mga Waray?", a: "Sa dalawang malalaking pulo ng Samar at Leyte", hint: "Dalawang pulo." },
+    { q: "Ano ang ugali ng mga Waray sa harap ng mga trahedya?", a: "Matiyaga at matiisin; masisipag at mapagmahal din sila", hint: "Makikita ito tuwing may bagyo o baha." },
+    { q: "Sino ang patron ng mga Waray?", a: "Ang Santo Niño", hint: "Katulad ng mga Cebuano." },
+  ],
+
+  "Mga Muslim sa Mindanao": [
+    { q: "Anong rehiyon ang tinitirhan ng karamihan ng mga Pilipinong Muslim?", a: "Ang Bangsamoro Autonomous Region in Muslim Mindanao (BARMM)", hint: "May apat na letrang daglat." },
+    { q: "Kailan unang dumating ang mga misyonerong Muslim sa Tawi-Tawi?", a: "Noong ika-14 na dantaon", hint: "Isang daang taon bago maitatag ang mga sultanato." },
+    { q: "Anong dalawang kahariang Muslim ang naitatag noong ika-15 dantaon?", a: "Ang Sultanato ng Sulu at ang Sultanato ng Maguindanao", hint: "Dalawang sultanato." },
+    { q: "Paano napanatili ng mga Muslim ang kanilang kultura sa panahon ng mga Espanyol at Amerikano?", a: "Napanatili nila ang kanilang kalayaan at natatanging kultura at pagkakakilanlan", hint: "Hindi sila lubusang nasakop." },
+    { q: "Ano ang Shari'ah?", a: "Ang batas ng Islam", hint: "Nasa kultura at kaugalian ng mga Muslim." },
+    { q: "Ano ang Adat?", a: "Iba't ibang lokal na kaugalian at tradisyon na itinuturing na tugma sa katuruang Islam", hint: "Lokal na kaugalian." },
+    { q: "Paano kinikilala ng mga Pilipinong Muslim ang kanilang sarili?", a: "Bangsamoro", hint: "Isang pangalan para sa kanilang pagkakakilanlan." },
+    { q: "Ano ang tatlong pinakamalaking pangkat ng mga Muslim sa Mindanao, ayon sa laki?", a: "Maguindanao (pinakamalaki), Tausug (ikalawa), at Maranao (ikatlo)", hint: "Isa, dalawa, tatlo." },
+    { q: "Saan kilala ang mga Maguindanao?", a: "Sa musika gamit ang kutyapi (kudyapi) at kulintang, at sa pagkaing pastil", hint: "Instrumento at pagkain." },
+    { q: "Ano ang pastil?", a: "Pagkaing gawa sa kanin at hinimay-himay na manok na nakabalot sa dahon ng saging", hint: "Pagkaing Maguindanao." },
+    { q: "Saan matatagpuan ang mga Tausug?", a: "Sa Sulu, Tawi-Tawi, at Basilan", hint: "Dating bahagi ng Sultanato ng Sulu." },
+    { q: "Saan kilala ang mga Tausug?", a: "Sa sayaw na Pangalay at sa paghahabi ng telang pis syabit", hint: "Isang sayaw at isang tela." },
+    { q: "Saan matatagpuan ang mga Maranao?", a: "Sa Lanao del Norte at Lanao del Sur", hint: "Dalawang lalawigang may \"Lanao.\"" },
+    { q: "Saan kilala ang mga Maranao?", a: "Sa torogan (magagarang bahay ng mga maharlika), disenyong sarimanok at okir, epikong Darangen, at sayaw na Singkil", hint: "Apat na bagay." },
+  ],
+
+  "Mga Kristiyano sa Mindanao at mga Wikang Rehiyonal": [
+    { q: "Ano ang pinakalaganap na pangkat sa Mindanao batay sa paniniwala?", a: "Ang mga Kristiyano, na halos 60 porsiyento ng populasyon ng Mindanao", hint: "Higit sa kalahati ng populasyon." },
+    { q: "Kailan nagsimulang dumating ang mga pangkat ng Kristiyano sa Mindanao?", a: "Noong dekada 1930", hint: "Bago ang digmaan." },
+    { q: "Anong mga pangkat ang kabilang sa mga dumating na Kristiyano?", a: "Ilokano, Cebuano, at Hiligaynon", hint: "Tatlong pangkat mula sa Luzon at Visayas." },
+    { q: "Bakit lalong dumami ang lumipat sa Mindanao noong dekada 1950?", a: "Dahil ipinamahagi ng pamahalaan sa mga magsasaka ang mga lupang sakahan sa Mindanao sa ilalim ng programang agraryo ni Pangulong Magsaysay", hint: "May kinalaman sa lupa." },
+    { q: "Aling mga pangkat ang pinakakaraniwan ngayon sa Mindanao?", a: "Ang mga Cebuano at Hiligaynon", hint: "Dalawang pangkat." },
+    { q: "Saan sinasalita ang Surigaonon?", a: "Sa Surigao del Norte at Surigao del Sur", hint: "Hango sa pangalan ng lalawigan." },
+    { q: "Saan sinasalita ang Butuanon?", a: "Sa Agusan del Norte at Agusan del Sur", hint: "Dalawang lalawigan." },
+    { q: "Saan ginagamit ang Chavacano?", a: "Sa rehiyon ng Zamboanga at ilang pamayanan sa Basilan, Sulu, at Tawi-Tawi", hint: "Wikang may impluwensiyang Espanyol." },
+    { q: "Bakit natatangi ang wikang Chavacano?", a: "Dahil nakabatay ito sa wikang Espanyol na may halong salita at impluwensiya mula sa Ilonggo, Cebuano, Tagalog, Malay, at Arabo", hint: "Halo-halong wika." },
+  ],
+
+  "Mga Lumad": [
+    { q: "Sino ang mga Lumad?", a: "Mga katutubong pangkat sa Mindanao na hindi naimpluwensiyahan ng mga Kristiyano at Muslim, may natatanging paniniwala, kultura, at pagkakakilanlan", hint: "Katutubo ng Mindanao." },
+    { q: "Ano-anong pangkat ng Lumad ang tinalakay sa aralin?", a: "Bagobo, Badjao, Manobo, T'boli, Tiruray, Subanen, Blaan, at Mansaka", hint: "Walong pangkat." },
+    { q: "Saan matatagpuan ang mga Bagobo?", a: "Sa hilaga at hilagang-kanlurang Davao, silangang Cotabato, at ilang bahagi ng Agusan del Norte at Agusan del Sur", hint: "Pangunahin ay sa Davao." },
+    { q: "Ano ang mga itinatanim ng mga Bagobo?", a: "Palay, gulay, at halamang-ugat", hint: "Nagkakaingin sila." },
+    { q: "Sa ano mahusay ang kalalakihang Bagobo?", a: "Sa paggawa ng mga sandata at kagamitang gawa sa tumbaga at bakal", hint: "Gawa sa metal." },
+    { q: "Sa ano mahusay ang kababaihang Bagobo?", a: "Sa paghahabi ng tela mula sa abaka at paggawa ng mga basket", hint: "Mga hinabing produkto." },
+    { q: "Ano ang ibig sabihin ng ranggong \"magani\" ng mga Bagobo?", a: "\"Mandirigma\"", hint: "Isang matapang na tao." },
+    { q: "Paano maaaring maging magani ang isang Bagobo?", a: "Kung nakatalo siya ng higit sa isang kaaway; may pulang kasuotan ang magani", hint: "Nakikita sa kulay ng kasuotan." },
+    { q: "Saan naninirahan ang mga Badjao?", a: "Sa karagatan ng Sulu, Tawi-Tawi, at Zamboanga del Sur", hint: "Sa dagat." },
+    { q: "Ano ang ibig sabihin ng salitang \"Badjao\"?", a: "\"Taong nasa dagat\"", hint: "Tinaguriang \"sea gypsies.\"" },
+    { q: "Ano ang tawag sa mga bahay na bangka ng mga Badjao?", a: "Sakayan", hint: "Dito sila naninirahan." },
+    { q: "Ano ang vinta?", a: "Isang bangkang may makukulay na layag na ginagamit ng mga Badjao sa paglalakbay", hint: "Makulay na bangka." },
+    { q: "Ano ang pangunahing ikinabubuhay ng mga Badjao?", a: "Pangingisda at paninisid ng perlas", hint: "Sa dagat nila kinukuha ang kabuhayan." },
+    { q: "Saan matatagpuan ang mga Manobo?", a: "Sa mga lalawigan ng Cotabato, Bukidnon, Agusan del Sur, at Davao", hint: "Apat na lalawigan." },
+    { q: "Ano ang ikinabubuhay ng mga Manobo?", a: "Pagsasaka at pangingisda; ang ilan ay nangangalap ng pagkain at nangangaso sa kagubatan", hint: "Kilala sila sa kahusayan sa pagtatanim." },
+    { q: "Ano ang disenyo ng makukulay na damit ng kababaihang Manobo?", a: "Bead art at sequin", hint: "Mga palamuting makintab." },
+    { q: "Saan matatagpuan ang mga T'boli?", a: "Sa Timog Cotabato at Agusan del Norte", hint: "Ayon sa aralin." },
+    { q: "Ano ang t'nalak?", a: "Telang hinahabi mula sa abaka ng mga T'boli", hint: "Kilalang produkto ng T'boli." },
+    { q: "Bakit tinatawag na \"dream weavers\" ang mga naghahabi ng t'nalak?", a: "Dahil kumukuha sila ng inspirasyon mula sa kanilang panaginip sa paghahabi ng disenyo", hint: "Mula sa panaginip." },
+    { q: "Saan matatagpuan ang mga Tiruray?", a: "Sa Maguindanao, Bukidnon, Sultan Kudarat, at Cotabato", hint: "Apat na lalawigan." },
+    { q: "Ano ang pangunahing kabuhayan ng mga Tiruray?", a: "Pagsasaka, pangangaso, at paggawa ng mga basket", hint: "Tatlong kabuhayan." },
+    { q: "Saan naninirahan ang mga Subanen?", a: "Sa mga kabundukan ng Zamboanga del Sur at Misamis Occidental", hint: "Dalawang lalawigan." },
+    { q: "Ano-anong epiko ang kilala sa mga Subanen?", a: "Guman, Ag Tobig Nog Keboklagan, at Sandayo", hint: "Tatlong epiko." },
+    { q: "Saan matatagpuan ang mga Blaan, at ano ang hinahabi nila?", a: "Sa Davao del Sur, Timog Cotabato, at Sultan Kudarat; naghahabi sila ng tabih na gawa sa abaka", hint: "Isang telang abaka." },
+    { q: "Saan matatagpuan ang mga Mansaka, at sino ang namumuno sa kanilang ritwal?", a: "Sa Davao de Oro at Davao del Norte; ang kanilang mga ritwal ay pinangungunahan ng isang baylan", hint: "Ang pinunong espirituwal ng ritwal." },
+    { q: "Ano ang pangunahing kabuhayan ng mga Mansaka?", a: "Pagsasaka at pagmimina", hint: "Dalawang kabuhayan." },
+  ],
+
+  "Mga Katutubong Pangkat at ang IPRA": [
+    { q: "Ilan ang pangkat etnolingguwistiko sa Pilipinas?", a: "Mahigit sa 180", hint: "Isang daan at walumpu pataas." },
+    { q: "Bakit maituturing na minorya ang higit sa kalahati ng mga pangkat?", a: "Dahil kakaunti lang ang mga taong nabibilang sa mga pangkat na ito", hint: "Maliit ang bilang ng kasapi." },
+    { q: "Ano ang pangkat etnolingguwistiko?", a: "Grupo ng mga taong pinagbubuklod ng natatanging pagkakakilanlan, kultura, wika, paraan ng pamumuhay, at mga tradisyon", hint: "May limang pinagbubuklod na bagay." },
+    { q: "Anong mga pangkat etnolingguwistiko ang nasa Luzon ayon sa aralin?", a: "Ilokano, Pangasinense, Igorot, Ivatan, Ibanag, Kapampangan, Tagalog, Bikolano, Negrito, Mangyan, Palawano, at Tagbanwa", hint: "Labindalawang pangkat." },
+    { q: "Paano hinahati ang mga pangkat sa Mindanao batay sa paniniwala o relihiyon?", a: "Muslim, Kristiyano, at Lumad", hint: "Tatlong pangkat." },
+    { q: "Ano ang Indigenous People's Rights Act (IPRA)?", a: "Isang batas na ipinasa noong 1997 na kumikilala sa mga karapatan ng mga katutubong pangkat at nagtataguyod ng paggalang sa kanilang pagkakakilanlan at kultura", hint: "Ipinasa ng pamahalaan." },
+    { q: "Ano ang ancestral domain?", a: "Ang lupaing ninuno ng mga katutubong pangkat, na may karapatan silang pangalagaan", hint: "Lupain ng mga ninuno." },
+    { q: "Bakit mahalagang mapanatili at maprotektahan ang mga lupaing ninuno?", a: "Dahil dito nakasalalay ang kabuhayan ng mga katutubong Pilipino", hint: "May kinalaman sa kabuhayan." },
+  ],
+
+  "Paggalang sa Pagkakaiba-iba ng mga Pilipino": [
+    { q: "Ano ang ipinapakita ng pagbibigay-galang sa kapwa Pilipino, bata man o matanda?", a: "Paggalang sa kapwa", hint: "Isang mabuting asal." },
+    { q: "Ano ang ipinapakita ng pagbili at paggamit ng mga kagamitang Pilipino?", a: "Pagsuporta sa mga produktong Pilipino", hint: "Tinatangkilik ang sariling atin." },
+    { q: "Bakit hindi mabuting asal ang panunukso sa mga Pilipinong may kakaibang punto sa pananalita?", a: "Dahil hindi mabuting asal ang panunukso sa paraan ng pagsasalita ng iba", hint: "Walang paggalang ang panunukso." },
+    { q: "Bakit hindi mabuting asal ang panghuhusga sa tradisyonal na kasuotan ng ibang pangkat?", a: "Dahil hindi ito nagpapakita ng paggalang at pagtanggap sa kultura ng iba", hint: "Dapat igalang ang kultura ng iba." },
+    { q: "Ano ang ipinapakita ng pagiging masaya sa balat na kulay kayumanggi?", a: "Pagtanggap at pagmamalaki sa sariling kulay at pagkakakilanlan", hint: "Pagmamalaki sa sarili." },
+  ],
+
+};
+
+// ── TAMA O MALI ────────────────────────────────────────────────────────────
+const trueOrFalse = [
+  { q: "Ang katangiang heograpikal ng Pilipinas ay may kinalaman sa pagkakabuo ng kultura ng iba't ibang pangkat etnolingguwistiko rito.", a: "tama" },
+  { q: "Cebuano ang pangunahing wikang ginagamit ng mga pangkat etnolingguwistiko sa bansa.", a: "mali" },
+  { q: "Tinatayang mahigit sa 180 ang mga pangkat etnolingguwistikong naninirahan sa bansa.", a: "tama" },
+  { q: "Kilala ang mga Kapampangan sa paggawa ng magagandang parol.", a: "tama" },
+  { q: "Islam lamang ang relihiyon ng lahat ng pangkat sa Mindanao.", a: "mali" },
+  { q: "Ang Ifugao, Bontoc, Kalinga, Kankanaey, Isneg, Ibaloi, at Tingguian ay kabilang sa pangkat na Mangyan.", a: "mali" },
+  { q: "Lahat ng Pilipino ay may pare-parehong wika, pamumuhay, at tradisyon.", a: "mali" },
+  { q: "Ang mga pangkat sa Pilipinas ay may kani-kaniyang ritwal.", a: "tama" },
+  { q: "Lahat ng katutubong pangkat ay naniniwala sa animismo.", a: "mali" },
+  { q: "Pagsasaka ang pangunahing ikinabubuhay ng lahat ng pangkat etnolingguwistiko sa Pilipinas.", a: "mali" },
+  { q: "Bisaya ang wika ng lahat ng mamamayan sa rehiyon ng Visayas.", a: "mali" },
+  { q: "Karamihan sa mga Pilipino ay Katoliko.", a: "tama" },
+  { q: "Pinananatili ng mga pangkat etnolingguwistiko sa bansa ang kanilang namanang kultura mula sa mga ninuno.", a: "tama" },
+  { q: "Ang mga Tausug ang pinakamalaking pangkat ng mga Muslim sa Mindanao.", a: "mali" },
+  { q: "Lumad ang tawag sa mga katutubong pangkat sa Mindanao na hindi naimpluwensiyahan ng mga Kristiyano at Muslim.", a: "tama" },
+  { q: "Ang Sinulog Festival sa Cebu ay pagpupugay sa Santo Niño.", a: "tama" },
+  { q: "Ang Hinilawod ay epiko ng mga Maranao.", a: "mali" },
+  { q: "Ang pangalang Sulod ay nangangahulugang \"loob\" o \"looban.\"", a: "tama" },
+  { q: "Ang mga Maranao ang pinakamalaking pangkat ng mga Muslim sa Mindanao.", a: "mali" },
+  { q: "Kilala ang mga T'boli sa paghahabi ng t'nalak mula sa abaka.", a: "tama" },
+  { q: "Tinaguriang \"sea gypsies\" ang mga Badjao.", a: "tama" },
+  { q: "Noong 1997, ipinasa ang Indigenous People's Rights Act na kumikilala sa mga karapatan ng mga katutubong pangkat.", a: "tama" },
+];
+
+// ── KILALANIN: PANGKAT SA LUZON, VISAYAS, AT MINDANAO ───────────────────────
+const identifyQuestions = [
+  { q: "Paglilibing ng mga bangkay sa dalisdis ng bundok.", a: "Igorot", choices: ["Igorot","Kalinga","Ifugao","Ivatan"] },
+  { q: "\"Sea gypsies.\"", a: "Badjao", choices: ["Badjao","Ilonggo","Muslim","Hanunoo"] },
+  { q: "Epikong Biag ni Lam-ang.", a: "Ilokano", choices: ["Ilokano","Tagalog","Bikolano","Ilonggo"] },
+  { q: "Paggamit ng \"po\" at \"opo\" sa pakikipag-usap sa mga nakatatanda.", a: "Tagalog", choices: ["Tagalog","Bikolano","Ilokano","Ilonggo"] },
+  { q: "Nakilala bilang mga \"mamumugot\" ng hilagang Pilipinas.", a: "Kalinga", choices: ["Kalinga","Ifugao","Ivatan","Igorot"] },
+  { q: "Kilala sa kanilang malumanay na pananalita.", a: "Ilonggo", choices: ["Ilonggo","Tagalog","Bikolano","Ilokano"] },
+  { q: "Paggamit ng vakul.", a: "Ivatan", choices: ["Ivatan","Hanunoo","Kalinga","Ifugao"] },
+  { q: "Gumagamit ng Surat Mangyan.", a: "Hanunoo", choices: ["Hanunoo","Ivatan","Badjao","Ifugao"] },
+  { q: "Ang kanilang mga ninuno ang umukit ng Hagdan-hagdang Palayan.", a: "Ifugao", choices: ["Ifugao","Kalinga","Igorot","Ivatan"] },
+  { q: "Kilala sa kanilang maaanghang na pagkain na may gata ng niyog.", a: "Bikolano", choices: ["Bikolano","Tagalog","Ilokano","Ilonggo"] },
+  { q: "Ano ang ibig sabihin ng ranggong \"magani\" sa pangkat ng mga Bagobo?", a: "mandirigma", choices: ["guwapo","manggagamot","mayamang pinuno","mandirigma"] },
+  { q: "Napapabilang sa anong pangkat ang mga \"dream weaver\"?", a: "T'boli", choices: ["Bagobo","Maguindanao","T'boli","Tiruray"] },
+  { q: "Saang lalawigan nakatira ang karamihan ng mga Kapampangan?", a: "Pampanga", choices: ["Mountain Province","Palawan","Pampanga","Sulu"] },
+  { q: "Aling pangkat ang kilala sa mga disenyong sarimanok at okir?", a: "Maranao", choices: ["Badjao","Maguindanao","Maranao","Tausug"] },
+  { q: "Aling pangkat etnolingguwistiko ang pinagmulan ng sistema ng pagsulat na baybayin?", a: "Tagalog", choices: ["Bikolano","Mangyan","Tagalog","Waray"] },
+  { q: "Alin ang may kaugnayan sa mga Ilokano?", a: "basi", choices: ["bahag","basi","sea gypsies","vakul"] },
+  { q: "Saan matatagpuan ang mga Mangyan?", a: "Mindoro", choices: ["Bulacan","Cotabato","Davao","Mindoro"] },
+  { q: "Aling pangkat ang matatagpuan sa Visayas?", a: "Ilonggo", choices: ["Dumagat","Ilonggo","Ivatan","Tingguian"] },
+  { q: "Anong pananampalataya ang naniniwala sa mga espiritu ng kalikasan?", a: "Animismo", choices: ["Animismo","Islam","Kristiyanismo","Protestantismo"] },
+  { q: "Saang lalawigan matatagpuan ang mga Hamtiknon (Hamtikanon)?", a: "Antique", choices: ["Antique","Misamis Occidental","Palawan","Zamboanga"] },
+  { q: "Ikalawang pinakamalaking pangkat ng mga Muslim; kilala sa sayaw na Pangalay.", a: "Tausug", choices: ["Tausug","Maranao","Maguindanao","Badjao"] },
+  { q: "Pinakamalaking pangkat ng mga Muslim; kilala sa kutyapi, kulintang, at pastil.", a: "Maguindanao", choices: ["Maguindanao","Tausug","Maranao","Tiruray"] },
+  { q: "Kilala sa torogan, epikong Darangen, at sayaw na Singkil.", a: "Maranao", choices: ["Maranao","Maguindanao","Tausug","Badjao"] },
+  { q: "\"Taong nasa dagat\"; gumagamit ng vinta at nakatira sa sakayan.", a: "Badjao", choices: ["Badjao","Manobo","T'boli","Mansaka"] },
+  { q: "Naghahabi ng t'nalak mula sa abaka at tinatawag na \"dream weavers.\"", a: "T'boli", choices: ["T'boli","Blaan","Bagobo","Subanen"] },
+  { q: "May ranggong \"magani\" at pulang kasuotan para sa mandirigma.", a: "Bagobo", choices: ["Bagobo","Manobo","Tiruray","Mansaka"] },
+  { q: "Kilala sa epikong Guman, Ag Tobig Nog Keboklagan, at Sandayo.", a: "Subanen", choices: ["Subanen","Blaan","Tiruray","Mansaka"] },
+  { q: "Mahusay sa paghahabi ng tabih na gawa sa abaka.", a: "Blaan", choices: ["Blaan","Subanen","T'boli","Manobo"] },
+  { q: "Ang kanilang mga ritwal ay pinangungunahan ng isang baylan; pagsasaka at pagmimina ang kabuhayan.", a: "Mansaka", choices: ["Mansaka","Blaan","Tiruray","Bagobo"] },
+  { q: "Epiko nina Labaw Donggon at Nagmalitong Yawa na naipapasa nang pasalita.", a: "Sulod", choices: ["Sulod","Waray","Aklanon","Abaknon"] },
+  { q: "Ipinagdiriwang ang Dinagyang sa Iloilo at MassKara sa Negros Occidental.", a: "Ilonggo", choices: ["Ilonggo","Cebuano","Waray","Boholano"] },
+  { q: "Ang mga taga-Antique ay tinatawag na Hamtiknon.", a: "Kinaray-a", choices: ["Kinaray-a","Aklanon","Boholano","Waray"] },
+  { q: "Nakatira sa isla ng Capul sa Samar; ang wika ay nauugnay sa mga wika ng Sama ng Sulu at Tawi-Tawi.", a: "Abaknon", choices: ["Abaknon","Waray","Boholano","Cebuano"] },
+  { q: "May wikang Malaynon bilang dayalekto; matatagpuan sa Aklan.", a: "Aklanon", choices: ["Aklanon","Kinaray-a","Waray","Ilonggo"] },
+  { q: "May matinding pananalig sa Santo Niño; kilala sa Sinulog Festival at sa paggawa ng gitara.", a: "Cebuano", choices: ["Cebuano","Waray","Boholano","Ilonggo"] },
+];
+
+// ═══════════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════════
+let state = {
+  awaiting: 'menu',
+  mode: null,
+  questions: [],
+  allAnswers: [],
+  qIndex: 0,
+  score: 0,
+  total: 0,
+  hintUsed: false,
+  audioEnabled: true,
+};
+
+// ═══════════════════════════════════════════════════════════════
+// TTS (UPGRADED FOR TRUE FILIPINO ACCENT)
+// ═══════════════════════════════════════════════════════════════
+let currentAudioStream = null;
+
+function speak(text) {
+  if (!state.audioEnabled) return;
+  
+  // Linisin ang mga nakaraang audio task
+  window.speechSynthesis.cancel();
+  if (currentAudioStream) {
+    currentAudioStream.pause();
+    currentAudioStream = null;
+  }
+  
+  // Tanggalin ang HTML tags at emojis para hindi basahin nang paputol-putol
+  const clean = text.replace(/<[^>]+>/g,'').replace(/[🇵🇭🌟✅❌💡⏭️🏆😊💪🔄🔲📚👋⭐✕🧭📏🗺️]/g,'');
+  
+  // PRIMARY METHOD: Google Translation Engine cloud voice stream (May natural na Filipino accent)
+  const googleTtsUrl = `https://translate.google.com/translate_tts?ie=UTF-8&tl=tl&client=tw-ob&q=${encodeURIComponent(clean)}`;
+  
+  currentAudioStream = new Audio(googleTtsUrl);
+  currentAudioStream.onplaying = () => showWave(true);
+  currentAudioStream.onended = currentAudioStream.onerror = () => showWave(false);
+  
+  currentAudioStream.play().catch(err => {
+    // BACKUP METHOD: Web Speech API (Gagana kapag walang internet connection)
+    console.warn("Google TTS blocked or offline. Falling back to local system speech engine.");
+    
+    const streamFallback = new SpeechSynthesisUtterance(clean);
+    streamFallback.lang = 'fil-PH';
+    streamFallback.rate = 0.95; streamFallback.pitch = 1.05; streamFallback.volume = 1;
+    
+    const voices = window.speechSynthesis.getVoices();
+    const filVoice = voices.find(v => v.lang.startsWith('fil') || v.lang.startsWith('tl'));
+    const engVoice = voices.find(v => v.lang.startsWith('en') && v.name.toLowerCase().includes('female'))
+                   || voices.find(v => v.lang.startsWith('en'));
+              
+    if (filVoice) {
+      streamFallback.voice = filVoice;
+    } else if (engVoice) {
+      streamFallback.voice = engVoice; 
+      streamFallback.lang = 'en-US'; 
+    }
+    
+    streamFallback.onstart = () => showWave(true);
+    streamFallback.onend = streamFallback.onerror = () => showWave(false);
+    window.speechSynthesis.speak(streamFallback);
+  });
+}
+
+function showWave(on) {
+  document.querySelectorAll('.speaker-wave').forEach(w => w.style.display = on ? 'inline-flex' : 'none');
+}
+
+// I-initialize ang mga boses ng system
+let localSystemVoices = [];
+function lookupSystemVoices() {
+  localSystemVoices = window.speechSynthesis.getVoices();
+}
+lookupSystemVoices();
+if (window.speechSynthesis.onvoiceschanged !== undefined) {
+  window.speechSynthesis.onvoiceschanged = lookupSystemVoices;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// UI HELPERS
+// ═══════════════════════════════════════════════════════════════
+const chatBox = document.getElementById('chat-box');
+const input = document.getElementById('user-input');
+const sendBtn = document.getElementById('send-btn');
+
+function scrollBottom() { chatBox.scrollTop = chatBox.scrollHeight; }
+
+function addMessage(role, html, speakText) {
+  const div = document.createElement('div');
+  div.className = `msg ${role}`;
+  const av = document.createElement('div');
+  av.className = 'avatar';
+  av.textContent = role === 'bot' ? '🤖' : '🧑';
+  const bub = document.createElement('div');
+  bub.className = 'bubble';
+  bub.innerHTML = role === 'bot'
+    ? html + '<span class="speaker-wave" style="display:none"><span></span><span></span><span></span><span></span><span></span></span>'
+    : html;
+  div.appendChild(av); div.appendChild(bub);
+  chatBox.appendChild(div);
+  scrollBottom(); bindChips();
+  if (role === 'bot') {
+    const txt = speakText || html.replace(/<[^>]+>/g,' ');
+    setTimeout(() => speak(txt), 350);
+  }
+}
+
+function addTyping() {
+  const d = document.createElement('div');
+  d.className = 'msg bot'; d.id = 'typing';
+  d.innerHTML = '<div class="avatar">🤖</div><div class="typing"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>';
+  chatBox.appendChild(d); scrollBottom();
+}
+function removeTyping() { const t = document.getElementById('typing'); if(t) t.remove(); }
+
+function bindChips() {
+  document.querySelectorAll('.chip:not([data-bound])').forEach(c => {
+    c.dataset.bound = '1';
+    c.addEventListener('click', () => handleUserMessage(c.dataset.val));
+  });
+}
+
+function updateScore() {
+  document.getElementById('score-val').textContent = state.score;
+  document.getElementById('total-val').textContent = state.total;
+}
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length-1; i > 0; i--) {
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]] = [a[j],a[i]];
+  }
+  return a;
+}
+
+function normalize(s) { return s.toLowerCase().trim().replace(/\s+/g,' '); }
+
+function checkAnswer(user, correct) {
+  const u = normalize(user), c = normalize(correct);
+  if (u === c) return true;
+  if (c.includes(u) && u.length > 5) return true;
+  const parts = c.split(/[,;\/]/);
+  for (const p of parts) if (u.includes(p.trim()) && p.trim().length > 4) return true;
+  return false;
+}
+
+function showResult() {
+  const pct = Math.round((state.score/state.total)*100);
+  const emoji = pct>=90?'🏆':pct>=70?'🌟':pct>=50?'😊':'💪';
+  const msg = pct>=90?'Napakahusay! Alam mo ang lahat!':pct>=70?'Magaling! Patuloy ka lang!':pct>=50?'Mabuti! Pag-aralan pa nang kaunti!':'Huwag sumuko! Subukan ulit!';
+  document.getElementById('res-emoji').textContent = emoji;
+  document.getElementById('res-score').textContent = state.score;
+  document.getElementById('res-total').textContent = state.total;
+  document.getElementById('res-msg').textContent = msg;
+  document.getElementById('result-overlay').classList.add('show');
+  speak(`Tapos na! Ang iyong puntos ay ${state.score} sa ${state.total}. ${msg}`);
+}
+
+function restartApp() {
+  document.getElementById('result-overlay').classList.remove('show');
+  state = { awaiting:'menu', mode:null, questions:[], allAnswers:[], qIndex:0, score:0, total:0, hintUsed:false, audioEnabled:state.audioEnabled };
+  chatBox.innerHTML = '';
+  document.querySelector('.input-bar').style.display = 'flex';
+  updateScore();
+  showMenu();
+}
+
+// ═══════════════════════════════════════════════════════════════
+// MC HELPERS
+// ═══════════════════════════════════════════════════════════════
+function getAllAnswers() {
+  const ans = [];
+  for (const qs of Object.values(topics)) for (const q of qs) ans.push(q.a);
+  return ans;
+}
+
+function generateChoices(correct, pool) {
+  const distractors = shuffle(pool.filter(a => a !== correct)).slice(0,3);
+  return shuffle([correct, ...distractors]);
+}
+
+function buildMCBtns(choices, correctAnswer) {
+  const letters = ['A','B','C','D','E'];
+  return `<div class="mc-options">${choices.map((c,i)=>
+    `<button class="mc-btn" data-answer="${encodeURIComponent(c)}" data-correct="${encodeURIComponent(correctAnswer)}" onclick="handleMCClick(this)">
+      <span class="letter">${letters[i]}</span>${c}
+    </button>`
+  ).join('')}</div>`;
+}
+
+function handleMCClick(btn) {
+  const allBtns = btn.closest('.mc-options').querySelectorAll('.mc-btn');
+  allBtns.forEach(b => b.disabled = true);
+  const chosen = decodeURIComponent(btn.dataset.answer);
+  const correct = decodeURIComponent(btn.dataset.correct);
+  const isCorrect = chosen === correct;
+  allBtns.forEach(b => { if(decodeURIComponent(b.dataset.answer)===correct) b.classList.add('correct'); });
+  if (!isCorrect) btn.classList.add('wrong');
+  setTimeout(() => {
+    if (isCorrect) {
+      state.score++;
+      addMessage('bot', `✅ <strong>Tama!</strong> +1 puntos! Ang sagot ay: <strong>${correct}</strong>`, `Tama! Ang sagot ay: ${correct}`);
+    } else {
+      addMessage('bot', `❌ <strong>Hindi tama.</strong> Ang tamang sagot ay: <strong>${correct}</strong>`, `Hindi tama. Ang tamang sagot ay: ${correct}`);
+    }
+    state.qIndex++; updateScore();
+    if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+    else setTimeout(showResult, 900);
+  }, 650);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// NEXT QUESTION
+// ═══════════════════════════════════════════════════════════════
+function nextQuestion() {
+  const qi = state.qIndex;
+  const q = state.questions[qi];
+  const num = qi + 1;
+
+  if (state.mode === 'full' || state.mode === 'topic_mc') {
+    const choices = generateChoices(q.a, state.allAnswers);
+    const tag = q.topic ? `<span class="topic-tag">${q.topic}</span><br>` : '';
+    const html = `${tag}<strong>T${num} sa ${state.total}:</strong> ${q.q}${buildMCBtns(choices, q.a)}`;
+    addMessage('bot', html, `Tanong ${num}. ${q.q}`);
+    return;
+  }
+
+  if (state.mode === 'tf') {
+    const html = `<strong>T${num} sa ${state.total}:</strong> <div class="scenario-card">${q.q}</div>
+      <span class="chip" data-val="tama">✅ Tama</span><span class="chip" data-val="mali">❌ Mali</span>`;
+    addMessage('bot', html, `Tanong ${num}. Tama o Mali: ${q.q}`);
+    return;
+  }
+
+  if (state.mode === 'identify') {
+    const btns = buildMCBtns(q.choices, q.a);
+    const html = `<strong>T${num} sa ${state.total}:</strong> Kilalanin kung ano ang tinutukoy:<div class="scenario-card">${q.q}</div>${btns}`;
+    addMessage('bot', html, `Tanong ${num}. Kilalanin ang tinutukoy: ${q.q}`);
+    return;
+  }
+
+  // typed answer mode
+  const tag = q.topic ? `<span class="topic-tag">${q.topic}</span><br>` : '';
+  const html = `${tag}<strong>T${num} sa ${state.total}:</strong> ${q.q}<br><small style="color:var(--muted)">Isulat ang sagot · i-type ang <em>hint</em> para sa tulong · <em>skip</em> para lumipat</small>`;
+  addMessage('bot', html, `Tanong ${num}. ${q.q}`);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// MENU
+// ═══════════════════════════════════════════════════════════════
+function showMenu() {
+  addMessage('bot',
+    `👋 <strong>Kumusta! Ako ang iyong AP Reviewer!</strong><br>Pag-aaralan natin ang mga <em>Pangkat sa Visayas</em>, ang mga <em>Muslim</em>, <em>Kristiyano</em>, at <em>Lumad</em> sa Mindanao, at ang <em>Indigenous People's Rights Act</em>.<br><br>Ano ang gusto mong gawin?<br>
+    <span class="chip" data-val="1">📚 Pag-aralan ang Paksa</span>
+    <span class="chip" data-val="2">✅ Tama o Mali</span>
+    <span class="chip" data-val="3">🌐 Kilalanin: Aling Pangkat Ito?</span>
+    <span class="chip" data-val="4">🌟 Buong Review (Multiple Choice)</span>`,
+    "Kumusta! Ako ang iyong AP Reviewer tungkol sa mga Pangkat sa Visayas at Mindanao. Ano ang gusto mong gawin? Pag-aralan ang paksa, Tama o Mali, Kilalanin, o Buong Review na multiple choice?"
+  );
+  state.awaiting = 'menu';
+}
+
+// ═══════════════════════════════════════════════════════════════
+// PROCESS MESSAGE
+// ═══════════════════════════════════════════════════════════════
+function processMessage(msg) {
+  const aw = state.awaiting;
+
+  // ── MENU ──────────────────────────────────────────────────
+  if (aw === 'menu') {
+    if (msg === '1') {
+      state.awaiting = 'topic';
+      const keys = Object.keys(topics);
+      const chips = keys.map((t,i) => `<span class="chip" data-val="${i+1}">${i+1}. ${t}</span>`).join(' ');
+      addMessage('bot', `📚 Alin ang paksang gusto mong pag-aralan?<br>${chips}`, 'Alin ang paksang gusto mong pag-aralan?');
+
+    } else if (msg === '2') {
+      state.mode = 'tf';
+      state.questions = shuffle(trueOrFalse);
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'tf_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `✅ <strong>Tama o Mali!</strong> ${state.total} tanong. Simulan na!`, `Tama o Mali! ${state.total} tanong. Simulan na!`);
+      setTimeout(nextQuestion, 800);
+
+    } else if (msg === '3') {
+      state.mode = 'identify';
+      state.questions = shuffle(identifyQuestions);
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'mc_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `🌐 <strong>Kilalanin!</strong> Alamin kung aling pangkat etnolingguwistiko ang tinutukoy sa bawat paglalarawan.`, 'Kilalanin! Alamin kung ano ang tinutukoy sa bawat pahayag.');
+      setTimeout(nextQuestion, 800);
+
+    } else if (msg === '4') {
+      state.mode = 'full';
+      const all = [];
+      for (const [topicName, qs] of Object.entries(topics)) {
+        qs.forEach(q => all.push({...q, topic: topicName}));
+      }
+      state.questions = shuffle(all);
+      state.allAnswers = getAllAnswers();
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'mc_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `🌟 <strong>Buong Review — Multiple Choice!</strong> ${state.total} tanong. Pag-isipang mabuti!`, `Buong Review! Multiple Choice! ${state.total} tanong. Pag-isipang mabuti!`);
+      setTimeout(nextQuestion, 800);
+
+    } else {
+      addMessage('bot',
+        `Pumili ng opsyon:<br>
+        <span class="chip" data-val="1">📚 Pag-aralan ang Paksa</span>
+        <span class="chip" data-val="2">✅ Tama o Mali</span>
+        <span class="chip" data-val="3">🌐 Kilalanin</span>
+        <span class="chip" data-val="4">🌟 Buong Review</span>`,
+        'Pumili ng opsyon.'
+      );
+    }
+    return;
+  }
+
+  // ── TOPIC SELECT ──────────────────────────────────────────
+  if (aw === 'topic') {
+    const keys = Object.keys(topics);
+    const idx = parseInt(msg) - 1;
+    if (keys[idx]) {
+      const topicName = keys[idx];
+      state.mode = 'topic_mc';
+      state.questions = shuffle(topics[topicName]);
+      state.allAnswers = getAllAnswers();
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'mc_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `📚 <strong>${topicName}</strong> — ${state.total} tanong. Handa ka na ba?`, `${topicName}. ${state.total} tanong. Handa ka na ba?`);
+      setTimeout(nextQuestion, 800);
+    } else {
+      const chips = Object.keys(topics).map((t,i) => `<span class="chip" data-val="${i+1}">${i+1}. ${t}</span>`).join(' ');
+      addMessage('bot', `Pumili ng wastong paksa:<br>${chips}`, 'Pumili ng wastong paksa.');
+    }
+    return;
+  }
+
+  // ── TYPED ANSWER ──────────────────────────────────────────
+  if (aw === 'answer') {
+    const q = state.questions[state.qIndex];
+    const m = normalize(msg);
+
+    if (m === 'hint') {
+      state.hintUsed = true;
+      addMessage('bot', `💡 <strong>Hint:</strong> ${q.hint}`, `Hint: ${q.hint}`);
+      return;
+    }
+    if (m === 'skip') {
+      addMessage('bot', `⏭️ Nilaktawan! Ang tamang sagot ay: <strong>${q.a}</strong>`, `Nilaktawan. Ang tamang sagot ay: ${q.a}`);
+      state.qIndex++; state.hintUsed = false;
+      if (state.qIndex < state.total) setTimeout(nextQuestion, 700);
+      else showResult();
+      return;
+    }
+
+    const correct = checkAnswer(msg, q.a);
+    if (correct) {
+      if (!state.hintUsed) state.score++;
+      const note = state.hintUsed ? ' <em>(ginamit ang hint — walang puntos)</em>' : ' +1 puntos!';
+      addMessage('bot', `✅ <strong>Tama!</strong>${note} Sagot: <strong>${q.a}</strong>`, `Tama! Ang sagot ay: ${q.a}`);
+    } else {
+      addMessage('bot', `❌ <strong>Hindi tama.</strong> Ang tamang sagot ay: <strong>${q.a}</strong>`, `Hindi tama. Ang tamang sagot ay: ${q.a}`);
+    }
+    state.qIndex++; state.hintUsed = false; updateScore();
+    if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+    else setTimeout(showResult, 900);
+    return;
+  }
+
+  // ── TRUE OR FALSE ─────────────────────────────────────────
+  if (aw === 'tf_answer') {
+    const q = state.questions[state.qIndex];
+    const ans = normalize(msg);
+    const valid = ans === 'tama' || ans === 'mali' || ans === 'true' || ans === 'false';
+    const mapped = (ans === 'true') ? 'tama' : (ans === 'false') ? 'mali' : ans;
+
+    if (valid) {
+      const correct = mapped === q.a;
+      if (correct) {
+        state.score++;
+        addMessage('bot', `✅ <strong>Tama!</strong> Ang sagot ay <strong>${q.a.toUpperCase()}</strong>.`, `Tama! Ang sagot ay ${q.a}.`);
+      } else {
+        addMessage('bot', `❌ <strong>Mali.</strong> Ang tamang sagot ay <strong>${q.a.toUpperCase()}</strong>.`, `Mali. Ang tamang sagot ay ${q.a}.`);
+      }
+      state.qIndex++; updateScore();
+      if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+      else setTimeout(showResult, 900);
+    } else {
+      addMessage('bot',
+        `Sagot: Tama o Mali?<br><span class="chip" data-val="tama">✅ Tama</span><span class="chip" data-val="mali">❌ Mali</span>`,
+        'Sagot: Tama o Mali?'
+      );
+    }
+    return;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// CONTROLS
+// ═══════════════════════════════════════════════════════════════
+function handleUserMessage(msg) {
+  if (!msg.trim()) return;
+  
+  // Ihinto nang malinis ang nagsasalitang audio kapag sumagot ang user
+  window.speechSynthesis.cancel();
+  if (currentAudioStream) {
+    currentAudioStream.pause();
+    currentAudioStream = null;
+    showWave(false);
+  }
+  
+  addMessage('user', msg.replace(/</g,'&lt;'));
+  input.value = '';
+  input.disabled = true; sendBtn.disabled = true;
+  addTyping();
+  setTimeout(() => {
+    removeTyping();
+    input.disabled = false; sendBtn.disabled = false;
+    input.focus();
+    processMessage(msg);
+  }, 480);
+}
+
+sendBtn.addEventListener('click', () => { handleUserMessage(input.value); });
+input.addEventListener('keydown', e => { if(e.key==='Enter') handleUserMessage(input.value); });
+
+document.getElementById('audio-toggle').addEventListener('click', function() {
+  state.audioEnabled = !state.audioEnabled;
+  this.textContent = state.audioEnabled ? '🔊' : '🔇';
+  this.classList.toggle('active', state.audioEnabled);
+  if (!state.audioEnabled) {
+    window.speechSynthesis.cancel();
+    if (currentAudioStream) {
+      currentAudioStream.pause();
+      currentAudioStream = null;
+      showWave(false);
+    }
+  }
+});
+
+// ═══════════════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════════════
+window.addEventListener('load', () => {
+  lookupSystemVoices();
+  showMenu();
+});
+
+function printPracticeTest() {
+  document.body.classList.add('printing-test');
+  window.print();
+}
+window.addEventListener('afterprint', () => {
+  document.body.classList.remove('printing-test');
+});
+
+// ═══════════════════════════════════════════════════════════════
+// BASAHIN ANG TALA (gumagamit ng boses ng browser — walang limitasyon
+// sa haba, hindi tulad ng maiikling audio clip ng Google TTS sa chat)
+// ═══════════════════════════════════════════════════════════════
+function getNotesText(section) {
+  const clone = section.cloneNode(true);
+  clone.querySelectorAll('button').forEach(b => b.remove());
+  let text = clone.innerText || clone.textContent || '';
+  text = text.replace(/\s+/g, ' ').trim();
+  return text;
+}
+
+function toggleNotesAudio() {
+  const btn = document.getElementById('notes-audio-btn');
+  if (!btn) return;
+
+  if (window.speechSynthesis.speaking || window.speechSynthesis.pending) {
+    window.speechSynthesis.cancel();
+    btn.innerHTML = '🔊 Basahin ang Tala';
+    btn.classList.remove('active');
+    return;
+  }
+
+  const activeSection = document.querySelector('.notes-section.active');
+  if (!activeSection) return;
+  const text = getNotesText(activeSection);
+  if (!text) return;
+
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.lang = 'fil-PH';
+  utter.rate = 0.95;
+  utter.pitch = 1.05;
+  utter.volume = 1;
+
+  const voices = window.speechSynthesis.getVoices();
+  const filVoice = voices.find(v => v.lang.startsWith('fil') || v.lang.startsWith('tl'));
+  const engVoice = voices.find(v => v.lang.startsWith('en') && v.name.toLowerCase().includes('female'))
+                 || voices.find(v => v.lang.startsWith('en'));
+  if (filVoice) {
+    utter.voice = filVoice;
+  } else if (engVoice) {
+    utter.voice = engVoice;
+    utter.lang = 'en-US';
+  }
+
+  utter.onstart = () => { btn.innerHTML = '⏹️ Ihinto ang Pagbasa'; btn.classList.add('active'); };
+  utter.onend = utter.onerror = () => { btn.innerHTML = '🔊 Basahin ang Tala'; btn.classList.remove('active'); };
+
+  window.speechSynthesis.speak(utter);
+}
+
+function switchTab(tabId, btn) {
+  window.speechSynthesis.cancel();
+  const audioBtn = document.getElementById('notes-audio-btn');
+  if (audioBtn) { audioBtn.innerHTML = '🔊 Basahin ang Tala'; audioBtn.classList.remove('active'); }
+  document.querySelectorAll('.notes-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.notes-tab').forEach(b => b.classList.remove('active'));
+  document.getElementById(tabId).classList.add('active');
+  btn.classList.add('active');
+}
+
+function closeNotesPanel() {
+  window.speechSynthesis.cancel();
+  const audioBtn = document.getElementById('notes-audio-btn');
+  if (audioBtn) { audioBtn.innerHTML = '🔊 Basahin ang Tala'; audioBtn.classList.remove('active'); }
+  document.getElementById('notes-overlay').classList.remove('show');
+}
+</script>
+
+<!-- ── Notes Panel ── -->
+<div class="notes-overlay" id="notes-overlay">
+  <div class="notes-panel">
+    <div class="notes-header">
+      <h2>📖 Pangkat sa Visayas at Mindanao — Mga Tala</h2>
+      <div class="notes-header-actions">
+        <button class="print-btn" id="notes-audio-btn" onclick="toggleNotesAudio()" title="Basahin nang malakas ang tab na ito">🔊 Basahin ang Tala</button>
+        <button class="print-btn" onclick="printPracticeTest()" title="I-print o i-save bilang PDF ang Practice Test at Answer Key">🖨️ I-print ang Test &amp; Key</button>
+        <button class="notes-close" onclick="closeNotesPanel()">✕</button>
+      </div>
+    </div>
+    <div class="notes-tabs">
+      <button class="notes-tab active" onclick="switchTab('tab-visayas', this)">🏝️ Visayas</button>
+      <button class="notes-tab" onclick="switchTab('tab-muslim', this)">🕌 Mga Muslim</button>
+      <button class="notes-tab" onclick="switchTab('tab-kristiyano', this)">⛪ Kristiyano at Wika</button>
+      <button class="notes-tab" onclick="switchTab('tab-lumad', this)">🌄 Mga Lumad</button>
+      <button class="notes-tab" onclick="switchTab('tab-ipra', this)">📜 IPRA at Asal</button>
+      <button class="notes-tab" onclick="switchTab('tab-tamomali', this)">✅ Tama o Mali</button>
+      <button class="notes-tab" onclick="switchTab('tab-ptest', this)">📝 Practice Test</button>
+      <button class="notes-tab" onclick="switchTab('tab-key', this)">🔑 Answer Key</button>
+      <button class="notes-tab" onclick="switchTab('tab-raw', this)">📄 Raw Notes</button>
+    </div>
+    <div class="notes-body">
+
+      <div class="notes-section active" id="tab-visayas">
+        <div class="chapter-summary">
+          📚 <strong>Buod:</strong> Kabilang sa mga pangkat sa Visayas ang mga Aklanon, Kinaray-a, Sulod, Ilonggo, Ati, Boholano, Cebuano, Abaknon, at Waray.
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 PAMPADALING TANDAAN</span>
+          <strong>"SULOD = sa LOOB."</strong> Ang mga Sulod ay nakatira sa kaloob-looban ng mga bundok at ilog. <strong>Hamtiknon</strong> = Kinaray-a na taga-<strong>Antique</strong>.
+        </div>
+        <table class="compare-table">
+          <tr><th>Pangkat</th><th>Saan</th><th>Kilala Sa</th></tr>
+          <tr><td>Aklanon</td><td>Aklan</td><td>Wikang Aklanon; Malaynon ang dayalekto</td></tr>
+          <tr><td>Kinaray-a</td><td>Antique at Iloilo</td><td>Hamtiknon ang taga-Antique</td></tr>
+          <tr><td>Sulod</td><td>Kabundukan ng Gitnang Panay</td><td>Epikong Hinilawod; kaingin; plawta at tambol</td></tr>
+          <tr><td>Ilonggo</td><td>Iloilo, Capiz, Aklan, Guimaras, Negros Occidental</td><td>Jusi, piña, sinamay, Barong Tagalog; Dinagyang at MassKara</td></tr>
+          <tr><td>Ati</td><td>Panay, Negros, Boracay</td><td>Tinatawag ding Agta o Atta</td></tr>
+          <tr><td>Boholano</td><td>Bohol</td><td>Dayalekto ng Cebuano; basket at palamuti</td></tr>
+          <tr><td>Cebuano</td><td>Cebu, Bohol, Negros Oriental, Kanlurang Leyte</td><td>Santo Niño, Sinulog Festival, paggawa ng gitara</td></tr>
+          <tr><td>Abaknon</td><td>Isla ng Capul, Samar</td><td>Wikang nauugnay sa Sama ng Sulu at Tawi-Tawi</td></tr>
+          <tr><td>Waray</td><td>Samar at Leyte</td><td>Matiyaga at matiisin; patron ang Santo Niño</td></tr>
+        </table>
+      </div>
+
+      <div class="notes-section" id="tab-muslim">
+        <div class="chapter-summary">
+          📚 <strong>Buod:</strong> Karamihan sa mga Pilipinong Muslim ay nasa BARMM at kinikilala ang kanilang sarili bilang <strong>Bangsamoro</strong>. Ang kanilang kultura ay naaayon sa Shari'ah at Adat.
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 PAMPADALING TANDAAN</span>
+          <strong>"Maguindanao, Tausug, Maranao"</strong> = <strong>una, ikalawa, ikatlo</strong> sa laki. Mga una ng pangalan: <strong>M-T-M</strong>.
+        </div>
+        <table class="compare-table">
+          <tr><th>Pangkat</th><th>Laki</th><th>Kilala Sa</th></tr>
+          <tr><td>Maguindanao</td><td>Una</td><td>Kutyapi at kulintang; pastil</td></tr>
+          <tr><td>Tausug</td><td>Ikalawa</td><td>Sayaw na Pangalay; telang pis syabit; Sulu, Tawi-Tawi, Basilan</td></tr>
+          <tr><td>Maranao</td><td>Ikatlo</td><td>Torogan; sarimanok at okir; epikong Darangen; sayaw na Singkil</td></tr>
+        </table>
+        <div class="tandaan-box">
+          <span class="tandaan-label">TANDAAN</span>
+          Dumating ang mga misyonerong Muslim sa Tawi-Tawi noong ika-14 na dantaon. Naitatag ang Sultanato ng Sulu at Sultanato ng Maguindanao noong ika-15 dantaon. <strong>Shari'ah</strong> = batas ng Islam; <strong>Adat</strong> = lokal na kaugaliang tugma sa Islam.
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-kristiyano">
+        <div class="chapter-summary">
+          📚 <strong>Buod:</strong> Mga Kristiyano ang pinakalaganap sa Mindanao (halos 60% ng populasyon). Ang mga Ilokano, Cebuano, at Hiligaynon ay nagsimulang dumating noong dekada 1930.
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 PAMPADALING TANDAAN</span>
+          <strong>"MU-KRI-LU"</strong> = <strong>Mu</strong>slim, <strong>Kri</strong>styano, <strong>Lu</strong>mad: ang tatlong pangkat sa Mindanao ayon sa paniniwala.
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">🗣️ Mga Wikang Rehiyonal sa Mindanao</div>
+          <div class="notes-item"><span class="notes-term">Surigaonon</span><span class="notes-def">Surigao del Norte at Surigao del Sur</span></div>
+          <div class="notes-item"><span class="notes-term">Butuanon</span><span class="notes-def">Agusan del Norte at Agusan del Sur</span></div>
+          <div class="notes-item"><span class="notes-term">Chavacano</span><span class="notes-def">Zamboanga at ilang pamayanan sa Basilan, Sulu, at Tawi-Tawi; nakabatay sa Espanyol na may halong Ilonggo, Cebuano, Tagalog, Malay, at Arabo</span></div>
+        </div>
+        <div class="tandaan-box">
+          <span class="tandaan-label">TANDAAN</span>
+          Dumami ang lumipat noong dekada 1950 nang ipamahagi ng pamahalaan ang mga lupang sakahan sa ilalim ng programang agraryo ni Pangulong Magsaysay. Pinakakaraniwan ngayon ang mga Cebuano at Hiligaynon.
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-lumad">
+        <div class="chapter-summary">
+          📚 <strong>Buod:</strong> Ang mga <strong>Lumad</strong> ay katutubong pangkat sa Mindanao na hindi naimpluwensiyahan ng mga Kristiyano at Muslim.
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 PAMPADALING TANDAAN</span>
+          <strong>"T'boli = Tela, Badjao = Bangka, Bagobo = Bakal."</strong> T'boli: t'nalak na tela mula sa abaka. Badjao: vinta at sakayan. Bagobo: sandata at kagamitang tumbaga at bakal.
+        </div>
+        <table class="compare-table">
+          <tr><th>Pangkat</th><th>Saan</th><th>Kilala Sa</th></tr>
+          <tr><td>Bagobo</td><td>Davao, silangang Cotabato, bahagi ng Agusan</td><td>Ranggong magani (mandirigma); sandata; abaka at basket</td></tr>
+          <tr><td>Badjao</td><td>Sulu, Tawi-Tawi, Zamboanga del Sur</td><td>"Taong nasa dagat"; sea gypsies; vinta; paninisid ng perlas</td></tr>
+          <tr><td>Manobo</td><td>Cotabato, Bukidnon, Agusan del Sur, Davao</td><td>Kahusayan sa pagtatanim; bead art at sequin</td></tr>
+          <tr><td>T'boli</td><td>Timog Cotabato, Agusan del Norte</td><td>T'nalak; "dream weavers"; palamuting metal</td></tr>
+          <tr><td>Tiruray</td><td>Maguindanao, Bukidnon, Sultan Kudarat, Cotabato</td><td>Pagsasaka, pangangaso, basket</td></tr>
+          <tr><td>Subanen</td><td>Zamboanga del Sur, Misamis Occidental</td><td>Epikong Guman, Ag Tobig Nog Keboklagan, Sandayo; gong, kulintang, tambol</td></tr>
+          <tr><td>Blaan</td><td>Davao del Sur, Timog Cotabato, Sultan Kudarat</td><td>Tabih na gawa sa abaka</td></tr>
+          <tr><td>Mansaka</td><td>Davao de Oro, Davao del Norte</td><td>Pagsasaka at pagmimina; ritwal na pinamumunuan ng baylan</td></tr>
+        </table>
+      </div>
+
+      <div class="notes-section" id="tab-ipra">
+        <div class="chapter-summary">
+          📚 <strong>Buod:</strong> Mahigit 180 pangkat etnolingguwistiko ang nasa Pilipinas. Noong 1997, ipinasa ang <strong>Indigenous People's Rights Act (IPRA)</strong> na kumikilala sa karapatan ng mga katutubo.
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">📜 Mahahalagang Punto</div>
+          <div class="notes-item"><span class="notes-term">Pangkat etnolingguwistiko</span><span class="notes-def">Pinagbubuklod ng pagkakakilanlan, kultura, wika, paraan ng pamumuhay, at tradisyon</span></div>
+          <div class="notes-item"><span class="notes-term">Minorya</span><span class="notes-def">Higit sa kalahati ng mga pangkat dahil kakaunti ang kasapi</span></div>
+          <div class="notes-item"><span class="notes-term">Ancestral domain</span><span class="notes-def">Lupaing ninuno na may karapatang pangalagaan ang mga katutubo; dito nakasalalay ang kanilang kabuhayan</span></div>
+        </div>
+        <div class="tandaan-box">
+          <span class="tandaan-label">MABUTING ASAL NG PILIPINO</span>
+          Magbigay-galang sa lahat, tangkilikin ang sariling produkto, ipagmalaki ang sariling kulay, at igalang ang kultura ng ibang pangkat. Huwag manukso sa punto ng iba o manghusga sa kanilang kasuotan.
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-tamomali">
+        <div class="notes-topic">
+          <div class="notes-topic-title">✅ Tama o Mali — Mga Paalala</div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">MALI</span><span class="notes-def">Islam lamang ang relihiyon sa Mindanao → may Muslim, Kristiyano, at Lumad.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">MALI</span><span class="notes-def">Mangyan ang Ifugao, Bontoc, Kalinga → mga pangkat ito sa Cordillera.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">MALI</span><span class="notes-def">Bisaya ang wika ng lahat sa Visayas → may Aklanon, Kinaray-a, Hiligaynon, Waray, at iba pa.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">MALI</span><span class="notes-def">Tausug ang pinakamalaking pangkat ng Muslim → Maguindanao ang pinakamalaki; Tausug ang ikalawa.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">MALI</span><span class="notes-def">Epiko ng Maranao ang Hinilawod → epiko ito ng mga Sulod.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">MALI</span><span class="notes-def">Maranao ang pinakamalaking pangkat ng Muslim → ikatlo sila sa laki.</span></div>
+          <div class="notes-item"><span class="notes-term" style="color:#ef4444">MALI</span><span class="notes-def">Lahat ng katutubong pangkat ay animista → hindi lahat.</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-ptest">
+        <div class="notes-topic">
+          <div class="notes-topic-title">📝 Practice Test</div>
+<div class="ptest-part-title">Part I — Pagtambalin: Aling Pangkat Ito?</div><div class="ptest-bank"><strong>Hanay B:</strong> Tagalog &middot; Ivatan &middot; Hanunoo &middot; Igorot &middot; Ifugao &middot; Ilonggo &middot; Bikolano &middot; Badjao &middot; Ilokano &middot; Kalinga &middot; Muslim</div><div class="ptest-q"><b>1.</b> Paglilibing ng mga bangkay sa dalisdis ng bundok. <span class="opt">Sagot: ______________</span></div><div class="ptest-q"><b>2.</b> "Sea gypsies." <span class="opt">Sagot: ______________</span></div><div class="ptest-q"><b>3.</b> Epikong Biag ni Lam-ang. <span class="opt">Sagot: ______________</span></div><div class="ptest-q"><b>4.</b> Paggamit ng "po" at "opo" sa pakikipag-usap sa mga nakatatanda. <span class="opt">Sagot: ______________</span></div><div class="ptest-q"><b>5.</b> Nakilala bilang mga "mamumugot" ng hilagang Pilipinas. <span class="opt">Sagot: ______________</span></div><div class="ptest-q"><b>6.</b> Kilala sa kanilang malumanay na pananalita. <span class="opt">Sagot: ______________</span></div><div class="ptest-q"><b>7.</b> Paggamit ng vakul. <span class="opt">Sagot: ______________</span></div><div class="ptest-q"><b>8.</b> Gumagamit ng Surat Mangyan. <span class="opt">Sagot: ______________</span></div><div class="ptest-q"><b>9.</b> Ang kanilang mga ninuno ang umukit ng Hagdan-hagdang Palayan. <span class="opt">Sagot: ______________</span></div><div class="ptest-q"><b>10.</b> Kilala sa kanilang maaanghang na pagkain na may gata ng niyog. <span class="opt">Sagot: ______________</span></div><div class="ptest-part-title">Part II — Piliin ang Tamang Sagot</div><div class="ptest-q"><b>11.</b> Ano ang ibig sabihin ng ranggong "magani" sa pangkat ng mga Bagobo?<br><span class="opt">a) guwapo</span><span class="opt">b) manggagamot</span><span class="opt">c) mayamang pinuno</span><span class="opt">d) mandirigma</span></div><div class="ptest-q"><b>12.</b> Napapabilang sa anong pangkat ang mga "dream weaver"?<br><span class="opt">a) Bagobo</span><span class="opt">b) Maguindanao</span><span class="opt">c) T'boli</span><span class="opt">d) Tiruray</span></div><div class="ptest-q"><b>13.</b> Saang lalawigan nakatira ang karamihan ng mga Kapampangan?<br><span class="opt">a) Mountain Province</span><span class="opt">b) Palawan</span><span class="opt">c) Pampanga</span><span class="opt">d) Sulu</span></div><div class="ptest-q"><b>14.</b> Aling pangkat ang kilala sa mga disenyong sarimanok at okir?<br><span class="opt">a) Badjao</span><span class="opt">b) Maguindanao</span><span class="opt">c) Maranao</span><span class="opt">d) Tausug</span></div><div class="ptest-q"><b>15.</b> Aling pangkat etnolingguwistiko ang pinagmulan ng sistema ng pagsulat na baybayin?<br><span class="opt">a) Bikolano</span><span class="opt">b) Mangyan</span><span class="opt">c) Tagalog</span><span class="opt">d) Waray</span></div><div class="ptest-q"><b>16.</b> Alin ang may kaugnayan sa mga Ilokano?<br><span class="opt">a) bahag</span><span class="opt">b) basi</span><span class="opt">c) sea gypsies</span><span class="opt">d) vakul</span></div><div class="ptest-q"><b>17.</b> Saan matatagpuan ang mga Mangyan?<br><span class="opt">a) Bulacan</span><span class="opt">b) Cotabato</span><span class="opt">c) Davao</span><span class="opt">d) Mindoro</span></div><div class="ptest-q"><b>18.</b> Aling pangkat ang matatagpuan sa Visayas?<br><span class="opt">a) Dumagat</span><span class="opt">b) Ilonggo</span><span class="opt">c) Ivatan</span><span class="opt">d) Tingguian</span></div><div class="ptest-q"><b>19.</b> Anong pananampalataya ang naniniwala sa mga espiritu ng kalikasan?<br><span class="opt">a) Animismo</span><span class="opt">b) Islam</span><span class="opt">c) Kristiyanismo</span><span class="opt">d) Protestantismo</span></div><div class="ptest-q"><b>20.</b> Saang lalawigan matatagpuan ang mga Hamtiknon (Hamtikanon)?<br><span class="opt">a) Antique</span><span class="opt">b) Misamis Occidental</span><span class="opt">c) Palawan</span><span class="opt">d) Zamboanga</span></div><div class="ptest-part-title">Part III — Mga Pangkat sa Visayas at Mindanao</div><div class="ptest-bank"><strong>Word Bank:</strong> Tausug &middot; Maguindanao &middot; Maranao &middot; Badjao &middot; T'boli &middot; Bagobo &middot; Subanen &middot; Blaan &middot; Mansaka &middot; Sulod &middot; Ilonggo &middot; Kinaray-a &middot; Abaknon &middot; Aklanon &middot; Cebuano</div><div class="ptest-q"><b>21.</b> Ikalawang pinakamalaking pangkat ng mga Muslim; kilala sa sayaw na Pangalay. <span class="opt">Sagot: ______________</span></div><div class="ptest-q"><b>22.</b> Pinakamalaking pangkat ng mga Muslim; kilala sa kutyapi, kulintang, at pastil. <span class="opt">Sagot: ______________</span></div><div class="ptest-q"><b>23.</b> Kilala sa torogan, epikong Darangen, at sayaw na Singkil. <span class="opt">Sagot: ______________</span></div><div class="ptest-q"><b>24.</b> "Taong nasa dagat"; gumagamit ng vinta at nakatira sa sakayan. <span class="opt">Sagot: ______________</span></div><div class="ptest-q"><b>25.</b> Naghahabi ng t'nalak mula sa abaka at tinatawag na "dream weavers." <span class="opt">Sagot: ______________</span></div><div class="ptest-q"><b>26.</b> May ranggong "magani" at pulang kasuotan para sa mandirigma. <span class="opt">Sagot: ______________</span></div><div class="ptest-q"><b>27.</b> Kilala sa epikong Guman, Ag Tobig Nog Keboklagan, at Sandayo. <span class="opt">Sagot: ______________</span></div><div class="ptest-q"><b>28.</b> Mahusay sa paghahabi ng tabih na gawa sa abaka. <span class="opt">Sagot: ______________</span></div><div class="ptest-q"><b>29.</b> Ang kanilang mga ritwal ay pinangungunahan ng isang baylan; pagsasaka at pagmimina ang kabuhayan. <span class="opt">Sagot: ______________</span></div><div class="ptest-q"><b>30.</b> Epiko nina Labaw Donggon at Nagmalitong Yawa na naipapasa nang pasalita. <span class="opt">Sagot: ______________</span></div><div class="ptest-q"><b>31.</b> Ipinagdiriwang ang Dinagyang sa Iloilo at MassKara sa Negros Occidental. <span class="opt">Sagot: ______________</span></div><div class="ptest-q"><b>32.</b> Ang mga taga-Antique ay tinatawag na Hamtiknon. <span class="opt">Sagot: ______________</span></div><div class="ptest-q"><b>33.</b> Nakatira sa isla ng Capul sa Samar; ang wika ay nauugnay sa mga wika ng Sama ng Sulu at Tawi-Tawi. <span class="opt">Sagot: ______________</span></div><div class="ptest-q"><b>34.</b> May wikang Malaynon bilang dayalekto; matatagpuan sa Aklan. <span class="opt">Sagot: ______________</span></div><div class="ptest-q"><b>35.</b> May matinding pananalig sa Santo Niño; kilala sa Sinulog Festival at sa paggawa ng gitara. <span class="opt">Sagot: ______________</span></div><div class="ptest-part-title">Part IV — Tama o Mali</div><div class="ptest-q"><b>36.</b> Ang katangiang heograpikal ng Pilipinas ay may kinalaman sa pagkakabuo ng kultura ng iba't ibang pangkat etnolingguwistiko rito. <span class="opt">Sagot: ______________</span></div><div class="ptest-q"><b>37.</b> Cebuano ang pangunahing wikang ginagamit ng mga pangkat etnolingguwistiko sa bansa. <span class="opt">Sagot: ______________</span></div><div class="ptest-q"><b>38.</b> Tinatayang mahigit sa 180 ang mga pangkat etnolingguwistikong naninirahan sa bansa. <span class="opt">Sagot: ______________</span></div><div class="ptest-q"><b>39.</b> Kilala ang mga Kapampangan sa paggawa ng magagandang parol. <span class="opt">Sagot: ______________</span></div><div class="ptest-q"><b>40.</b> Islam lamang ang relihiyon ng lahat ng pangkat sa Mindanao. <span class="opt">Sagot: ______________</span></div><div class="ptest-q"><b>41.</b> Ang Ifugao, Bontoc, Kalinga, Kankanaey, Isneg, Ibaloi, at Tingguian ay kabilang sa pangkat na Mangyan. <span class="opt">Sagot: ______________</span></div><div class="ptest-q"><b>42.</b> Lahat ng Pilipino ay may pare-parehong wika, pamumuhay, at tradisyon. <span class="opt">Sagot: ______________</span></div><div class="ptest-q"><b>43.</b> Ang mga pangkat sa Pilipinas ay may kani-kaniyang ritwal. <span class="opt">Sagot: ______________</span></div><div class="ptest-q"><b>44.</b> Lahat ng katutubong pangkat ay naniniwala sa animismo. <span class="opt">Sagot: ______________</span></div><div class="ptest-q"><b>45.</b> Pagsasaka ang pangunahing ikinabubuhay ng lahat ng pangkat etnolingguwistiko sa Pilipinas. <span class="opt">Sagot: ______________</span></div><div class="ptest-q"><b>46.</b> Bisaya ang wika ng lahat ng mamamayan sa rehiyon ng Visayas. <span class="opt">Sagot: ______________</span></div><div class="ptest-q"><b>47.</b> Karamihan sa mga Pilipino ay Katoliko. <span class="opt">Sagot: ______________</span></div><div class="ptest-q"><b>48.</b> Pinananatili ng mga pangkat etnolingguwistiko sa bansa ang kanilang namanang kultura mula sa mga ninuno. <span class="opt">Sagot: ______________</span></div><div class="ptest-q"><b>49.</b> Ang mga Tausug ang pinakamalaking pangkat ng mga Muslim sa Mindanao. <span class="opt">Sagot: ______________</span></div><div class="ptest-q"><b>50.</b> Lumad ang tawag sa mga katutubong pangkat sa Mindanao na hindi naimpluwensiyahan ng mga Kristiyano at Muslim. <span class="opt">Sagot: ______________</span></div><div class="ptest-q"><b>51.</b> Ang Sinulog Festival sa Cebu ay pagpupugay sa Santo Niño. <span class="opt">Sagot: ______________</span></div><div class="ptest-q"><b>52.</b> Ang Hinilawod ay epiko ng mga Maranao. <span class="opt">Sagot: ______________</span></div><div class="ptest-q"><b>53.</b> Ang pangalang Sulod ay nangangahulugang "loob" o "looban." <span class="opt">Sagot: ______________</span></div><div class="ptest-q"><b>54.</b> Ang mga Maranao ang pinakamalaking pangkat ng mga Muslim sa Mindanao. <span class="opt">Sagot: ______________</span></div><div class="ptest-q"><b>55.</b> Kilala ang mga T'boli sa paghahabi ng t'nalak mula sa abaka. <span class="opt">Sagot: ______________</span></div><div class="ptest-q"><b>56.</b> Tinaguriang "sea gypsies" ang mga Badjao. <span class="opt">Sagot: ______________</span></div><div class="ptest-q"><b>57.</b> Noong 1997, ipinasa ang Indigenous People's Rights Act na kumikilala sa mga karapatan ng mga katutubong pangkat. <span class="opt">Sagot: ______________</span></div><div class="ptest-part-title">Part V — Mabuting Asal ng Pilipino (♡ kung mabuting asal, ✗ kung hindi)</div><div class="ptest-q"><b>58.</b> Nagbigay-galang sa kapwa Pilipino, bata man o matanda. <span class="opt">Sagot: ______</span></div><div class="ptest-q"><b>59.</b> Ipinagmamalaki sa mga dayuhang kaibigan ang kagandahan ng Pilipinas. <span class="opt">Sagot: ______</span></div><div class="ptest-q"><b>60.</b> Bumibili at gumagamit ng mga kagamitang Pilipino. <span class="opt">Sagot: ______</span></div><div class="ptest-q"><b>61.</b> Kumakanta ng pambansang awit nang buong katapatan. <span class="opt">Sagot: ______</span></div><div class="ptest-q"><b>62.</b> Nanunukso ng mga Pilipinong may kakaibang punto sa pananalita. <span class="opt">Sagot: ______</span></div><div class="ptest-q"><b>63.</b> May paggalang sa iba't ibang pangkat etnolingguwistiko. <span class="opt">Sagot: ______</span></div><div class="ptest-q"><b>64.</b> Nahihiyang magsuot ng bahag. <span class="opt">Sagot: ______</span></div><div class="ptest-q"><b>65.</b> Mas mahilig sa mga dayuhang produkto kaysa mga lokal na produkto. <span class="opt">Sagot: ______</span></div><div class="ptest-q"><b>66.</b> Nanghuhusga sa tradisyonal na kasuotan ng ibang pangkat etnolingguwistiko. <span class="opt">Sagot: ______</span></div><div class="ptest-q"><b>67.</b> Masaya sa pagkakaroon ng balat na kulay kayumanggi. <span class="opt">Sagot: ______</span></div><div class="ptest-part-title">Part VI — Maikling Sagot</div><div class="ptest-q"><b>68.</b> Ano ang tatlong pangkat sa Mindanao batay sa paniniwala o relihiyon?</div><div class="ptest-q"><b>69.</b> Ano ang Indigenous People's Rights Act (IPRA)?</div><div class="ptest-q"><b>70.</b> Ibigay ang tatlong pinakamalaking pangkat ng mga Muslim sa Mindanao ayon sa laki, mula una hanggang ikatlo.</div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-key">
+        <div class="notes-topic">
+<div class="notes-topic-title">Part I — Pagtambalin</div><div class="key-grid"><div class="key-pill">1. <b>Igorot</b></div><div class="key-pill">2. <b>Badjao</b></div><div class="key-pill">3. <b>Ilokano</b></div><div class="key-pill">4. <b>Tagalog</b></div><div class="key-pill">5. <b>Kalinga</b></div><div class="key-pill">6. <b>Ilonggo</b></div><div class="key-pill">7. <b>Ivatan</b></div><div class="key-pill">8. <b>Hanunoo</b></div><div class="key-pill">9. <b>Ifugao</b></div><div class="key-pill">10. <b>Bikolano</b></div></div><div class="notes-topic-title">Part II — Tamang Sagot</div><div class="key-grid"><div class="key-pill">11. <b>mandirigma</b></div><div class="key-pill">12. <b>T'boli</b></div><div class="key-pill">13. <b>Pampanga</b></div><div class="key-pill">14. <b>Maranao</b></div><div class="key-pill">15. <b>Tagalog</b></div><div class="key-pill">16. <b>basi</b></div><div class="key-pill">17. <b>Mindoro</b></div><div class="key-pill">18. <b>Ilonggo</b></div><div class="key-pill">19. <b>Animismo</b></div><div class="key-pill">20. <b>Antique</b></div></div><div class="notes-topic-title">Part III — Mga Pangkat</div><div class="key-grid"><div class="key-pill">21. <b>Tausug</b></div><div class="key-pill">22. <b>Maguindanao</b></div><div class="key-pill">23. <b>Maranao</b></div><div class="key-pill">24. <b>Badjao</b></div><div class="key-pill">25. <b>T'boli</b></div><div class="key-pill">26. <b>Bagobo</b></div><div class="key-pill">27. <b>Subanen</b></div><div class="key-pill">28. <b>Blaan</b></div><div class="key-pill">29. <b>Mansaka</b></div><div class="key-pill">30. <b>Sulod</b></div><div class="key-pill">31. <b>Ilonggo</b></div><div class="key-pill">32. <b>Kinaray-a</b></div><div class="key-pill">33. <b>Abaknon</b></div><div class="key-pill">34. <b>Aklanon</b></div><div class="key-pill">35. <b>Cebuano</b></div></div><div class="notes-topic-title">Part IV — Tama o Mali</div><div class="key-grid"><div class="key-pill">36. <b>TAMA</b></div><div class="key-pill">37. <b>MALI</b></div><div class="key-pill">38. <b>TAMA</b></div><div class="key-pill">39. <b>TAMA</b></div><div class="key-pill">40. <b>MALI</b></div><div class="key-pill">41. <b>MALI</b></div><div class="key-pill">42. <b>MALI</b></div><div class="key-pill">43. <b>TAMA</b></div><div class="key-pill">44. <b>MALI</b></div><div class="key-pill">45. <b>MALI</b></div><div class="key-pill">46. <b>MALI</b></div><div class="key-pill">47. <b>TAMA</b></div><div class="key-pill">48. <b>TAMA</b></div><div class="key-pill">49. <b>MALI</b></div><div class="key-pill">50. <b>TAMA</b></div><div class="key-pill">51. <b>TAMA</b></div><div class="key-pill">52. <b>MALI</b></div><div class="key-pill">53. <b>TAMA</b></div><div class="key-pill">54. <b>MALI</b></div><div class="key-pill">55. <b>TAMA</b></div><div class="key-pill">56. <b>TAMA</b></div><div class="key-pill">57. <b>TAMA</b></div></div><div class="notes-topic-title">Part V — Mabuting Asal</div><div class="key-grid"><div class="key-pill">58. <b>♡</b></div><div class="key-pill">59. <b>♡</b></div><div class="key-pill">60. <b>♡</b></div><div class="key-pill">61. <b>♡</b></div><div class="key-pill">62. <b>✗</b></div><div class="key-pill">63. <b>♡</b></div><div class="key-pill">64. <b>✗</b></div><div class="key-pill">65. <b>✗</b></div><div class="key-pill">66. <b>✗</b></div><div class="key-pill">67. <b>♡</b></div></div><div class="notes-topic-title">Part VI — Maikling Sagot (mga halimbawang sagot)</div><div class="ptest-q" style="margin-bottom:6px"><b>68.</b> Muslim, Kristiyano, at Lumad.</div><div class="ptest-q" style="margin-bottom:6px"><b>69.</b> Isang batas na ipinasa noong 1997 na kumikilala sa mga karapatan ng mga katutubong pangkat, kabilang ang karapatang pangalagaan ang kanilang lupaing ninuno (ancestral domain).</div><div class="ptest-q" style="margin-bottom:6px"><b>70.</b> Maguindanao (una), Tausug (ikalawa), at Maranao (ikatlo).</div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-raw">
+        <div class="rawnotes-intro">
+          📌 Ito ang orihinal na nilalaman ng dokumentong ini-upload, nang walang binago — para madali mong masangguni ang buong teksto kapag kailangan mo ng detalye na wala sa reviewer.
+        </div>
+        <div class="rawnotes-doc">
+<h3 class="doc-heading">Ang mga Kapampangan (Pampangueño)</h3>
+<p>Ang mga <strong>Kapampangan</strong> ay nakatira sa Pampanga at sa mga lalawigan ng Tarlac, Nueva Ecija, at Zambales. Kapampangan ang wikang kanilang ginagamit.</p>
+<p>Karamihan sa mga Kapampangan ay nabubuhay sa pagtatanim ng palay at asukal. Sila rin ay kilala sa kahusayang magluto at sa paggawa ng tocino, tapa, at longganisa.</p>
+<p>Kilala rin ang mga Kapampangan sa paggawa ng mga kagamitang yari sa kahoy at magagandang parol. Makikita ang mga ipinagmamalaking parol ng mga Kapampangan sa Giant Lantern Festival tuwing panahon ng Kapaskuhan.</p>
+<p>Matatag sa mga pagsubok ang mga Kapampangan. Noong 1991, pumutok ang Bulkang Pinatubo at natabunan ng lahar ang malalawak na taniman sa Pampanga at ilang lalawigan sa Gitnang Luzon. Nagdulot ito ng pagkasira ng maraming bahay at ari-arian. Gayumpaman, nanaig ang kasipagan ng mga Kapampangan. Ipinakita rin nila ang pagiging malikhain sa pamamagitan ng paggamit ng lahar sa paggawa ng mga palamuti sa bahay at iba pang kagamitan.</p>
+<p>Relihiyoso rin ang mga Kapampangan. Karamihan sa kanila ay mga Katoliko. Ginugunita nila ang pasyon at pagkamatay ni Hesukristo tuwing Semana Santa sa isang dulang tinatawag na senakulo. Ang mga Katoliko at mga turista ay dumarayo sa Pampanga upang mapanood ang taunang okasyong ito.</p>
+<h3 class="doc-heading">Ang mga Tagalog</h3>
+<p>Ang mga <strong>Tagalog</strong> ay pinakamalaking pangkat etnolingguwistiko sa Pilipinas. Sila ay laganap sa buong bansa, partikular na sa mga lalawigan ng Bulacan, Bataan, Zambales, Tarlac, Rizal, Cavite, Laguna, Batangas, Aurora, Quezon, Mindoro, Marinduque, Palawan, at sa Rehiyon ng Kalakhang Maynila (National Capital Region o NCR). Ang mga Tagalog ay gumagamit ng wikang Tagalog na pangunahing batayan ng wikang pambansang Filipino. Ang <strong>baybayin</strong>, na isang sistema ng pagsulat na ginamit ng mga pamayanan sa Luzon bago dumating ang mga Espanyol, ay nagmula sa mga Tagalog. Ang <em>Laguna Copperplate Inscription</em> ay nagpapatunay ng paggamit ng mga sinaunang Pilipino sa baybayin sa pagsulat.</p>
+<p>Ang kulturang Tagalog ay madaling nahalo sa iba pang mga kultura dahil sa pagpapakasal at pandarayuhan. Ang mga Tagalog ay kilala sa pagiging magalang, masayahin, palakaibigan, at malapit sa pamilya. Sila ay gumagamit ng magagalang na salita tulad ng "po" at "opo" sa pakikipag-usap sa mga nakatatanda.</p>
+<p>Ang mga Tagalog ay mahilig sa musika at panitikan. Ang kundiman, na koleksiyon ng mga awit ng pag-ibig, ay nagmula sa mga Tagalog. Ang balagtasan ay isang kilalang uri ng panitikang Tagalog na nagdedebate o nagtatalo ang dalawang tao sa pamamagitan ng tula. Ang pangalang "balagtasan" ay hango sa pangalan ni Francisco "Balagtas" Baltazar, ang "Prinsipe ng mga Makatang Tagalog."</p>
+<p>Ang pangunahing ikinabubuhay ng mga Tagalog ay pagsasaka at pangingisda. Marami din ang nabubuhay sa paghahabi at paggawa ng sapatos, damit, at iba pang mga produkto at pagluluto ng pagkain.</p>
+<p>Karamihan sa mga Tagalog ay Katoliko at Protestante. Marami din sa kanila ang mga miyembro ng Iglesia ni Cristo at ang iba naman ay mga Saksi ni Jehovah.</p>
+<h3 class="doc-heading">Ang mga Bikolano</h3>
+<p>Naninirahan ang mga <strong>Bikolano</strong> sa mga lalawigan ng Camarines Norte, Camarines Sur, Albay, Masbate, Catanduanes, at Sorsogon sa rehiyon ng Bicol. Ginagamit nila ang wikang Bikolano. Karamihan sa mga Bikolano ay nagsasaka at nangingisda. Ang iba naman ay nabubuhay sa paggawa ng banig at basket gamit ang sinamay (abaka), rattan, at niyog.</p>
+<p>Kilala ang mga Bikolano sa kanilang maaanghang na pagkain at sa paggamit ng gata ng niyog sa pagluluto. Sikat na pagkain ng mga Bikolano ang <em>Bicol Express</em> at laing. Ang matatamis na kendi na gawa sa pili ay isa ring sikat na pagkain mula sa rehiyon.</p>
+<p>Ang mga Bikolano ay mapagmahal, masisipag, at pasensiyoso. Makikita ang kaugaliang ito sa bawat Bikolano sa kanilang muli't muling pagbangon pagkaraan ng mga trahedyang dulot ng mga bagyo at pagputok ng mga bulkan.</p>
+<p>Karamihan sa mga Bikolano ay Katoliko. Ipinagdiriwang taon-taon sa Lungsod ng Naga ang kapistahan ng Birhen ng Peñafrancia na kanilang patron. Ang pagdiriwang na ito ay ginaganap sa loob ng isang linggo tuwing buwan ng Setyembre at sinasamahan ng isang parada sa Ilog Bicol. Dinarayo ng mga turista ang kapistahang ito.</p>
+<h3 class="doc-heading">Ang mga Negrito</h3>
+<p>Ang mga <strong>Negrito</strong> ay laganap sa bansa. Ilan sa mga pangkat ng Negrito na matatagpuan sa Luzon ang mga Aeta, Dumagat, at Batak.</p>
+<h3 class="doc-heading">Mga Aeta</h3>
+<p>Ang mga <strong>Aeta</strong> o <strong>Agta</strong> ay laganap sa mga bulubunduking bahagi ng Luzon. May mga naninirahan sa mga lalawigan ng Zambales, Tarlac, Bataan, Pampanga, Isabela, Camarines Norte, at Camarines Sur. Ang mga Aeta ay karaniwang maliit ang taas, maitim ang balat, at kulot ang buhok. Pagala-gala sila at nabubuhay sa pangangaso. Nakikipagkalakalan din sila sa mga taga-kapatagan.</p>
+<h3 class="doc-heading">Mga Dumagat</h3>
+<p>Ang pangkat ng mga <strong>Dumagat</strong> ay matatagpuan sa mga lalawigan ng Rizal, Camarines Norte, Camarines Sur, Bulacan, Nueva Vizcaya, at Isabela. Sila ay kabilang sa pangkat ng mga Negrito. Ang mga Dumagat ay may kayumangging balat at kulot na buhok na katulad sa mga Aeta. Ang ikinabubuhay ng mga Dumagat ay pagkakaingin, pangingisda, at pagdadaing.</p>
+<p>Naniniwala sila sa animismo bunga ng kanilang ugnayan sa kalikasan. Naniniwala sila sa mga anito na mga espiritu ng kanilang mga ninuno. Sa paglipas ng panahon, marami nang Dumagat ang nananampalataya sa Kristiyanismo.</p>
+<h3 class="doc-heading">Mga Batak</h3>
+<p>Kabilang din sa pangkat ng mga Negrito ang mga <strong>Batak</strong> na naninirahan sa mga tabing-ilog ng Palawan. Ang kanilang wika ay tinatawag ding Batak o Binatak. Ang mga Batak ay nabubuhay sa pangangaso at pangangalap ng pagkain sa kagubatan. Dahil sa kanilang pakikisalamuha sa iba pang mga pangkat, natuto silang magtanim ng mga halamang-ugat at iba pang mga puno at halamang namumunga. Mayroon silang mga tradisyonal na manggagamot na tinatawag nilang <em>babaylan</em> na gumagamit ng mga halaman sa panggagamot.</p>
+<h3 class="doc-heading">Ang mga Mangyan</h3>
+<p>Ang mga <strong>Mangyan</strong> ay matatagpuan sa isla ng Mindoro at may maliliit na pangkat sa ilang pamayanan sa Romblon, Albay, Negros, at Palawan. Sila ay nabubuhay sa pagkakaingin. Nagtatanim sila ng palay, mais, at mga halamang ugat tulad ng ube at kamote. Nanghuhuli rin sila ng mababangis na hayop at nangangalap ng mga pananim bilang kabuhayan. Ilan sa kanila ay nangingisda at ang iba naman ay nakikipagkalakalan sa mga Tagalog sa Mindoro.</p>
+<p>Karamihan sa mga Mangyan ay naimpluwensiyahan na ng modernisasyon, ngunit nananatili pa rin ang kanilang mga tradisyon. Isa sa mga ito ang kanilang sistema ng pagsusulat. Ang <em>ambahan</em> ay isang uri ng tula na ginagawa pa rin ng mga Mangyan hanggang sa kasalukuyan. Maging ang mga tradisyonal na awit at sayaw ay buhay pa rin sa mga tribong Mangyan.</p>
+<p>Ang mga Mangyan ay naniniwala sa mga diyos at espiritung gumagabay sa kanilang buhay. Isa na rito si Binayo, ang diyos na nangangalaga sa palay. Nagsasagawa sila ng mga ritwal sa bawat yugto ng pagsasaka upang masiguro ang masaganang ani ng palay.</p>
+<p>Ang sumusunod ay ilan sa mga tribong Mangyan sa Mindoro.</p>
+<h3 class="doc-heading">Mga Alangan</h3>
+<p>Ang pangalan ng tribong <strong>Alangan</strong> ay nagmula sa Ilog Alangan. Ilan sa mga kalalakihang Alangan ay nagsusuot pa rin ng bahag na gawa sa telang nagmula sa balat ng kahoy. Ang mga kababaihan naman ay nagsusuot ng tapis na gawa sa hinabing rattan. Ang pagnguya ng nganga at pagbibigay nito sa kapwa ay ginagawa bilang simbolo ng pagtanggap o pakikipagkaibigan. Ang mga Alangan ay naninirahan sa malalaking bahay na may tatlo hanggang dalawampung pamilya.</p>
+<h3 class="doc-heading">Mga Buhid</h3>
+<p>Ang mga <strong>Buhid</strong> ay kilala sa produkto nilang paso na ibinibenta sa ibang mga pangkat. Tinatawag silang "manlalakbay ng mga kabundukan." Ang mga kababaihan ay nakasuot ng itim at puting pang-itaas na tinatawag na <em>abol</em>. Ilan sa mga kalalakihan ay nagsusuot pa rin ng bahag. Gumagawa rin ang mga kababaihan ng makukulay na kuwintas at pulseras.</p>
+<h3 class="doc-heading">Mga Hanunoo</h3>
+<p>Ang mga <strong>Hanunoo</strong> ay kilala sa kanilang mga instrumentong pang-musika at mga awit. Inuukit nila ang kanilang tula at iba pang mga isinulat sa mga kawayan gamit ang kanilang sariling paraan ng pagsusulat na tinatawag na <em>Surat Mangyan</em>. Ang kalalakihan at kababaihan ay kapwa may mahahabang buhok. Itinatali ng kalalakihan ang kanilang buhok gamit ang panyo at ang kababaihan naman ay naglalagay ng makukulay na palamuti sa kanilang buhok.</p>
+<h3 class="doc-heading">Mga Iraya</h3>
+<p>Malapit sa dagat ang tirahan ng mga <strong>Iraya</strong>. Kilala sila sa mahusay na paghahabi ng mga basket na gawa sa nito. Ang nito ay isang uri ng halamang baging na tumutubo sa kagubatan. Gumagawa rin sila ng mga paso at pinggan. Kilala rin ang mga Iraya sa paggamit ng <em>harablon</em> na isang kagamitan sa paghahabi. Ang kababaihan ng Iraya ay nagsusuot pa rin ng mga damit na gawa sa balat ng puno.</p>
+<h3 class="doc-heading">Mga Ratagnon</h3>
+<p>Matatagpuan ang tribong <strong>Ratagnon</strong> sa pinakatimog na dulo ng Mindoro. Ginagamit nila ang wika ng mga naninirahan sa isla ng Cuyo sa Palawan. Ang kalalakihan at kababaihan ay nagsusuot ng pulang rattan sa kanilang baywang. Ang mga lalaki ay nakasuot ng dyaket na may mga <em>bead</em>.</p>
+<h3 class="doc-heading">Mga Tadyawan</h3>
+<p>Ang mga <strong>Tadyawan</strong> ay nakatira sa silangang bahagi ng Mindoro. Sila ay nabubuhay sa pagkakaingin. Ang kababaihang Tadyawan ay nagsusuot ng mga pulseras at sinturon o telang nakapalibot sa baywang na gawa sa mga <em>bead</em>. Isinusuot din ng mga kalalakihan ang isang uri ng bahag na tinatawag na <em>abay</em>.</p>
+<h3 class="doc-heading">Mga Tau-buid</h3>
+<p>Ang tribong <strong>Tau-buid</strong> ay kilala sa kanilang hilig sa pananabako na itinuturing nilang paraan ng pakikitungo sa kapwa. Ang ilan sa kanila ay nagsusuot pa rin ng bahag at kasuotang gawa sa balat ng kahoy.</p>
+<h3 class="doc-heading">Ang mga Pangkat sa Palawan</h3>
+<p>Sa Palawan naman matatagpuan ang mga pangkat ng mga Palawano at Tagbanwa.</p>
+<h3 class="doc-heading">Mga Palawano</h3>
+<p>Ang pangkat ng <strong>Palawano</strong>, o Palaw'an, ay binubuo ng iba't ibang tribong laganap sa gitna at katimugang Palawan. Dati silang pagala-gala ngunit sa paglipas ng panahon, karamihan sa kanila ay nanirahan na malapit sa mga ilog at dalampasigan. Pagsasaka, pangangaso, at pangingisda ang kanilang pangunahing pinagkukunan ng kabuhayan. Ang mga lalaki ay nagsusuot ng bahag at ang mga babae naman ay nagsusuot ng tapis. Naghahabi ang kababaihan ng mga <em>tingkep</em> o mga basket na yari sa rattan na ginagamit sa ritwal ng panggagamot upang tawagin ang espiritung gagamot sa may sakit.</p>
+<h3 class="doc-heading">Mga Tagbanwa</h3>
+<p>Ang mga <strong>Tagbanwa</strong> ay matatagpuan sa gitna at hilagang Palawan. May malalaking pamayanan ng mga Tagbanwa sa mga isla ng Calamianes, Busuanga, at Coron. Ang mga Tagbanwa ay nagsusuot ng mga damit na gawa sa balat ng kahoy. Marami sa kanila ay nagsusuot na rin ng damit ng ibang pangkat tulad ng mga Muslim at mga tagabayan. Ang tirahan ng mga Tagbanwa ay yari sa kawayan at anahaw. Pangunahing kabuhayan nila ang pagsasaka habang ang mga pamayanan sa dalampasigan ay nangingisda. Kilala ang mga Tagbanwa sa paghahabi ng mga banig na yari sa pandan at paggawa ng mga basket na yari sa kawayan.</p>
+<p>Kilalang ritwal ng mga Tagbanwa ang <em>pagdiwata</em> na idinaraos upang humingi ng tulong mula sa mga diyos o bilang pasasalamat sa matagumpay na ani o pangangaso. Ito ay pinangungunahan ng isang babaylan na nag-aalay at nagsasayaw upang tawagin ang kanilang mga diyos.</p>
+<h3 class="doc-heading">Mga Pangkat Etnolingguwistiko sa Visayas</h3>
+<p>Ang mga pangunahing pangkat etnolingguwistiko sa Visayas ay ang mga <strong>Aklanon, Kinaray-a, Ilonggo, Boholano, Cebuano, at Waray</strong>. Ilan sa mga maliliit na pangkat sa rehiyon ay nagsasalita ng sari-sarili nilang wika.</p>
+<h3 class="doc-heading">Ang mga Aklanon</h3>
+<p>Matatagpuan ang mga <strong>Aklanon</strong> sa lalawigan ng Aklan, ngunit may ilang pamayanang Aklanon sa Iloilo, Antique, Capiz, at Romblon. Ang kanilang wika ay Aklanon, na isang wikang rehiyonal sa Visayas. Ang wikang Malaynon ay isang dayalekto ng Aklanon.</p>
+<h3 class="doc-heading">Ang mga Kinaray-a</h3>
+<p>Ang mga <strong>Kinaray-a o Karay-a</strong> ay matatagpuan sa lalawigan ng Antique at Iloilo. Ang kanilang wika ay tinatawag ding Karay-a o Kinaray-a. Ang mga Kinaray-a mula sa Antique ay tinatawag na <strong>Hamtiknon</strong>. Marami sa kanila ay Katoliko, habang ang iba naman ay Protestante.</p>
+<h3 class="doc-heading">Ang mga Sulod</h3>
+<p>Ang mga <strong>Sulod</strong> ay nakatira sa mga kabundukan ng Gitnang Panay, Tapaz sa Capiz, Lambunao sa Iloilo, at Valderrama sa Antique. Ang pangalang Sulod ay nangangahulugang <strong>“loob” o “looban.”</strong> Ginamit ito ng mga katabing tribo sa pagtukoy sa kanila dahil ang mga Sulod ay nakatira sa kaloob-looban ng mga bundok at ilog.</p>
+<p>Katulad ng mga Mangyan, ang mga Sulod ay gumagamit ng kaingin sa pagsasaka. Sila ay nagtatanim ng palay, mais, at mga halamang-ugat. Mahahalagang kabuhayan din para sa mga Sulod ang pangangaso at pangingisda.</p>
+<p>Ang kababaihan ng Sulod ay nagsusuot ng makukulay na damit na gawa sa seda at bulak at ang kalalakihan naman ay nagsusuot ng pantalon o bahag. Nakatira sila sa mga bahay na gawa sa kawayan na may iisang silid.</p>
+<p>Ang mga Sulod ay mahilig sa musika. Gumagawa sila ng sarili nilang instrumento tulad ng plawta na yari sa kawayan, tambol, at gitara. Ang epikong <strong>Hinilawod</strong> ay isang akdang pampanitikan na likha ng mga Sulod na naipapasa-pasa nang pasalita. Isinasalaysay nito ang kuwento ni Labaw Donggon at ang kaniyang paglalakbay upang makamit ang pag-ibig ni Nagmalitong Yawa. Naglalaman din ito ng kaalamang tungkol sa sinaunang paniniwala, tradisyon, at kultura ng mga Sulod.</p>
+<h3 class="doc-heading">Ang mga Ilonggo</h3>
+<p>Ang mga <strong>Ilonggo o Hiligaynon</strong> ay matatagpuan sa mga lalawigan ng Iloilo, Capiz, Aklan, Guimaras, at Negros Occidental. Ginagamit nila ang wikang Ilonggo o Hiligaynon.</p>
+<p>Karamihan sa mga Ilonggo ay nagsasaka at nangingisda. Mayroon ding gumagawa ng mga pagkain at nagdadaing ng isda. Kilala rin sila sa kanilang husay sa paghahabi ng jusi, piña, at sinamay. Mahusay ang mga Ilonggo sa paggawa ng magagandang <strong>Barong Tagalog</strong>.</p>
+<p>Ang mga Ilonggo ay kilala sa kanilang mahusay na pananalita at pagiging palabiro. Mahilig din sila sa mga kapistahan tulad ng pagdiriwang ng <strong>Dinagyang</strong> sa Iloilo at ang <strong>MassKara</strong> sa Negros Occidental.</p>
+<h3 class="doc-heading">Ang mga Ati</h3>
+<p>May mga pangkat <strong>Aeta</strong> sa ilang lugar sa Panay at Negros at sa isla ng Boracay. Sila ay tinatawag na mga <strong>Agta, Atta, o Ati</strong>. Dating pagala-gala ang mga Agta sa iba't ibang lugar sa Panay at Negros ngunit karamihan sa kanila ay nakatira na sa ilang mga pamayanan sa mga bayan. Marami din sa mga Ati sa kasalukuyan ang taga-sunod ng Kristiyanismo.</p>
+<h3 class="doc-heading">Ang mga Boholano</h3>
+<p>Ang mga <strong>Boholano</strong> ay nakatira sa lalawigan ng Bohol at nagsasalita ng Boholano, na isang dayalekto ng Cebuano. Karamihan sa mga Boholano ay mga Katoliko. Pangunahing kabuhayan ng mga Boholano ang <strong>pagsasaka at paggawa ng mga basket at mga palamuti.</strong></p>
+<h3 class="doc-heading">Ang mga Cebuano</h3>
+<p>Ang mga <strong>Cebuano</strong> ay isa sa malalaking pangkat etnolingguwistiko sa Pilipinas. Matatagpuan sila sa mga lalawigan ng Cebu, Bohol, Negros Oriental, at Kanlurang Leyte. Ginagamit nila ang wikang Cebuano, na isa sa mga wikang Bisaya.</p>
+<p>Pagsasaka at pangingisda ang mga pangunahing ikinabubuhay ng mga Cebuano. Ang iba sa kanila ay nagmimina o kaya ay nagdadaing ng isda bilang hanapbuhay. Isang mahalagang kabuhayan din ng mga Cebuano ang <strong>paggawa ng gitara</strong>.</p>
+<p>Karamihan sa mga <strong>Cebuano</strong> ay mga Katoliko. Kilala sila sa mga matinding pananalig sa <strong>Santo Niño</strong> at ipinagdiriwang nila ang kapistahan nito sa iba't ibang paraan. Isa sa mga kapistahang ito ang <strong>Sinulog Festival</strong>. Nagdarasal at sumasayaw ang mga tao sa kalsada habang hawak ang imahen ng Santo Niño. Bukod dito, mayroon ding mga paputok at parada. Ito ay kaya naman isa ang Sinulog sa mga pinakakakulay na kapistahan sa Pilipinas na dinarayo ng mga turista.</p>
+<h3 class="doc-heading">Ang mga Abaknon</h3>
+<p>Ang mga <strong>Abaknon</strong> ay matatagpuan sa hilagang-silangang Samar. Sila ay kilala rin sa ibang pangalan tulad ng <strong>Capul, Capuleño, at Sama Capul</strong> dahil sila ay matatagpuan sa isla ng Capul sa Samar. Ang kanilang wika ay tinatawag ding <strong>Abaknon, Inabaknon, at Sama</strong>. Ang wikang Abaknon o Sama ay naiiba sa mga wika sa Visayas dahil ito ay nauugnay sa mga wika ng mga pangkat ng mga Sama mula sa Sulu at Tawi-Tawi.</p>
+<h3 class="doc-heading">Ang mga Waray</h3>
+<p>Matatagpuan ang mga <strong>Waray</strong> sa dalawang malalaking pulo ng Samar at Leyte. Ginagamit nila ang wikang Waray. Ang mga Waray ay masisipag at mapagmahal. Ang kanilang pagiging matiyaga at matiisin ay makikita sa mga panahon ng mga trahedya dala ng mga bagyo, baha, o iba pang sakuna na nararanasan sa kanilang rehiyon.</p>
+<p>Karamihan sa mga Waray ay mga magsasaka at mangingisda. Ang ilan naman sa kanila ay gumagawa ng mga basket, alahas, at iba pang produkto. Relihiyoso rin ang mga Waray. Ipinagdiriwang din nila ang kapistahan ng kanilang patrong Santo Niño.</p>
+<h3 class="doc-heading">Mga Pangkat Etnolingguwistiko sa Mindanao</h3>
+<p>Ang mga pangkat etnolingguwistiko sa Mindanao ay maaaring hatiin sa tatlong batay sa kinabibilangan nilang paniniwala o relihiyon. Ang mga pangkat na ito ay ang mga <strong>Muslim, Kristiyano, at Lumad.</strong></p>
+<h3 class="doc-heading">Ang mga Muslim</h3>
+<p>Ang mga <strong>Muslim</strong> ay matatagpuan sa mga lalawigan ng <strong>Basilan, Cotabato, Lanao del Norte, Lanao del Sur, Maguindanao, Sultan Kudarat, Sulu, Tawi-Tawi, Zamboanga del Norte, at Zamboanga del Sur.</strong> Naninirahan ang karamihan ng mga Pilipinong Muslim sa mga lalawigang sakop ng <strong>Bangsamoro Autonomous Region in Muslim Mindanao (BARMM)</strong> simula pa noong ika-15 dantaon.</p>
+<p>Unang dumating ang mga misyonerong Muslim sa Tawi-Tawi noong ika-14 na dantaon. Sa loob ng isang siglo, napalaganap nila ang relihiyong Islam sa iba't ibang bahagi ng Mindanao. Noong ika-15 dantaon, naitatag ang dalawang kahariang Muslim sa Mindanao. Ito ang <strong>Sultanato ng Sulu</strong> at ang <strong>Sultanato ng Maguindanao</strong>. Sa buong panahon ng pananakop ng mga Espanyol at mga Amerikano, napanatili ng mga pamayanang Muslim ang kanilang kalayaan at natatanging kultura at pagkakakilanlan.</p>
+<p>Ang kultura, paniniwala, at kaugalian ng mga Pilipinong Muslim ay naaayon sa kanilang <strong>Shari'ah</strong> at sa mga batas ng Islam. Ang <strong>Shari'ah</strong> ay ang sistemang legal na naaayon sa Shari'ah at <strong>Adat</strong>. Ang <strong>Shari'ah</strong> ay ang batas ng Islam, at <strong>Hadith</strong>, o mga salaysay sa Qur'an, ay ang banal na aklat ng mga Muslim. Samantala, ang <strong>Adat</strong> ay tumutukoy sa iba't ibang lokal na kaugalian at tradisyon na itinuturing na tugma sa katuruang Islam. Ang <strong>Adat</strong> ay karaniwang sinusunod ng mga pamayanang Muslim sa Timog-Silangang Asya.</p>
+<p>Kinikilala ng mga Pilipinong Muslim ang kanilang sarili bilang <strong>Bangsamoro</strong>. Ilan sa pinakamalaking pangkat ng Moro ang mga <strong>Maguindanaoan, Tausug, at Maranao.</strong></p>
+<h3 class="doc-heading">Mga Maguindanao</h3>
+<p>Ang mga <strong>Maguindanao o Maguindanaon</strong> ang pinakamalaking pangkat ng mga Muslim sa Mindanao. Sila ay dating laganap sa mga lugar na dating sakop ng Sultanato ng Maguindanao. Sa kasalukuyan, karamihan sa kanila ay naninirahan sa lalawigan ng Maguindanao. Naninirahan din sila sa mga lalawigan ng <strong>Cotabato, South Cotabato, Sultan Kudarat, Sarangani, Zamboanga Sibugay, Timog Cotabato, at Zamboanga del Sur.</strong></p>
+<p>Kilala ang mga Maguindanaon sa kanilang musika gamit ang mga instrumentong <strong>kutyapi, o kudyapi, at kulintang</strong>. Ang <strong>pastil</strong>, na gawa sa kanin at hinimay-himay na manok na nakabalot sa dahon ng saging, ay isang kilalang pagkain ng mga Maguindanao.</p>
+<h3 class="doc-heading">Mga Tausug</h3>
+<p>Ang mga <strong>Tausug</strong> ang ikalawang pinakamalaking pangkat ng mga Muslim sa Mindanao. Sila ay dating bahagi ng Sultanato ng Sulu, ngunit ngayon ay matatagpuan sila sa mga lalawigan ng <strong>Sulu, Tawi-Tawi, at Basilan</strong>. Kilala ang mga Tausug sa sayaw na <strong>Pangalay</strong> at sa paghahabi ng telang <strong>pis syabit</strong>.</p>
+<h3 class="doc-heading">Mga Maranao</h3>
+<p>Ang mga <strong>Maranao</strong> ang ikatlo sa pinakamalaking pangkat ng mga Muslim sa Mindanao. Sila ay matatagpuan sa mga lalawigan ng <strong>Lanao del Norte at Lanao del Sur</strong>. Kilala ang mga Maranao sa paggawa ng <strong>torogan</strong>, o magagarang bahay, ng mga maharlika, at mga disenyong <strong>sarimanok</strong> at <strong>okir</strong>. Ang epikong <strong>Darangen</strong> at sayaw na <strong>Singkil</strong> ay mula sa mga Maranao.</p>
+<h3 class="doc-heading">Ang mga Pangkat ng Kristiyano</h3>
+<p>Ang pangkat naman ng mga <strong>Kristiyano</strong> ang pinakalaganap sa Mindanao. Tinatayang 60 porsiyento ng populasyon ng Mindanao ay mga Kristiyano. Nagsimulang dumating sa Mindanao ang mga pangkat ng Kristiyano noong dekada 1930. Ito ay kinabibilangan ng mga <strong>Ilokano, Cebuano, at Hiligaynon</strong>. Lalong dumami ang mga lumipat sa Mindanao noong dekada 1950 nang ipinamahagi ng pamahalaan sa mga magsasaka ang mga lupang sakahan sa Mindanao bilang bahagi ng programang agraryo ni <strong>Pangulong Magsaysay</strong>. Sa kasalukuyan, pinakakaraniwan sa Mindanao ang mga <strong>Cebuano at Hiligaynon</strong>.</p>
+<p>Ang mga Cebuano ay matatagpuan sa <strong>Rehiyon ng Zamboanga, Hilagang Mindanao, Caraga, Rehiyon ng Davao, at SOCCSKSARGEN</strong>.</p>
+<p>May ilang pamayanan sa Mindanao na nagsasalita ng mga wikang rehiyonal. Kabilang dito ang wikang <strong>Surigaonon</strong> sa mga lalawigan ng Surigao del Norte at Surigao del Sur. Ang wikang <strong>Butuanon</strong> naman ay sinasalita sa mga lalawigan ng Agusan del Norte at Agusan del Sur. Ang wikang <strong>Chavacano</strong> ay ginagamit sa rehiyon ng Zamboanga at ilang pamayanan sa Basilan, Sulu, at Tawi-Tawi. Natatangi ang wikang Chavacano dahil ito ay nababatay sa wikang Espanyol na may mga halong salita at impluwensiya mula sa wikang <strong>Ilonggo, Cebuano, Tagalog, Malay, at Arabo</strong>.</p>
+<h3 class="doc-heading">Ang mga Lumad</h3>
+<p>Ang mga <strong>Lumad</strong> ay mga katutubong pangkat sa Mindanao na hindi naimpluwensiyahan ng mga Kristiyano at Muslim. Sila ay may natatanging mga paniniwala, kultura, at pagkakakilanlan.</p>
+<h3 class="doc-heading">Mga Bagobo</h3>
+<p>Ang mga <strong>Bagobo</strong> ay matatagpuan sa <strong>hilaga at hilagang-kanlurang bahagi ng Davao, sa silangang bahagi ng Cotabato, at sa ilang bahagi ng Agusan del Norte at Agusan del Sur</strong>. Nagkakaingin ang mga Bagobo upang makapagsaka. Nagtatanim sila ng <strong>palay, mga gulay, at mga halamang-ugat</strong>. Nabubuhay rin sila sa pangunguha ng mga pagkain sa kagubatan at pangangaso.</p>
+<p>Ang kalalakihang Bagobo ay mahusay gumawa ng mga <strong>sandata</strong> at mga kagamitang gawa sa <strong>tumbaga at bakal</strong>. Ang kababaihan naman ay mahusay maghabi ng tela mula sa <strong>abaka</strong> at gumawa ng mga <strong>basket</strong>.</p>
+<p>Layunin ng kalalakihang Bagobo na makamit ang <strong>ranggong “magani”</strong> na nangangahulugang <strong>“mandirigma.”</strong> Maaari maging magani ang isang indibidwal kung siya ay nakatalo ng higit sa isang kaaway. Ang mga magani ay may pulang kasuotan na nagpapakita ng pagiging mandirigma.</p>
+<h3 class="doc-heading">Mga Badjao</h3>
+<p>Ang mga <strong>Badjao</strong> ay naninirahan sa karagatan ng <strong>Sulu, Tawi-Tawi, at Zamboanga del Sur</strong>. Ang salitang “Badjao” ay nangangahulugang <strong>“taong nasa dagat.”</strong> Tinagurian silang <strong>“sea gypsies”</strong> dahil karamihan sa kanila ay naninirahan sa mga bahay na bangka na kung tawagin ay <strong>“sakayan.”</strong> Naglalakbay sila sa karagatan gamit ang <strong>vinta</strong>, isang bangkang may makukulay na layag. Mayroon ding mga Badjao na permanenteng naninirahan sa maliliit na pulo sa Mindanao tulad ng pulo ng <strong>Sitangkai sa Tawi-Tawi</strong>.</p>
+<p>Pangingisda at paninisid ng perlas ang pangunahing ikinabubuhay ng mga Badjao. Ang nahuhuli nilang isda at nakukuhang halamang dagat at perlas ay ipinagpapalit nila sa damit, gulay, at iba pang kagamitan na kailangan nila. Nagsusuot ang kababaihang Badjao ng <strong>kuwintas, pulseras, hikaw, singsing, at makukulay na payneta.</strong></p>
+<h3 class="doc-heading">Mga Manobo</h3>
+<p>Ang mga <strong>Manobo</strong> ay matatagpuan sa mga lalawigan ng <strong>Cotabato, Bukidnon, Agusan del Sur, at Davao</strong>. Sila ay naninirahan sa mga kabundukan habang ang ilan naman ay nakatira malapit sa dagat. Ang mga Manobo ay nabubuhay sa <strong>pagsasaka at pangingisda</strong>. Ang ilan ay nangangalap ng pagkain at nangangaso sa kagubatan. Kilala ang mga Manobo sa kahusayan sa pagtatanim.</p>
+<p>Ilan sa mga lalaking Manobo ay nagsusuot ng <strong>bahag</strong> at ang iba naman ay nagsusuot ng hinabing pantalon. Ang makukulay na hinabing damit ng mga kababaihan ay may disenyong <strong>bead art</strong> at <strong>sequin</strong>.</p>
+<h3 class="doc-heading">Tradisyonal na kasuotan ng kababaihang Manobo</h3>
+<h3 class="doc-heading">Mga T’boli</h3>
+<p>Ang pangkat ng mga <strong>T’boli</strong> ay matatagpuan sa <strong>Timog Cotabato at Agusan del Norte</strong>. Nabubuhay ang mga T’boli sa <strong>pangangaso, pagsasaka, at pangingisda</strong>. Kilala sila sa paghahabi ng <strong>t’nalak</strong> mula sa abaka at sa paggawa ng mga palamuting yari sa metal.</p>
+<p>Ang mga naghahabi ng <strong>t’nalak</strong> ay tinatawag na <strong>“dream weavers”</strong> dahil kumukuha sila ng inspirasyon mula sa kanilang panaginip sa paghahabi ng disenyo sa tela.</p>
+<h3 class="doc-heading">Mga Tiruray</h3>
+<p>Ang pangkat ng mga <strong>Tiruray</strong> ay matatagpuan sa mga lalawigan ng <strong>Maguindanao, Bukidnon, Sultan Kudarat, at Cotabato</strong>. May mga pamayanan ng mga Tiruray na matatagpuan sa dalampasigan at mayroon ding naninirahan sa mga kabundukan.</p>
+<p>Pangunahing kabuhayan ng mga Tiruray ang <strong>pagsasaka, pangangaso, at paggawa ng mga basket.</strong></p>
+<h3 class="doc-heading">Mga Subanen</h3>
+<p>Ang mga <strong>Subanen o Subanon</strong> ay naninirahan sa mga kabundukan ng <strong>Zamboanga del Sur at Misamis Occidental</strong>. Kilala sila sa paggawa ng <strong>palayok, paghahabi ng tela, at paggawa ng mga kasangkapan at sandatang metal</strong>.</p>
+<p>Mayaman ang panitikan ng mga Subanen. Kilala sila sa kanilang mga epikong <strong>Guman, Ag Tobig Nog Keboklagan, at Sandayo</strong>. Kilala rin ang kanilang mga katutubong sayaw at musika at mga instrumentong pangmusika tulad ng <strong>gong, kulintang, at tambol</strong>.</p>
+<h3 class="doc-heading">Mga Blaan</h3>
+<p>Ang pangkat ng mga <strong>Blaan</strong> ay matatagpuan sa <strong>Davao del Sur, Timog Cotabato, at Sultan Kudarat</strong>. Pangunahing kabuhayan nila ang <strong>pagsasaka at pangangaso</strong>. Mahusay ang mga Blaan sa <strong>paghahabi ng tabih</strong> na gawa sa abaka.</p>
+<h3 class="doc-heading">Mga Mansaka</h3>
+<p>Ang mga <strong>Mansaka</strong> ay matatagpuan sa <strong>Davao de Oro at Davao del Norte</strong>. Marami sa kanila ay naninirahan sa mga kabundukan habang ang ilan ay nakatira malapit sa mga ilog at sa dalampasigan. <strong>Pagsasaka at pagmimina</strong> ang pangunahing kabuhayan ng mga Mansaka. Maraming Mansaka ang patuloy na nananampalataya sa kanilang katutubong relihiyon. Ang kanilang mga ritwal ay pinangungunahan ng isang <strong>baylan</strong>.</p>
+<h3 class="doc-heading">Alalahanin Natin</h3>
+<ul>
+<li><p>Ang Pilipinas ay binubuo ng mahigit sa <strong>180 pangkat etnolingguwistiko</strong> na matatagpuan sa iba't ibang bahagi ng bansa. Higit sa kalahati ng bilang na ito ay maituturing na minorya dahil kakaunti lang ang mga taong nabibilang sa mga pangkat na ito.</p></li>
+<li><p>Ang mga pangkat etnolingguwistiko ay grupo ng mga taong pinagbubuklod ng kanilang natatanging <strong>pagkakakilanlan, kultura, wika, paraan ng pamumuhay, at mga tradisyon</strong>.</p></li>
+<li><p>Kabilang sa mga pangkat etnolingguwistiko sa <strong>Luzon</strong> ang mga <strong>Ilokano, Pangasinense, Igorot, Ivatan, Ibanag, Kapampangan, Tagalog, Bikolano, Negrito, Mangyan, Palawano, at Tagbanwa</strong>.</p></li>
+<li><p>Ang mga <strong>Aklanon, Kinaray-a, Sulod, Ilonggo, Ati, Boholano, Cebuano, Abaknon, at Waray</strong> ang ilan sa mga pangkat etnolingguwistiko sa <strong>Visayas</strong>.</p></li>
+<li><p>Ang mga pangkat etnolingguwistiko sa <strong>Mindanao</strong> ay maaaring hatiin sa tatlo batay sa kinabibilangan nilang paniniwala o relihiyon. Ang mga pangkat na ito ay ang mga <strong>Muslim, Kristiyano, at Lumad</strong>.</p></li>
+<li><p>Kabilang sa pangkat ng mga <strong>Muslim</strong> ang mga <strong>Tausug, Maranao, at Maguindanao</strong>. Matatagpuan sila sa rehiyon ng <strong>Bangsamoro, Hilagang Mindanao, at Zamboanga</strong>. Mayroon ding ilang maliliit na pamayanang Muslim sa iba pang bahagi ng Mindanao.</p></li>
+<li><p>Ang mga <strong>Kristiyano</strong> ang pinakamalaking pangkat na bumubuo sa halos <strong>60 porsiyento ng populasyon ng Mindanao</strong>.</p></li>
+<li><p>May ilang pangkat sa Mindanao na nagsasalita ng mga <strong>wikang rehiyonal</strong> tulad ng <strong>Surigaonon, Butuanon, at Chavacano</strong>.</p></li>
+<li><p>Ang mga <strong>Lumad</strong> ay mga katutubong pangkat na hindi naimpluwensiyahan ng mga Muslim o Kristiyano at napananatili ang kanilang sariling pamumuhay at kultura. Kabilang dito ang mga <strong>Bagobo, Blaan, Manobo, T’boli, Tiruray, Subanen, at Mansaka</strong>.</p></li>
+</ul>
+<h3 class="doc-heading">Karagdagang Teksto sa Itaas</h3>
+<p><strong>Alam ba ninyo na ang mga katutubong pangkat sa Pilipinas ay pinangangalagaan at pinoprotektahan ng ating pamahalaan?</strong> Noong <strong>1997</strong>, ipinasa ng pamahalaan ang <strong>Indigenous People’s Rights Act</strong> na kumikilala sa mga karapatan ng mga katutubong pangkat. Itinataguyod ng batas ang pagpapahalaga at paggalang sa pagkakakilanlan at kultura ng mga katutubong pangkat.</p>
+<p>Kinikilala rin ang karapatan ng mga pangkat na ito na pangalagaan ang kanilang mga lupaing ninuno o <strong>ancestral domain</strong>. Mahalangang mapanatili at maprotektahan ang mga lupaing ito dahil dito nakasalalay ang kabuhayan ng mga katutubong Pilipino.</p>
+<h3 class="doc-heading">Isaisip</h3>
+<p><strong>A. Isulat sa patlang ang Tama kung ang kaisipan ng pangungusap ay tama. Isulat naman ang Mali kung hindi.</strong></p>
+<ol type="1">
+<li><p>Ang katangiang heograpikal ng Pilipinas ay may kinalaman sa pagkakabuo ng kultura ng iba't ibang pangkat etnolingguwistiko rito.</p></li>
+<li><p>Cebuano ang pangunahing wikang ginagamit ng mga pangkat etnolingguwistiko sa bansa.</p></li>
+<li><p>Tinatayang mahigit sa 180 ang mga pangkat etnolingguwistikong naninirahan sa bansa.</p></li>
+<li><p>Kilala ang mga Kapampangan sa paggawa ng magagandang parol.</p></li>
+<li><p>Islam lamang ang relihiyon ng lahat ng pangkat sa Mindanao.</p></li>
+<li><p>Ang Ifugao, Bontoc, Kalinga, Kankanaey, Isneg, Ibaloi, at Tingguian ay kabilang sa pangkat na Mangyan.</p></li>
+<li><p>Lahat ng Pilipino ay may pare-parehong wika, pamumuhay, at tradisyon.</p></li>
+<li><p>Ang mga pangkat sa Pilipinas ay may kani-kaniyang ritwal.</p></li>
+<li><p>Lahat ng katutubong pangkat ay naniniwala sa animismo.</p></li>
+<li><p>Pagsasaka ang pangunahing ikinabubuhay ng mga pangkat etnolingguwistiko sa Pilipinas.</p></li>
+<li><p>Bisaya ang wika ng lahat ng mamamayan sa rehiyon ng Visayas.</p></li>
+<li><p>Karamihan sa mga Pilipino ay Katoliko.</p></li>
+<li><p>Pinananatili ng mga pangkat etnolingguwistiko sa bansa ang kanilang namamang kulturang mula sa mga ninuno.</p></li>
+<li><p>Ang mga Tausug ang pinakamalaking pangkat ng mga Muslim sa Mindanao.</p></li>
+<li><p>Lumad ang tawag sa mga katutubong pangkat sa Mindanao na hindi naimpluwensyahan ng mga Kristiyano at Muslim.</p></li>
+</ol>
+<h3 class="doc-heading">✅ Mga Sagot</h3>
+<table style="width:98%;">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 13%" />
+<col style="width: 73%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>#</strong></th>
+<th style="text-align: left;"><strong>Sagot</strong></th>
+<th style="text-align: left;"><strong>Maikling paliwanag</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>1</strong></td>
+<td style="text-align: left;"><strong>Tama</strong></td>
+<td style="text-align: left;">Nakaaapekto ang heograpiya sa kultura ng mga pangkat.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>2</strong></td>
+<td style="text-align: left;"><strong>Mali</strong></td>
+<td style="text-align: left;">Maraming iba't ibang wika ang ginagamit ng mga pangkat etnolingguwistiko.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>3</strong></td>
+<td style="text-align: left;"><strong>Tama</strong></td>
+<td style="text-align: left;">Tinatayang mahigit 180 ang mga pangkat etnolingguwistiko sa Pilipinas.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>4</strong></td>
+<td style="text-align: left;"><strong>Tama</strong></td>
+<td style="text-align: left;">Kilala ang mga Kapampangan sa paggawa ng magagandang parol.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>5</strong></td>
+<td style="text-align: left;"><strong>Mali</strong></td>
+<td style="text-align: left;">May mga <strong>Muslim, Kristiyano, at Lumad</strong> sa Mindanao.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>6</strong></td>
+<td style="text-align: left;"><strong>Mali</strong></td>
+<td style="text-align: left;">Ang mga Ifugao, Bontoc, Kalinga, at iba pa ay mga pangkat sa <strong>Cordillera</strong>, hindi Mangyan.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>7</strong></td>
+<td style="text-align: left;"><strong>Mali</strong></td>
+<td style="text-align: left;">Magkakaiba ang wika, pamumuhay, at tradisyon ng mga Pilipino.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>8</strong></td>
+<td style="text-align: left;"><strong>Tama</strong></td>
+<td style="text-align: left;">May kani-kaniyang ritwal ang iba't ibang pangkat.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>9</strong></td>
+<td style="text-align: left;"><strong>Mali</strong></td>
+<td style="text-align: left;">Hindi lahat ng katutubong pangkat ay naniniwala sa animismo.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>10</strong></td>
+<td style="text-align: left;"><strong>Mali</strong></td>
+<td style="text-align: left;">Iba-iba ang pangunahing kabuhayan ng mga pangkat, gaya ng pangingisda, pangangaso, paghahabi, atbp.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>11</strong></td>
+<td style="text-align: left;">❌ <strong>Mali</strong></td>
+<td style="text-align: left;">Hindi lahat sa Visayas ay nagsasalita ng Bisaya; may Aklanon, Kinaray-a, Hiligaynon, Waray, at iba pa.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>12</strong></td>
+<td style="text-align: left;">✅ <strong>Tama</strong></td>
+<td style="text-align: left;">Karamihan sa mga Pilipino ay Katoliko.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>13</strong></td>
+<td style="text-align: left;">✅ <strong>Tama</strong></td>
+<td style="text-align: left;">Pinananatili ng mga pangkat ang kanilang kultura at mga tradisyon mula sa mga ninuno.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>14</strong></td>
+<td style="text-align: left;">❌ <strong>Mali</strong></td>
+<td style="text-align: left;">Ang <strong>Maguindanao/Maguindanaon</strong> ang pinakamalaking pangkat ng Muslim; Tausug ang ikalawa.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>15</strong></td>
+<td style="text-align: left;">✅ <strong>Tama</strong></td>
+<td style="text-align: left;">Ang Lumad ay tawag sa mga katutubong pangkat sa Mindanao na hindi naimpluwensyahan ng Muslim o Kristiyano.</td>
+</tr>
+</tbody>
+</table>
+<h3 class="doc-heading">B. Pagtambalin</h3>
+<p><strong>Pagtambalin ang mga salita o pahayag sa Hanay A sa wastong pangkat etnolingguwistiko sa Hanay B. Isulat ang titik ng iyong sagot sa patlang.</strong></p>
+<h3 class="doc-heading">Hanay A</h3>
+<ol type="1">
+<li><p>Paglilibing ng mga bangkay sa dalisdis ng bundok</p></li>
+<li><p>“Sea gypsies”</p></li>
+<li><p>Epikong <em>Biag ni Lam-ang</em></p></li>
+<li><p>Paggamit ng “po” at “opo” sa pakikipag-usap sa mga nakatatanda</p></li>
+<li><p>Nakilala bilang mga “mamumugot” ng hilagang Pilipinas</p></li>
+<li><p>Kilala sa kanilang malumanay na pananalita</p></li>
+<li><p>Paggamit ng <em>vakul</em></p></li>
+<li><p>Gumagamit ng <em>Surat Mangyan</em></p></li>
+<li><p>Ang kanilang mga ninuno ang umukit ng Hagdan-hagdang Palayan</p></li>
+<li><p>Kilala sa kanilang maaanghang na pagkain na may gata ng niyog</p></li>
+</ol>
+<h3 class="doc-heading">Hanay B</h3>
+<p>a. Tagalog<br />
+b. Ivatan<br />
+c. Hanunoo<br />
+d. Igorot<br />
+e. Ifugao<br />
+f. Ilonggo<br />
+g. Bikolano<br />
+h. Badjao<br />
+i. Ilokano<br />
+j. Kalinga<br />
+k. Muslim</p>
+<h3 class="doc-heading">Final answers for B:</h3>
+<p><strong>1. D</strong><br />
+<strong>2. H</strong><br />
+<strong>3. I</strong><br />
+<strong>4. A</strong><br />
+<strong>5. J</strong><br />
+<strong>6. F</strong><br />
+<strong>7. B</strong><br />
+<strong>8. C</strong><br />
+<strong>9. E</strong><br />
+<strong>10. G</strong></p>
+<h3 class="doc-heading">C. Piliin ang Tamang Sagot</h3>
+<p><strong>Basahin ang sumusunod na mga katanungan at bilugan ang titik ng tamang sagot.</strong></p>
+<p><strong>1. Ano ang ibig sabihin ng ranggong <em>magani</em> sa pangkat ng mga Bagobo?</strong></p>
+<p>a. guwapo<br />
+b. manggagamot<br />
+c. mayamang pinuno<br />
+d. mandirigma</p>
+<p><strong>2. Napapabilang sa anong pangkat ang mga <em>dream weaver</em>?</strong></p>
+<p>a. Bagobo<br />
+b. Maguindanao<br />
+c. T’boli<br />
+d. Tiruray</p>
+<p><strong>3. Saang lalawigan nakatira ang karamihan ng mga Kapampangan?</strong></p>
+<p>a. Mountain Province<br />
+b. Palawan<br />
+c. Pampanga<br />
+d. Sulu</p>
+<p><strong>4. Aling pangkat ang kilala sa mga disenyong <em>sarimanok</em> at <em>okir</em>?</strong></p>
+<p>a. Badjao<br />
+b. Maguindanao<br />
+c. Maranao<br />
+d. Tausug</p>
+<p><strong>5. Aling pangkat etnolingguwistiko ang nagpalaganap ng sistema ng pagsulat na baybayin?</strong></p>
+<p>a. Bikolano<br />
+b. Mangyan<br />
+c. Tagalog<br />
+d. Waray</p>
+<p><strong>6. Alin ang may kaugnayan sa mga Ilokano?</strong></p>
+<p>a. bahag<br />
+b. basi<br />
+c. sea gypsies<br />
+d. vakul</p>
+<p><strong>7. Saan matatagpuan ang mga Mangyan?</strong></p>
+<p>a. Bulacan<br />
+b. Cotabato<br />
+c. Davao<br />
+d. Mindoro</p>
+<p><strong>8. Aling pangkat ang matatagpuan sa Visayas?</strong></p>
+<p>a. Dumagat<br />
+b. Ilonggo<br />
+c. Ivatan<br />
+d. Tingguian</p>
+<p><strong>9. Anong pananampalataya ang naniniwala sa mga espiritu ng kalikasan?</strong></p>
+<p>a. Animismo<br />
+b. Islam<br />
+c. Kristiyanismo<br />
+d. Protestantismo</p>
+<p><strong>10. Saang lalawigan matatagpuan ang mga Hamtikanon?</strong></p>
+<p>a. Antique<br />
+b. Misamis Occidental<br />
+c. Palawan<br />
+d. Zamboanga</p>
+<h3 class="doc-heading">Tamang Sagot</h3>
+<ol type="1">
+<li><p><strong>D. mandirigma</strong></p></li>
+<li><p><strong>C. T’boli</strong></p></li>
+<li><p><strong>C. Pampanga</strong></p></li>
+<li><p><strong>C. Maranao</strong></p></li>
+<li><p><strong>B. Mangyan</strong></p></li>
+<li><p><strong>B. basi</strong></p></li>
+<li><p><strong>D. Mindoro</strong></p></li>
+<li><p><strong>B. Ilonggo</strong></p></li>
+<li><p><strong>A. Animismo</strong></p></li>
+<li><p><strong>A. Antique</strong></p></li>
+</ol>
+<p><strong>A. Gumuhit ng puso (♡) sa patlang kung ang pangungusap ay nagpapahiwatig ng mabuting asal ng isang Pilipino.</strong></p>
+<h3 class="doc-heading">Ang mabuting Pilipino ay…</h3>
+<ol type="1">
+<li><p>______ nagbigay-galang sa kapwa Pilipino, bata man o matanda.</p></li>
+<li><p>______ ipinagmamalaki sa mga dayuhang kaibigan ang kagandahan ng Pilipinas.</p></li>
+<li><p>______ bumibili at gumagamit ng mga kagamitang Pilipino.</p></li>
+<li><p>______ kumakanta ng pambansang awit nang buong katapatan.</p></li>
+<li><p>______ nanunukso ng mga Pilipinong may kakaibang punto sa pananalita.</p></li>
+<li><p>______ may paggalang sa iba't ibang pangkat etnolingguwistiko.</p></li>
+<li><p>______ nahihiyang magsuot ng bahag.</p></li>
+<li><p>______ mas mahilig sa mga dayuhang produkto kaysa mga lokal na produkto.</p></li>
+<li><p>______ nanghuhusga sa tradisyonal na kasuotan ng ibang pangkat etnolingguwistiko.</p></li>
+<li><p>______ masaya sa pagkakaroon ng balat na kulay kayumanggi.</p></li>
+</ol>
+<h3 class="doc-heading">Answers</h3>
+<table style="width:98%;">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 13%" />
+<col style="width: 73%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>#</strong></th>
+<th style="text-align: left;"><strong>Sagot</strong></th>
+<th style="text-align: left;"><strong>Dahilan</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>1</strong></td>
+<td style="text-align: left;">❤️ N</td>
+<td style="text-align: left;">agpapakita ng paggalang sa kapwa.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>2</strong></td>
+<td style="text-align: left;">❤️ I</td>
+<td style="text-align: left;">pinagmamalaki ang kagandahan ng Pilipinas.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>3</strong></td>
+<td style="text-align: left;">❤️ S</td>
+<td style="text-align: left;">inusuportahan ang mga produktong Pilipino.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>4</strong></td>
+<td style="text-align: left;">❤️ N</td>
+<td style="text-align: left;">agpapakita ng pagmamahal at katapatan sa bansa.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>5</strong></td>
+<td style="text-align: left;">❌</td>
+<td style="text-align: left;">Ang panunukso sa paraan ng pagsasalita ay hindi mabuting asal.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>6</strong></td>
+<td style="text-align: left;">❤️ N</td>
+<td style="text-align: left;">agpapakita ng paggalang sa iba't ibang pangkat.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>7</strong></td>
+<td style="text-align: left;">❌</td>
+<td style="text-align: left;">Hindi ito nagpapakita ng pagtanggap sa tradisyonal na kasuotan.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>8</strong></td>
+<td style="text-align: left;">❌</td>
+<td style="text-align: left;">Mas mainam na tangkilikin din ang mga lokal na produkto.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>9</strong></td>
+<td style="text-align: left;">❌</td>
+<td style="text-align: left;">Hindi mabuting asal ang panghuhusga sa kultura ng iba.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>10</strong></td>
+<td style="text-align: left;">❤️ N</td>
+<td style="text-align: left;">agpapakita ng pagtanggap at pagmamalaki sa sariling kulay at pagkakakilanlan.</td>
+</tr>
+</tbody>
+</table>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ── Hidden Print Area (Practice Test + Answer Key) ── -->
+<div id="print-area">
+<div class="p-cover"><div class="p-icon">🎎</div><h1>AP 5 — Mga Pangkat sa Visayas at Mindanao Practice Test</h1><div class="p-sub">Mga Pangkat sa Visayas · Muslim · Kristiyano · Lumad · IPRA</div>
+<div class="p-info-box"><div><strong>Pangalan:</strong> _____________________________________</div><div><strong>Baitang/Pangkat:</strong> ___________________ &nbsp; <strong>Petsa:</strong> ___________________</div><div><strong>Iskor:</strong> _______ / 70</div></div>
+<div class="p-instructions"><strong>Panuto:</strong> Basahing mabuti ang bawat aytem. Isulat ang sagot sa patlang (Bahagi I, III, IV, V), piliin ang tamang letra (Bahagi II), o sagutin sa buong pangungusap (Bahagi VI). Good luck!</div></div><h2 class="p-part-title">Bahagi I — Pagtambalin: Aling Pangkat Ito?</h2><div class="p-bank"><strong>Hanay B:</strong> Tagalog &middot; Ivatan &middot; Hanunoo &middot; Igorot &middot; Ifugao &middot; Ilonggo &middot; Bikolano &middot; Badjao &middot; Ilokano &middot; Kalinga &middot; Muslim</div><div class="p-q"><b>1.</b> Paglilibing ng mga bangkay sa dalisdis ng bundok. <span class="p-blank"></span></div><div class="p-q"><b>2.</b> "Sea gypsies." <span class="p-blank"></span></div><div class="p-q"><b>3.</b> Epikong Biag ni Lam-ang. <span class="p-blank"></span></div><div class="p-q"><b>4.</b> Paggamit ng "po" at "opo" sa pakikipag-usap sa mga nakatatanda. <span class="p-blank"></span></div><div class="p-q"><b>5.</b> Nakilala bilang mga "mamumugot" ng hilagang Pilipinas. <span class="p-blank"></span></div><div class="p-q"><b>6.</b> Kilala sa kanilang malumanay na pananalita. <span class="p-blank"></span></div><div class="p-q"><b>7.</b> Paggamit ng vakul. <span class="p-blank"></span></div><div class="p-q"><b>8.</b> Gumagamit ng Surat Mangyan. <span class="p-blank"></span></div><div class="p-q"><b>9.</b> Ang kanilang mga ninuno ang umukit ng Hagdan-hagdang Palayan. <span class="p-blank"></span></div><div class="p-q"><b>10.</b> Kilala sa kanilang maaanghang na pagkain na may gata ng niyog. <span class="p-blank"></span></div><div class="p-break"></div><h2 class="p-part-title">Bahagi II — Piliin ang Tamang Sagot</h2><div class="p-q"><b>11.</b> Ano ang ibig sabihin ng ranggong "magani" sa pangkat ng mga Bagobo?<br><span class="p-opt">a) guwapo</span><span class="p-opt">b) manggagamot</span><span class="p-opt">c) mayamang pinuno</span><span class="p-opt">d) mandirigma</span></div><div class="p-q"><b>12.</b> Napapabilang sa anong pangkat ang mga "dream weaver"?<br><span class="p-opt">a) Bagobo</span><span class="p-opt">b) Maguindanao</span><span class="p-opt">c) T'boli</span><span class="p-opt">d) Tiruray</span></div><div class="p-q"><b>13.</b> Saang lalawigan nakatira ang karamihan ng mga Kapampangan?<br><span class="p-opt">a) Mountain Province</span><span class="p-opt">b) Palawan</span><span class="p-opt">c) Pampanga</span><span class="p-opt">d) Sulu</span></div><div class="p-q"><b>14.</b> Aling pangkat ang kilala sa mga disenyong sarimanok at okir?<br><span class="p-opt">a) Badjao</span><span class="p-opt">b) Maguindanao</span><span class="p-opt">c) Maranao</span><span class="p-opt">d) Tausug</span></div><div class="p-q"><b>15.</b> Aling pangkat etnolingguwistiko ang pinagmulan ng sistema ng pagsulat na baybayin?<br><span class="p-opt">a) Bikolano</span><span class="p-opt">b) Mangyan</span><span class="p-opt">c) Tagalog</span><span class="p-opt">d) Waray</span></div><div class="p-q"><b>16.</b> Alin ang may kaugnayan sa mga Ilokano?<br><span class="p-opt">a) bahag</span><span class="p-opt">b) basi</span><span class="p-opt">c) sea gypsies</span><span class="p-opt">d) vakul</span></div><div class="p-q"><b>17.</b> Saan matatagpuan ang mga Mangyan?<br><span class="p-opt">a) Bulacan</span><span class="p-opt">b) Cotabato</span><span class="p-opt">c) Davao</span><span class="p-opt">d) Mindoro</span></div><div class="p-q"><b>18.</b> Aling pangkat ang matatagpuan sa Visayas?<br><span class="p-opt">a) Dumagat</span><span class="p-opt">b) Ilonggo</span><span class="p-opt">c) Ivatan</span><span class="p-opt">d) Tingguian</span></div><div class="p-q"><b>19.</b> Anong pananampalataya ang naniniwala sa mga espiritu ng kalikasan?<br><span class="p-opt">a) Animismo</span><span class="p-opt">b) Islam</span><span class="p-opt">c) Kristiyanismo</span><span class="p-opt">d) Protestantismo</span></div><div class="p-q"><b>20.</b> Saang lalawigan matatagpuan ang mga Hamtiknon (Hamtikanon)?<br><span class="p-opt">a) Antique</span><span class="p-opt">b) Misamis Occidental</span><span class="p-opt">c) Palawan</span><span class="p-opt">d) Zamboanga</span></div><div class="p-break"></div><h2 class="p-part-title">Bahagi III — Mga Pangkat sa Visayas at Mindanao</h2><div class="p-bank"><strong>Word Bank:</strong> Tausug &middot; Maguindanao &middot; Maranao &middot; Badjao &middot; T'boli &middot; Bagobo &middot; Subanen &middot; Blaan &middot; Mansaka &middot; Sulod &middot; Ilonggo &middot; Kinaray-a &middot; Abaknon &middot; Aklanon &middot; Cebuano</div><div class="p-q"><b>21.</b> Ikalawang pinakamalaking pangkat ng mga Muslim; kilala sa sayaw na Pangalay. <span class="p-blank"></span></div><div class="p-q"><b>22.</b> Pinakamalaking pangkat ng mga Muslim; kilala sa kutyapi, kulintang, at pastil. <span class="p-blank"></span></div><div class="p-q"><b>23.</b> Kilala sa torogan, epikong Darangen, at sayaw na Singkil. <span class="p-blank"></span></div><div class="p-q"><b>24.</b> "Taong nasa dagat"; gumagamit ng vinta at nakatira sa sakayan. <span class="p-blank"></span></div><div class="p-q"><b>25.</b> Naghahabi ng t'nalak mula sa abaka at tinatawag na "dream weavers." <span class="p-blank"></span></div><div class="p-q"><b>26.</b> May ranggong "magani" at pulang kasuotan para sa mandirigma. <span class="p-blank"></span></div><div class="p-q"><b>27.</b> Kilala sa epikong Guman, Ag Tobig Nog Keboklagan, at Sandayo. <span class="p-blank"></span></div><div class="p-q"><b>28.</b> Mahusay sa paghahabi ng tabih na gawa sa abaka. <span class="p-blank"></span></div><div class="p-q"><b>29.</b> Ang kanilang mga ritwal ay pinangungunahan ng isang baylan; pagsasaka at pagmimina ang kabuhayan. <span class="p-blank"></span></div><div class="p-q"><b>30.</b> Epiko nina Labaw Donggon at Nagmalitong Yawa na naipapasa nang pasalita. <span class="p-blank"></span></div><div class="p-q"><b>31.</b> Ipinagdiriwang ang Dinagyang sa Iloilo at MassKara sa Negros Occidental. <span class="p-blank"></span></div><div class="p-q"><b>32.</b> Ang mga taga-Antique ay tinatawag na Hamtiknon. <span class="p-blank"></span></div><div class="p-q"><b>33.</b> Nakatira sa isla ng Capul sa Samar; ang wika ay nauugnay sa mga wika ng Sama ng Sulu at Tawi-Tawi. <span class="p-blank"></span></div><div class="p-q"><b>34.</b> May wikang Malaynon bilang dayalekto; matatagpuan sa Aklan. <span class="p-blank"></span></div><div class="p-q"><b>35.</b> May matinding pananalig sa Santo Niño; kilala sa Sinulog Festival at sa paggawa ng gitara. <span class="p-blank"></span></div><div class="p-break"></div><h2 class="p-part-title">Bahagi IV — Tama o Mali</h2><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>36.</b> Ang katangiang heograpikal ng Pilipinas ay may kinalaman sa pagkakabuo ng kultura ng iba't ibang pangkat etnolingguwistiko rito.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>37.</b> Cebuano ang pangunahing wikang ginagamit ng mga pangkat etnolingguwistiko sa bansa.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>38.</b> Tinatayang mahigit sa 180 ang mga pangkat etnolingguwistikong naninirahan sa bansa.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>39.</b> Kilala ang mga Kapampangan sa paggawa ng magagandang parol.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>40.</b> Islam lamang ang relihiyon ng lahat ng pangkat sa Mindanao.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>41.</b> Ang Ifugao, Bontoc, Kalinga, Kankanaey, Isneg, Ibaloi, at Tingguian ay kabilang sa pangkat na Mangyan.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>42.</b> Lahat ng Pilipino ay may pare-parehong wika, pamumuhay, at tradisyon.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>43.</b> Ang mga pangkat sa Pilipinas ay may kani-kaniyang ritwal.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>44.</b> Lahat ng katutubong pangkat ay naniniwala sa animismo.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>45.</b> Pagsasaka ang pangunahing ikinabubuhay ng lahat ng pangkat etnolingguwistiko sa Pilipinas.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>46.</b> Bisaya ang wika ng lahat ng mamamayan sa rehiyon ng Visayas.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>47.</b> Karamihan sa mga Pilipino ay Katoliko.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>48.</b> Pinananatili ng mga pangkat etnolingguwistiko sa bansa ang kanilang namanang kultura mula sa mga ninuno.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>49.</b> Ang mga Tausug ang pinakamalaking pangkat ng mga Muslim sa Mindanao.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>50.</b> Lumad ang tawag sa mga katutubong pangkat sa Mindanao na hindi naimpluwensiyahan ng mga Kristiyano at Muslim.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>51.</b> Ang Sinulog Festival sa Cebu ay pagpupugay sa Santo Niño.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>52.</b> Ang Hinilawod ay epiko ng mga Maranao.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>53.</b> Ang pangalang Sulod ay nangangahulugang "loob" o "looban."</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>54.</b> Ang mga Maranao ang pinakamalaking pangkat ng mga Muslim sa Mindanao.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>55.</b> Kilala ang mga T'boli sa paghahabi ng t'nalak mula sa abaka.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>56.</b> Tinaguriang "sea gypsies" ang mga Badjao.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>57.</b> Noong 1997, ipinasa ang Indigenous People's Rights Act na kumikilala sa mga karapatan ng mga katutubong pangkat.</div><div class="p-break"></div><h2 class="p-part-title">Bahagi V — Mabuting Asal ng Pilipino (♡ o ✗)</h2><div class="p-bank">Ang mabuting Pilipino ay...</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>58.</b> Nagbigay-galang sa kapwa Pilipino, bata man o matanda.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>59.</b> Ipinagmamalaki sa mga dayuhang kaibigan ang kagandahan ng Pilipinas.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>60.</b> Bumibili at gumagamit ng mga kagamitang Pilipino.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>61.</b> Kumakanta ng pambansang awit nang buong katapatan.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>62.</b> Nanunukso ng mga Pilipinong may kakaibang punto sa pananalita.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>63.</b> May paggalang sa iba't ibang pangkat etnolingguwistiko.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>64.</b> Nahihiyang magsuot ng bahag.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>65.</b> Mas mahilig sa mga dayuhang produkto kaysa mga lokal na produkto.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>66.</b> Nanghuhusga sa tradisyonal na kasuotan ng ibang pangkat etnolingguwistiko.</div><div class="p-q"><span class="p-blank" style="min-width:40px"></span> <b>67.</b> Masaya sa pagkakaroon ng balat na kulay kayumanggi.</div><h2 class="p-part-title">Bahagi VI — Maikling Sagot</h2><div class="p-q"><b>68.</b> Ano ang tatlong pangkat sa Mindanao batay sa paniniwala o relihiyon?<br><br>_________________________________________________<br><br>_________________________________________________</div><div class="p-q"><b>69.</b> Ano ang Indigenous People's Rights Act (IPRA)?<br><br>_________________________________________________<br><br>_________________________________________________</div><div class="p-q"><b>70.</b> Ibigay ang tatlong pinakamalaking pangkat ng mga Muslim sa Mindanao ayon sa laki, mula una hanggang ikatlo.<br><br>_________________________________________________<br><br>_________________________________________________</div><div class="p-break"></div><h2 class="p-part-title">✅ Kumpletong Susi sa Pagwawasto</h2><div class="p-key-part-title">Bahagi I — Pagtambalin</div><div class="p-key-grid"><div class="p-key-pill">1. <b>Igorot</b></div><div class="p-key-pill">2. <b>Badjao</b></div><div class="p-key-pill">3. <b>Ilokano</b></div><div class="p-key-pill">4. <b>Tagalog</b></div><div class="p-key-pill">5. <b>Kalinga</b></div><div class="p-key-pill">6. <b>Ilonggo</b></div><div class="p-key-pill">7. <b>Ivatan</b></div><div class="p-key-pill">8. <b>Hanunoo</b></div><div class="p-key-pill">9. <b>Ifugao</b></div><div class="p-key-pill">10. <b>Bikolano</b></div></div><div class="p-key-part-title">Bahagi II — Tamang Sagot</div><div class="p-key-grid"><div class="p-key-pill">11. <b>mandirigma</b></div><div class="p-key-pill">12. <b>T'boli</b></div><div class="p-key-pill">13. <b>Pampanga</b></div><div class="p-key-pill">14. <b>Maranao</b></div><div class="p-key-pill">15. <b>Tagalog</b></div><div class="p-key-pill">16. <b>basi</b></div><div class="p-key-pill">17. <b>Mindoro</b></div><div class="p-key-pill">18. <b>Ilonggo</b></div><div class="p-key-pill">19. <b>Animismo</b></div><div class="p-key-pill">20. <b>Antique</b></div></div><div class="p-key-part-title">Bahagi III — Mga Pangkat</div><div class="p-key-grid"><div class="p-key-pill">21. <b>Tausug</b></div><div class="p-key-pill">22. <b>Maguindanao</b></div><div class="p-key-pill">23. <b>Maranao</b></div><div class="p-key-pill">24. <b>Badjao</b></div><div class="p-key-pill">25. <b>T'boli</b></div><div class="p-key-pill">26. <b>Bagobo</b></div><div class="p-key-pill">27. <b>Subanen</b></div><div class="p-key-pill">28. <b>Blaan</b></div><div class="p-key-pill">29. <b>Mansaka</b></div><div class="p-key-pill">30. <b>Sulod</b></div><div class="p-key-pill">31. <b>Ilonggo</b></div><div class="p-key-pill">32. <b>Kinaray-a</b></div><div class="p-key-pill">33. <b>Abaknon</b></div><div class="p-key-pill">34. <b>Aklanon</b></div><div class="p-key-pill">35. <b>Cebuano</b></div></div><div class="p-key-part-title">Bahagi IV — Tama o Mali</div><div class="p-key-grid"><div class="p-key-pill">36. <b>TAMA</b></div><div class="p-key-pill">37. <b>MALI</b></div><div class="p-key-pill">38. <b>TAMA</b></div><div class="p-key-pill">39. <b>TAMA</b></div><div class="p-key-pill">40. <b>MALI</b></div><div class="p-key-pill">41. <b>MALI</b></div><div class="p-key-pill">42. <b>MALI</b></div><div class="p-key-pill">43. <b>TAMA</b></div><div class="p-key-pill">44. <b>MALI</b></div><div class="p-key-pill">45. <b>MALI</b></div><div class="p-key-pill">46. <b>MALI</b></div><div class="p-key-pill">47. <b>TAMA</b></div><div class="p-key-pill">48. <b>TAMA</b></div><div class="p-key-pill">49. <b>MALI</b></div><div class="p-key-pill">50. <b>TAMA</b></div><div class="p-key-pill">51. <b>TAMA</b></div><div class="p-key-pill">52. <b>MALI</b></div><div class="p-key-pill">53. <b>TAMA</b></div><div class="p-key-pill">54. <b>MALI</b></div><div class="p-key-pill">55. <b>TAMA</b></div><div class="p-key-pill">56. <b>TAMA</b></div><div class="p-key-pill">57. <b>TAMA</b></div></div><div class="p-key-part-title">Bahagi V — Mabuting Asal</div><div class="p-key-grid"><div class="p-key-pill">58. <b>♡</b></div><div class="p-key-pill">59. <b>♡</b></div><div class="p-key-pill">60. <b>♡</b></div><div class="p-key-pill">61. <b>♡</b></div><div class="p-key-pill">62. <b>✗</b></div><div class="p-key-pill">63. <b>♡</b></div><div class="p-key-pill">64. <b>✗</b></div><div class="p-key-pill">65. <b>✗</b></div><div class="p-key-pill">66. <b>✗</b></div><div class="p-key-pill">67. <b>♡</b></div></div><div class="p-key-part-title">Bahagi VI — Maikling Sagot (mga halimbawang sagot)</div><div class="p-q"><b>68.</b> Muslim, Kristiyano, at Lumad.</div><div class="p-q"><b>69.</b> Isang batas na ipinasa noong 1997 na kumikilala sa mga karapatan ng mga katutubong pangkat, kabilang ang karapatang pangalagaan ang kanilang lupaing ninuno (ancestral domain).</div><div class="p-q"><b>70.</b> Maguindanao (una), Tausug (ikalawa), at Maranao (ikatlo).</div>
+</div>
+
+</body>
+</html>
