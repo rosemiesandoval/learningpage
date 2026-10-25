@@ -1,0 +1,2155 @@
+<!DOCTYPE html>
+<html lang="tl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🌴 AP: Pinagkukunan-Yaman Reviewer 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --gold: #f59e0b;
+  --gold-dark: #b45309;
+  --blue: #3b82f6;
+  --blue-dark: #1d4ed8;
+  --red: #ef4444;
+  --green: #22c55e;
+  --bg: #0c1a0e;
+  --surface: #132015;
+  --surface2: #1a2e1d;
+  --text: #f0fdf4;
+  --muted: #86efac;
+  --border: #166534;
+}
+
+body {
+  font-family: 'Baloo 2', cursive;
+  background: var(--bg);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--text);
+  background-image:
+    radial-gradient(ellipse at 10% 30%, rgba(245,158,11,.06) 0%, transparent 55%),
+    radial-gradient(ellipse at 90% 70%, rgba(59,130,246,.06) 0%, transparent 55%);
+}
+
+header {
+  width: 100%;
+  background: linear-gradient(135deg, #14532d, #1e3a5f);
+  border-bottom: 2px solid var(--gold-dark);
+  padding: 13px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 4px 30px rgba(0,0,0,.5);
+}
+.header-icon { font-size: 2rem; animation: float 3s ease-in-out infinite; }
+@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
+
+header h1 {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.45rem;
+  background: linear-gradient(90deg, var(--gold), #fde68a, var(--gold));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+header .sub { font-size: .72rem; color: var(--muted); margin-top: 1px; }
+
+.header-controls { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+.score-pill {
+  background: rgba(245,158,11,.15);
+  border: 1px solid rgba(245,158,11,.4);
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-weight: 800;
+  font-size: .85rem;
+  color: var(--gold);
+}
+.audio-btn {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  background: var(--surface2);
+  color: var(--text);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all .2s;
+  display: flex; align-items: center; justify-content: center;
+}
+.audio-btn:hover, .audio-btn.active { background: #14532d; border-color: var(--gold); }
+
+.chat-wrap {
+  width: 100%; max-width: 700px; flex: 1;
+  display: flex; flex-direction: column;
+  padding: 16px 14px 0;
+}
+
+#chat-box {
+  flex: 1; overflow-y: auto;
+  display: flex; flex-direction: column;
+  gap: 14px; padding-bottom: 10px;
+  max-height: calc(100vh - 200px);
+  scroll-behavior: smooth;
+}
+#chat-box::-webkit-scrollbar { width: 4px; }
+#chat-box::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+.msg { display: flex; gap: 8px; }
+.msg.user { flex-direction: row-reverse; }
+
+.avatar {
+  width: 34px; height: 34px; border-radius: 50%;
+  font-size: 1rem; display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 2px;
+}
+.msg.bot .avatar { background: linear-gradient(135deg, #14532d, #1e3a5f); border: 1.5px solid rgba(245,158,11,.4); }
+.msg.user .avatar { background: linear-gradient(135deg, #1e3a5f, #14532d); border: 1.5px solid rgba(59,130,246,.3); }
+
+.bubble {
+  max-width: 80%;
+  padding: 11px 16px;
+  border-radius: 18px;
+  font-size: .9rem;
+  line-height: 1.65;
+  animation: pop .22s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes pop { from{transform:scale(.88) translateY(6px);opacity:0} to{transform:scale(1) translateY(0);opacity:1} }
+
+.msg.bot .bubble {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-bottom-left-radius: 5px;
+}
+.msg.user .bubble {
+  background: linear-gradient(135deg, #1e3a5f, var(--blue-dark));
+  border-bottom-right-radius: 5px;
+}
+
+/* chips */
+.chip {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: rgba(245,158,11,.12);
+  border: 1.5px solid rgba(245,158,11,.4);
+  color: var(--gold);
+  border-radius: 30px;
+  padding: 5px 13px; margin: 5px 4px 0 0;
+  font-size: .8rem; font-weight: 700;
+  cursor: pointer; transition: all .15s;
+  user-select: none; font-family: 'Baloo 2', cursive;
+}
+.chip:hover {
+  background: var(--gold-dark); color: white;
+  border-color: var(--gold);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(245,158,11,.3);
+}
+
+/* topic tag */
+.topic-tag {
+  display: inline-block;
+  background: linear-gradient(135deg, #14532d, #166534);
+  border: 1px solid var(--gold-dark);
+  color: var(--gold);
+  font-size: .68rem; font-weight: 800;
+  border-radius: 20px; padding: 2px 10px;
+  margin-bottom: 5px; letter-spacing: .5px;
+  text-transform: uppercase;
+}
+
+/* multiple choice */
+.mc-options { display: flex; flex-direction: column; gap: 7px; margin-top: 10px; width: 100%; }
+.mc-btn {
+  display: flex; align-items: center; gap: 10px;
+  background: rgba(255,255,255,.03);
+  border: 1.5px solid var(--border);
+  border-radius: 12px; padding: 9px 14px;
+  color: var(--text); font-family: 'Baloo 2', cursive;
+  font-size: .87rem; font-weight: 600;
+  cursor: pointer; transition: all .15s; text-align: left; width: 100%;
+}
+.mc-btn:hover:not(:disabled) {
+  background: rgba(245,158,11,.12); border-color: var(--gold);
+  color: var(--gold); transform: translateX(3px);
+}
+.mc-btn .letter {
+  display: flex; align-items: center; justify-content: center;
+  width: 26px; height: 26px; border-radius: 8px;
+  background: rgba(245,158,11,.15); border: 1px solid rgba(245,158,11,.35);
+  color: var(--gold); font-size: .78rem; font-weight: 800;
+  flex-shrink: 0; transition: all .15s;
+}
+.mc-btn:hover:not(:disabled) .letter { background: var(--gold-dark); color: white; border-color: var(--gold-dark); }
+.mc-btn.correct { background: rgba(34,197,94,.15)!important; border-color: #22c55e!important; color: #22c55e!important; cursor: default; }
+.mc-btn.correct .letter { background: #22c55e!important; color: white!important; border-color: #22c55e!important; }
+.mc-btn.wrong { background: rgba(239,68,68,.12)!important; border-color: #ef4444!important; color: #ef4444!important; cursor: default; }
+.mc-btn.wrong .letter { background: #ef4444!important; color: white!important; border-color: #ef4444!important; }
+.mc-btn:disabled { cursor: default; transform: none!important; }
+
+/* speaker wave */
+.speaker-wave {
+  display: inline-flex; align-items: flex-end;
+  gap: 2px; height: 14px; margin-left: 6px; vertical-align: middle;
+}
+.speaker-wave span {
+  display: block; width: 3px; border-radius: 2px;
+  background: var(--gold); animation: wave 1s ease-in-out infinite;
+}
+.speaker-wave span:nth-child(1){height:4px;animation-delay:0s}
+.speaker-wave span:nth-child(2){height:10px;animation-delay:.1s}
+.speaker-wave span:nth-child(3){height:6px;animation-delay:.2s}
+.speaker-wave span:nth-child(4){height:12px;animation-delay:.15s}
+.speaker-wave span:nth-child(5){height:4px;animation-delay:.05s}
+@keyframes wave{0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.8)}}
+
+/* typing */
+.typing {
+  display: flex; gap: 4px; padding: 12px 16px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 18px; border-bottom-left-radius: 5px; width: fit-content;
+}
+.dot { width: 7px; height: 7px; border-radius: 50%; background: var(--gold); animation: bounce .9s infinite; }
+.dot:nth-child(2){animation-delay:.15s} .dot:nth-child(3){animation-delay:.3s}
+@keyframes bounce{0%,80%,100%{transform:translateY(0);opacity:.6}40%{transform:translateY(-7px);opacity:1}}
+
+/* input bar */
+.input-bar {
+  width: 100%; max-width: 700px;
+  padding: 10px 14px 18px;
+  display: flex; gap: 8px;
+  background: var(--bg); position: sticky; bottom: 0;
+}
+#user-input {
+  flex: 1; padding: 12px 18px;
+  border: 2px solid var(--border); border-radius: 30px;
+  font-family: 'Baloo 2', cursive; font-size: .92rem;
+  outline: none; background: var(--surface); color: var(--text);
+  transition: border-color .2s, box-shadow .2s;
+}
+#user-input::placeholder { color: var(--muted); }
+#user-input:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(245,158,11,.12); }
+
+#send-btn {
+  width: 48px; height: 48px; border-radius: 50%; border: none;
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  color: white; font-size: 1.1rem; cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 3px 14px rgba(245,158,11,.4); flex-shrink: 0;
+}
+#send-btn:hover { transform: scale(1.08); box-shadow: 0 5px 20px rgba(245,158,11,.55); }
+#send-btn:disabled { opacity: .5; transform: none; }
+
+/* result modal */
+.result-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.75); backdrop-filter: blur(6px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 100; opacity: 0; pointer-events: none; transition: opacity .3s;
+}
+.result-overlay.show { opacity: 1; pointer-events: all; }
+.result-card {
+  background: linear-gradient(135deg, #132015, #0c1a0e);
+  border: 2px solid var(--gold-dark);
+  border-radius: 24px; padding: 36px 40px;
+  text-align: center; max-width: 380px; width: 90%;
+  box-shadow: 0 20px 60px rgba(0,0,0,.6);
+  transform: scale(.9); transition: transform .3s cubic-bezier(.34,1.56,.64,1);
+}
+.result-overlay.show .result-card { transform: scale(1); }
+.result-emoji { font-size: 4rem; margin-bottom: 12px; display: block; }
+.result-title {
+  font-family: 'Fredoka One', cursive; font-size: 1.7rem; margin-bottom: 6px;
+  background: linear-gradient(90deg, var(--gold), #fde68a);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.result-score { font-size: 3rem; font-weight: 900; margin: 10px 0; color: white; }
+.result-msg { color: var(--muted); font-size: .9rem; margin-bottom: 22px; }
+.result-btn {
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  border: none; border-radius: 30px; padding: 12px 30px;
+  color: white; font-family: 'Baloo 2', cursive; font-weight: 800;
+  font-size: 1rem; cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+  box-shadow: 0 4px 16px rgba(245,158,11,.35);
+}
+.result-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 22px rgba(245,158,11,.5); }
+
+/* scenario card for identify questions */
+.scenario-card {
+  background: rgba(245,158,11,.07);
+  border: 1px solid rgba(245,158,11,.25);
+  border-radius: 12px; padding: 10px 14px;
+  margin: 8px 0 6px; font-style: italic;
+  font-size: .87rem; color: #fde68a; line-height: 1.5;
+}
+
+/* ── Notes Panel ─────────────────────────────────────────────── */
+.notes-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.78); backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 200; opacity: 0; pointer-events: none; transition: opacity .3s;
+}
+.notes-overlay.show { opacity: 1; pointer-events: all; }
+.notes-panel {
+  background: linear-gradient(160deg, #0c1a0e, #132015);
+  border: 2px solid var(--gold-dark);
+  border-radius: 20px;
+  width: 92%; max-width: 720px;
+  max-height: 88vh;
+  display: flex; flex-direction: column;
+  box-shadow: 0 24px 60px rgba(0,0,0,.7);
+  overflow: hidden;
+  transform: translateY(30px);
+  transition: transform .35s cubic-bezier(.34,1.2,.64,1);
+}
+.notes-overlay.show .notes-panel { transform: translateY(0); }
+.notes-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 22px; border-bottom: 1px solid var(--border);
+  background: linear-gradient(135deg, #14532d44, #1e3a5f44);
+}
+.notes-header h2 { font-family: 'Fredoka One', cursive; font-size: 1.3rem; color: var(--gold); }
+.notes-close {
+  width: 34px; height: 34px; border-radius: 50%;
+  border: 1.5px solid var(--border); background: var(--surface2);
+  color: var(--text); font-size: 1rem; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; transition: all .2s;
+}
+.notes-close:hover { background: #b91c1c; border-color: #ef4444; }
+.notes-body { overflow-y: auto; padding: 20px 22px; flex: 1; }
+.notes-body::-webkit-scrollbar { width: 4px; }
+.notes-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+.notes-topic { margin-bottom: 28px; }
+.notes-topic-title {
+  font-family: 'Fredoka One', cursive; font-size: 1.05rem;
+  color: var(--gold); margin-bottom: 10px;
+  padding-bottom: 6px; border-bottom: 1px solid var(--border);
+}
+.notes-item {
+  display: flex; gap: 10px; align-items: flex-start;
+  padding: 7px 0; border-bottom: 1px solid rgba(255,255,255,.04);
+  font-size: .87rem; line-height: 1.55;
+}
+.notes-item:last-child { border-bottom: none; }
+.notes-term { font-weight: 800; color: var(--gold); min-width: 150px; flex-shrink: 0; font-size: .84rem; }
+.notes-def { color: #d1fae5; }
+.notes-tabs {
+  display: flex; flex-wrap: wrap; gap: 8px; padding: 14px 22px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(0,0,0,.15);
+}
+.notes-tab {
+  padding: 12px 20px; border-radius: 10px;
+  border: 1.5px solid var(--border); 
+  background: rgba(255,255,255,.04); color: var(--muted);
+  font-family: 'Baloo 2', cursive; font-size: .9rem; font-weight: 700;
+  cursor: pointer; transition: all .15s; white-space: nowrap;
+  min-height: 48px; display: flex; align-items: center;
+}
+.notes-tab.active { background: var(--surface); color: var(--gold); border-color: var(--gold-dark); }
+.notes-tab:hover:not(.active) { color: var(--text); background: var(--surface2); }
+.notes-section { display: none; }
+.notes-section.active { display: block; }
+
+
+/* ── Print button in notes header ─────────────────────────────── */
+.notes-header-actions { display: flex; align-items: center; gap: 10px; }
+.print-btn {
+  display: flex; align-items: center; gap: 6px;
+  background: rgba(245,158,11,.12);
+  border: 1.5px solid rgba(245,158,11,.4);
+  color: var(--gold);
+  border-radius: 20px;
+  padding: 7px 14px;
+  font-family: 'Baloo 2', cursive;
+  font-size: .78rem;
+  font-weight: 800;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all .15s;
+}
+.print-btn:hover { background: var(--gold); color: #0c1a0e; border-color: var(--gold); }
+.print-btn.active { background: var(--gold); color: #0c1a0e; border-color: var(--gold); }
+
+/* ── On-screen Practice Test / Answer Key ─────────────────────── */
+.ptest-part-title {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1rem;
+  color: var(--gold);
+  margin: 22px 0 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+.ptest-part-title:first-child { margin-top: 0; }
+.ptest-q {
+  font-size: .87rem;
+  line-height: 1.6;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed rgba(255,255,255,.06);
+  color: #d1fae5;
+}
+.ptest-q b { color: var(--gold); }
+.ptest-q .opt { display: block; margin: 2px 0 2px 18px; color: #d1fae5; }
+.ptest-bank {
+  background: rgba(59,130,246,.08);
+  border: 1px solid rgba(59,130,246,.3);
+  border-radius: 10px;
+  padding: 10px 16px;
+  margin-bottom: 14px;
+  font-size: .82rem;
+  color: #dbeafe;
+  line-height: 1.6;
+}
+.key-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.key-pill {
+  background: rgba(245,158,11,.1);
+  border: 1px solid rgba(245,158,11,.25);
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: .78rem;
+  color: #fde68a;
+}
+.key-pill b { color: #34d399; }
+
+/* ── Print / Save-as-PDF styles ──────────────────────────────────
+   By default everything is hidden from print. When body carries
+   .printing-test, only #print-area (a light-themed clone of the
+   Practice Test + Answer Key) is shown, laid out for paper. ──── */
+@media print {
+  body * { visibility: hidden; }
+  #print-area, #print-area * { visibility: visible; }
+  #print-area {
+    display: block !important;
+    position: absolute; top: 0; left: 0; width: 100%;
+    background: #fff; color: #14290f;
+    font-family: 'Helvetica', Arial, sans-serif;
+    font-size: 10.5pt;
+    line-height: 1.5;
+  }
+  #print-area .p-cover { text-align: center; padding-top: 40px; }
+  #print-area .p-cover .p-icon { font-size: 34pt; }
+  #print-area .p-cover h1 { font-size: 19pt; color: #b45309; margin: 8px 0 4px; }
+  #print-area .p-cover .p-sub { font-size: 10.5pt; color: #166534; margin-bottom: 20px; }
+  #print-area .p-info-box {
+    border: 1.5px solid #fcd34d; border-radius: 10px;
+    max-width: 460px; margin: 0 auto 20px; padding: 14px 20px;
+    text-align: left; font-size: 10pt;
+  }
+  #print-area .p-info-box div { margin: 6px 0; border-bottom: 1px dotted #fde68a; padding-bottom: 6px; }
+  #print-area .p-instructions {
+    max-width: 460px; margin: 0 auto; text-align: left;
+    background: #fffbeb; border: 1px solid #fcd34d; border-radius: 10px;
+    padding: 12px 18px; font-size: 9.5pt; color: #78350f;
+  }
+  #print-area h2.p-part-title {
+    font-size: 12.5pt; color: #fff;
+    background: linear-gradient(135deg, #b45309, #14532d) !important;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    padding: 6px 12px; border-radius: 7px; margin: 18px 0 10px;
+    page-break-after: avoid;
+  }
+  #print-area .p-bank {
+    background: #f0fdf4 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    border: 1px solid #86efac; border-radius: 8px; padding: 8px 14px;
+    margin-bottom: 12px; font-size: 9.5pt; color: #14532d;
+  }
+  #print-area .p-q {
+    margin-bottom: 8px; padding-bottom: 8px;
+    border-bottom: 1px dotted #fde68a; font-size: 10pt;
+    page-break-inside: avoid; color: #14290f;
+  }
+  #print-area .p-q b { color: #b45309; }
+  #print-area .p-q .p-blank { display: inline-block; min-width: 65px; border-bottom: 1px solid #64748b; }
+  #print-area .p-q .p-opt { display: block; margin: 2px 0 0 20px; color: #365314; }
+  #print-area .p-break { page-break-before: always; }
+  #print-area .p-key-part-title {
+    font-size: 11pt; color: #b45309; font-weight: bold;
+    margin: 14px 0 8px; border-bottom: 2px solid #b45309; padding-bottom: 4px;
+  }
+  #print-area .p-key-grid {
+    display: grid; grid-template-columns: repeat(5, 1fr);
+    gap: 5px 8px; margin-bottom: 14px;
+  }
+  #print-area .p-key-pill {
+    background: #f0fdf4 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    border: 1px solid #86efac; border-radius: 6px;
+    padding: 4px 8px; font-size: 8.5pt; color: #166534;
+  }
+  #print-area .p-key-pill b { color: #b45309; }
+  @page { size: letter; margin: 1.5cm 1.8cm; }
+}
+#print-area { display: none; }
+
+
+/* ── Chapter Summary / Tandaan / Memory boxes (fix: previously missing) ── */
+.chapter-summary {
+  background: linear-gradient(135deg, rgba(59,130,246,.1), rgba(34,197,94,.08));
+  border: 1px solid rgba(59,130,246,.25);
+  border-left: 4px solid var(--blue);
+  border-radius: 12px;
+  padding: 14px 18px;
+  margin-bottom: 18px;
+  font-size: .88rem;
+  line-height: 1.65;
+  color: #dbeafe;
+}
+.tandaan-box {
+  background: rgba(245,158,11,.08);
+  border: 1px solid rgba(245,158,11,.3);
+  border-left: 4px solid var(--gold);
+  border-radius: 12px;
+  padding: 12px 18px;
+  margin: 14px 0;
+  font-size: .86rem;
+  line-height: 1.6;
+  color: #fde68a;
+}
+.tandaan-label {
+  display: block;
+  font-family: 'Baloo 2', cursive;
+  font-size: .8rem;
+  color: var(--gold);
+  letter-spacing: .5px;
+  margin-bottom: 5px;
+}
+.memory-box {
+  background: rgba(34,197,94,.08);
+  border: 1px solid rgba(34,197,94,.3);
+  border-left: 4px solid var(--green);
+  border-radius: 12px;
+  padding: 12px 18px;
+  margin: 14px 0 22px;
+  font-size: .86rem;
+  line-height: 1.6;
+  color: #bbf7d0;
+}
+.memory-label {
+  display: block;
+  font-family: 'Baloo 2', cursive;
+  font-size: .8rem;
+  color: var(--green);
+  letter-spacing: .5px;
+  margin-bottom: 5px;
+}
+.compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0 20px;
+  font-size: .82rem;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.compare-table th {
+  background: linear-gradient(135deg, var(--blue-dark), var(--gold-dark));
+  color: white;
+  text-align: left;
+  padding: 9px 12px;
+  font-size: .78rem;
+  text-transform: uppercase;
+  letter-spacing: .4px;
+}
+.compare-table td {
+  padding: 9px 12px;
+  border-top: 1px solid var(--border);
+  color: var(--text);
+  vertical-align: top;
+}
+.compare-table tr:nth-child(even) td { background: rgba(255,255,255,.02); }
+
+/* ── Story Box (for reading Bible stories aloud) ─────────────────── */
+.story-box {
+  background: rgba(255,255,255,.03);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px 20px;
+  margin-bottom: 16px;
+  font-size: .92rem;
+  line-height: 1.8;
+  color: var(--text);
+}
+.story-box p { margin-bottom: 10px; }
+.story-box p:last-child { margin-bottom: 0; }
+.story-ref {
+  display: block;
+  text-align: right;
+  font-style: italic;
+  color: var(--muted);
+  font-size: .8rem;
+  margin-top: 10px;
+}
+.story-label {
+  display: block;
+  font-family: 'Baloo 2', cursive;
+  font-size: .9rem;
+  color: var(--gold);
+  letter-spacing: .5px;
+  margin-bottom: 10px;
+}
+/* ── Raw Notes (original document view) ──────────────────────── */
+.rawnotes-intro {
+  font-size: .82rem;
+  color: var(--muted);
+  line-height: 1.6;
+  background: rgba(59,130,246,.1);
+  border: 1px solid rgba(59,130,246,.3);
+  border-left: 4px solid var(--blue);
+  border-radius: 10px;
+  padding: 12px 18px;
+  margin-bottom: 20px;
+}
+.rawnotes-doc {
+  font-family: 'Lora', Georgia, serif;
+  line-height: 1.75;
+}
+.rawnotes-doc p {
+  font-size: .95rem;
+  margin-bottom: 14px;
+  color: #e2f5e6;
+}
+.rawnotes-doc strong { color: var(--gold); font-weight: 700; }
+.rawnotes-doc em { color: var(--muted); font-style: italic; }
+.rawnotes-doc h3.doc-heading {
+  font-family: 'Baloo 2', cursive;
+  font-size: 1.05rem;
+  color: var(--gold);
+  margin: 26px 0 12px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid var(--border);
+}
+.rawnotes-doc h3.doc-heading:first-child { margin-top: 0; }
+.rawnotes-doc ul, .rawnotes-doc ol {
+  margin: 0 0 14px 26px;
+  color: #e2f5e6;
+}
+.rawnotes-doc li { margin-bottom: 6px; font-size: .95rem; }
+.rawnotes-doc table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0 20px;
+  font-size: .82rem;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.rawnotes-doc th {
+  background: linear-gradient(135deg, var(--blue-dark), var(--gold-dark));
+  color: white;
+  text-align: left;
+  padding: 9px 12px;
+  font-size: .78rem;
+}
+.rawnotes-doc td {
+  padding: 9px 12px;
+  border-top: 1px solid var(--border);
+  color: var(--text);
+  vertical-align: top;
+}
+.rawnotes-doc tr:nth-child(even) td { background: rgba(255,255,255,.02); }
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE: TABLET (≤820px)
+   ═══════════════════════════════════════════════════════════════ */
+@media (max-width: 820px) {
+  .notes-panel { width: 95%; max-height: 92vh; }
+  .notes-tabs { padding: 12px 16px; gap: 6px; }
+  .notes-tab { padding: 10px 14px; font-size: .82rem; min-height: 42px; }
+  .notes-body { padding: 16px; }
+  .notes-header { padding: 14px 16px; }
+  .chat-wrap { padding: 14px 10px 0; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE: MOBILE (≤600px)
+   ═══════════════════════════════════════════════════════════════ */
+@media (max-width: 600px) {
+  header {
+    padding: 10px 12px;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .header-icon { font-size: 1.5rem; }
+  header h1 { font-size: 1.05rem; line-height: 1.2; }
+  header .sub { font-size: .62rem; }
+  .header-controls { gap: 6px; margin-left: auto; }
+  .score-pill { padding: 4px 10px; font-size: .74rem; }
+  .audio-btn { width: 32px; height: 32px; font-size: .85rem; }
+
+  .chat-wrap { padding: 10px 6px 0; }
+  #chat-box { gap: 12px; }
+  .bubble { max-width: 88%; font-size: .88rem; padding: 10px 13px; }
+  .avatar { width: 30px; height: 30px; font-size: .85rem; }
+
+  .chip { font-size: .78rem; padding: 7px 12px; }
+  .mc-btn { font-size: .84rem; padding: 10px 12px; }
+  .mc-btn .letter { width: 22px; height: 22px; font-size: .74rem; }
+  .topic-tag { font-size: .68rem; }
+  .scenario-card { font-size: .88rem; padding: 10px 14px; }
+
+  .input-bar { padding: 8px 8px calc(8px + env(safe-area-inset-bottom)); gap: 8px; }
+  #user-input { font-size: .88rem; padding: 10px 14px; }
+  #send-btn { width: 40px; height: 40px; font-size: 1rem; }
+
+  .result-card { width: 92%; padding: 26px 20px; }
+  .result-emoji { font-size: 2.6rem; }
+  .result-title { font-size: 1.2rem; }
+  .result-score { font-size: 1.8rem; }
+
+  /* ── Notes panel: near-full-screen on phones ── */
+  .notes-overlay { align-items: flex-end; }
+  .notes-panel {
+    width: 100%; max-width: 100%;
+    max-height: 94vh;
+    border-radius: 20px 20px 0 0;
+    border-left: none; border-right: none; border-bottom: none;
+  }
+  .notes-header { padding: 12px 14px; flex-wrap: wrap; gap: 8px; }
+  .notes-header h2 { font-size: 1.05rem; flex: 1 1 100%; }
+  .notes-header-actions { flex-wrap: wrap; gap: 6px; width: 100%; justify-content: flex-start; }
+  .print-btn { font-size: .7rem; padding: 6px 11px; }
+  .notes-close { width: 30px; height: 30px; font-size: .9rem; margin-left: auto; }
+
+  .notes-tabs { padding: 10px 12px; gap: 5px; }
+  .notes-tab { padding: 8px 12px; font-size: .76rem; min-height: 38px; }
+  .notes-body { padding: 14px; }
+
+  .notes-item { flex-direction: column; gap: 2px; }
+  .notes-term { min-width: 0; font-size: .82rem; }
+  .notes-def { font-size: .84rem; }
+  .notes-topic-title { font-size: .95rem; }
+  .chapter-summary, .memory-box, .tandaan-box, .story-box, .verse-card { font-size: .82rem; padding: 12px 14px; }
+
+  /* ── Tables: allow horizontal scroll instead of squeezing ── */
+  .compare-table { display: block; overflow-x: auto; white-space: nowrap; }
+  .compare-table th, .compare-table td { white-space: normal; min-width: 110px; }
+
+  .key-grid { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 5px; }
+  .key-pill { font-size: .72rem; padding: 5px 8px; }
+  .ptest-part-title { font-size: .92rem; }
+  .ptest-q { font-size: .82rem; }
+  .ptest-bank { font-size: .78rem; padding: 8px 12px; }
+
+  .rawnotes-doc p, .rawnotes-doc li { font-size: .87rem; }
+  .rawnotes-doc h3.doc-heading { font-size: .95rem; }
+  .rawnotes-doc table { display: block; overflow-x: auto; white-space: nowrap; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE: VERY SMALL PHONES (≤380px)
+   ═══════════════════════════════════════════════════════════════ */
+@media (max-width: 380px) {
+  header h1 { font-size: .92rem; }
+  header .sub { display: none; }
+  .score-pill span { font-size: .7rem; }
+  .bubble { max-width: 92%; font-size: .84rem; }
+  .notes-tab { font-size: .7rem; padding: 7px 10px; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE: LANDSCAPE PHONES (short height)
+   ═══════════════════════════════════════════════════════════════ */
+@media (max-height: 480px) and (orientation: landscape) {
+  .notes-panel { max-height: 98vh; }
+  .notes-tabs { padding: 6px 12px; }
+  .notes-tab { min-height: 32px; padding: 6px 10px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-icon">🌴</div>
+  <div>
+    <h1>Pinagkukunan-Yaman</h1>
+    <div class="sub">Yamang Lupa · Gubat · Tubig · Mineral</div>
+  </div>
+  <div class="header-controls">
+    <div class="score-pill">⭐ <span id="score-val">0</span> / <span id="total-val">0</span></div>
+    <button class="audio-btn" id="notes-toggle" title="Basahin ang mga Tala" onclick="document.getElementById('notes-overlay').classList.add('show')">📖</button>
+    <button class="audio-btn active" id="audio-toggle" title="I-toggle ang Audio">🔊</button>
+  </div>
+</header>
+
+<div class="chat-wrap">
+  <div id="chat-box"></div>
+</div>
+
+<div class="input-bar">
+  <input type="text" id="user-input" placeholder="Isulat ang iyong sagot dito…" autocomplete="off" />
+  <button id="send-btn">➤</button>
+</div>
+
+<div class="result-overlay" id="result-overlay">
+  <div class="result-card">
+    <span class="result-emoji" id="res-emoji">🏆</span>
+    <div class="result-title">Tapos na!</div>
+    <div class="result-score"><span id="res-score">0</span>/<span id="res-total">0</span></div>
+    <div class="result-msg" id="res-msg">Magaling!</div>
+    <button class="result-btn" onclick="restartApp()">🔄 Maglaro Ulit</button>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+// QUESTION BANK
+// ═══════════════════════════════════════════════════════════════
+const topics = {
+
+  "Pinagkukunan-Yaman at Likas na Yaman": [
+    { q: "Saan nagmumula ang lahat ng produkto at serbisyong napakikinabangan ng mga tao?", a: "Sa mga pinagkukunan-yaman", hint: "Ito ang pamagat ng aralin." },
+    { q: "Ilang uri ang pinagkukunan-yaman ng Pilipinas, at ano-ano ang mga ito?", a: "Tatlo: likas na yaman, yamang tao, at yamang kapital", hint: "L-T-K." },
+    { q: "Ano ang likas na yaman?", a: "Mga hilaw na materyales mula sa kalikasan na maaaring gamitin at iproseso upang tugunan ang mga pangangailangan ng mga tao", hint: "Galing sa kalikasan." },
+    { q: "Ano ang likas na yamang organiko?", a: "Mga likas na yamang may buhay, tulad ng mga halaman at hayop", hint: "May buhay." },
+    { q: "Ano ang likas na yamang di-organiko?", a: "Mga likas na yamang hindi nabubuhay, tulad ng lupa, tubig, bato, metal, at mineral", hint: "Walang buhay." },
+    { q: "Alin ang halimbawa ng likas na yamang organiko: lupa, halaman, o bato?", a: "Halaman", hint: "May buhay." },
+    { q: "Alin ang halimbawa ng likas na yamang di-organiko: baka, mangga, o tubig?", a: "Tubig", hint: "Hindi ito may buhay." },
+    { q: "Bakit sari-sari ang likas na yamang matatagpuan sa Pilipinas?", a: "Dahil ang Pilipinas ay isang arkipelago na may klimang tropikal", hint: "May dalawang dahilan." },
+    { q: "Ano-ano ang apat na likas na yamang tatalakayin sa aralin?", a: "Yamang lupa, yamang gubat, yamang tubig, at yamang mineral", hint: "LU-GU-TU-MI." },
+    { q: "Ano-anong pangunahing pangangailangan ang nagmumula sa mga yamang lupa, gubat, tubig, at mineral?", a: "Pagkain, tubig, damit, tirahan, at iba pa", hint: "Mga batayang pangangailangan." },
+  ],
+
+  "Yamang Lupa": [
+    { q: "Ano ang yamang lupa?", a: "Mga likas na yaman na matatagpuan sa ibabaw ng lupa; kabilang dito ang mismong lupa at ang mga hilaw na produktong makukuha rito", hint: "Nasa ibabaw ng lupa." },
+    { q: "Gaano kalawak ang kalupaan ng Pilipinas?", a: "300,000 kilometro kuwadrado", hint: "Tatlong daang libo." },
+    { q: "Ano ang bumubuo sa kalupaan ng Pilipinas?", a: "Mga isla, kabundukan, kapatagan, at iba pa", hint: "Mga anyong lupa." },
+    { q: "Bakit mainam para sa agrikultura ang mga kapatagan ng Pilipinas?", a: "Dahil malawak at matabang ang lupa roon", hint: "Dalawang katangian ng lupa." },
+    { q: "Ano ang pinagkukunan ng makakain at kabuhayan ng mga mamamayan mula sa kapatagan?", a: "Agrikultura", hint: "Pagsasaka." },
+    { q: "Paano nakatutulong ang klimang tropikal sa mga pananim?", a: "Nagbibigay ito ng tag-ulan na nakatutulong sa mga pananim", hint: "Ulan." },
+    { q: "Gaano kalawak ang lupa sa Pilipinas na ginagamit sa pagsasaka?", a: "Tinatayang 130,000 kilometro kuwadrado", hint: "Mas mababa sa kalahati ng kabuuang lupa." },
+    { q: "Ano-ano ang tinatamnan sa mga lupain ng Pilipinas?", a: "Palay, mais, niyog, at tubo", hint: "Apat na pananim." },
+    { q: "Ano-anong prutas ang tinatanim at inaani sa Pilipinas ayon sa aralin?", a: "Mangga, saging, pinya, at durian", hint: "Apat na prutas." },
+    { q: "Ano-anong gulay ang tinatanim at inaani sa Pilipinas ayon sa aralin?", a: "Kamatis, repolyo, at sibuyas", hint: "Tatlong gulay." },
+    { q: "Ano ang ginagawa sa maraming inaning produkto ng Pilipinas bukod sa pagkain sa bansa?", a: "Iniluluwas at ibinebenta sa ibang bansa", hint: "Export." },
+    { q: "Bukod sa pagkain, para saan pa ang mga pananim?", a: "Ginagamit din bilang sangkap o materyales ng mga produkto", hint: "Hindi lang pagkain." },
+    { q: "Anong pananim ang ginagamit sa paggawa ng iba't ibang produkto ayon sa aralin?", a: "Niyog", hint: "Puno ng buhay." },
+    { q: "Ano ang nagagawa sa langis ng niyog?", a: "Ginagamit itong sangkap sa mga sabon, pampaganda, at iba pa", hint: "Pampaligo at pampaganda." },
+    { q: "Ano ang ginagawa sa bao ng niyog?", a: "Maaari itong gawing uling", hint: "Panggatong." },
+    { q: "Ano ang ginagawa sa hibla ng dahon ng niyog?", a: "Ginagawa itong lubid", hint: "Panali." },
+    { q: "Ano ang magagawa sa laman at sabaw ng niyog?", a: "Maaari itong kainin o gamitin sa iba't ibang lutuin", hint: "Pagkain." },
+    { q: "Ano ang paghahayupan?", a: "Ang pag-aalaga ng mga hayop na mapagkukunan ng karne bilang pagkain", hint: "Pag-aalaga ng hayop." },
+    { q: "Anong mga hayop ang inaalagaan sa paghahayupan ayon sa aralin?", a: "Manok, baka, kambing, at kalabaw", hint: "Apat na hayop." },
+    { q: "Ano pa ang makukuha sa mga hayop bukod sa karne?", a: "Itlog, gatas, at iba pang materyales tulad ng balat ng hayop (leather)", hint: "Hindi lang karne." },
+    { q: "Ano ang ginagawa sa balat ng hayop (leather)?", a: "Ginagamit ito sa paggawa ng sapatos, bag, at iba pang palamuti", hint: "Mga gamit na yari sa balat." },
+    { q: "Paano nauugnay ang paghahayupan sa iba pang gawaing agrikultural?", a: "Ginagamit ang dumi ng mga hayop tulad ng manok at baka bilang pataba sa lupa", hint: "Dumi ng hayop." },
+    { q: "Ano ang aquaculture?", a: "Ang paggamit sa lupa bilang palaisdaan", hint: "Isda sa lupa." },
+    { q: "Paano nakapagpaparami ng isda, lamang-dagat, at halamang tubig sa aquaculture?", a: "Sa pamamagitan ng pagpapagawa ng mga artipisyal na lawa at fish pond", hint: "Gawang-taong lawa." },
+  ],
+
+  "Yamang Gubat": [
+    { q: "Gaano kalawak ang kalupaan ng Pilipinas na itinuturing na kagubatan?", a: "Mahigit 70,000 kilometro kuwadrado", hint: "Pitumpung libo pataas." },
+    { q: "Ilang uri ng punongkahoy ang matatagpuan sa mga kagubatan ng Pilipinas?", a: "Mahigit 3,000 uri", hint: "Tatlong libo pataas." },
+    { q: "Ano-anong punongkahoy ang kabilang sa mga kagubatan ng Pilipinas ayon sa aralin?", a: "Narra, molave, yakal, apitong, tanguile, lauan, at acacia", hint: "Pitong puno." },
+    { q: "Ano ang tahanan ng iba't ibang uri ng halaman, hayop, at iba pang yamang gubat?", a: "Ang mga kagubatan", hint: "Dito sila nakatira." },
+    { q: "Para saan ginagamit ang mga materyales mula sa punongkahoy?", a: "Sa paggawa ng papel, muwebles, at bahay", hint: "Tatlong gamit." },
+    { q: "Ano ang pagtotroso?", a: "Ang pagputol at pagproseso sa mga punongkahoy upang magamit sa iba't ibang industriya", hint: "Pagputol ng puno." },
+    { q: "Para saan ginagamit ang kahoy mula sa kawayan?", a: "Sa konstruksyon at paggawa ng mga muwebles", hint: "Gaya ng punongkahoy." },
+    { q: "Para saan ginagamit ang hibla ng kawayan?", a: "Sa paggawa ng mga basket at iba pang kasangkapan", hint: "Hinahabi." },
+    { q: "Paano nakatutulong ang kawayan sa kalikasan?", a: "Nakatutulong itong pigilan ang baha at pagguho ng lupa", hint: "Dalawang sakuna." },
+    { q: "Para saan ginagamit ang rattan?", a: "Sa paggawa ng mga basket at muwebles", hint: "Gaya ng hibla ng kawayan." },
+    { q: "Saan matatagpuan ang bakawan?", a: "Sa mga baybayin ng Pilipinas", hint: "Malapit sa dagat." },
+    { q: "Ano ang papel ng bakawan sa gilid ng tubig?", a: "Nagsisilbi itong mga bakod sa gilid ng tubig", hint: "BAKAWAN = BAKod." },
+    { q: "Ano-ano ang makukuha sa bakawan?", a: "Kahoy, panggatong, at mga sangkap sa paggawa ng gamot at tela", hint: "Apat na bagay." },
+    { q: "Anong mga hayop ang naninirahan sa bakawan?", a: "Isda, kabibe, hipon, at alimango", hint: "Mga lamang-dagat." },
+    { q: "Bakit mahalaga ang bakawan bilang natural na proteksiyon?", a: "Dahil pinoprotektahan nito ang baybayin laban sa mapaminsalang mga alon", hint: "Alon." },
+    { q: "Sa anong mga industriya ginagamit ang hilaw na materyales mula sa yamang gubat?", a: "Pagkain, parmasyutika, konstruksyon, paghahabi, at iba pa", hint: "Apat na industriya." },
+    { q: "Bukod sa hilaw na materyales, bakit mahalaga ang mga kagubatan?", a: "Para mapanatili ang malinis na hangin at suplay ng tubig", hint: "Hangin at tubig." },
+    { q: "Bakit mahalaga ang mga puno at halaman sa kagubatan sa mga bundok?", a: "Upang hindi gumuho ang lupa sa mga bundok", hint: "Pagguho." },
+    { q: "Ano ang biodiversity (dibersidad) sa kalikasan?", a: "Ang pagkakaroon ng sari-saring mga hayop at halaman sa kalikasan", hint: "Sari-saring buhay." },
+    { q: "Bakit mahalaga ang yamang gubat sa pagpapanatili ng biodiversity?", a: "Dahil tahanan ito ng sari-saring mga hayop at halaman", hint: "Tahanan." },
+  ],
+
+  "Yamang Tubig": [
+    { q: "Sa anong rehiyon matatagpuan ang Pilipinas na mapagkukunan ng iba't ibang yamang tubig?", a: "Sa Coral Triangle", hint: "Tatsulok ng korales." },
+    { q: "Ano-anong yamang tubig ang sagana sa mga anyong tubig ng Pilipinas?", a: "Isda, korales, kabibe, perlas, at iba pa", hint: "Mga yaman sa dagat." },
+    { q: "Bilang ano itinuturing ang Pilipinas sa buong daigdig dahil sa yamang tubig nito?", a: "Sentro ng marine biodiversity", hint: "Marine biodiversity." },
+    { q: "Ano ang marine biodiversity?", a: "Ang iba't ibang uri ng buhay na naninirahan sa ilalim ng karagatan", hint: "Buhay sa ilalim ng dagat." },
+    { q: "Bakit mahalaga ang biodiversity?", a: "Upang mapanatili ang balanse sa kalikasan na kailangan upang masuportahan ang buhay sa daigdig", hint: "Balanse." },
+    { q: "Ano-anong isda ang sagana sa mga tubig-alat ng Pilipinas?", a: "Tambakol, tamban, lapu-lapu, at galunggong", hint: "Apat na isda." },
+    { q: "Ano-ano ang karaniwang pinaparami at nakukuha sa mga tubig-tabang at palaisdaan?", a: "Ulang, at mga isdang tilapia at bangus", hint: "Isang ulang at dalawang isda." },
+    { q: "Para saan ginagamit ang mga halamang-dagat?", a: "Bilang sangkap ng pagkain at pataba sa lupa", hint: "Pagkain at pataba." },
+    { q: "Ano ang papel ng halamang-dagat sa mga isda?", a: "Tahanan at pagkain ng mga isda", hint: "Dalawang papel." },
+    { q: "Ano ang ginagawa ng halamang-dagat sa carbon dioxide sa katubigan?", a: "Kinokonsumo nito ang carbon dioxide sa katubigan", hint: "Pagkonsumo." },
+  ],
+
+  "Pagbasa ng Tsart ng Lamang-Dagat (2015–2020)": [
+    { q: "Anong ahensiya ang pinagmulan ng tsart ng mga nahuling lamang-dagat?", a: "SEAFDEC", hint: "Pang-isdaan." },
+    { q: "Anong taon ang saklaw ng tsart ng mga nahuling lamang-dagat?", a: "2015 hanggang 2020", hint: "Anim na taon." },
+    { q: "Sa anong yunit sinusukat ang dami ng nahuling lamang-dagat sa tsart?", a: "Metrikong tonelada", hint: "Timbang." },
+    { q: "Aling lamang-dagat ang may pinakamaraming nahuli noong 2020?", a: "Tuna (520,167 metrikong tonelada)", hint: "Pinakamarami sa lahat ng taon." },
+    { q: "Aling lamang-dagat ang pangalawa sa pinakamaraming nahuli noong 2020?", a: "Scad (387,035 metrikong tonelada)", hint: "Mas marami kaysa sardinas noong 2020." },
+    { q: "Aling lamang-dagat ang may pinakakaunting nahuli noong 2020?", a: "Alimango (33,545 metrikong tonelada)", hint: "Mas kaunti kaysa hipon/sugpo." },
+    { q: "Ano ang nangyari sa nahuling tuna mula 2015 hanggang 2020?", a: "Bumaba, mula 560,161 patungong 520,167 metrikong tonelada", hint: "Mas kaunti noong 2020." },
+    { q: "Ano ang nangyari sa nahuling scad mula 2015 hanggang 2020?", a: "Tumaas, mula 364,793 patungong 387,035 metrikong tonelada", hint: "Dumami." },
+    { q: "Ano ang nangyari sa nahuling alimango mula 2015 hanggang 2020?", a: "Tumaas, mula 27,207 patungong 33,545 metrikong tonelada", hint: "Dumami." },
+    { q: "Ano ang nangyari sa nahuling sardinas mula 2015 hanggang 2020?", a: "Bumaba, mula 384,711 patungong 348,498 metrikong tonelada", hint: "Mas kaunti noong 2020." },
+  ],
+
+  "Yamang Mineral": [
+    { q: "Paano nakukuha ang karamihan ng mga yamang mineral?", a: "Sa pamamagitan ng pagmimina sa mga kabundukan, baybayin, at ilalim ng dagat (seabed)", hint: "Pagmimina." },
+    { q: "Ano ang sinasabi ng aralin tungkol sa deposito ng mineral sa Pilipinas?", a: "Isa ang Pilipinas sa mga bansa sa daigdig na may pinakamaraming deposito ng mineral", hint: "Mayaman sa mineral." },
+    { q: "Ilang uri ang yamang mineral, at ano-ano ang mga ito?", a: "Tatlo: metal, di-metal, at petrolyo", hint: "Me-Di-Pe." },
+    { q: "Para saan pangunahing ginagamit ang mga mineral na metal?", a: "Para sa mga materyales sa konstruksyon, elektroniks, pag-aalahas, at iba pang katulad na industriya", hint: "Apat na industriya." },
+    { q: "Saan karaniwang natatagpuan ang mga mineral na metal?", a: "Sa mga kabundukan", hint: "Mataas na lugar." },
+    { q: "Ano-ano ang halimbawa ng mineral na metal?", a: "Ginto, pilak, tanso, nickel, chromite, at iron (bakal)", hint: "Anim na halimbawa." },
+    { q: "Para saan mahalaga ang mga mineral na di-metal?", a: "Sa paggawa ng semento, marmol, salamin, ceramic, at iba pang materyales sa konstruksyon", hint: "Pagtatayo ng gusali." },
+    { q: "Ano-ano ang halimbawa ng mineral na di-metal ayon sa aralin?", a: "Buhangin, graba, luwad, marmol, gypsum, sulfur, asbestos, dolomite, at iba pa", hint: "Mahabang listahan." },
+    { q: "Ano-ano ang mga halimbawa ng petrolyo?", a: "Langis, karbon (coal), at natural na gas", hint: "Tatlong halimbawa." },
+    { q: "Ano ang tinatayang halaga ng deposito ng langis sa Pilipinas?", a: "26.3 trilyong dolyares", hint: "Trilyon." },
+    { q: "Saan matatagpuan ang malaking bahagi ng deposito ng langis ng Pilipinas?", a: "Sa Kanlurang Dagat Pilipinas", hint: "Kanluran." },
+    { q: "Para saan ginagamit ang bakal o iron?", a: "Sa paggawa ng mga bahay, tulay, gusali, kotse, appliances, elektroniks, at iba pa", hint: "Matibay na istruktura." },
+    { q: "Para saan ginagamit ang tanso?", a: "Sa mga kawad ng produktong elektroniko", hint: "Kuryente." },
+    { q: "Para saan ginagamit ang chromite?", a: "Hinahalo ito sa paggawa ng stainless steel na ginagamit sa mga panluto, sasakyan, at iba pa", hint: "Stainless steel." },
+    { q: "Para saan ginagamit ang nickel?", a: "Sa baterya", hint: "Pinagkukunan ng kuryente." },
+    { q: "Para saan ginagamit ang ginto at pilak?", a: "Sa alahas", hint: "Pang-adorno." },
+    { q: "Para saan ginagamit ang limestone?", a: "Sa semento", hint: "Ginagamit sa pagtatayo ng gusali." },
+    { q: "Para saan ginagamit ang aspalto?", a: "Sa kalsada", hint: "Daan." },
+    { q: "Para saan ginagamit ang asin?", a: "Bilang pampalasa at sa pag-iimbak ng pagkain", hint: "Sa kusina." },
+    { q: "Para saan ginagamit ang marmol?", a: "Palamuti sa mga bahay at gusali, at sa iskultura", hint: "Pampaganda." },
+    { q: "Para saan ginagamit ang sulfur?", a: "Sa baterya, pataba, at pagsasala ng krudong langis (crude oil)", hint: "Tatlong gamit." },
+    { q: "Para saan ginagamit ang petrolyo?", a: "Bilang panggatong; mahalaga sa pagpapatakbo ng mga sasakyan at makinarya at sa paglikha ng kuryente", hint: "Enerhiya." },
+    { q: "Anong uri ng yamang mineral ang langis, karbon, at natural na gas?", a: "Petrolyo", hint: "Panggatong." },
+    { q: "Anong uri ng yamang mineral ang buhangin, graba, at luwad?", a: "Di-metal", hint: "Para sa konstruksyon." },
+  ],
+
+};
+
+// ── TAMA O MALI ────────────────────────────────────────────────────────────
+const trueOrFalse = [
+  { q: "Ang mga produkto at serbisyong napakikinabangan ng tao ay nagmumula sa mga pinagkukunan-yaman.", a: "tama" },
+  { q: "Apat ang uri ng pinagkukunan-yaman ng Pilipinas.", a: "mali" },
+  { q: "Ang likas na yaman, yamang tao, at yamang kapital ay ang tatlong uri ng pinagkukunan-yaman.", a: "tama" },
+  { q: "Ang halaman at hayop ay mga likas na yamang organiko.", a: "tama" },
+  { q: "Ang lupa, tubig, bato, metal, at mineral ay mga likas na yamang organiko.", a: "mali" },
+  { q: "Ang kalupaan ng Pilipinas ay may lawak na 300,000 kilometro kuwadrado.", a: "tama" },
+  { q: "Ang lahat ng kalupaan ng Pilipinas, 300,000 kilometro kuwadrado, ay ginagamit sa pagsasaka.", a: "mali" },
+  { q: "Palay, mais, niyog, at tubo ang ilan sa mga tinatamnan sa mga lupain ng Pilipinas.", a: "tama" },
+  { q: "Ang langis ng niyog ay sangkap sa mga sabon at pampaganda.", a: "tama" },
+  { q: "Ang hibla ng dahon ng niyog ay ginagawang uling.", a: "mali" },
+  { q: "Ang dumi ng manok at baka ay ginagamit na pataba sa lupa.", a: "tama" },
+  { q: "Ang aquaculture ay ang paggamit sa lupa bilang palaisdaan.", a: "tama" },
+  { q: "Ang paghahayupan ay ang pagputol at pagproseso ng mga punongkahoy.", a: "mali" },
+  { q: "Mahigit 70,000 kilometro kuwadrado ng kalupaan ng Pilipinas ang itinuturing na kagubatan.", a: "tama" },
+  { q: "Ang narra, molave, at yakal ay mga uri ng punongkahoy sa kagubatan ng Pilipinas.", a: "tama" },
+  { q: "Ang pagtotroso ay ang pagputol at pagproseso sa mga punongkahoy.", a: "tama" },
+  { q: "Nakatutulong ang kawayan na pigilan ang baha at pagguho ng lupa.", a: "tama" },
+  { q: "Matatagpuan ang bakawan sa mga bundok ng Pilipinas.", a: "mali" },
+  { q: "Ang Pilipinas ay matatagpuan sa Coral Triangle.", a: "tama" },
+  { q: "Ang tilapia at bangus ay karaniwang pinaparami sa mga tubig-tabang at palaisdaan.", a: "tama" },
+  { q: "Ang tambakol, tamban, lapu-lapu, at galunggong ay mga isdang sagana sa tubig-alat ng Pilipinas.", a: "tama" },
+  { q: "Kinokonsumo ng mga halamang-dagat ang carbon dioxide sa katubigan.", a: "tama" },
+  { q: "Noong 2020, ang tuna ang may pinakamaraming nahuling lamang-dagat sa tsart.", a: "tama" },
+  { q: "Ang mga yamang mineral ay nauuri sa tatlo: metal, di-metal, at petrolyo.", a: "tama" },
+  { q: "Ang ginto, pilak, tanso, at nickel ay mga mineral na di-metal.", a: "mali" },
+  { q: "Ang asin at aspalto ay mga mineral na di-metal.", a: "tama" },
+  { q: "Ang nickel ay ginagamit sa baterya.", a: "tama" },
+  { q: "Ang langis, karbon, at natural na gas ay mga halimbawa ng petrolyo.", a: "tama" },
+  { q: "Ang malaking bahagi ng deposito ng langis ng Pilipinas ay sinasabing matatagpuan sa Kanlurang Dagat Pilipinas.", a: "tama" },
+];
+
+// ── KILALANIN: ALING YAMAN ITO? ─────────────────────────────────────────────
+const identifyQuestions = [
+  { q: "Pag-aalaga ng manok, baka, kambing, at kalabaw para sa karne.", a: "Paghahayupan", choices: ["Paghahayupan","Aquaculture","Pagtotroso","Pagmimina"] },
+  { q: "Paggamit sa lupa bilang palaisdaan.", a: "Aquaculture", choices: ["Aquaculture","Paghahayupan","Pagtotroso","Pagmimina"] },
+  { q: "Pagputol at pagproseso sa mga punongkahoy.", a: "Pagtotroso", choices: ["Pagtotroso","Paghahayupan","Aquaculture","Pagmimina"] },
+  { q: "Pagkuha ng mga mineral sa kabundukan, baybayin, at ilalim ng dagat.", a: "Pagmimina", choices: ["Pagmimina","Pagtotroso","Aquaculture","Paghahayupan"] },
+  { q: "Nagsisilbing bakod sa gilid ng tubig at natural na proteksiyon sa mapaminsalang alon.", a: "Bakawan", choices: ["Bakawan","Kawayan","Rattan","Narra"] },
+  { q: "Ginagamit ang hibla nito sa paggawa ng basket at nakatutulong itong pigilan ang baha at pagguho ng lupa.", a: "Kawayan", choices: ["Kawayan","Bakawan","Molave","Acacia"] },
+  { q: "Ginagamit sa paggawa ng mga basket at muwebles.", a: "Rattan", choices: ["Rattan","Bakawan","Tubo","Niyog"] },
+  { q: "Ang bao nito ay maaaring gawing uling.", a: "Niyog", choices: ["Niyog","Mais","Tubo","Palay"] },
+  { q: "Ang langis nito ay sangkap sa mga sabon at pampaganda.", a: "Niyog", choices: ["Niyog","Palay","Mangga","Saging"] },
+  { q: "Rehiyong kinaroroonan ng Pilipinas na kilala sa yamang tubig.", a: "Coral Triangle", choices: ["Coral Triangle","Pacific Ring","Silangang Dagat","Seabed"] },
+  { q: "Iba't ibang uri ng buhay na naninirahan sa ilalim ng karagatan.", a: "Marine biodiversity", choices: ["Marine biodiversity","Aquaculture","Tubig-alat","Seabed"] },
+  { q: "Isdang sagana sa tubig-alat: tambakol, tamban, lapu-lapu, at ____.", a: "Galunggong", choices: ["Galunggong","Tilapia","Bangus","Ulang"] },
+  { q: "Isdang karaniwang pinaparami sa tubig-tabang at palaisdaan.", a: "Bangus", choices: ["Bangus","Lapu-lapu","Tamban","Galunggong"] },
+  { q: "Pinakamaraming nahuling lamang-dagat noong 2020 ayon sa tsart.", a: "Tuna", choices: ["Tuna","Scad","Sardinas","Pusit"] },
+  { q: "Pinakakaunting nahuling lamang-dagat noong 2020 ayon sa tsart.", a: "Alimango", choices: ["Alimango","Hipon/Sugpo","Pusit","Carangid"] },
+  { q: "Ang bakal o iron: anong uri ng mineral ito?", a: "Metal", choices: ["Metal","Di-metal","Petrolyo","Organiko"] },
+  { q: "Ang asin: anong uri ng mineral ito?", a: "Di-metal", choices: ["Di-metal","Metal","Petrolyo","Organiko"] },
+  { q: "Ang karbon (coal): anong uri ng mineral ito?", a: "Petrolyo", choices: ["Petrolyo","Metal","Di-metal","Organiko"] },
+  { q: "Ginagamit sa mga kawad ng produktong elektroniko.", a: "Tanso", choices: ["Tanso","Nickel","Chromite","Asin"] },
+  { q: "Hinahalo sa paggawa ng stainless steel para sa mga panluto at sasakyan.", a: "Chromite", choices: ["Chromite","Tanso","Nickel","Sulfur"] },
+  { q: "Ginagamit sa baterya.", a: "Nickel", choices: ["Nickel","Asin","Marmol","Aspalto"] },
+  { q: "Ginagamit sa semento.", a: "Limestone", choices: ["Limestone","Aspalto","Marmol","Asin"] },
+  { q: "Ginagamit sa kalsada.", a: "Aspalto", choices: ["Aspalto","Limestone","Marmol","Sulfur"] },
+  { q: "Ginagamit bilang palamuti sa bahay at gusali, at sa iskultura.", a: "Marmol", choices: ["Marmol","Aspalto","Asin","Limestone"] },
+  { q: "Ginagamit sa baterya, pataba, at pagsasala ng krudong langis.", a: "Sulfur", choices: ["Sulfur","Asin","Tanso","Limestone"] },
+  { q: "Ginagamit sa alahas.", a: "Ginto at pilak", choices: ["Ginto at pilak","Tanso","Chromite","Nickel"] },
+  { q: "Ang yamang matatagpuan sa ibabaw ng lupa, kasama ang mismong lupa.", a: "Yamang lupa", choices: ["Yamang lupa","Yamang gubat","Yamang tubig","Yamang mineral"] },
+  { q: "Ang yamang pinagkukunan ng narra, molave, at yakal.", a: "Yamang gubat", choices: ["Yamang gubat","Yamang lupa","Yamang tubig","Yamang mineral"] },
+  { q: "Ang yamang pinagkukunan ng perlas, korales, at kabibe.", a: "Yamang tubig", choices: ["Yamang tubig","Yamang gubat","Yamang lupa","Yamang mineral"] },
+  { q: "Ang yamang kinabibilangan ng ginto, buhangin, at langis.", a: "Yamang mineral", choices: ["Yamang mineral","Yamang tubig","Yamang lupa","Yamang gubat"] },
+  { q: "Pinagkukunan ng pagkain gaya ng palay, mais, mangga, at saging.", a: "Yamang lupa", choices: ["Yamang lupa","Yamang gubat","Yamang tubig","Yamang mineral"] },
+  { q: "Tahanan ng mahigit 3,000 uri ng punongkahoy.", a: "Yamang gubat", choices: ["Yamang gubat","Yamang lupa","Yamang tubig","Yamang mineral"] },
+  { q: "Tinatayang may halagang 26.3 trilyong dolyares ang deposito nito.", a: "Langis", choices: ["Langis","Ginto","Karbon","Asin"] },
+];
+
+// ═══════════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════════
+let state = {
+  awaiting: 'menu',
+  mode: null,
+  questions: [],
+  allAnswers: [],
+  qIndex: 0,
+  score: 0,
+  total: 0,
+  hintUsed: false,
+  audioEnabled: true,
+};
+
+// ═══════════════════════════════════════════════════════════════
+// TTS (UPGRADED FOR TRUE FILIPINO ACCENT)
+// ═══════════════════════════════════════════════════════════════
+let currentAudioStream = null;
+
+function speak(text) {
+  if (!state.audioEnabled) return;
+  
+  // Linisin ang mga nakaraang audio task
+  window.speechSynthesis.cancel();
+  if (currentAudioStream) {
+    currentAudioStream.pause();
+    currentAudioStream = null;
+  }
+  
+  // Tanggalin ang HTML tags at emojis para hindi basahin nang paputol-putol
+  const clean = text.replace(/<[^>]+>/g,'').replace(/[🇵🇭🌟✅❌💡⏭️🏆😊💪🔄🔲📚👋⭐✕🧭📏🗺️]/g,'');
+  
+  // PRIMARY METHOD: Google Translation Engine cloud voice stream (May natural na Filipino accent)
+  const googleTtsUrl = `https://translate.google.com/translate_tts?ie=UTF-8&tl=tl&client=tw-ob&q=${encodeURIComponent(clean)}`;
+  
+  currentAudioStream = new Audio(googleTtsUrl);
+  currentAudioStream.onplaying = () => showWave(true);
+  currentAudioStream.onended = currentAudioStream.onerror = () => showWave(false);
+  
+  currentAudioStream.play().catch(err => {
+    // BACKUP METHOD: Web Speech API (Gagana kapag walang internet connection)
+    console.warn("Google TTS blocked or offline. Falling back to local system speech engine.");
+    
+    const streamFallback = new SpeechSynthesisUtterance(clean);
+    streamFallback.lang = 'fil-PH';
+    streamFallback.rate = 0.95; streamFallback.pitch = 1.05; streamFallback.volume = 1;
+    
+    const voices = window.speechSynthesis.getVoices();
+    const filVoice = voices.find(v => v.lang.startsWith('fil') || v.lang.startsWith('tl'));
+    const engVoice = voices.find(v => v.lang.startsWith('en') && v.name.toLowerCase().includes('female'))
+                   || voices.find(v => v.lang.startsWith('en'));
+              
+    if (filVoice) {
+      streamFallback.voice = filVoice;
+    } else if (engVoice) {
+      streamFallback.voice = engVoice; 
+      streamFallback.lang = 'en-US'; 
+    }
+    
+    streamFallback.onstart = () => showWave(true);
+    streamFallback.onend = streamFallback.onerror = () => showWave(false);
+    window.speechSynthesis.speak(streamFallback);
+  });
+}
+
+function showWave(on) {
+  document.querySelectorAll('.speaker-wave').forEach(w => w.style.display = on ? 'inline-flex' : 'none');
+}
+
+// I-initialize ang mga boses ng system
+let localSystemVoices = [];
+function lookupSystemVoices() {
+  localSystemVoices = window.speechSynthesis.getVoices();
+}
+lookupSystemVoices();
+if (window.speechSynthesis.onvoiceschanged !== undefined) {
+  window.speechSynthesis.onvoiceschanged = lookupSystemVoices;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// UI HELPERS
+// ═══════════════════════════════════════════════════════════════
+const chatBox = document.getElementById('chat-box');
+const input = document.getElementById('user-input');
+const sendBtn = document.getElementById('send-btn');
+
+function scrollBottom() { chatBox.scrollTop = chatBox.scrollHeight; }
+
+function addMessage(role, html, speakText) {
+  const div = document.createElement('div');
+  div.className = `msg ${role}`;
+  const av = document.createElement('div');
+  av.className = 'avatar';
+  av.textContent = role === 'bot' ? '🤖' : '🧑';
+  const bub = document.createElement('div');
+  bub.className = 'bubble';
+  bub.innerHTML = role === 'bot'
+    ? html + '<span class="speaker-wave" style="display:none"><span></span><span></span><span></span><span></span><span></span></span>'
+    : html;
+  div.appendChild(av); div.appendChild(bub);
+  chatBox.appendChild(div);
+  scrollBottom(); bindChips();
+  if (role === 'bot') {
+    const txt = speakText || html.replace(/<[^>]+>/g,' ');
+    setTimeout(() => speak(txt), 350);
+  }
+}
+
+function addTyping() {
+  const d = document.createElement('div');
+  d.className = 'msg bot'; d.id = 'typing';
+  d.innerHTML = '<div class="avatar">🤖</div><div class="typing"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>';
+  chatBox.appendChild(d); scrollBottom();
+}
+function removeTyping() { const t = document.getElementById('typing'); if(t) t.remove(); }
+
+function bindChips() {
+  document.querySelectorAll('.chip:not([data-bound])').forEach(c => {
+    c.dataset.bound = '1';
+    c.addEventListener('click', () => handleUserMessage(c.dataset.val));
+  });
+}
+
+function updateScore() {
+  document.getElementById('score-val').textContent = state.score;
+  document.getElementById('total-val').textContent = state.total;
+}
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length-1; i > 0; i--) {
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]] = [a[j],a[i]];
+  }
+  return a;
+}
+
+function normalize(s) { return s.toLowerCase().trim().replace(/\s+/g,' '); }
+
+function checkAnswer(user, correct) {
+  const u = normalize(user), c = normalize(correct);
+  if (u === c) return true;
+  if (c.includes(u) && u.length > 5) return true;
+  const parts = c.split(/[,;\/]/);
+  for (const p of parts) if (u.includes(p.trim()) && p.trim().length > 4) return true;
+  return false;
+}
+
+function showResult() {
+  const pct = Math.round((state.score/state.total)*100);
+  const emoji = pct>=90?'🏆':pct>=70?'🌟':pct>=50?'😊':'💪';
+  const msg = pct>=90?'Napakahusay! Alam mo ang lahat!':pct>=70?'Magaling! Patuloy ka lang!':pct>=50?'Mabuti! Pag-aralan pa nang kaunti!':'Huwag sumuko! Subukan ulit!';
+  document.getElementById('res-emoji').textContent = emoji;
+  document.getElementById('res-score').textContent = state.score;
+  document.getElementById('res-total').textContent = state.total;
+  document.getElementById('res-msg').textContent = msg;
+  document.getElementById('result-overlay').classList.add('show');
+  speak(`Tapos na! Ang iyong puntos ay ${state.score} sa ${state.total}. ${msg}`);
+}
+
+function restartApp() {
+  document.getElementById('result-overlay').classList.remove('show');
+  state = { awaiting:'menu', mode:null, questions:[], allAnswers:[], qIndex:0, score:0, total:0, hintUsed:false, audioEnabled:state.audioEnabled };
+  chatBox.innerHTML = '';
+  document.querySelector('.input-bar').style.display = 'flex';
+  updateScore();
+  showMenu();
+}
+
+// ═══════════════════════════════════════════════════════════════
+// MC HELPERS
+// ═══════════════════════════════════════════════════════════════
+function getAllAnswers() {
+  const ans = [];
+  for (const qs of Object.values(topics)) for (const q of qs) ans.push(q.a);
+  return ans;
+}
+
+function generateChoices(correct, pool) {
+  const distractors = shuffle(pool.filter(a => a !== correct)).slice(0,3);
+  return shuffle([correct, ...distractors]);
+}
+
+function buildMCBtns(choices, correctAnswer) {
+  const letters = ['A','B','C','D','E'];
+  return `<div class="mc-options">${choices.map((c,i)=>
+    `<button class="mc-btn" data-answer="${encodeURIComponent(c)}" data-correct="${encodeURIComponent(correctAnswer)}" onclick="handleMCClick(this)">
+      <span class="letter">${letters[i]}</span>${c}
+    </button>`
+  ).join('')}</div>`;
+}
+
+function handleMCClick(btn) {
+  const allBtns = btn.closest('.mc-options').querySelectorAll('.mc-btn');
+  allBtns.forEach(b => b.disabled = true);
+  const chosen = decodeURIComponent(btn.dataset.answer);
+  const correct = decodeURIComponent(btn.dataset.correct);
+  const isCorrect = chosen === correct;
+  allBtns.forEach(b => { if(decodeURIComponent(b.dataset.answer)===correct) b.classList.add('correct'); });
+  if (!isCorrect) btn.classList.add('wrong');
+  setTimeout(() => {
+    if (isCorrect) {
+      state.score++;
+      addMessage('bot', `✅ <strong>Tama!</strong> +1 puntos! Ang sagot ay: <strong>${correct}</strong>`, `Tama! Ang sagot ay: ${correct}`);
+    } else {
+      addMessage('bot', `❌ <strong>Hindi tama.</strong> Ang tamang sagot ay: <strong>${correct}</strong>`, `Hindi tama. Ang tamang sagot ay: ${correct}`);
+    }
+    state.qIndex++; updateScore();
+    if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+    else setTimeout(showResult, 900);
+  }, 650);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// NEXT QUESTION
+// ═══════════════════════════════════════════════════════════════
+function nextQuestion() {
+  const qi = state.qIndex;
+  const q = state.questions[qi];
+  const num = qi + 1;
+
+  if (state.mode === 'full' || state.mode === 'topic_mc') {
+    const choices = generateChoices(q.a, state.allAnswers);
+    const tag = q.topic ? `<span class="topic-tag">${q.topic}</span><br>` : '';
+    const html = `${tag}<strong>T${num} sa ${state.total}:</strong> ${q.q}${buildMCBtns(choices, q.a)}`;
+    addMessage('bot', html, `Tanong ${num}. ${q.q}`);
+    return;
+  }
+
+  if (state.mode === 'tf') {
+    const html = `<strong>T${num} sa ${state.total}:</strong> <div class="scenario-card">${q.q}</div>
+      <span class="chip" data-val="tama">✅ Tama</span><span class="chip" data-val="mali">❌ Mali</span>`;
+    addMessage('bot', html, `Tanong ${num}. Tama o Mali: ${q.q}`);
+    return;
+  }
+
+  if (state.mode === 'identify') {
+    const btns = buildMCBtns(q.choices, q.a);
+    const html = `<strong>T${num} sa ${state.total}:</strong> Kilalanin kung ano ang tinutukoy:<div class="scenario-card">${q.q}</div>${btns}`;
+    addMessage('bot', html, `Tanong ${num}. Kilalanin ang tinutukoy: ${q.q}`);
+    return;
+  }
+
+  // typed answer mode
+  const tag = q.topic ? `<span class="topic-tag">${q.topic}</span><br>` : '';
+  const html = `${tag}<strong>T${num} sa ${state.total}:</strong> ${q.q}<br><small style="color:var(--muted)">Isulat ang sagot · i-type ang <em>hint</em> para sa tulong · <em>skip</em> para lumipat</small>`;
+  addMessage('bot', html, `Tanong ${num}. ${q.q}`);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// MENU
+// ═══════════════════════════════════════════════════════════════
+function showMenu() {
+  addMessage('bot',
+    `👋 <strong>Kumusta! Ako ang iyong AP Reviewer!</strong><br>Pag-aaralan natin ang mga <em>Pinagkukunan-Yaman</em> ng Pilipinas: ang <em>yamang lupa</em>, <em>yamang gubat</em>, <em>yamang tubig</em>, at <em>yamang mineral</em>.<br><br>Ano ang gusto mong gawin?<br>
+    <span class="chip" data-val="1">📚 Pag-aralan ang Paksa</span>
+    <span class="chip" data-val="2">✅ Tama o Mali</span>
+    <span class="chip" data-val="3">🌐 Kilalanin: Aling Yaman Ito?</span>
+    <span class="chip" data-val="4">🌟 Buong Review (Multiple Choice)</span>`,
+    "Kumusta! Ako ang iyong AP Reviewer tungkol sa Pinagkukunan-Yaman ng Pilipinas. Ano ang gusto mong gawin? Pag-aralan ang paksa, Tama o Mali, Kilalanin, o Buong Review na multiple choice?"
+  );
+  state.awaiting = 'menu';
+}
+
+// ═══════════════════════════════════════════════════════════════
+// PROCESS MESSAGE
+// ═══════════════════════════════════════════════════════════════
+function processMessage(msg) {
+  const aw = state.awaiting;
+
+  // ── MENU ──────────────────────────────────────────────────
+  if (aw === 'menu') {
+    if (msg === '1') {
+      state.awaiting = 'topic';
+      const keys = Object.keys(topics);
+      const chips = keys.map((t,i) => `<span class="chip" data-val="${i+1}">${i+1}. ${t}</span>`).join(' ');
+      addMessage('bot', `📚 Alin ang paksang gusto mong pag-aralan?<br>${chips}`, 'Alin ang paksang gusto mong pag-aralan?');
+
+    } else if (msg === '2') {
+      state.mode = 'tf';
+      state.questions = shuffle(trueOrFalse);
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'tf_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `✅ <strong>Tama o Mali!</strong> ${state.total} tanong. Simulan na!`, `Tama o Mali! ${state.total} tanong. Simulan na!`);
+      setTimeout(nextQuestion, 800);
+
+    } else if (msg === '3') {
+      state.mode = 'identify';
+      state.questions = shuffle(identifyQuestions);
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'mc_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `🌐 <strong>Kilalanin!</strong> Alamin kung aling yaman, gamit, o salita ang tinutukoy sa bawat paglalarawan.`, 'Kilalanin! Alamin kung ano ang tinutukoy sa bawat pahayag.');
+      setTimeout(nextQuestion, 800);
+
+    } else if (msg === '4') {
+      state.mode = 'full';
+      const all = [];
+      for (const [topicName, qs] of Object.entries(topics)) {
+        qs.forEach(q => all.push({...q, topic: topicName}));
+      }
+      state.questions = shuffle(all);
+      state.allAnswers = getAllAnswers();
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'mc_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `🌟 <strong>Buong Review — Multiple Choice!</strong> ${state.total} tanong. Pag-isipang mabuti!`, `Buong Review! Multiple Choice! ${state.total} tanong. Pag-isipang mabuti!`);
+      setTimeout(nextQuestion, 800);
+
+    } else {
+      addMessage('bot',
+        `Pumili ng opsyon:<br>
+        <span class="chip" data-val="1">📚 Pag-aralan ang Paksa</span>
+        <span class="chip" data-val="2">✅ Tama o Mali</span>
+        <span class="chip" data-val="3">🌐 Kilalanin</span>
+        <span class="chip" data-val="4">🌟 Buong Review</span>`,
+        'Pumili ng opsyon.'
+      );
+    }
+    return;
+  }
+
+  // ── TOPIC SELECT ──────────────────────────────────────────
+  if (aw === 'topic') {
+    const keys = Object.keys(topics);
+    const idx = parseInt(msg) - 1;
+    if (keys[idx]) {
+      const topicName = keys[idx];
+      state.mode = 'topic_mc';
+      state.questions = shuffle(topics[topicName]);
+      state.allAnswers = getAllAnswers();
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'mc_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `📚 <strong>${topicName}</strong> — ${state.total} tanong. Handa ka na ba?`, `${topicName}. ${state.total} tanong. Handa ka na ba?`);
+      setTimeout(nextQuestion, 800);
+    } else {
+      const chips = Object.keys(topics).map((t,i) => `<span class="chip" data-val="${i+1}">${i+1}. ${t}</span>`).join(' ');
+      addMessage('bot', `Pumili ng wastong paksa:<br>${chips}`, 'Pumili ng wastong paksa.');
+    }
+    return;
+  }
+
+  // ── TYPED ANSWER ──────────────────────────────────────────
+  if (aw === 'answer') {
+    const q = state.questions[state.qIndex];
+    const m = normalize(msg);
+
+    if (m === 'hint') {
+      state.hintUsed = true;
+      addMessage('bot', `💡 <strong>Hint:</strong> ${q.hint}`, `Hint: ${q.hint}`);
+      return;
+    }
+    if (m === 'skip') {
+      addMessage('bot', `⏭️ Nilaktawan! Ang tamang sagot ay: <strong>${q.a}</strong>`, `Nilaktawan. Ang tamang sagot ay: ${q.a}`);
+      state.qIndex++; state.hintUsed = false;
+      if (state.qIndex < state.total) setTimeout(nextQuestion, 700);
+      else showResult();
+      return;
+    }
+
+    const correct = checkAnswer(msg, q.a);
+    if (correct) {
+      if (!state.hintUsed) state.score++;
+      const note = state.hintUsed ? ' <em>(ginamit ang hint — walang puntos)</em>' : ' +1 puntos!';
+      addMessage('bot', `✅ <strong>Tama!</strong>${note} Sagot: <strong>${q.a}</strong>`, `Tama! Ang sagot ay: ${q.a}`);
+    } else {
+      addMessage('bot', `❌ <strong>Hindi tama.</strong> Ang tamang sagot ay: <strong>${q.a}</strong>`, `Hindi tama. Ang tamang sagot ay: ${q.a}`);
+    }
+    state.qIndex++; state.hintUsed = false; updateScore();
+    if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+    else setTimeout(showResult, 900);
+    return;
+  }
+
+  // ── TRUE OR FALSE ─────────────────────────────────────────
+  if (aw === 'tf_answer') {
+    const q = state.questions[state.qIndex];
+    const ans = normalize(msg);
+    const valid = ans === 'tama' || ans === 'mali' || ans === 'true' || ans === 'false';
+    const mapped = (ans === 'true') ? 'tama' : (ans === 'false') ? 'mali' : ans;
+
+    if (valid) {
+      const correct = mapped === q.a;
+      if (correct) {
+        state.score++;
+        addMessage('bot', `✅ <strong>Tama!</strong> Ang sagot ay <strong>${q.a.toUpperCase()}</strong>.`, `Tama! Ang sagot ay ${q.a}.`);
+      } else {
+        addMessage('bot', `❌ <strong>Mali.</strong> Ang tamang sagot ay <strong>${q.a.toUpperCase()}</strong>.`, `Mali. Ang tamang sagot ay ${q.a}.`);
+      }
+      state.qIndex++; updateScore();
+      if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+      else setTimeout(showResult, 900);
+    } else {
+      addMessage('bot',
+        `Sagot: Tama o Mali?<br><span class="chip" data-val="tama">✅ Tama</span><span class="chip" data-val="mali">❌ Mali</span>`,
+        'Sagot: Tama o Mali?'
+      );
+    }
+    return;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// CONTROLS
+// ═══════════════════════════════════════════════════════════════
+function handleUserMessage(msg) {
+  if (!msg.trim()) return;
+  
+  // Ihinto nang malinis ang nagsasalitang audio kapag sumagot ang user
+  window.speechSynthesis.cancel();
+  if (currentAudioStream) {
+    currentAudioStream.pause();
+    currentAudioStream = null;
+    showWave(false);
+  }
+  
+  addMessage('user', msg.replace(/</g,'&lt;'));
+  input.value = '';
+  input.disabled = true; sendBtn.disabled = true;
+  addTyping();
+  setTimeout(() => {
+    removeTyping();
+    input.disabled = false; sendBtn.disabled = false;
+    input.focus();
+    processMessage(msg);
+  }, 480);
+}
+
+sendBtn.addEventListener('click', () => { handleUserMessage(input.value); });
+input.addEventListener('keydown', e => { if(e.key==='Enter') handleUserMessage(input.value); });
+
+document.getElementById('audio-toggle').addEventListener('click', function() {
+  state.audioEnabled = !state.audioEnabled;
+  this.textContent = state.audioEnabled ? '🔊' : '🔇';
+  this.classList.toggle('active', state.audioEnabled);
+  if (!state.audioEnabled) {
+    window.speechSynthesis.cancel();
+    if (currentAudioStream) {
+      currentAudioStream.pause();
+      currentAudioStream = null;
+      showWave(false);
+    }
+  }
+});
+
+// ═══════════════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════════════
+window.addEventListener('load', () => {
+  lookupSystemVoices();
+  showMenu();
+});
+
+function printPracticeTest() {
+  document.body.classList.add('printing-test');
+  window.print();
+}
+window.addEventListener('afterprint', () => {
+  document.body.classList.remove('printing-test');
+});
+
+// ═══════════════════════════════════════════════════════════════
+// BASAHIN ANG TALA (gumagamit ng boses ng browser — walang limitasyon
+// sa haba, hindi tulad ng maiikling audio clip ng Google TTS sa chat)
+// ═══════════════════════════════════════════════════════════════
+function getNotesText(section) {
+  const clone = section.cloneNode(true);
+  clone.querySelectorAll('button').forEach(b => b.remove());
+  let text = clone.innerText || clone.textContent || '';
+  text = text.replace(/\s+/g, ' ').trim();
+  return text;
+}
+
+function toggleNotesAudio() {
+  const btn = document.getElementById('notes-audio-btn');
+  if (!btn) return;
+
+  if (window.speechSynthesis.speaking || window.speechSynthesis.pending) {
+    window.speechSynthesis.cancel();
+    btn.innerHTML = '🔊 Basahin ang Tala';
+    btn.classList.remove('active');
+    return;
+  }
+
+  const activeSection = document.querySelector('.notes-section.active');
+  if (!activeSection) return;
+  const text = getNotesText(activeSection);
+  if (!text) return;
+
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.lang = 'fil-PH';
+  utter.rate = 0.95;
+  utter.pitch = 1.05;
+  utter.volume = 1;
+
+  const voices = window.speechSynthesis.getVoices();
+  const filVoice = voices.find(v => v.lang.startsWith('fil') || v.lang.startsWith('tl'));
+  const engVoice = voices.find(v => v.lang.startsWith('en') && v.name.toLowerCase().includes('female'))
+                 || voices.find(v => v.lang.startsWith('en'));
+  if (filVoice) {
+    utter.voice = filVoice;
+  } else if (engVoice) {
+    utter.voice = engVoice;
+    utter.lang = 'en-US';
+  }
+
+  utter.onstart = () => { btn.innerHTML = '⏹️ Ihinto ang Pagbasa'; btn.classList.add('active'); };
+  utter.onend = utter.onerror = () => { btn.innerHTML = '🔊 Basahin ang Tala'; btn.classList.remove('active'); };
+
+  window.speechSynthesis.speak(utter);
+}
+
+function switchTab(tabId, btn) {
+  window.speechSynthesis.cancel();
+  const audioBtn = document.getElementById('notes-audio-btn');
+  if (audioBtn) { audioBtn.innerHTML = '🔊 Basahin ang Tala'; audioBtn.classList.remove('active'); }
+  document.querySelectorAll('.notes-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.notes-tab').forEach(b => b.classList.remove('active'));
+  document.getElementById(tabId).classList.add('active');
+  btn.classList.add('active');
+}
+
+function closeNotesPanel() {
+  window.speechSynthesis.cancel();
+  const audioBtn = document.getElementById('notes-audio-btn');
+  if (audioBtn) { audioBtn.innerHTML = '🔊 Basahin ang Tala'; audioBtn.classList.remove('active'); }
+  document.getElementById('notes-overlay').classList.remove('show');
+}
+</script>
+
+<!-- ── Notes Panel ── -->
+<div class="notes-overlay" id="notes-overlay">
+  <div class="notes-panel">
+    <div class="notes-header">
+      <h2>📖 Pinagkukunan-Yaman — Mga Tala</h2>
+      <div class="notes-header-actions">
+        <button class="print-btn" id="notes-audio-btn" onclick="toggleNotesAudio()" title="Basahin nang malakas ang tab na ito">🔊 Basahin ang Tala</button>
+        <button class="print-btn" onclick="printPracticeTest()" title="I-print o i-save bilang PDF ang Practice Test at Answer Key">🖨️ I-print ang Test &amp; Key</button>
+        <button class="notes-close" onclick="closeNotesPanel()">✕</button>
+      </div>
+    </div>
+    <div class="notes-tabs">
+      <button class="notes-tab active" onclick="switchTab('tab-uri', this)">🌴 Mga Uri</button>
+      <button class="notes-tab" onclick="switchTab('tab-lupa', this)">🌾 Yamang Lupa</button>
+      <button class="notes-tab" onclick="switchTab('tab-gubat', this)">🌳 Yamang Gubat</button>
+      <button class="notes-tab" onclick="switchTab('tab-tubig', this)">🐟 Yamang Tubig</button>
+      <button class="notes-tab" onclick="switchTab('tab-mineral', this)">⛏️ Yamang Mineral</button>
+      <button class="notes-tab" onclick="switchTab('tab-tamomali', this)">✅ Tama o Mali</button>
+      <button class="notes-tab" onclick="switchTab('tab-ptest', this)">📝 Practice Test</button>
+      <button class="notes-tab" onclick="switchTab('tab-key', this)">🔑 Answer Key</button>
+      <button class="notes-tab" onclick="switchTab('tab-raw', this)">📄 Raw Notes</button>
+    </div>
+    <div class="notes-body">
+
+      <div class="notes-section active" id="tab-uri">
+        <div class="chapter-summary">
+          📚 <strong>Buod:</strong> Lahat ng produkto at serbisyong napakikinabangan ng tao ay nagmumula sa <strong>pinagkukunan-yaman</strong>. May <strong>tatlong uri</strong> ito: <strong>likas na yaman, yamang tao, at yamang kapital</strong>.
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 PAMPADALING TANDAAN</span>
+          <strong>"L-T-K"</strong> = <strong>L</strong>ikas na yaman, yamang <strong>T</strong>ao, yamang <strong>K</strong>apital. At ang apat na likas na yaman: <strong>"LU-GU-TU-MI"</strong> = <strong>Lu</strong>pa, <strong>Gu</strong>bat, <strong>Tu</strong>big, <strong>Mi</strong>neral.
+        </div>
+        <table class="compare-table">
+          <tr><th>Uri</th><th>Ibig Sabihin</th><th>Halimbawa</th></tr>
+          <tr><td>Organiko</td><td>Likas na yamang may buhay</td><td>Halaman at hayop</td></tr>
+          <tr><td>Di-organiko</td><td>Likas na yamang hindi nabubuhay</td><td>Lupa, tubig, bato, metal, at mineral</td></tr>
+        </table>
+        <div class="notes-topic">
+          <div class="notes-topic-title">🌴 Mahahalagang Punto</div>
+          <div class="notes-item"><span class="notes-term">Likas na yaman</span><span class="notes-def">Hilaw na materyales mula sa kalikasan na maaaring gamitin at iproseso upang tugunan ang pangangailangan ng tao</span></div>
+          <div class="notes-item"><span class="notes-term">Bakit sari-sari?</span><span class="notes-def">Ang Pilipinas ay isang <strong>arkipelago</strong> na may <strong>klimang tropikal</strong></span></div>
+          <div class="notes-item"><span class="notes-term">Mga pangunahing pangangailangan</span><span class="notes-def">Pagkain, tubig, damit, tirahan, at iba pa</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-lupa">
+        <div class="chapter-summary">
+          📚 <strong>Buod:</strong> Ang <strong>yamang lupa</strong> ay ang mga likas na yaman sa <strong>ibabaw ng lupa</strong>. May lawak na <strong>300,000 km²</strong> ang kalupaan ng Pilipinas; <strong>130,000 km²</strong> nito ang ginagamit sa pagsasaka.
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 PAMPADALING TANDAAN</span>
+          <strong>"300 → 130 → 70"</strong> = buong lupa <strong>300,000</strong> km² → sakahan <strong>130,000</strong> km² → gubat <strong>70,000</strong> km². <strong>Aquaculture</strong> = <strong>aqua</strong> (tubig) + lupa → <strong>palaisdaan sa lupa</strong>.
+        </div>
+        <table class="compare-table">
+          <tr><th>Gamit ng Yamang Lupa</th><th>Halimbawa</th></tr>
+          <tr><td>Pagsasaka</td><td>Palay, mais, niyog, tubo; mangga, saging, pinya, durian; kamatis, repolyo, sibuyas</td></tr>
+          <tr><td>Paghahayupan</td><td>Manok, baka, kambing, kalabaw → karne, itlog, gatas, balat (leather)</td></tr>
+          <tr><td>Aquaculture</td><td>Artipisyal na lawa at fish pond para sa isda, lamang-dagat, at halamang tubig</td></tr>
+        </table>
+        <div class="notes-topic">
+          <div class="notes-topic-title">🥥 Mga Gamit ng Niyog</div>
+          <div class="notes-item"><span class="notes-term">Langis</span><span class="notes-def">Sangkap sa sabon, pampaganda, at iba pa</span></div>
+          <div class="notes-item"><span class="notes-term">Bao</span><span class="notes-def">Ginagawang <strong>uling</strong></span></div>
+          <div class="notes-item"><span class="notes-term">Hibla ng dahon</span><span class="notes-def">Ginagawang <strong>lubid</strong></span></div>
+          <div class="notes-item"><span class="notes-term">Laman at sabaw</span><span class="notes-def">Kinakain o ginagamit sa iba't ibang lutuin</span></div>
+        </div>
+        <div class="tandaan-box">
+          <span class="tandaan-label">TANDAAN</span>
+          Ang <strong>dumi ng manok at baka</strong> ay ginagamit na <strong>pataba</strong> sa lupa. Ang <strong>balat ng hayop (leather)</strong> ay ginagawang sapatos, bag, at palamuti. Maraming inaning produkto ang <strong>iniluluwas</strong> sa ibang bansa.
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-gubat">
+        <div class="chapter-summary">
+          📚 <strong>Buod:</strong> Mahigit <strong>70,000 km²</strong> ng kalupaan ang kagubatan. Mahigit <strong>3,000 uri</strong> ng punongkahoy ang naroon. Ang yamang gubat ang pinagkukunan ng hilaw na materyales para sa iba't ibang industriya.
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 PAMPADALING TANDAAN</span>
+          <strong>"BAKAWAN = BAKod"</strong> sa gilid ng tubig. <strong>"Pagtotroso"</strong> = <strong>troso</strong> (putol na kahoy), kaya pagputol at pagproseso ng puno. Mga punong kahoy: <strong>"Na-Mo-Ya-A-Ta-La-A"</strong> = Narra, Molave, Yakal, Apitong, Tanguile, Lauan, Acacia.
+        </div>
+        <table class="compare-table">
+          <tr><th>Yamang Gubat</th><th>Gamit / Kahalagahan</th></tr>
+          <tr><td>Punongkahoy</td><td>Papel, muwebles, at bahay</td></tr>
+          <tr><td>Kawayan</td><td>Kahoy: konstruksyon at muwebles; hibla: basket at kasangkapan; pumipigil sa baha at pagguho ng lupa</td></tr>
+          <tr><td>Rattan</td><td>Basket at muwebles</td></tr>
+          <tr><td>Bakawan</td><td>Nasa baybayin; bakod sa gilid ng tubig; kahoy, panggatong, sangkap sa gamot at tela; tahanan ng isda, kabibe, hipon, at alimango; proteksiyon sa mapaminsalang alon</td></tr>
+        </table>
+        <div class="notes-topic">
+          <div class="notes-topic-title">🌳 Bakit Mahalaga ang Kagubatan?</div>
+          <div class="notes-item"><span class="notes-term">Hilaw na materyales</span><span class="notes-def">Para sa pagkain, parmasyutika, konstruksyon, paghahabi, at iba pa</span></div>
+          <div class="notes-item"><span class="notes-term">Hangin at tubig</span><span class="notes-def">Nagpapanatili ng malinis na hangin at suplay ng tubig</span></div>
+          <div class="notes-item"><span class="notes-term">Lupa</span><span class="notes-def">Pinipigilan ng mga puno at halaman ang pagguho ng lupa sa bundok</span></div>
+          <div class="notes-item"><span class="notes-term">Biodiversity</span><span class="notes-def">Tahanan ng sari-saring hayop at halaman</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-tubig">
+        <div class="chapter-summary">
+          📚 <strong>Buod:</strong> Nasa <strong>Coral Triangle</strong> ang Pilipinas, kaya sagana ito sa yamang tubig. Itinuturing itong <strong>sentro ng marine biodiversity</strong> sa buong daigdig.
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 PAMPADALING TANDAAN</span>
+          <strong>Tubig-ALAT</strong> = tamban, tambakol, <strong>lapu-lapu</strong>, <strong>galunggong</strong>. <strong>Tubig-TABANG at palaisdaan</strong> = <strong>tilapia, bangus, ulang</strong>. Tandaan: ang <strong>T</strong>ilapia ay <strong>T</strong>abang.
+        </div>
+        <table class="compare-table">
+          <tr><th>Uri ng Tubig</th><th>Halimbawa</th></tr>
+          <tr><td>Tubig-alat</td><td>Tambakol, tamban, lapu-lapu, galunggong</td></tr>
+          <tr><td>Tubig-tabang at palaisdaan</td><td>Ulang, tilapia, bangus</td></tr>
+          <tr><td>Halamang-dagat</td><td>Sangkap ng pagkain at pataba; tahanan at pagkain ng isda; kinokonsumo ang carbon dioxide sa katubigan</td></tr>
+        </table>
+        <div class="notes-topic">
+          <div class="notes-topic-title">🐟 Tsart ng Lamang-Dagat (SEAFDEC, metrikong tonelada)</div>
+          <div class="notes-item"><span class="notes-term">Pinakamarami noong 2020</span><span class="notes-def">Tuna (520,167); sumunod ang Scad (387,035) at Sardinas (348,498)</span></div>
+          <div class="notes-item"><span class="notes-term">Pinakakaunti noong 2020</span><span class="notes-def">Alimango (33,545)</span></div>
+          <div class="notes-item"><span class="notes-term">Bumaba mula 2015 → 2020</span><span class="notes-def">Tuna, Sardinas, Mackerel, Pusit, Carangid</span></div>
+          <div class="notes-item"><span class="notes-term">Tumaas mula 2015 → 2020</span><span class="notes-def">Scad, Hipon/Sugpo, Alimango</span></div>
+        </div>
+        <div class="tandaan-box">
+          <span class="tandaan-label">PAALALA</span>
+          Sa <strong>Subukin Natin</strong> na may tanong na "Ano ang napapansin mo?" at "Ano ang dahilan?", walang nakasulat na sagot sa aralin. Ang mga bilang sa itaas ay galing sa tsart; ang dahilan ay sagot mo.
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-mineral">
+        <div class="chapter-summary">
+          📚 <strong>Buod:</strong> Nauuri ang yamang mineral sa <strong>tatlo</strong>: <strong>metal, di-metal, at petrolyo</strong>. Kinukuha ang mga ito sa pamamagitan ng <strong>pagmimina</strong> sa kabundukan, baybayin, at seabed.
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 PAMPADALING TANDAAN</span>
+          <strong>"ME-DI-PE"</strong> = <strong>Me</strong>tal, <strong>Di</strong>-metal, <strong>Pe</strong>trolyo. <strong>Petrolyo = Panggatong</strong>. <strong>Chromite → Chef's pot</strong> (stainless na panluto). <strong>Nickel → baterya</strong>. <strong>Aspalto → kalsada</strong>. <strong>Limestone → semento</strong>.
+        </div>
+        <table class="compare-table">
+          <tr><th>Uri</th><th>Halimbawa</th><th>Produkto / Gamit</th></tr>
+          <tr><td>Metal</td><td>Bakal (iron)</td><td>Bahay, tulay, gusali, kotse, appliances, elektroniks</td></tr>
+          <tr><td>Metal</td><td>Tanso</td><td>Kawad ng produktong elektroniko</td></tr>
+          <tr><td>Metal</td><td>Chromite</td><td>Hinahalo sa stainless steel (panluto, sasakyan)</td></tr>
+          <tr><td>Metal</td><td>Nickel</td><td>Baterya</td></tr>
+          <tr><td>Metal</td><td>Ginto at pilak</td><td>Alahas</td></tr>
+          <tr><td>Di-metal</td><td>Limestone</td><td>Semento</td></tr>
+          <tr><td>Di-metal</td><td>Aspalto</td><td>Kalsada</td></tr>
+          <tr><td>Di-metal</td><td>Asin</td><td>Pampalasa; pag-iimbak ng pagkain</td></tr>
+          <tr><td>Di-metal</td><td>Marmol</td><td>Palamuti sa bahay at gusali; iskultura</td></tr>
+          <tr><td>Di-metal</td><td>Sulfur</td><td>Baterya, pataba, pagsasala ng krudong langis</td></tr>
+          <tr><td>Petrolyo</td><td>Langis, karbon, natural na gas</td><td>Panggatong; pagpapatakbo ng sasakyan at makinarya; paglikha ng kuryente</td></tr>
+        </table>
+        <div class="tandaan-box">
+          <span class="tandaan-label">TANDAAN</span>
+          Ang mga <strong>metal</strong> ay karaniwang matatagpuan sa <strong>kabundukan</strong>. Tinatayang <strong>26.3 trilyong dolyares</strong> ang halaga ng deposito ng langis; malaking bahagi raw nito ay nasa <strong>Kanlurang Dagat Pilipinas</strong>. Ang mga di-metal tulad ng buhangin, graba, luwad, gypsum, asbestos, at dolomite ay para sa konstruksyon.
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-tamomali">
+        <div class="notes-topic">
+          <div class="notes-topic-title">✅ Tama o Mali — Mga Paalala</div>
+          <div class="notes-item"><span class="notes-term"><span style="color:#ef4444">MALI</span></span><span class="notes-def">Apat ang uri ng pinagkukunan-yaman → <strong>tatlo</strong> lamang: likas na yaman, yamang tao, yamang kapital.</span></div>
+          <div class="notes-item"><span class="notes-term"><span style="color:#ef4444">MALI</span></span><span class="notes-def">Organiko ang lupa, tubig, at mineral → <strong>di-organiko</strong> ang mga ito; ang halaman at hayop ang organiko.</span></div>
+          <div class="notes-item"><span class="notes-term"><span style="color:#ef4444">MALI</span></span><span class="notes-def">Buong 300,000 km² ay sakahan → <strong>tinatayang 130,000 km²</strong> lamang.</span></div>
+          <div class="notes-item"><span class="notes-term"><span style="color:#ef4444">MALI</span></span><span class="notes-def">Hibla ng niyog ang uling → <strong>bao</strong> ang uling; <strong>hibla ng dahon</strong> ang lubid.</span></div>
+          <div class="notes-item"><span class="notes-term"><span style="color:#ef4444">MALI</span></span><span class="notes-def">Paghahayupan ang pagputol ng puno → <strong>pagtotroso</strong> iyon; paghahayupan ay pag-aalaga ng hayop.</span></div>
+          <div class="notes-item"><span class="notes-term"><span style="color:#ef4444">MALI</span></span><span class="notes-def">Nasa bundok ang bakawan → nasa <strong>baybayin</strong>.</span></div>
+          <div class="notes-item"><span class="notes-term"><span style="color:#ef4444">MALI</span></span><span class="notes-def">Ginto, pilak, tanso, at nickel ay di-metal → <strong>metal</strong> ang mga ito.</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-ptest">
+        <div class="notes-topic">
+          <div class="notes-topic-title">📝 Practice Test (60 aytem)</div>
+<div class="ptest-part-title">Bahagi I — Pagtambalin: Anong Yaman Ito?</div>
+<div class="ptest-bank"><strong>Hanay B (maaaring gamitin nang higit sa isang beses):</strong> Yamang Lupa &middot; Yamang Gubat &middot; Yamang Tubig &middot; Yamang Mineral</div>
+<div class="ptest-q"><b>1.</b> Pagsasaka ng palay, mais, niyog, at tubo. <span class="opt">Sagot: ______________</span></div>
+<div class="ptest-q"><b>2.</b> Bakawan at kawayan. <span class="opt">Sagot: ______________</span></div>
+<div class="ptest-q"><b>3.</b> Perlas, korales, at kabibe. <span class="opt">Sagot: ______________</span></div>
+<div class="ptest-q"><b>4.</b> Ginto, pilak, at tanso. <span class="opt">Sagot: ______________</span></div>
+<div class="ptest-q"><b>5.</b> Paghahayupan (pag-aalaga ng baka, kambing, at kalabaw). <span class="opt">Sagot: ______________</span></div>
+<div class="ptest-q"><b>6.</b> Narra, molave, at yakal. <span class="opt">Sagot: ______________</span></div>
+<div class="ptest-q"><b>7.</b> Tilapia at bangus sa mga palaisdaan. <span class="opt">Sagot: ______________</span></div>
+<div class="ptest-q"><b>8.</b> Langis, karbon, at natural na gas. <span class="opt">Sagot: ______________</span></div>
+<div class="ptest-q"><b>9.</b> Aquaculture. <span class="opt">Sagot: ______________</span></div>
+<div class="ptest-q"><b>10.</b> Rattan. <span class="opt">Sagot: ______________</span></div>
+<div class="ptest-part-title">Bahagi II — Piliin ang Tamang Sagot</div>
+<div class="ptest-q"><b>11.</b> Ilang uri ang pinagkukunan-yaman ng Pilipinas?<br><span class="opt">a) 2</span><span class="opt">b) 3</span><span class="opt">c) 4</span><span class="opt">d) 5</span></div>
+<div class="ptest-q"><b>12.</b> Ano ang tawag sa mga hilaw na materyales mula sa kalikasan na maaaring gamitin at iproseso upang tugunan ang pangangailangan ng tao?<br><span class="opt">a) yamang tao</span><span class="opt">b) yamang kapital</span><span class="opt">c) likas na yaman</span><span class="opt">d) serbisyo</span></div>
+<div class="ptest-q"><b>13.</b> Alin ang halimbawa ng likas na yamang organiko?<br><span class="opt">a) lupa</span><span class="opt">b) tubig</span><span class="opt">c) halaman</span><span class="opt">d) mineral</span></div>
+<div class="ptest-q"><b>14.</b> Gaano kalawak ang kalupaan ng Pilipinas?<br><span class="opt">a) 130,000 km²</span><span class="opt">b) 70,000 km²</span><span class="opt">c) 300,000 km²</span><span class="opt">d) 26,300 km²</span></div>
+<div class="ptest-q"><b>15.</b> Tinatayang gaano kalawak na lupa ang ginagamit sa pagsasaka?<br><span class="opt">a) 130,000 kilometro kuwadrado</span><span class="opt">b) 300,000 kilometro kuwadrado</span><span class="opt">c) 70,000 kilometro kuwadrado</span><span class="opt">d) 3,000 kilometro kuwadrado</span></div>
+<div class="ptest-q"><b>16.</b> Anong bahagi ng niyog ang maaaring gawing uling?<br><span class="opt">a) hibla ng dahon</span><span class="opt">b) bao</span><span class="opt">c) langis</span><span class="opt">d) sabaw</span></div>
+<div class="ptest-q"><b>17.</b> Ano ang ginagawa sa hibla ng dahon ng niyog?<br><span class="opt">a) lubid</span><span class="opt">b) uling</span><span class="opt">c) sabon</span><span class="opt">d) gatas</span></div>
+<div class="ptest-q"><b>18.</b> Ano ang ginagamit na pataba sa lupa mula sa mga hayop?<br><span class="opt">a) dumi ng hayop</span><span class="opt">b) balat ng hayop</span><span class="opt">c) itlog</span><span class="opt">d) gatas</span></div>
+<div class="ptest-q"><b>19.</b> Ano ang aquaculture?<br><span class="opt">a) pagputol ng mga puno</span><span class="opt">b) paggamit sa lupa bilang palaisdaan</span><span class="opt">c) pagmimina sa bundok</span><span class="opt">d) pag-aalaga ng manok</span></div>
+<div class="ptest-q"><b>20.</b> Gaano kalawak ang kagubatan sa Pilipinas?<br><span class="opt">a) mahigit 70,000 kilometro kuwadrado</span><span class="opt">b) mahigit 300,000 kilometro kuwadrado</span><span class="opt">c) mahigit 3,000 kilometro kuwadrado</span><span class="opt">d) mahigit 26,300 kilometro kuwadrado</span></div>
+<div class="ptest-q"><b>21.</b> Ano ang pagtotroso?<br><span class="opt">a) pagmimina ng ginto</span><span class="opt">b) pag-aalaga ng hayop</span><span class="opt">c) pagputol at pagproseso ng mga punongkahoy</span><span class="opt">d) paggawa ng fish pond</span></div>
+<div class="ptest-q"><b>22.</b> Ano ang naitutulong ng bakawan sa baybayin?<br><span class="opt">a) nagbibigay ng langis</span><span class="opt">b) nagpapataba ng bundok</span><span class="opt">c) natural na proteksiyon sa mapaminsalang alon</span><span class="opt">d) nagbibigay ng asin</span></div>
+<div class="ptest-q"><b>23.</b> Alin ang nakatutulong na pigilan ang baha at pagguho ng lupa?<br><span class="opt">a) kawayan</span><span class="opt">b) asin</span><span class="opt">c) sulfur</span><span class="opt">d) perlas</span></div>
+<div class="ptest-q"><b>24.</b> Ang Pilipinas ay matatagpuan sa rehiyong tinatawag na ____.<br><span class="opt">a) Pacific Triangle</span><span class="opt">b) Coral Triangle</span><span class="opt">c) Golden Triangle</span><span class="opt">d) Bermuda Triangle</span></div>
+<div class="ptest-q"><b>25.</b> Ano ang marine biodiversity?<br><span class="opt">a) iba&#x27;t ibang uri ng buhay sa ilalim ng karagatan</span><span class="opt">b) pagmimina sa seabed</span><span class="opt">c) paggawa ng fish pond</span><span class="opt">d) pagtatanim ng palay</span></div>
+<div class="ptest-q"><b>26.</b> Alin ang isdang sagana sa tubig-alat?<br><span class="opt">a) tilapia</span><span class="opt">b) bangus</span><span class="opt">c) galunggong</span><span class="opt">d) ulang</span></div>
+<div class="ptest-q"><b>27.</b> Ano ang ginagawa ng mga halamang-dagat sa carbon dioxide sa katubigan?<br><span class="opt">a) kinokonsumo ito</span><span class="opt">b) ginagawa itong langis</span><span class="opt">c) ginagawa itong asin</span><span class="opt">d) pinalalabas ito sa hangin</span></div>
+<div class="ptest-q"><b>28.</b> Alin sa sumusunod ang mineral na di-metal?<br><span class="opt">a) ginto</span><span class="opt">b) asin</span><span class="opt">c) tanso</span><span class="opt">d) nickel</span></div>
+<div class="ptest-q"><b>29.</b> Para saan hinahalo ang chromite?<br><span class="opt">a) paggawa ng stainless steel</span><span class="opt">b) paggawa ng semento</span><span class="opt">c) paggawa ng sabon</span><span class="opt">d) paggawa ng papel</span></div>
+<div class="ptest-q"><b>30.</b> Saan sinasabing matatagpuan ang malaking bahagi ng deposito ng langis ng Pilipinas?<br><span class="opt">a) Kanlurang Dagat Pilipinas</span><span class="opt">b) Silangang Dagat Pilipinas</span><span class="opt">c) Hilagang bundok ng Luzon</span><span class="opt">d) Gitnang kapatagan ng Luzon</span></div>
+<div class="ptest-part-title">Bahagi III — Uri ng Yamang Mineral</div>
+<div class="ptest-bank">Isulat ang <b>M</b> kung metal, <b>DM</b> kung di-metal, at <b>P</b> kung petrolyo.</div>
+<div class="ptest-q"><b>31.</b> Langis <span class="opt">Sagot: ______</span></div>
+<div class="ptest-q"><b>32.</b> Chromite <span class="opt">Sagot: ______</span></div>
+<div class="ptest-q"><b>33.</b> Asin <span class="opt">Sagot: ______</span></div>
+<div class="ptest-q"><b>34.</b> Karbon <span class="opt">Sagot: ______</span></div>
+<div class="ptest-q"><b>35.</b> Aspalto <span class="opt">Sagot: ______</span></div>
+<div class="ptest-q"><b>36.</b> Bakal <span class="opt">Sagot: ______</span></div>
+<div class="ptest-q"><b>37.</b> Ginto <span class="opt">Sagot: ______</span></div>
+<div class="ptest-q"><b>38.</b> Marmol <span class="opt">Sagot: ______</span></div>
+<div class="ptest-q"><b>39.</b> Natural na gas <span class="opt">Sagot: ______</span></div>
+<div class="ptest-q"><b>40.</b> Pilak <span class="opt">Sagot: ______</span></div>
+<div class="ptest-part-title">Bahagi IV — Tama o Mali</div>
+<div class="ptest-q"><b>41.</b> Tatlo ang uri ng pinagkukunan-yaman ng Pilipinas. <span class="opt">Sagot: ______</span></div>
+<div class="ptest-q"><b>42.</b> Ang lupa at tubig ay mga likas na yamang organiko. <span class="opt">Sagot: ______</span></div>
+<div class="ptest-q"><b>43.</b> Ang buong 300,000 kilometro kuwadrado ng kalupaan ng Pilipinas ay ginagamit sa pagsasaka. <span class="opt">Sagot: ______</span></div>
+<div class="ptest-q"><b>44.</b> Ang bao ng niyog ay maaaring gawing uling. <span class="opt">Sagot: ______</span></div>
+<div class="ptest-q"><b>45.</b> Ang aquaculture ay pag-aalaga ng manok at baka. <span class="opt">Sagot: ______</span></div>
+<div class="ptest-q"><b>46.</b> Ang bakawan ay tahanan ng isda, kabibe, hipon, at alimango. <span class="opt">Sagot: ______</span></div>
+<div class="ptest-q"><b>47.</b> Itinuturing ang Pilipinas na sentro ng marine biodiversity sa buong daigdig. <span class="opt">Sagot: ______</span></div>
+<div class="ptest-q"><b>48.</b> Ang asin ay isang mineral na metal. <span class="opt">Sagot: ______</span></div>
+<div class="ptest-q"><b>49.</b> Ang nickel ay ginagamit sa baterya. <span class="opt">Sagot: ______</span></div>
+<div class="ptest-q"><b>50.</b> Mahalaga ang petrolyo sa pagpapatakbo ng mga sasakyan at makinarya at sa paglikha ng kuryente. <span class="opt">Sagot: ______</span></div>
+<div class="ptest-part-title">Bahagi V — Pagbasa ng Tsart ng Lamang-Dagat</div>
+<div class="ptest-bank">Mula sa tsart ng SEAFDEC (metrikong tonelada): Tuna — 2015: 560,161; 2020: 520,167 · Sardinas — 2015: 384,711; 2020: 348,498 · Scad — 2015: 364,793; 2020: 387,035 · Alimango — 2015: 27,207; 2020: 33,545</div>
+<div class="ptest-q"><b>51.</b> Aling lamang-dagat sa itaas ang may pinakamaraming nahuli noong 2020? <span class="opt">Sagot: ______________</span></div>
+<div class="ptest-q"><b>52.</b> Alin ang mas marami noong 2020: sardinas o scad? <span class="opt">Sagot: ______________</span></div>
+<div class="ptest-q"><b>53.</b> Tumaas o bumaba ang nahuling tuna mula 2015 hanggang 2020? <span class="opt">Sagot: ______________</span></div>
+<div class="ptest-q"><b>54.</b> Tumaas o bumaba ang nahuling alimango mula 2015 hanggang 2020? <span class="opt">Sagot: ______________</span></div>
+<div class="ptest-q"><b>55.</b> Ilang metrikong tonelada ng scad ang nahuli noong 2020? <span class="opt">Sagot: ______________</span></div>
+<div class="ptest-part-title">Bahagi VI — Maikling Sagot</div>
+<div class="ptest-q"><b>56.</b> Ano ang tatlong uri ng pinagkukunan-yaman ng Pilipinas?<br><span class="opt">______________________________________</span></div>
+<div class="ptest-q"><b>57.</b> Magbigay ng tatlong gamit ng niyog.<br><span class="opt">______________________________________</span></div>
+<div class="ptest-q"><b>58.</b> Magbigay ng dalawang dahilan kung bakit mahalaga ang mga kagubatan.<br><span class="opt">______________________________________</span></div>
+<div class="ptest-q"><b>59.</b> Ano ang tatlong uri ng yamang mineral? Magbigay ng isang halimbawa ng bawat isa.<br><span class="opt">______________________________________</span></div>
+<div class="ptest-q"><b>60.</b> Bakit mahalaga ang bakawan? Magbigay ng dalawang dahilan.<br><span class="opt">______________________________________</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-key">
+        <div class="notes-topic">
+<div class="notes-topic-title">Bahagi I — Pagtambalin</div>
+<div class="key-grid"><div class="key-pill">1. <b>Yamang Lupa</b></div><div class="key-pill">2. <b>Yamang Gubat</b></div><div class="key-pill">3. <b>Yamang Tubig</b></div><div class="key-pill">4. <b>Yamang Mineral</b></div><div class="key-pill">5. <b>Yamang Lupa</b></div><div class="key-pill">6. <b>Yamang Gubat</b></div><div class="key-pill">7. <b>Yamang Tubig</b></div><div class="key-pill">8. <b>Yamang Mineral</b></div><div class="key-pill">9. <b>Yamang Lupa</b></div><div class="key-pill">10. <b>Yamang Gubat</b></div></div>
+<div class="notes-topic-title">Bahagi II — Multiple Choice</div>
+<div class="key-grid"><div class="key-pill">11. <b>b) 3</b></div><div class="key-pill">12. <b>c) likas na yaman</b></div><div class="key-pill">13. <b>c) halaman</b></div><div class="key-pill">14. <b>c) 300,000 km²</b></div><div class="key-pill">15. <b>a) 130,000 kilometro kuwadrado</b></div><div class="key-pill">16. <b>b) bao</b></div><div class="key-pill">17. <b>a) lubid</b></div><div class="key-pill">18. <b>a) dumi ng hayop</b></div><div class="key-pill">19. <b>b) paggamit sa lupa bilang palaisdaan</b></div><div class="key-pill">20. <b>a) mahigit 70,000 kilometro kuwadrado</b></div><div class="key-pill">21. <b>c) pagputol at pagproseso ng mga punongkahoy</b></div><div class="key-pill">22. <b>c) natural na proteksiyon sa mapaminsalang alon</b></div><div class="key-pill">23. <b>a) kawayan</b></div><div class="key-pill">24. <b>b) Coral Triangle</b></div><div class="key-pill">25. <b>a) iba&#x27;t ibang uri ng buhay sa ilalim ng karagatan</b></div><div class="key-pill">26. <b>c) galunggong</b></div><div class="key-pill">27. <b>a) kinokonsumo ito</b></div><div class="key-pill">28. <b>b) asin</b></div><div class="key-pill">29. <b>a) paggawa ng stainless steel</b></div><div class="key-pill">30. <b>a) Kanlurang Dagat Pilipinas</b></div></div>
+<div class="notes-topic-title">Bahagi III — M, DM, o P</div>
+<div class="key-grid"><div class="key-pill">31. <b>P</b></div><div class="key-pill">32. <b>M</b></div><div class="key-pill">33. <b>DM</b></div><div class="key-pill">34. <b>P</b></div><div class="key-pill">35. <b>DM</b></div><div class="key-pill">36. <b>M</b></div><div class="key-pill">37. <b>M</b></div><div class="key-pill">38. <b>DM</b></div><div class="key-pill">39. <b>P</b></div><div class="key-pill">40. <b>M</b></div></div>
+<div class="notes-topic-title">Bahagi IV — Tama o Mali</div>
+<div class="key-grid"><div class="key-pill">41. <b>TAMA</b></div><div class="key-pill">42. <b>MALI</b></div><div class="key-pill">43. <b>MALI</b></div><div class="key-pill">44. <b>TAMA</b></div><div class="key-pill">45. <b>MALI</b></div><div class="key-pill">46. <b>TAMA</b></div><div class="key-pill">47. <b>TAMA</b></div><div class="key-pill">48. <b>MALI</b></div><div class="key-pill">49. <b>TAMA</b></div><div class="key-pill">50. <b>TAMA</b></div></div>
+<div class="notes-topic-title">Bahagi V — Tsart</div>
+<div class="key-grid"><div class="key-pill">51. <b>Tuna</b></div><div class="key-pill">52. <b>Scad</b></div><div class="key-pill">53. <b>Bumaba</b></div><div class="key-pill">54. <b>Tumaas</b></div><div class="key-pill">55. <b>387,035</b></div></div>
+<div class="notes-topic-title">Bahagi VI — Maikling Sagot (mga halimbawang sagot)</div>
+<div class="ptest-q"><b>56.</b> Likas na yaman, yamang tao, at yamang kapital.</div><div class="ptest-q"><b>57.</b> Langis para sa sabon at pampaganda; bao na ginagawang uling; hibla ng dahon na ginagawang lubid; laman at sabaw na kinakain o ginagamit sa lutuin (alinmang tatlo).</div><div class="ptest-q"><b>58.</b> Pinagkukunan ng hilaw na materyales; nagpapanatili ng malinis na hangin at suplay ng tubig; pumipigil sa pagguho ng lupa sa bundok; tahanan ng sari-saring hayop at halaman (alinmang dalawa).</div><div class="ptest-q"><b>59.</b> Metal (hal. ginto, tanso, bakal), di-metal (hal. asin, marmol, limestone), at petrolyo (hal. langis, karbon, natural na gas).</div><div class="ptest-q"><b>60.</b> Natural na proteksiyon sa mapaminsalang alon; tahanan ng isda, kabibe, hipon, at alimango; pinagkukunan ng kahoy, panggatong, at sangkap sa gamot at tela (alinmang dalawa).</div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-raw">
+        <div class="rawnotes-intro">
+          📌 Ito ang orihinal na nilalaman ng dokumentong ini-upload, nang walang binago — para madali mong masangguni ang buong teksto kapag kailangan mo ng detalye na wala sa reviewer.
+        </div>
+        <div class="rawnotes-doc">
+<h3 class="doc-heading">Pinagkukunan-Yaman</h3>
+<p>Masdan mo ang iyong sarili at ang iyong paligid. Ano-anong mga produkto, kagamitan, at serbisyo ang ginagamit mo sa isang araw? Saan kaya nagmula ang mga ito?</p>
+<p>Lahat ng mga produkto at serbisyong napakikinabangan ng mga tao ay nagmumula sa mga pinagkukunan-yaman. Maaari nating hatiin sa tatlong uri ang mga pinagkukunan-yaman ng Pilipinas. Ito ang mga likas na yaman, yamang tao, at yamang kapital.</p>
+<h3 class="doc-heading">Likas na Yaman</h3>
+<p>Ang mga likas na yaman ay mga hilaw na materyales mula sa kalikasan na maaaring gamitin at iproseso upang tugunan ang mga pangangailangan ng mga tao. May mga likas na yaman na organiko, may buhay, tulad ng mga halaman at hayop. May mga likas na yaman ding di-organiko, tulad ng lupa, tubig, bato, metal, at mineral.</p>
+<p>Bilang isang arkipelago na may klimang tropikal, sari-saring likas na yaman ang matatagpuan sa Pilipinas. Sa ating mga yamang lupa, yamang gubat, yamang tubig, at yamang mineral nagmumula ang ating mga pangunahing pangangailangan tulad ng pagkain, tubig, damit, tirahan, at iba pa. Isa-isahin natin ang iba't ibang yamang taglay ng kapuluan ng Pilipinas.</p>
+<h3 class="doc-heading">Yamang Lupa</h3>
+<p>Ang yamang lupa ay tumutukoy sa mga likas na yaman na matatagpuan sa ibabaw ng lupa. Kabilang dito ang mismong lupa at ang mga hilaw na produktong makukuha rito. May lawak na 300,000 kilometro kuwadrado ang kalupaan ng Pilipinas na binubuo ng mga isla, kabundukan, kapatagan, at iba pa. Ang malawak at matabang lupa sa mga kapatagan ng Pilipinas ay mainam para sa agrikultura, na pinagkukunan ng makakain at kabuhayan ng mga mamamayan. Gayundin, ang klimang tropikal na nararanasan ng bansa ay nagbibigay ng tag-ulan na nakatutulong sa mga pananim.</p>
+<p>Tinatayang 130,000 kilometro kuwadrado ng lupa sa Pilipinas ay ginagamit sa pagsasaka. Ang mga lupain ay tinatamnan ng palay, mais, niyog, at tubo. May iba't ibang uri ng mga prutas at gulay na tinatanim at inaani sa bansa na nagiging mahalagang pinagkukunan ng pagkain ng mga Pilipino. Kabilang dito ang mangga, saging, pinya, durian, kamatis, repolyo, sibuyas, at marami pang iba. Marami rin sa mga inaning produkto sa Pilipinas ang iniluluwas at ibinobenta sa ibang bansa.</p>
+<p>May mga pananim ding ginagamit bilang sangkap o materyales ng mga produkto bukod sa pagkain. Isang halimbawa nito ang niyog na ginagamit sa paggawa ng iba't ibang produkto. Ang langis ng niyog ay sangkap sa mga sabon, pampaganda, at iba pa. Maaari ding gawing uling ang bao nito. Ginagawa namang lubid ang hibla ng dahon ng niyog. Ang laman at sabaw ng niyog ay maaaring kainin o gamitin sa iba't ibang lutuin. Ilan lamang ito sa mga pakinabang na nakukuha mula sa niyog.</p>
+<p>Bukod sa pagsasaka, mahalaga rin ang lupa sa paghahayupan. Tumutukoy ito sa pag-aalaga ng mga hayop na mapagkukunan ng karne bilang pagkain tulad ng mga manok, baka, kambing, at kalabaw.</p>
+<p>Bukod sa karne, mapagkukunan din ang mga hayop na ito ng itlog, gatas, at iba pang materyales tulad ng balat ng hayop (leather) na ginagamit sa paggawa ng sapatos, bag, at iba pang palamuti. Mayroon ding ugnayan ang paghahayupan sa iba pang gawaing agrikultural. Halimbawa, ginagamit ang dumi ng mga hayop tulad ng manok at baka bilang pataba sa lupa.</p>
+<p>Isa pang paraan ng paggamit sa yamang lupa ang aquaculture o ang paggamit sa lupa bilang palaisdaan. Sa paraang ito, nakapagpaparami ng mga isda, lamang-dagat, at halamang tubig sa kalupaan sa pamamagitan ng pagpapagawa ng mga artipisyal na lawa at fish pond.</p>
+<h3 class="doc-heading">Yamang Gubat</h3>
+<p>Nasa mahigit 70,000 kilometro kuwadrado ng kalupaan ng Pilipinas ang itinuturing na kagubatan. Tahanan ang mga kagubatang ito ng iba't ibang uri ng halaman, hayop, at iba pang yamang gubat. Mahigit 3,000 uri ng punongkahoy ang matatagpuan sa mga kagubatan ng Pilipinas.</p>
+<p>Kabilang sa mga punong ito ang narra, molave, yakal, apitong, tanguile, lauan, at acacia. Nagmumula sa mga punongkahoy ang mga materyales na ginagamit sa paggawa ng papel, muwebles, at bahay. Pagtotroso ang tawag sa pagputol at pagproseso sa mga punongkahoy upang magamit sa iba't ibang industriya.</p>
+<p>Marami ring kawayan sa ating mga kagubatan. Tulad ng punongkahoy, Ginagamit din ang kahoy mula sa kawayan sa konstruksyon at paggawa ng mga muwebles. Ginagamit naman ang hibla nito sa paggawa ng mga basket at iba pang kasangkapan. Nakatutulong din ito sa pagpigil ng baha at pagguho ng lupa. Ang rattan naman ay ginagamit sa paggawa ng mga basket at muwebles.</p>
+<p>Matatagpuan naman ang bakawan sa mga baybayin ng Pilipinas. Ito ang nagsisilbing mga bakod sa gilid ng tubig. Pinagkukunan ito ng kahoy, panggatong, at mga sangkap sa paggawa ng gamot at tela. Nagsisilbi rin itong tahanan ng mga isda, kabibe, hipon, at alimango. Mahalaga ang bakawan bilang natural na proteksiyon sa mapaminsalang mga alon.</p>
+<p>Sa pangkalahatan, ang yamang gubat ang pinagkukunan ng mga hilaw na materyales na ginagamit sa iba't ibang industriya tulad ng pagkain, parmasyutika, konstruksyon, paghahabi, at iba pa. Bukod dito, ang mga kagubatan ay mahalaga sa pagpapanatili ng malinis na hangin at suplay ng tubig. Mahalaga rin ang mga puno at halaman sa kagubatan upang hindi gumuho ang lupa sa mga bundok. Bilang tahanan ng sari-saring mga hayop at halaman, mahalaga ang mga yamang gubat sa pagpapanatili ng dibersidad (biodiversity) sa kalikasan.</p>
+<h3 class="doc-heading">Subukin Natin</h3>
+<p>Tukuyin ang pakinabang o yaring produkto na maaaring gawin mula sa sumusunod na mga likas na yaman. Punan ang tsart sa ibaba.</p>
+<table style="width:97%;">
+<colgroup>
+<col style="width: 35%" />
+<col style="width: 62%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>Likas na Yaman</strong></th>
+<th style="text-align: left;"><strong>Pakinabang o Yaring Produkto</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">1. baka</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2. puno ng narra</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">3. mangga</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">4. manok</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">5. mais</td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table>
+<h3 class="doc-heading">Yamang Tubig</h3>
+<p>Matatagpuan ang Pilipinas sa rehiyong kilala bilang Coral Triangle na mapagkukunan ng iba't ibang yamang tubig. Dahil dito, ang mga anyong tubig ng bansa ay sagana sa iba't ibang uri ng isda, korales, kabibe, perlas, at iba pang yamang tubig. Sa katunayan, itinuturing ang Pilipinas bilang sentro ng marine biodiversity sa buong daigdig. Ang marine biodiversity ay tumutukoy sa iba't ibang uri ng buhay na naninirahan sa ilalim ng karagatan. Mahalaga ang biodiversity upang mapanatili ang balanse sa kalikasan na kailangan upang masuportahan ang buhay sa daigdig.</p>
+<p>Ang tambakol, tamban, lapu-lapu, at galunggong ay ilan lamang sa mga isdang sagana sa mga tubig-alat ng Pilipinas. Karaniwang pinaparami at nakukuha ang mga ulang at mga isdang tilapia at bangus sa mga tubig-tabang at mga palaisdaan. Bukod sa mga ito, marami ring pakinabang ang mga halamang-dagat. Ginagamit ang mga ito bilang sangkap ng pagkain at pataba sa lupa. Mahalaga rin ang papel ng halamang-dagat bilang tahanan at pagkain ng mga isda at sa pagkonsumo ng carbon dioxide sa katubigan.</p>
+<h3 class="doc-heading">Subukin Natin</h3>
+<p>Pag-aralan ang tsart at sagutin ang mga tanong.</p>
+<p>Dami ng mga nahuling lamang-dagat sa Pilipinas, 2015–2020 (metrikong tonelada)</p>
+<table style="width:98%;">
+<colgroup>
+<col style="width: 27%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>Uri ng lamang-dagat</strong></th>
+<th style="text-align: left;"><strong>2020</strong></th>
+<th style="text-align: left;"><strong>2019</strong></th>
+<th style="text-align: left;"><strong>2018</strong></th>
+<th style="text-align: left;"><strong>2017</strong></th>
+<th style="text-align: left;"><strong>2016</strong></th>
+<th style="text-align: left;"><strong>2015</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Tuna</td>
+<td style="text-align: left;">520,167</td>
+<td style="text-align: left;">530,754</td>
+<td style="text-align: left;">532,856</td>
+<td style="text-align: left;">541,325</td>
+<td style="text-align: left;">509,177</td>
+<td style="text-align: left;">560,161</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Sardinas</td>
+<td style="text-align: left;">348,498</td>
+<td style="text-align: left;">334,696</td>
+<td style="text-align: left;">350,830</td>
+<td style="text-align: left;">331,485</td>
+<td style="text-align: left;">369,685</td>
+<td style="text-align: left;">384,711</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Scad</td>
+<td style="text-align: left;">387,035</td>
+<td style="text-align: left;">319,319</td>
+<td style="text-align: left;">302,516</td>
+<td style="text-align: left;">314,283</td>
+<td style="text-align: left;">356,673</td>
+<td style="text-align: left;">364,793</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mackerel</td>
+<td style="text-align: left;">83,182</td>
+<td style="text-align: left;">91,919</td>
+<td style="text-align: left;">88,614</td>
+<td style="text-align: left;">97,762</td>
+<td style="text-align: left;">103,828</td>
+<td style="text-align: left;">114,793</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Pusit</td>
+<td style="text-align: left;">49,086</td>
+<td style="text-align: left;">53,772</td>
+<td style="text-align: left;">53,506</td>
+<td style="text-align: left;">56,575</td>
+<td style="text-align: left;">59,286</td>
+<td style="text-align: left;">59,794</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Carangid</td>
+<td style="text-align: left;">52,351</td>
+<td style="text-align: left;">51,200</td>
+<td style="text-align: left;">51,918</td>
+<td style="text-align: left;">53,374</td>
+<td style="text-align: left;">60,389</td>
+<td style="text-align: left;">64,201</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Hipon/Sugpo</td>
+<td style="text-align: left;">33,823</td>
+<td style="text-align: left;">38,495</td>
+<td style="text-align: left;">32,879</td>
+<td style="text-align: left;">29,325</td>
+<td style="text-align: left;">31,416</td>
+<td style="text-align: left;">32,984</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Alimango</td>
+<td style="text-align: left;">33,545</td>
+<td style="text-align: left;">30,224</td>
+<td style="text-align: left;">34,605</td>
+<td style="text-align: left;">31,956</td>
+<td style="text-align: left;">29,532</td>
+<td style="text-align: left;">27,207</td>
+</tr>
+</tbody>
+</table>
+<p>Mula sa SEAFDEC: <a href="http://www.seafdec.org/fisheries-country-profile-philippines/?utm_source=chatgpt.com">http://www.seafdec.org/fisheries-country-profile-philippines/</a></p>
+<p>1. Ano ang napapansin mo sa bilang ng mga nahuhuling lamang-dagat sa paglipas ng panahon?</p>
+<p>2. Ano sa iyong palagay ang dahilan nito?</p>
+<h3 class="doc-heading">Yamang Mineral</h3>
+<p>Isa ang Pilipinas sa mga bansa sa daigdig na may pinakamaraming deposito ng mineral. Karamihan sa ating mga yamang mineral ay nakukuha sa pamamagitan ng pagmimina sa mga kabundukan, baybayin, at ilalim ng dagat (seabed). Nauuri ang mga yamang mineral sa tatlo: metal, di-metal, at petrolyo.</p>
+<p>Ang mga mineral na metal ang pangunahing pinanggagalingan ng mga materyales sa konstruksyon, elektroniks, pag-aalahas, at iba pang katulad na industriya. Karaniwang natatagpuan ang mga ito sa mga kabundukan. Ilan sa mga halimbawa nito ang ginto, pilak, tanso, nickel, chromite, at iron.</p>
+<p>Samantala, ang mga mineral na di-metal ay mahalaga sa paggawa ng semento, marmol, salamin, ceramic, at iba pang materyales na gamit sa konstruksyon. Ilan sa mga halimbawa nito ang buhangin, graba, luwad, marmol, gypsum, sulfur, asbestos, dolomite, at marami pang iba.</p>
+<p>Bukod sa mga ito, mayroon ding reserba ng petrolyo ang Pilipinas. Tinatayang aabot sa 26.3 trilyong dolyares ang halaga ng deposito ng langis sa iba't ibang bahagi ng kapuluan. Sinasabing malaking bahagi nito ang matatagpuan sa Kanlurang Dagat Pilipinas.</p>
+<h3 class="doc-heading">Mga Yamang Mineral, Halimbawa, at Produkto</h3>
+<table style="width:99%;">
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 26%" />
+<col style="width: 58%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>Yamang Mineral</strong></th>
+<th style="text-align: left;"><strong>Halimbawa</strong></th>
+<th style="text-align: left;"><strong>Produkto</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Metal</td>
+<td style="text-align: left;">Bakal o iron</td>
+<td style="text-align: left;">Paggawa ng mga bahay, tulay, gusali, kotse, appliances, elektroniks, at iba pa</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Tanso</td>
+<td style="text-align: left;">Ginagamit sa mga kawad ng produktong elektroniko</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Chromite</td>
+<td style="text-align: left;">Hinahalo sa paggawa ng stainless steel na ginagamit sa mga panluto, sasakyan, at iba pa</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Nickel</td>
+<td style="text-align: left;">Baterya</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Ginto at pilak</td>
+<td style="text-align: left;">Alahas</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Di-metal</td>
+<td style="text-align: left;">Limestone</td>
+<td style="text-align: left;">Semento</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Aspalto</td>
+<td style="text-align: left;">Kalsada</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Asin</td>
+<td style="text-align: left;">Pampalasa, ginagamit sa pag-iimbak ng pagkain</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Marmol</td>
+<td style="text-align: left;">Palamuti sa mga bahay at gusali; ginagamit sa iskultura</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Sulfur</td>
+<td style="text-align: left;">Baterya, pataba, at pagsasala ng krudong langis (crude oil)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Petrolyo</td>
+<td style="text-align: left;">Langis, karbon (coal), natural na gas</td>
+<td style="text-align: left;">Panggatong</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Mahalaga sa pagpapatakbo ng mga sasakyan at makinarya</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Mahalaga sa paglikha ng kuryente</td>
+</tr>
+</tbody>
+</table>
+<p>Subukan natin:<br />
+Tukuyin kung anong uri ng yamang mineral and sumusunod na mga likas na yaman. Isulat ang M kung ito ay metal, DM kung di-metal, P kung petrolyo<br />
+1. Langis<br />
+2. Chromite<br />
+3. Asin<br />
+4. Karbon<br />
+5. Aspalto<br />
+6. Bakal</p>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ── Hidden Print Area (Practice Test + Answer Key) ── -->
+<div id="print-area">
+<div class="p-cover"><div class="p-icon">🌴</div><h1>AP 5 — Pinagkukunan-Yaman Practice Test</h1><div class="p-sub">Yamang Lupa · Gubat · Tubig · Mineral</div>
+<div class="p-info-box"><div><strong>Pangalan:</strong> _____________________________________</div><div><strong>Baitang/Pangkat:</strong> ___________________ &nbsp; <strong>Petsa:</strong> ___________________</div><div><strong>Iskor:</strong> _______ / 60</div></div>
+<div class="p-instructions"><strong>Panuto:</strong> Basahing mabuti ang bawat aytem. Isulat ang sagot sa patlang (Bahagi I, III, IV, V), piliin ang tamang letra (Bahagi II), o sagutin sa buong pangungusap (Bahagi VI). Good luck!</div></div>
+<h2 class="p-part-title">Bahagi I — Pagtambalin: Anong Yaman Ito?</h2>
+<div class="p-bank"><strong>Hanay B (maaaring gamitin nang higit sa isang beses):</strong> Yamang Lupa &middot; Yamang Gubat &middot; Yamang Tubig &middot; Yamang Mineral</div>
+<div class="p-q"><b>1.</b> Pagsasaka ng palay, mais, niyog, at tubo. <span class="p-blank"></span></div>
+<div class="p-q"><b>2.</b> Bakawan at kawayan. <span class="p-blank"></span></div>
+<div class="p-q"><b>3.</b> Perlas, korales, at kabibe. <span class="p-blank"></span></div>
+<div class="p-q"><b>4.</b> Ginto, pilak, at tanso. <span class="p-blank"></span></div>
+<div class="p-q"><b>5.</b> Paghahayupan (pag-aalaga ng baka, kambing, at kalabaw). <span class="p-blank"></span></div>
+<div class="p-q"><b>6.</b> Narra, molave, at yakal. <span class="p-blank"></span></div>
+<div class="p-q"><b>7.</b> Tilapia at bangus sa mga palaisdaan. <span class="p-blank"></span></div>
+<div class="p-q"><b>8.</b> Langis, karbon, at natural na gas. <span class="p-blank"></span></div>
+<div class="p-q"><b>9.</b> Aquaculture. <span class="p-blank"></span></div>
+<div class="p-q"><b>10.</b> Rattan. <span class="p-blank"></span></div>
+<div class="p-break"></div>
+<h2 class="p-part-title">Bahagi II — Piliin ang Tamang Sagot</h2>
+<div class="p-q"><b>11.</b> Ilang uri ang pinagkukunan-yaman ng Pilipinas?<br><span class="p-opt">a) 2</span><span class="p-opt">b) 3</span><span class="p-opt">c) 4</span><span class="p-opt">d) 5</span></div>
+<div class="p-q"><b>12.</b> Ano ang tawag sa mga hilaw na materyales mula sa kalikasan na maaaring gamitin at iproseso upang tugunan ang pangangailangan ng tao?<br><span class="p-opt">a) yamang tao</span><span class="p-opt">b) yamang kapital</span><span class="p-opt">c) likas na yaman</span><span class="p-opt">d) serbisyo</span></div>
+<div class="p-q"><b>13.</b> Alin ang halimbawa ng likas na yamang organiko?<br><span class="p-opt">a) lupa</span><span class="p-opt">b) tubig</span><span class="p-opt">c) halaman</span><span class="p-opt">d) mineral</span></div>
+<div class="p-q"><b>14.</b> Gaano kalawak ang kalupaan ng Pilipinas?<br><span class="p-opt">a) 130,000 km²</span><span class="p-opt">b) 70,000 km²</span><span class="p-opt">c) 300,000 km²</span><span class="p-opt">d) 26,300 km²</span></div>
+<div class="p-q"><b>15.</b> Tinatayang gaano kalawak na lupa ang ginagamit sa pagsasaka?<br><span class="p-opt">a) 130,000 kilometro kuwadrado</span><span class="p-opt">b) 300,000 kilometro kuwadrado</span><span class="p-opt">c) 70,000 kilometro kuwadrado</span><span class="p-opt">d) 3,000 kilometro kuwadrado</span></div>
+<div class="p-q"><b>16.</b> Anong bahagi ng niyog ang maaaring gawing uling?<br><span class="p-opt">a) hibla ng dahon</span><span class="p-opt">b) bao</span><span class="p-opt">c) langis</span><span class="p-opt">d) sabaw</span></div>
+<div class="p-q"><b>17.</b> Ano ang ginagawa sa hibla ng dahon ng niyog?<br><span class="p-opt">a) lubid</span><span class="p-opt">b) uling</span><span class="p-opt">c) sabon</span><span class="p-opt">d) gatas</span></div>
+<div class="p-q"><b>18.</b> Ano ang ginagamit na pataba sa lupa mula sa mga hayop?<br><span class="p-opt">a) dumi ng hayop</span><span class="p-opt">b) balat ng hayop</span><span class="p-opt">c) itlog</span><span class="p-opt">d) gatas</span></div>
+<div class="p-q"><b>19.</b> Ano ang aquaculture?<br><span class="p-opt">a) pagputol ng mga puno</span><span class="p-opt">b) paggamit sa lupa bilang palaisdaan</span><span class="p-opt">c) pagmimina sa bundok</span><span class="p-opt">d) pag-aalaga ng manok</span></div>
+<div class="p-q"><b>20.</b> Gaano kalawak ang kagubatan sa Pilipinas?<br><span class="p-opt">a) mahigit 70,000 kilometro kuwadrado</span><span class="p-opt">b) mahigit 300,000 kilometro kuwadrado</span><span class="p-opt">c) mahigit 3,000 kilometro kuwadrado</span><span class="p-opt">d) mahigit 26,300 kilometro kuwadrado</span></div>
+<div class="p-q"><b>21.</b> Ano ang pagtotroso?<br><span class="p-opt">a) pagmimina ng ginto</span><span class="p-opt">b) pag-aalaga ng hayop</span><span class="p-opt">c) pagputol at pagproseso ng mga punongkahoy</span><span class="p-opt">d) paggawa ng fish pond</span></div>
+<div class="p-q"><b>22.</b> Ano ang naitutulong ng bakawan sa baybayin?<br><span class="p-opt">a) nagbibigay ng langis</span><span class="p-opt">b) nagpapataba ng bundok</span><span class="p-opt">c) natural na proteksiyon sa mapaminsalang alon</span><span class="p-opt">d) nagbibigay ng asin</span></div>
+<div class="p-q"><b>23.</b> Alin ang nakatutulong na pigilan ang baha at pagguho ng lupa?<br><span class="p-opt">a) kawayan</span><span class="p-opt">b) asin</span><span class="p-opt">c) sulfur</span><span class="p-opt">d) perlas</span></div>
+<div class="p-q"><b>24.</b> Ang Pilipinas ay matatagpuan sa rehiyong tinatawag na ____.<br><span class="p-opt">a) Pacific Triangle</span><span class="p-opt">b) Coral Triangle</span><span class="p-opt">c) Golden Triangle</span><span class="p-opt">d) Bermuda Triangle</span></div>
+<div class="p-q"><b>25.</b> Ano ang marine biodiversity?<br><span class="p-opt">a) iba&#x27;t ibang uri ng buhay sa ilalim ng karagatan</span><span class="p-opt">b) pagmimina sa seabed</span><span class="p-opt">c) paggawa ng fish pond</span><span class="p-opt">d) pagtatanim ng palay</span></div>
+<div class="p-q"><b>26.</b> Alin ang isdang sagana sa tubig-alat?<br><span class="p-opt">a) tilapia</span><span class="p-opt">b) bangus</span><span class="p-opt">c) galunggong</span><span class="p-opt">d) ulang</span></div>
+<div class="p-q"><b>27.</b> Ano ang ginagawa ng mga halamang-dagat sa carbon dioxide sa katubigan?<br><span class="p-opt">a) kinokonsumo ito</span><span class="p-opt">b) ginagawa itong langis</span><span class="p-opt">c) ginagawa itong asin</span><span class="p-opt">d) pinalalabas ito sa hangin</span></div>
+<div class="p-q"><b>28.</b> Alin sa sumusunod ang mineral na di-metal?<br><span class="p-opt">a) ginto</span><span class="p-opt">b) asin</span><span class="p-opt">c) tanso</span><span class="p-opt">d) nickel</span></div>
+<div class="p-q"><b>29.</b> Para saan hinahalo ang chromite?<br><span class="p-opt">a) paggawa ng stainless steel</span><span class="p-opt">b) paggawa ng semento</span><span class="p-opt">c) paggawa ng sabon</span><span class="p-opt">d) paggawa ng papel</span></div>
+<div class="p-q"><b>30.</b> Saan sinasabing matatagpuan ang malaking bahagi ng deposito ng langis ng Pilipinas?<br><span class="p-opt">a) Kanlurang Dagat Pilipinas</span><span class="p-opt">b) Silangang Dagat Pilipinas</span><span class="p-opt">c) Hilagang bundok ng Luzon</span><span class="p-opt">d) Gitnang kapatagan ng Luzon</span></div>
+<div class="p-break"></div>
+<h2 class="p-part-title">Bahagi III — Uri ng Yamang Mineral</h2>
+<div class="p-bank">Isulat ang <b>M</b> kung metal, <b>DM</b> kung di-metal, at <b>P</b> kung petrolyo.</div>
+<div class="p-q"><b>31.</b> Langis <span class="p-blank"></span></div>
+<div class="p-q"><b>32.</b> Chromite <span class="p-blank"></span></div>
+<div class="p-q"><b>33.</b> Asin <span class="p-blank"></span></div>
+<div class="p-q"><b>34.</b> Karbon <span class="p-blank"></span></div>
+<div class="p-q"><b>35.</b> Aspalto <span class="p-blank"></span></div>
+<div class="p-q"><b>36.</b> Bakal <span class="p-blank"></span></div>
+<div class="p-q"><b>37.</b> Ginto <span class="p-blank"></span></div>
+<div class="p-q"><b>38.</b> Marmol <span class="p-blank"></span></div>
+<div class="p-q"><b>39.</b> Natural na gas <span class="p-blank"></span></div>
+<div class="p-q"><b>40.</b> Pilak <span class="p-blank"></span></div>
+<h2 class="p-part-title">Bahagi IV — Tama o Mali</h2>
+<div class="p-q"><b>41.</b> Tatlo ang uri ng pinagkukunan-yaman ng Pilipinas. <span class="p-blank"></span></div>
+<div class="p-q"><b>42.</b> Ang lupa at tubig ay mga likas na yamang organiko. <span class="p-blank"></span></div>
+<div class="p-q"><b>43.</b> Ang buong 300,000 kilometro kuwadrado ng kalupaan ng Pilipinas ay ginagamit sa pagsasaka. <span class="p-blank"></span></div>
+<div class="p-q"><b>44.</b> Ang bao ng niyog ay maaaring gawing uling. <span class="p-blank"></span></div>
+<div class="p-q"><b>45.</b> Ang aquaculture ay pag-aalaga ng manok at baka. <span class="p-blank"></span></div>
+<div class="p-q"><b>46.</b> Ang bakawan ay tahanan ng isda, kabibe, hipon, at alimango. <span class="p-blank"></span></div>
+<div class="p-q"><b>47.</b> Itinuturing ang Pilipinas na sentro ng marine biodiversity sa buong daigdig. <span class="p-blank"></span></div>
+<div class="p-q"><b>48.</b> Ang asin ay isang mineral na metal. <span class="p-blank"></span></div>
+<div class="p-q"><b>49.</b> Ang nickel ay ginagamit sa baterya. <span class="p-blank"></span></div>
+<div class="p-q"><b>50.</b> Mahalaga ang petrolyo sa pagpapatakbo ng mga sasakyan at makinarya at sa paglikha ng kuryente. <span class="p-blank"></span></div>
+<div class="p-break"></div>
+<h2 class="p-part-title">Bahagi V — Pagbasa ng Tsart ng Lamang-Dagat</h2>
+<div class="p-bank">Mula sa tsart ng SEAFDEC (metrikong tonelada): Tuna — 2015: 560,161; 2020: 520,167 · Sardinas — 2015: 384,711; 2020: 348,498 · Scad — 2015: 364,793; 2020: 387,035 · Alimango — 2015: 27,207; 2020: 33,545</div>
+<div class="p-q"><b>51.</b> Aling lamang-dagat sa itaas ang may pinakamaraming nahuli noong 2020? <span class="p-blank"></span></div>
+<div class="p-q"><b>52.</b> Alin ang mas marami noong 2020: sardinas o scad? <span class="p-blank"></span></div>
+<div class="p-q"><b>53.</b> Tumaas o bumaba ang nahuling tuna mula 2015 hanggang 2020? <span class="p-blank"></span></div>
+<div class="p-q"><b>54.</b> Tumaas o bumaba ang nahuling alimango mula 2015 hanggang 2020? <span class="p-blank"></span></div>
+<div class="p-q"><b>55.</b> Ilang metrikong tonelada ng scad ang nahuli noong 2020? <span class="p-blank"></span></div>
+<h2 class="p-part-title">Bahagi VI — Maikling Sagot</h2>
+<div class="p-q"><b>56.</b> Ano ang tatlong uri ng pinagkukunan-yaman ng Pilipinas?<br><br>_________________________________________________<br><br>_________________________________________________</div>
+<div class="p-q"><b>57.</b> Magbigay ng tatlong gamit ng niyog.<br><br>_________________________________________________<br><br>_________________________________________________</div>
+<div class="p-q"><b>58.</b> Magbigay ng dalawang dahilan kung bakit mahalaga ang mga kagubatan.<br><br>_________________________________________________<br><br>_________________________________________________</div>
+<div class="p-q"><b>59.</b> Ano ang tatlong uri ng yamang mineral? Magbigay ng isang halimbawa ng bawat isa.<br><br>_________________________________________________<br><br>_________________________________________________</div>
+<div class="p-q"><b>60.</b> Bakit mahalaga ang bakawan? Magbigay ng dalawang dahilan.<br><br>_________________________________________________<br><br>_________________________________________________</div>
+<div class="p-break"></div><h2 class="p-part-title">✅ Kumpletong Susi sa Pagwawasto</h2>
+<div class="p-key-part-title">Bahagi I — Pagtambalin</div>
+<div class="p-key-grid"><div class="p-key-pill">1. <b>Yamang Lupa</b></div><div class="p-key-pill">2. <b>Yamang Gubat</b></div><div class="p-key-pill">3. <b>Yamang Tubig</b></div><div class="p-key-pill">4. <b>Yamang Mineral</b></div><div class="p-key-pill">5. <b>Yamang Lupa</b></div><div class="p-key-pill">6. <b>Yamang Gubat</b></div><div class="p-key-pill">7. <b>Yamang Tubig</b></div><div class="p-key-pill">8. <b>Yamang Mineral</b></div><div class="p-key-pill">9. <b>Yamang Lupa</b></div><div class="p-key-pill">10. <b>Yamang Gubat</b></div></div>
+<div class="p-key-part-title">Bahagi II — Multiple Choice</div>
+<div class="p-key-grid"><div class="p-key-pill">11. <b>b) 3</b></div><div class="p-key-pill">12. <b>c) likas na yaman</b></div><div class="p-key-pill">13. <b>c) halaman</b></div><div class="p-key-pill">14. <b>c) 300,000 km²</b></div><div class="p-key-pill">15. <b>a) 130,000 kilometro kuwadrado</b></div><div class="p-key-pill">16. <b>b) bao</b></div><div class="p-key-pill">17. <b>a) lubid</b></div><div class="p-key-pill">18. <b>a) dumi ng hayop</b></div><div class="p-key-pill">19. <b>b) paggamit sa lupa bilang palaisdaan</b></div><div class="p-key-pill">20. <b>a) mahigit 70,000 kilometro kuwadrado</b></div><div class="p-key-pill">21. <b>c) pagputol at pagproseso ng mga punongkahoy</b></div><div class="p-key-pill">22. <b>c) natural na proteksiyon sa mapaminsalang alon</b></div><div class="p-key-pill">23. <b>a) kawayan</b></div><div class="p-key-pill">24. <b>b) Coral Triangle</b></div><div class="p-key-pill">25. <b>a) iba&#x27;t ibang uri ng buhay sa ilalim ng karagatan</b></div><div class="p-key-pill">26. <b>c) galunggong</b></div><div class="p-key-pill">27. <b>a) kinokonsumo ito</b></div><div class="p-key-pill">28. <b>b) asin</b></div><div class="p-key-pill">29. <b>a) paggawa ng stainless steel</b></div><div class="p-key-pill">30. <b>a) Kanlurang Dagat Pilipinas</b></div></div>
+<div class="p-key-part-title">Bahagi III — M, DM, o P</div>
+<div class="p-key-grid"><div class="p-key-pill">31. <b>P</b></div><div class="p-key-pill">32. <b>M</b></div><div class="p-key-pill">33. <b>DM</b></div><div class="p-key-pill">34. <b>P</b></div><div class="p-key-pill">35. <b>DM</b></div><div class="p-key-pill">36. <b>M</b></div><div class="p-key-pill">37. <b>M</b></div><div class="p-key-pill">38. <b>DM</b></div><div class="p-key-pill">39. <b>P</b></div><div class="p-key-pill">40. <b>M</b></div></div>
+<div class="p-key-part-title">Bahagi IV — Tama o Mali</div>
+<div class="p-key-grid"><div class="p-key-pill">41. <b>TAMA</b></div><div class="p-key-pill">42. <b>MALI</b></div><div class="p-key-pill">43. <b>MALI</b></div><div class="p-key-pill">44. <b>TAMA</b></div><div class="p-key-pill">45. <b>MALI</b></div><div class="p-key-pill">46. <b>TAMA</b></div><div class="p-key-pill">47. <b>TAMA</b></div><div class="p-key-pill">48. <b>MALI</b></div><div class="p-key-pill">49. <b>TAMA</b></div><div class="p-key-pill">50. <b>TAMA</b></div></div>
+<div class="p-key-part-title">Bahagi V — Tsart</div>
+<div class="p-key-grid"><div class="p-key-pill">51. <b>Tuna</b></div><div class="p-key-pill">52. <b>Scad</b></div><div class="p-key-pill">53. <b>Bumaba</b></div><div class="p-key-pill">54. <b>Tumaas</b></div><div class="p-key-pill">55. <b>387,035</b></div></div>
+<div class="p-key-part-title">Bahagi VI — Maikling Sagot (mga halimbawang sagot)</div>
+<div class="p-q"><b>56.</b> Likas na yaman, yamang tao, at yamang kapital.</div><div class="p-q"><b>57.</b> Langis para sa sabon at pampaganda; bao na ginagawang uling; hibla ng dahon na ginagawang lubid; laman at sabaw na kinakain o ginagamit sa lutuin (alinmang tatlo).</div><div class="p-q"><b>58.</b> Pinagkukunan ng hilaw na materyales; nagpapanatili ng malinis na hangin at suplay ng tubig; pumipigil sa pagguho ng lupa sa bundok; tahanan ng sari-saring hayop at halaman (alinmang dalawa).</div><div class="p-q"><b>59.</b> Metal (hal. ginto, tanso, bakal), di-metal (hal. asin, marmol, limestone), at petrolyo (hal. langis, karbon, natural na gas).</div><div class="p-q"><b>60.</b> Natural na proteksiyon sa mapaminsalang alon; tahanan ng isda, kabibe, hipon, at alimango; pinagkukunan ng kahoy, panggatong, at sangkap sa gamot at tela (alinmang dalawa).</div>
+</div>
+
+</body>
+</html>
