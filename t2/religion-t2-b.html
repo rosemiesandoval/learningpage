@@ -772,7 +772,7 @@ header .sub { font-size: .72rem; color: var(--muted); margin-top: 1px; }
   <div class="header-icon">🕊️</div>
   <div>
     <h1>Sin, Forgiveness &amp; Healing</h1>
-    <div class="sub">Venial &amp; Mortal Sin · Reconciliation · Act of Contrition · Jesus the Healer</div>
+    <div class="sub">Sin · Adam &amp; Eve · Forgiveness · Reconciliation · Jesus the Healer</div>
   </div>
   <div class="header-controls">
     <div class="score-pill">⭐ <span id="score-val">0</span> / <span id="total-val">0</span></div>
@@ -916,6 +916,46 @@ const topics = {
     { q: "What quality did the centurion show in Jesus?", a: "Faith (trust that Jesus could heal with just a word)", hint: "Belief." },
   ],
 
+
+  "Adam and Eve and Original Sin": [
+    { q: "Who do Christians believe created the universe and everything in it?", a: "God", hint: "The Creator." },
+    { q: "In whose image did God create humans?", a: "In His own image", hint: "Made like God." },
+    { q: "What was everything like in the beginning?", a: "Perfect and free from sin", hint: "No sin yet." },
+    { q: "Which book of the Bible tells the story of Adam and Eve?", a: "Genesis, the first book of the Bible", hint: "The first book." },
+    { q: "Who were Adam and Eve?", a: "The first people created by God", hint: "The first humans." },
+    { q: "Where did Adam and Eve live?", a: "In a beautiful garden called the Garden of Eden", hint: "A garden." },
+    { q: "What was the Garden of Eden like?", a: "Very beautiful, with an abundance of fruit trees", hint: "Lots of fruit." },
+    { q: "What did God say Adam and Eve could eat?", a: "Fruit from any tree in the garden, apart from the Tree of Knowledge of Good and Evil", hint: "One tree was not allowed." },
+    { q: "What did God say would happen if they ate fruit from the Tree of Knowledge of Good and Evil?", a: "They would die", hint: "A warning." },
+    { q: "Who did Adam and Eve notice in the garden one day?", a: "A snake (serpent)", hint: "A tempter." },
+    { q: "Who was the serpent really?", a: "Satan in disguise", hint: "The evil one." },
+    { q: "What did the serpent tell Adam and Eve?", a: "\"You will not die! You will be like God, and you will know everything about good and evil.\"", hint: "He told them a lie." },
+    { q: "Why did Adam and Eve pick and eat the fruit?", a: "It looked so ripe and delicious that, forgetting God's warning, they picked a piece and ate it", hint: "They forgot the warning." },
+    { q: "How did God feel about what Adam and Eve did?", a: "Very displeased, because they did not follow His instructions", hint: "They disobeyed." },
+    { q: "What had God given Adam and Eve that they used to disobey Him?", a: "Free choice", hint: "They could choose." },
+    { q: "How did Adam and Eve feel afterward, and what did they do?", a: "They felt full of guilt and ran away from the beautiful Garden of Eden", hint: "Guilt." },
+    { q: "What do Christians call this first sin?", a: "Original Sin", hint: "The very first sin." },
+    { q: "What changed after Original Sin?", a: "The relationship between humans and God changed, and Christians believe that from then on no human was free from sin", hint: "Relationship with God." },
+  ],
+
+  "Is God Forgiving? Forgiveness in Christianity": [
+    { q: "What is the aim of the lesson \"Is God Forgiving?\"", a: "To explore the meaning of forgiveness in Christianity", hint: "Meaning of forgiveness." },
+    { q: "How do Christians learn what is right and what is wrong?", a: "God teaches them in the stories of the Old Testament and through the teachings of Jesus", hint: "Two sources." },
+    { q: "What is a sin, according to Christians?", a: "Something that is wrong and against the word of God; anything that goes against God, including wrong actions, thoughts, or attitudes", hint: "Against God." },
+    { q: "What do Christians believe about forgiveness (forgive)?", a: "Jesus showed that God is always ready to forgive; if they say sorry for their sins, they will be forgiven by God", hint: "Say sorry." },
+    { q: "What does permanent mean?", a: "Forever; it cannot be changed", hint: "Lasts forever." },
+    { q: "Why do Christians believe God sent His son, Jesus, to the world?", a: "To take the punishment for all of mankind's sins", hint: "He took our punishment." },
+    { q: "What did Jesus' death on the cross and rising again teach Christians?", a: "That they can be forgiven if they put their trust in Him", hint: "Trust." },
+    { q: "What did Jesus say when He was killed on the cross?", a: "\"Forgive them Father, for they do not know what they do.\"", hint: "A prayer for the people." },
+    { q: "What does \"Forgiveness is permanent\" mean for Christians?", a: "God's forgiveness lasts forever; once He has forgiven a sin, the slate is wiped clean and the sin is forgotten in His eyes", hint: "Wiped clean." },
+    { q: "What does \"Forgiveness is free\" mean?", a: "Christians do not have to do anything to earn or pay for forgiveness; it is always available and given freely by God", hint: "No payment." },
+    { q: "What do Christians believe about forgiving others?", a: "They should try to forgive others, just as God forgives them, using Jesus as an example", hint: "Follow Jesus' example." },
+    { q: "Is forgiving others easy for Christians?", a: "It is often difficult, but many Christians strive to do it in their lives", hint: "Often difficult." },
+    { q: "Which sins will God forgive, according to Christians?", a: "Any sin, no matter how big or small", hint: "All sins." },
+    { q: "What must Christians do to receive God's forgiveness?", a: "Put their trust in God and in the message of Jesus", hint: "Trust." },
+    { q: "What is one of the main teachings of Christianity about God's forgiveness?", a: "God's forgiveness is free and it is permanent", hint: "Free and permanent." },
+  ],
+
 };
 
 // ── TRUE OR FALSE ──────────────────────────────────────────────────────────
@@ -950,6 +990,24 @@ const trueOrFalse = [
   { q: "The centurion said that Jesus must come to his house to heal his servant.", a: "false" },
   { q: "The centurion's servant was healed at that moment.", a: "true" },
   { q: "The story of the centurion's servant took place in Capernaum.", a: "true" },
+  { q: "Christians believe that God created the universe and everything in it.", a: "true" },
+  { q: "Christians believe that in the beginning everything was perfect and free from sin.", a: "true" },
+  { q: "Genesis tells the story of Adam and Eve.", a: "true" },
+  { q: "God told Adam and Eve they could not eat from any tree in the Garden of Eden.", a: "false" },
+  { q: "The serpent in the garden was actually Satan in disguise.", a: "true" },
+  { q: "Adam and Eve ate the fruit because they remembered God's warning.", a: "false" },
+  { q: "Adam and Eve's first sin is sometimes known as Original Sin.", a: "true" },
+  { q: "A sin can be a wrong action, thought, or attitude that goes against God.", a: "true" },
+  { q: "Permanent means that something can be changed easily.", a: "false" },
+  { q: "Christians believe God sent Jesus to take the punishment for all of mankind's sins.", a: "true" },
+  { q: "Christians believe that they must pay or earn God's forgiveness.", a: "false" },
+  { q: "Christians believe God will forgive any sin, no matter how big or small.", a: "true" },
+  { q: "On the cross, Jesus said, \"Forgive them Father, for they do not know what they do.\"", a: "true" },
+  { q: "Christians believe they should try to forgive others, just as God forgives them.", a: "true" },
+  { q: "Copying from someone's Maths test is the right thing to do if you do not know the answers.", a: "false" },
+  { q: "Sitting next to a new girl at lunchtime so she does not feel lonely is the right thing to do.", a: "true" },
+  { q: "Handing in a ten pound note found on the supermarket floor to a member of staff is the right thing to do.", a: "true" },
+  { q: "Taking your friend's new water bottle from the cloakroom and putting it in your own bag is the right thing to do.", a: "false" },
 ];
 
 // ── IDENTIFY ───────────────────────────────────────────────────────────────
@@ -983,6 +1041,14 @@ const identifyQuestions = [
   { q: "Which CCC number says Jesus came to heal the whole man, soul and body?", a: "CCC 1503", choices: ["CCC 1503","CCC 1870","CCC 1468","CCC 1854"] },
   { q: "Which CCC numbers describe venial and mortal sins?", a: "CCC 1854–1863", choices: ["CCC 1854–1863","CCC 1468–1470","CCC 1503","CCC 1870"] },
   { q: "Which CCC numbers describe Reconciliation as a sacrament of healing?", a: "CCC 1468–1470", choices: ["CCC 1468–1470","CCC 1854–1863","CCC 1503","CCC 1870"] },
+  { q: "The first book of the Bible, which tells the story of Adam and Eve.", a: "Genesis", choices: ["Genesis","Exodus","Luke","Matthew"] },
+  { q: "The beautiful garden where Adam and Eve lived.", a: "Garden of Eden", choices: ["Garden of Eden","Garden of Gethsemane","Capernaum","Nain"] },
+  { q: "The tree Adam and Eve were told not to eat from.", a: "Tree of Knowledge of Good and Evil", choices: ["Tree of Knowledge of Good and Evil","Tree of Life","Fig tree","Olive tree"] },
+  { q: "The serpent in the garden, who was really ____ in disguise.", a: "Satan", choices: ["Satan","An angel","A prophet","A Pharisee"] },
+  { q: "The first sin of Adam and Eve.", a: "Original Sin", choices: ["Original Sin","Mortal sin","Venial sin","Deadly sin"] },
+  { q: "The word that means forever and cannot be changed.", a: "Permanent", choices: ["Permanent","Temporary","Forgiveness","Absolution"] },
+  { q: "Forgiveness that Christians do not have to earn or pay for.", a: "Free", choices: ["Free","Costly","Earned","Temporary"] },
+  { q: "\"Forgive them Father, for they do not know what they do.\"", a: "Jesus on the cross", choices: ["Jesus on the cross","Adam","The centurion","The serpent"] },
 ];
 
 // ═══════════════════════════════════════════════════════════════
@@ -1241,7 +1307,7 @@ function nextQuestion() {
 // ═══════════════════════════════════════════════════════════════
 function showMenu() {
   addMessage('bot',
-    `👋 <strong>Hi! I'm your Religion Reviewer!</strong><br>Let's study <em>Sin and the Seven Deadly Sins</em>, the stories of <em>the Paralyzed Man</em> and <em>the Centurion's Servant</em>, and the <em>Sacrament of Reconciliation</em>.<br><br>What would you like to do?<br>
+    `👋 <strong>Hi! I'm your Religion Reviewer!</strong><br>Let's study <em>Sin and the Seven Deadly Sins</em>, <em>Adam and Eve</em>, <em>Is God Forgiving?</em>, the stories of <em>the Paralyzed Man</em> and <em>the Centurion's Servant</em>, and the <em>Sacrament of Reconciliation</em>.<br><br>What would you like to do?<br>
     <span class="chip" data-val="1">📚 Study by Topic</span>
     <span class="chip" data-val="2">✅ True or False</span>
     <span class="chip" data-val="3">🌐 Identify</span>
@@ -1534,6 +1600,8 @@ function closeNotesPanel() {
     </div>
     <div class="notes-tabs">
       <button class="notes-tab active" onclick="switchTab('tab-sin', this)">😇 Sin &amp; Deadly Sins</button>
+      <button class="notes-tab" onclick="switchTab('tab-adam', this)">🍎 Adam &amp; Eve</button>
+      <button class="notes-tab" onclick="switchTab('tab-forg', this)">💗 Is God Forgiving?</button>
       <button class="notes-tab" onclick="switchTab('tab-para', this)">🛏️ Paralyzed Man</button>
       <button class="notes-tab" onclick="switchTab('tab-recon', this)">🙏 Reconciliation</button>
       <button class="notes-tab" onclick="switchTab('tab-aoc', this)">📿 Act of Contrition</button>
@@ -1569,6 +1637,72 @@ function closeNotesPanel() {
           <tr><td>Greed</td><td>Excessive desire for material things</td><td>Wanting more things</td></tr>
           <tr><td>Envy</td><td>Jealousy toward another's happiness</td><td>Jealous</td></tr>
         </table>
+      </div>
+
+      <div class="notes-section" id="tab-adam">
+        <div class="story-box">
+          <span class="story-label">📖 Read Aloud: Adam and Eve and the Garden of Eden</span>
+          <p>Christians believe that God created the Universe and everything in it. The Bible explains that God created humans in His own image. This means that in the beginning, everything was perfect and free from sin.</p>
+          <p>The first book of the Bible, Genesis, tells the story of the first people created by God, Adam and Eve. Many Christians believe that they lived together in a beautiful garden, called the Garden of Eden. They were created in the image of God. This means that they were without sin.</p>
+          <p>The Garden of Eden was very beautiful, with an abundance of fruit trees. God said to Adam and Eve that they could eat from any tree in the garden, apart from a tree called the Tree of Knowledge of Good and Evil. God said that if they were to eat fruit from this tree they would die.</p>
+          <p>One day, Adam and Eve noticed a snake in the garden. This serpent was actually Satan in disguise. He asked Adam and Eve, "Is it true that God has said you cannot eat the fruit from the Tree of Knowledge of Good and Evil?" "Yes," they answered. "God told us that we would die if we ate fruit from that tree." "You will not die!" said the serpent. "You will be like God, and you will know everything about good and evil."</p>
+          <p>Adam and Eve went to look at the fruit on the tree. It looked so ripe and delicious that, forgetting God's warning, they picked a piece of fruit and ate it.</p>
+          <p>God was very displeased with Adam and Eve for not following His instructions. They were given free choice by God and they disobeyed Him. Adam and Eve felt full of guilt and ran away from the beautiful Garden of Eden.</p>
+          <p>This first sin is sometimes known by Christians as 'Original Sin.' The relationship between humans and God was changed and Christians believe that, from this point onwards, no human was free from sin.</p>
+          <span class="story-ref">— Genesis (from the Forgiveness slides)</span>
+        </div>
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> God created everything perfect. Adam and Eve <strong>disobeyed</strong> God by eating the fruit of the <strong>Tree of Knowledge of Good and Evil</strong>. This first sin is called <strong>Original Sin</strong>, and from then on no human was free from sin.
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 MEMORY TRICK</span>
+          <strong>"G-E-S-F-O"</strong>: <strong>G</strong>od's <strong>E</strong>xception (one tree), the <strong>S</strong>erpent's lie, they <strong>F</strong>orgot the warning, <strong>O</strong>riginal Sin. Remember: they were given <strong>free choice</strong>, and they chose to <strong>disobey</strong>.
+        </div>
+        <table class="compare-table">
+          <tr><th>Part of the Story</th><th>What Happened</th></tr>
+          <tr><td>Garden of Eden</td><td>Beautiful, with many fruit trees; Adam and Eve could eat from any tree except one</td></tr>
+          <tr><td>The warning</td><td>Eating from the Tree of Knowledge of Good and Evil meant they would die</td></tr>
+          <tr><td>The serpent</td><td>Satan in disguise; said, "You will not die! You will be like God"</td></tr>
+          <tr><td>The sin</td><td>They forgot God's warning and ate the fruit; they disobeyed</td></tr>
+          <tr><td>After</td><td>God was displeased; they felt guilty and ran away; the relationship with God changed</td></tr>
+        </table>
+      </div>
+
+      <div class="notes-section" id="tab-forg">
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> <strong>Aim:</strong> to explore the meaning of forgiveness in Christianity. Christians believe that <strong>God is always ready to forgive</strong>. His forgiveness is <strong>free</strong> and <strong>permanent</strong>, and it is one of the main teachings of Christianity.
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 MEMORY TRICK</span>
+          <strong>"FREE + FOREVER"</strong>: God's forgiveness is <strong>free</strong> (nothing to earn or pay) and <strong>forever</strong> (permanent: the slate is wiped clean). Christians then try to <strong>forgive others</strong>, just like Jesus.
+        </div>
+        <table class="compare-table">
+          <tr><th>Key Word</th><th>Meaning</th></tr>
+          <tr><td>Forgive / forgiveness</td><td>Christians believe Jesus showed that God is always ready to forgive; if they say sorry for their sins, they will be forgiven by God</td></tr>
+          <tr><td>Permanent</td><td>Forever; it cannot be changed</td></tr>
+          <tr><td>Sin</td><td>Anything that goes against God; it can be wrong actions, thoughts, or attitudes</td></tr>
+          <tr><td>Jesus</td><td>God's son, sent to the world to take the punishment for all of mankind's sins</td></tr>
+        </table>
+        <div class="notes-topic">
+          <div class="notes-topic-title">💗 What Christians Believe About Forgiveness</div>
+          <div class="notes-item"><span class="notes-term">Jesus and the cross</span><span class="notes-def">God sent His son Jesus to take the punishment for all mankind's sins. Jesus died on a cross and rose again to teach Christians that they can be forgiven if they put their trust in Him.</span></div>
+          <div class="notes-item"><span class="notes-term">Jesus' words</span><span class="notes-def">"Forgive them Father, for they do not know what they do." <em>(Luke 23; your slide shows the verse as 23:24, while Bibles usually number it 23:34)</em></span></div>
+          <div class="notes-item"><span class="notes-term">Forgiveness is permanent</span><span class="notes-def">Once God has forgiven a sin, the slate is wiped clean and that sin is forgotten in His eyes.</span></div>
+          <div class="notes-item"><span class="notes-term">Forgiveness is free</span><span class="notes-def">Christians do not have to do anything to earn or pay for forgiveness. It is always available and given freely by God.</span></div>
+          <div class="notes-item"><span class="notes-term">Forgiving others</span><span class="notes-def">Christians try to forgive others, just as God forgives them. It is often difficult, but they use Jesus as an example.</span></div>
+          <div class="notes-item"><span class="notes-term">Any sin</span><span class="notes-def">God will forgive any sin, no matter how big or small, when Christians put their trust in God and in the message of Jesus.</span></div>
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">🤔 Right or Wrong? (Remember It!)</div>
+          <div class="notes-item"><span class="notes-term"><span style="color:#22c55e">RIGHT</span></span><span class="notes-def">Sitting next to a new girl at lunchtime so she does not feel lonely.</span></div>
+          <div class="notes-item"><span class="notes-term"><span style="color:#22c55e">RIGHT</span></span><span class="notes-def">Handing in a ten pound note found on the supermarket floor to a member of staff.</span></div>
+          <div class="notes-item"><span class="notes-term"><span style="color:#ef4444">WRONG</span></span><span class="notes-def">Copying Maths test answers from the person next to you.</span></div>
+          <div class="notes-item"><span class="notes-term"><span style="color:#ef4444">WRONG</span></span><span class="notes-def">Taking your friend's new water bottle from the cloakroom and putting it in your own bag.</span></div>
+        </div>
+        <div class="tandaan-box">
+          <span class="tandaan-label">THINK ABOUT IT</span>
+          Christians learn what is right and wrong from God's teachings in the Old Testament stories and through the teachings of Jesus. Discuss: Is there anything you think God would not forgive? Why? Which sins would be more difficult to forgive, and why?
+        </div>
       </div>
 
       <div class="notes-section" id="tab-para">
@@ -1665,7 +1799,7 @@ function closeNotesPanel() {
 
       <div class="notes-section" id="tab-verses">
         <div class="verse-intro">🕊️ These are the key words of Jesus and the people in the two stories. Practice saying them from memory!</div>
-<div class="verse-grid"><div class="verse-card"><span class="verse-theme">Forgiveness</span><div class="verse-text">Friend, your sins are forgiven.</div><span class="verse-ref">Jesus, to the paralyzed man — Luke 5:20</span></div><div class="verse-card"><span class="verse-theme">Authority</span><div class="verse-text">The Son of Man has authority on earth to forgive sins.</div><span class="verse-ref">Jesus — Luke 5:24</span></div><div class="verse-card"><span class="verse-theme">Healing</span><div class="verse-text">I tell you, get up, take your mat and go home.</div><span class="verse-ref">Jesus — Luke 5:24</span></div><div class="verse-card"><span class="verse-theme">Praise</span><div class="verse-text">We have seen remarkable things today.</div><span class="verse-ref">The people — Luke 5:26</span></div><div class="verse-card"><span class="verse-theme">Faith and Humility</span><div class="verse-text">Lord, I do not deserve to have You come under my roof. But just say the word, and my servant will be healed.</div><span class="verse-ref">The centurion — Matthew 8:8</span></div><div class="verse-card"><span class="verse-theme">Faith Rewarded</span><div class="verse-text">Go! Let it be done just as you believed it would.</div><span class="verse-ref">Jesus, to the centurion — Matthew 8:13</span></div></div>
+<div class="verse-grid"><div class="verse-card"><span class="verse-theme">Forgiveness</span><div class="verse-text">Friend, your sins are forgiven.</div><span class="verse-ref">Jesus, to the paralyzed man — Luke 5:20</span></div><div class="verse-card"><span class="verse-theme">Authority</span><div class="verse-text">The Son of Man has authority on earth to forgive sins.</div><span class="verse-ref">Jesus — Luke 5:24</span></div><div class="verse-card"><span class="verse-theme">Healing</span><div class="verse-text">I tell you, get up, take your mat and go home.</div><span class="verse-ref">Jesus — Luke 5:24</span></div><div class="verse-card"><span class="verse-theme">Praise</span><div class="verse-text">We have seen remarkable things today.</div><span class="verse-ref">The people — Luke 5:26</span></div><div class="verse-card"><span class="verse-theme">Forgiveness for Others</span><div class="verse-text">Forgive them Father, for they do not know what they do.</div><span class="verse-ref">Jesus, on the cross — Luke 23</span></div><div class="verse-card"><span class="verse-theme">Faith and Humility</span><div class="verse-text">Lord, I do not deserve to have You come under my roof. But just say the word, and my servant will be healed.</div><span class="verse-ref">The centurion — Matthew 8:8</span></div><div class="verse-card"><span class="verse-theme">Faith Rewarded</span><div class="verse-text">Go! Let it be done just as you believed it would.</div><span class="verse-ref">Jesus, to the centurion — Matthew 8:13</span></div></div>
       </div>
 
       <div class="notes-section" id="tab-tf">
@@ -1677,13 +1811,16 @@ function closeNotesPanel() {
           <div class="notes-item"><span class="notes-term"><span style="color:#ef4444">FALSE</span></span><span class="notes-def">Jesus first said "Get up and walk" → He first said <strong>"Friend, your sins are forgiven."</strong></span></div>
           <div class="notes-item"><span class="notes-term"><span style="color:#ef4444">FALSE</span></span><span class="notes-def">Sin does not affect the Church → sin <strong>wounds</strong> the whole Church.</span></div>
           <div class="notes-item"><span class="notes-term"><span style="color:#ef4444">FALSE</span></span><span class="notes-def">Penance is the priest's prayer of forgiveness → that is <strong>absolution</strong>; penance is the atonement the priest imposes.</span></div>
+          <div class="notes-item"><span class="notes-term"><span style="color:#ef4444">FALSE</span></span><span class="notes-def">God told Adam and Eve not to eat from any tree → they could eat from <strong>any tree except the Tree of Knowledge of Good and Evil</strong>.</span></div>
+          <div class="notes-item"><span class="notes-term"><span style="color:#ef4444">FALSE</span></span><span class="notes-def">Christians must earn or pay for forgiveness → it is <strong>free</strong>.</span></div>
+          <div class="notes-item"><span class="notes-term"><span style="color:#ef4444">FALSE</span></span><span class="notes-def">Permanent means easy to change → it means <strong>forever</strong>, and it cannot be changed.</span></div>
           <div class="notes-item"><span class="notes-term"><span style="color:#ef4444">FALSE</span></span><span class="notes-def">The centurion said Jesus must come to his house → he said <strong>"just say the word."</strong></span></div>
         </div>
       </div>
 
       <div class="notes-section" id="tab-ptest">
         <div class="notes-topic">
-          <div class="notes-topic-title">📝 Practice Test (53 items)</div>
+          <div class="notes-topic-title">📝 Practice Test (65 items)</div>
 <div class="ptest-part-title">Part I — Name the Deadly Sin</div>
 <div class="ptest-bank"><strong>Word Bank:</strong> lust &middot; gluttony &middot; pride &middot; sloth &middot; wrath &middot; greed &middot; envy</div>
 <div class="ptest-q"><b>1.</b> Unrestrained sexual craving. <span class="opt">Answer: ______________</span></div>
@@ -1738,13 +1875,26 @@ function closeNotesPanel() {
 <div class="ptest-q"><b>45.</b> I firmly intend with Your help to do ____, to sin no more. <span class="opt"></span></div>
 <div class="ptest-q"><b>46.</b> Our Savior Jesus Christ suffered and died for ____. <span class="opt"></span></div>
 <div class="ptest-q"><b>47.</b> In His name, my God, have ____. <span class="opt"></span></div>
-<div class="ptest-part-title">Part VI — Short Answer</div>
-<div class="ptest-q"><b>48.</b> What are the two kinds of sin? Tell how they are different.<br><span class="opt">______________________________________</span></div>
-<div class="ptest-q"><b>49.</b> Name the five essential elements of the sacrament of Reconciliation.<br><span class="opt">______________________________________</span></div>
-<div class="ptest-q"><b>50.</b> Why did the friends of the paralyzed man lower him through the roof?<br><span class="opt">______________________________________</span></div>
-<div class="ptest-q"><b>51.</b> What did Jesus show by forgiving and healing the paralyzed man?<br><span class="opt">______________________________________</span></div>
-<div class="ptest-q"><b>52.</b> Name any three of the seven deadly sins.<br><span class="opt">______________________________________</span></div>
-<div class="ptest-q"><b>53.</b> What did the centurion show when he said, &quot;Just say the word, and my servant will be healed&quot;?<br><span class="opt">______________________________________</span></div>
+<div class="ptest-part-title">Part VI — Adam and Eve and &quot;Is God Forgiving?&quot;</div>
+<div class="ptest-q"><b>48.</b> Which book of the Bible tells the story of Adam and Eve?<br><span class="opt">a. Acts</span><span class="opt">b. Matthew</span><span class="opt">c. Genesis</span><span class="opt">d. Luke</span></div>
+<div class="ptest-q"><b>49.</b> Where did Adam and Eve live?<br><span class="opt">a. Capernaum</span><span class="opt">b. Nain</span><span class="opt">c. Galilee</span><span class="opt">d. Garden of Eden</span></div>
+<div class="ptest-q"><b>50.</b> Which tree were Adam and Eve told not to eat from?<br><span class="opt">a. any fruit tree</span><span class="opt">b. Tree of Knowledge of Good and Evil</span><span class="opt">c. the tallest tree</span><span class="opt">d. Tree of Life only</span></div>
+<div class="ptest-q"><b>51.</b> Who was the serpent in the garden, really?<br><span class="opt">a. Adam&#x27;s friend</span><span class="opt">b. a prophet</span><span class="opt">c. Satan in disguise</span><span class="opt">d. an angel</span></div>
+<div class="ptest-q"><b>52.</b> What is the first sin of Adam and Eve called?<br><span class="opt">a. Venial sin</span><span class="opt">b. Original Sin</span><span class="opt">c. Mortal sin</span><span class="opt">d. Deadly sin</span></div>
+<div class="ptest-q"><b>53.</b> What does permanent mean?<br><span class="opt">a. easy to change</span><span class="opt">b. free of charge</span><span class="opt">c. forever and cannot be changed</span><span class="opt">d. for a short time</span></div>
+<div class="ptest-q"><b>54.</b> Christians believe God&#x27;s forgiveness is ____.<br><span class="opt">a. earned and temporary</span><span class="opt">b. only for small sins</span><span class="opt">c. paid for with money</span><span class="opt">d. free and permanent</span></div>
+<div class="ptest-q"><b>55.</b> What did Jesus say on the cross?<br><span class="opt">a. &quot;Do not cry.&quot;</span><span class="opt">b. &quot;Forgive them Father, for they do not know what they do.&quot;</span><span class="opt">c. &quot;Follow me.&quot;</span><span class="opt">d. &quot;Go home.&quot;</span></div>
+<div class="ptest-q"><b>56.</b> How do Christians try to treat others, using Jesus as an example?<br><span class="opt">a. ignore them</span><span class="opt">b. take revenge</span><span class="opt">c. forgive them, as God forgives them</span><span class="opt">d. avoid them</span></div>
+<div class="ptest-q"><b>57.</b> Which of these is a sin, according to Christians?<br><span class="opt">a. anything that is fun</span><span class="opt">b. anything that is new</span><span class="opt">c. anything that is quiet</span><span class="opt">d. anything that goes against God</span></div>
+<div class="ptest-part-title">Part VII — Short Answer</div>
+<div class="ptest-q"><b>58.</b> What are the two kinds of sin? Tell how they are different.<br><span class="opt">______________________________________</span></div>
+<div class="ptest-q"><b>59.</b> Name the five essential elements of the sacrament of Reconciliation.<br><span class="opt">______________________________________</span></div>
+<div class="ptest-q"><b>60.</b> Why did the friends of the paralyzed man lower him through the roof?<br><span class="opt">______________________________________</span></div>
+<div class="ptest-q"><b>61.</b> What did Jesus show by forgiving and healing the paralyzed man?<br><span class="opt">______________________________________</span></div>
+<div class="ptest-q"><b>62.</b> Name any three of the seven deadly sins.<br><span class="opt">______________________________________</span></div>
+<div class="ptest-q"><b>63.</b> Why do Christians believe God sent Jesus to the world?<br><span class="opt">______________________________________</span></div>
+<div class="ptest-q"><b>64.</b> Tell two things Christians believe about God&#x27;s forgiveness.<br><span class="opt">______________________________________</span></div>
+<div class="ptest-q"><b>65.</b> What did the centurion show when he said, &quot;Just say the word, and my servant will be healed&quot;?<br><span class="opt">______________________________________</span></div>
         </div>
       </div>
 
@@ -1760,8 +1910,10 @@ function closeNotesPanel() {
 <div class="key-grid"><div class="key-pill">33. <b>TRUE</b></div><div class="key-pill">34. <b>FALSE</b></div><div class="key-pill">35. <b>TRUE</b></div><div class="key-pill">36. <b>FALSE</b></div><div class="key-pill">37. <b>TRUE</b></div><div class="key-pill">38. <b>FALSE</b></div><div class="key-pill">39. <b>TRUE</b></div><div class="key-pill">40. <b>FALSE</b></div><div class="key-pill">41. <b>TRUE</b></div><div class="key-pill">42. <b>TRUE</b></div></div>
 <div class="notes-topic-title">Part V — Act of Contrition</div>
 <div class="key-grid"><div class="key-pill">43. <b>sorry</b></div><div class="key-pill">44. <b>things</b></div><div class="key-pill">45. <b>penance</b></div><div class="key-pill">46. <b>us</b></div><div class="key-pill">47. <b>mercy</b></div></div>
-<div class="notes-topic-title">Part VI — Short Answer (sample answers)</div>
-<div class="ptest-q"><b>48.</b> Venial sin is a less serious or light sin done without full knowledge or complete consent; it weakens love for God and others. Mortal sin is a grave sin committed with full knowledge and deliberate consent; it turns a person away from God.</div><div class="ptest-q"><b>49.</b> Examination of conscience, contrition, confession, penance, and absolution.</div><div class="ptest-q"><b>50.</b> They could not get through the crowd, and they believed Jesus could heal him, so they found another way to bring him in front of Jesus.</div><div class="ptest-q"><b>51.</b> That He has the power to heal both body and soul, and the authority on earth to forgive sins.</div><div class="ptest-q"><b>52.</b> Any three of: lust, gluttony, pride, sloth, wrath, greed, envy.</div><div class="ptest-q"><b>53.</b> Faith and humility: he trusted that Jesus could heal with only a word, and he felt he did not deserve to have Jesus come under his roof.</div>
+<div class="notes-topic-title">Part VI — Adam and Eve and Forgiveness</div>
+<div class="key-grid"><div class="key-pill">48. <b>c. Genesis</b></div><div class="key-pill">49. <b>d. Garden of Eden</b></div><div class="key-pill">50. <b>b. Tree of Knowledge of Good and Evil</b></div><div class="key-pill">51. <b>c. Satan in disguise</b></div><div class="key-pill">52. <b>b. Original Sin</b></div><div class="key-pill">53. <b>c. forever and cannot be changed</b></div><div class="key-pill">54. <b>d. free and permanent</b></div><div class="key-pill">55. <b>b. &quot;Forgive them Father, for they do not know what they do.&quot;</b></div><div class="key-pill">56. <b>c. forgive them, as God forgives them</b></div><div class="key-pill">57. <b>d. anything that goes against God</b></div></div>
+<div class="notes-topic-title">Part VII — Short Answer (sample answers)</div>
+<div class="ptest-q"><b>58.</b> Venial sin is a less serious or light sin done without full knowledge or complete consent; it weakens love for God and others. Mortal sin is a grave sin committed with full knowledge and deliberate consent; it turns a person away from God.</div><div class="ptest-q"><b>59.</b> Examination of conscience, contrition, confession, penance, and absolution.</div><div class="ptest-q"><b>60.</b> They could not get through the crowd, and they believed Jesus could heal him, so they found another way to bring him in front of Jesus.</div><div class="ptest-q"><b>61.</b> That He has the power to heal both body and soul, and the authority on earth to forgive sins.</div><div class="ptest-q"><b>62.</b> Any three of: lust, gluttony, pride, sloth, wrath, greed, envy.</div><div class="ptest-q"><b>63.</b> To take the punishment for all of mankind&#x27;s sins. Jesus died on a cross and rose again to teach Christians that they can be forgiven if they put their trust in Him.</div><div class="ptest-q"><b>64.</b> It is permanent (once forgiven, the slate is wiped clean and the sin is forgotten in His eyes) and it is free (they do not have to earn or pay for it). Any sin, big or small, can be forgiven.</div><div class="ptest-q"><b>65.</b> Faith and humility: he trusted that Jesus could heal with only a word, and he felt he did not deserve to have Jesus come under his roof.</div>
         </div>
       </div>
 
@@ -1840,6 +1992,40 @@ function closeNotesPanel() {
 <li><p>What did Jesus do?</p></li>
 </ol>
 
+<h3 class="doc-heading">Slides: Is God Forgiving? (Forgiveness.pptx)</h3>
+<p><em>Typed from the slides you uploaded, in order, because most of the text on the slides is inside pictures.</em></p>
+<p><strong>Aim:</strong> To explore the meaning of forgiveness in Christianity.</p>
+<p><strong>Success Criteria:</strong> I can retell the story of Adam and Eve. I can explain what forgiveness means to Christians. I can explain why Jesus is important in Christianity.</p>
+<p><strong>Remember It! (What is right and what is wrong?)</strong> Key Question: Can we remember some of the key facts about Christianity?</p>
+<ul>
+<li>Right: You see a new girl in the class sitting on her own at lunchtime so you go and sit next to her so she doesn't feel lonely.</li>
+<li>Right: You find a ten pound note on the floor in the supermarket and hand it in to a member of staff.</li>
+<li>Wrong: You have a Maths test and don't know some of the answers so you copy them from the person sitting next to you.</li>
+<li>Wrong: Your friend has a new water bottle that you have been wanting for a while. At breaktime, you go into the cloakroom and put it in your own bag.</li>
+</ul>
+<p>Key Question: How did you decide which things were right and which things were wrong? You have probably grown up with the people around you teaching you the difference. Perhaps this was your parents, your teachers or family friends. Christians believe that God teaches them what is right and what is wrong, both in the stories of the Old Testament and through the teachings of Jesus. A sin is a word Christians use for something that is wrong and against the word of God.</p>
+<p><strong>Is God Forgiving: Key Vocabulary</strong></p>
+<ul>
+<li>forgive / forgiveness: Christians believe that Jesus showed them that God is always ready to forgive. This means that if Christians say sorry for sins they will be forgiven by God.</li>
+<li>permanent: When something is permanent, it means it is forever and it can not be changed.</li>
+<li>sin: In Christianity, a sin refers to anything that goes against God. This can be wrong actions, thoughts or attitudes.</li>
+<li>Jesus</li>
+</ul>
+<p><strong>What Is a Sin?</strong> Key Question: What do Christians believe about sin? Christians believe that God created the Universe and everything in it. The Bible explains that God created humans in His own image. This means that in the beginning, everything was perfect and free from sin.</p>
+<p><strong>Adam and Eve</strong> The first book of the Bible, Genesis, tells the story of the first people created by God, Adam and Eve. Many Christians believe that they lived together in a beautiful garden, called the Garden of Eden. They were created in the image of God. This means that they were without sin.</p>
+<p><strong>The Garden of Eden</strong> The Garden of Eden was very beautiful, with an abundance of fruit trees. God said to Adam and Eve that they could eat from any tree in the garden, apart from a tree called the Tree of Knowledge of Good and Evil. God said that if they were to eat fruit from this tree they would die.</p>
+<p><strong>Original Sin</strong> One day, Adam and Eve noticed a snake in the garden. This serpent was actually Satan in disguise. He asked Adam and Eve, "Is it true that God has said you cannot eat the fruit from the Tree of Knowledge of Good and Evil?" "Yes," they answered. "God told us that we would die if we ate fruit from that tree." "You will not die!" said the serpent. "You will be like God, and you will know everything about good and evil."</p>
+<p>Adam and Eve went to look at the fruit on the tree. It looked so ripe and delicious that, forgetting God's warning, they picked a piece of fruit and ate it.</p>
+<p>God was very displeased with Adam and Eve for not following His instructions. They were given free choice by God and they disobeyed Him. Adam and Eve felt full of guilt and ran away from the beautiful Garden of Eden. This first sin is sometimes known by Christians as 'Original Sin.' The relationship between humans and God was changed and Christians believe that, from this point onwards, no human was free from sin.</p>
+<p>Christians believe that God sent His son, Jesus, to the world to take the punishment for all of mankind's sins. Jesus died on a cross and rose again to teach Christians that they can be forgiven if they put their trust in Him.</p>
+<p><strong>What Is Forgiveness?</strong> When Jesus was killed on the cross, He said, 'Forgive them Father, for they do not know what they do.' (Luke 23:24) Key Question: What do you think about what Jesus said? Would you say the same?</p>
+<p><strong>Forgiveness is permanent:</strong> Christians believe that God's forgiveness lasts forever. This means that once He has forgiven a sin, the slate is wiped clean and that sin is forgotten in His eyes.</p>
+<p><strong>Forgiveness is free:</strong> Christians believe that they don't have to do anything to earn or pay for forgiveness. It is always available and given freely by God.</p>
+<p><strong>Forgiving Others:</strong> Christians also believe that they should try to forgive others, just as God forgives them. This is often difficult but it is something many Christians strive to do in their lives, using Jesus as an example. 'Forgive them Father, for they do not know what they do.'</p>
+<p>Is there anything you think that God would not forgive? Why? Talk about this with your partner.</p>
+<p><strong>Forgiveness</strong> Let's think about the discussions we have had about forgiveness. Key Question: Which sins did you feel were more difficult to forgive and why?</p>
+<p>Christians believe that God will forgive any sin, no matter how big or small. To do this, Christians put their trust in God and in the message of Jesus. For Christians, God's forgiveness is free and it is permanent. This is one of the main teachings of Christianity.</p>
+
         </div>
       </div>
 
@@ -1849,9 +2035,9 @@ function closeNotesPanel() {
 
 <!-- ── Hidden Print Area (Practice Test + Answer Key) ── -->
 <div id="print-area">
-<div class="p-cover"><div class="p-icon">🕊️</div><h1>Religion 5 — Sin, Forgiveness &amp; Healing Practice Test</h1><div class="p-sub">Venial &amp; Mortal Sin · Reconciliation · Act of Contrition · Jesus the Healer</div>
-<div class="p-info-box"><div><strong>Name:</strong> _____________________________________</div><div><strong>Section:</strong> ___________________ &nbsp; <strong>Date:</strong> ___________________</div><div><strong>Score:</strong> _______ / 53</div></div>
-<div class="p-instructions"><strong>Instructions:</strong> Read each item carefully. Write your answer on the blank provided (Parts I, III, IV, V), write the letter of the correct answer (Part II), or answer in complete sentences (Part VI). Good luck!</div></div>
+<div class="p-cover"><div class="p-icon">🕊️</div><h1>Religion 5 — Sin, Forgiveness &amp; Healing Practice Test</h1><div class="p-sub">Sin · Adam &amp; Eve · Forgiveness · Reconciliation · Jesus the Healer</div>
+<div class="p-info-box"><div><strong>Name:</strong> _____________________________________</div><div><strong>Section:</strong> ___________________ &nbsp; <strong>Date:</strong> ___________________</div><div><strong>Score:</strong> _______ / 65</div></div>
+<div class="p-instructions"><strong>Instructions:</strong> Read each item carefully. Write your answer on the blank provided (Parts I, III, IV, V), write the letter of the correct answer (Parts II and VI), or answer in complete sentences (Part VII). Good luck!</div></div>
 <h2 class="p-part-title">Part I — Name the Deadly Sin</h2>
 <div class="p-bank"><strong>Word Bank:</strong> lust &middot; gluttony &middot; pride &middot; sloth &middot; wrath &middot; greed &middot; envy</div>
 <div class="p-q"><b>1.</b> Unrestrained sexual craving. <span class="p-blank"></span></div>
@@ -1908,13 +2094,27 @@ function closeNotesPanel() {
 <div class="p-q"><b>46.</b> Our Savior Jesus Christ suffered and died for ____.</div>
 <div class="p-q"><b>47.</b> In His name, my God, have ____.</div>
 <div class="p-break"></div>
-<h2 class="p-part-title">Part VI — Short Answer</h2>
-<div class="p-q"><b>48.</b> What are the two kinds of sin? Tell how they are different.<br><br>_________________________________________________<br><br>_________________________________________________</div>
-<div class="p-q"><b>49.</b> Name the five essential elements of the sacrament of Reconciliation.<br><br>_________________________________________________<br><br>_________________________________________________</div>
-<div class="p-q"><b>50.</b> Why did the friends of the paralyzed man lower him through the roof?<br><br>_________________________________________________<br><br>_________________________________________________</div>
-<div class="p-q"><b>51.</b> What did Jesus show by forgiving and healing the paralyzed man?<br><br>_________________________________________________<br><br>_________________________________________________</div>
-<div class="p-q"><b>52.</b> Name any three of the seven deadly sins.<br><br>_________________________________________________<br><br>_________________________________________________</div>
-<div class="p-q"><b>53.</b> What did the centurion show when he said, &quot;Just say the word, and my servant will be healed&quot;?<br><br>_________________________________________________<br><br>_________________________________________________</div>
+<h2 class="p-part-title">Part VI — Adam and Eve and &quot;Is God Forgiving?&quot;</h2>
+<div class="p-q"><b>48.</b> Which book of the Bible tells the story of Adam and Eve?<br><span class="p-opt">a. Acts</span><span class="p-opt">b. Matthew</span><span class="p-opt">c. Genesis</span><span class="p-opt">d. Luke</span></div>
+<div class="p-q"><b>49.</b> Where did Adam and Eve live?<br><span class="p-opt">a. Capernaum</span><span class="p-opt">b. Nain</span><span class="p-opt">c. Galilee</span><span class="p-opt">d. Garden of Eden</span></div>
+<div class="p-q"><b>50.</b> Which tree were Adam and Eve told not to eat from?<br><span class="p-opt">a. any fruit tree</span><span class="p-opt">b. Tree of Knowledge of Good and Evil</span><span class="p-opt">c. the tallest tree</span><span class="p-opt">d. Tree of Life only</span></div>
+<div class="p-q"><b>51.</b> Who was the serpent in the garden, really?<br><span class="p-opt">a. Adam&#x27;s friend</span><span class="p-opt">b. a prophet</span><span class="p-opt">c. Satan in disguise</span><span class="p-opt">d. an angel</span></div>
+<div class="p-q"><b>52.</b> What is the first sin of Adam and Eve called?<br><span class="p-opt">a. Venial sin</span><span class="p-opt">b. Original Sin</span><span class="p-opt">c. Mortal sin</span><span class="p-opt">d. Deadly sin</span></div>
+<div class="p-q"><b>53.</b> What does permanent mean?<br><span class="p-opt">a. easy to change</span><span class="p-opt">b. free of charge</span><span class="p-opt">c. forever and cannot be changed</span><span class="p-opt">d. for a short time</span></div>
+<div class="p-q"><b>54.</b> Christians believe God&#x27;s forgiveness is ____.<br><span class="p-opt">a. earned and temporary</span><span class="p-opt">b. only for small sins</span><span class="p-opt">c. paid for with money</span><span class="p-opt">d. free and permanent</span></div>
+<div class="p-q"><b>55.</b> What did Jesus say on the cross?<br><span class="p-opt">a. &quot;Do not cry.&quot;</span><span class="p-opt">b. &quot;Forgive them Father, for they do not know what they do.&quot;</span><span class="p-opt">c. &quot;Follow me.&quot;</span><span class="p-opt">d. &quot;Go home.&quot;</span></div>
+<div class="p-q"><b>56.</b> How do Christians try to treat others, using Jesus as an example?<br><span class="p-opt">a. ignore them</span><span class="p-opt">b. take revenge</span><span class="p-opt">c. forgive them, as God forgives them</span><span class="p-opt">d. avoid them</span></div>
+<div class="p-q"><b>57.</b> Which of these is a sin, according to Christians?<br><span class="p-opt">a. anything that is fun</span><span class="p-opt">b. anything that is new</span><span class="p-opt">c. anything that is quiet</span><span class="p-opt">d. anything that goes against God</span></div>
+<div class="p-break"></div>
+<h2 class="p-part-title">Part VII — Short Answer</h2>
+<div class="p-q"><b>58.</b> What are the two kinds of sin? Tell how they are different.<br><br>_________________________________________________<br><br>_________________________________________________</div>
+<div class="p-q"><b>59.</b> Name the five essential elements of the sacrament of Reconciliation.<br><br>_________________________________________________<br><br>_________________________________________________</div>
+<div class="p-q"><b>60.</b> Why did the friends of the paralyzed man lower him through the roof?<br><br>_________________________________________________<br><br>_________________________________________________</div>
+<div class="p-q"><b>61.</b> What did Jesus show by forgiving and healing the paralyzed man?<br><br>_________________________________________________<br><br>_________________________________________________</div>
+<div class="p-q"><b>62.</b> Name any three of the seven deadly sins.<br><br>_________________________________________________<br><br>_________________________________________________</div>
+<div class="p-q"><b>63.</b> Why do Christians believe God sent Jesus to the world?<br><br>_________________________________________________<br><br>_________________________________________________</div>
+<div class="p-q"><b>64.</b> Tell two things Christians believe about God&#x27;s forgiveness.<br><br>_________________________________________________<br><br>_________________________________________________</div>
+<div class="p-q"><b>65.</b> What did the centurion show when he said, &quot;Just say the word, and my servant will be healed&quot;?<br><br>_________________________________________________<br><br>_________________________________________________</div>
 <div class="p-break"></div><h2 class="p-part-title">✅ Complete Answer Key</h2>
 <div class="p-key-part-title">Part I — Name the Deadly Sin</div>
 <div class="p-key-grid"><div class="p-key-pill">1. <b>lust</b></div><div class="p-key-pill">2. <b>gluttony</b></div><div class="p-key-pill">3. <b>pride</b></div><div class="p-key-pill">4. <b>sloth</b></div><div class="p-key-pill">5. <b>wrath</b></div><div class="p-key-pill">6. <b>greed</b></div><div class="p-key-pill">7. <b>envy</b></div></div>
@@ -1926,8 +2126,10 @@ function closeNotesPanel() {
 <div class="p-key-grid"><div class="p-key-pill">33. <b>TRUE</b></div><div class="p-key-pill">34. <b>FALSE</b></div><div class="p-key-pill">35. <b>TRUE</b></div><div class="p-key-pill">36. <b>FALSE</b></div><div class="p-key-pill">37. <b>TRUE</b></div><div class="p-key-pill">38. <b>FALSE</b></div><div class="p-key-pill">39. <b>TRUE</b></div><div class="p-key-pill">40. <b>FALSE</b></div><div class="p-key-pill">41. <b>TRUE</b></div><div class="p-key-pill">42. <b>TRUE</b></div></div>
 <div class="p-key-part-title">Part V — Act of Contrition</div>
 <div class="p-key-grid"><div class="p-key-pill">43. <b>sorry</b></div><div class="p-key-pill">44. <b>things</b></div><div class="p-key-pill">45. <b>penance</b></div><div class="p-key-pill">46. <b>us</b></div><div class="p-key-pill">47. <b>mercy</b></div></div>
-<div class="p-key-part-title">Part VI — Short Answer (sample answers)</div>
-<div class="p-q"><b>48.</b> Venial sin is a less serious or light sin done without full knowledge or complete consent; it weakens love for God and others. Mortal sin is a grave sin committed with full knowledge and deliberate consent; it turns a person away from God.</div><div class="p-q"><b>49.</b> Examination of conscience, contrition, confession, penance, and absolution.</div><div class="p-q"><b>50.</b> They could not get through the crowd, and they believed Jesus could heal him, so they found another way to bring him in front of Jesus.</div><div class="p-q"><b>51.</b> That He has the power to heal both body and soul, and the authority on earth to forgive sins.</div><div class="p-q"><b>52.</b> Any three of: lust, gluttony, pride, sloth, wrath, greed, envy.</div><div class="p-q"><b>53.</b> Faith and humility: he trusted that Jesus could heal with only a word, and he felt he did not deserve to have Jesus come under his roof.</div>
+<div class="p-key-part-title">Part VI — Adam and Eve and Forgiveness</div>
+<div class="p-key-grid"><div class="p-key-pill">48. <b>c. Genesis</b></div><div class="p-key-pill">49. <b>d. Garden of Eden</b></div><div class="p-key-pill">50. <b>b. Tree of Knowledge of Good and Evil</b></div><div class="p-key-pill">51. <b>c. Satan in disguise</b></div><div class="p-key-pill">52. <b>b. Original Sin</b></div><div class="p-key-pill">53. <b>c. forever and cannot be changed</b></div><div class="p-key-pill">54. <b>d. free and permanent</b></div><div class="p-key-pill">55. <b>b. &quot;Forgive them Father, for they do not know what they do.&quot;</b></div><div class="p-key-pill">56. <b>c. forgive them, as God forgives them</b></div><div class="p-key-pill">57. <b>d. anything that goes against God</b></div></div>
+<div class="p-key-part-title">Part VII — Short Answer (sample answers)</div>
+<div class="p-q"><b>58.</b> Venial sin is a less serious or light sin done without full knowledge or complete consent; it weakens love for God and others. Mortal sin is a grave sin committed with full knowledge and deliberate consent; it turns a person away from God.</div><div class="p-q"><b>59.</b> Examination of conscience, contrition, confession, penance, and absolution.</div><div class="p-q"><b>60.</b> They could not get through the crowd, and they believed Jesus could heal him, so they found another way to bring him in front of Jesus.</div><div class="p-q"><b>61.</b> That He has the power to heal both body and soul, and the authority on earth to forgive sins.</div><div class="p-q"><b>62.</b> Any three of: lust, gluttony, pride, sloth, wrath, greed, envy.</div><div class="p-q"><b>63.</b> To take the punishment for all of mankind&#x27;s sins. Jesus died on a cross and rose again to teach Christians that they can be forgiven if they put their trust in Him.</div><div class="p-q"><b>64.</b> It is permanent (once forgiven, the slate is wiped clean and the sin is forgotten in His eyes) and it is free (they do not have to earn or pay for it). Any sin, big or small, can be forgiven.</div><div class="p-q"><b>65.</b> Faith and humility: he trusted that Jesus could heal with only a word, and he felt he did not deserve to have Jesus come under his roof.</div>
 </div>
 
 </body>
