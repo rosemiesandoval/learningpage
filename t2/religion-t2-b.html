@@ -1,0 +1,1934 @@
+<!DOCTYPE html>
+<html lang="tl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>✝️ Religion: Sin, Forgiveness &amp; Healing Reviewer 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --gold: #f59e0b;
+  --gold-dark: #b45309;
+  --blue: #3b82f6;
+  --blue-dark: #1d4ed8;
+  --red: #ef4444;
+  --green: #22c55e;
+  --bg: #0c1a0e;
+  --surface: #132015;
+  --surface2: #1a2e1d;
+  --text: #f0fdf4;
+  --muted: #86efac;
+  --border: #166534;
+}
+
+body {
+  font-family: 'Baloo 2', cursive;
+  background: var(--bg);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--text);
+  background-image:
+    radial-gradient(ellipse at 10% 30%, rgba(245,158,11,.06) 0%, transparent 55%),
+    radial-gradient(ellipse at 90% 70%, rgba(59,130,246,.06) 0%, transparent 55%);
+}
+
+header {
+  width: 100%;
+  background: linear-gradient(135deg, #14532d, #1e3a5f);
+  border-bottom: 2px solid var(--gold-dark);
+  padding: 13px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 4px 30px rgba(0,0,0,.5);
+}
+.header-icon { font-size: 2rem; animation: float 3s ease-in-out infinite; }
+@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
+
+header h1 {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.45rem;
+  background: linear-gradient(90deg, var(--gold), #fde68a, var(--gold));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+header .sub { font-size: .72rem; color: var(--muted); margin-top: 1px; }
+
+.header-controls { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+.score-pill {
+  background: rgba(245,158,11,.15);
+  border: 1px solid rgba(245,158,11,.4);
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-weight: 800;
+  font-size: .85rem;
+  color: var(--gold);
+}
+.audio-btn {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  background: var(--surface2);
+  color: var(--text);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all .2s;
+  display: flex; align-items: center; justify-content: center;
+}
+.audio-btn:hover, .audio-btn.active { background: #14532d; border-color: var(--gold); }
+
+.chat-wrap {
+  width: 100%; max-width: 700px; flex: 1;
+  display: flex; flex-direction: column;
+  padding: 16px 14px 0;
+}
+
+#chat-box {
+  flex: 1; overflow-y: auto;
+  display: flex; flex-direction: column;
+  gap: 14px; padding-bottom: 10px;
+  max-height: calc(100vh - 200px);
+  scroll-behavior: smooth;
+}
+#chat-box::-webkit-scrollbar { width: 4px; }
+#chat-box::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+.msg { display: flex; gap: 8px; }
+.msg.user { flex-direction: row-reverse; }
+
+.avatar {
+  width: 34px; height: 34px; border-radius: 50%;
+  font-size: 1rem; display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 2px;
+}
+.msg.bot .avatar { background: linear-gradient(135deg, #14532d, #1e3a5f); border: 1.5px solid rgba(245,158,11,.4); }
+.msg.user .avatar { background: linear-gradient(135deg, #1e3a5f, #14532d); border: 1.5px solid rgba(59,130,246,.3); }
+
+.bubble {
+  max-width: 80%;
+  padding: 11px 16px;
+  border-radius: 18px;
+  font-size: .9rem;
+  line-height: 1.65;
+  animation: pop .22s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes pop { from{transform:scale(.88) translateY(6px);opacity:0} to{transform:scale(1) translateY(0);opacity:1} }
+
+.msg.bot .bubble {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-bottom-left-radius: 5px;
+}
+.msg.user .bubble {
+  background: linear-gradient(135deg, #1e3a5f, var(--blue-dark));
+  border-bottom-right-radius: 5px;
+}
+
+/* chips */
+.chip {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: rgba(245,158,11,.12);
+  border: 1.5px solid rgba(245,158,11,.4);
+  color: var(--gold);
+  border-radius: 30px;
+  padding: 5px 13px; margin: 5px 4px 0 0;
+  font-size: .8rem; font-weight: 700;
+  cursor: pointer; transition: all .15s;
+  user-select: none; font-family: 'Baloo 2', cursive;
+}
+.chip:hover {
+  background: var(--gold-dark); color: white;
+  border-color: var(--gold);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(245,158,11,.3);
+}
+
+/* topic tag */
+.topic-tag {
+  display: inline-block;
+  background: linear-gradient(135deg, #14532d, #166534);
+  border: 1px solid var(--gold-dark);
+  color: var(--gold);
+  font-size: .68rem; font-weight: 800;
+  border-radius: 20px; padding: 2px 10px;
+  margin-bottom: 5px; letter-spacing: .5px;
+  text-transform: uppercase;
+}
+
+/* multiple choice */
+.mc-options { display: flex; flex-direction: column; gap: 7px; margin-top: 10px; width: 100%; }
+.mc-btn {
+  display: flex; align-items: center; gap: 10px;
+  background: rgba(255,255,255,.03);
+  border: 1.5px solid var(--border);
+  border-radius: 12px; padding: 9px 14px;
+  color: var(--text); font-family: 'Baloo 2', cursive;
+  font-size: .87rem; font-weight: 600;
+  cursor: pointer; transition: all .15s; text-align: left; width: 100%;
+}
+.mc-btn:hover:not(:disabled) {
+  background: rgba(245,158,11,.12); border-color: var(--gold);
+  color: var(--gold); transform: translateX(3px);
+}
+.mc-btn .letter {
+  display: flex; align-items: center; justify-content: center;
+  width: 26px; height: 26px; border-radius: 8px;
+  background: rgba(245,158,11,.15); border: 1px solid rgba(245,158,11,.35);
+  color: var(--gold); font-size: .78rem; font-weight: 800;
+  flex-shrink: 0; transition: all .15s;
+}
+.mc-btn:hover:not(:disabled) .letter { background: var(--gold-dark); color: white; border-color: var(--gold-dark); }
+.mc-btn.correct { background: rgba(34,197,94,.15)!important; border-color: #22c55e!important; color: #22c55e!important; cursor: default; }
+.mc-btn.correct .letter { background: #22c55e!important; color: white!important; border-color: #22c55e!important; }
+.mc-btn.wrong { background: rgba(239,68,68,.12)!important; border-color: #ef4444!important; color: #ef4444!important; cursor: default; }
+.mc-btn.wrong .letter { background: #ef4444!important; color: white!important; border-color: #ef4444!important; }
+.mc-btn:disabled { cursor: default; transform: none!important; }
+
+/* speaker wave */
+.speaker-wave {
+  display: inline-flex; align-items: flex-end;
+  gap: 2px; height: 14px; margin-left: 6px; vertical-align: middle;
+}
+.speaker-wave span {
+  display: block; width: 3px; border-radius: 2px;
+  background: var(--gold); animation: wave 1s ease-in-out infinite;
+}
+.speaker-wave span:nth-child(1){height:4px;animation-delay:0s}
+.speaker-wave span:nth-child(2){height:10px;animation-delay:.1s}
+.speaker-wave span:nth-child(3){height:6px;animation-delay:.2s}
+.speaker-wave span:nth-child(4){height:12px;animation-delay:.15s}
+.speaker-wave span:nth-child(5){height:4px;animation-delay:.05s}
+@keyframes wave{0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.8)}}
+
+/* typing */
+.typing {
+  display: flex; gap: 4px; padding: 12px 16px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 18px; border-bottom-left-radius: 5px; width: fit-content;
+}
+.dot { width: 7px; height: 7px; border-radius: 50%; background: var(--gold); animation: bounce .9s infinite; }
+.dot:nth-child(2){animation-delay:.15s} .dot:nth-child(3){animation-delay:.3s}
+@keyframes bounce{0%,80%,100%{transform:translateY(0);opacity:.6}40%{transform:translateY(-7px);opacity:1}}
+
+/* input bar */
+.input-bar {
+  width: 100%; max-width: 700px;
+  padding: 10px 14px 18px;
+  display: flex; gap: 8px;
+  background: var(--bg); position: sticky; bottom: 0;
+}
+#user-input {
+  flex: 1; padding: 12px 18px;
+  border: 2px solid var(--border); border-radius: 30px;
+  font-family: 'Baloo 2', cursive; font-size: .92rem;
+  outline: none; background: var(--surface); color: var(--text);
+  transition: border-color .2s, box-shadow .2s;
+}
+#user-input::placeholder { color: var(--muted); }
+#user-input:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(245,158,11,.12); }
+
+#send-btn {
+  width: 48px; height: 48px; border-radius: 50%; border: none;
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  color: white; font-size: 1.1rem; cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 3px 14px rgba(245,158,11,.4); flex-shrink: 0;
+}
+#send-btn:hover { transform: scale(1.08); box-shadow: 0 5px 20px rgba(245,158,11,.55); }
+#send-btn:disabled { opacity: .5; transform: none; }
+
+/* result modal */
+.result-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.75); backdrop-filter: blur(6px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 100; opacity: 0; pointer-events: none; transition: opacity .3s;
+}
+.result-overlay.show { opacity: 1; pointer-events: all; }
+.result-card {
+  background: linear-gradient(135deg, #132015, #0c1a0e);
+  border: 2px solid var(--gold-dark);
+  border-radius: 24px; padding: 36px 40px;
+  text-align: center; max-width: 380px; width: 90%;
+  box-shadow: 0 20px 60px rgba(0,0,0,.6);
+  transform: scale(.9); transition: transform .3s cubic-bezier(.34,1.56,.64,1);
+}
+.result-overlay.show .result-card { transform: scale(1); }
+.result-emoji { font-size: 4rem; margin-bottom: 12px; display: block; }
+.result-title {
+  font-family: 'Fredoka One', cursive; font-size: 1.7rem; margin-bottom: 6px;
+  background: linear-gradient(90deg, var(--gold), #fde68a);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.result-score { font-size: 3rem; font-weight: 900; margin: 10px 0; color: white; }
+.result-msg { color: var(--muted); font-size: .9rem; margin-bottom: 22px; }
+.result-btn {
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  border: none; border-radius: 30px; padding: 12px 30px;
+  color: white; font-family: 'Baloo 2', cursive; font-weight: 800;
+  font-size: 1rem; cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+  box-shadow: 0 4px 16px rgba(245,158,11,.35);
+}
+.result-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 22px rgba(245,158,11,.5); }
+
+/* scenario card for identify questions */
+.scenario-card {
+  background: rgba(245,158,11,.07);
+  border: 1px solid rgba(245,158,11,.25);
+  border-radius: 12px; padding: 10px 14px;
+  margin: 8px 0 6px; font-style: italic;
+  font-size: .87rem; color: #fde68a; line-height: 1.5;
+}
+
+/* ── Notes Panel ─────────────────────────────────────────────── */
+.notes-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.78); backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 200; opacity: 0; pointer-events: none; transition: opacity .3s;
+}
+.notes-overlay.show { opacity: 1; pointer-events: all; }
+.notes-panel {
+  background: linear-gradient(160deg, #0c1a0e, #132015);
+  border: 2px solid var(--gold-dark);
+  border-radius: 20px;
+  width: 92%; max-width: 720px;
+  max-height: 88vh;
+  display: flex; flex-direction: column;
+  box-shadow: 0 24px 60px rgba(0,0,0,.7);
+  overflow: hidden;
+  transform: translateY(30px);
+  transition: transform .35s cubic-bezier(.34,1.2,.64,1);
+}
+.notes-overlay.show .notes-panel { transform: translateY(0); }
+.notes-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 22px; border-bottom: 1px solid var(--border);
+  background: linear-gradient(135deg, #14532d44, #1e3a5f44);
+}
+.notes-header h2 { font-family: 'Fredoka One', cursive; font-size: 1.3rem; color: var(--gold); }
+.notes-close {
+  width: 34px; height: 34px; border-radius: 50%;
+  border: 1.5px solid var(--border); background: var(--surface2);
+  color: var(--text); font-size: 1rem; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; transition: all .2s;
+}
+.notes-close:hover { background: #b91c1c; border-color: #ef4444; }
+.notes-body { overflow-y: auto; padding: 20px 22px; flex: 1; }
+.notes-body::-webkit-scrollbar { width: 4px; }
+.notes-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+.notes-topic { margin-bottom: 28px; }
+.notes-topic-title {
+  font-family: 'Fredoka One', cursive; font-size: 1.05rem;
+  color: var(--gold); margin-bottom: 10px;
+  padding-bottom: 6px; border-bottom: 1px solid var(--border);
+}
+.notes-item {
+  display: flex; gap: 10px; align-items: flex-start;
+  padding: 7px 0; border-bottom: 1px solid rgba(255,255,255,.04);
+  font-size: .87rem; line-height: 1.55;
+}
+.notes-item:last-child { border-bottom: none; }
+.notes-term { font-weight: 800; color: var(--gold); min-width: 150px; flex-shrink: 0; font-size: .84rem; }
+.notes-def { color: #d1fae5; }
+.notes-tabs {
+  display: flex; flex-wrap: wrap; gap: 8px; padding: 14px 22px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(0,0,0,.15);
+}
+.notes-tab {
+  padding: 12px 20px; border-radius: 10px;
+  border: 1.5px solid var(--border); 
+  background: rgba(255,255,255,.04); color: var(--muted);
+  font-family: 'Baloo 2', cursive; font-size: .9rem; font-weight: 700;
+  cursor: pointer; transition: all .15s; white-space: nowrap;
+  min-height: 48px; display: flex; align-items: center;
+}
+.notes-tab.active { background: var(--surface); color: var(--gold); border-color: var(--gold-dark); }
+.notes-tab:hover:not(.active) { color: var(--text); background: var(--surface2); }
+.notes-section { display: none; }
+.notes-section.active { display: block; }
+
+
+/* ── Print button in notes header ─────────────────────────────── */
+.notes-header-actions { display: flex; align-items: center; gap: 10px; }
+.print-btn {
+  display: flex; align-items: center; gap: 6px;
+  background: rgba(245,158,11,.12);
+  border: 1.5px solid rgba(245,158,11,.4);
+  color: var(--gold);
+  border-radius: 20px;
+  padding: 7px 14px;
+  font-family: 'Baloo 2', cursive;
+  font-size: .78rem;
+  font-weight: 800;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all .15s;
+}
+.print-btn:hover { background: var(--gold); color: #0c1a0e; border-color: var(--gold); }
+.print-btn.active { background: var(--gold); color: #0c1a0e; border-color: var(--gold); }
+
+/* ── On-screen Practice Test / Answer Key ─────────────────────── */
+.ptest-part-title {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1rem;
+  color: var(--gold);
+  margin: 22px 0 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+.ptest-part-title:first-child { margin-top: 0; }
+.ptest-q {
+  font-size: .87rem;
+  line-height: 1.6;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed rgba(255,255,255,.06);
+  color: #d1fae5;
+}
+.ptest-q b { color: var(--gold); }
+.ptest-q .opt { display: block; margin: 2px 0 2px 18px; color: #d1fae5; }
+.ptest-bank {
+  background: rgba(59,130,246,.08);
+  border: 1px solid rgba(59,130,246,.3);
+  border-radius: 10px;
+  padding: 10px 16px;
+  margin-bottom: 14px;
+  font-size: .82rem;
+  color: #dbeafe;
+  line-height: 1.6;
+}
+.key-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.key-pill {
+  background: rgba(245,158,11,.1);
+  border: 1px solid rgba(245,158,11,.25);
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: .78rem;
+  color: #fde68a;
+}
+.key-pill b { color: #34d399; }
+
+/* ── Print / Save-as-PDF styles ──────────────────────────────────
+   By default everything is hidden from print. When body carries
+   .printing-test, only #print-area (a light-themed clone of the
+   Practice Test + Answer Key) is shown, laid out for paper. ──── */
+@media print {
+  body * { visibility: hidden; }
+  #print-area, #print-area * { visibility: visible; }
+  #print-area {
+    display: block !important;
+    position: absolute; top: 0; left: 0; width: 100%;
+    background: #fff; color: #14290f;
+    font-family: 'Helvetica', Arial, sans-serif;
+    font-size: 10.5pt;
+    line-height: 1.5;
+  }
+  #print-area .p-cover { text-align: center; padding-top: 40px; }
+  #print-area .p-cover .p-icon { font-size: 34pt; }
+  #print-area .p-cover h1 { font-size: 19pt; color: #b45309; margin: 8px 0 4px; }
+  #print-area .p-cover .p-sub { font-size: 10.5pt; color: #166534; margin-bottom: 20px; }
+  #print-area .p-info-box {
+    border: 1.5px solid #fcd34d; border-radius: 10px;
+    max-width: 460px; margin: 0 auto 20px; padding: 14px 20px;
+    text-align: left; font-size: 10pt;
+  }
+  #print-area .p-info-box div { margin: 6px 0; border-bottom: 1px dotted #fde68a; padding-bottom: 6px; }
+  #print-area .p-instructions {
+    max-width: 460px; margin: 0 auto; text-align: left;
+    background: #fffbeb; border: 1px solid #fcd34d; border-radius: 10px;
+    padding: 12px 18px; font-size: 9.5pt; color: #78350f;
+  }
+  #print-area h2.p-part-title {
+    font-size: 12.5pt; color: #fff;
+    background: linear-gradient(135deg, #b45309, #14532d) !important;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    padding: 6px 12px; border-radius: 7px; margin: 18px 0 10px;
+    page-break-after: avoid;
+  }
+  #print-area .p-bank {
+    background: #f0fdf4 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    border: 1px solid #86efac; border-radius: 8px; padding: 8px 14px;
+    margin-bottom: 12px; font-size: 9.5pt; color: #14532d;
+  }
+  #print-area .p-q {
+    margin-bottom: 8px; padding-bottom: 8px;
+    border-bottom: 1px dotted #fde68a; font-size: 10pt;
+    page-break-inside: avoid; color: #14290f;
+  }
+  #print-area .p-q b { color: #b45309; }
+  #print-area .p-q .p-blank { display: inline-block; min-width: 65px; border-bottom: 1px solid #64748b; }
+  #print-area .p-q .p-opt { display: block; margin: 2px 0 0 20px; color: #365314; }
+  #print-area .p-break { page-break-before: always; }
+  #print-area .p-key-part-title {
+    font-size: 11pt; color: #b45309; font-weight: bold;
+    margin: 14px 0 8px; border-bottom: 2px solid #b45309; padding-bottom: 4px;
+  }
+  #print-area .p-key-grid {
+    display: grid; grid-template-columns: repeat(5, 1fr);
+    gap: 5px 8px; margin-bottom: 14px;
+  }
+  #print-area .p-key-pill {
+    background: #f0fdf4 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    border: 1px solid #86efac; border-radius: 6px;
+    padding: 4px 8px; font-size: 8.5pt; color: #166534;
+  }
+  #print-area .p-key-pill b { color: #b45309; }
+  @page { size: letter; margin: 1.5cm 1.8cm; }
+}
+#print-area { display: none; }
+
+
+/* ── Chapter Summary / Tandaan / Memory boxes (fix: previously missing) ── */
+.chapter-summary {
+  background: linear-gradient(135deg, rgba(59,130,246,.1), rgba(34,197,94,.08));
+  border: 1px solid rgba(59,130,246,.25);
+  border-left: 4px solid var(--blue);
+  border-radius: 12px;
+  padding: 14px 18px;
+  margin-bottom: 18px;
+  font-size: .88rem;
+  line-height: 1.65;
+  color: #dbeafe;
+}
+.tandaan-box {
+  background: rgba(245,158,11,.08);
+  border: 1px solid rgba(245,158,11,.3);
+  border-left: 4px solid var(--gold);
+  border-radius: 12px;
+  padding: 12px 18px;
+  margin: 14px 0;
+  font-size: .86rem;
+  line-height: 1.6;
+  color: #fde68a;
+}
+.tandaan-label {
+  display: block;
+  font-family: 'Baloo 2', cursive;
+  font-size: .8rem;
+  color: var(--gold);
+  letter-spacing: .5px;
+  margin-bottom: 5px;
+}
+.memory-box {
+  background: rgba(34,197,94,.08);
+  border: 1px solid rgba(34,197,94,.3);
+  border-left: 4px solid var(--green);
+  border-radius: 12px;
+  padding: 12px 18px;
+  margin: 14px 0 22px;
+  font-size: .86rem;
+  line-height: 1.6;
+  color: #bbf7d0;
+}
+.memory-label {
+  display: block;
+  font-family: 'Baloo 2', cursive;
+  font-size: .8rem;
+  color: var(--green);
+  letter-spacing: .5px;
+  margin-bottom: 5px;
+}
+.compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0 20px;
+  font-size: .82rem;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.compare-table th {
+  background: linear-gradient(135deg, var(--blue-dark), var(--gold-dark));
+  color: white;
+  text-align: left;
+  padding: 9px 12px;
+  font-size: .78rem;
+  text-transform: uppercase;
+  letter-spacing: .4px;
+}
+.compare-table td {
+  padding: 9px 12px;
+  border-top: 1px solid var(--border);
+  color: var(--text);
+  vertical-align: top;
+}
+.compare-table tr:nth-child(even) td { background: rgba(255,255,255,.02); }
+
+/* ── Story Box (for reading Bible stories aloud) ─────────────────── */
+.story-box {
+  background: rgba(255,255,255,.03);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px 20px;
+  margin-bottom: 16px;
+  font-size: .92rem;
+  line-height: 1.8;
+  color: var(--text);
+}
+.story-box p { margin-bottom: 10px; }
+.story-box p:last-child { margin-bottom: 0; }
+.story-ref {
+  display: block;
+  text-align: right;
+  font-style: italic;
+  color: var(--muted);
+  font-size: .8rem;
+  margin-top: 10px;
+}
+.story-label {
+  display: block;
+  font-family: 'Baloo 2', cursive;
+  font-size: .9rem;
+  color: var(--gold);
+  letter-spacing: .5px;
+  margin-bottom: 10px;
+}
+/* ── Raw Notes (original document view) ──────────────────────── */
+.rawnotes-intro {
+  font-size: .82rem;
+  color: var(--muted);
+  line-height: 1.6;
+  background: rgba(59,130,246,.1);
+  border: 1px solid rgba(59,130,246,.3);
+  border-left: 4px solid var(--blue);
+  border-radius: 10px;
+  padding: 12px 18px;
+  margin-bottom: 20px;
+}
+.rawnotes-doc {
+  font-family: 'Lora', Georgia, serif;
+  line-height: 1.75;
+}
+.rawnotes-doc p {
+  font-size: .95rem;
+  margin-bottom: 14px;
+  color: #e2f5e6;
+}
+.rawnotes-doc strong { color: var(--gold); font-weight: 700; }
+.rawnotes-doc em { color: var(--muted); font-style: italic; }
+.rawnotes-doc h3.doc-heading {
+  font-family: 'Baloo 2', cursive;
+  font-size: 1.05rem;
+  color: var(--gold);
+  margin: 26px 0 12px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid var(--border);
+}
+.rawnotes-doc h3.doc-heading:first-child { margin-top: 0; }
+.rawnotes-doc ul, .rawnotes-doc ol {
+  margin: 0 0 14px 26px;
+  color: #e2f5e6;
+}
+.rawnotes-doc li { margin-bottom: 6px; font-size: .95rem; }
+.rawnotes-doc table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0 20px;
+  font-size: .82rem;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.rawnotes-doc th {
+  background: linear-gradient(135deg, var(--blue-dark), var(--gold-dark));
+  color: white;
+  text-align: left;
+  padding: 9px 12px;
+  font-size: .78rem;
+}
+.rawnotes-doc td {
+  padding: 9px 12px;
+  border-top: 1px solid var(--border);
+  color: var(--text);
+  vertical-align: top;
+}
+.rawnotes-doc tr:nth-child(even) td { background: rgba(255,255,255,.02); }
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE: TABLET (≤820px)
+   ═══════════════════════════════════════════════════════════════ */
+@media (max-width: 820px) {
+  .notes-panel { width: 95%; max-height: 92vh; }
+  .notes-tabs { padding: 12px 16px; gap: 6px; }
+  .notes-tab { padding: 10px 14px; font-size: .82rem; min-height: 42px; }
+  .notes-body { padding: 16px; }
+  .notes-header { padding: 14px 16px; }
+  .chat-wrap { padding: 14px 10px 0; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE: MOBILE (≤600px)
+   ═══════════════════════════════════════════════════════════════ */
+@media (max-width: 600px) {
+  header {
+    padding: 10px 12px;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .header-icon { font-size: 1.5rem; }
+  header h1 { font-size: 1.05rem; line-height: 1.2; }
+  header .sub { font-size: .62rem; }
+  .header-controls { gap: 6px; margin-left: auto; }
+  .score-pill { padding: 4px 10px; font-size: .74rem; }
+  .audio-btn { width: 32px; height: 32px; font-size: .85rem; }
+
+  .chat-wrap { padding: 10px 6px 0; }
+  #chat-box { gap: 12px; }
+  .bubble { max-width: 88%; font-size: .88rem; padding: 10px 13px; }
+  .avatar { width: 30px; height: 30px; font-size: .85rem; }
+
+  .chip { font-size: .78rem; padding: 7px 12px; }
+  .mc-btn { font-size: .84rem; padding: 10px 12px; }
+  .mc-btn .letter { width: 22px; height: 22px; font-size: .74rem; }
+  .topic-tag { font-size: .68rem; }
+  .scenario-card { font-size: .88rem; padding: 10px 14px; }
+
+  .input-bar { padding: 8px 8px calc(8px + env(safe-area-inset-bottom)); gap: 8px; }
+  #user-input { font-size: .88rem; padding: 10px 14px; }
+  #send-btn { width: 40px; height: 40px; font-size: 1rem; }
+
+  .result-card { width: 92%; padding: 26px 20px; }
+  .result-emoji { font-size: 2.6rem; }
+  .result-title { font-size: 1.2rem; }
+  .result-score { font-size: 1.8rem; }
+
+  /* ── Notes panel: near-full-screen on phones ── */
+  .notes-overlay { align-items: flex-end; }
+  .notes-panel {
+    width: 100%; max-width: 100%;
+    max-height: 94vh;
+    border-radius: 20px 20px 0 0;
+    border-left: none; border-right: none; border-bottom: none;
+  }
+  .notes-header { padding: 12px 14px; flex-wrap: wrap; gap: 8px; }
+  .notes-header h2 { font-size: 1.05rem; flex: 1 1 100%; }
+  .notes-header-actions { flex-wrap: wrap; gap: 6px; width: 100%; justify-content: flex-start; }
+  .print-btn { font-size: .7rem; padding: 6px 11px; }
+  .notes-close { width: 30px; height: 30px; font-size: .9rem; margin-left: auto; }
+
+  .notes-tabs { padding: 10px 12px; gap: 5px; }
+  .notes-tab { padding: 8px 12px; font-size: .76rem; min-height: 38px; }
+  .notes-body { padding: 14px; }
+
+  .notes-item { flex-direction: column; gap: 2px; }
+  .notes-term { min-width: 0; font-size: .82rem; }
+  .notes-def { font-size: .84rem; }
+  .notes-topic-title { font-size: .95rem; }
+  .chapter-summary, .memory-box, .tandaan-box, .story-box, .verse-card { font-size: .82rem; padding: 12px 14px; }
+
+  /* ── Tables: allow horizontal scroll instead of squeezing ── */
+  .compare-table { display: block; overflow-x: auto; white-space: nowrap; }
+  .compare-table th, .compare-table td { white-space: normal; min-width: 110px; }
+
+  .key-grid { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 5px; }
+  .key-pill { font-size: .72rem; padding: 5px 8px; }
+  .ptest-part-title { font-size: .92rem; }
+  .ptest-q { font-size: .82rem; }
+  .ptest-bank { font-size: .78rem; padding: 8px 12px; }
+
+  .rawnotes-doc p, .rawnotes-doc li { font-size: .87rem; }
+  .rawnotes-doc h3.doc-heading { font-size: .95rem; }
+  .rawnotes-doc table { display: block; overflow-x: auto; white-space: nowrap; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE: VERY SMALL PHONES (≤380px)
+   ═══════════════════════════════════════════════════════════════ */
+@media (max-width: 380px) {
+  header h1 { font-size: .92rem; }
+  header .sub { display: none; }
+  .score-pill span { font-size: .7rem; }
+  .bubble { max-width: 92%; font-size: .84rem; }
+  .notes-tab { font-size: .7rem; padding: 7px 10px; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE: LANDSCAPE PHONES (short height)
+   ═══════════════════════════════════════════════════════════════ */
+@media (max-height: 480px) and (orientation: landscape) {
+  .notes-panel { max-height: 98vh; }
+  .notes-tabs { padding: 6px 12px; }
+  .notes-tab { min-height: 32px; padding: 6px 10px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-icon">🕊️</div>
+  <div>
+    <h1>Sin, Forgiveness &amp; Healing</h1>
+    <div class="sub">Venial &amp; Mortal Sin · Reconciliation · Act of Contrition · Jesus the Healer</div>
+  </div>
+  <div class="header-controls">
+    <div class="score-pill">⭐ <span id="score-val">0</span> / <span id="total-val">0</span></div>
+    <button class="audio-btn" id="notes-toggle" title="Open Reviewer" onclick="document.getElementById('notes-overlay').classList.add('show')">📖</button>
+    <button class="audio-btn active" id="audio-toggle" title="Toggle Audio">🔊</button>
+  </div>
+</header>
+
+<div class="chat-wrap">
+  <div id="chat-box"></div>
+</div>
+
+<div class="input-bar">
+  <input type="text" id="user-input" placeholder="Type your answer here…" autocomplete="off" />
+  <button id="send-btn">➤</button>
+</div>
+
+<div class="result-overlay" id="result-overlay">
+  <div class="result-card">
+    <span class="result-emoji" id="res-emoji">🏆</span>
+    <div class="result-title">Quiz Complete!</div>
+    <div class="result-score"><span id="res-score">0</span>/<span id="res-total">0</span></div>
+    <div class="result-msg" id="res-msg">Great job!</div>
+    <button class="result-btn" onclick="restartApp()">🔄 Maglaro Ulit</button>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+// QUESTION BANK
+// ═══════════════════════════════════════════════════════════════
+const topics = {
+
+  "Sin and the Seven Deadly Sins": [
+    { q: "What is sin?", a: "A free decision to do what is bad and turn away from God", hint: "It turns us away from God." },
+    { q: "How many kinds of sin does the Catholic Church teach?", a: "Two: venial sins and mortal sins", hint: "Light and grave." },
+    { q: "What is a venial sin?", a: "A less serious or light sin", hint: "Think 'light'." },
+    { q: "How is a venial sin done?", a: "Without full knowledge or complete consent", hint: "Not completely knowing or choosing." },
+    { q: "What does a venial sin do to us?", a: "It weakens love for God and others", hint: "It weakens love." },
+    { q: "What is a mortal sin?", a: "A grave or serious sin; a grave violation of God's law", hint: "Think 'grave'." },
+    { q: "How is a mortal sin committed?", a: "With full knowledge and deliberate consent", hint: "Knowing it and choosing it." },
+    { q: "What does a mortal sin do to a person?", a: "It turns the person away from God", hint: "Away from God." },
+    { q: "How many deadly sins are there?", a: "Seven", hint: "A lucky number, but not a lucky list." },
+    { q: "What are the seven deadly sins?", a: "Lust, gluttony, pride, sloth, wrath, greed, and envy", hint: "L-G-P-S-W-G-E." },
+    { q: "What is lust?", a: "Unrestrained sexual craving", hint: "Craving that is not held back." },
+    { q: "What is gluttony?", a: "To overindulge, especially by overeating", hint: "Too much food." },
+    { q: "What is pride?", a: "An inflated sense of one's accomplishments", hint: "Thinking too highly of yourself." },
+    { q: "What is sloth?", a: "Laziness or lack of effort", hint: "Think of the slow animal." },
+    { q: "What is wrath?", a: "Uncontented feelings or hatred and anger", hint: "Anger." },
+    { q: "What is greed?", a: "The excessive desire for material things", hint: "Wanting too many things." },
+    { q: "What is envy?", a: "Jealousy toward another's happiness", hint: "Jealousy." },
+    { q: "Which deadly sin is laziness?", a: "Sloth", hint: "Lack of effort." },
+    { q: "Which deadly sin is overeating?", a: "Gluttony", hint: "Too much food." },
+    { q: "Which deadly sin is jealousy of another's happiness?", a: "Envy", hint: "Jealousy." },
+  ],
+
+  "Jesus Forgives and Heals a Paralyzed Man": [
+    { q: "In which Bible passage is the story of the paralyzed man found?", a: "Luke 5:17–26", hint: "A Gospel." },
+    { q: "Who were sitting there while Jesus was teaching?", a: "Pharisees and teachers of the law", hint: "They had come from many places." },
+    { q: "From where had the Pharisees and teachers of the law come?", a: "From every village of Galilee and from Judea and Jerusalem", hint: "Three places." },
+    { q: "What power was with Jesus?", a: "The power of the Lord, to heal the sick", hint: "Power to heal." },
+    { q: "Who came carrying a paralyzed man on a mat?", a: "Some men (his friends)", hint: "They cared for him." },
+    { q: "What did the men want to do for the paralyzed man?", a: "Take him into the house and lay him before Jesus", hint: "Get him to Jesus." },
+    { q: "Why could they not bring him into the house?", a: "Because of the crowd", hint: "Too many people." },
+    { q: "What did the men do when they could not find a way in?", a: "They went up on the roof and lowered him on his mat through the tiles into the middle of the crowd, right in front of Jesus", hint: "Through the roof." },
+    { q: "What did Jesus see in these men?", a: "Their faith", hint: "It moved Jesus." },
+    { q: "What was the first thing Jesus said to the paralyzed man?", a: "\"Friend, your sins are forgiven.\"", hint: "Forgiveness came first." },
+    { q: "What did the Pharisees and teachers of the law think when Jesus forgave the man's sins?", a: "They thought he was speaking blasphemy: \"Who can forgive sins but God alone?\"", hint: "They doubted Jesus." },
+    { q: "What did Jesus say that the Son of Man has?", a: "Authority on earth to forgive sins", hint: "Power to forgive." },
+    { q: "What did Jesus tell the paralyzed man to do?", a: "\"Get up, take your mat and go home.\"", hint: "Three commands." },
+    { q: "What happened immediately after Jesus spoke?", a: "The man stood up, took his mat, and went home praising God", hint: "He was healed." },
+    { q: "How did the people react?", a: "Everyone was amazed, gave praise to God, and were filled with awe", hint: "Amazed and praising." },
+    { q: "What did the people say after the miracle?", a: "\"We have seen remarkable things today.\"", hint: "Remarkable." },
+  ],
+
+  "Jesus the Healer": [
+    { q: "In the Gospel story, how is Jesus presented?", a: "As one who has the power to heal", hint: "Power over sickness and sin." },
+    { q: "Over what does Jesus have power?", a: "Over sickness and sin", hint: "Two things." },
+    { q: "How did Jesus heal people physically?", a: "By curing their illnesses", hint: "Body." },
+    { q: "How did Jesus heal people spiritually?", a: "By forgiving their sins", hint: "Soul." },
+    { q: "What did people recognize when they saw Jesus' compassion, healing, and forgiveness?", a: "The presence and ways of God in His actions", hint: "God at work." },
+    { q: "Of what is Jesus the sign?", a: "God's healing love", hint: "Healing love." },
+    { q: "According to CCC 1503, whom has Jesus come to heal?", a: "The whole man, soul and body", hint: "Soul and body." },
+    { q: "How does Jesus continue to touch and heal us today?", a: "Through the sacraments", hint: "Signs of God's grace." },
+    { q: "What are we called to do as Christians?", a: "Reach out to those in need, and recognize the need of the sick for special help and comfort from family, community, and God's grace", hint: "Help the sick." },
+  ],
+
+  "Forgiveness and Reconciliation": [
+    { q: "How are our sins forgiven?", a: "Through confession", hint: "Telling our sins." },
+    { q: "How should we confess our sins?", a: "Sincerely, with sorrow and faith in God, resolving not to commit sin again", hint: "Sorrow, faith, and a resolve." },
+    { q: "What does God do when we come to Him and are sorry?", a: "He is willing to forgive and love us", hint: "Mercy." },
+    { q: "What does the lesson say about God's grace and mercy?", a: "His grace abounds and His mercy endures forever", hint: "Never ends." },
+    { q: "What does Jesus teach us to give rather than to condemn sinners?", a: "Mercy (and understanding rather than judgment)", hint: "Be merciful." },
+    { q: "What does Jesus call for?", a: "Conversion, or change of heart", hint: "Return to God." },
+    { q: "What kind of sacrament is Reconciliation?", a: "A sacrament of healing", hint: "Jesus heals us." },
+    { q: "What does Reconciliation bring us?", a: "Freedom, peace, and joy", hint: "Three gifts." },
+    { q: "For which sins do we receive forgiveness in Reconciliation?", a: "Sins that we commit after baptism", hint: "After baptism." },
+    { q: "With whom are we reconciled through the sacrament?", a: "God and the Church", hint: "Two." },
+    { q: "Why does sin hurt the whole Church?", a: "Because everything we do as members of the Church affects the whole Church", hint: "We belong together." },
+    { q: "What does the healing in Reconciliation restore?", a: "Health and strength to the Church and to ourselves", hint: "Church and self." },
+  ],
+
+  "Essential Elements of Reconciliation": [
+    { q: "How many essential elements are in the sacrament of reconciliation?", a: "Five", hint: "E-C-C-P-A." },
+    { q: "What are the five essential elements?", a: "Examination of conscience, contrition, confession, penance, and absolution", hint: "Every Child Can Pray Always." },
+    { q: "What is examination of conscience?", a: "A methodical and prayerful review of one's life and actions to determine how he or she conforms to God's will", hint: "Looking back at your actions." },
+    { q: "What is contrition?", a: "A heartfelt sorrow for the sins committed with the intention of sinning no more", hint: "Sorry, and no more sinning." },
+    { q: "What is confession?", a: "Telling sins to the priest", hint: "Tell the priest." },
+    { q: "What is penance?", a: "The atonement that the priest imposes on the sinner; a prayer or action to repair the hurt done to God and others", hint: "Making up for the hurt." },
+    { q: "What is absolution?", a: "A prayer spoken by the priest for the forgiveness of sins", hint: "The priest's prayer." },
+    { q: "Which element comes first in the list?", a: "Examination of conscience", hint: "Think before you confess." },
+    { q: "Who imposes the penance?", a: "The priest", hint: "Not the sinner." },
+    { q: "What can a penance be?", a: "A prayer or an action", hint: "Two forms." },
+    { q: "What does contrition make us see?", a: "The contradiction between God's love and sin", hint: "Love versus sin." },
+    { q: "What does contrition lead us to do?", a: "Change for the better and place all our hope in God", hint: "Change and hope." },
+  ],
+
+  "Act of Contrition": [
+    { q: "What prayer do we recite to express sorrow for our sins?", a: "The Act of Contrition", hint: "A prayer of sorrow." },
+    { q: "Complete: \"My God, I am sorry for my sins with all my ____.\"", a: "Heart", hint: "Sorry from the inside." },
+    { q: "Complete: \"I have sinned against You Whom I should love above all ____.\"", a: "Things", hint: "Love God most." },
+    { q: "Complete: \"I firmly intend with Your help to do ____, to sin no more.\"", a: "Penance", hint: "Making up for sin." },
+    { q: "What do we promise to avoid in the Act of Contrition?", a: "Whatever leads me to sin", hint: "Stay away from temptation." },
+    { q: "Who suffered and died for us, according to the prayer?", a: "Our Savior Jesus Christ", hint: "The Savior." },
+    { q: "Complete: \"In His name, my God, have ____.\"", a: "Mercy", hint: "The last word." },
+    { q: "From which source is the Act of Contrition taken in the lesson?", a: "The Revised Rite of Penance", hint: "A rite of the Church." },
+  ],
+
+  "Jesus Healed the Centurion's Servant": [
+    { q: "In which Bible passage is the story of the centurion's servant found?", a: "Matthew 8:5–9, 13", hint: "A Gospel." },
+    { q: "Where was Jesus when the centurion came to Him?", a: "Capernaum", hint: "A town." },
+    { q: "Who came to Jesus asking for help?", a: "A centurion", hint: "A Roman soldier." },
+    { q: "What help did the centurion need?", a: "Healing for his servant, who lay at home paralyzed and suffering terribly", hint: "For someone else." },
+    { q: "What kind of master was the centurion?", a: "A caring master, who asked Jesus for help for his suffering servant", hint: "He cared for his servant." },
+    { q: "What did Jesus ask the centurion?", a: "\"Shall I come and heal him?\"", hint: "A question about coming." },
+    { q: "Why did the centurion say Jesus did not need to come under his roof?", a: "Because he felt he did not deserve to have Jesus come under his roof, and Jesus could just say the word", hint: "Humility and faith." },
+    { q: "What did the centurion say would happen if Jesus just said the word?", a: "His servant would be healed", hint: "Faith in Jesus' word." },
+    { q: "What did the centurion compare himself to?", a: "A man under authority, with soldiers under him who obey his commands", hint: "He gives orders." },
+    { q: "What did Jesus say to the centurion?", a: "\"Go! Let it be done just as you believed it would.\"", hint: "Based on belief." },
+    { q: "What happened to the servant?", a: "He was healed at that moment", hint: "Immediately." },
+    { q: "What quality did the centurion show in Jesus?", a: "Faith (trust that Jesus could heal with just a word)", hint: "Belief." },
+  ],
+
+};
+
+// ── TRUE OR FALSE ──────────────────────────────────────────────────────────
+const trueOrFalse = [
+  { q: "Sin turns us away from God.", a: "true" },
+  { q: "The Church teaches that there are three kinds of sin.", a: "false" },
+  { q: "A venial sin is a less serious or light sin.", a: "true" },
+  { q: "A mortal sin is done without full knowledge or complete consent.", a: "false" },
+  { q: "A mortal sin is a grave violation of God's law.", a: "true" },
+  { q: "A venial sin weakens love for God and others.", a: "true" },
+  { q: "There are seven deadly sins.", a: "true" },
+  { q: "Sloth means laziness or lack of effort.", a: "true" },
+  { q: "Gluttony means jealousy toward another's happiness.", a: "false" },
+  { q: "Greed is the excessive desire for material things.", a: "true" },
+  { q: "Pride is an inflated sense of one's accomplishments.", a: "true" },
+  { q: "The friends of the paralyzed man lowered him through the roof because of the crowd.", a: "true" },
+  { q: "Jesus saw the faith of the men who brought the paralyzed man.", a: "true" },
+  { q: "Jesus first said, \"Get up and walk,\" to the paralyzed man.", a: "false" },
+  { q: "The Pharisees thought only God could forgive sins.", a: "true" },
+  { q: "Jesus said the Son of Man has authority on earth to forgive sins.", a: "true" },
+  { q: "Jesus healed people physically by curing illnesses and spiritually by forgiving sins.", a: "true" },
+  { q: "Jesus continues to touch and heal us through the sacraments.", a: "true" },
+  { q: "Reconciliation is a sacrament of healing.", a: "true" },
+  { q: "In Reconciliation we receive forgiveness for sins committed after baptism.", a: "true" },
+  { q: "Sin does not affect the Church as a whole.", a: "false" },
+  { q: "Confession is telling sins to the priest.", a: "true" },
+  { q: "Penance is a prayer spoken by the priest for the forgiveness of sins.", a: "false" },
+  { q: "Absolution is a prayer spoken by the priest for the forgiveness of sins.", a: "true" },
+  { q: "Contrition is a heartfelt sorrow for sins with the intention of sinning no more.", a: "true" },
+  { q: "Examination of conscience is a prayerful review of one's life and actions.", a: "true" },
+  { q: "The Act of Contrition is a prayer that expresses sorrow for our sins.", a: "true" },
+  { q: "The centurion said that Jesus must come to his house to heal his servant.", a: "false" },
+  { q: "The centurion's servant was healed at that moment.", a: "true" },
+  { q: "The story of the centurion's servant took place in Capernaum.", a: "true" },
+];
+
+// ── IDENTIFY ───────────────────────────────────────────────────────────────
+const identifyQuestions = [
+  { q: "A less serious or light sin.", a: "Venial sin", choices: ["Venial sin","Mortal sin","Original sin","Deadly virtue"] },
+  { q: "A grave or serious sin done with full knowledge and deliberate consent.", a: "Mortal sin", choices: ["Mortal sin","Venial sin","Penance","Absolution"] },
+  { q: "Unrestrained sexual craving.", a: "Lust", choices: ["Lust","Greed","Envy","Pride"] },
+  { q: "To overindulge, especially by overeating.", a: "Gluttony", choices: ["Gluttony","Sloth","Wrath","Greed"] },
+  { q: "An inflated sense of one's accomplishments.", a: "Pride", choices: ["Pride","Envy","Lust","Sloth"] },
+  { q: "Laziness or lack of effort.", a: "Sloth", choices: ["Sloth","Gluttony","Pride","Wrath"] },
+  { q: "Uncontented feelings or hatred and anger.", a: "Wrath", choices: ["Wrath","Envy","Greed","Lust"] },
+  { q: "The excessive desire for material things.", a: "Greed", choices: ["Greed","Envy","Pride","Gluttony"] },
+  { q: "Jealousy toward another's happiness.", a: "Envy", choices: ["Envy","Greed","Wrath","Sloth"] },
+  { q: "A methodical and prayerful review of one's life and actions.", a: "Examination of conscience", choices: ["Examination of conscience","Contrition","Confession","Absolution"] },
+  { q: "A heartfelt sorrow for sins with the intention of sinning no more.", a: "Contrition", choices: ["Contrition","Penance","Confession","Absolution"] },
+  { q: "Telling sins to the priest.", a: "Confession", choices: ["Confession","Penance","Contrition","Absolution"] },
+  { q: "The atonement the priest imposes, such as a prayer or an action.", a: "Penance", choices: ["Penance","Absolution","Contrition","Confession"] },
+  { q: "A prayer spoken by the priest for the forgiveness of sins.", a: "Absolution", choices: ["Absolution","Penance","Confession","Contrition"] },
+  { q: "The sacrament of healing in which we receive forgiveness for sins committed after baptism.", a: "Reconciliation", choices: ["Reconciliation","Eucharist","Baptism","Confirmation"] },
+  { q: "The prayer that begins, \"My God, I am sorry for my sins with all my heart.\"", a: "Act of Contrition", choices: ["Act of Contrition","Our Father","Hail Mary","Apostles' Creed"] },
+  { q: "Where is the story of the paralyzed man found?", a: "Luke 5:17–26", choices: ["Luke 5:17–26","Matthew 8:5–13","John 13:1–17","Acts 8:27–38"] },
+  { q: "Where is the story of the centurion's servant found?", a: "Matthew 8:5–9, 13", choices: ["Matthew 8:5–9, 13","Luke 5:17–26","Luke 7:11–17","John 13:1–17"] },
+  { q: "Jesus said this first to the paralyzed man: \"Friend, ____.\"", a: "your sins are forgiven", choices: ["your sins are forgiven","follow me","do not be afraid","come and see"] },
+  { q: "What did Jesus see in the friends of the paralyzed man?", a: "Their faith", choices: ["Their faith","Their money","Their strength","Their fear"] },
+  { q: "They thought Jesus was speaking blasphemy.", a: "Pharisees and teachers of the law", choices: ["Pharisees and teachers of the law","The friends","The crowd","The disciples"] },
+  { q: "The man who asked Jesus to heal his paralyzed servant.", a: "Centurion", choices: ["Centurion","Pharisee","Fisherman","Tax collector"] },
+  { q: "The town where Jesus was when the centurion asked for help.", a: "Capernaum", choices: ["Capernaum","Nain","Jericho","Bethany"] },
+  { q: "\"Lord, I do not deserve to have You come under my roof. But just say the word.\"", a: "The centurion", choices: ["The centurion","The paralyzed man","A Pharisee","The paralyzed man's friend"] },
+  { q: "\"Go! Let it be done just as you believed it would.\"", a: "Jesus to the centurion", choices: ["Jesus to the centurion","The centurion to Jesus","Jesus to the paralyzed man","A Pharisee to Jesus"] },
+  { q: "\"I tell you, get up, take your mat and go home.\"", a: "Jesus to the paralyzed man", choices: ["Jesus to the paralyzed man","The friends to Jesus","The centurion to Jesus","Jesus to the centurion"] },
+  { q: "Which CCC number says Jesus came to heal the whole man, soul and body?", a: "CCC 1503", choices: ["CCC 1503","CCC 1870","CCC 1468","CCC 1854"] },
+  { q: "Which CCC numbers describe venial and mortal sins?", a: "CCC 1854–1863", choices: ["CCC 1854–1863","CCC 1468–1470","CCC 1503","CCC 1870"] },
+  { q: "Which CCC numbers describe Reconciliation as a sacrament of healing?", a: "CCC 1468–1470", choices: ["CCC 1468–1470","CCC 1854–1863","CCC 1503","CCC 1870"] },
+];
+
+// ═══════════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════════
+let state = {
+  awaiting: 'menu',
+  mode: null,
+  questions: [],
+  allAnswers: [],
+  qIndex: 0,
+  score: 0,
+  total: 0,
+  hintUsed: false,
+  audioEnabled: true,
+};
+
+// ═══════════════════════════════════════════════════════════════
+// TTS (UPGRADED FOR TRUE FILIPINO ACCENT)
+// ═══════════════════════════════════════════════════════════════
+let currentAudioStream = null;
+
+function speak(text) {
+  if (!state.audioEnabled) return;
+  
+  // Linisin ang mga nakaraang audio task
+  window.speechSynthesis.cancel();
+  if (currentAudioStream) {
+    currentAudioStream.pause();
+    currentAudioStream = null;
+  }
+  
+  // Tanggalin ang HTML tags at emojis para hindi basahin nang paputol-putol
+  const clean = text.replace(/<[^>]+>/g,'').replace(/[🇵🇭🌟✅❌💡⏭️🏆😊💪🔄🔲📚👋⭐✕🧭📏🗺️]/g,'');
+  
+  // PRIMARY METHOD: Google Translation Engine cloud voice stream (May natural na Filipino accent)
+  const googleTtsUrl = `https://translate.google.com/translate_tts?ie=UTF-8&tl=tl&client=tw-ob&q=${encodeURIComponent(clean)}`;
+  
+  currentAudioStream = new Audio(googleTtsUrl);
+  currentAudioStream.onplaying = () => showWave(true);
+  currentAudioStream.onended = currentAudioStream.onerror = () => showWave(false);
+  
+  currentAudioStream.play().catch(err => {
+    // BACKUP METHOD: Web Speech API (works even without internet)
+    console.warn("Google TTS blocked or offline. Falling back to local system speech engine.");
+    
+    const streamFallback = new SpeechSynthesisUtterance(clean);
+    streamFallback.lang = 'fil-PH';
+    streamFallback.rate = 0.95; streamFallback.pitch = 1.05; streamFallback.volume = 1;
+    
+    const voices = window.speechSynthesis.getVoices();
+    const filVoice = voices.find(v => v.lang.startsWith('fil') || v.lang.startsWith('tl'));
+    const engVoice = voices.find(v => v.lang.startsWith('en') && v.name.toLowerCase().includes('female'))
+                   || voices.find(v => v.lang.startsWith('en'));
+              
+    if (filVoice) {
+      streamFallback.voice = filVoice;
+    } else if (engVoice) {
+      streamFallback.voice = engVoice; 
+      streamFallback.lang = 'en-US'; 
+    }
+    
+    streamFallback.onstart = () => showWave(true);
+    streamFallback.onend = streamFallback.onerror = () => showWave(false);
+    window.speechSynthesis.speak(streamFallback);
+  });
+}
+
+function showWave(on) {
+  document.querySelectorAll('.speaker-wave').forEach(w => w.style.display = on ? 'inline-flex' : 'none');
+}
+
+// I-initialize ang mga boses ng system
+let localSystemVoices = [];
+function lookupSystemVoices() {
+  localSystemVoices = window.speechSynthesis.getVoices();
+}
+lookupSystemVoices();
+if (window.speechSynthesis.onvoiceschanged !== undefined) {
+  window.speechSynthesis.onvoiceschanged = lookupSystemVoices;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// UI HELPERS
+// ═══════════════════════════════════════════════════════════════
+const chatBox = document.getElementById('chat-box');
+const input = document.getElementById('user-input');
+const sendBtn = document.getElementById('send-btn');
+
+function scrollBottom() { chatBox.scrollTop = chatBox.scrollHeight; }
+
+function addMessage(role, html, speakText) {
+  const div = document.createElement('div');
+  div.className = `msg ${role}`;
+  const av = document.createElement('div');
+  av.className = 'avatar';
+  av.textContent = role === 'bot' ? '🤖' : '🧑';
+  const bub = document.createElement('div');
+  bub.className = 'bubble';
+  bub.innerHTML = role === 'bot'
+    ? html + '<span class="speaker-wave" style="display:none"><span></span><span></span><span></span><span></span><span></span></span>'
+    : html;
+  div.appendChild(av); div.appendChild(bub);
+  chatBox.appendChild(div);
+  scrollBottom(); bindChips();
+  if (role === 'bot') {
+    const txt = speakText || html.replace(/<[^>]+>/g,' ');
+    setTimeout(() => speak(txt), 350);
+  }
+}
+
+function addTyping() {
+  const d = document.createElement('div');
+  d.className = 'msg bot'; d.id = 'typing';
+  d.innerHTML = '<div class="avatar">🤖</div><div class="typing"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>';
+  chatBox.appendChild(d); scrollBottom();
+}
+function removeTyping() { const t = document.getElementById('typing'); if(t) t.remove(); }
+
+function bindChips() {
+  document.querySelectorAll('.chip:not([data-bound])').forEach(c => {
+    c.dataset.bound = '1';
+    c.addEventListener('click', () => handleUserMessage(c.dataset.val));
+  });
+}
+
+function updateScore() {
+  document.getElementById('score-val').textContent = state.score;
+  document.getElementById('total-val').textContent = state.total;
+}
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length-1; i > 0; i--) {
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]] = [a[j],a[i]];
+  }
+  return a;
+}
+
+function normalize(s) { return s.toLowerCase().trim().replace(/\s+/g,' '); }
+
+function checkAnswer(user, correct) {
+  const u = normalize(user), c = normalize(correct);
+  if (u === c) return true;
+  if (c.includes(u) && u.length > 5) return true;
+  const parts = c.split(/[,;\/]/);
+  for (const p of parts) if (u.includes(p.trim()) && p.trim().length > 4) return true;
+  return false;
+}
+
+function showResult() {
+  const pct = Math.round((state.score/state.total)*100);
+  const emoji = pct>=90?'🏆':pct>=70?'🌟':pct>=50?'😊':'💪';
+  const msg = pct>=90?'Excellent! You know it all!':pct>=70?'Great job! Keep it up!':pct>=50?'Good! Study a little more!':"Don't give up! Try again!";
+  document.getElementById('res-emoji').textContent = emoji;
+  document.getElementById('res-score').textContent = state.score;
+  document.getElementById('res-total').textContent = state.total;
+  document.getElementById('res-msg').textContent = msg;
+  document.getElementById('result-overlay').classList.add('show');
+  speak(`All done! Your score is ${state.score} out of ${state.total}. ${msg}`);
+}
+
+function restartApp() {
+  document.getElementById('result-overlay').classList.remove('show');
+  state = { awaiting:'menu', mode:null, questions:[], allAnswers:[], qIndex:0, score:0, total:0, hintUsed:false, audioEnabled:state.audioEnabled };
+  chatBox.innerHTML = '';
+  document.querySelector('.input-bar').style.display = 'flex';
+  updateScore();
+  showMenu();
+}
+
+// ═══════════════════════════════════════════════════════════════
+// MC HELPERS
+// ═══════════════════════════════════════════════════════════════
+function getAllAnswers() {
+  const ans = [];
+  for (const qs of Object.values(topics)) for (const q of qs) ans.push(q.a);
+  return ans;
+}
+
+function generateChoices(correct, pool) {
+  const others = pool.filter(a => a !== correct);
+  const near = shuffle(others).sort((x, y) => Math.abs(x.length - correct.length) - Math.abs(y.length - correct.length)).slice(0, 7);
+  return shuffle([correct, ...shuffle(near).slice(0, 3)]);
+}
+
+function buildMCBtns(choices, correctAnswer) {
+  const letters = ['A','B','C','D','E'];
+  return `<div class="mc-options">${choices.map((c,i)=>
+    `<button class="mc-btn" data-answer="${encodeURIComponent(c)}" data-correct="${encodeURIComponent(correctAnswer)}" onclick="handleMCClick(this)">
+      <span class="letter">${letters[i]}</span>${c}
+    </button>`
+  ).join('')}</div>`;
+}
+
+function handleMCClick(btn) {
+  const allBtns = btn.closest('.mc-options').querySelectorAll('.mc-btn');
+  allBtns.forEach(b => b.disabled = true);
+  const chosen = decodeURIComponent(btn.dataset.answer);
+  const correct = decodeURIComponent(btn.dataset.correct);
+  const isCorrect = chosen === correct;
+  allBtns.forEach(b => { if(decodeURIComponent(b.dataset.answer)===correct) b.classList.add('correct'); });
+  if (!isCorrect) btn.classList.add('wrong');
+  setTimeout(() => {
+    if (isCorrect) {
+      state.score++;
+      addMessage('bot', `✅ <strong>Correct!</strong> +1 point! The answer is: <strong>${correct}</strong>`, `Correct! The answer is: ${correct}`);
+    } else {
+      addMessage('bot', `❌ <strong>Not quite.</strong> The correct answer is: <strong>${correct}</strong>`, `Not quite. The correct answer is: ${correct}`);
+    }
+    state.qIndex++; updateScore();
+    if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+    else setTimeout(showResult, 900);
+  }, 650);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// NEXT QUESTION
+// ═══════════════════════════════════════════════════════════════
+function nextQuestion() {
+  const qi = state.qIndex;
+  const q = state.questions[qi];
+  const num = qi + 1;
+
+  if (state.mode === 'full' || state.mode === 'topic_mc') {
+    const choices = generateChoices(q.a, state.allAnswers);
+    const tag = q.topic ? `<span class="topic-tag">${q.topic}</span><br>` : '';
+    const html = `${tag}<strong>Q${num} of ${state.total}:</strong> ${q.q}${buildMCBtns(choices, q.a)}`;
+    addMessage('bot', html, `Question ${num}. ${q.q}`);
+    return;
+  }
+
+  if (state.mode === 'tf') {
+    const html = `<strong>Q${num} of ${state.total}:</strong> <div class="scenario-card">${q.q}</div>
+      <span class="chip" data-val="true">✅ True</span><span class="chip" data-val="false">❌ False</span>`;
+    addMessage('bot', html, `Question ${num}. True or False: ${q.q}`);
+    return;
+  }
+
+  if (state.mode === 'identify') {
+    const btns = buildMCBtns(q.choices, q.a);
+    const html = `<strong>Q${num} of ${state.total}:</strong> Identify what is being described:<div class="scenario-card">${q.q}</div>${btns}`;
+    addMessage('bot', html, `Question ${num}. Identify: ${q.q}`);
+    return;
+  }
+
+  // typed answer mode
+  const tag = q.topic ? `<span class="topic-tag">${q.topic}</span><br>` : '';
+  const html = `${tag}<strong>Q${num} of ${state.total}:</strong> ${q.q}<br><small style="color:var(--muted)">Type your answer · type <em>hint</em> for help · <em>skip</em> to move on</small>`;
+  addMessage('bot', html, `Question ${num}. ${q.q}`);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// MENU
+// ═══════════════════════════════════════════════════════════════
+function showMenu() {
+  addMessage('bot',
+    `👋 <strong>Hi! I'm your Religion Reviewer!</strong><br>Let's study <em>Sin and the Seven Deadly Sins</em>, the stories of <em>the Paralyzed Man</em> and <em>the Centurion's Servant</em>, and the <em>Sacrament of Reconciliation</em>.<br><br>What would you like to do?<br>
+    <span class="chip" data-val="1">📚 Study by Topic</span>
+    <span class="chip" data-val="2">✅ True or False</span>
+    <span class="chip" data-val="3">🌐 Identify</span>
+    <span class="chip" data-val="4">🌟 Full Review (Multiple Choice)</span>`,
+    "Hi! I'm your Religion Reviewer on Sin, Forgiveness, and Healing. What would you like to do? Study a topic, True or False, Identify, or a Full Review with multiple choice?"
+  );
+  state.awaiting = 'menu';
+}
+
+// ═══════════════════════════════════════════════════════════════
+// PROCESS MESSAGE
+// ═══════════════════════════════════════════════════════════════
+function processMessage(msg) {
+  const aw = state.awaiting;
+
+  // ── MENU ──────────────────────────────────────────────────
+  if (aw === 'menu') {
+    if (msg === '1') {
+      state.awaiting = 'topic';
+      const keys = Object.keys(topics);
+      const chips = keys.map((t,i) => `<span class="chip" data-val="${i+1}">${i+1}. ${t}</span>`).join(' ');
+      addMessage('bot', `📚 Which topic would you like to study?<br>${chips}`, 'Which topic would you like to study?');
+
+    } else if (msg === '2') {
+      state.mode = 'tf';
+      state.questions = shuffle(trueOrFalse);
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'tf_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `✅ <strong>True or False!</strong> ${state.total} questions. Let's start!`, `True or False! ${state.total} questions. Let's start!`);
+      setTimeout(nextQuestion, 800);
+
+    } else if (msg === '3') {
+      state.mode = 'identify';
+      state.questions = shuffle(identifyQuestions);
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'mc_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `🌐 <strong>Identify!</strong> Match the sins, the elements of Reconciliation, and the Bible stories to what is being described.`, "Identify! Figure out what's being described in each item.");
+      setTimeout(nextQuestion, 800);
+
+    } else if (msg === '4') {
+      state.mode = 'full';
+      const all = [];
+      for (const [topicName, qs] of Object.entries(topics)) {
+        qs.forEach(q => all.push({...q, topic: topicName}));
+      }
+      state.questions = shuffle(all);
+      state.allAnswers = getAllAnswers();
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'mc_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `🌟 <strong>Full Review — Multiple Choice!</strong> ${state.total} questions. Think carefully!`, `Full Review! Multiple Choice! ${state.total} questions. Think carefully!`);
+      setTimeout(nextQuestion, 800);
+
+    } else {
+      addMessage('bot',
+        `Choose an option:<br>
+        <span class="chip" data-val="1">📚 Study by Topic</span>
+        <span class="chip" data-val="2">✅ True or False</span>
+        <span class="chip" data-val="3">🌐 Identify</span>
+        <span class="chip" data-val="4">🌟 Full Review</span>`,
+        'Choose an option.'
+      );
+    }
+    return;
+  }
+
+  // ── TOPIC SELECT ──────────────────────────────────────────
+  if (aw === 'topic') {
+    const keys = Object.keys(topics);
+    const idx = parseInt(msg) - 1;
+    if (keys[idx]) {
+      const topicName = keys[idx];
+      state.mode = 'topic_mc';
+      state.questions = shuffle(topics[topicName]);
+      state.allAnswers = getAllAnswers();
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'mc_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `📚 <strong>${topicName}</strong> — ${state.total} questions. Ready?`, `${topicName}. ${state.total} questions. Ready?`);
+      setTimeout(nextQuestion, 800);
+    } else {
+      const chips = Object.keys(topics).map((t,i) => `<span class="chip" data-val="${i+1}">${i+1}. ${t}</span>`).join(' ');
+      addMessage('bot', `Please choose a valid topic:<br>${chips}`, 'Please choose a valid topic.');
+    }
+    return;
+  }
+
+  // ── TYPED ANSWER ──────────────────────────────────────────
+  if (aw === 'answer') {
+    const q = state.questions[state.qIndex];
+    const m = normalize(msg);
+
+    if (m === 'hint') {
+      state.hintUsed = true;
+      addMessage('bot', `💡 <strong>Hint:</strong> ${q.hint}`, `Hint: ${q.hint}`);
+      return;
+    }
+    if (m === 'skip') {
+      addMessage('bot', `⏭️ Skipped! The correct answer is: <strong>${q.a}</strong>`, `Skipped. The correct answer is: ${q.a}`);
+      state.qIndex++; state.hintUsed = false;
+      if (state.qIndex < state.total) setTimeout(nextQuestion, 700);
+      else showResult();
+      return;
+    }
+
+    const correct = checkAnswer(msg, q.a);
+    if (correct) {
+      if (!state.hintUsed) state.score++;
+      const note = state.hintUsed ? ' <em>(hint used — no point)</em>' : ' +1 point!';
+      addMessage('bot', `✅ <strong>Correct!</strong>${note} Answer: <strong>${q.a}</strong>`, `Correct! The answer is: ${q.a}`);
+    } else {
+      addMessage('bot', `❌ <strong>Not quite.</strong> The correct answer is: <strong>${q.a}</strong>`, `Not quite. The correct answer is: ${q.a}`);
+    }
+    state.qIndex++; state.hintUsed = false; updateScore();
+    if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+    else setTimeout(showResult, 900);
+    return;
+  }
+
+  // ── TRUE OR FALSE ─────────────────────────────────────────
+  if (aw === 'tf_answer') {
+    const q = state.questions[state.qIndex];
+    const ans = normalize(msg);
+    const valid = ans === 'true' || ans === 'false';
+
+    if (valid) {
+      const correct = ans === q.a;
+      if (correct) {
+        state.score++;
+        addMessage('bot', `✅ <strong>Correct!</strong> The answer is <strong>${q.a.toUpperCase()}</strong>.`, `Correct! The answer is ${q.a}.`);
+      } else {
+        addMessage('bot', `❌ <strong>Incorrect.</strong> The correct answer is <strong>${q.a.toUpperCase()}</strong>.`, `Incorrect. The correct answer is ${q.a}.`);
+      }
+      state.qIndex++; updateScore();
+      if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+      else setTimeout(showResult, 900);
+    } else {
+      addMessage('bot',
+        `Answer: True or False?<br><span class="chip" data-val="true">✅ True</span><span class="chip" data-val="false">❌ False</span>`,
+        'Answer: True or False?'
+      );
+    }
+    return;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// CONTROLS
+// ═══════════════════════════════════════════════════════════════
+function handleUserMessage(msg) {
+  if (!msg.trim()) return;
+  
+  // Stop any speaking audio cleanly when the user answers
+  window.speechSynthesis.cancel();
+  if (currentAudioStream) {
+    currentAudioStream.pause();
+    currentAudioStream = null;
+    showWave(false);
+  }
+  
+  addMessage('user', msg.replace(/</g,'&lt;'));
+  input.value = '';
+  input.disabled = true; sendBtn.disabled = true;
+  addTyping();
+  setTimeout(() => {
+    removeTyping();
+    input.disabled = false; sendBtn.disabled = false;
+    input.focus();
+    processMessage(msg);
+  }, 480);
+}
+
+sendBtn.addEventListener('click', () => { handleUserMessage(input.value); });
+input.addEventListener('keydown', e => { if(e.key==='Enter') handleUserMessage(input.value); });
+
+document.getElementById('audio-toggle').addEventListener('click', function() {
+  state.audioEnabled = !state.audioEnabled;
+  this.textContent = state.audioEnabled ? '🔊' : '🔇';
+  this.classList.toggle('active', state.audioEnabled);
+  if (!state.audioEnabled) {
+    window.speechSynthesis.cancel();
+    if (currentAudioStream) {
+      currentAudioStream.pause();
+      currentAudioStream = null;
+      showWave(false);
+    }
+  }
+});
+
+// ═══════════════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════════════
+window.addEventListener('load', () => {
+  lookupSystemVoices();
+  showMenu();
+});
+
+function printPracticeTest() {
+  document.body.classList.add('printing-test');
+  window.print();
+}
+window.addEventListener('afterprint', () => {
+  document.body.classList.remove('printing-test');
+});
+
+// ═══════════════════════════════════════════════════════════════
+// READ NOTES ALOUD (uses the browser's own voice — no length limit,
+// unlike the short Google TTS clips used for chat messages)
+// ═══════════════════════════════════════════════════════════════
+function getNotesText(section) {
+  // Skip the Practice Test / Answer Key tabs — too long and not meant to be read aloud
+  const clone = section.cloneNode(true);
+  clone.querySelectorAll('button').forEach(b => b.remove());
+  let text = clone.innerText || clone.textContent || '';
+  text = text.replace(/\s+/g, ' ').trim();
+  return text;
+}
+
+function toggleNotesAudio() {
+  const btn = document.getElementById('notes-audio-btn');
+  if (!btn) return;
+
+  if (window.speechSynthesis.speaking || window.speechSynthesis.pending) {
+    window.speechSynthesis.cancel();
+    btn.innerHTML = '🔊 Read Notes Aloud';
+    btn.classList.remove('active');
+    return;
+  }
+
+  const activeSection = document.querySelector('.notes-section.active');
+  if (!activeSection) return;
+  const text = getNotesText(activeSection);
+  if (!text) return;
+
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.lang = 'en-US';
+  utter.rate = 0.95;
+  utter.pitch = 1.05;
+  utter.volume = 1;
+
+  const voices = window.speechSynthesis.getVoices();
+  const voice = voices.find(v => v.lang.startsWith('en') && v.name.toLowerCase().includes('female'))
+             || voices.find(v => v.lang.startsWith('en'));
+  if (voice) utter.voice = voice;
+
+  utter.onstart = () => { btn.innerHTML = '⏹️ Stop Reading'; btn.classList.add('active'); };
+  utter.onend = utter.onerror = () => { btn.innerHTML = '🔊 Read Notes Aloud'; btn.classList.remove('active'); };
+
+  window.speechSynthesis.speak(utter);
+}
+
+function switchTab(tabId, btn) {
+  window.speechSynthesis.cancel();
+  const audioBtn = document.getElementById('notes-audio-btn');
+  if (audioBtn) { audioBtn.innerHTML = '🔊 Read Notes Aloud'; audioBtn.classList.remove('active'); }
+  document.querySelectorAll('.notes-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.notes-tab').forEach(b => b.classList.remove('active'));
+  document.getElementById(tabId).classList.add('active');
+  btn.classList.add('active');
+}
+
+function closeNotesPanel() {
+  window.speechSynthesis.cancel();
+  const audioBtn = document.getElementById('notes-audio-btn');
+  if (audioBtn) { audioBtn.innerHTML = '🔊 Read Notes Aloud'; audioBtn.classList.remove('active'); }
+  document.getElementById('notes-overlay').classList.remove('show');
+}
+</script>
+
+<!-- ── Notes Panel ── -->
+<div class="notes-overlay" id="notes-overlay">
+  <div class="notes-panel">
+    <div class="notes-header">
+      <h2>📖 Sin, Forgiveness &amp; Healing — Notes</h2>
+      <div class="notes-header-actions">
+        <button class="print-btn" id="notes-audio-btn" onclick="toggleNotesAudio()" title="Have this tab read aloud">🔊 Read Notes Aloud</button>
+        <button class="print-btn" onclick="printPracticeTest()" title="Print or save the Practice Test &amp; Answer Key as PDF">🖨️ Print Test &amp; Key</button>
+        <button class="notes-close" onclick="closeNotesPanel()">✕</button>
+      </div>
+    </div>
+    <div class="notes-tabs">
+      <button class="notes-tab active" onclick="switchTab('tab-sin', this)">😇 Sin &amp; Deadly Sins</button>
+      <button class="notes-tab" onclick="switchTab('tab-para', this)">🛏️ Paralyzed Man</button>
+      <button class="notes-tab" onclick="switchTab('tab-recon', this)">🙏 Reconciliation</button>
+      <button class="notes-tab" onclick="switchTab('tab-aoc', this)">📿 Act of Contrition</button>
+      <button class="notes-tab" onclick="switchTab('tab-cent', this)">⚔️ Centurion's Servant</button>
+      <button class="notes-tab" onclick="switchTab('tab-verses', this)">🕊️ Memory Verses</button>
+      <button class="notes-tab" onclick="switchTab('tab-tf', this)">✅ True or False</button>
+      <button class="notes-tab" onclick="switchTab('tab-ptest', this)">📝 Practice Test</button>
+      <button class="notes-tab" onclick="switchTab('tab-key', this)">🔑 Answer Key</button>
+      <button class="notes-tab" onclick="switchTab('tab-raw', this)">📄 Raw Notes</button>
+    </div>
+    <div class="notes-body">
+
+      <div class="notes-section active" id="tab-sin">
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> <strong>Sin</strong> is a free decision to do what is bad and turn away from God. There are <strong>two kinds</strong>: <strong>venial</strong> (less serious) and <strong>mortal</strong> (grave).
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 MEMORY TRICK</span>
+          <strong>Mortal = Major</strong> (grave, full knowledge and deliberate consent). <strong>Venial = Very small</strong> (light, not full knowledge or consent). The seven deadly sins in order: <strong>"Little Green Parrots Sing While Gliding Easily"</strong> = <strong>L</strong>ust, <strong>G</strong>luttony, <strong>P</strong>ride, <strong>S</strong>loth, <strong>W</strong>rath, <strong>G</strong>reed, <strong>E</strong>nvy.
+        </div>
+        <table class="compare-table">
+          <tr><th>Kind of Sin</th><th>Meaning</th><th>How It Is Done</th><th>Effect</th></tr>
+          <tr><td>Venial</td><td>Less serious or light sin</td><td>Without full knowledge or complete consent</td><td>Weakens love for God and others</td></tr>
+          <tr><td>Mortal</td><td>Grave or serious sin; a grave violation of God's law</td><td>With full knowledge and deliberate consent</td><td>Turns a person away from God</td></tr>
+        </table>
+        <table class="compare-table">
+          <tr><th>Deadly Sin</th><th>Meaning</th><th>Clue</th></tr>
+          <tr><td>Lust</td><td>Unrestrained sexual craving</td><td>Craving</td></tr>
+          <tr><td>Gluttony</td><td>To overindulge, especially by overeating</td><td>Too much food</td></tr>
+          <tr><td>Pride</td><td>Inflated sense of one's accomplishments</td><td>Too proud</td></tr>
+          <tr><td>Sloth</td><td>Laziness or lack of effort</td><td>Slow and lazy</td></tr>
+          <tr><td>Wrath</td><td>Uncontented feelings or hatred and anger</td><td>Anger</td></tr>
+          <tr><td>Greed</td><td>Excessive desire for material things</td><td>Wanting more things</td></tr>
+          <tr><td>Envy</td><td>Jealousy toward another's happiness</td><td>Jealous</td></tr>
+        </table>
+      </div>
+
+      <div class="notes-section" id="tab-para">
+        <div class="story-box">
+          <span class="story-label">📖 Read Aloud: Jesus Forgives and Heals a Paralyzed Man</span>
+          <p>One day Jesus was teaching, and Pharisees and teachers of the law were sitting there. They had come from every village of Galilee and from Judea and Jerusalem. And the power of the Lord was with Jesus to heal the sick. Some men came carrying a paralyzed man on a mat and tried to take him into the house to lay him before Jesus. When they could not find a way to do this because of the crowd, they went up on the roof and lowered him on his mat through the tiles into the middle of the crowd, right in front of Jesus.</p>
+          <p>When Jesus saw their faith, he said, "Friend, your sins are forgiven."</p>
+          <p>The Pharisees and the teachers of the law began thinking to themselves, "Who is this fellow who speaks blasphemy? Who can forgive sins but God alone?"</p>
+          <p>Jesus knew what they were thinking and asked, "Why are you thinking these things in your hearts? Which is easier to say, 'Your sins are forgiven,' or to say, 'Get up and walk'? But I want you to know that the Son of Man has authority on earth to forgive sins." So he said to the paralyzed man, "I tell you, get up, take your mat and go home." Immediately he stood up in front of them, took what he had been lying on and went home praising God. Everyone was amazed and gave praise to God. They were filled with awe and said, "We have seen remarkable things today."</p>
+          <span class="story-ref">— Luke 5:17–26</span>
+        </div>
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> Jesus has the <strong>power to heal</strong> and the <strong>authority to forgive sins</strong>. He healed people <strong>physically</strong> by curing illnesses and <strong>spiritually</strong> by forgiving sins. <em>(Luke 5:17–26)</em>
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 MEMORY TRICK</span>
+          Two helpers in the story: <strong>faith</strong> and <strong>friends</strong>. The friends had <strong>faith</strong>, so they went <strong>through the roof</strong>! Jesus healed the <strong>soul first</strong> ("your sins are forgiven"), then the <strong>body</strong> ("get up").
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">🛏️ Story Questions and Answers</div>
+          <div class="notes-item"><span class="notes-term">What was wrong with the man?</span><span class="notes-def">He was paralyzed and had to be carried on a mat.</span></div>
+          <div class="notes-item"><span class="notes-term">What did his friends do?</span><span class="notes-def">They went up on the roof and lowered him through the tiles in front of Jesus because of the crowd.</span></div>
+          <div class="notes-item"><span class="notes-term">Why did they go to so much trouble?</span><span class="notes-def">They believed that Jesus could heal him. (Your own answer may use your own words.)</span></div>
+          <div class="notes-item"><span class="notes-term">What did Jesus see in them?</span><span class="notes-def">Their faith.</span></div>
+        </div>
+        <div class="tandaan-box">
+          <span class="tandaan-label">REMEMBER</span>
+          "Christ's compassion toward the sick and his many healings of every kind of infirmity are a resplendent sign that God has visited his people... Jesus has the power not only to heal, but also to forgive sins; he has come to heal the whole man, soul and body." <em>(CCC 1503)</em> Jesus continues to touch and heal us through the <strong>sacraments</strong>.
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-recon">
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> God forgives sins big or small. <strong>Reconciliation</strong> is a <strong>sacrament of healing</strong> that brings freedom, peace, and joy and reconciles us with God and the Church. <em>(CCC 1468–1470)</em>
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 MEMORY TRICK</span>
+          The 5 elements: <strong>"Every Child Can Pray Always"</strong> = <strong>E</strong>xamination of conscience, <strong>C</strong>ontrition, <strong>C</strong>onfession, <strong>P</strong>enance, <strong>A</strong>bsolution. Who does what? <strong>You</strong> examine, feel sorry, and confess; the <strong>priest</strong> gives the penance and says the absolution.
+        </div>
+        <table class="compare-table">
+          <tr><th>Element</th><th>Meaning</th></tr>
+          <tr><td>1. Examination of conscience</td><td>A methodical and prayerful review of one's life and actions to see how they conform to God's will</td></tr>
+          <tr><td>2. Contrition</td><td>A heartfelt sorrow for sins with the intention of sinning no more</td></tr>
+          <tr><td>3. Confession</td><td>Telling sins to the priest</td></tr>
+          <tr><td>4. Penance</td><td>The atonement the priest imposes; a prayer or action to repair the hurt done to God and others</td></tr>
+          <tr><td>5. Absolution</td><td>A prayer spoken by the priest for the forgiveness of sins</td></tr>
+        </table>
+        <div class="notes-topic">
+          <div class="notes-topic-title">🙏 About Forgiveness</div>
+          <div class="notes-item"><span class="notes-term">How are sins forgiven?</span><span class="notes-def">Through confession, made sincerely, with sorrow and faith in God, and a resolve not to sin again</span></div>
+          <div class="notes-item"><span class="notes-term">What does God do?</span><span class="notes-def">He waits for us, is willing to forgive and love us; His grace abounds and His mercy endures forever</span></div>
+          <div class="notes-item"><span class="notes-term">What does Jesus teach?</span><span class="notes-def">To give mercy rather than condemn sinners, and understanding rather than judgment; He calls for conversion (a change of heart)</span></div>
+          <div class="notes-item"><span class="notes-term">Sins after baptism</span><span class="notes-def">We receive forgiveness for them in Reconciliation</span></div>
+          <div class="notes-item"><span class="notes-term">Why it matters to the Church</span><span class="notes-def">Sin wounds the Church; the healing we receive restores health and strength to the Church and to ourselves</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-aoc">
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> <strong>Contrition</strong> means we are sorry for our sins. It helps us see the contradiction between God's love and sin, leads us to change for the better, and places all our hope in God. Recite this prayer to express sorrow for your sins.
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 MEMORY TRICK</span>
+          Remember the prayer in 5 beats: <strong>Sorry</strong> (I am sorry) → <strong>Sinned</strong> (against You, whom I love above all) → <strong>Sin no more</strong> (do penance, avoid what leads to sin) → <strong>Savior</strong> (Jesus suffered and died for us) → <strong>Mercy</strong> (have mercy).
+        </div>
+        <div class="verse-grid"><div class="verse-card"><span class="verse-theme">Act of Contrition</span><div class="verse-text" style="font-style:normal">My God, I am sorry for my sins with all my heart.<br>In choosing to do wrong and failing to do good,<br>I have sinned against You Whom I should love above all things.<br>I firmly intend with Your help to do penance,<br>to sin no more, and to avoid whatever leads me to sin.<br>Our Savior Jesus Christ suffered and died for us.<br>In His name, my God, have mercy.</div><span class="verse-ref">Revised Rite of Penance</span></div></div>
+      </div>
+
+      <div class="notes-section" id="tab-cent">
+        <div class="story-box">
+          <span class="story-label">📖 Read Aloud: Jesus Healed the Centurion's Servant</span>
+          <p>When Jesus had entered Capernaum, a centurion came to Him, asking for help. "Lord," he said, "my servant lies at home paralyzed, suffering terribly."</p>
+          <p>Jesus said to him, "Shall I come and heal him?"</p>
+          <p>The centurion replied, "Lord, I do not deserve to have You come under my roof. But just say the word, and my servant will be healed. For I myself am a man under authority, with soldiers under me. I tell this one, 'Go,' and he goes; and that one, 'Come,' and he comes. I say to my servant, 'Do this,' and he does it."</p>
+          <p>Then Jesus said to the centurion, "Go! Let it be done just as you believed it would." And his servant was healed at that moment.</p>
+          <span class="story-ref">— Matthew 8:5–9, 13</span>
+        </div>
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> A <strong>centurion</strong> in <strong>Capernaum</strong> asked Jesus to heal his <strong>paralyzed servant</strong>. His <strong>faith and humility</strong> moved Jesus, and the servant was healed at that moment. <em>(Matthew 8:5–9, 13)</em>
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 MEMORY TRICK</span>
+          <strong>"C-C-C"</strong>: <strong>C</strong>apernaum, <strong>C</strong>enturion, <strong>C</strong>ared for his servant. The centurion believed a <strong>word</strong> was enough: <strong>"Just say the word."</strong>
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">⚔️ Story Questions and Answers</div>
+          <div class="notes-item"><span class="notes-term">Where was Jesus?</span><span class="notes-def">Capernaum</span></div>
+          <div class="notes-item"><span class="notes-term">Who came to Him for help?</span><span class="notes-def">A centurion</span></div>
+          <div class="notes-item"><span class="notes-term">What help did he need?</span><span class="notes-def">Healing for his servant, who was paralyzed and suffering terribly</span></div>
+          <div class="notes-item"><span class="notes-term">What kind of master was he?</span><span class="notes-def">A caring master who also showed humility and faith</span></div>
+          <div class="notes-item"><span class="notes-term">What did Jesus do?</span><span class="notes-def">He said, "Go! Let it be done just as you believed it would," and the servant was healed at that moment</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-verses">
+        <div class="verse-intro">🕊️ These are the key words of Jesus and the people in the two stories. Practice saying them from memory!</div>
+<div class="verse-grid"><div class="verse-card"><span class="verse-theme">Forgiveness</span><div class="verse-text">Friend, your sins are forgiven.</div><span class="verse-ref">Jesus, to the paralyzed man — Luke 5:20</span></div><div class="verse-card"><span class="verse-theme">Authority</span><div class="verse-text">The Son of Man has authority on earth to forgive sins.</div><span class="verse-ref">Jesus — Luke 5:24</span></div><div class="verse-card"><span class="verse-theme">Healing</span><div class="verse-text">I tell you, get up, take your mat and go home.</div><span class="verse-ref">Jesus — Luke 5:24</span></div><div class="verse-card"><span class="verse-theme">Praise</span><div class="verse-text">We have seen remarkable things today.</div><span class="verse-ref">The people — Luke 5:26</span></div><div class="verse-card"><span class="verse-theme">Faith and Humility</span><div class="verse-text">Lord, I do not deserve to have You come under my roof. But just say the word, and my servant will be healed.</div><span class="verse-ref">The centurion — Matthew 8:8</span></div><div class="verse-card"><span class="verse-theme">Faith Rewarded</span><div class="verse-text">Go! Let it be done just as you believed it would.</div><span class="verse-ref">Jesus, to the centurion — Matthew 8:13</span></div></div>
+      </div>
+
+      <div class="notes-section" id="tab-tf">
+        <div class="notes-topic">
+          <div class="notes-topic-title">✅ True or False — Key Reminders</div>
+          <div class="notes-item"><span class="notes-term"><span style="color:#ef4444">FALSE</span></span><span class="notes-def">Three kinds of sin → <strong>two</strong> kinds: venial and mortal.</span></div>
+          <div class="notes-item"><span class="notes-term"><span style="color:#ef4444">FALSE</span></span><span class="notes-def">Mortal sin is done without full knowledge → that describes <strong>venial</strong> sin; mortal needs full knowledge and deliberate consent.</span></div>
+          <div class="notes-item"><span class="notes-term"><span style="color:#ef4444">FALSE</span></span><span class="notes-def">Gluttony is jealousy → gluttony is <strong>overeating</strong>; jealousy is <strong>envy</strong>.</span></div>
+          <div class="notes-item"><span class="notes-term"><span style="color:#ef4444">FALSE</span></span><span class="notes-def">Jesus first said "Get up and walk" → He first said <strong>"Friend, your sins are forgiven."</strong></span></div>
+          <div class="notes-item"><span class="notes-term"><span style="color:#ef4444">FALSE</span></span><span class="notes-def">Sin does not affect the Church → sin <strong>wounds</strong> the whole Church.</span></div>
+          <div class="notes-item"><span class="notes-term"><span style="color:#ef4444">FALSE</span></span><span class="notes-def">Penance is the priest's prayer of forgiveness → that is <strong>absolution</strong>; penance is the atonement the priest imposes.</span></div>
+          <div class="notes-item"><span class="notes-term"><span style="color:#ef4444">FALSE</span></span><span class="notes-def">The centurion said Jesus must come to his house → he said <strong>"just say the word."</strong></span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-ptest">
+        <div class="notes-topic">
+          <div class="notes-topic-title">📝 Practice Test (53 items)</div>
+<div class="ptest-part-title">Part I — Name the Deadly Sin</div>
+<div class="ptest-bank"><strong>Word Bank:</strong> lust &middot; gluttony &middot; pride &middot; sloth &middot; wrath &middot; greed &middot; envy</div>
+<div class="ptest-q"><b>1.</b> Unrestrained sexual craving. <span class="opt">Answer: ______________</span></div>
+<div class="ptest-q"><b>2.</b> To overindulge, especially by overeating. <span class="opt">Answer: ______________</span></div>
+<div class="ptest-q"><b>3.</b> An inflated sense of one&#x27;s accomplishments. <span class="opt">Answer: ______________</span></div>
+<div class="ptest-q"><b>4.</b> Laziness or lack of effort. <span class="opt">Answer: ______________</span></div>
+<div class="ptest-q"><b>5.</b> Uncontented feelings or hatred and anger. <span class="opt">Answer: ______________</span></div>
+<div class="ptest-q"><b>6.</b> The excessive desire for material things. <span class="opt">Answer: ______________</span></div>
+<div class="ptest-q"><b>7.</b> Jealousy toward another&#x27;s happiness. <span class="opt">Answer: ______________</span></div>
+<div class="ptest-part-title">Part II — Multiple Choice</div>
+<div class="ptest-q"><b>8.</b> What is sin?<br><span class="opt">a. a free decision to do what is bad and turn away from God</span><span class="opt">b. a mistake made by accident</span><span class="opt">c. a kind of prayer</span><span class="opt">d. a sacrament</span></div>
+<div class="ptest-q"><b>9.</b> How many kinds of sin does the Catholic Church teach?<br><span class="opt">a. one</span><span class="opt">b. two</span><span class="opt">c. three</span><span class="opt">d. seven</span></div>
+<div class="ptest-q"><b>10.</b> Which sin is less serious or light?<br><span class="opt">a. mortal sin</span><span class="opt">b. venial sin</span><span class="opt">c. deadly sin</span><span class="opt">d. grave sin</span></div>
+<div class="ptest-q"><b>11.</b> A mortal sin is committed with ____.<br><span class="opt">a. no knowledge</span><span class="opt">b. full knowledge and deliberate consent</span><span class="opt">c. accidental consent</span><span class="opt">d. a quick prayer</span></div>
+<div class="ptest-q"><b>12.</b> What does a venial sin do?<br><span class="opt">a. It weakens love for God and others</span><span class="opt">b. It ends the world</span><span class="opt">c. It makes us holy</span><span class="opt">d. It forgives other sins</span></div>
+<div class="ptest-q"><b>13.</b> Who carried the paralyzed man to Jesus?<br><span class="opt">a. his friends</span><span class="opt">b. the Pharisees</span><span class="opt">c. the soldiers</span><span class="opt">d. the angels</span></div>
+<div class="ptest-q"><b>14.</b> How did the friends bring the paralyzed man in front of Jesus?<br><span class="opt">a. through the door</span><span class="opt">b. by lowering him through the roof tiles</span><span class="opt">c. by carrying him across the lake</span><span class="opt">d. by calling Jesus out</span></div>
+<div class="ptest-q"><b>15.</b> Why could they not take him into the house?<br><span class="opt">a. the door was locked</span><span class="opt">b. it was raining</span><span class="opt">c. because of the crowd</span><span class="opt">d. the man was too heavy</span></div>
+<div class="ptest-q"><b>16.</b> What did Jesus see that moved Him to forgive and heal the man?<br><span class="opt">a. their money</span><span class="opt">b. their faith</span><span class="opt">c. their strength</span><span class="opt">d. their gifts</span></div>
+<div class="ptest-q"><b>17.</b> What were the first words of Jesus to the paralyzed man?<br><span class="opt">a. &quot;Get up and walk.&quot;</span><span class="opt">b. &quot;Friend, your sins are forgiven.&quot;</span><span class="opt">c. &quot;Follow me.&quot;</span><span class="opt">d. &quot;Do not be afraid.&quot;</span></div>
+<div class="ptest-q"><b>18.</b> Who thought Jesus was speaking blasphemy?<br><span class="opt">a. the friends</span><span class="opt">b. the Pharisees and teachers of the law</span><span class="opt">c. the crowd outside</span><span class="opt">d. the disciples</span></div>
+<div class="ptest-q"><b>19.</b> What authority did Jesus say the Son of Man has on earth?<br><span class="opt">a. to build houses</span><span class="opt">b. to forgive sins</span><span class="opt">c. to stop the rain</span><span class="opt">d. to rule the sea</span></div>
+<div class="ptest-q"><b>20.</b> Reconciliation is a sacrament of ____.<br><span class="opt">a. initiation</span><span class="opt">b. healing</span><span class="opt">c. marriage</span><span class="opt">d. service</span></div>
+<div class="ptest-q"><b>21.</b> Which element is telling sins to the priest?<br><span class="opt">a. contrition</span><span class="opt">b. penance</span><span class="opt">c. confession</span><span class="opt">d. absolution</span></div>
+<div class="ptest-q"><b>22.</b> What is the atonement that the priest imposes on the sinner?<br><span class="opt">a. penance</span><span class="opt">b. absolution</span><span class="opt">c. examination of conscience</span><span class="opt">d. contrition</span></div>
+<div class="ptest-q"><b>23.</b> Which prayer is spoken by the priest for the forgiveness of sins?<br><span class="opt">a. Act of Contrition</span><span class="opt">b. absolution</span><span class="opt">c. penance</span><span class="opt">d. Hail Mary</span></div>
+<div class="ptest-q"><b>24.</b> Which element is a heartfelt sorrow for sin with the intention of sinning no more?<br><span class="opt">a. contrition</span><span class="opt">b. confession</span><span class="opt">c. absolution</span><span class="opt">d. penance</span></div>
+<div class="ptest-q"><b>25.</b> In which town was Jesus when the centurion came to Him?<br><span class="opt">a. Nain</span><span class="opt">b. Capernaum</span><span class="opt">c. Jericho</span><span class="opt">d. Bethlehem</span></div>
+<div class="ptest-q"><b>26.</b> What was wrong with the centurion&#x27;s servant?<br><span class="opt">a. he was blind</span><span class="opt">b. he was paralyzed and suffering terribly</span><span class="opt">c. he was lost</span><span class="opt">d. he was hungry</span></div>
+<div class="ptest-q"><b>27.</b> What did Jesus say to the centurion?<br><span class="opt">a. &quot;Go! Let it be done just as you believed it would.&quot;</span><span class="opt">b. &quot;Come back tomorrow.&quot;</span><span class="opt">c. &quot;You must pay first.&quot;</span><span class="opt">d. &quot;Find another healer.&quot;</span></div>
+<div class="ptest-part-title">Part III — Elements of Reconciliation</div>
+<div class="ptest-bank"><strong>Word Bank:</strong> examination of conscience &middot; contrition &middot; confession &middot; penance &middot; absolution</div>
+<div class="ptest-q"><b>28.</b> A prayer spoken by the priest for the forgiveness of sins. <span class="opt">Answer: ______________</span></div>
+<div class="ptest-q"><b>29.</b> A heartfelt sorrow for the sins committed with the intention of sinning no more. <span class="opt">Answer: ______________</span></div>
+<div class="ptest-q"><b>30.</b> A methodical and prayerful review of one&#x27;s life and actions. <span class="opt">Answer: ______________</span></div>
+<div class="ptest-q"><b>31.</b> The atonement the priest imposes; a prayer or action to repair the hurt done to God and others. <span class="opt">Answer: ______________</span></div>
+<div class="ptest-q"><b>32.</b> Telling sins to the priest. <span class="opt">Answer: ______________</span></div>
+<div class="ptest-part-title">Part IV — True or False</div>
+<div class="ptest-q"><b>33.</b> Sin turns us away from God. <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>34.</b> There are three kinds of sin: venial, mortal, and original. <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>35.</b> A mortal sin is a grave violation of God&#x27;s law. <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>36.</b> Gluttony means laziness. <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>37.</b> Jesus has power over both sickness and sin. <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>38.</b> The friends of the paralyzed man gave up when they saw the crowd. <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>39.</b> Sin wounds and hurts the whole Church. <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>40.</b> Penance is telling sins to the priest. <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>41.</b> The Act of Contrition expresses sorrow for our sins. <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>42.</b> The centurion&#x27;s servant was healed at that moment. <span class="opt">Answer: ______</span></div>
+<div class="ptest-part-title">Part V — Complete the Act of Contrition</div>
+<div class="ptest-q"><b>43.</b> My God, I am ____ for my sins with all my heart. <span class="opt"></span></div>
+<div class="ptest-q"><b>44.</b> I have sinned against You Whom I should love above all ____. <span class="opt"></span></div>
+<div class="ptest-q"><b>45.</b> I firmly intend with Your help to do ____, to sin no more. <span class="opt"></span></div>
+<div class="ptest-q"><b>46.</b> Our Savior Jesus Christ suffered and died for ____. <span class="opt"></span></div>
+<div class="ptest-q"><b>47.</b> In His name, my God, have ____. <span class="opt"></span></div>
+<div class="ptest-part-title">Part VI — Short Answer</div>
+<div class="ptest-q"><b>48.</b> What are the two kinds of sin? Tell how they are different.<br><span class="opt">______________________________________</span></div>
+<div class="ptest-q"><b>49.</b> Name the five essential elements of the sacrament of Reconciliation.<br><span class="opt">______________________________________</span></div>
+<div class="ptest-q"><b>50.</b> Why did the friends of the paralyzed man lower him through the roof?<br><span class="opt">______________________________________</span></div>
+<div class="ptest-q"><b>51.</b> What did Jesus show by forgiving and healing the paralyzed man?<br><span class="opt">______________________________________</span></div>
+<div class="ptest-q"><b>52.</b> Name any three of the seven deadly sins.<br><span class="opt">______________________________________</span></div>
+<div class="ptest-q"><b>53.</b> What did the centurion show when he said, &quot;Just say the word, and my servant will be healed&quot;?<br><span class="opt">______________________________________</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-key">
+        <div class="notes-topic">
+<div class="notes-topic-title">Part I — Name the Deadly Sin</div>
+<div class="key-grid"><div class="key-pill">1. <b>lust</b></div><div class="key-pill">2. <b>gluttony</b></div><div class="key-pill">3. <b>pride</b></div><div class="key-pill">4. <b>sloth</b></div><div class="key-pill">5. <b>wrath</b></div><div class="key-pill">6. <b>greed</b></div><div class="key-pill">7. <b>envy</b></div></div>
+<div class="notes-topic-title">Part II — Multiple Choice</div>
+<div class="key-grid"><div class="key-pill">8. <b>a. a free decision to do what is bad and turn away from God</b></div><div class="key-pill">9. <b>b. two</b></div><div class="key-pill">10. <b>b. venial sin</b></div><div class="key-pill">11. <b>b. full knowledge and deliberate consent</b></div><div class="key-pill">12. <b>a. It weakens love for God and others</b></div><div class="key-pill">13. <b>a. his friends</b></div><div class="key-pill">14. <b>b. by lowering him through the roof tiles</b></div><div class="key-pill">15. <b>c. because of the crowd</b></div><div class="key-pill">16. <b>b. their faith</b></div><div class="key-pill">17. <b>b. &quot;Friend, your sins are forgiven.&quot;</b></div><div class="key-pill">18. <b>b. the Pharisees and teachers of the law</b></div><div class="key-pill">19. <b>b. to forgive sins</b></div><div class="key-pill">20. <b>b. healing</b></div><div class="key-pill">21. <b>c. confession</b></div><div class="key-pill">22. <b>a. penance</b></div><div class="key-pill">23. <b>b. absolution</b></div><div class="key-pill">24. <b>a. contrition</b></div><div class="key-pill">25. <b>b. Capernaum</b></div><div class="key-pill">26. <b>b. he was paralyzed and suffering terribly</b></div><div class="key-pill">27. <b>a. &quot;Go! Let it be done just as you believed it would.&quot;</b></div></div>
+<div class="notes-topic-title">Part III — Elements</div>
+<div class="key-grid"><div class="key-pill">28. <b>absolution</b></div><div class="key-pill">29. <b>contrition</b></div><div class="key-pill">30. <b>examination of conscience</b></div><div class="key-pill">31. <b>penance</b></div><div class="key-pill">32. <b>confession</b></div></div>
+<div class="notes-topic-title">Part IV — True or False</div>
+<div class="key-grid"><div class="key-pill">33. <b>TRUE</b></div><div class="key-pill">34. <b>FALSE</b></div><div class="key-pill">35. <b>TRUE</b></div><div class="key-pill">36. <b>FALSE</b></div><div class="key-pill">37. <b>TRUE</b></div><div class="key-pill">38. <b>FALSE</b></div><div class="key-pill">39. <b>TRUE</b></div><div class="key-pill">40. <b>FALSE</b></div><div class="key-pill">41. <b>TRUE</b></div><div class="key-pill">42. <b>TRUE</b></div></div>
+<div class="notes-topic-title">Part V — Act of Contrition</div>
+<div class="key-grid"><div class="key-pill">43. <b>sorry</b></div><div class="key-pill">44. <b>things</b></div><div class="key-pill">45. <b>penance</b></div><div class="key-pill">46. <b>us</b></div><div class="key-pill">47. <b>mercy</b></div></div>
+<div class="notes-topic-title">Part VI — Short Answer (sample answers)</div>
+<div class="ptest-q"><b>48.</b> Venial sin is a less serious or light sin done without full knowledge or complete consent; it weakens love for God and others. Mortal sin is a grave sin committed with full knowledge and deliberate consent; it turns a person away from God.</div><div class="ptest-q"><b>49.</b> Examination of conscience, contrition, confession, penance, and absolution.</div><div class="ptest-q"><b>50.</b> They could not get through the crowd, and they believed Jesus could heal him, so they found another way to bring him in front of Jesus.</div><div class="ptest-q"><b>51.</b> That He has the power to heal both body and soul, and the authority on earth to forgive sins.</div><div class="ptest-q"><b>52.</b> Any three of: lust, gluttony, pride, sloth, wrath, greed, envy.</div><div class="ptest-q"><b>53.</b> Faith and humility: he trusted that Jesus could heal with only a word, and he felt he did not deserve to have Jesus come under his roof.</div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-raw">
+        <div class="rawnotes-intro">
+          📌 This is the original content of the uploaded lesson, unedited — for whenever you need to check the exact wording or an example not covered in the reviewer.
+        </div>
+        <div class="rawnotes-doc">
+<h3 class="doc-heading">Sin: Kinds and the 7 Deadly Sins</h3>
+<p>Sin is bad and it turns us away from God<br />
+2 kinds of sins<br />
+1. Venial sin – less serious or light sin<br />
+2. Mortal sin – grave or serious sin<br />
+<br />
+7 deadly sin<br />
+1. Lust – unrestrained sexual craving<br />
+2. Gluttony – to over indulge, especially by over – eating<br />
+3. Pride – inflated sense of one’s accomplishments<br />
+4. Sloth – laziness or lack of effort<br />
+5. Wrath – uncontented feelings or hatred and anger<br />
+6. Greed – the excessive desire of material things<br />
+7. Envy – Jealousy towards another’s happiness.<br />
+</p>
+<h3 class="doc-heading">Jesus Forgives and Heals a Paralyzed Man</h3>
+<p>One day Jesus was teaching, and Pharisees and teachers of the law were sitting there. They had come from every village of Galilee and from Judea and Jerusalem. And the power of the Lord was with Jesus to heal the sick. Some men came carrying a paralyzed man on a mat and tried to take him into the house to lay him before Jesus. When they could not find a way to do this because of the crowd, they went up on the roof and lowered him on his mat through the tiles into the middle of the crowd, right in front of Jesus.</p>
+<p>When Jesus saw their faith, he said, “Friend, your sins are forgiven.”</p>
+<p>The Pharisees and the teachers of the law began thinking to themselves, “Who is this fellow who speaks blasphemy? Who can forgive sins but God alone?”</p>
+<p>Jesus knew what they were thinking and asked, “Why are you thinking these things in your hearts? Which is easier to say, ‘Your sins are forgiven,’ or to say, ‘Get up and walk’? But I want you to know that the Son of Man has authority on earth to forgive sins.” So he said to the paralyzed man, “I tell you, get up, take your mat and go home.” Immediately he stood up in front of them, took what he had been lying on and went home praising God. Everyone was amazed and gave praise to God. They were filled with awe and said, “We have seen remarkable things today.” (Luke 5:17–26)</p>
+<h3 class="doc-heading">B. Answer the following questions.</h3>
+<p>1. What was wrong with the man being carried into the house where Jesus was?</p>
+<p>2. What did the friends of the paralyzed man do, so that Jesus could cure him?</p>
+<p>3. Why do you think his friends went to so much trouble just to bring him to Jesus?</p>
+<p>4. What did Jesus see in these men that moved Him to forgive and heal the paralyzed man?</p>
+<h3 class="doc-heading">Explanation</h3>
+<p>In the Gospel story, Jesus is presented as one who has the power to heal. He has power over sickness and sin. He healed people physically by curing their illnesses and healed spiritually by forgiving their sins.</p>
+<p>Many people who witnessed Jesus’ compassion, healing, and forgiveness recognized the presence and ways of God in His actions. Jesus is indeed the sign of God’s healing love. God was at work in and through Jesus. “Christ’s compassion toward the sick and his many healings of every kind of infirmity are a resplendent sign that God has visited his people and that the kingdom of God is close at hand. Jesus has the power not only to heal, but also to forgive sins; he has come to heal the whole man, soul and body; he is the physician the sick have need of” (CCC 1503).</p>
+<p>The Church believes that Jesus continues to bring God’s healing power. Jesus continues to touch and heal us through the sacraments. As Christians, we are called to reach out to those in need and “recognize the need of the sick for special help and comfort from family, community, and God’s grace” (CCC 1870).</p>
+<h3 class="doc-heading">Sin and Forgiveness</h3>
+<p>Sin is a free decision to do what is bad and turn away from God. The Catholic Church teaches that there are two kinds of sins: venial sins and mortal sins.</p>
+<p>A venial sin may be described as a less serious or light sin. It is done without full knowledge or complete consent. It weakens love for God and others.</p>
+<p>A mortal sin is a grave or serious sin. It is committed with full knowledge and deliberate consent. It is a grave violation of God’s law. It turns a person away from God. (CCC 1854–1863)</p>
+<p>God forgives sins, be they big or small. Our sins are forgiven through confession. We make God happy when we confess our sins sincerely. We confess them with sorrow and faith in God. We resolve not to commit sin again.</p>
+<p>God waits for us to come to Him and be sorry for our sins. He is willing to forgive and love us although we often hurt Him through our sins. His grace abounds and His mercy endures forever.</p>
+<p>Jesus teaches us to give mercy rather than to condemn sinners and to show understanding rather than judgment. He calls for conversion or change of heart. He invites us to return to God. He strengthens us to turn away from sin.</p>
+<p>Reconciliation is a sacrament of healing. Through it, Jesus embraces and heals us. It brings us freedom, peace, and joy. We receive forgiveness from God for sins that we commit after baptism. We are reconciled with God and the Church. (CCC 1468–1470)</p>
+<p>As members of the Church, everything we do affects the whole Church. Sin wounds and hurts the Church. The healing we receive in reconciliation restores health and strength to the Church and to ourselves.</p>
+<h3 class="doc-heading">The Essential Elements in the Sacrament of Reconciliation</h3>
+<p>The following are the essential elements in the sacrament of reconciliation:</p>
+<p>1. Examination of conscience is a methodical and prayerful review of one’s life and actions to determine how he or she conforms to God’s will.</p>
+<p>2. Contrition is a heartfelt sorrow for the sins committed with the intention of sinning no more.</p>
+<p>3. Confession is telling sins to the priest.</p>
+<p>4. Penance is the atonement that the priest imposes on the sinner. It can be a prayer or action done to repair the hurt committed against God and others.</p>
+<p>5. Absolution is a prayer spoken by the priest for the forgiveness of sins.</p>
+<h3 class="doc-heading">B. Contrition</h3>
+<p>Contrition is an important element in the sacrament of reconciliation. Contrition means that we are sorry for our sins. It makes us see the contradiction between God’s love and sin. It leads us to change for the better and to place all our hope in God. Recite this prayer to express sorrow for your sins.</p>
+<h3 class="doc-heading">Act of Contrition</h3>
+<p>My God, I am sorry for my sins with all my heart.</p>
+<p>In choosing to do wrong and failing to do good,</p>
+<p>I have sinned against You Whom I should love above all things.</p>
+<p>I firmly intend with Your help to do penance,</p>
+<p>to sin no more, and to avoid whatever leads me to sin.</p>
+<p>Our Savior Jesus Christ suffered and died for us.</p>
+<p>In His name, my God, have mercy.</p>
+<p>(Revised Rite of Penance)</p>
+<h3 class="doc-heading">Jesus Healed the Centurion’s Servant</h3>
+<p>When Jesus had entered Capernaum, a centurion came to Him, asking for help. “Lord,” he said, “my servant lies at home paralyzed, suffering terribly.”</p>
+<p>Jesus said to him, “Shall I come and heal him?”</p>
+<p>The centurion replied, “Lord, I do not deserve to have You come under my roof. But just say the word, and my servant will be healed. For I myself am a man under authority, with soldiers under me. I tell this one, ‘Go,’ and he goes; and that one, ‘Come,’ and he comes. I say to my servant, ‘Do this,’ and he does it.”</p>
+<p>Then Jesus said to the centurion, “Go! Let it be done just as you believed it would.” And his servant was healed at that moment. (Matthew 8:5–9,13)</p>
+<h3 class="doc-heading">B. Answer these questions.</h3>
+<ol type="1">
+<li><p>Where was Jesus in the story?</p></li>
+<li><p>Who came to Him to seek His help?</p></li>
+<li><p>What help did the man need?</p></li>
+<li><p>What kind of master was he?</p></li>
+<li><p>What did Jesus do?</p></li>
+</ol>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ── Hidden Print Area (Practice Test + Answer Key) ── -->
+<div id="print-area">
+<div class="p-cover"><div class="p-icon">🕊️</div><h1>Religion 5 — Sin, Forgiveness &amp; Healing Practice Test</h1><div class="p-sub">Venial &amp; Mortal Sin · Reconciliation · Act of Contrition · Jesus the Healer</div>
+<div class="p-info-box"><div><strong>Name:</strong> _____________________________________</div><div><strong>Section:</strong> ___________________ &nbsp; <strong>Date:</strong> ___________________</div><div><strong>Score:</strong> _______ / 53</div></div>
+<div class="p-instructions"><strong>Instructions:</strong> Read each item carefully. Write your answer on the blank provided (Parts I, III, IV, V), write the letter of the correct answer (Part II), or answer in complete sentences (Part VI). Good luck!</div></div>
+<h2 class="p-part-title">Part I — Name the Deadly Sin</h2>
+<div class="p-bank"><strong>Word Bank:</strong> lust &middot; gluttony &middot; pride &middot; sloth &middot; wrath &middot; greed &middot; envy</div>
+<div class="p-q"><b>1.</b> Unrestrained sexual craving. <span class="p-blank"></span></div>
+<div class="p-q"><b>2.</b> To overindulge, especially by overeating. <span class="p-blank"></span></div>
+<div class="p-q"><b>3.</b> An inflated sense of one&#x27;s accomplishments. <span class="p-blank"></span></div>
+<div class="p-q"><b>4.</b> Laziness or lack of effort. <span class="p-blank"></span></div>
+<div class="p-q"><b>5.</b> Uncontented feelings or hatred and anger. <span class="p-blank"></span></div>
+<div class="p-q"><b>6.</b> The excessive desire for material things. <span class="p-blank"></span></div>
+<div class="p-q"><b>7.</b> Jealousy toward another&#x27;s happiness. <span class="p-blank"></span></div>
+<h2 class="p-part-title">Part II — Multiple Choice</h2>
+<div class="p-q"><b>8.</b> What is sin?<br><span class="p-opt">a. a free decision to do what is bad and turn away from God</span><span class="p-opt">b. a mistake made by accident</span><span class="p-opt">c. a kind of prayer</span><span class="p-opt">d. a sacrament</span></div>
+<div class="p-q"><b>9.</b> How many kinds of sin does the Catholic Church teach?<br><span class="p-opt">a. one</span><span class="p-opt">b. two</span><span class="p-opt">c. three</span><span class="p-opt">d. seven</span></div>
+<div class="p-q"><b>10.</b> Which sin is less serious or light?<br><span class="p-opt">a. mortal sin</span><span class="p-opt">b. venial sin</span><span class="p-opt">c. deadly sin</span><span class="p-opt">d. grave sin</span></div>
+<div class="p-q"><b>11.</b> A mortal sin is committed with ____.<br><span class="p-opt">a. no knowledge</span><span class="p-opt">b. full knowledge and deliberate consent</span><span class="p-opt">c. accidental consent</span><span class="p-opt">d. a quick prayer</span></div>
+<div class="p-q"><b>12.</b> What does a venial sin do?<br><span class="p-opt">a. It weakens love for God and others</span><span class="p-opt">b. It ends the world</span><span class="p-opt">c. It makes us holy</span><span class="p-opt">d. It forgives other sins</span></div>
+<div class="p-q"><b>13.</b> Who carried the paralyzed man to Jesus?<br><span class="p-opt">a. his friends</span><span class="p-opt">b. the Pharisees</span><span class="p-opt">c. the soldiers</span><span class="p-opt">d. the angels</span></div>
+<div class="p-q"><b>14.</b> How did the friends bring the paralyzed man in front of Jesus?<br><span class="p-opt">a. through the door</span><span class="p-opt">b. by lowering him through the roof tiles</span><span class="p-opt">c. by carrying him across the lake</span><span class="p-opt">d. by calling Jesus out</span></div>
+<div class="p-q"><b>15.</b> Why could they not take him into the house?<br><span class="p-opt">a. the door was locked</span><span class="p-opt">b. it was raining</span><span class="p-opt">c. because of the crowd</span><span class="p-opt">d. the man was too heavy</span></div>
+<div class="p-q"><b>16.</b> What did Jesus see that moved Him to forgive and heal the man?<br><span class="p-opt">a. their money</span><span class="p-opt">b. their faith</span><span class="p-opt">c. their strength</span><span class="p-opt">d. their gifts</span></div>
+<div class="p-q"><b>17.</b> What were the first words of Jesus to the paralyzed man?<br><span class="p-opt">a. &quot;Get up and walk.&quot;</span><span class="p-opt">b. &quot;Friend, your sins are forgiven.&quot;</span><span class="p-opt">c. &quot;Follow me.&quot;</span><span class="p-opt">d. &quot;Do not be afraid.&quot;</span></div>
+<div class="p-q"><b>18.</b> Who thought Jesus was speaking blasphemy?<br><span class="p-opt">a. the friends</span><span class="p-opt">b. the Pharisees and teachers of the law</span><span class="p-opt">c. the crowd outside</span><span class="p-opt">d. the disciples</span></div>
+<div class="p-q"><b>19.</b> What authority did Jesus say the Son of Man has on earth?<br><span class="p-opt">a. to build houses</span><span class="p-opt">b. to forgive sins</span><span class="p-opt">c. to stop the rain</span><span class="p-opt">d. to rule the sea</span></div>
+<div class="p-q"><b>20.</b> Reconciliation is a sacrament of ____.<br><span class="p-opt">a. initiation</span><span class="p-opt">b. healing</span><span class="p-opt">c. marriage</span><span class="p-opt">d. service</span></div>
+<div class="p-q"><b>21.</b> Which element is telling sins to the priest?<br><span class="p-opt">a. contrition</span><span class="p-opt">b. penance</span><span class="p-opt">c. confession</span><span class="p-opt">d. absolution</span></div>
+<div class="p-q"><b>22.</b> What is the atonement that the priest imposes on the sinner?<br><span class="p-opt">a. penance</span><span class="p-opt">b. absolution</span><span class="p-opt">c. examination of conscience</span><span class="p-opt">d. contrition</span></div>
+<div class="p-q"><b>23.</b> Which prayer is spoken by the priest for the forgiveness of sins?<br><span class="p-opt">a. Act of Contrition</span><span class="p-opt">b. absolution</span><span class="p-opt">c. penance</span><span class="p-opt">d. Hail Mary</span></div>
+<div class="p-q"><b>24.</b> Which element is a heartfelt sorrow for sin with the intention of sinning no more?<br><span class="p-opt">a. contrition</span><span class="p-opt">b. confession</span><span class="p-opt">c. absolution</span><span class="p-opt">d. penance</span></div>
+<div class="p-q"><b>25.</b> In which town was Jesus when the centurion came to Him?<br><span class="p-opt">a. Nain</span><span class="p-opt">b. Capernaum</span><span class="p-opt">c. Jericho</span><span class="p-opt">d. Bethlehem</span></div>
+<div class="p-q"><b>26.</b> What was wrong with the centurion&#x27;s servant?<br><span class="p-opt">a. he was blind</span><span class="p-opt">b. he was paralyzed and suffering terribly</span><span class="p-opt">c. he was lost</span><span class="p-opt">d. he was hungry</span></div>
+<div class="p-q"><b>27.</b> What did Jesus say to the centurion?<br><span class="p-opt">a. &quot;Go! Let it be done just as you believed it would.&quot;</span><span class="p-opt">b. &quot;Come back tomorrow.&quot;</span><span class="p-opt">c. &quot;You must pay first.&quot;</span><span class="p-opt">d. &quot;Find another healer.&quot;</span></div>
+<div class="p-break"></div>
+<h2 class="p-part-title">Part III — Elements of Reconciliation</h2>
+<div class="p-bank"><strong>Word Bank:</strong> examination of conscience &middot; contrition &middot; confession &middot; penance &middot; absolution</div>
+<div class="p-q"><b>28.</b> A prayer spoken by the priest for the forgiveness of sins. <span class="p-blank"></span></div>
+<div class="p-q"><b>29.</b> A heartfelt sorrow for the sins committed with the intention of sinning no more. <span class="p-blank"></span></div>
+<div class="p-q"><b>30.</b> A methodical and prayerful review of one&#x27;s life and actions. <span class="p-blank"></span></div>
+<div class="p-q"><b>31.</b> The atonement the priest imposes; a prayer or action to repair the hurt done to God and others. <span class="p-blank"></span></div>
+<div class="p-q"><b>32.</b> Telling sins to the priest. <span class="p-blank"></span></div>
+<h2 class="p-part-title">Part IV — True or False</h2>
+<div class="p-q"><b>33.</b> Sin turns us away from God. <span class="p-blank"></span></div>
+<div class="p-q"><b>34.</b> There are three kinds of sin: venial, mortal, and original. <span class="p-blank"></span></div>
+<div class="p-q"><b>35.</b> A mortal sin is a grave violation of God&#x27;s law. <span class="p-blank"></span></div>
+<div class="p-q"><b>36.</b> Gluttony means laziness. <span class="p-blank"></span></div>
+<div class="p-q"><b>37.</b> Jesus has power over both sickness and sin. <span class="p-blank"></span></div>
+<div class="p-q"><b>38.</b> The friends of the paralyzed man gave up when they saw the crowd. <span class="p-blank"></span></div>
+<div class="p-q"><b>39.</b> Sin wounds and hurts the whole Church. <span class="p-blank"></span></div>
+<div class="p-q"><b>40.</b> Penance is telling sins to the priest. <span class="p-blank"></span></div>
+<div class="p-q"><b>41.</b> The Act of Contrition expresses sorrow for our sins. <span class="p-blank"></span></div>
+<div class="p-q"><b>42.</b> The centurion&#x27;s servant was healed at that moment. <span class="p-blank"></span></div>
+<h2 class="p-part-title">Part V — Complete the Act of Contrition</h2>
+<div class="p-q"><b>43.</b> My God, I am ____ for my sins with all my heart.</div>
+<div class="p-q"><b>44.</b> I have sinned against You Whom I should love above all ____.</div>
+<div class="p-q"><b>45.</b> I firmly intend with Your help to do ____, to sin no more.</div>
+<div class="p-q"><b>46.</b> Our Savior Jesus Christ suffered and died for ____.</div>
+<div class="p-q"><b>47.</b> In His name, my God, have ____.</div>
+<div class="p-break"></div>
+<h2 class="p-part-title">Part VI — Short Answer</h2>
+<div class="p-q"><b>48.</b> What are the two kinds of sin? Tell how they are different.<br><br>_________________________________________________<br><br>_________________________________________________</div>
+<div class="p-q"><b>49.</b> Name the five essential elements of the sacrament of Reconciliation.<br><br>_________________________________________________<br><br>_________________________________________________</div>
+<div class="p-q"><b>50.</b> Why did the friends of the paralyzed man lower him through the roof?<br><br>_________________________________________________<br><br>_________________________________________________</div>
+<div class="p-q"><b>51.</b> What did Jesus show by forgiving and healing the paralyzed man?<br><br>_________________________________________________<br><br>_________________________________________________</div>
+<div class="p-q"><b>52.</b> Name any three of the seven deadly sins.<br><br>_________________________________________________<br><br>_________________________________________________</div>
+<div class="p-q"><b>53.</b> What did the centurion show when he said, &quot;Just say the word, and my servant will be healed&quot;?<br><br>_________________________________________________<br><br>_________________________________________________</div>
+<div class="p-break"></div><h2 class="p-part-title">✅ Complete Answer Key</h2>
+<div class="p-key-part-title">Part I — Name the Deadly Sin</div>
+<div class="p-key-grid"><div class="p-key-pill">1. <b>lust</b></div><div class="p-key-pill">2. <b>gluttony</b></div><div class="p-key-pill">3. <b>pride</b></div><div class="p-key-pill">4. <b>sloth</b></div><div class="p-key-pill">5. <b>wrath</b></div><div class="p-key-pill">6. <b>greed</b></div><div class="p-key-pill">7. <b>envy</b></div></div>
+<div class="p-key-part-title">Part II — Multiple Choice</div>
+<div class="p-key-grid"><div class="p-key-pill">8. <b>a. a free decision to do what is bad and turn away from God</b></div><div class="p-key-pill">9. <b>b. two</b></div><div class="p-key-pill">10. <b>b. venial sin</b></div><div class="p-key-pill">11. <b>b. full knowledge and deliberate consent</b></div><div class="p-key-pill">12. <b>a. It weakens love for God and others</b></div><div class="p-key-pill">13. <b>a. his friends</b></div><div class="p-key-pill">14. <b>b. by lowering him through the roof tiles</b></div><div class="p-key-pill">15. <b>c. because of the crowd</b></div><div class="p-key-pill">16. <b>b. their faith</b></div><div class="p-key-pill">17. <b>b. &quot;Friend, your sins are forgiven.&quot;</b></div><div class="p-key-pill">18. <b>b. the Pharisees and teachers of the law</b></div><div class="p-key-pill">19. <b>b. to forgive sins</b></div><div class="p-key-pill">20. <b>b. healing</b></div><div class="p-key-pill">21. <b>c. confession</b></div><div class="p-key-pill">22. <b>a. penance</b></div><div class="p-key-pill">23. <b>b. absolution</b></div><div class="p-key-pill">24. <b>a. contrition</b></div><div class="p-key-pill">25. <b>b. Capernaum</b></div><div class="p-key-pill">26. <b>b. he was paralyzed and suffering terribly</b></div><div class="p-key-pill">27. <b>a. &quot;Go! Let it be done just as you believed it would.&quot;</b></div></div>
+<div class="p-key-part-title">Part III — Elements</div>
+<div class="p-key-grid"><div class="p-key-pill">28. <b>absolution</b></div><div class="p-key-pill">29. <b>contrition</b></div><div class="p-key-pill">30. <b>examination of conscience</b></div><div class="p-key-pill">31. <b>penance</b></div><div class="p-key-pill">32. <b>confession</b></div></div>
+<div class="p-key-part-title">Part IV — True or False</div>
+<div class="p-key-grid"><div class="p-key-pill">33. <b>TRUE</b></div><div class="p-key-pill">34. <b>FALSE</b></div><div class="p-key-pill">35. <b>TRUE</b></div><div class="p-key-pill">36. <b>FALSE</b></div><div class="p-key-pill">37. <b>TRUE</b></div><div class="p-key-pill">38. <b>FALSE</b></div><div class="p-key-pill">39. <b>TRUE</b></div><div class="p-key-pill">40. <b>FALSE</b></div><div class="p-key-pill">41. <b>TRUE</b></div><div class="p-key-pill">42. <b>TRUE</b></div></div>
+<div class="p-key-part-title">Part V — Act of Contrition</div>
+<div class="p-key-grid"><div class="p-key-pill">43. <b>sorry</b></div><div class="p-key-pill">44. <b>things</b></div><div class="p-key-pill">45. <b>penance</b></div><div class="p-key-pill">46. <b>us</b></div><div class="p-key-pill">47. <b>mercy</b></div></div>
+<div class="p-key-part-title">Part VI — Short Answer (sample answers)</div>
+<div class="p-q"><b>48.</b> Venial sin is a less serious or light sin done without full knowledge or complete consent; it weakens love for God and others. Mortal sin is a grave sin committed with full knowledge and deliberate consent; it turns a person away from God.</div><div class="p-q"><b>49.</b> Examination of conscience, contrition, confession, penance, and absolution.</div><div class="p-q"><b>50.</b> They could not get through the crowd, and they believed Jesus could heal him, so they found another way to bring him in front of Jesus.</div><div class="p-q"><b>51.</b> That He has the power to heal both body and soul, and the authority on earth to forgive sins.</div><div class="p-q"><b>52.</b> Any three of: lust, gluttony, pride, sloth, wrath, greed, envy.</div><div class="p-q"><b>53.</b> Faith and humility: he trusted that Jesus could heal with only a word, and he felt he did not deserve to have Jesus come under his roof.</div>
+</div>
+
+</body>
+</html>
