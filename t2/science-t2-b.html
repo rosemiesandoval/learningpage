@@ -1,0 +1,2248 @@
+<!DOCTYPE html>
+<html lang="tl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🌿 Science: Animal &amp; Plant Habitats Reviewer 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --gold: #f59e0b;
+  --gold-dark: #b45309;
+  --blue: #3b82f6;
+  --blue-dark: #1d4ed8;
+  --red: #ef4444;
+  --green: #22c55e;
+  --bg: #0c1a0e;
+  --surface: #132015;
+  --surface2: #1a2e1d;
+  --text: #f0fdf4;
+  --muted: #86efac;
+  --border: #166534;
+}
+
+body {
+  font-family: 'Baloo 2', cursive;
+  background: var(--bg);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--text);
+  background-image:
+    radial-gradient(ellipse at 10% 30%, rgba(245,158,11,.06) 0%, transparent 55%),
+    radial-gradient(ellipse at 90% 70%, rgba(59,130,246,.06) 0%, transparent 55%);
+}
+
+header {
+  width: 100%;
+  background: linear-gradient(135deg, #14532d, #1e3a5f);
+  border-bottom: 2px solid var(--gold-dark);
+  padding: 13px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 4px 30px rgba(0,0,0,.5);
+}
+.header-icon { font-size: 2rem; animation: float 3s ease-in-out infinite; }
+@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
+
+header h1 {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.45rem;
+  background: linear-gradient(90deg, var(--gold), #fde68a, var(--gold));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+header .sub { font-size: .72rem; color: var(--muted); margin-top: 1px; }
+
+.header-controls { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+.score-pill {
+  background: rgba(245,158,11,.15);
+  border: 1px solid rgba(245,158,11,.4);
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-weight: 800;
+  font-size: .85rem;
+  color: var(--gold);
+}
+.audio-btn {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  background: var(--surface2);
+  color: var(--text);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all .2s;
+  display: flex; align-items: center; justify-content: center;
+}
+.audio-btn:hover, .audio-btn.active { background: #14532d; border-color: var(--gold); }
+
+.chat-wrap {
+  width: 100%; max-width: 700px; flex: 1;
+  display: flex; flex-direction: column;
+  padding: 16px 14px 0;
+}
+
+#chat-box {
+  flex: 1; overflow-y: auto;
+  display: flex; flex-direction: column;
+  gap: 14px; padding-bottom: 10px;
+  max-height: calc(100vh - 200px);
+  scroll-behavior: smooth;
+}
+#chat-box::-webkit-scrollbar { width: 4px; }
+#chat-box::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+.msg { display: flex; gap: 8px; }
+.msg.user { flex-direction: row-reverse; }
+
+.avatar {
+  width: 34px; height: 34px; border-radius: 50%;
+  font-size: 1rem; display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 2px;
+}
+.msg.bot .avatar { background: linear-gradient(135deg, #14532d, #1e3a5f); border: 1.5px solid rgba(245,158,11,.4); }
+.msg.user .avatar { background: linear-gradient(135deg, #1e3a5f, #14532d); border: 1.5px solid rgba(59,130,246,.3); }
+
+.bubble {
+  max-width: 80%;
+  padding: 11px 16px;
+  border-radius: 18px;
+  font-size: .9rem;
+  line-height: 1.65;
+  animation: pop .22s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes pop { from{transform:scale(.88) translateY(6px);opacity:0} to{transform:scale(1) translateY(0);opacity:1} }
+
+.msg.bot .bubble {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-bottom-left-radius: 5px;
+}
+.msg.user .bubble {
+  background: linear-gradient(135deg, #1e3a5f, var(--blue-dark));
+  border-bottom-right-radius: 5px;
+}
+
+/* chips */
+.chip {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: rgba(245,158,11,.12);
+  border: 1.5px solid rgba(245,158,11,.4);
+  color: var(--gold);
+  border-radius: 30px;
+  padding: 5px 13px; margin: 5px 4px 0 0;
+  font-size: .8rem; font-weight: 700;
+  cursor: pointer; transition: all .15s;
+  user-select: none; font-family: 'Baloo 2', cursive;
+}
+.chip:hover {
+  background: var(--gold-dark); color: white;
+  border-color: var(--gold);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(245,158,11,.3);
+}
+
+/* topic tag */
+.topic-tag {
+  display: inline-block;
+  background: linear-gradient(135deg, #14532d, #166534);
+  border: 1px solid var(--gold-dark);
+  color: var(--gold);
+  font-size: .68rem; font-weight: 800;
+  border-radius: 20px; padding: 2px 10px;
+  margin-bottom: 5px; letter-spacing: .5px;
+  text-transform: uppercase;
+}
+
+/* multiple choice */
+.mc-options { display: flex; flex-direction: column; gap: 7px; margin-top: 10px; width: 100%; }
+.mc-btn {
+  display: flex; align-items: center; gap: 10px;
+  background: rgba(255,255,255,.03);
+  border: 1.5px solid var(--border);
+  border-radius: 12px; padding: 9px 14px;
+  color: var(--text); font-family: 'Baloo 2', cursive;
+  font-size: .87rem; font-weight: 600;
+  cursor: pointer; transition: all .15s; text-align: left; width: 100%;
+}
+.mc-btn:hover:not(:disabled) {
+  background: rgba(245,158,11,.12); border-color: var(--gold);
+  color: var(--gold); transform: translateX(3px);
+}
+.mc-btn .letter {
+  display: flex; align-items: center; justify-content: center;
+  width: 26px; height: 26px; border-radius: 8px;
+  background: rgba(245,158,11,.15); border: 1px solid rgba(245,158,11,.35);
+  color: var(--gold); font-size: .78rem; font-weight: 800;
+  flex-shrink: 0; transition: all .15s;
+}
+.mc-btn:hover:not(:disabled) .letter { background: var(--gold-dark); color: white; border-color: var(--gold-dark); }
+.mc-btn.correct { background: rgba(34,197,94,.15)!important; border-color: #22c55e!important; color: #22c55e!important; cursor: default; }
+.mc-btn.correct .letter { background: #22c55e!important; color: white!important; border-color: #22c55e!important; }
+.mc-btn.wrong { background: rgba(239,68,68,.12)!important; border-color: #ef4444!important; color: #ef4444!important; cursor: default; }
+.mc-btn.wrong .letter { background: #ef4444!important; color: white!important; border-color: #ef4444!important; }
+.mc-btn:disabled { cursor: default; transform: none!important; }
+
+/* speaker wave */
+.speaker-wave {
+  display: inline-flex; align-items: flex-end;
+  gap: 2px; height: 14px; margin-left: 6px; vertical-align: middle;
+}
+.speaker-wave span {
+  display: block; width: 3px; border-radius: 2px;
+  background: var(--gold); animation: wave 1s ease-in-out infinite;
+}
+.speaker-wave span:nth-child(1){height:4px;animation-delay:0s}
+.speaker-wave span:nth-child(2){height:10px;animation-delay:.1s}
+.speaker-wave span:nth-child(3){height:6px;animation-delay:.2s}
+.speaker-wave span:nth-child(4){height:12px;animation-delay:.15s}
+.speaker-wave span:nth-child(5){height:4px;animation-delay:.05s}
+@keyframes wave{0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.8)}}
+
+/* typing */
+.typing {
+  display: flex; gap: 4px; padding: 12px 16px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 18px; border-bottom-left-radius: 5px; width: fit-content;
+}
+.dot { width: 7px; height: 7px; border-radius: 50%; background: var(--gold); animation: bounce .9s infinite; }
+.dot:nth-child(2){animation-delay:.15s} .dot:nth-child(3){animation-delay:.3s}
+@keyframes bounce{0%,80%,100%{transform:translateY(0);opacity:.6}40%{transform:translateY(-7px);opacity:1}}
+
+/* input bar */
+.input-bar {
+  width: 100%; max-width: 700px;
+  padding: 10px 14px 18px;
+  display: flex; gap: 8px;
+  background: var(--bg); position: sticky; bottom: 0;
+}
+#user-input {
+  flex: 1; padding: 12px 18px;
+  border: 2px solid var(--border); border-radius: 30px;
+  font-family: 'Baloo 2', cursive; font-size: .92rem;
+  outline: none; background: var(--surface); color: var(--text);
+  transition: border-color .2s, box-shadow .2s;
+}
+#user-input::placeholder { color: var(--muted); }
+#user-input:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(245,158,11,.12); }
+
+#send-btn {
+  width: 48px; height: 48px; border-radius: 50%; border: none;
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  color: white; font-size: 1.1rem; cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 3px 14px rgba(245,158,11,.4); flex-shrink: 0;
+}
+#send-btn:hover { transform: scale(1.08); box-shadow: 0 5px 20px rgba(245,158,11,.55); }
+#send-btn:disabled { opacity: .5; transform: none; }
+
+/* result modal */
+.result-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.75); backdrop-filter: blur(6px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 100; opacity: 0; pointer-events: none; transition: opacity .3s;
+}
+.result-overlay.show { opacity: 1; pointer-events: all; }
+.result-card {
+  background: linear-gradient(135deg, #132015, #0c1a0e);
+  border: 2px solid var(--gold-dark);
+  border-radius: 24px; padding: 36px 40px;
+  text-align: center; max-width: 380px; width: 90%;
+  box-shadow: 0 20px 60px rgba(0,0,0,.6);
+  transform: scale(.9); transition: transform .3s cubic-bezier(.34,1.56,.64,1);
+}
+.result-overlay.show .result-card { transform: scale(1); }
+.result-emoji { font-size: 4rem; margin-bottom: 12px; display: block; }
+.result-title {
+  font-family: 'Fredoka One', cursive; font-size: 1.7rem; margin-bottom: 6px;
+  background: linear-gradient(90deg, var(--gold), #fde68a);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.result-score { font-size: 3rem; font-weight: 900; margin: 10px 0; color: white; }
+.result-msg { color: var(--muted); font-size: .9rem; margin-bottom: 22px; }
+.result-btn {
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  border: none; border-radius: 30px; padding: 12px 30px;
+  color: white; font-family: 'Baloo 2', cursive; font-weight: 800;
+  font-size: 1rem; cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+  box-shadow: 0 4px 16px rgba(245,158,11,.35);
+}
+.result-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 22px rgba(245,158,11,.5); }
+
+/* scenario card for identify questions */
+.scenario-card {
+  background: rgba(245,158,11,.07);
+  border: 1px solid rgba(245,158,11,.25);
+  border-radius: 12px; padding: 10px 14px;
+  margin: 8px 0 6px; font-style: italic;
+  font-size: .87rem; color: #fde68a; line-height: 1.5;
+}
+
+/* ── Notes Panel ─────────────────────────────────────────────── */
+.notes-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.78); backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 200; opacity: 0; pointer-events: none; transition: opacity .3s;
+}
+.notes-overlay.show { opacity: 1; pointer-events: all; }
+.notes-panel {
+  background: linear-gradient(160deg, #0c1a0e, #132015);
+  border: 2px solid var(--gold-dark);
+  border-radius: 20px;
+  width: 92%; max-width: 720px;
+  max-height: 88vh;
+  display: flex; flex-direction: column;
+  box-shadow: 0 24px 60px rgba(0,0,0,.7);
+  overflow: hidden;
+  transform: translateY(30px);
+  transition: transform .35s cubic-bezier(.34,1.2,.64,1);
+}
+.notes-overlay.show .notes-panel { transform: translateY(0); }
+.notes-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 22px; border-bottom: 1px solid var(--border);
+  background: linear-gradient(135deg, #14532d44, #1e3a5f44);
+}
+.notes-header h2 { font-family: 'Fredoka One', cursive; font-size: 1.3rem; color: var(--gold); }
+.notes-close {
+  width: 34px; height: 34px; border-radius: 50%;
+  border: 1.5px solid var(--border); background: var(--surface2);
+  color: var(--text); font-size: 1rem; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; transition: all .2s;
+}
+.notes-close:hover { background: #b91c1c; border-color: #ef4444; }
+.notes-body { overflow-y: auto; padding: 20px 22px; flex: 1; }
+.notes-body::-webkit-scrollbar { width: 4px; }
+.notes-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+.notes-topic { margin-bottom: 28px; }
+.notes-topic-title {
+  font-family: 'Fredoka One', cursive; font-size: 1.05rem;
+  color: var(--gold); margin-bottom: 10px;
+  padding-bottom: 6px; border-bottom: 1px solid var(--border);
+}
+.notes-item {
+  display: flex; gap: 10px; align-items: flex-start;
+  padding: 7px 0; border-bottom: 1px solid rgba(255,255,255,.04);
+  font-size: .87rem; line-height: 1.55;
+}
+.notes-item:last-child { border-bottom: none; }
+.notes-term { font-weight: 800; color: var(--gold); min-width: 150px; flex-shrink: 0; font-size: .84rem; }
+.notes-def { color: #d1fae5; }
+.notes-tabs {
+  display: flex; flex-wrap: wrap; gap: 8px; padding: 14px 22px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(0,0,0,.15);
+}
+.notes-tab {
+  padding: 12px 20px; border-radius: 10px;
+  border: 1.5px solid var(--border); 
+  background: rgba(255,255,255,.04); color: var(--muted);
+  font-family: 'Baloo 2', cursive; font-size: .9rem; font-weight: 700;
+  cursor: pointer; transition: all .15s; white-space: nowrap;
+  min-height: 48px; display: flex; align-items: center;
+}
+.notes-tab.active { background: var(--surface); color: var(--gold); border-color: var(--gold-dark); }
+.notes-tab:hover:not(.active) { color: var(--text); background: var(--surface2); }
+.notes-section { display: none; }
+.notes-section.active { display: block; }
+
+
+/* ── Print button in notes header ─────────────────────────────── */
+.notes-header-actions { display: flex; align-items: center; gap: 10px; }
+.print-btn {
+  display: flex; align-items: center; gap: 6px;
+  background: rgba(245,158,11,.12);
+  border: 1.5px solid rgba(245,158,11,.4);
+  color: var(--gold);
+  border-radius: 20px;
+  padding: 7px 14px;
+  font-family: 'Baloo 2', cursive;
+  font-size: .78rem;
+  font-weight: 800;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all .15s;
+}
+.print-btn:hover { background: var(--gold); color: #0c1a0e; border-color: var(--gold); }
+.print-btn.active { background: var(--gold); color: #0c1a0e; border-color: var(--gold); }
+
+/* ── On-screen Practice Test / Answer Key ─────────────────────── */
+.ptest-part-title {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1rem;
+  color: var(--gold);
+  margin: 22px 0 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+.ptest-part-title:first-child { margin-top: 0; }
+.ptest-q {
+  font-size: .87rem;
+  line-height: 1.6;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed rgba(255,255,255,.06);
+  color: #d1fae5;
+}
+.ptest-q b { color: var(--gold); }
+.ptest-q .opt { display: block; margin: 2px 0 2px 18px; color: #d1fae5; }
+.ptest-bank {
+  background: rgba(59,130,246,.08);
+  border: 1px solid rgba(59,130,246,.3);
+  border-radius: 10px;
+  padding: 10px 16px;
+  margin-bottom: 14px;
+  font-size: .82rem;
+  color: #dbeafe;
+  line-height: 1.6;
+}
+.key-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.key-pill {
+  background: rgba(245,158,11,.1);
+  border: 1px solid rgba(245,158,11,.25);
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: .78rem;
+  color: #fde68a;
+}
+.key-pill b { color: #34d399; }
+
+/* ── Print / Save-as-PDF styles ──────────────────────────────────
+   By default everything is hidden from print. When body carries
+   .printing-test, only #print-area (a light-themed clone of the
+   Practice Test + Answer Key) is shown, laid out for paper. ──── */
+@media print {
+  body * { visibility: hidden; }
+  #print-area, #print-area * { visibility: visible; }
+  #print-area {
+    display: block !important;
+    position: absolute; top: 0; left: 0; width: 100%;
+    background: #fff; color: #14290f;
+    font-family: 'Helvetica', Arial, sans-serif;
+    font-size: 10.5pt;
+    line-height: 1.5;
+  }
+  #print-area .p-cover { text-align: center; padding-top: 40px; }
+  #print-area .p-cover .p-icon { font-size: 34pt; }
+  #print-area .p-cover h1 { font-size: 19pt; color: #b45309; margin: 8px 0 4px; }
+  #print-area .p-cover .p-sub { font-size: 10.5pt; color: #166534; margin-bottom: 20px; }
+  #print-area .p-info-box {
+    border: 1.5px solid #fcd34d; border-radius: 10px;
+    max-width: 460px; margin: 0 auto 20px; padding: 14px 20px;
+    text-align: left; font-size: 10pt;
+  }
+  #print-area .p-info-box div { margin: 6px 0; border-bottom: 1px dotted #fde68a; padding-bottom: 6px; }
+  #print-area .p-instructions {
+    max-width: 460px; margin: 0 auto; text-align: left;
+    background: #fffbeb; border: 1px solid #fcd34d; border-radius: 10px;
+    padding: 12px 18px; font-size: 9.5pt; color: #78350f;
+  }
+  #print-area h2.p-part-title {
+    font-size: 12.5pt; color: #fff;
+    background: linear-gradient(135deg, #b45309, #14532d) !important;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    padding: 6px 12px; border-radius: 7px; margin: 18px 0 10px;
+    page-break-after: avoid;
+  }
+  #print-area .p-bank {
+    background: #f0fdf4 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    border: 1px solid #86efac; border-radius: 8px; padding: 8px 14px;
+    margin-bottom: 12px; font-size: 9.5pt; color: #14532d;
+  }
+  #print-area .p-q {
+    margin-bottom: 8px; padding-bottom: 8px;
+    border-bottom: 1px dotted #fde68a; font-size: 10pt;
+    page-break-inside: avoid; color: #14290f;
+  }
+  #print-area .p-q b { color: #b45309; }
+  #print-area .p-q .p-blank { display: inline-block; min-width: 65px; border-bottom: 1px solid #64748b; }
+  #print-area .p-q .p-opt { display: block; margin: 2px 0 0 20px; color: #365314; }
+  #print-area .p-break { page-break-before: always; }
+  #print-area .p-key-part-title {
+    font-size: 11pt; color: #b45309; font-weight: bold;
+    margin: 14px 0 8px; border-bottom: 2px solid #b45309; padding-bottom: 4px;
+  }
+  #print-area .p-key-grid {
+    display: grid; grid-template-columns: repeat(5, 1fr);
+    gap: 5px 8px; margin-bottom: 14px;
+  }
+  #print-area .p-key-pill {
+    background: #f0fdf4 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    border: 1px solid #86efac; border-radius: 6px;
+    padding: 4px 8px; font-size: 8.5pt; color: #166534;
+  }
+  #print-area .p-key-pill b { color: #b45309; }
+  @page { size: letter; margin: 1.5cm 1.8cm; }
+}
+#print-area { display: none; }
+
+
+/* ── Chapter Summary / Tandaan / Memory boxes (fix: previously missing) ── */
+.chapter-summary {
+  background: linear-gradient(135deg, rgba(59,130,246,.1), rgba(34,197,94,.08));
+  border: 1px solid rgba(59,130,246,.25);
+  border-left: 4px solid var(--blue);
+  border-radius: 12px;
+  padding: 14px 18px;
+  margin-bottom: 18px;
+  font-size: .88rem;
+  line-height: 1.65;
+  color: #dbeafe;
+}
+.tandaan-box {
+  background: rgba(245,158,11,.08);
+  border: 1px solid rgba(245,158,11,.3);
+  border-left: 4px solid var(--gold);
+  border-radius: 12px;
+  padding: 12px 18px;
+  margin: 14px 0;
+  font-size: .86rem;
+  line-height: 1.6;
+  color: #fde68a;
+}
+.tandaan-label {
+  display: block;
+  font-family: 'Baloo 2', cursive;
+  font-size: .8rem;
+  color: var(--gold);
+  letter-spacing: .5px;
+  margin-bottom: 5px;
+}
+.memory-box {
+  background: rgba(34,197,94,.08);
+  border: 1px solid rgba(34,197,94,.3);
+  border-left: 4px solid var(--green);
+  border-radius: 12px;
+  padding: 12px 18px;
+  margin: 14px 0 22px;
+  font-size: .86rem;
+  line-height: 1.6;
+  color: #bbf7d0;
+}
+.memory-label {
+  display: block;
+  font-family: 'Baloo 2', cursive;
+  font-size: .8rem;
+  color: var(--green);
+  letter-spacing: .5px;
+  margin-bottom: 5px;
+}
+.compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0 20px;
+  font-size: .82rem;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.compare-table th {
+  background: linear-gradient(135deg, var(--blue-dark), var(--gold-dark));
+  color: white;
+  text-align: left;
+  padding: 9px 12px;
+  font-size: .78rem;
+  text-transform: uppercase;
+  letter-spacing: .4px;
+}
+.compare-table td {
+  padding: 9px 12px;
+  border-top: 1px solid var(--border);
+  color: var(--text);
+  vertical-align: top;
+}
+.compare-table tr:nth-child(even) td { background: rgba(255,255,255,.02); }
+
+/* ── Story Box (for reading Bible stories aloud) ─────────────────── */
+.story-box {
+  background: rgba(255,255,255,.03);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px 20px;
+  margin-bottom: 16px;
+  font-size: .92rem;
+  line-height: 1.8;
+  color: var(--text);
+}
+.story-box p { margin-bottom: 10px; }
+.story-box p:last-child { margin-bottom: 0; }
+.story-ref {
+  display: block;
+  text-align: right;
+  font-style: italic;
+  color: var(--muted);
+  font-size: .8rem;
+  margin-top: 10px;
+}
+.story-label {
+  display: block;
+  font-family: 'Baloo 2', cursive;
+  font-size: .9rem;
+  color: var(--gold);
+  letter-spacing: .5px;
+  margin-bottom: 10px;
+}
+/* ── Raw Notes (original document view) ──────────────────────── */
+.rawnotes-intro {
+  font-size: .82rem;
+  color: var(--muted);
+  line-height: 1.6;
+  background: rgba(59,130,246,.1);
+  border: 1px solid rgba(59,130,246,.3);
+  border-left: 4px solid var(--blue);
+  border-radius: 10px;
+  padding: 12px 18px;
+  margin-bottom: 20px;
+}
+.rawnotes-doc {
+  font-family: 'Lora', Georgia, serif;
+  line-height: 1.75;
+}
+.rawnotes-doc p {
+  font-size: .95rem;
+  margin-bottom: 14px;
+  color: #e2f5e6;
+}
+.rawnotes-doc strong { color: var(--gold); font-weight: 700; }
+.rawnotes-doc em { color: var(--muted); font-style: italic; }
+.rawnotes-doc h3.doc-heading {
+  font-family: 'Baloo 2', cursive;
+  font-size: 1.05rem;
+  color: var(--gold);
+  margin: 26px 0 12px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid var(--border);
+}
+.rawnotes-doc h3.doc-heading:first-child { margin-top: 0; }
+.rawnotes-doc ul, .rawnotes-doc ol {
+  margin: 0 0 14px 26px;
+  color: #e2f5e6;
+}
+.rawnotes-doc li { margin-bottom: 6px; font-size: .95rem; }
+.rawnotes-doc table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0 20px;
+  font-size: .82rem;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.rawnotes-doc th {
+  background: linear-gradient(135deg, var(--blue-dark), var(--gold-dark));
+  color: white;
+  text-align: left;
+  padding: 9px 12px;
+  font-size: .78rem;
+}
+.rawnotes-doc td {
+  padding: 9px 12px;
+  border-top: 1px solid var(--border);
+  color: var(--text);
+  vertical-align: top;
+}
+.rawnotes-doc tr:nth-child(even) td { background: rgba(255,255,255,.02); }
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE: TABLET (≤820px)
+   ═══════════════════════════════════════════════════════════════ */
+@media (max-width: 820px) {
+  .notes-panel { width: 95%; max-height: 92vh; }
+  .notes-tabs { padding: 12px 16px; gap: 6px; }
+  .notes-tab { padding: 10px 14px; font-size: .82rem; min-height: 42px; }
+  .notes-body { padding: 16px; }
+  .notes-header { padding: 14px 16px; }
+  .chat-wrap { padding: 14px 10px 0; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE: MOBILE (≤600px)
+   ═══════════════════════════════════════════════════════════════ */
+@media (max-width: 600px) {
+  header {
+    padding: 10px 12px;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .header-icon { font-size: 1.5rem; }
+  header h1 { font-size: 1.05rem; line-height: 1.2; }
+  header .sub { font-size: .62rem; }
+  .header-controls { gap: 6px; margin-left: auto; }
+  .score-pill { padding: 4px 10px; font-size: .74rem; }
+  .audio-btn { width: 32px; height: 32px; font-size: .85rem; }
+
+  .chat-wrap { padding: 10px 6px 0; }
+  #chat-box { gap: 12px; }
+  .bubble { max-width: 88%; font-size: .88rem; padding: 10px 13px; }
+  .avatar { width: 30px; height: 30px; font-size: .85rem; }
+
+  .chip { font-size: .78rem; padding: 7px 12px; }
+  .mc-btn { font-size: .84rem; padding: 10px 12px; }
+  .mc-btn .letter { width: 22px; height: 22px; font-size: .74rem; }
+  .topic-tag { font-size: .68rem; }
+  .scenario-card { font-size: .88rem; padding: 10px 14px; }
+
+  .input-bar { padding: 8px 8px calc(8px + env(safe-area-inset-bottom)); gap: 8px; }
+  #user-input { font-size: .88rem; padding: 10px 14px; }
+  #send-btn { width: 40px; height: 40px; font-size: 1rem; }
+
+  .result-card { width: 92%; padding: 26px 20px; }
+  .result-emoji { font-size: 2.6rem; }
+  .result-title { font-size: 1.2rem; }
+  .result-score { font-size: 1.8rem; }
+
+  /* ── Notes panel: near-full-screen on phones ── */
+  .notes-overlay { align-items: flex-end; }
+  .notes-panel {
+    width: 100%; max-width: 100%;
+    max-height: 94vh;
+    border-radius: 20px 20px 0 0;
+    border-left: none; border-right: none; border-bottom: none;
+  }
+  .notes-header { padding: 12px 14px; flex-wrap: wrap; gap: 8px; }
+  .notes-header h2 { font-size: 1.05rem; flex: 1 1 100%; }
+  .notes-header-actions { flex-wrap: wrap; gap: 6px; width: 100%; justify-content: flex-start; }
+  .print-btn { font-size: .7rem; padding: 6px 11px; }
+  .notes-close { width: 30px; height: 30px; font-size: .9rem; margin-left: auto; }
+
+  .notes-tabs { padding: 10px 12px; gap: 5px; }
+  .notes-tab { padding: 8px 12px; font-size: .76rem; min-height: 38px; }
+  .notes-body { padding: 14px; }
+
+  .notes-item { flex-direction: column; gap: 2px; }
+  .notes-term { min-width: 0; font-size: .82rem; }
+  .notes-def { font-size: .84rem; }
+  .notes-topic-title { font-size: .95rem; }
+  .chapter-summary, .memory-box, .tandaan-box, .story-box, .verse-card { font-size: .82rem; padding: 12px 14px; }
+
+  /* ── Tables: allow horizontal scroll instead of squeezing ── */
+  .compare-table { display: block; overflow-x: auto; white-space: nowrap; }
+  .compare-table th, .compare-table td { white-space: normal; min-width: 110px; }
+
+  .key-grid { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 5px; }
+  .key-pill { font-size: .72rem; padding: 5px 8px; }
+  .ptest-part-title { font-size: .92rem; }
+  .ptest-q { font-size: .82rem; }
+  .ptest-bank { font-size: .78rem; padding: 8px 12px; }
+
+  .rawnotes-doc p, .rawnotes-doc li { font-size: .87rem; }
+  .rawnotes-doc h3.doc-heading { font-size: .95rem; }
+  .rawnotes-doc table { display: block; overflow-x: auto; white-space: nowrap; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE: VERY SMALL PHONES (≤380px)
+   ═══════════════════════════════════════════════════════════════ */
+@media (max-width: 380px) {
+  header h1 { font-size: .92rem; }
+  header .sub { display: none; }
+  .score-pill span { font-size: .7rem; }
+  .bubble { max-width: 92%; font-size: .84rem; }
+  .notes-tab { font-size: .7rem; padding: 7px 10px; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE: LANDSCAPE PHONES (short height)
+   ═══════════════════════════════════════════════════════════════ */
+@media (max-height: 480px) and (orientation: landscape) {
+  .notes-panel { max-height: 98vh; }
+  .notes-tabs { padding: 6px 12px; }
+  .notes-tab { min-height: 32px; padding: 6px 10px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-icon">🌿</div>
+  <div>
+    <h1>Animal &amp; Plant Habitats</h1>
+    <div class="sub">Terrestrial · Aquatic · Aerial Habitats of Animals and Plants</div>
+  </div>
+  <div class="header-controls">
+    <div class="score-pill">⭐ <span id="score-val">0</span> / <span id="total-val">0</span></div>
+    <button class="audio-btn" id="notes-toggle" title="Open Reviewer" onclick="document.getElementById('notes-overlay').classList.add('show')">📖</button>
+    <button class="audio-btn active" id="audio-toggle" title="Toggle Audio">🔊</button>
+  </div>
+</header>
+
+<div class="chat-wrap">
+  <div id="chat-box"></div>
+</div>
+
+<div class="input-bar">
+  <input type="text" id="user-input" placeholder="Type your answer here…" autocomplete="off" />
+  <button id="send-btn">➤</button>
+</div>
+
+<div class="result-overlay" id="result-overlay">
+  <div class="result-card">
+    <span class="result-emoji" id="res-emoji">🏆</span>
+    <div class="result-title">Quiz Complete!</div>
+    <div class="result-score"><span id="res-score">0</span>/<span id="res-total">0</span></div>
+    <div class="result-msg" id="res-msg">Great job!</div>
+    <button class="result-btn" onclick="restartApp()">🔄 Maglaro Ulit</button>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+// QUESTION BANK
+// ═══════════════════════════════════════════════════════════════
+const topics = {
+
+  "Habitats and Animal Needs": [
+    { q: "What does an organism's environment refer to?", a: "All the things that surround it (the living and nonliving things around it)", hint: "Everything around the organism." },
+    { q: "What needs must an organism satisfy in order to survive?", a: "Food, water, shelter, air, enough space, and protection from its enemies", hint: "Six needs." },
+    { q: "What is a habitat?", a: "A place in which an organism lives", hint: "An animal's home." },
+    { q: "Why are animals found in places that have all the things that help them live?", a: "Because those places satisfy their needs", hint: "Needs are met there." },
+    { q: "Into what three groups may animal habitats be grouped?", a: "Terrestrial (land), aquatic (water), and aerial (above the ground)", hint: "T-A-A." },
+    { q: "What does terrestrial mean?", a: "Land", hint: "Think of 'terra', meaning earth." },
+    { q: "What does aquatic mean?", a: "Water", hint: "Think of 'aqua'." },
+    { q: "What does aerial mean?", a: "Above the ground", hint: "Think of 'air'." },
+    { q: "In a habitat, how do living things of the same kind live?", a: "Together in groups", hint: "They stay with their own kind." },
+    { q: "When is a place a natural habitat for certain animals?", a: "When it provides enough food, water, shelter, space, and protection", hint: "It meets their needs." },
+  ],
+
+  "Terrestrial Animal Habitats": [
+    { q: "What are terrestrial animal habitats?", a: "Land habitats, such as forests, gardens, farms, and deserts", hint: "Habitats on land." },
+    { q: "How do forest animals live?", a: "Independently, getting food available in the forest", hint: "Each finds its own food." },
+    { q: "What do forest animals eat?", a: "Fruits, plants, insects, and other smaller animals", hint: "Four kinds of food." },
+    { q: "What three things do animals get from a forest?", a: "Food, shelter, and protection", hint: "Basic needs." },
+    { q: "Name animals found in the forest.", a: "Wild boar, Philippine eagle, tamaraw, Philippine deer, and tarsier", hint: "Five animals." },
+    { q: "Why is a garden a perfect place for insects?", a: "Because insects can satisfy their needs for food there", hint: "Nectar and plants." },
+    { q: "What do butterflies do in a garden?", a: "They collect nectar from one flower to another", hint: "Sweet liquid in flowers." },
+    { q: "Name animals found in a garden.", a: "Butterfly, ant, worm, bird, centipede, beetle, and grasshopper", hint: "Mostly insects." },
+    { q: "Which animals live under the ground in a garden?", a: "Earthworms and burrowing insects like beetles, mealworms, scorpions, millipedes, and centipedes", hint: "Burrowers." },
+    { q: "Which animals are usually found in a farm habitat?", a: "Domestic animals", hint: "Raised by farmers." },
+    { q: "Name animals raised on a farm.", a: "Chickens, pigs, horses, carabaos, cows, ducks, goats, and sheep", hint: "Eight animals." },
+    { q: "What do farm animals provide for people?", a: "Food such as milk, meat, and poultry products like eggs", hint: "Three kinds of food." },
+    { q: "Which farm animals are used for transportation?", a: "Horses, cows, and carabaos", hint: "Bigger farm animals." },
+    { q: "How do big farm animals help farmers?", a: "They help till the soil for planting", hint: "Preparing the field." },
+    { q: "How do desert animals avoid dehydration?", a: "They stay away from the hot Sun and dig holes or burrow in the ground for shelter", hint: "Hide from the heat." },
+    { q: "When do kangaroo rats and lizards come out to look for food?", a: "At night", hint: "When it is cooler." },
+    { q: "How do scorpions and wolf spiders keep from losing moisture?", a: "Their thick body coverings prevent or reduce moisture loss", hint: "Thick covering." },
+    { q: "How do the kidneys of desert animals help them save water?", a: "They concentrate urine so the animals excrete less water", hint: "Less water lost." },
+    { q: "Where do desert animals get water?", a: "From succulent or watery plants like cacti, and from the blood and body tissues of their prey", hint: "Plants and prey." },
+    { q: "Name animals found in the desert.", a: "Centipede, antelope, cheetah, eagle, armadillo (also ants, beetles, and snakes)", hint: "Hot, dry places." },
+  ],
+
+  "Freshwater Animal Habitats": [
+    { q: "Into what two groups are aquatic habitats divided?", a: "Freshwater habitats and saltwater habitats", hint: "Two kinds of water." },
+    { q: "Where are freshwater animals found?", a: "In ponds, lakes, rivers, and streams", hint: "Four places." },
+    { q: "What determines the organisms living in a freshwater place?", a: "The kind of water environment", hint: "The type of habitat." },
+    { q: "Which freshwater animals are bred in ponds?", a: "Milkfish, tilapia, and shrimp", hint: "Three animals." },
+    { q: "Which animals are at home in rivers, lakes, and streams?", a: "Mudfish, catfish, snails, frogs, and toads", hint: "Five animals." },
+    { q: "Are swamps freshwater or saltwater habitats?", a: "Freshwater habitats", hint: "Think of Candaba." },
+    { q: "Where is the Candaba Swamp located?", a: "In Pampanga", hint: "A province in Central Luzon." },
+    { q: "Which birds can be found in Candaba Swamp?", a: "Herons, wild ducks, Philippine ducks, kingfishers, egrets, and turtle doves", hint: "It is a bird sanctuary." },
+    { q: "About how large is the Candaba Swamp habitat?", a: "About 32,000 hectares of swamps, marshes, and ponds", hint: "Thirty-two thousand." },
+    { q: "Why do thousands of migratory birds visit Candaba Swamp?", a: "They are looking for warmer places to stay", hint: "Warmer weather." },
+  ],
+
+  "Saltwater Animal Habitats": [
+    { q: "Where are saltwater environments found?", a: "In seas and oceans", hint: "Big bodies of water." },
+    { q: "Why are oceans and seas sanctuaries of plant and animal diversity?", a: "Because of their sheer size", hint: "They are huge." },
+    { q: "What are coral reefs?", a: "Diverse habitats or ecosystems found under the sea", hint: "Under the sea." },
+    { q: "What percent of all marine organisms do coral reefs contain?", a: "About 25%", hint: "One fourth." },
+    { q: "What do coral reefs serve as for seawater organisms?", a: "Breeding places", hint: "Where they reproduce." },
+    { q: "Which animals can be found in coral reefs?", a: "Sharks, sea turtles, different kinds of saltwater fishes, and eels", hint: "Four kinds." },
+    { q: "Where is Tubbataha Reef, and what has it been declared?", a: "In Puerto Princesa, Palawan; a natural park", hint: "Palawan." },
+    { q: "Where is Apo Reef located, and how large is it?", a: "In Occidental Mindoro; about 43 square kilometers", hint: "One of the most beautiful diving destinations." },
+    { q: "Where is Bajo de Masinloc located?", a: "Near Zambales", hint: "Also called Scarborough Shoal." },
+    { q: "What are the other names of Bajo de Masinloc?", a: "Scarborough Shoal and Panatag Shoal", hint: "Two other names." },
+    { q: "Describe the shape and size of Bajo de Masinloc.", a: "A triangle-shaped chain of reefs and rocks covering about 150 square kilometers", hint: "Three-sided." },
+    { q: "Why do Philippine fishermen frequent Bajo de Masinloc?", a: "Because the place is rich with marine organisms", hint: "Plenty of fish." },
+    { q: "What is an estuary?", a: "An area formed when freshwater rivers or streams mix with saltwater from the ocean", hint: "Where river meets sea." },
+    { q: "What does brackish mean?", a: "Slightly salty", hint: "Between fresh and salty." },
+    { q: "Which animals live in estuaries?", a: "Fishes, shellfishes, and some migratory birds", hint: "Marine organisms." },
+    { q: "What are intertidal zones?", a: "Areas near the shoreline that are totally covered during high tide but partially uncovered during low tide", hint: "Between the tides." },
+    { q: "Which animals live in intertidal zones?", a: "Sea urchins, sea anemones, barnacles, crabs, fishes, starfish, and mussels", hint: "Seven kinds." },
+    { q: "Where are mangrove forests often found?", a: "In intertidal zones", hint: "Along the shoreline." },
+    { q: "Where are most of the world's mangrove forests found?", a: "In Asia", hint: "A continent." },
+    { q: "Where in the Philippines can you find mangrove forests?", a: "Puerto Princesa and El Nido in Palawan, Mindoro, Siargao, Calauit Island, and Sibuyan Island", hint: "Five places." },
+    { q: "Which animals are commonly found in mangrove areas?", a: "Fishes, jellyfish, mollusks, worms, barnacles, snails, crabs, and shrimps", hint: "Many small animals." },
+    { q: "What is special about the Banacon Island Mangrove Forest in Bohol?", a: "It is an ecotourist destination of about 425 hectares, established through bayanihan among community residents, and one of the biggest mangrove plantations in the country", hint: "Community effort." },
+  ],
+
+  "Aerial Habitats and Wildlife Biologists": [
+    { q: "What are aerial habitats?", a: "Places located above the ground where some animals live", hint: "Up in the air." },
+    { q: "What do aboveground dwellers do?", a: "They climb and cling to parts of trees and can transfer from one tree to another without getting on the ground", hint: "Tree movers." },
+    { q: "What are considered aerial habitats?", a: "Trees and caves", hint: "Two places." },
+    { q: "Which organisms live in the trunks of trees?", a: "Some burrowing insects, birds with powerful beaks, and other organisms", hint: "Three groups." },
+    { q: "What do wildlife biologists do?", a: "They study wild animals and find ways of helping them survive", hint: "Animal scientists." },
+    { q: "What do wildlife biologists study about animals?", a: "Their habits, what they eat, where they go when they move, and how long they can live", hint: "Four things." },
+    { q: "Why do wildlife biologists study how long an animal can live?", a: "To suggest ways to sustain their population and save them from extinction", hint: "Prevent extinction." },
+    { q: "What are sanctuaries?", a: "Protected habitats of organisms", hint: "Protected places." },
+  ],
+
+  "Plant Habitats and Land Plants": [
+    { q: "What is a need?", a: "Something a living thing must have in order to continue living", hint: "Must-have." },
+    { q: "What do plants need to grow and survive?", a: "Air, water, food, and space, plus light to make food", hint: "Four needs and light." },
+    { q: "What are terrestrial plants?", a: "Plants that grow on land", hint: "Terrestrial means land." },
+    { q: "How do terrestrial plants get nutrients?", a: "From the soil through their roots", hint: "Underground parts." },
+    { q: "What are ornamental plants?", a: "Plants with attractive and colorful leaves, which are grown in gardens", hint: "Plants for beauty." },
+    { q: "Name some ornamental plants with attractive, colorful leaves.", a: "Bromeliads, mayanas, and snake plants", hint: "Three plants." },
+    { q: "Name some flowering plants found in gardens.", a: "Roses, orchids, santan, lilies, and hydrangeas", hint: "Five flowers." },
+    { q: "Why do cultured garden plants need fertilizers and good soil?", a: "To grow healthy", hint: "Extra nutrients." },
+    { q: "Why do some plants grow best in shaded areas?", a: "Because they need only a small amount of sunlight", hint: "Less light." },
+    { q: "Which plants can be found in a vegetable garden?", a: "Squash, tomatoes, peppers, string beans, radish, cabbage, bitter gourd, peas, and eggplants", hint: "Many vegetables." },
+    { q: "Which herbs and spices can be grown in a vegetable garden?", a: "Onions, garlic, bay leaf, and basil", hint: "Used in cooking." },
+    { q: "Which medicinal plants are named in the lesson?", a: "Sambong, lagundi, ginger, and oregano", hint: "Used to cure illness." },
+    { q: "Why do some gardeners use organic fertilizers and pesticides?", a: "To avoid the harmful effects of chemicals", hint: "Safer for the body." },
+    { q: "When are rice fields planted with rice?", a: "During the rainy season or when there is enough water supply", hint: "Needs lots of water." },
+    { q: "What crops are planted in rice fields during the dry season?", a: "Peanuts, corn, watermelon, mongo, turnips, cassava, pineapple, and vegetables", hint: "Crops that need less water." },
+    { q: "Which plants are ideal in coastal areas, and why?", a: "Coconuts and trees that give timber and lumber, because coastal areas have sandy soil and these plants need less water", hint: "Sandy soil." },
+    { q: "What helps plants on riverbanks, swamps, and pond edges prevent soil erosion?", a: "Their thick taproots hold the soil firmly", hint: "Strong roots." },
+    { q: "What are grasslands ideal for?", a: "Cattle and horse raising", hint: "Grazing animals." },
+    { q: "Why can a cactus grow in the desert?", a: "It has thick stems that store water for long periods of time", hint: "Stores water." },
+    { q: "What are controlled plant habitats?", a: "Habitats that need constant monitoring and care, such as nurseries, greenhouses, and terrariums", hint: "Humans manage them." },
+    { q: "What are hydroponic plants?", a: "Plants like lettuce that are grown without soil, but with water", hint: "Water, no soil." },
+    { q: "What is kept in plant nurseries and greenhouses?", a: "Seedlings, cuttings, and newly transplanted and potted plants", hint: "Young plants." },
+    { q: "Why are rainforests cleared for farming good only for short-term crops?", a: "Because the soil is less fertile; most of the nutrients are absorbed by trees, vines, and other wild plants", hint: "Nutrients are used up." },
+    { q: "What is the canopy?", a: "The dense covering formed by tall trees in a rainforest", hint: "A roof of leaves." },
+    { q: "What is the emergent layer?", a: "The top layer of the forest, made up of the tallest trees that go beyond the canopy", hint: "Above the canopy." },
+    { q: "What is the understory?", a: "The smaller plants and trees below the canopy", hint: "Under the canopy." },
+    { q: "Name plants that grow in a rainforest.", a: "Narra, mahogany, birds of paradise, acacia, bamboos, and palm trees", hint: "Six plants." },
+  ],
+
+  "Aquatic and Aerial Plants": [
+    { q: "What are aquatic plants also called?", a: "Hydrophytes", hint: "Water plants." },
+    { q: "Into what two groups are aquatic plant habitats divided?", a: "Flowing water habitats and standing water habitats", hint: "Moving or not moving." },
+    { q: "Give examples of flowing water habitats.", a: "Rivers and streams", hint: "Water is in constant motion." },
+    { q: "Give examples of standing water habitats.", a: "Ponds and wetlands (and lakes)", hint: "Water does not move." },
+    { q: "How are a pond and a lake different?", a: "A lake is bigger than a pond; both are bodies of standing water", hint: "Size." },
+    { q: "Which plants live in ponds and lakes, and how are they suited to water?", a: "Lotus and azolla, which have broad leaves and feathery roots that help them absorb water", hint: "Broad leaves, feathery roots." },
+    { q: "What is a wetland?", a: "A body of land that is usually flooded with water; the water flows slowly into other bodies of water", hint: "Marshes and swamps." },
+    { q: "Name examples of wetlands.", a: "Marshes and swamps", hint: "Two examples." },
+    { q: "Which plants grow in wetlands?", a: "Water lilies and water hyacinths", hint: "Floating plants." },
+    { q: "Where does rainwater or spring water go as it runs downhill?", a: "It is collected in streams, creeks, or brooks, which merge into rivers that end up in a sea or an ocean", hint: "From small to big." },
+    { q: "What is a tributary?", a: "A smaller river flowing into a larger one", hint: "Small joins large." },
+    { q: "What is a watershed?", a: "The area of land into which a river and its tributaries flow", hint: "The land area." },
+    { q: "What covers the seabed and ocean floors in saltwater habitats?", a: "Seagrass", hint: "A plant on the sea floor." },
+    { q: "What are aerial plants also called?", a: "Epiphytes", hint: "Plants that live on other plants." },
+    { q: "Where do aerial plants live?", a: "On the branches and stems of trees", hint: "Up on trees." },
+    { q: "What kind of roots do aerial plants have?", a: "Specialized roots attached to other plants that can absorb water and moisture from the air", hint: "Air roots." },
+    { q: "Name examples of aerial plants.", a: "Orchids, bird's nest plants, different kinds of ferns, and bromeliads", hint: "Four examples." },
+    { q: "What benefits do wetlands provide?", a: "Preventing floods, purifying water, and serving as homes for many commercially important fish species", hint: "Three benefits." },
+  ],
+
+};
+
+// ── TRUE OR FALSE ──────────────────────────────────────────────────────────
+const trueOrFalse = [
+  { q: "A habitat is a place in which an organism lives.", a: "true" },
+  { q: "Animal habitats are grouped into terrestrial, aquatic, and aerial.", a: "true" },
+  { q: "Terrestrial habitats are habitats in the water.", a: "false" },
+  { q: "Forest animals live independently and get the food available in the forest.", a: "true" },
+  { q: "A tarsier is an example of a desert animal.", a: "false" },
+  { q: "Gardens are perfect places where insects can satisfy their needs for food.", a: "true" },
+  { q: "Farm animals such as horses, cows, and carabaos can help farmers till the soil.", a: "true" },
+  { q: "Desert animals come out to look for food during the hottest part of the day.", a: "false" },
+  { q: "Some desert animals get water from cacti and from the body tissues of their prey.", a: "true" },
+  { q: "Ponds, lakes, rivers, and streams are saltwater habitats.", a: "false" },
+  { q: "Swamps are considered freshwater habitats.", a: "true" },
+  { q: "Candaba Swamp in Pampanga is a popular bird sanctuary.", a: "true" },
+  { q: "Coral reefs contain about 25% of all marine organisms.", a: "true" },
+  { q: "Tubbataha Reef has been declared a natural park.", a: "true" },
+  { q: "Apo Reef is located in Occidental Mindoro.", a: "true" },
+  { q: "Bajo de Masinloc is also known as Scarborough Shoal.", a: "true" },
+  { q: "An estuary is formed when freshwater from rivers mixes with saltwater from the ocean.", a: "true" },
+  { q: "Intertidal zones are always completely covered by water.", a: "false" },
+  { q: "Mangrove forests are often found in intertidal zones.", a: "true" },
+  { q: "Most of the mangrove forests in the world are found in Asia.", a: "true" },
+  { q: "Trees and caves are considered aerial habitats.", a: "true" },
+  { q: "Wildlife biologists study wild animals and find ways of helping them survive.", a: "true" },
+  { q: "Plants that grow on land are called terrestrial plants.", a: "true" },
+  { q: "Plants need air, water, food, space, and light to make food.", a: "true" },
+  { q: "Hydroponic plants such as lettuce are grown without soil, but with water.", a: "true" },
+  { q: "Grasslands are ideal for rice planting only.", a: "false" },
+  { q: "Plants growing along riverbanks have thick taproots that help prevent soil erosion.", a: "true" },
+  { q: "Rainforest soil is very fertile because trees and wild plants do not absorb its nutrients.", a: "false" },
+  { q: "The emergent layer is the top layer of a rainforest.", a: "true" },
+  { q: "Aquatic plants are also called hydrophytes.", a: "true" },
+  { q: "A tributary is a larger river that a smaller river flows out of.", a: "false" },
+  { q: "Epiphytes are plants that live on the branches and stems of trees.", a: "true" },
+];
+
+// ── IDENTIFY ───────────────────────────────────────────────────────────────
+const identifyQuestions = [
+  { q: "Butterflies collect nectar here, and earthworms live under the ground.", a: "Garden", choices: ["Garden","Desert","Coral reef","Estuary"] },
+  { q: "Kangaroo rats and lizards stay in burrows here and come out at night.", a: "Desert", choices: ["Desert","Forest","Farm","Swamp"] },
+  { q: "Chickens, pigs, horses, and carabaos are raised here.", a: "Farm", choices: ["Farm","Forest","Desert","Mangrove forest"] },
+  { q: "Tarsier, tamaraw, and Philippine eagle live here.", a: "Forest", choices: ["Forest","Desert","Coral reef","Farm"] },
+  { q: "Sharks, sea turtles, and eels live here, and it holds about 25% of marine organisms.", a: "Coral reef", choices: ["Coral reef","Estuary","Pond","Garden"] },
+  { q: "Brackish area where a freshwater river mixes with ocean saltwater.", a: "Estuary", choices: ["Estuary","Intertidal zone","Lake","Coral reef"] },
+  { q: "Shoreline area covered at high tide and partly uncovered at low tide.", a: "Intertidal zone", choices: ["Intertidal zone","Estuary","Swamp","Desert"] },
+  { q: "Forest found in intertidal zones and a breeding place of marine organisms.", a: "Mangrove forest", choices: ["Mangrove forest","Rainforest","Coral reef","Grassland"] },
+  { q: "Places where animals live above the ground, like trees and caves.", a: "Aerial habitat", choices: ["Aerial habitat","Terrestrial habitat","Aquatic habitat","Estuary"] },
+  { q: "Bird sanctuary in Pampanga.", a: "Candaba Swamp", choices: ["Candaba Swamp","Apo Reef","Tubbataha Reef","Banacon Island"] },
+  { q: "Reef in Puerto Princesa, Palawan that has been declared a natural park.", a: "Tubbataha Reef", choices: ["Tubbataha Reef","Apo Reef","Bajo de Masinloc","Candaba Swamp"] },
+  { q: "Reef in Occidental Mindoro covering about 43 square kilometers.", a: "Apo Reef", choices: ["Apo Reef","Tubbataha Reef","Bajo de Masinloc","Banacon Island"] },
+  { q: "Triangle-shaped chain of reefs and rocks near Zambales, also called Panatag Shoal.", a: "Bajo de Masinloc", choices: ["Bajo de Masinloc","Apo Reef","Candaba Swamp","Tubbataha Reef"] },
+  { q: "Mangrove forest in Bohol, now an ecotourist destination.", a: "Banacon Island", choices: ["Banacon Island","Calauit Island","Sibuyan Island","Siargao"] },
+  { q: "A scientist who studies wild animals and finds ways of helping them survive.", a: "Wildlife biologist", choices: ["Wildlife biologist","Botanist","Farmer","Gardener"] },
+  { q: "Protected habitats of organisms.", a: "Sanctuaries", choices: ["Sanctuaries","Estuaries","Wetlands","Burrows"] },
+  { q: "Plants that grow on land.", a: "Terrestrial plants", choices: ["Terrestrial plants","Hydrophytes","Epiphytes","Seagrass"] },
+  { q: "Plants that grow in water.", a: "Hydrophytes", choices: ["Hydrophytes","Epiphytes","Terrestrial plants","Ornamental plants"] },
+  { q: "Plants that grow on the branches and stems of trees.", a: "Epiphytes", choices: ["Epiphytes","Hydrophytes","Terrestrial plants","Cacti"] },
+  { q: "Plants with attractive and colorful leaves, such as bromeliads and snake plants.", a: "Ornamental plants", choices: ["Ornamental plants","Medicinal plants","Aquatic plants","Aerial plants"] },
+  { q: "Sambong, lagundi, ginger, and oregano.", a: "Medicinal plants", choices: ["Medicinal plants","Ornamental plants","Aquatic plants","Aerial plants"] },
+  { q: "Plants such as lettuce grown without soil, but with water.", a: "Hydroponic plants", choices: ["Hydroponic plants","Aerial plants","Wild plants","Terrestrial grasses"] },
+  { q: "Plants that store water in their thick stems to survive in the desert.", a: "Cactus", choices: ["Cactus","Lotus","Water lily","Seagrass"] },
+  { q: "Top layer of a rainforest made of the tallest trees.", a: "Emergent layer", choices: ["Emergent layer","Canopy","Understory","Undergrowth"] },
+  { q: "Dense covering formed by tall rainforest trees.", a: "Canopy", choices: ["Canopy","Emergent layer","Understory","Watershed"] },
+  { q: "Smaller plants and trees below the canopy.", a: "Understory", choices: ["Understory","Canopy","Emergent layer","Tributary"] },
+  { q: "A smaller river flowing into a larger one.", a: "Tributary", choices: ["Tributary","Watershed","Wetland","Estuary"] },
+  { q: "The area of land into which a river and its tributaries flow.", a: "Watershed", choices: ["Watershed","Tributary","Wetland","Estuary"] },
+  { q: "A body of land usually flooded with water, such as a marsh or swamp.", a: "Wetland", choices: ["Wetland","Watershed","Grassland","Desert"] },
+  { q: "Lotus and azolla have broad leaves and feathery roots. Where do they live?", a: "Ponds and lakes", choices: ["Ponds and lakes","Deserts","Grasslands","Rainforests"] },
+  { q: "Water lilies and water hyacinths grow in this habitat.", a: "Wetlands", choices: ["Wetlands","Deserts","Coastal areas","Grasslands"] },
+  { q: "Plants that grow on the seabed and ocean floors.", a: "Seagrass", choices: ["Seagrass","Azolla","Lotus","Orchid"] },
+  { q: "Orchids, bird's nest plants, ferns, and bromeliads on tree branches.", a: "Aerial plants", choices: ["Aerial plants","Aquatic plants","Desert plants","Garden vegetables"] },
+  { q: "Ideal for cattle and horse raising, and covered with all sorts of grasses.", a: "Grassland", choices: ["Grassland","Rainforest","Swamp","Coral reef"] },
+];
+
+// ═══════════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════════
+let state = {
+  awaiting: 'menu',
+  mode: null,
+  questions: [],
+  allAnswers: [],
+  qIndex: 0,
+  score: 0,
+  total: 0,
+  hintUsed: false,
+  audioEnabled: true,
+};
+
+// ═══════════════════════════════════════════════════════════════
+// TTS (UPGRADED FOR TRUE FILIPINO ACCENT)
+// ═══════════════════════════════════════════════════════════════
+let currentAudioStream = null;
+
+function speak(text) {
+  if (!state.audioEnabled) return;
+  
+  // Linisin ang mga nakaraang audio task
+  window.speechSynthesis.cancel();
+  if (currentAudioStream) {
+    currentAudioStream.pause();
+    currentAudioStream = null;
+  }
+  
+  // Tanggalin ang HTML tags at emojis para hindi basahin nang paputol-putol
+  const clean = text.replace(/<[^>]+>/g,'').replace(/[🇵🇭🌟✅❌💡⏭️🏆😊💪🔄🔲📚👋⭐✕🧭📏🗺️]/g,'');
+  
+  // PRIMARY METHOD: Google Translation Engine cloud voice stream (May natural na Filipino accent)
+  const googleTtsUrl = `https://translate.google.com/translate_tts?ie=UTF-8&tl=tl&client=tw-ob&q=${encodeURIComponent(clean)}`;
+  
+  currentAudioStream = new Audio(googleTtsUrl);
+  currentAudioStream.onplaying = () => showWave(true);
+  currentAudioStream.onended = currentAudioStream.onerror = () => showWave(false);
+  
+  currentAudioStream.play().catch(err => {
+    // BACKUP METHOD: Web Speech API (works even without internet)
+    console.warn("Google TTS blocked or offline. Falling back to local system speech engine.");
+    
+    const streamFallback = new SpeechSynthesisUtterance(clean);
+    streamFallback.lang = 'fil-PH';
+    streamFallback.rate = 0.95; streamFallback.pitch = 1.05; streamFallback.volume = 1;
+    
+    const voices = window.speechSynthesis.getVoices();
+    const filVoice = voices.find(v => v.lang.startsWith('fil') || v.lang.startsWith('tl'));
+    const engVoice = voices.find(v => v.lang.startsWith('en') && v.name.toLowerCase().includes('female'))
+                   || voices.find(v => v.lang.startsWith('en'));
+              
+    if (filVoice) {
+      streamFallback.voice = filVoice;
+    } else if (engVoice) {
+      streamFallback.voice = engVoice; 
+      streamFallback.lang = 'en-US'; 
+    }
+    
+    streamFallback.onstart = () => showWave(true);
+    streamFallback.onend = streamFallback.onerror = () => showWave(false);
+    window.speechSynthesis.speak(streamFallback);
+  });
+}
+
+function showWave(on) {
+  document.querySelectorAll('.speaker-wave').forEach(w => w.style.display = on ? 'inline-flex' : 'none');
+}
+
+// I-initialize ang mga boses ng system
+let localSystemVoices = [];
+function lookupSystemVoices() {
+  localSystemVoices = window.speechSynthesis.getVoices();
+}
+lookupSystemVoices();
+if (window.speechSynthesis.onvoiceschanged !== undefined) {
+  window.speechSynthesis.onvoiceschanged = lookupSystemVoices;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// UI HELPERS
+// ═══════════════════════════════════════════════════════════════
+const chatBox = document.getElementById('chat-box');
+const input = document.getElementById('user-input');
+const sendBtn = document.getElementById('send-btn');
+
+function scrollBottom() { chatBox.scrollTop = chatBox.scrollHeight; }
+
+function addMessage(role, html, speakText) {
+  const div = document.createElement('div');
+  div.className = `msg ${role}`;
+  const av = document.createElement('div');
+  av.className = 'avatar';
+  av.textContent = role === 'bot' ? '🤖' : '🧑';
+  const bub = document.createElement('div');
+  bub.className = 'bubble';
+  bub.innerHTML = role === 'bot'
+    ? html + '<span class="speaker-wave" style="display:none"><span></span><span></span><span></span><span></span><span></span></span>'
+    : html;
+  div.appendChild(av); div.appendChild(bub);
+  chatBox.appendChild(div);
+  scrollBottom(); bindChips();
+  if (role === 'bot') {
+    const txt = speakText || html.replace(/<[^>]+>/g,' ');
+    setTimeout(() => speak(txt), 350);
+  }
+}
+
+function addTyping() {
+  const d = document.createElement('div');
+  d.className = 'msg bot'; d.id = 'typing';
+  d.innerHTML = '<div class="avatar">🤖</div><div class="typing"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>';
+  chatBox.appendChild(d); scrollBottom();
+}
+function removeTyping() { const t = document.getElementById('typing'); if(t) t.remove(); }
+
+function bindChips() {
+  document.querySelectorAll('.chip:not([data-bound])').forEach(c => {
+    c.dataset.bound = '1';
+    c.addEventListener('click', () => handleUserMessage(c.dataset.val));
+  });
+}
+
+function updateScore() {
+  document.getElementById('score-val').textContent = state.score;
+  document.getElementById('total-val').textContent = state.total;
+}
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length-1; i > 0; i--) {
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]] = [a[j],a[i]];
+  }
+  return a;
+}
+
+function normalize(s) { return s.toLowerCase().trim().replace(/\s+/g,' '); }
+
+function checkAnswer(user, correct) {
+  const u = normalize(user), c = normalize(correct);
+  if (u === c) return true;
+  if (c.includes(u) && u.length > 5) return true;
+  const parts = c.split(/[,;\/]/);
+  for (const p of parts) if (u.includes(p.trim()) && p.trim().length > 4) return true;
+  return false;
+}
+
+function showResult() {
+  const pct = Math.round((state.score/state.total)*100);
+  const emoji = pct>=90?'🏆':pct>=70?'🌟':pct>=50?'😊':'💪';
+  const msg = pct>=90?'Excellent! You know it all!':pct>=70?'Great job! Keep it up!':pct>=50?'Good! Study a little more!':"Don't give up! Try again!";
+  document.getElementById('res-emoji').textContent = emoji;
+  document.getElementById('res-score').textContent = state.score;
+  document.getElementById('res-total').textContent = state.total;
+  document.getElementById('res-msg').textContent = msg;
+  document.getElementById('result-overlay').classList.add('show');
+  speak(`All done! Your score is ${state.score} out of ${state.total}. ${msg}`);
+}
+
+function restartApp() {
+  document.getElementById('result-overlay').classList.remove('show');
+  state = { awaiting:'menu', mode:null, questions:[], allAnswers:[], qIndex:0, score:0, total:0, hintUsed:false, audioEnabled:state.audioEnabled };
+  chatBox.innerHTML = '';
+  document.querySelector('.input-bar').style.display = 'flex';
+  updateScore();
+  showMenu();
+}
+
+// ═══════════════════════════════════════════════════════════════
+// MC HELPERS
+// ═══════════════════════════════════════════════════════════════
+function getAllAnswers() {
+  const ans = [];
+  for (const qs of Object.values(topics)) for (const q of qs) ans.push(q.a);
+  return ans;
+}
+
+function generateChoices(correct, pool) {
+  const distractors = shuffle(pool.filter(a => a !== correct)).slice(0,3);
+  return shuffle([correct, ...distractors]);
+}
+
+function buildMCBtns(choices, correctAnswer) {
+  const letters = ['A','B','C','D','E'];
+  return `<div class="mc-options">${choices.map((c,i)=>
+    `<button class="mc-btn" data-answer="${encodeURIComponent(c)}" data-correct="${encodeURIComponent(correctAnswer)}" onclick="handleMCClick(this)">
+      <span class="letter">${letters[i]}</span>${c}
+    </button>`
+  ).join('')}</div>`;
+}
+
+function handleMCClick(btn) {
+  const allBtns = btn.closest('.mc-options').querySelectorAll('.mc-btn');
+  allBtns.forEach(b => b.disabled = true);
+  const chosen = decodeURIComponent(btn.dataset.answer);
+  const correct = decodeURIComponent(btn.dataset.correct);
+  const isCorrect = chosen === correct;
+  allBtns.forEach(b => { if(decodeURIComponent(b.dataset.answer)===correct) b.classList.add('correct'); });
+  if (!isCorrect) btn.classList.add('wrong');
+  setTimeout(() => {
+    if (isCorrect) {
+      state.score++;
+      addMessage('bot', `✅ <strong>Correct!</strong> +1 point! The answer is: <strong>${correct}</strong>`, `Correct! The answer is: ${correct}`);
+    } else {
+      addMessage('bot', `❌ <strong>Not quite.</strong> The correct answer is: <strong>${correct}</strong>`, `Not quite. The correct answer is: ${correct}`);
+    }
+    state.qIndex++; updateScore();
+    if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+    else setTimeout(showResult, 900);
+  }, 650);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// NEXT QUESTION
+// ═══════════════════════════════════════════════════════════════
+function nextQuestion() {
+  const qi = state.qIndex;
+  const q = state.questions[qi];
+  const num = qi + 1;
+
+  if (state.mode === 'full' || state.mode === 'topic_mc') {
+    const choices = generateChoices(q.a, state.allAnswers);
+    const tag = q.topic ? `<span class="topic-tag">${q.topic}</span><br>` : '';
+    const html = `${tag}<strong>Q${num} of ${state.total}:</strong> ${q.q}${buildMCBtns(choices, q.a)}`;
+    addMessage('bot', html, `Question ${num}. ${q.q}`);
+    return;
+  }
+
+  if (state.mode === 'tf') {
+    const html = `<strong>Q${num} of ${state.total}:</strong> <div class="scenario-card">${q.q}</div>
+      <span class="chip" data-val="true">✅ True</span><span class="chip" data-val="false">❌ False</span>`;
+    addMessage('bot', html, `Question ${num}. True or False: ${q.q}`);
+    return;
+  }
+
+  if (state.mode === 'identify') {
+    const btns = buildMCBtns(q.choices, q.a);
+    const html = `<strong>Q${num} of ${state.total}:</strong> Identify what is being described:<div class="scenario-card">${q.q}</div>${btns}`;
+    addMessage('bot', html, `Question ${num}. Identify: ${q.q}`);
+    return;
+  }
+
+  // typed answer mode
+  const tag = q.topic ? `<span class="topic-tag">${q.topic}</span><br>` : '';
+  const html = `${tag}<strong>Q${num} of ${state.total}:</strong> ${q.q}<br><small style="color:var(--muted)">Type your answer · type <em>hint</em> for help · <em>skip</em> to move on</small>`;
+  addMessage('bot', html, `Question ${num}. ${q.q}`);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// MENU
+// ═══════════════════════════════════════════════════════════════
+function showMenu() {
+  addMessage('bot',
+    `👋 <strong>Hi! I'm your Science Reviewer!</strong><br>Let's study <em>Animal Habitats</em> (land, water, and aerial) and <em>Plant Habitats</em> (terrestrial, aquatic, and aerial plants).<br><br>What would you like to do?<br>
+    <span class="chip" data-val="1">📚 Study by Topic</span>
+    <span class="chip" data-val="2">✅ True or False</span>
+    <span class="chip" data-val="3">🌐 Identify</span>
+    <span class="chip" data-val="4">🌟 Full Review (Multiple Choice)</span>`,
+    "Hi! I'm your Science Reviewer on Animal and Plant Habitats. What would you like to do? Study a topic, True or False, Identify, or a Full Review with multiple choice?"
+  );
+  state.awaiting = 'menu';
+}
+
+// ═══════════════════════════════════════════════════════════════
+// PROCESS MESSAGE
+// ═══════════════════════════════════════════════════════════════
+function processMessage(msg) {
+  const aw = state.awaiting;
+
+  // ── MENU ──────────────────────────────────────────────────
+  if (aw === 'menu') {
+    if (msg === '1') {
+      state.awaiting = 'topic';
+      const keys = Object.keys(topics);
+      const chips = keys.map((t,i) => `<span class="chip" data-val="${i+1}">${i+1}. ${t}</span>`).join(' ');
+      addMessage('bot', `📚 Which topic would you like to study?<br>${chips}`, 'Which topic would you like to study?');
+
+    } else if (msg === '2') {
+      state.mode = 'tf';
+      state.questions = shuffle(trueOrFalse);
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'tf_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `✅ <strong>True or False!</strong> ${state.total} questions. Let's start!`, `True or False! ${state.total} questions. Let's start!`);
+      setTimeout(nextQuestion, 800);
+
+    } else if (msg === '3') {
+      state.mode = 'identify';
+      state.questions = shuffle(identifyQuestions);
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'mc_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `🌐 <strong>Identify!</strong> Figure out which habitat, animal, or plant each description is about.`, "Identify! Figure out what's being described in each item.");
+      setTimeout(nextQuestion, 800);
+
+    } else if (msg === '4') {
+      state.mode = 'full';
+      const all = [];
+      for (const [topicName, qs] of Object.entries(topics)) {
+        qs.forEach(q => all.push({...q, topic: topicName}));
+      }
+      state.questions = shuffle(all);
+      state.allAnswers = getAllAnswers();
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'mc_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `🌟 <strong>Full Review — Multiple Choice!</strong> ${state.total} questions. Think carefully!`, `Full Review! Multiple Choice! ${state.total} questions. Think carefully!`);
+      setTimeout(nextQuestion, 800);
+
+    } else {
+      addMessage('bot',
+        `Choose an option:<br>
+        <span class="chip" data-val="1">📚 Study by Topic</span>
+        <span class="chip" data-val="2">✅ True or False</span>
+        <span class="chip" data-val="3">🌐 Identify</span>
+        <span class="chip" data-val="4">🌟 Full Review</span>`,
+        'Choose an option.'
+      );
+    }
+    return;
+  }
+
+  // ── TOPIC SELECT ──────────────────────────────────────────
+  if (aw === 'topic') {
+    const keys = Object.keys(topics);
+    const idx = parseInt(msg) - 1;
+    if (keys[idx]) {
+      const topicName = keys[idx];
+      state.mode = 'topic_mc';
+      state.questions = shuffle(topics[topicName]);
+      state.allAnswers = getAllAnswers();
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'mc_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `📚 <strong>${topicName}</strong> — ${state.total} questions. Ready?`, `${topicName}. ${state.total} questions. Ready?`);
+      setTimeout(nextQuestion, 800);
+    } else {
+      const chips = Object.keys(topics).map((t,i) => `<span class="chip" data-val="${i+1}">${i+1}. ${t}</span>`).join(' ');
+      addMessage('bot', `Please choose a valid topic:<br>${chips}`, 'Please choose a valid topic.');
+    }
+    return;
+  }
+
+  // ── TYPED ANSWER ──────────────────────────────────────────
+  if (aw === 'answer') {
+    const q = state.questions[state.qIndex];
+    const m = normalize(msg);
+
+    if (m === 'hint') {
+      state.hintUsed = true;
+      addMessage('bot', `💡 <strong>Hint:</strong> ${q.hint}`, `Hint: ${q.hint}`);
+      return;
+    }
+    if (m === 'skip') {
+      addMessage('bot', `⏭️ Skipped! The correct answer is: <strong>${q.a}</strong>`, `Skipped. The correct answer is: ${q.a}`);
+      state.qIndex++; state.hintUsed = false;
+      if (state.qIndex < state.total) setTimeout(nextQuestion, 700);
+      else showResult();
+      return;
+    }
+
+    const correct = checkAnswer(msg, q.a);
+    if (correct) {
+      if (!state.hintUsed) state.score++;
+      const note = state.hintUsed ? ' <em>(hint used — no point)</em>' : ' +1 point!';
+      addMessage('bot', `✅ <strong>Correct!</strong>${note} Answer: <strong>${q.a}</strong>`, `Correct! The answer is: ${q.a}`);
+    } else {
+      addMessage('bot', `❌ <strong>Not quite.</strong> The correct answer is: <strong>${q.a}</strong>`, `Not quite. The correct answer is: ${q.a}`);
+    }
+    state.qIndex++; state.hintUsed = false; updateScore();
+    if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+    else setTimeout(showResult, 900);
+    return;
+  }
+
+  // ── TRUE OR FALSE ─────────────────────────────────────────
+  if (aw === 'tf_answer') {
+    const q = state.questions[state.qIndex];
+    const ans = normalize(msg);
+    const valid = ans === 'true' || ans === 'false';
+
+    if (valid) {
+      const correct = ans === q.a;
+      if (correct) {
+        state.score++;
+        addMessage('bot', `✅ <strong>Correct!</strong> The answer is <strong>${q.a.toUpperCase()}</strong>.`, `Correct! The answer is ${q.a}.`);
+      } else {
+        addMessage('bot', `❌ <strong>Incorrect.</strong> The correct answer is <strong>${q.a.toUpperCase()}</strong>.`, `Incorrect. The correct answer is ${q.a}.`);
+      }
+      state.qIndex++; updateScore();
+      if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+      else setTimeout(showResult, 900);
+    } else {
+      addMessage('bot',
+        `Answer: True or False?<br><span class="chip" data-val="true">✅ True</span><span class="chip" data-val="false">❌ False</span>`,
+        'Answer: True or False?'
+      );
+    }
+    return;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// CONTROLS
+// ═══════════════════════════════════════════════════════════════
+function handleUserMessage(msg) {
+  if (!msg.trim()) return;
+  
+  // Stop any speaking audio cleanly when the user answers
+  window.speechSynthesis.cancel();
+  if (currentAudioStream) {
+    currentAudioStream.pause();
+    currentAudioStream = null;
+    showWave(false);
+  }
+  
+  addMessage('user', msg.replace(/</g,'&lt;'));
+  input.value = '';
+  input.disabled = true; sendBtn.disabled = true;
+  addTyping();
+  setTimeout(() => {
+    removeTyping();
+    input.disabled = false; sendBtn.disabled = false;
+    input.focus();
+    processMessage(msg);
+  }, 480);
+}
+
+sendBtn.addEventListener('click', () => { handleUserMessage(input.value); });
+input.addEventListener('keydown', e => { if(e.key==='Enter') handleUserMessage(input.value); });
+
+document.getElementById('audio-toggle').addEventListener('click', function() {
+  state.audioEnabled = !state.audioEnabled;
+  this.textContent = state.audioEnabled ? '🔊' : '🔇';
+  this.classList.toggle('active', state.audioEnabled);
+  if (!state.audioEnabled) {
+    window.speechSynthesis.cancel();
+    if (currentAudioStream) {
+      currentAudioStream.pause();
+      currentAudioStream = null;
+      showWave(false);
+    }
+  }
+});
+
+// ═══════════════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════════════
+window.addEventListener('load', () => {
+  lookupSystemVoices();
+  showMenu();
+});
+
+function printPracticeTest() {
+  document.body.classList.add('printing-test');
+  window.print();
+}
+window.addEventListener('afterprint', () => {
+  document.body.classList.remove('printing-test');
+});
+
+// ═══════════════════════════════════════════════════════════════
+// READ NOTES ALOUD (uses the browser's own voice — no length limit,
+// unlike the short Google TTS clips used for chat messages)
+// ═══════════════════════════════════════════════════════════════
+function getNotesText(section) {
+  // Skip the Practice Test / Answer Key tabs — too long and not meant to be read aloud
+  const clone = section.cloneNode(true);
+  clone.querySelectorAll('button').forEach(b => b.remove());
+  let text = clone.innerText || clone.textContent || '';
+  text = text.replace(/\s+/g, ' ').trim();
+  return text;
+}
+
+function toggleNotesAudio() {
+  const btn = document.getElementById('notes-audio-btn');
+  if (!btn) return;
+
+  if (window.speechSynthesis.speaking || window.speechSynthesis.pending) {
+    window.speechSynthesis.cancel();
+    btn.innerHTML = '🔊 Read Notes Aloud';
+    btn.classList.remove('active');
+    return;
+  }
+
+  const activeSection = document.querySelector('.notes-section.active');
+  if (!activeSection) return;
+  const text = getNotesText(activeSection);
+  if (!text) return;
+
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.lang = 'en-US';
+  utter.rate = 0.95;
+  utter.pitch = 1.05;
+  utter.volume = 1;
+
+  const voices = window.speechSynthesis.getVoices();
+  const voice = voices.find(v => v.lang.startsWith('en') && v.name.toLowerCase().includes('female'))
+             || voices.find(v => v.lang.startsWith('en'));
+  if (voice) utter.voice = voice;
+
+  utter.onstart = () => { btn.innerHTML = '⏹️ Stop Reading'; btn.classList.add('active'); };
+  utter.onend = utter.onerror = () => { btn.innerHTML = '🔊 Read Notes Aloud'; btn.classList.remove('active'); };
+
+  window.speechSynthesis.speak(utter);
+}
+
+function switchTab(tabId, btn) {
+  window.speechSynthesis.cancel();
+  const audioBtn = document.getElementById('notes-audio-btn');
+  if (audioBtn) { audioBtn.innerHTML = '🔊 Read Notes Aloud'; audioBtn.classList.remove('active'); }
+  document.querySelectorAll('.notes-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.notes-tab').forEach(b => b.classList.remove('active'));
+  document.getElementById(tabId).classList.add('active');
+  btn.classList.add('active');
+}
+
+function closeNotesPanel() {
+  window.speechSynthesis.cancel();
+  const audioBtn = document.getElementById('notes-audio-btn');
+  if (audioBtn) { audioBtn.innerHTML = '🔊 Read Notes Aloud'; audioBtn.classList.remove('active'); }
+  document.getElementById('notes-overlay').classList.remove('show');
+}
+</script>
+
+<!-- ── Notes Panel ── -->
+<div class="notes-overlay" id="notes-overlay">
+  <div class="notes-panel">
+    <div class="notes-header">
+      <h2>📖 Animal &amp; Plant Habitats — Notes</h2>
+      <div class="notes-header-actions">
+        <button class="print-btn" id="notes-audio-btn" onclick="toggleNotesAudio()" title="Have this tab read aloud">🔊 Read Notes Aloud</button>
+        <button class="print-btn" onclick="printPracticeTest()" title="Print or save the Practice Test &amp; Answer Key as PDF">🖨️ Print Test &amp; Key</button>
+        <button class="notes-close" onclick="closeNotesPanel()">✕</button>
+      </div>
+    </div>
+    <div class="notes-tabs">
+      <button class="notes-tab active" onclick="switchTab('tab-land', this)">🏞️ Animals: Land &amp; Air</button>
+      <button class="notes-tab" onclick="switchTab('tab-water', this)">🌊 Animals: Water</button>
+      <button class="notes-tab" onclick="switchTab('tab-plants', this)">🌳 Plants: Land</button>
+      <button class="notes-tab" onclick="switchTab('tab-aq', this)">🪷 Plants: Water &amp; Air</button>
+      <button class="notes-tab" onclick="switchTab('tab-tf', this)">✅ True or False</button>
+      <button class="notes-tab" onclick="switchTab('tab-ptest', this)">📝 Practice Test</button>
+      <button class="notes-tab" onclick="switchTab('tab-key', this)">🔑 Answer Key</button>
+      <button class="notes-tab" onclick="switchTab('tab-raw', this)">📄 Raw Notes</button>
+    </div>
+    <div class="notes-body">
+
+      <div class="notes-section active" id="tab-land">
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> A <strong>habitat</strong> is a place in which an organism lives. It gives the animal <strong>food, water, shelter, air, enough space, and protection</strong>. Animal habitats are <strong>terrestrial</strong> (land), <strong>aquatic</strong> (water), or <strong>aerial</strong> (above the ground).
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 MEMORY TRICK</span>
+          <strong>"T-A-A"</strong>: <strong>T</strong>errestrial = <strong>T</strong>erra (land), <strong>A</strong>quatic = <strong>A</strong>qua (water), <strong>A</strong>erial = <strong>A</strong>ir (above the ground). And remember: a habitat is a <strong>home</strong> that has all of the animal's <strong>needs</strong>.
+        </div>
+        <table class="compare-table">
+          <tr><th>Land Habitat</th><th>Animals</th><th>Key Facts</th></tr>
+          <tr><td>Forest</td><td>Wild boar, Philippine eagle, tamaraw, Philippine deer, tarsier</td><td>Lots of water; animals live independently; food, shelter, and protection</td></tr>
+          <tr><td>Garden</td><td>Butterfly, ant, worm, bird, centipede, beetle, grasshopper</td><td>Butterflies collect nectar; earthworms and beetles live under the ground</td></tr>
+          <tr><td>Farm</td><td>Horse, carabao, cow, pig, sheep, chicken, duck, goat</td><td>Domestic animals give milk, meat, and eggs; horses, cows, and carabaos help till the soil</td></tr>
+          <tr><td>Desert</td><td>Kangaroo rat, lizard, scorpion, wolf spider, antelope, cheetah, armadillo</td><td>Burrow to avoid the hot Sun; come out at night; get water from cacti and prey</td></tr>
+        </table>
+        <div class="notes-topic">
+          <div class="notes-topic-title">🦅 Aerial Habitats</div>
+          <div class="notes-item"><span class="notes-term">Where?</span><span class="notes-def">Trees and caves, places above the ground</span></div>
+          <div class="notes-item"><span class="notes-term">Who lives there?</span><span class="notes-def">Animals that climb and cling to trees; some burrowing insects and birds with powerful beaks live in tree trunks</span></div>
+          <div class="notes-item"><span class="notes-term">Wildlife biologist</span><span class="notes-def">Studies wild animals and helps them survive and avoid extinction</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-water">
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> Aquatic habitats are <strong>freshwater</strong> (ponds, lakes, rivers, streams, swamps) or <strong>saltwater</strong> (seas, oceans, coral reefs, estuaries, intertidal zones, mangroves).
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 MEMORY TRICK</span>
+          <strong>"T-A-B-B-C"</strong> places: <strong>T</strong>ubbataha = Palawan, <strong>A</strong>po Reef = Mindoro, <strong>B</strong>ajo de Masinloc = Zambales, <strong>B</strong>anacon = Bohol, <strong>C</strong>andaba = Pampanga. <strong>Estuary</strong> = river + sea = <strong>brackish</strong>. <strong>Intertidal</strong> = <strong>between the tides</strong>.
+        </div>
+        <table class="compare-table">
+          <tr><th>Place</th><th>Where</th><th>Facts</th></tr>
+          <tr><td>Candaba Swamp</td><td>Pampanga</td><td>Freshwater; about 32,000 hectares; bird sanctuary for herons, wild ducks, kingfishers, egrets, turtle doves</td></tr>
+          <tr><td>Tubbataha Reef</td><td>Puerto Princesa, Palawan</td><td>Declared a natural park</td></tr>
+          <tr><td>Apo Reef</td><td>Occidental Mindoro</td><td>About 43 square kilometers; a top diving destination</td></tr>
+          <tr><td>Bajo de Masinloc</td><td>Near Zambales</td><td>Also called Scarborough Shoal or Panatag Shoal; triangle-shaped; about 150 square kilometers</td></tr>
+          <tr><td>Banacon Island Mangrove Forest</td><td>Bohol</td><td>About 425 hectares; built through bayanihan; one of the biggest mangrove plantations</td></tr>
+        </table>
+        <table class="compare-table">
+          <tr><th>Habitat</th><th>What It Is</th><th>Animals</th></tr>
+          <tr><td>Pond or lake</td><td>Freshwater, standing water</td><td>Milkfish, tilapia, shrimp, mudfish, catfish, snails, frogs, toads</td></tr>
+          <tr><td>Coral reef</td><td>Diverse ecosystem under the sea; about 25% of marine organisms; a breeding place</td><td>Sharks, sea turtles, saltwater fishes, eels</td></tr>
+          <tr><td>Estuary</td><td>Where a freshwater river meets ocean saltwater; brackish</td><td>Fishes, shellfishes, migratory birds</td></tr>
+          <tr><td>Intertidal zone</td><td>Covered at high tide, partly uncovered at low tide</td><td>Sea urchins, sea anemones, barnacles, crabs, starfish, mussels</td></tr>
+          <tr><td>Mangrove forest</td><td>Often in intertidal zones; a breeding place; most are in Asia</td><td>Fishes, jellyfish, mollusks, worms, barnacles, snails, crabs, shrimps</td></tr>
+        </table>
+      </div>
+
+      <div class="notes-section" id="tab-plants">
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> Plants need <strong>air, water, food, space, and light</strong>. <strong>Terrestrial plants</strong> grow on land and get nutrients from the soil through their roots.
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 MEMORY TRICK</span>
+          <strong>Rainforest layers from top to bottom: "Every Child Uses Umbrellas"</strong> = <strong>E</strong>mergent, <strong>C</strong>anopy, <strong>U</strong>nderstory, <strong>U</strong>ndergrowth. Plants need <strong>AWFS + Light</strong> = <strong>A</strong>ir, <strong>W</strong>ater, <strong>F</strong>ood, <strong>S</strong>pace, and light.
+        </div>
+        <table class="compare-table">
+          <tr><th>Land Plant Habitat</th><th>Plants</th><th>Key Facts</th></tr>
+          <tr><td>Home garden</td><td>Bromeliads, mayanas, snake plants; roses, orchids, santan, lilies, hydrangeas</td><td>Ornamental plants; need fertilizer and good soil; some grow best in shade</td></tr>
+          <tr><td>Vegetable garden</td><td>Squash, tomato, pepper, string beans, radish, cabbage, bitter gourd, peas, eggplant; onion, garlic, bay leaf, basil; sambong, lagundi, ginger, oregano</td><td>Herbs, spices, and medicinal plants too; organic fertilizer avoids harmful chemicals</td></tr>
+          <tr><td>Rice fields</td><td>Rice (rainy season); peanuts, corn, watermelon, mongo, turnips, cassava, pineapple (dry season)</td><td>Crops change with the water supply</td></tr>
+          <tr><td>Coastal areas</td><td>Coconuts and timber trees</td><td>Sandy soil; plants that need less water</td></tr>
+          <tr><td>Wet soil (riverbanks, mangroves, swamps, pond edges)</td><td>Plants with thick taproots</td><td>Roots hold the soil and prevent erosion</td></tr>
+          <tr><td>Grasslands</td><td>Grasses</td><td>Can endure extreme heat; ideal for cattle and horses</td></tr>
+          <tr><td>Desert</td><td>Cactus</td><td>Thick stem stores water</td></tr>
+          <tr><td>Controlled (nursery, greenhouse, terrarium)</td><td>Seedlings, cuttings, potted plants; hydroponic lettuce</td><td>Temperature, heat, and space are controlled</td></tr>
+          <tr><td>Rainforest</td><td>Narra, mahogany, birds of paradise, acacia, bamboos, palms</td><td>Nutrients taken by trees, so cleared land fits short-term crops only</td></tr>
+        </table>
+        <div class="tandaan-box">
+          <span class="tandaan-label">REMEMBER</span>
+          Rainforest layers: the <strong>emergent layer</strong> is the top layer (tallest trees beyond the canopy). The <strong>canopy</strong> is the dense covering of tall trees. The <strong>understory</strong> holds the smaller plants and trees below the canopy.
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-aq">
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> <strong>Aquatic plants (hydrophytes)</strong> live in flowing water (rivers, streams) or standing water (ponds, lakes, wetlands). <strong>Aerial plants (epiphytes)</strong> live on the branches and stems of trees.
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 MEMORY TRICK</span>
+          <strong>"Hydro = water"</strong>, so <strong>hydrophytes</strong> are water plants. <strong>"Epi = on"</strong>, so <strong>epiphytes</strong> grow <strong>on</strong> other plants. A <strong>tributary</strong> is <strong>tiny</strong> compared with the river it joins.
+        </div>
+        <table class="compare-table">
+          <tr><th>Habitat</th><th>Plants</th><th>Key Facts</th></tr>
+          <tr><td>Ponds and lakes (standing water)</td><td>Lotus, azolla</td><td>Broad leaves and feathery roots help absorb water; a lake is bigger than a pond</td></tr>
+          <tr><td>Wetlands (marshes, swamps)</td><td>Water lilies, water hyacinths</td><td>A body of land usually flooded with water that flows slowly to other waters</td></tr>
+          <tr><td>Rivers and streams (flowing water)</td><td>Water lilies, water hyacinths</td><td>Tributary = smaller river joining a larger one; watershed = land area the river and its tributaries drain</td></tr>
+          <tr><td>Oceans and seas</td><td>Seagrass</td><td>Covers the seabed and ocean floors</td></tr>
+          <tr><td>Aerial</td><td>Orchids, bird's nest plants, ferns, bromeliads</td><td>Specialized roots attached to other plants absorb water and moisture from the air</td></tr>
+        </table>
+        <div class="tandaan-box">
+          <span class="tandaan-label">GOOD TO KNOW</span>
+          Wetlands prevent floods, purify water, and are homes to commercially important fish species.
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-tf">
+        <div class="notes-topic">
+          <div class="notes-topic-title">✅ True or False — Key Reminders</div>
+          <div class="notes-item"><span class="notes-term"><span style="color:#ef4444">FALSE</span></span><span class="notes-def">Terrestrial habitats are in the water → terrestrial means <strong>land</strong>; aquatic means water.</span></div>
+          <div class="notes-item"><span class="notes-term"><span style="color:#ef4444">FALSE</span></span><span class="notes-def">Ponds, lakes, rivers, and streams are saltwater habitats → they are <strong>freshwater</strong> habitats.</span></div>
+          <div class="notes-item"><span class="notes-term"><span style="color:#ef4444">FALSE</span></span><span class="notes-def">Desert animals look for food in the daytime → they come out at <strong>night</strong>.</span></div>
+          <div class="notes-item"><span class="notes-term"><span style="color:#ef4444">FALSE</span></span><span class="notes-def">Intertidal zones are always covered by water → they are covered at high tide and <strong>partly uncovered</strong> at low tide.</span></div>
+          <div class="notes-item"><span class="notes-term"><span style="color:#ef4444">FALSE</span></span><span class="notes-def">Most mangrove forests are in Africa → most are in <strong>Asia</strong>.</span></div>
+          <div class="notes-item"><span class="notes-term"><span style="color:#ef4444">FALSE</span></span><span class="notes-def">Rainforest soil is very fertile → it is <strong>less fertile</strong> because trees and wild plants take most nutrients.</span></div>
+          <div class="notes-item"><span class="notes-term"><span style="color:#ef4444">FALSE</span></span><span class="notes-def">A tributary is the larger river → it is the <strong>smaller</strong> river that flows into a larger one.</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-ptest">
+        <div class="notes-topic">
+          <div class="notes-topic-title">📝 Practice Test (62 items)</div>
+<div class="ptest-part-title">Part I — Name the Habitat</div>
+<div class="ptest-bank"><strong>Word Bank (use each once):</strong> forest &middot; garden &middot; farm &middot; desert &middot; freshwater habitat &middot; coral reef &middot; estuary &middot; intertidal zone &middot; mangrove forest &middot; aerial habitat</div>
+<div class="ptest-q"><b>1.</b> Butterflies collect nectar here, and earthworms and beetles live under the ground. <span class="opt">Answer: ______________</span></div>
+<div class="ptest-q"><b>2.</b> Kangaroo rats and lizards stay in burrows here and come out at night to look for food. <span class="opt">Answer: ______________</span></div>
+<div class="ptest-q"><b>3.</b> Cows, carabaos, chickens, and pigs are raised here, and some help till the soil. <span class="opt">Answer: ______________</span></div>
+<div class="ptest-q"><b>4.</b> Tarsiers, tamaraws, and the Philippine eagle live here. <span class="opt">Answer: ______________</span></div>
+<div class="ptest-q"><b>5.</b> Sharks, sea turtles, and eels live here; it contains about 25% of all marine organisms. <span class="opt">Answer: ______________</span></div>
+<div class="ptest-q"><b>6.</b> A brackish area formed when a freshwater river mixes with ocean saltwater. <span class="opt">Answer: ______________</span></div>
+<div class="ptest-q"><b>7.</b> Shoreline areas that are covered at high tide but partly uncovered at low tide. <span class="opt">Answer: ______________</span></div>
+<div class="ptest-q"><b>8.</b> Found often in intertidal zones; a breeding place of marine organisms. Banacon Island has a famous one. <span class="opt">Answer: ______________</span></div>
+<div class="ptest-q"><b>9.</b> Ponds, lakes, rivers, and streams where tilapia, catfish, and frogs live. <span class="opt">Answer: ______________</span></div>
+<div class="ptest-q"><b>10.</b> Trees and caves where animals live above the ground. <span class="opt">Answer: ______________</span></div>
+<div class="ptest-part-title">Part II — Multiple Choice</div>
+<div class="ptest-q"><b>11.</b> What is a habitat?<br><span class="opt">a. a place where an organism lives</span><span class="opt">b. a kind of food</span><span class="opt">c. a type of weather</span><span class="opt">d. a group of plants only</span></div>
+<div class="ptest-q"><b>12.</b> Which is NOT one of the three groups of animal habitats?<br><span class="opt">a. terrestrial</span><span class="opt">b. aquatic</span><span class="opt">c. aerial</span><span class="opt">d. volcanic</span></div>
+<div class="ptest-q"><b>13.</b> Which animal is found in a Philippine forest?<br><span class="opt">a. shark</span><span class="opt">b. tarsier</span><span class="opt">c. sea turtle</span><span class="opt">d. eel</span></div>
+<div class="ptest-q"><b>14.</b> Why do desert animals dig holes or burrow in the ground?<br><span class="opt">a. to avoid the hot Sun and dehydration</span><span class="opt">b. to hide from the rain</span><span class="opt">c. to find fish</span><span class="opt">d. to build farms</span></div>
+<div class="ptest-q"><b>15.</b> Which farm animal helps farmers till the soil?<br><span class="opt">a. duck</span><span class="opt">b. chicken</span><span class="opt">c. carabao</span><span class="opt">d. goat</span></div>
+<div class="ptest-q"><b>16.</b> Which freshwater animals are bred in ponds?<br><span class="opt">a. sharks and eels</span><span class="opt">b. milkfish, tilapia, and shrimp</span><span class="opt">c. sea turtles</span><span class="opt">d. whales</span></div>
+<div class="ptest-q"><b>17.</b> Candaba Swamp in Pampanga is a popular sanctuary for what animals?<br><span class="opt">a. fishes</span><span class="opt">b. birds</span><span class="opt">c. sharks</span><span class="opt">d. tamaraws</span></div>
+<div class="ptest-q"><b>18.</b> Where is Tubbataha Reef?<br><span class="opt">a. Puerto Princesa, Palawan</span><span class="opt">b. Occidental Mindoro</span><span class="opt">c. Zambales</span><span class="opt">d. Bohol</span></div>
+<div class="ptest-q"><b>19.</b> Which reef is located in Occidental Mindoro?<br><span class="opt">a. Apo Reef</span><span class="opt">b. Tubbataha Reef</span><span class="opt">c. Bajo de Masinloc</span><span class="opt">d. Banacon Island</span></div>
+<div class="ptest-q"><b>20.</b> Another name for Bajo de Masinloc is ____.<br><span class="opt">a. Panatag Shoal</span><span class="opt">b. Candaba Swamp</span><span class="opt">c. Apo Reef</span><span class="opt">d. Banacon Island</span></div>
+<div class="ptest-q"><b>21.</b> What does brackish mean?<br><span class="opt">a. very cold</span><span class="opt">b. slightly salty</span><span class="opt">c. very deep</span><span class="opt">d. completely fresh</span></div>
+<div class="ptest-q"><b>22.</b> Where is the Banacon Island Mangrove Forest?<br><span class="opt">a. Bohol</span><span class="opt">b. Palawan</span><span class="opt">c. Pampanga</span><span class="opt">d. Zambales</span></div>
+<div class="ptest-q"><b>23.</b> Which are considered aerial habitats?<br><span class="opt">a. trees and caves</span><span class="opt">b. ponds and lakes</span><span class="opt">c. farms and gardens</span><span class="opt">d. estuaries</span></div>
+<div class="ptest-q"><b>24.</b> What do wildlife biologists do?<br><span class="opt">a. study wild animals and help them survive</span><span class="opt">b. cut down forests</span><span class="opt">c. raise farm animals</span><span class="opt">d. build fish ponds</span></div>
+<div class="ptest-q"><b>25.</b> Which is an example of an ornamental plant?<br><span class="opt">a. bromeliad</span><span class="opt">b. radish</span><span class="opt">c. cabbage</span><span class="opt">d. eggplant</span></div>
+<div class="ptest-q"><b>26.</b> Which plant is used as medicine?<br><span class="opt">a. lagundi</span><span class="opt">b. cabbage</span><span class="opt">c. squash</span><span class="opt">d. peas</span></div>
+<div class="ptest-q"><b>27.</b> Why can a cactus live in the desert?<br><span class="opt">a. its thick stem stores water</span><span class="opt">b. its leaves float</span><span class="opt">c. it has feathery roots</span><span class="opt">d. it grows on trees</span></div>
+<div class="ptest-q"><b>28.</b> What do you call the smaller plants and trees below the canopy of a rainforest?<br><span class="opt">a. emergent layer</span><span class="opt">b. understory</span><span class="opt">c. watershed</span><span class="opt">d. tributary</span></div>
+<div class="ptest-q"><b>29.</b> Which pair are examples of epiphytes?<br><span class="opt">a. orchid and fern</span><span class="opt">b. lotus and azolla</span><span class="opt">c. cactus and coconut</span><span class="opt">d. rice and corn</span></div>
+<div class="ptest-q"><b>30.</b> Which plants have broad leaves and feathery roots that help them absorb water in ponds and lakes?<br><span class="opt">a. lotus and azolla</span><span class="opt">b. narra and mahogany</span><span class="opt">c. cactus and snake plant</span><span class="opt">d. orchid and fern</span></div>
+<div class="ptest-part-title">Part III — Terrestrial, Aquatic, or Aerial Plant?</div>
+<div class="ptest-bank">Write <b>T</b> if the plant is terrestrial, <b>A</b> if it is aquatic, and <b>AE</b> if it is aerial.</div>
+<div class="ptest-q"><b>31.</b> hyacinth <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>32.</b> malunggay <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>33.</b> narra <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>34.</b> azolla <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>35.</b> seagrass <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>36.</b> banana <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>37.</b> lotus <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>38.</b> gumamela <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>39.</b> orchid <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>40.</b> cactus <span class="opt">Answer: ______</span></div>
+<div class="ptest-part-title">Part IV — True or False</div>
+<div class="ptest-q"><b>41.</b> A habitat provides an organism with food, water, shelter, and space. <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>42.</b> Ponds and lakes are saltwater habitats. <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>43.</b> Hydroponic plants such as lettuce are grown without soil, but with water. <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>44.</b> Most of the mangrove forests in the world are found in Africa. <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>45.</b> A tributary is a smaller river that flows into a larger river. <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>46.</b> Aerial plants have roots that absorb water and moisture from the air. <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>47.</b> Coral reefs contain about 25% of all marine organisms. <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>48.</b> Wetlands are bodies of water that never get flooded. <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>49.</b> Grasslands are ideal for cattle and horse raising. <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>50.</b> Rainforest soil is very fertile because trees do not absorb its nutrients. <span class="opt">Answer: ______</span></div>
+<div class="ptest-part-title">Part V — Match the Term</div>
+<div class="ptest-bank"><strong>Column B:</strong> a. canopy &middot; b. hydrophytes &middot; c. tributary &middot; d. wetland &middot; e. epiphytes &middot; f. terrestrial plants &middot; g. emergent layer</div>
+<div class="ptest-q"><b>51.</b> plants that grow on stems and branches of other plants <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>52.</b> plants that grow on land <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>53.</b> plants that grow in water <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>54.</b> top layer of the forest, made of the tallest trees that go beyond the canopy <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>55.</b> a smaller stream flowing into a larger river <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>56.</b> a body of land that is usually flooded with water <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>57.</b> the dense covering formed by tall trees in a rainforest <span class="opt">Answer: ______</span></div>
+<div class="ptest-part-title">Part VI — Short Answer</div>
+<div class="ptest-q"><b>58.</b> What is a habitat?<br><span class="opt">______________________________________</span></div>
+<div class="ptest-q"><b>59.</b> Name the three groups of animal habitats and give one example of each.<br><span class="opt">______________________________________</span></div>
+<div class="ptest-q"><b>60.</b> Why are rainforests that are cleared for farming good only for short-term crops?<br><span class="opt">______________________________________</span></div>
+<div class="ptest-q"><b>61.</b> How do the thick taproots of plants on riverbanks help the environment?<br><span class="opt">______________________________________</span></div>
+<div class="ptest-q"><b>62.</b> Name two places in the Philippines that are sanctuaries or natural parks, and tell where each is.<br><span class="opt">______________________________________</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-key">
+        <div class="notes-topic">
+<div class="notes-topic-title">Part I — Name the Habitat</div>
+<div class="key-grid"><div class="key-pill">1. <b>garden</b></div><div class="key-pill">2. <b>desert</b></div><div class="key-pill">3. <b>farm</b></div><div class="key-pill">4. <b>forest</b></div><div class="key-pill">5. <b>coral reef</b></div><div class="key-pill">6. <b>estuary</b></div><div class="key-pill">7. <b>intertidal zone</b></div><div class="key-pill">8. <b>mangrove forest</b></div><div class="key-pill">9. <b>freshwater habitat</b></div><div class="key-pill">10. <b>aerial habitat</b></div></div>
+<div class="notes-topic-title">Part II — Multiple Choice</div>
+<div class="key-grid"><div class="key-pill">11. <b>a. a place where an organism lives</b></div><div class="key-pill">12. <b>d. volcanic</b></div><div class="key-pill">13. <b>b. tarsier</b></div><div class="key-pill">14. <b>a. to avoid the hot Sun and dehydration</b></div><div class="key-pill">15. <b>c. carabao</b></div><div class="key-pill">16. <b>b. milkfish, tilapia, and shrimp</b></div><div class="key-pill">17. <b>b. birds</b></div><div class="key-pill">18. <b>a. Puerto Princesa, Palawan</b></div><div class="key-pill">19. <b>a. Apo Reef</b></div><div class="key-pill">20. <b>a. Panatag Shoal</b></div><div class="key-pill">21. <b>b. slightly salty</b></div><div class="key-pill">22. <b>a. Bohol</b></div><div class="key-pill">23. <b>a. trees and caves</b></div><div class="key-pill">24. <b>a. study wild animals and help them survive</b></div><div class="key-pill">25. <b>a. bromeliad</b></div><div class="key-pill">26. <b>a. lagundi</b></div><div class="key-pill">27. <b>a. its thick stem stores water</b></div><div class="key-pill">28. <b>b. understory</b></div><div class="key-pill">29. <b>a. orchid and fern</b></div><div class="key-pill">30. <b>a. lotus and azolla</b></div></div>
+<div class="notes-topic-title">Part III — T, A, or AE</div>
+<div class="key-grid"><div class="key-pill">31. <b>A</b></div><div class="key-pill">32. <b>T</b></div><div class="key-pill">33. <b>T</b></div><div class="key-pill">34. <b>A</b></div><div class="key-pill">35. <b>A</b></div><div class="key-pill">36. <b>T</b></div><div class="key-pill">37. <b>A</b></div><div class="key-pill">38. <b>T</b></div><div class="key-pill">39. <b>AE</b></div><div class="key-pill">40. <b>T</b></div></div>
+<div class="notes-topic-title">Part IV — True or False</div>
+<div class="key-grid"><div class="key-pill">41. <b>TRUE</b></div><div class="key-pill">42. <b>FALSE</b></div><div class="key-pill">43. <b>TRUE</b></div><div class="key-pill">44. <b>FALSE</b></div><div class="key-pill">45. <b>TRUE</b></div><div class="key-pill">46. <b>TRUE</b></div><div class="key-pill">47. <b>TRUE</b></div><div class="key-pill">48. <b>FALSE</b></div><div class="key-pill">49. <b>TRUE</b></div><div class="key-pill">50. <b>FALSE</b></div></div>
+<div class="notes-topic-title">Part V — Match the Term</div>
+<div class="key-grid"><div class="key-pill">51. <b>e</b></div><div class="key-pill">52. <b>f</b></div><div class="key-pill">53. <b>b</b></div><div class="key-pill">54. <b>g</b></div><div class="key-pill">55. <b>c</b></div><div class="key-pill">56. <b>d</b></div><div class="key-pill">57. <b>a</b></div></div>
+<div class="notes-topic-title">Part VI — Short Answer (sample answers)</div>
+<div class="ptest-q"><b>58.</b> A habitat is a place in which an organism lives and gets what it needs: food, water, shelter, space, and protection.</div><div class="ptest-q"><b>59.</b> Terrestrial (forest, garden, farm, or desert), aquatic (pond, coral reef, or mangrove forest), and aerial (trees or caves).</div><div class="ptest-q"><b>60.</b> The soil is less fertile because most of the nutrients are absorbed by the trees, vines, and other wild plants.</div><div class="ptest-q"><b>61.</b> They hold the soil firmly, which prevents soil erosion.</div><div class="ptest-q"><b>62.</b> Any two: Tubbataha Reef (Palawan), Apo Reef (Occidental Mindoro), Bajo de Masinloc (near Zambales), Candaba Swamp (Pampanga), Banacon Island Mangrove Forest (Bohol).</div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-raw">
+        <div class="rawnotes-intro">
+          📌 This is the original content of the uploaded lesson, unedited — for whenever you need to check the exact wording or an example not covered in the reviewer.
+        </div>
+        <div class="rawnotes-doc">
+<h3 class="doc-heading">Animal Habitats</h3>
+<p>An organism’s environment refers to all the things that surround it. In order to survive, an organism should be able to satisfy its needs, such as food, water, shelter, air, enough space, and protection from its enemies. Animals are found in places that have all the things that help them live. Such a place is called a habitat. A habitat is a place in which an organism lives.</p>
+<p>Animal habitats may be grouped into terrestrial or land, aquatic or water, and aerial or above the ground.</p>
+<h3 class="doc-heading">Terrestrial Habitats</h3>
+<p>In a habitat, living things of the same kind live together in groups. There are times when several living things live with or near each other in a particular place. An example of this place is the forest. Many animals are found in the forest. This kind of habitat provides a lot of water. Forest animals live independently. They get food available in the forest, such as fruits, plants, insects, and other smaller animals. Animals get food, shelter, and protection in a forest.</p>
+<p>Animals found in the forest:</p>
+<ul>
+<li><p>Wild boar</p></li>
+<li><p>Philippine eagle</p></li>
+<li><p>Tamaraw</p></li>
+<li><p>Philippine deer</p></li>
+<li><p>Tarsier</p></li>
+</ul>
+<p>Many animals live in a garden. Gardens are perfect places where animals, especially insects, can satisfy their needs for food. In a garden, you can find butterflies collecting nectar from one flower to another. You can also find grasshoppers, ants, birds, and worms. Under the ground, you will find earthworms and other burrowing insects like beetles, mealworms, scorpions, millipedes, and centipedes.</p>
+<p>Animals found in a garden:</p>
+<ul>
+<li><p>Butterfly</p></li>
+<li><p>Ant</p></li>
+<li><p>Worm</p></li>
+<li><p>Bird</p></li>
+<li><p>Centipedes</p></li>
+<li><p>Beetles</p></li>
+<li><p>Grasshopper</p></li>
+</ul>
+<p>Domestic animals are usually found in a farm habitat. On a farm, farmers raise different animals, such as chickens, pigs, horses, carabaos, and cows. Ducks, goats, and sheep are also found on a farm. These animals usually provide food for people, such as milk, meat, and poultry products like eggs. Some animals are used for transportation like horses, cows, and carabaos. These bigger farm animals help farmers till the soil for planting.</p>
+<p>Animals found on a farm:</p>
+<ul>
+<li><p>Horse</p></li>
+<li><p>Carabao</p></li>
+<li><p>Cow</p></li>
+<li><p>Pig</p></li>
+<li><p>Sheep</p></li>
+<li><p>Chicken</p></li>
+<li><p>Duck</p></li>
+</ul>
+<p>Deserts are very hot during the day. In order to avoid dehydration, desert animals stay away from the hot Sun. They dig holes or burrow in the ground for shelter. Kangaroo rats and lizards stay inside burrows and come out to look for food at night.</p>
+<p>Desert animals have the ability to keep water in their bodies. Scorpions and wolf spiders have thick body coverings that help them prevent or reduce moisture loss. Their kidneys also concentrate urine so that they excrete less water.</p>
+<p>Desert animals obtain water from succulent or watery plants like cacti. They also use the blood and body tissues of their prey as sources of water.</p>
+<p>Examples of desert animals:</p>
+<ul>
+<li><p>Centipede</p></li>
+<li><p>Antelope</p></li>
+<li><p>Cheetah</p></li>
+<li><p>Eagle</p></li>
+<li><p>Armadillo</p></li>
+</ul>
+<p>Other examples of desert animals are the armadillos, ants, beetles, antelopes, centipedes, cheetahs, eagles, and snakes.</p>
+<h3 class="doc-heading">Aquatic Habitats</h3>
+<p>Aquatic habitats can be grouped into two: freshwater habitat and saltwater habitat. Many animals thrive in water. These animals possess unique parts and characteristics that enable them to adapt to their environment.</p>
+<h3 class="doc-heading">Freshwater Habitats</h3>
+<p>Freshwater animals are found in ponds, lakes, rivers, and streams. The kind of water environment determines the organisms living in these places.</p>
+<p>Ponds are good for breeding freshwater animals like milkfish, tilapia, and shrimp. Rivers, lakes, and streams are home to mudfish, catfish, snails, frogs, and toads. Many other freshwater organisms live together in these places.</p>
+<p><strong>Some animals that live in freshwater:</strong></p>
+<ul>
+<li><p>catfish</p></li>
+<li><p>frog</p></li>
+<li><p>tilapia</p></li>
+<li><p>snail</p></li>
+<li><p>toad</p></li>
+</ul>
+<p>Swamps are also considered freshwater habitats. Candaba Swamp, located in Pampanga, is a popular bird sanctuary for herons, wild ducks, Philippine ducks, kingfishers, egrets, and turtle doves. This habitat, which covers about 32,000 hectares of swamps, marshes, and ponds, is also home to thousands of migratory birds who are looking for warmer places to stay.</p>
+<h3 class="doc-heading">Saltwater Habitats</h3>
+<p>A large number of animals may be found in saltwater environments, such as seas and oceans. Due to the sheer size of oceans and seas, they are sanctuaries of plant and animal diversity.</p>
+<p>Coral reefs are diverse habitats or ecosystems found under the sea. They contain about 25% of all marine organisms. Coral reefs serve as breeding places for seawater organisms.</p>
+<p>Here, one can find sharks, sea turtles, different kinds of saltwater fishes, and eels. Tubbataha Reef in Puerto Princesa, Palawan, has been declared a natural park. Apo Reef, located in Occidental Mindoro, covers about 43 square kilometers of a reef system. It is one of the most beautiful diving destinations in the Philippines.</p>
+<p>Another popular marine sanctuary is Bajo de Masinloc, located near Zambales. The place is known internationally as Scarborough Shoal. In the Philippines, Bajo de Masinloc or Panatag Shoal, forms a triangle-shaped chain of reefs and rocks. It covers an area of about 150 square kilometers. The place is rich with marine organisms, which is why Philippine fishermen frequent the place for fishing.</p>
+<p>When freshwater rivers or streams mix with saltwater from the ocean, an estuary is formed. Estuaries are brackish, or slightly salty, areas that serve as home to many kinds of marine organisms, such as fishes, shellfishes, and some migratory birds.</p>
+<p>Some areas near the shoreline are barely submerged, which is why part of it may be totally covered during high tide but partially uncovered during low tide. These places are called intertidal zones. These habitats are home to sea urchins, sea anemones, barnacles, crabs, different kinds of fishes, starfish, and mussels.</p>
+<p>Mangrove forests are often found in intertidal zones. They also serve as breeding places of marine organisms. Most of the mangrove forests in the world are found in Asia. In the Philippines, you can find mangrove forests in Puerto Princesa and El Nido in Palawan, Mindoro, Siargao, Calauit Island, and Sibuyan Island. One can commonly find different kinds of fishes, jellyfish, mollusks, worms, barnacles, snails, crabs, and shrimps in these areas.</p>
+<p>Bohol is rich with marine habitats, especially mangroves. The Banacon Island Mangrove Forest in Bohol is now an ecotourist destination. The area covers about 425 hectares of mangrove forest established through bayanihan among community residents. It is considered as one of the biggest mangrove plantations in the country.</p>
+<h3 class="doc-heading">Aerial Habitats</h3>
+<p>Some animals live in areas located above the ground. These aboveground dwellers climb and cling to parts of trees. They are also capable of transferring from one tree to another without necessarily getting on the ground. Trees and caves are considered aerial habitats. Some burrowing insects, birds with powerful beaks, and other organisms live in the trunks of trees.</p>
+<h3 class="doc-heading">BREAKING THROUGH LINK</h3>
+<p>Do you like animals? If you do, you might want to become a wildlife biologist. Wildlife biologists study wild animals and find ways of helping them survive. These biologists study and learn animal habits, what they eat, and where they go when they move from one place to another. They also study how long an animal could live so that they can suggest ways on how to sustain their population and save them from extinction. Wildlife biologists contribute a lot in the conservation of animal life.</p>
+<h3 class="doc-heading">REFLECT L2</h3>
+<p>Sanctuaries are protected habitats of organisms. Name examples of places that are declared as national parks and sanctuaries of Philippine wildlife. Write a paragraph to communicate how national parks help protect endangered organisms.</p>
+<h3 class="doc-heading">TAKE NOTE</h3>
+<p>1. An organism’s environment refers to the living and nonliving things that surround it.</p>
+<p>2. A habitat is a place where an animal lives and gets its needs.</p>
+<p>3. Animals live in places where they can find food, shelter, and protection.</p>
+<p>4. Animal habitats can be grouped into terrestrial, aquatic, or aerial.</p>
+<p>5. Some animals live in terrestrial habitats such as gardens, farms, and forests.</p>
+<p>6. Freshwater habitats include rivers, ponds, lakes, and streams.</p>
+<p>7. Saltwater habitats include seas, oceans, coral reefs, mangroves, and intertidal zones.</p>
+<p>8. Aerial habitats refer to places where animals can live above the ground. These include trees and caves.</p>
+<h3 class="doc-heading">CHECK-UP TEST</h3>
+<p><strong>A. Write True if the statement is correct. If not, change the underlined word to make the sentence correct.</strong></p>
+<p>1. Animals live in places where they get enough food, shelter, and protection.</p>
+<p>2. Ponds, lakes, and streams are examples of saltwater habitats.</p>
+<p>3. Farm animals provide us with food, transportation, and help in tilling the soil for planting.</p>
+<p>4. Intertidal zones are areas along the shoreline that experience fluctuating levels of water due to tides.</p>
+<p>5. Mangroves are home to sharks and whales.</p>
+<p><strong>B. Complete the following chart by listing at least three names of animals that live in the given place or habitat.</strong></p>
+<table style="width:97%;">
+<colgroup>
+<col style="width: 63%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>Habitat</strong></th>
+<th style="text-align: left;"><strong>Animals</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Pond or lake</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Home garden</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Farm</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Coral reef</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Intertidal zone</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mangrove forest</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Estuary</td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table>
+<p><strong>C. Answer the following questions.</strong></p>
+<p>1. What is a habitat?</p>
+<p>2. When is a place considered a natural habitat for certain animals?</p>
+<p>3. Why should animal habitats be protected? What can you do to protect animal habitats?</p>
+<h3 class="doc-heading">Plant Habitats</h3>
+<h3 class="doc-heading">CONCEPT MAP</h3>
+<p>Plants live:</p>
+<p>- On land</p>
+<ul>
+<li><p>Forest</p></li>
+<li><p>Desert</p></li>
+<li><p>Grasslands</p></li>
+</ul>
+<p>- In water</p>
+<ul>
+<li><p>Oceans</p></li>
+<li><p>Ponds and rivers</p></li>
+<li><p>Wetlands</p></li>
+</ul>
+<h3 class="doc-heading">LEARN</h3>
+<p>In the experiment, new sprouts of potato and carrot grew. New rice plants grew at the middle part of the sponges. Roots were seen growing toward the lower sponge in search for water. The tender new roots were well-nourished by the liquid fertilizer added to the water. This is just one of the many ways plants can grow. In this lesson, you will learn the different types of plant habitats and how plants meet their needs within them.</p>
+<h3 class="doc-heading">Plant Habitats</h3>
+<p>Like animals, plants have needs in order to grow and survive in their environment. A need is something a living thing must have in order to continue living. Plants need air, water, food, and space. Plants also need light to make food.</p>
+<p>Plants live in different places. Most plants grow on land. These plants obtain nutrients from the soil through their roots. Plants that grow on land are called terrestrial plants.</p>
+<h3 class="doc-heading">Terrestrial Habitats</h3>
+<p>Home gardens serve as home to many kinds of plants. The kinds of plants that can be found in a garden will depend on the interest of the gardener.</p>
+<p>Some gardens have different kinds of ornamental plants. These plants have attractive and colorful leaves, such as bromeliads, mayanas, and snake plants. Many flowering plants are also found in gardens, such as roses, orchids, santan, lilies, and hydrangeas.</p>
+<h3 class="doc-heading">Some Ornamental Plants</h3>
+<ul>
+<li><p>Bromeliads</p></li>
+<li><p>Santan plant</p></li>
+<li><p>Snake plant</p></li>
+<li><p>Red rose</p></li>
+<li><p>Orchid</p></li>
+</ul>
+<p>Since these plants are cultured, they need supplements in the form of fertilizers and good soil for them to grow healthy. Some plants need maximum sunlight. Other plants need only a small amount of sunlight. This is the reason why some plants grow best in shaded areas.</p>
+<h3 class="doc-heading">Some Fruits and Vegetables</h3>
+<ul>
+<li><p>Squash</p></li>
+<li><p>Tomatoes</p></li>
+<li><p>Raddish</p></li>
+<li><p>Cabbage</p></li>
+<li><p>Eggplant</p></li>
+<li><p>Onions</p></li>
+</ul>
+<p>Some gardeners prefer to have vegetable gardens. Vegetables are good sources of food. Some plants that can be found in a vegetable garden are squash, tomatoes, peppers, string beans, radish, cabbage, bitter gourd, peas, and eggplants. Herbs and spices such as onions, garlic, bay leaf, and basil can also be grown in a vegetable garden. Medicinal plants such as sambong, lagundi, ginger, and oregano are used to cure certain diseases and body illness. Plants like vegetables, when not sprayed with too much chemical insecticides, are healthy for the body. Some gardeners use organic fertilizers and pesticides to avoid the harmful effects of chemicals.</p>
+<p>Rice fields and farmlands are planted with rice during the rainy season or when there is enough water supply to support their needs. During the dry season, rice fields are planted with different crops such as peanuts, corn, watermelon, mongo plants, turnips, cassava, and pineapple. Rice fields are also planted with vegetables for mass harvest and production.</p>
+<p>Coastal areas contain sandy soil. These places are ideal for plants that need less water, such as coconuts, and trees that supply us with timber, lumber, and other hardwood for house construction and fuel.</p>
+<p>Plants can also grow where the soil is wet like riverbanks, mangrove forests, swamps, and along the edges of ponds. Plants that grow in these places have thick taproots to hold the soil firmly, thus preventing soil erosion.</p>
+<p>Grasslands are usually covered with all sorts of grasses. These plants can endure extreme heat. Grasslands are ideal for cattle and horse raising.</p>
+<p>Some plants such as a cactus, can also grow in the desert. These plants have thick stems that allow them to store water for long periods of time.</p>
+<p>Plants are also grown in controlled environments. These plants need constant monitoring and care. Examples of these habitats are plant nurseries and greenhouses. Hydroponic plants, such as lettuce, can be grown and cultivated without soil, but with water. Their habitats are enclosed to control the temperature, amount of heat, and space. Seedlings, cuttings, and newly transplanted and potted plants are kept in these places. A terrarium is another example of a controlled plant habitat.</p>
+<p>Many wild plants and trees are found in the forest. These ecosystems are composed mainly of trees and plants that receive a high amount of rainfall. Most of the nutrients are obtained by trees, vines, and other wild plants, resulting in less fertile soil. This is why rainforests that are cleared for farming are good only for short-term crops.</p>
+<p>In a rainforest, tall trees form a dense covering called canopy. The tallest trees that go beyond the canopy and make up the top layer of the forest form the emergent layer. The smaller plants and trees below the canopy make up the understory. Examples of plants that grow in a rainforest are narra, mahogany, birds of paradise, acacia, different varieties of bamboos, and palm trees.</p>
+<p>Labels in the illustration:</p>
+<ul>
+<li><p>Emergent layer</p></li>
+<li><p>Canopy</p></li>
+<li><p>Understory</p></li>
+<li><p>Undergrowth</p></li>
+</ul>
+<h3 class="doc-heading">Aquatic Habitats</h3>
+<p>Like animals, some plants can also live in water.</p>
+<p>Plants that live in water are called aquatic plants or hydrophytes. Aquatic habitats can be grouped into flowing water habitats and standing water habitats. In flowing water habitats such as rivers and streams, water is in constant motion. In standing water habitats, such as ponds and wetlands, water does not move.</p>
+<h3 class="doc-heading">Ponds and Lakes</h3>
+<p>Ponds and lakes are bodies of standing water. A lake is bigger than a pond. Plants that live in these areas, such as lotus and azolla, have broad leaves and feathery roots that help them absorb water.</p>
+<h3 class="doc-heading">Wetlands</h3>
+<p>A wetland is a body of land that is usually flooded with water. Water in this place flows slowly into other bodies of water. Marshes and swamps are examples of wetlands. Water plants, such as water lilies and water hyacinths, grow in wetlands.</p>
+<h3 class="doc-heading">Rivers and Streams</h3>
+<p>Rainwater or water from a spring runs downhill and is collected in streams, creeks, or brooks. These watercourses merge into rivers whose water eventually ends up in a sea or an ocean. A smaller river flowing into a larger one is called a tributary and the area of land into which a river and its tributaries flow is called a watershed. Water lilies and water hyacinths grow in these bodies of water.</p>
+<h3 class="doc-heading">Oceans and Seas</h3>
+<p>For saltwater habitats, the seabed and ocean floors are sometimes covered with seagrass.</p>
+<h3 class="doc-heading">Aerial Habitats</h3>
+<p>Some plants live on the branches and stems of trees. They are called aerial plants or epiphytes. Aerial plants have specialized roots attached to other plants. Examples are orchids, bird’s nest plants, different kinds of ferns, and bromeliads. These plants have roots that are capable of absorbing water and moisture from the air.</p>
+<h3 class="doc-heading">BREAKING THROUGH LINK</h3>
+<p>Wetlands provide many benefits such as preventing flood, purifying water, and serving as homes for many commercially important fish species. Find out how wetlands are utilized in the purification of water.</p>
+<h3 class="doc-heading">TAKE NOTE</h3>
+<ol type="1">
+<li><p>Plants that grow on land are called terrestrial plants.</p></li>
+<li><p>Terrestrial plant habitats include the rainforests, deserts, gardens, coastal areas, and grasslands.</p></li>
+<li><p>Plants that grow in water are called aquatic plants or hydrophytes.</p></li>
+<li><p>Aquatic plant habitats include ponds and lakes, wetlands, rivers, and streams.</p></li>
+<li><p>Marshes and swamps are examples of wetlands.</p></li>
+<li><p>Some plants can grow on branches or stems of trees. These are called aerial plants or epiphytes.</p></li>
+</ol>
+<h3 class="doc-heading">CHECK-UP TEST</h3>
+<p><strong>A. Write T if the plant is terrestrial, A if it is aquatic, and AE if it is aerial.</strong></p>
+<ol type="1">
+<li><p>_____ hyacinth</p></li>
+<li><p>_____ malunggay</p></li>
+<li><p>_____ narra</p></li>
+<li><p>_____ azolla</p></li>
+<li><p>_____ seagrass</p></li>
+<li><p>_____ banana</p></li>
+<li><p>_____ lotus</p></li>
+<li><p>_____ gumamela</p></li>
+<li><p>_____ orchid</p></li>
+<li><p>_____ cactus</p></li>
+</ol>
+<p><strong>B. Match the terms in Column B with their descriptions in Column A. Write only the letter of the correct answer.</strong></p>
+<p>Column A</p>
+<ol type="1">
+<li><p>_____ plants that grow on stems and branches of other plants</p></li>
+<li><p>_____ plants that grow on land</p></li>
+<li><p>_____ plants that grow in water</p></li>
+<li><p>_____ uppermost layer of a rainforest</p></li>
+<li><p>_____ smaller stream flowing into a larger river</p></li>
+</ol>
+<p>Column B</p>
+<p>a. canopy<br />
+b. hydrophytes<br />
+c. tributary<br />
+d. wetland<br />
+e. epiphytes<br />
+f. terrestrial plants</p>
+<p><strong>C. Explain or discuss the following.</strong></p>
+<p>1. What are epiphytes? What benefits do these plants get from their host plants?</p>
+<p>2. How are greenhouses and plant nurseries designed to sustain the life of plants?</p>
+<p>3. What environmental elements inside a terrarium contribute to supporting plant growth?</p>
+<h3 class="doc-heading">GO FURTHER L3</h3>
+<p>A. Some trees like the mahogany and ipil-ipil lose their leaves during summer. However, the trees stay alive and grow new leaves when the weather becomes cooler. Write a paragraph explaining why the trees stay alive even without leaves.</p>
+<p>B. Marikina River has plenty of water lilies and water hyacinths. What are the effects of the overgrowth of these plants on the environment? Find out what the city government has been doing with the plants gathered from the river.</p>
+<h3 class="doc-heading">WRAP-UP OF MAIN IDEAS</h3>
+<ol type="1">
+<li><p>A natural habitat provides enough food, water, shelter, and space for an organism.</p></li>
+<li><p>Animal and plant habitats are grouped into terrestrial, aquatic, and aerial.</p></li>
+<li><p>Freshwater habitats include ponds, rivers, lakes, swamps, and streams.</p></li>
+<li><p>Saltwater habitats include the sea, ocean, estuaries, mangrove forests, intertidal zones, and coral reefs.</p></li>
+<li><p>Terrestrial habitats include gardens, farms, coastal areas, grasslands, forests, and deserts.</p></li>
+<li><p>Aerial habitat refers to places where animals live above the ground.</p></li>
+</ol>
+<h3 class="doc-heading">CHAPTER TEST L3</h3>
+<p><strong>A. Complete the following chart by listing at least three names of plants that live in the given place or habitat.</strong></p>
+<table style="width:97%;">
+<colgroup>
+<col style="width: 68%" />
+<col style="width: 28%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>Habitat</strong></th>
+<th style="text-align: left;"><strong>Plants</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Home garden</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Vegetable garden</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Farmland</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Swamp</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Rainforest</td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table>
+<p><strong>B. Choose and write the letter of the correct answer.</strong></p>
+<p>1. Which is not an example of a freshwater plant habitat?</p>
+<p>a. lake<br />
+b. pond<br />
+c. swamp<br />
+d. mangrove forest</p>
+<p>2. Which plant has specialized roots attached to another plant for food and protection?</p>
+<p>a. waling-waling orchid<br />
+b. cactus<br />
+c. rose plant<br />
+d. bamboo</p>
+<p>3. Which of the following is a domestic animal found on a farm?</p>
+<p>a. alligator<br />
+b. sea turtle<br />
+c. horse<br />
+d. milkfish</p>
+<p>4. Which plant grows best in a rainforest?</p>
+<p>a. gumamela plant<br />
+b. squash<br />
+c. eggplant<br />
+d. narra</p>
+<p>5. What is the dense covering formed by tall trees in a rainforest?</p>
+<p>a. canopy<br />
+b. understory<br />
+c. emergent layer<br />
+d. crown</p>
+<p>6. Which animal can be seen in a coral reef?</p>
+<p>a. toad<br />
+b. shark<br />
+c. salamander<br />
+d. whales</p>
+<p>7. How are trees growing on riverbanks helpful to the environment?</p>
+<p>a. The trees shed leaves to serve as food for water organisms.</p>
+<p>b. The roots of the trees are anchored firmly to the soil to prevent soil erosion.</p>
+<p>c. The branches of the trees bend to cover the river from the Sun.</p>
+<p>d. The trunks, when they fall, are carried downstream.</p>
+<p>8. Why are rainforests cleared for farming good only for short-term crops?</p>
+<p>a. Long-term crops are not ideal in rainforest areas.</p>
+<p>b. Rainforest soil is not fertile because most of the nutrients are absorbed by trees and wild plants.</p>
+<p>c. The nutrients in rainforest soil can only be absorbed by short-term crops.</p>
+<p>d. Plants grown in places where forest clearing is done are not healthy.</p>
+<p>9. What are enclosed bodies of water where saltwater and freshwater meet called?</p>
+<p>a. intertidal zones<br />
+b. estuaries<br />
+c. coral reefs<br />
+d. mangrove forests</p>
+<p>10. Which of the following animals live under the ground?</p>
+<p>a. spider<br />
+b. locust<br />
+c. earthworm<br />
+d. firefly</p>
+<p><strong>C. Answer the following questions.</strong></p>
+<p>1. What is a habitat?</p>
+<p>2. When is a place considered a natural habitat for certain animals and plants?</p>
+<p>3. Describe in your own words why habitats should be protected.</p>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ── Hidden Print Area (Practice Test + Answer Key) ── -->
+<div id="print-area">
+<div class="p-cover"><div class="p-icon">🌿</div><h1>Science 6 — Animal &amp; Plant Habitats Practice Test</h1><div class="p-sub">Terrestrial · Aquatic · Aerial Habitats of Animals and Plants</div>
+<div class="p-info-box"><div><strong>Name:</strong> _____________________________________</div><div><strong>Section:</strong> ___________________ &nbsp; <strong>Date:</strong> ___________________</div><div><strong>Score:</strong> _______ / 62</div></div>
+<div class="p-instructions"><strong>Instructions:</strong> Read each item carefully. Write your answer on the blank provided (Parts I, III, IV, V), write the letter of the correct answer (Part II), or answer in complete sentences (Part VI). Good luck!</div></div>
+<h2 class="p-part-title">Part I — Name the Habitat</h2>
+<div class="p-bank"><strong>Word Bank (use each once):</strong> forest &middot; garden &middot; farm &middot; desert &middot; freshwater habitat &middot; coral reef &middot; estuary &middot; intertidal zone &middot; mangrove forest &middot; aerial habitat</div>
+<div class="p-q"><b>1.</b> Butterflies collect nectar here, and earthworms and beetles live under the ground. <span class="p-blank"></span></div>
+<div class="p-q"><b>2.</b> Kangaroo rats and lizards stay in burrows here and come out at night to look for food. <span class="p-blank"></span></div>
+<div class="p-q"><b>3.</b> Cows, carabaos, chickens, and pigs are raised here, and some help till the soil. <span class="p-blank"></span></div>
+<div class="p-q"><b>4.</b> Tarsiers, tamaraws, and the Philippine eagle live here. <span class="p-blank"></span></div>
+<div class="p-q"><b>5.</b> Sharks, sea turtles, and eels live here; it contains about 25% of all marine organisms. <span class="p-blank"></span></div>
+<div class="p-q"><b>6.</b> A brackish area formed when a freshwater river mixes with ocean saltwater. <span class="p-blank"></span></div>
+<div class="p-q"><b>7.</b> Shoreline areas that are covered at high tide but partly uncovered at low tide. <span class="p-blank"></span></div>
+<div class="p-q"><b>8.</b> Found often in intertidal zones; a breeding place of marine organisms. Banacon Island has a famous one. <span class="p-blank"></span></div>
+<div class="p-q"><b>9.</b> Ponds, lakes, rivers, and streams where tilapia, catfish, and frogs live. <span class="p-blank"></span></div>
+<div class="p-q"><b>10.</b> Trees and caves where animals live above the ground. <span class="p-blank"></span></div>
+<div class="p-break"></div>
+<h2 class="p-part-title">Part II — Multiple Choice</h2>
+<div class="p-q"><b>11.</b> What is a habitat?<br><span class="p-opt">a. a place where an organism lives</span><span class="p-opt">b. a kind of food</span><span class="p-opt">c. a type of weather</span><span class="p-opt">d. a group of plants only</span></div>
+<div class="p-q"><b>12.</b> Which is NOT one of the three groups of animal habitats?<br><span class="p-opt">a. terrestrial</span><span class="p-opt">b. aquatic</span><span class="p-opt">c. aerial</span><span class="p-opt">d. volcanic</span></div>
+<div class="p-q"><b>13.</b> Which animal is found in a Philippine forest?<br><span class="p-opt">a. shark</span><span class="p-opt">b. tarsier</span><span class="p-opt">c. sea turtle</span><span class="p-opt">d. eel</span></div>
+<div class="p-q"><b>14.</b> Why do desert animals dig holes or burrow in the ground?<br><span class="p-opt">a. to avoid the hot Sun and dehydration</span><span class="p-opt">b. to hide from the rain</span><span class="p-opt">c. to find fish</span><span class="p-opt">d. to build farms</span></div>
+<div class="p-q"><b>15.</b> Which farm animal helps farmers till the soil?<br><span class="p-opt">a. duck</span><span class="p-opt">b. chicken</span><span class="p-opt">c. carabao</span><span class="p-opt">d. goat</span></div>
+<div class="p-q"><b>16.</b> Which freshwater animals are bred in ponds?<br><span class="p-opt">a. sharks and eels</span><span class="p-opt">b. milkfish, tilapia, and shrimp</span><span class="p-opt">c. sea turtles</span><span class="p-opt">d. whales</span></div>
+<div class="p-q"><b>17.</b> Candaba Swamp in Pampanga is a popular sanctuary for what animals?<br><span class="p-opt">a. fishes</span><span class="p-opt">b. birds</span><span class="p-opt">c. sharks</span><span class="p-opt">d. tamaraws</span></div>
+<div class="p-q"><b>18.</b> Where is Tubbataha Reef?<br><span class="p-opt">a. Puerto Princesa, Palawan</span><span class="p-opt">b. Occidental Mindoro</span><span class="p-opt">c. Zambales</span><span class="p-opt">d. Bohol</span></div>
+<div class="p-q"><b>19.</b> Which reef is located in Occidental Mindoro?<br><span class="p-opt">a. Apo Reef</span><span class="p-opt">b. Tubbataha Reef</span><span class="p-opt">c. Bajo de Masinloc</span><span class="p-opt">d. Banacon Island</span></div>
+<div class="p-q"><b>20.</b> Another name for Bajo de Masinloc is ____.<br><span class="p-opt">a. Panatag Shoal</span><span class="p-opt">b. Candaba Swamp</span><span class="p-opt">c. Apo Reef</span><span class="p-opt">d. Banacon Island</span></div>
+<div class="p-q"><b>21.</b> What does brackish mean?<br><span class="p-opt">a. very cold</span><span class="p-opt">b. slightly salty</span><span class="p-opt">c. very deep</span><span class="p-opt">d. completely fresh</span></div>
+<div class="p-q"><b>22.</b> Where is the Banacon Island Mangrove Forest?<br><span class="p-opt">a. Bohol</span><span class="p-opt">b. Palawan</span><span class="p-opt">c. Pampanga</span><span class="p-opt">d. Zambales</span></div>
+<div class="p-q"><b>23.</b> Which are considered aerial habitats?<br><span class="p-opt">a. trees and caves</span><span class="p-opt">b. ponds and lakes</span><span class="p-opt">c. farms and gardens</span><span class="p-opt">d. estuaries</span></div>
+<div class="p-q"><b>24.</b> What do wildlife biologists do?<br><span class="p-opt">a. study wild animals and help them survive</span><span class="p-opt">b. cut down forests</span><span class="p-opt">c. raise farm animals</span><span class="p-opt">d. build fish ponds</span></div>
+<div class="p-q"><b>25.</b> Which is an example of an ornamental plant?<br><span class="p-opt">a. bromeliad</span><span class="p-opt">b. radish</span><span class="p-opt">c. cabbage</span><span class="p-opt">d. eggplant</span></div>
+<div class="p-q"><b>26.</b> Which plant is used as medicine?<br><span class="p-opt">a. lagundi</span><span class="p-opt">b. cabbage</span><span class="p-opt">c. squash</span><span class="p-opt">d. peas</span></div>
+<div class="p-q"><b>27.</b> Why can a cactus live in the desert?<br><span class="p-opt">a. its thick stem stores water</span><span class="p-opt">b. its leaves float</span><span class="p-opt">c. it has feathery roots</span><span class="p-opt">d. it grows on trees</span></div>
+<div class="p-q"><b>28.</b> What do you call the smaller plants and trees below the canopy of a rainforest?<br><span class="p-opt">a. emergent layer</span><span class="p-opt">b. understory</span><span class="p-opt">c. watershed</span><span class="p-opt">d. tributary</span></div>
+<div class="p-q"><b>29.</b> Which pair are examples of epiphytes?<br><span class="p-opt">a. orchid and fern</span><span class="p-opt">b. lotus and azolla</span><span class="p-opt">c. cactus and coconut</span><span class="p-opt">d. rice and corn</span></div>
+<div class="p-q"><b>30.</b> Which plants have broad leaves and feathery roots that help them absorb water in ponds and lakes?<br><span class="p-opt">a. lotus and azolla</span><span class="p-opt">b. narra and mahogany</span><span class="p-opt">c. cactus and snake plant</span><span class="p-opt">d. orchid and fern</span></div>
+<div class="p-break"></div>
+<h2 class="p-part-title">Part III — Terrestrial, Aquatic, or Aerial Plant?</h2>
+<div class="p-bank">Write <b>T</b> if the plant is terrestrial, <b>A</b> if it is aquatic, and <b>AE</b> if it is aerial.</div>
+<div class="p-q"><b>31.</b> hyacinth <span class="p-blank"></span></div>
+<div class="p-q"><b>32.</b> malunggay <span class="p-blank"></span></div>
+<div class="p-q"><b>33.</b> narra <span class="p-blank"></span></div>
+<div class="p-q"><b>34.</b> azolla <span class="p-blank"></span></div>
+<div class="p-q"><b>35.</b> seagrass <span class="p-blank"></span></div>
+<div class="p-q"><b>36.</b> banana <span class="p-blank"></span></div>
+<div class="p-q"><b>37.</b> lotus <span class="p-blank"></span></div>
+<div class="p-q"><b>38.</b> gumamela <span class="p-blank"></span></div>
+<div class="p-q"><b>39.</b> orchid <span class="p-blank"></span></div>
+<div class="p-q"><b>40.</b> cactus <span class="p-blank"></span></div>
+<h2 class="p-part-title">Part IV — True or False</h2>
+<div class="p-q"><b>41.</b> A habitat provides an organism with food, water, shelter, and space. <span class="p-blank"></span></div>
+<div class="p-q"><b>42.</b> Ponds and lakes are saltwater habitats. <span class="p-blank"></span></div>
+<div class="p-q"><b>43.</b> Hydroponic plants such as lettuce are grown without soil, but with water. <span class="p-blank"></span></div>
+<div class="p-q"><b>44.</b> Most of the mangrove forests in the world are found in Africa. <span class="p-blank"></span></div>
+<div class="p-q"><b>45.</b> A tributary is a smaller river that flows into a larger river. <span class="p-blank"></span></div>
+<div class="p-q"><b>46.</b> Aerial plants have roots that absorb water and moisture from the air. <span class="p-blank"></span></div>
+<div class="p-q"><b>47.</b> Coral reefs contain about 25% of all marine organisms. <span class="p-blank"></span></div>
+<div class="p-q"><b>48.</b> Wetlands are bodies of water that never get flooded. <span class="p-blank"></span></div>
+<div class="p-q"><b>49.</b> Grasslands are ideal for cattle and horse raising. <span class="p-blank"></span></div>
+<div class="p-q"><b>50.</b> Rainforest soil is very fertile because trees do not absorb its nutrients. <span class="p-blank"></span></div>
+<div class="p-break"></div>
+<h2 class="p-part-title">Part V — Match the Term</h2>
+<div class="p-bank"><strong>Column B:</strong> a. canopy &middot; b. hydrophytes &middot; c. tributary &middot; d. wetland &middot; e. epiphytes &middot; f. terrestrial plants &middot; g. emergent layer</div>
+<div class="p-q"><b>51.</b> plants that grow on stems and branches of other plants <span class="p-blank"></span></div>
+<div class="p-q"><b>52.</b> plants that grow on land <span class="p-blank"></span></div>
+<div class="p-q"><b>53.</b> plants that grow in water <span class="p-blank"></span></div>
+<div class="p-q"><b>54.</b> top layer of the forest, made of the tallest trees that go beyond the canopy <span class="p-blank"></span></div>
+<div class="p-q"><b>55.</b> a smaller stream flowing into a larger river <span class="p-blank"></span></div>
+<div class="p-q"><b>56.</b> a body of land that is usually flooded with water <span class="p-blank"></span></div>
+<div class="p-q"><b>57.</b> the dense covering formed by tall trees in a rainforest <span class="p-blank"></span></div>
+<h2 class="p-part-title">Part VI — Short Answer</h2>
+<div class="p-q"><b>58.</b> What is a habitat?<br><br>_________________________________________________<br><br>_________________________________________________</div>
+<div class="p-q"><b>59.</b> Name the three groups of animal habitats and give one example of each.<br><br>_________________________________________________<br><br>_________________________________________________</div>
+<div class="p-q"><b>60.</b> Why are rainforests that are cleared for farming good only for short-term crops?<br><br>_________________________________________________<br><br>_________________________________________________</div>
+<div class="p-q"><b>61.</b> How do the thick taproots of plants on riverbanks help the environment?<br><br>_________________________________________________<br><br>_________________________________________________</div>
+<div class="p-q"><b>62.</b> Name two places in the Philippines that are sanctuaries or natural parks, and tell where each is.<br><br>_________________________________________________<br><br>_________________________________________________</div>
+<div class="p-break"></div><h2 class="p-part-title">✅ Complete Answer Key</h2>
+<div class="p-key-part-title">Part I — Name the Habitat</div>
+<div class="p-key-grid"><div class="p-key-pill">1. <b>garden</b></div><div class="p-key-pill">2. <b>desert</b></div><div class="p-key-pill">3. <b>farm</b></div><div class="p-key-pill">4. <b>forest</b></div><div class="p-key-pill">5. <b>coral reef</b></div><div class="p-key-pill">6. <b>estuary</b></div><div class="p-key-pill">7. <b>intertidal zone</b></div><div class="p-key-pill">8. <b>mangrove forest</b></div><div class="p-key-pill">9. <b>freshwater habitat</b></div><div class="p-key-pill">10. <b>aerial habitat</b></div></div>
+<div class="p-key-part-title">Part II — Multiple Choice</div>
+<div class="p-key-grid"><div class="p-key-pill">11. <b>a. a place where an organism lives</b></div><div class="p-key-pill">12. <b>d. volcanic</b></div><div class="p-key-pill">13. <b>b. tarsier</b></div><div class="p-key-pill">14. <b>a. to avoid the hot Sun and dehydration</b></div><div class="p-key-pill">15. <b>c. carabao</b></div><div class="p-key-pill">16. <b>b. milkfish, tilapia, and shrimp</b></div><div class="p-key-pill">17. <b>b. birds</b></div><div class="p-key-pill">18. <b>a. Puerto Princesa, Palawan</b></div><div class="p-key-pill">19. <b>a. Apo Reef</b></div><div class="p-key-pill">20. <b>a. Panatag Shoal</b></div><div class="p-key-pill">21. <b>b. slightly salty</b></div><div class="p-key-pill">22. <b>a. Bohol</b></div><div class="p-key-pill">23. <b>a. trees and caves</b></div><div class="p-key-pill">24. <b>a. study wild animals and help them survive</b></div><div class="p-key-pill">25. <b>a. bromeliad</b></div><div class="p-key-pill">26. <b>a. lagundi</b></div><div class="p-key-pill">27. <b>a. its thick stem stores water</b></div><div class="p-key-pill">28. <b>b. understory</b></div><div class="p-key-pill">29. <b>a. orchid and fern</b></div><div class="p-key-pill">30. <b>a. lotus and azolla</b></div></div>
+<div class="p-key-part-title">Part III — T, A, or AE</div>
+<div class="p-key-grid"><div class="p-key-pill">31. <b>A</b></div><div class="p-key-pill">32. <b>T</b></div><div class="p-key-pill">33. <b>T</b></div><div class="p-key-pill">34. <b>A</b></div><div class="p-key-pill">35. <b>A</b></div><div class="p-key-pill">36. <b>T</b></div><div class="p-key-pill">37. <b>A</b></div><div class="p-key-pill">38. <b>T</b></div><div class="p-key-pill">39. <b>AE</b></div><div class="p-key-pill">40. <b>T</b></div></div>
+<div class="p-key-part-title">Part IV — True or False</div>
+<div class="p-key-grid"><div class="p-key-pill">41. <b>TRUE</b></div><div class="p-key-pill">42. <b>FALSE</b></div><div class="p-key-pill">43. <b>TRUE</b></div><div class="p-key-pill">44. <b>FALSE</b></div><div class="p-key-pill">45. <b>TRUE</b></div><div class="p-key-pill">46. <b>TRUE</b></div><div class="p-key-pill">47. <b>TRUE</b></div><div class="p-key-pill">48. <b>FALSE</b></div><div class="p-key-pill">49. <b>TRUE</b></div><div class="p-key-pill">50. <b>FALSE</b></div></div>
+<div class="p-key-part-title">Part V — Match the Term</div>
+<div class="p-key-grid"><div class="p-key-pill">51. <b>e</b></div><div class="p-key-pill">52. <b>f</b></div><div class="p-key-pill">53. <b>b</b></div><div class="p-key-pill">54. <b>g</b></div><div class="p-key-pill">55. <b>c</b></div><div class="p-key-pill">56. <b>d</b></div><div class="p-key-pill">57. <b>a</b></div></div>
+<div class="p-key-part-title">Part VI — Short Answer (sample answers)</div>
+<div class="p-q"><b>58.</b> A habitat is a place in which an organism lives and gets what it needs: food, water, shelter, space, and protection.</div><div class="p-q"><b>59.</b> Terrestrial (forest, garden, farm, or desert), aquatic (pond, coral reef, or mangrove forest), and aerial (trees or caves).</div><div class="p-q"><b>60.</b> The soil is less fertile because most of the nutrients are absorbed by the trees, vines, and other wild plants.</div><div class="p-q"><b>61.</b> They hold the soil firmly, which prevents soil erosion.</div><div class="p-q"><b>62.</b> Any two: Tubbataha Reef (Palawan), Apo Reef (Occidental Mindoro), Bajo de Masinloc (near Zambales), Candaba Swamp (Pampanga), Banacon Island Mangrove Forest (Bohol).</div>
+</div>
+
+</body>
+</html>
