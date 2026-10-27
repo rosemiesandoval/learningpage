@@ -1,0 +1,2073 @@
+<!DOCTYPE html>
+<html lang="tl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🗣️ Filipino: Sanhi at Bunga at Aspekto ng Pandiwa Reviewer 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --gold: #f59e0b;
+  --gold-dark: #b45309;
+  --blue: #3b82f6;
+  --blue-dark: #1d4ed8;
+  --red: #ef4444;
+  --green: #22c55e;
+  --bg: #0c1a0e;
+  --surface: #132015;
+  --surface2: #1a2e1d;
+  --text: #f0fdf4;
+  --muted: #86efac;
+  --border: #166534;
+}
+
+body {
+  font-family: 'Baloo 2', cursive;
+  background: var(--bg);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--text);
+  background-image:
+    radial-gradient(ellipse at 10% 30%, rgba(245,158,11,.06) 0%, transparent 55%),
+    radial-gradient(ellipse at 90% 70%, rgba(59,130,246,.06) 0%, transparent 55%);
+}
+
+header {
+  width: 100%;
+  background: linear-gradient(135deg, #14532d, #1e3a5f);
+  border-bottom: 2px solid var(--gold-dark);
+  padding: 13px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 4px 30px rgba(0,0,0,.5);
+}
+.header-icon { font-size: 2rem; animation: float 3s ease-in-out infinite; }
+@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
+
+header h1 {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.45rem;
+  background: linear-gradient(90deg, var(--gold), #fde68a, var(--gold));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+header .sub { font-size: .72rem; color: var(--muted); margin-top: 1px; }
+
+.header-controls { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+.score-pill {
+  background: rgba(245,158,11,.15);
+  border: 1px solid rgba(245,158,11,.4);
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-weight: 800;
+  font-size: .85rem;
+  color: var(--gold);
+}
+.audio-btn {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  background: var(--surface2);
+  color: var(--text);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all .2s;
+  display: flex; align-items: center; justify-content: center;
+}
+.audio-btn:hover, .audio-btn.active { background: #14532d; border-color: var(--gold); }
+
+.chat-wrap {
+  width: 100%; max-width: 700px; flex: 1;
+  display: flex; flex-direction: column;
+  padding: 16px 14px 0;
+}
+
+#chat-box {
+  flex: 1; overflow-y: auto;
+  display: flex; flex-direction: column;
+  gap: 14px; padding-bottom: 10px;
+  max-height: calc(100vh - 200px);
+  scroll-behavior: smooth;
+}
+#chat-box::-webkit-scrollbar { width: 4px; }
+#chat-box::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+.msg { display: flex; gap: 8px; }
+.msg.user { flex-direction: row-reverse; }
+
+.avatar {
+  width: 34px; height: 34px; border-radius: 50%;
+  font-size: 1rem; display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 2px;
+}
+.msg.bot .avatar { background: linear-gradient(135deg, #14532d, #1e3a5f); border: 1.5px solid rgba(245,158,11,.4); }
+.msg.user .avatar { background: linear-gradient(135deg, #1e3a5f, #14532d); border: 1.5px solid rgba(59,130,246,.3); }
+
+.bubble {
+  max-width: 80%;
+  padding: 11px 16px;
+  border-radius: 18px;
+  font-size: .9rem;
+  line-height: 1.65;
+  animation: pop .22s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes pop { from{transform:scale(.88) translateY(6px);opacity:0} to{transform:scale(1) translateY(0);opacity:1} }
+
+.msg.bot .bubble {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-bottom-left-radius: 5px;
+}
+.msg.user .bubble {
+  background: linear-gradient(135deg, #1e3a5f, var(--blue-dark));
+  border-bottom-right-radius: 5px;
+}
+
+/* chips */
+.chip {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: rgba(245,158,11,.12);
+  border: 1.5px solid rgba(245,158,11,.4);
+  color: var(--gold);
+  border-radius: 30px;
+  padding: 5px 13px; margin: 5px 4px 0 0;
+  font-size: .8rem; font-weight: 700;
+  cursor: pointer; transition: all .15s;
+  user-select: none; font-family: 'Baloo 2', cursive;
+}
+.chip:hover {
+  background: var(--gold-dark); color: white;
+  border-color: var(--gold);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(245,158,11,.3);
+}
+
+/* topic tag */
+.topic-tag {
+  display: inline-block;
+  background: linear-gradient(135deg, #14532d, #166534);
+  border: 1px solid var(--gold-dark);
+  color: var(--gold);
+  font-size: .68rem; font-weight: 800;
+  border-radius: 20px; padding: 2px 10px;
+  margin-bottom: 5px; letter-spacing: .5px;
+  text-transform: uppercase;
+}
+
+/* multiple choice */
+.mc-options { display: flex; flex-direction: column; gap: 7px; margin-top: 10px; width: 100%; }
+.mc-btn {
+  display: flex; align-items: center; gap: 10px;
+  background: rgba(255,255,255,.03);
+  border: 1.5px solid var(--border);
+  border-radius: 12px; padding: 9px 14px;
+  color: var(--text); font-family: 'Baloo 2', cursive;
+  font-size: .87rem; font-weight: 600;
+  cursor: pointer; transition: all .15s; text-align: left; width: 100%;
+}
+.mc-btn:hover:not(:disabled) {
+  background: rgba(245,158,11,.12); border-color: var(--gold);
+  color: var(--gold); transform: translateX(3px);
+}
+.mc-btn .letter {
+  display: flex; align-items: center; justify-content: center;
+  width: 26px; height: 26px; border-radius: 8px;
+  background: rgba(245,158,11,.15); border: 1px solid rgba(245,158,11,.35);
+  color: var(--gold); font-size: .78rem; font-weight: 800;
+  flex-shrink: 0; transition: all .15s;
+}
+.mc-btn:hover:not(:disabled) .letter { background: var(--gold-dark); color: white; border-color: var(--gold-dark); }
+.mc-btn.correct { background: rgba(34,197,94,.15)!important; border-color: #22c55e!important; color: #22c55e!important; cursor: default; }
+.mc-btn.correct .letter { background: #22c55e!important; color: white!important; border-color: #22c55e!important; }
+.mc-btn.wrong { background: rgba(239,68,68,.12)!important; border-color: #ef4444!important; color: #ef4444!important; cursor: default; }
+.mc-btn.wrong .letter { background: #ef4444!important; color: white!important; border-color: #ef4444!important; }
+.mc-btn:disabled { cursor: default; transform: none!important; }
+
+/* speaker wave */
+.speaker-wave {
+  display: inline-flex; align-items: flex-end;
+  gap: 2px; height: 14px; margin-left: 6px; vertical-align: middle;
+}
+.speaker-wave span {
+  display: block; width: 3px; border-radius: 2px;
+  background: var(--gold); animation: wave 1s ease-in-out infinite;
+}
+.speaker-wave span:nth-child(1){height:4px;animation-delay:0s}
+.speaker-wave span:nth-child(2){height:10px;animation-delay:.1s}
+.speaker-wave span:nth-child(3){height:6px;animation-delay:.2s}
+.speaker-wave span:nth-child(4){height:12px;animation-delay:.15s}
+.speaker-wave span:nth-child(5){height:4px;animation-delay:.05s}
+@keyframes wave{0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.8)}}
+
+/* typing */
+.typing {
+  display: flex; gap: 4px; padding: 12px 16px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 18px; border-bottom-left-radius: 5px; width: fit-content;
+}
+.dot { width: 7px; height: 7px; border-radius: 50%; background: var(--gold); animation: bounce .9s infinite; }
+.dot:nth-child(2){animation-delay:.15s} .dot:nth-child(3){animation-delay:.3s}
+@keyframes bounce{0%,80%,100%{transform:translateY(0);opacity:.6}40%{transform:translateY(-7px);opacity:1}}
+
+/* input bar */
+.input-bar {
+  width: 100%; max-width: 700px;
+  padding: 10px 14px 18px;
+  display: flex; gap: 8px;
+  background: var(--bg); position: sticky; bottom: 0;
+}
+#user-input {
+  flex: 1; padding: 12px 18px;
+  border: 2px solid var(--border); border-radius: 30px;
+  font-family: 'Baloo 2', cursive; font-size: .92rem;
+  outline: none; background: var(--surface); color: var(--text);
+  transition: border-color .2s, box-shadow .2s;
+}
+#user-input::placeholder { color: var(--muted); }
+#user-input:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(245,158,11,.12); }
+
+#send-btn {
+  width: 48px; height: 48px; border-radius: 50%; border: none;
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  color: white; font-size: 1.1rem; cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 3px 14px rgba(245,158,11,.4); flex-shrink: 0;
+}
+#send-btn:hover { transform: scale(1.08); box-shadow: 0 5px 20px rgba(245,158,11,.55); }
+#send-btn:disabled { opacity: .5; transform: none; }
+
+/* result modal */
+.result-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.75); backdrop-filter: blur(6px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 100; opacity: 0; pointer-events: none; transition: opacity .3s;
+}
+.result-overlay.show { opacity: 1; pointer-events: all; }
+.result-card {
+  background: linear-gradient(135deg, #132015, #0c1a0e);
+  border: 2px solid var(--gold-dark);
+  border-radius: 24px; padding: 36px 40px;
+  text-align: center; max-width: 380px; width: 90%;
+  box-shadow: 0 20px 60px rgba(0,0,0,.6);
+  transform: scale(.9); transition: transform .3s cubic-bezier(.34,1.56,.64,1);
+}
+.result-overlay.show .result-card { transform: scale(1); }
+.result-emoji { font-size: 4rem; margin-bottom: 12px; display: block; }
+.result-title {
+  font-family: 'Fredoka One', cursive; font-size: 1.7rem; margin-bottom: 6px;
+  background: linear-gradient(90deg, var(--gold), #fde68a);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.result-score { font-size: 3rem; font-weight: 900; margin: 10px 0; color: white; }
+.result-msg { color: var(--muted); font-size: .9rem; margin-bottom: 22px; }
+.result-btn {
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  border: none; border-radius: 30px; padding: 12px 30px;
+  color: white; font-family: 'Baloo 2', cursive; font-weight: 800;
+  font-size: 1rem; cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+  box-shadow: 0 4px 16px rgba(245,158,11,.35);
+}
+.result-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 22px rgba(245,158,11,.5); }
+
+/* scenario card for identify questions */
+.scenario-card {
+  background: rgba(245,158,11,.07);
+  border: 1px solid rgba(245,158,11,.25);
+  border-radius: 12px; padding: 10px 14px;
+  margin: 8px 0 6px; font-style: italic;
+  font-size: .87rem; color: #fde68a; line-height: 1.5;
+}
+
+/* ── Notes Panel ─────────────────────────────────────────────── */
+.notes-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.78); backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 200; opacity: 0; pointer-events: none; transition: opacity .3s;
+}
+.notes-overlay.show { opacity: 1; pointer-events: all; }
+.notes-panel {
+  background: linear-gradient(160deg, #0c1a0e, #132015);
+  border: 2px solid var(--gold-dark);
+  border-radius: 20px;
+  width: 92%; max-width: 720px;
+  max-height: 88vh;
+  display: flex; flex-direction: column;
+  box-shadow: 0 24px 60px rgba(0,0,0,.7);
+  overflow: hidden;
+  transform: translateY(30px);
+  transition: transform .35s cubic-bezier(.34,1.2,.64,1);
+}
+.notes-overlay.show .notes-panel { transform: translateY(0); }
+.notes-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 22px; border-bottom: 1px solid var(--border);
+  background: linear-gradient(135deg, #14532d44, #1e3a5f44);
+}
+.notes-header h2 { font-family: 'Fredoka One', cursive; font-size: 1.3rem; color: var(--gold); }
+.notes-close {
+  width: 34px; height: 34px; border-radius: 50%;
+  border: 1.5px solid var(--border); background: var(--surface2);
+  color: var(--text); font-size: 1rem; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; transition: all .2s;
+}
+.notes-close:hover { background: #b91c1c; border-color: #ef4444; }
+.notes-body { overflow-y: auto; padding: 20px 22px; flex: 1; }
+.notes-body::-webkit-scrollbar { width: 4px; }
+.notes-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+.notes-topic { margin-bottom: 28px; }
+.notes-topic-title {
+  font-family: 'Fredoka One', cursive; font-size: 1.05rem;
+  color: var(--gold); margin-bottom: 10px;
+  padding-bottom: 6px; border-bottom: 1px solid var(--border);
+}
+.notes-item {
+  display: flex; gap: 10px; align-items: flex-start;
+  padding: 7px 0; border-bottom: 1px solid rgba(255,255,255,.04);
+  font-size: .87rem; line-height: 1.55;
+}
+.notes-item:last-child { border-bottom: none; }
+.notes-term { font-weight: 800; color: var(--gold); min-width: 150px; flex-shrink: 0; font-size: .84rem; }
+.notes-def { color: #d1fae5; }
+.notes-tabs {
+  display: flex; flex-wrap: wrap; gap: 8px; padding: 14px 22px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(0,0,0,.15);
+}
+.notes-tab {
+  padding: 12px 20px; border-radius: 10px;
+  border: 1.5px solid var(--border); 
+  background: rgba(255,255,255,.04); color: var(--muted);
+  font-family: 'Baloo 2', cursive; font-size: .9rem; font-weight: 700;
+  cursor: pointer; transition: all .15s; white-space: nowrap;
+  min-height: 48px; display: flex; align-items: center;
+}
+.notes-tab.active { background: var(--surface); color: var(--gold); border-color: var(--gold-dark); }
+.notes-tab:hover:not(.active) { color: var(--text); background: var(--surface2); }
+.notes-section { display: none; }
+.notes-section.active { display: block; }
+
+
+/* ── Print button in notes header ─────────────────────────────── */
+.notes-header-actions { display: flex; align-items: center; gap: 10px; }
+.print-btn {
+  display: flex; align-items: center; gap: 6px;
+  background: rgba(245,158,11,.12);
+  border: 1.5px solid rgba(245,158,11,.4);
+  color: var(--gold);
+  border-radius: 20px;
+  padding: 7px 14px;
+  font-family: 'Baloo 2', cursive;
+  font-size: .78rem;
+  font-weight: 800;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all .15s;
+}
+.print-btn:hover { background: var(--gold); color: #0c1a0e; border-color: var(--gold); }
+.print-btn.active { background: var(--gold); color: #0c1a0e; border-color: var(--gold); }
+
+/* ── On-screen Practice Test / Answer Key ─────────────────────── */
+.ptest-part-title {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1rem;
+  color: var(--gold);
+  margin: 22px 0 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+.ptest-part-title:first-child { margin-top: 0; }
+.ptest-q {
+  font-size: .87rem;
+  line-height: 1.6;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed rgba(255,255,255,.06);
+  color: #d1fae5;
+}
+.ptest-q b { color: var(--gold); }
+.ptest-q .opt { display: block; margin: 2px 0 2px 18px; color: #d1fae5; }
+.ptest-bank {
+  background: rgba(59,130,246,.08);
+  border: 1px solid rgba(59,130,246,.3);
+  border-radius: 10px;
+  padding: 10px 16px;
+  margin-bottom: 14px;
+  font-size: .82rem;
+  color: #dbeafe;
+  line-height: 1.6;
+}
+.key-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.key-pill {
+  background: rgba(245,158,11,.1);
+  border: 1px solid rgba(245,158,11,.25);
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: .78rem;
+  color: #fde68a;
+}
+.key-pill b { color: #34d399; }
+
+/* ── Print / Save-as-PDF styles ──────────────────────────────────
+   By default everything is hidden from print. When body carries
+   .printing-test, only #print-area (a light-themed clone of the
+   Practice Test + Answer Key) is shown, laid out for paper. ──── */
+@media print {
+  body * { visibility: hidden; }
+  #print-area, #print-area * { visibility: visible; }
+  #print-area {
+    display: block !important;
+    position: absolute; top: 0; left: 0; width: 100%;
+    background: #fff; color: #14290f;
+    font-family: 'Helvetica', Arial, sans-serif;
+    font-size: 10.5pt;
+    line-height: 1.5;
+  }
+  #print-area .p-cover { text-align: center; padding-top: 40px; }
+  #print-area .p-cover .p-icon { font-size: 34pt; }
+  #print-area .p-cover h1 { font-size: 19pt; color: #b45309; margin: 8px 0 4px; }
+  #print-area .p-cover .p-sub { font-size: 10.5pt; color: #166534; margin-bottom: 20px; }
+  #print-area .p-info-box {
+    border: 1.5px solid #fcd34d; border-radius: 10px;
+    max-width: 460px; margin: 0 auto 20px; padding: 14px 20px;
+    text-align: left; font-size: 10pt;
+  }
+  #print-area .p-info-box div { margin: 6px 0; border-bottom: 1px dotted #fde68a; padding-bottom: 6px; }
+  #print-area .p-instructions {
+    max-width: 460px; margin: 0 auto; text-align: left;
+    background: #fffbeb; border: 1px solid #fcd34d; border-radius: 10px;
+    padding: 12px 18px; font-size: 9.5pt; color: #78350f;
+  }
+  #print-area h2.p-part-title {
+    font-size: 12.5pt; color: #fff;
+    background: linear-gradient(135deg, #b45309, #14532d) !important;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    padding: 6px 12px; border-radius: 7px; margin: 18px 0 10px;
+    page-break-after: avoid;
+  }
+  #print-area .p-bank {
+    background: #f0fdf4 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    border: 1px solid #86efac; border-radius: 8px; padding: 8px 14px;
+    margin-bottom: 12px; font-size: 9.5pt; color: #14532d;
+  }
+  #print-area .p-q {
+    margin-bottom: 8px; padding-bottom: 8px;
+    border-bottom: 1px dotted #fde68a; font-size: 10pt;
+    page-break-inside: avoid; color: #14290f;
+  }
+  #print-area .p-q b { color: #b45309; }
+  #print-area .p-q .p-blank { display: inline-block; min-width: 65px; border-bottom: 1px solid #64748b; }
+  #print-area .p-q .p-opt { display: block; margin: 2px 0 0 20px; color: #365314; }
+  #print-area .p-break { page-break-before: always; }
+  #print-area .p-key-part-title {
+    font-size: 11pt; color: #b45309; font-weight: bold;
+    margin: 14px 0 8px; border-bottom: 2px solid #b45309; padding-bottom: 4px;
+  }
+  #print-area .p-key-grid {
+    display: grid; grid-template-columns: repeat(5, 1fr);
+    gap: 5px 8px; margin-bottom: 14px;
+  }
+  #print-area .p-key-pill {
+    background: #f0fdf4 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    border: 1px solid #86efac; border-radius: 6px;
+    padding: 4px 8px; font-size: 8.5pt; color: #166534;
+  }
+  #print-area .p-key-pill b { color: #b45309; }
+  @page { size: letter; margin: 1.5cm 1.8cm; }
+}
+#print-area { display: none; }
+
+
+/* ── Chapter Summary / Tandaan / Memory boxes (fix: previously missing) ── */
+.chapter-summary {
+  background: linear-gradient(135deg, rgba(59,130,246,.1), rgba(34,197,94,.08));
+  border: 1px solid rgba(59,130,246,.25);
+  border-left: 4px solid var(--blue);
+  border-radius: 12px;
+  padding: 14px 18px;
+  margin-bottom: 18px;
+  font-size: .88rem;
+  line-height: 1.65;
+  color: #dbeafe;
+}
+.tandaan-box {
+  background: rgba(245,158,11,.08);
+  border: 1px solid rgba(245,158,11,.3);
+  border-left: 4px solid var(--gold);
+  border-radius: 12px;
+  padding: 12px 18px;
+  margin: 14px 0;
+  font-size: .86rem;
+  line-height: 1.6;
+  color: #fde68a;
+}
+.tandaan-label {
+  display: block;
+  font-family: 'Baloo 2', cursive;
+  font-size: .8rem;
+  color: var(--gold);
+  letter-spacing: .5px;
+  margin-bottom: 5px;
+}
+.memory-box {
+  background: rgba(34,197,94,.08);
+  border: 1px solid rgba(34,197,94,.3);
+  border-left: 4px solid var(--green);
+  border-radius: 12px;
+  padding: 12px 18px;
+  margin: 14px 0 22px;
+  font-size: .86rem;
+  line-height: 1.6;
+  color: #bbf7d0;
+}
+.memory-label {
+  display: block;
+  font-family: 'Baloo 2', cursive;
+  font-size: .8rem;
+  color: var(--green);
+  letter-spacing: .5px;
+  margin-bottom: 5px;
+}
+.compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0 20px;
+  font-size: .82rem;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.compare-table th {
+  background: linear-gradient(135deg, var(--blue-dark), var(--gold-dark));
+  color: white;
+  text-align: left;
+  padding: 9px 12px;
+  font-size: .78rem;
+  text-transform: uppercase;
+  letter-spacing: .4px;
+}
+.compare-table td {
+  padding: 9px 12px;
+  border-top: 1px solid var(--border);
+  color: var(--text);
+  vertical-align: top;
+}
+.compare-table tr:nth-child(even) td { background: rgba(255,255,255,.02); }
+
+/* ── Story Box (for reading Bible stories aloud) ─────────────────── */
+.story-box {
+  background: rgba(255,255,255,.03);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px 20px;
+  margin-bottom: 16px;
+  font-size: .92rem;
+  line-height: 1.8;
+  color: var(--text);
+}
+.story-box p { margin-bottom: 10px; }
+.story-box p:last-child { margin-bottom: 0; }
+.story-ref {
+  display: block;
+  text-align: right;
+  font-style: italic;
+  color: var(--muted);
+  font-size: .8rem;
+  margin-top: 10px;
+}
+.story-label {
+  display: block;
+  font-family: 'Baloo 2', cursive;
+  font-size: .9rem;
+  color: var(--gold);
+  letter-spacing: .5px;
+  margin-bottom: 10px;
+}
+/* ── Raw Notes (original document view) ──────────────────────── */
+.rawnotes-intro {
+  font-size: .82rem;
+  color: var(--muted);
+  line-height: 1.6;
+  background: rgba(59,130,246,.1);
+  border: 1px solid rgba(59,130,246,.3);
+  border-left: 4px solid var(--blue);
+  border-radius: 10px;
+  padding: 12px 18px;
+  margin-bottom: 20px;
+}
+.rawnotes-doc {
+  font-family: 'Lora', Georgia, serif;
+  line-height: 1.75;
+}
+.rawnotes-doc p {
+  font-size: .95rem;
+  margin-bottom: 14px;
+  color: #e2f5e6;
+}
+.rawnotes-doc strong { color: var(--gold); font-weight: 700; }
+.rawnotes-doc em { color: var(--muted); font-style: italic; }
+.rawnotes-doc h3.doc-heading {
+  font-family: 'Baloo 2', cursive;
+  font-size: 1.05rem;
+  color: var(--gold);
+  margin: 26px 0 12px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid var(--border);
+}
+.rawnotes-doc h3.doc-heading:first-child { margin-top: 0; }
+.rawnotes-doc ul, .rawnotes-doc ol {
+  margin: 0 0 14px 26px;
+  color: #e2f5e6;
+}
+.rawnotes-doc li { margin-bottom: 6px; font-size: .95rem; }
+.rawnotes-doc table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0 20px;
+  font-size: .82rem;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.rawnotes-doc th {
+  background: linear-gradient(135deg, var(--blue-dark), var(--gold-dark));
+  color: white;
+  text-align: left;
+  padding: 9px 12px;
+  font-size: .78rem;
+}
+.rawnotes-doc td {
+  padding: 9px 12px;
+  border-top: 1px solid var(--border);
+  color: var(--text);
+  vertical-align: top;
+}
+.rawnotes-doc tr:nth-child(even) td { background: rgba(255,255,255,.02); }
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE: TABLET (≤820px)
+   ═══════════════════════════════════════════════════════════════ */
+@media (max-width: 820px) {
+  .notes-panel { width: 95%; max-height: 92vh; }
+  .notes-tabs { padding: 12px 16px; gap: 6px; }
+  .notes-tab { padding: 10px 14px; font-size: .82rem; min-height: 42px; }
+  .notes-body { padding: 16px; }
+  .notes-header { padding: 14px 16px; }
+  .chat-wrap { padding: 14px 10px 0; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE: MOBILE (≤600px)
+   ═══════════════════════════════════════════════════════════════ */
+@media (max-width: 600px) {
+  header {
+    padding: 10px 12px;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .header-icon { font-size: 1.5rem; }
+  header h1 { font-size: 1.05rem; line-height: 1.2; }
+  header .sub { font-size: .62rem; }
+  .header-controls { gap: 6px; margin-left: auto; }
+  .score-pill { padding: 4px 10px; font-size: .74rem; }
+  .audio-btn { width: 32px; height: 32px; font-size: .85rem; }
+
+  .chat-wrap { padding: 10px 6px 0; }
+  #chat-box { gap: 12px; }
+  .bubble { max-width: 88%; font-size: .88rem; padding: 10px 13px; }
+  .avatar { width: 30px; height: 30px; font-size: .85rem; }
+
+  .chip { font-size: .78rem; padding: 7px 12px; }
+  .mc-btn { font-size: .84rem; padding: 10px 12px; }
+  .mc-btn .letter { width: 22px; height: 22px; font-size: .74rem; }
+  .topic-tag { font-size: .68rem; }
+  .scenario-card { font-size: .88rem; padding: 10px 14px; }
+
+  .input-bar { padding: 8px 8px calc(8px + env(safe-area-inset-bottom)); gap: 8px; }
+  #user-input { font-size: .88rem; padding: 10px 14px; }
+  #send-btn { width: 40px; height: 40px; font-size: 1rem; }
+
+  .result-card { width: 92%; padding: 26px 20px; }
+  .result-emoji { font-size: 2.6rem; }
+  .result-title { font-size: 1.2rem; }
+  .result-score { font-size: 1.8rem; }
+
+  /* ── Notes panel: near-full-screen on phones ── */
+  .notes-overlay { align-items: flex-end; }
+  .notes-panel {
+    width: 100%; max-width: 100%;
+    max-height: 94vh;
+    border-radius: 20px 20px 0 0;
+    border-left: none; border-right: none; border-bottom: none;
+  }
+  .notes-header { padding: 12px 14px; flex-wrap: wrap; gap: 8px; }
+  .notes-header h2 { font-size: 1.05rem; flex: 1 1 100%; }
+  .notes-header-actions { flex-wrap: wrap; gap: 6px; width: 100%; justify-content: flex-start; }
+  .print-btn { font-size: .7rem; padding: 6px 11px; }
+  .notes-close { width: 30px; height: 30px; font-size: .9rem; margin-left: auto; }
+
+  .notes-tabs { padding: 10px 12px; gap: 5px; }
+  .notes-tab { padding: 8px 12px; font-size: .76rem; min-height: 38px; }
+  .notes-body { padding: 14px; }
+
+  .notes-item { flex-direction: column; gap: 2px; }
+  .notes-term { min-width: 0; font-size: .82rem; }
+  .notes-def { font-size: .84rem; }
+  .notes-topic-title { font-size: .95rem; }
+  .chapter-summary, .memory-box, .tandaan-box, .story-box, .verse-card { font-size: .82rem; padding: 12px 14px; }
+
+  /* ── Tables: allow horizontal scroll instead of squeezing ── */
+  .compare-table { display: block; overflow-x: auto; white-space: nowrap; }
+  .compare-table th, .compare-table td { white-space: normal; min-width: 110px; }
+
+  .key-grid { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 5px; }
+  .key-pill { font-size: .72rem; padding: 5px 8px; }
+  .ptest-part-title { font-size: .92rem; }
+  .ptest-q { font-size: .82rem; }
+  .ptest-bank { font-size: .78rem; padding: 8px 12px; }
+
+  .rawnotes-doc p, .rawnotes-doc li { font-size: .87rem; }
+  .rawnotes-doc h3.doc-heading { font-size: .95rem; }
+  .rawnotes-doc table { display: block; overflow-x: auto; white-space: nowrap; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE: VERY SMALL PHONES (≤380px)
+   ═══════════════════════════════════════════════════════════════ */
+@media (max-width: 380px) {
+  header h1 { font-size: .92rem; }
+  header .sub { display: none; }
+  .score-pill span { font-size: .7rem; }
+  .bubble { max-width: 92%; font-size: .84rem; }
+  .notes-tab { font-size: .7rem; padding: 7px 10px; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE: LANDSCAPE PHONES (short height)
+   ═══════════════════════════════════════════════════════════════ */
+@media (max-height: 480px) and (orientation: landscape) {
+  .notes-panel { max-height: 98vh; }
+  .notes-tabs { padding: 6px 12px; }
+  .notes-tab { min-height: 32px; padding: 6px 10px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-icon">🗣️</div>
+  <div>
+    <h1>Sanhi at Bunga at Aspekto ng Pandiwa</h1>
+    <div class="sub">Sanhi at Bunga · Naganap na · Katatapos · Perpektibo · Imperpektibo · Kontemplatibo</div>
+  </div>
+  <div class="header-controls">
+    <div class="score-pill">⭐ <span id="score-val">0</span> / <span id="total-val">0</span></div>
+    <button class="audio-btn" id="notes-toggle" title="Basahin ang mga Tala" onclick="document.getElementById('notes-overlay').classList.add('show')">📖</button>
+    <button class="audio-btn active" id="audio-toggle" title="I-toggle ang Audio">🔊</button>
+  </div>
+</header>
+
+<div class="chat-wrap">
+  <div id="chat-box"></div>
+</div>
+
+<div class="input-bar">
+  <input type="text" id="user-input" placeholder="Isulat ang iyong sagot dito…" autocomplete="off" />
+  <button id="send-btn">➤</button>
+</div>
+
+<div class="result-overlay" id="result-overlay">
+  <div class="result-card">
+    <span class="result-emoji" id="res-emoji">🏆</span>
+    <div class="result-title">Tapos na!</div>
+    <div class="result-score"><span id="res-score">0</span>/<span id="res-total">0</span></div>
+    <div class="result-msg" id="res-msg">Magaling!</div>
+    <button class="result-btn" onclick="restartApp()">🔄 Maglaro Ulit</button>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+// QUESTION BANK
+// ═══════════════════════════════════════════════════════════════
+const topics = {
+
+  "Sanhi at Bunga": [
+    { q: "Ano ang tinatawag na sanhi?", a: "Ang dahilan o paliwanag sa mga pangyayari", hint: "Ito ang pinagmulan." },
+    { q: "Ano ang tinatawag na bunga?", a: "Ang resulta o kinalabasan ng pangyayari", hint: "Ito ang kinalabasan." },
+    { q: "Ayon sa aralin, paano dumadaloy ang mga pangyayari sa kuwento?", a: "Dumadaloy ang mga pangyayari bunga ng mga naunang pangyayari", hint: "May nauna at may kasunod." },
+    { q: "Ano ang laging nagiging sanhi ng problema sa kuwento?", a: "Isang aksiyon", hint: "May ginawa." },
+    { q: "Ano ang nagiging sanhi ng paglutas sa problema sa kuwento?", a: "Isa pang aksiyon", hint: "May isa pang ginawa." },
+    { q: "Bakit mahalagang maging malinaw ang sanhi at bunga sa teksto?", a: "Upang ganap itong maunawaan", hint: "Para maintindihan ang teksto." },
+    { q: "Ano-anong pang-ugnay ang ginagamit sa pagsasabi ng sanhi o dahilan?", a: "Sapagkat, dahil, dahil sa, kapag, at kasi", hint: "Limang pang-ugnay." },
+    { q: "Ano-anong pang-ugnay ang naglalahad ng resulta o bunga?", a: "Kaya, bunga nito, at tuloy", hint: "Tatlong pang-ugnay." },
+    { q: "Alin ang pang-ugnay ng sanhi: kaya o dahil?", a: "Dahil", hint: "Nagsasabi ng dahilan." },
+    { q: "Alin ang pang-ugnay ng bunga: kasi o tuloy?", a: "Tuloy", hint: "Nagsasabi ng resulta." },
+    { q: "Sa pangungusap na \"Makatarungan ang mga batas kaya sinusunod ito ng mga tao,\" ano ang sanhi?", a: "Makatarungan ang mga batas", hint: "Ito ang dahilan; sinusunod ito dahil dito." },
+    { q: "Sa pangungusap na \"Makatarungan ang mga batas kaya sinusunod ito ng mga tao,\" ano ang bunga?", a: "Sinusunod ito ng mga tao", hint: "Ito ang resulta." },
+    { q: "Sa pangungusap na \"Halos walang nakipaglibing dahil sa masamang pag-uugali na ipinakita niya,\" ano ang sanhi?", a: "Ang masamang pag-uugali na ipinakita niya sa kaniyang mga nasasakupan", hint: "Kasunod ng 'dahil sa'." },
+    { q: "Sa pangungusap na \"Halos walang nakipaglibing dahil sa masamang pag-uugali na ipinakita niya,\" ano ang bunga?", a: "Halos walang nakipaglibing", hint: "Ito ang resulta." },
+    { q: "Alin ang karaniwang kasunod ng pang-ugnay na \"dahil\": sanhi o bunga?", a: "Sanhi", hint: "Sinasabi nito ang dahilan." },
+    { q: "Alin ang karaniwang kasunod ng pang-ugnay na \"kaya\": sanhi o bunga?", a: "Bunga", hint: "Sinasabi nito ang resulta." },
+    { q: "Ano ang maaaring bunga kapag malimit ang pagputol ng matandang kahoy sa kagubatan? (halimbawang sagot)", a: "Nauubos ang mga puno at maaaring gumuho ang lupa", hint: "Wala nang humahawak sa lupa." },
+    { q: "Ano ang maaaring sanhi kapag biglang gumuho ang lupa sa kabundukan? (halimbawang sagot)", a: "Walang habas na pagputol ng mga puno", hint: "Walang ugat na humahawak sa lupa." },
+    { q: "Ano ang maaaring sanhi kapag umuunti na ang nahuhuling isda sa karagatan? (halimbawang sagot)", a: "Labis na panghuhuli at pagdumi sa dagat", hint: "Maraming kinuha o nasira." },
+    { q: "Ano ang maaaring bunga kapag tinatambakan ng lupa ang ilog? (halimbawang sagot)", a: "Bumabaw ang ilog at maaaring bumaha", hint: "Hindi na makadaloy ang tubig." },
+    { q: "Ano ang maaaring bunga kapag nagsasagawa ang gobyerno ng programa para muling buhayin ang mga kagubatan? (halimbawang sagot)", a: "Muling dumarami ang mga puno", hint: "Muling nabubuhay." },
+    { q: "Ano ang maaaring bunga kapag pinangangalagaan ng mga Bantay Gubat ang mga agilang nahuhuli? (halimbawang sagot)", a: "Naililigtas at dumarami ang mga agila", hint: "Hindi sila nawawala." },
+  ],
+
+  "Aspekto ng Pandiwa: Naganap na at Katatapos Pa Lamang": [
+    { q: "Ano ang pandiwa?", a: "Salitang nagsasaad ng kilos o galaw", hint: "Kilos." },
+    { q: "Ano ang tinatawag na aspekto o panahunan ng pandiwa?", a: "Ang anyo ng pandiwa na nagpapakita kung kailan ginawa o gagawin ang isang aksiyon", hint: "Panahon ng kilos." },
+    { q: "Paano ipinahahayag ang aspekto ng pandiwa?", a: "Sa pamamagitan ng pagbabanghay", hint: "Pagbabago ng anyo ng pandiwa." },
+    { q: "Ano ang ipinapakita ng aspektong naganap na o pangnagdaan?", a: "Na ang isang aksiyon o gawain ay natapos na o nasimulan na", hint: "Tapos na o nasimulan na." },
+    { q: "Ano pang tawag sa aspektong naganap na?", a: "Pangnagdaan", hint: "Nagdaan na." },
+    { q: "Ano-anong salitang pamanahon ang nagpapakita ng naganap na aksiyon?", a: "Kanina, noon, kagabi, at iba pa", hint: "Mga salitang nagsasabi ng nakaraan." },
+    { q: "Alin ang pandiwang naganap na sa \"Noong unang panahon, pinamunuan nila ang buong isla\"?", a: "Pinamunuan", hint: "Nagawa noong unang panahon." },
+    { q: "Alin ang pandiwang naganap na sa \"Nagmakaawa kanina ang matanda kay Rajah Kawayan\"?", a: "Nagmakaawa", hint: "May salitang 'kanina'." },
+    { q: "Ano ang ipinapakita ng aspektong katatapos pa lamang?", a: "Hindi pa katagalan mula nang natapos ang gawain", hint: "Kakatapos lang." },
+    { q: "Anong panlapi ang karaniwang nasa unahan ng pandiwang katatapos pa lamang?", a: "Ka-", hint: "Dalawang titik." },
+    { q: "Ano pa ang ginagawa sa salitang-ugat ng pandiwang katatapos?", a: "Inuulit ang unang pantig ng salitang-ugat", hint: "Inuulit ang una." },
+    { q: "Ano ang pormula ng pagbuo ng katatapos pa lamang?", a: "Ka- + ulit ng unang pantig + salitang-ugat", hint: "Tatlong bahagi." },
+    { q: "Alin ang pandiwang katatapos sa \"Kaaalis pa lamang ng matandang pinagmalupitan ni Rajah Kawayan\"?", a: "Kaaalis", hint: "May ka- at inulit na pantig." },
+    { q: "Alin ang pandiwang katatapos sa \"Kapapatupad lang ng bagong batas sa mga nasasakupan\"?", a: "Kapapatupad", hint: "Ka-pa-patupad." },
+    { q: "Ano ang anyong katatapos ng \"umupo\"?", a: "Kauupo", hint: "Ka + u + upo." },
+    { q: "Ano ang anyong katatapos ng \"dumating\"?", a: "Kadarating", hint: "Ka + da + dating." },
+    { q: "Ano ang anyong katatapos ng \"bumangon\"?", a: "Kababangon", hint: "Ka + ba + bangon." },
+    { q: "Ano ang anyong katatapos ng \"humingi\"?", a: "Kahihingi", hint: "Ka + hi + hingi." },
+    { q: "Ano ang anyong katatapos ng \"lumuhod\"?", a: "Kaluluhod", hint: "Ka + lu + luhod." },
+    { q: "Ano ang anyong naganap na ng \"kakikilala\"?", a: "Nakilala", hint: "Mula sa salitang-ugat na 'kilala'." },
+    { q: "Anong aspekto ang \"Humarang ang matanda sa kaniyang daraanan kanina\"?", a: "Naganap na", hint: "May salitang 'kanina'." },
+    { q: "Anong aspekto ang \"Kaaalis pa lamang ng matanda nang bigla siyang nagkasakit\"?", a: "Katatapos pa lamang", hint: "May 'pa lamang' at ka- na pandiwa." },
+  ],
+
+  "Tatlong Aspekto ng Pandiwa: Perpektibo, Imperpektibo, Kontemplatibo": [
+    { q: "Ano ang tatlong aspekto ng pandiwa ayon sa aralin?", a: "Perpektibo, imperpektibo, at kontemplatibo", hint: "P-I-K." },
+    { q: "Ano ang tinutukoy ng aspekto ng pandiwa?", a: "Ang kalagayan o panahon ng kilos", hint: "Kailan ang kilos." },
+    { q: "Ano ang ibig sabihin ng perpektibo?", a: "Naganap na ang kilos", hint: "Tapos na." },
+    { q: "Ano ang ibig sabihin ng imperpektibo?", a: "Nagaganap pa ang kilos", hint: "Ginagawa pa." },
+    { q: "Ano ang ibig sabihin ng kontemplatibo?", a: "Magaganap pa lamang ang kilos", hint: "Gagawin pa lang." },
+    { q: "Ano ang halimbawa ng perpektibo na may pandiwang kumain?", a: "Kumain si Liza.", hint: "Tapos nang kumain." },
+    { q: "Ano ang halimbawa ng imperpektibo na may pandiwang kumain?", a: "Kumakain si Liza.", hint: "Kumakain ngayon." },
+    { q: "Ano ang halimbawa ng kontemplatibo na may pandiwang kumain?", a: "Kakain si Liza.", hint: "Hindi pa kumakain." },
+    { q: "Ano ang Tandaan tungkol sa perpektibo?", a: "Tapos na ang kilos", hint: "Tapos." },
+    { q: "Ano ang Tandaan tungkol sa imperpektibo?", a: "Kasalukuyang ginagawa o inuulit ang kilos", hint: "Kasalukuyan o inuulit." },
+    { q: "Ano ang Tandaan tungkol sa kontemplatibo?", a: "Hindi pa nasisimulan ang kilos", hint: "Wala pang simula." },
+    { q: "Anong aspekto ang \"Naglinis si Marco ng silid\"?", a: "Perpektibo", hint: "Tapos na ang paglilinis." },
+    { q: "Anong aspekto ang \"Naglilinis si Marco ng silid\"?", a: "Imperpektibo", hint: "Naglilinis pa." },
+    { q: "Anong aspekto ang \"Maglilinis si Marco ng silid\"?", a: "Kontemplatibo", hint: "Hindi pa nagsisimula." },
+    { q: "Anong aspekto ang \"Nagluto si Nanay ng hapunan\"?", a: "Perpektibo", hint: "Naluto na." },
+    { q: "Anong aspekto ang \"Nagluluto si Nanay ng hapunan\"?", a: "Imperpektibo", hint: "Nagluluto pa." },
+    { q: "Anong aspekto ang \"Magluluto si Nanay ng hapunan\"?", a: "Kontemplatibo", hint: "Magluluto pa lang." },
+    { q: "Anong aspekto ang \"Sumulat ako ng liham\"?", a: "Perpektibo", hint: "Naisulat na." },
+    { q: "Anong aspekto ang \"Sumusulat ako ng liham\"?", a: "Imperpektibo", hint: "Sumusulat pa." },
+    { q: "Anong aspekto ang \"Susulat ako ng liham\"?", a: "Kontemplatibo", hint: "Susulat pa lang." },
+    { q: "Sa salitang-ugat na LARO, ano ang pangungusap na perpektibo sa aralin?", a: "Naglaro si Mia. (tapos na)", hint: "Tapos nang maglaro." },
+    { q: "Sa salitang-ugat na LARO, ano ang pangungusap na imperpektibo sa aralin?", a: "Naglalaro si Mia. (ginagawa pa)", hint: "Naglalaro pa." },
+    { q: "Sa salitang-ugat na LARO, ano ang pangungusap na kontemplatibo sa aralin?", a: "Maglalaro si Mia. (gagawin pa)", hint: "Maglalaro pa lang." },
+    { q: "Ano ang itinutulong ng aspekto ng pandiwa?", a: "Tumutulong ito upang malaman ang kalagayan ng kilos", hint: "Kalagayan ng kilos." },
+  ],
+
+};
+
+// ── TAMA O MALI ────────────────────────────────────────────────────────────
+const trueOrFalse = [
+  { q: "Ang sanhi ay ang dahilan o paliwanag sa mga pangyayari.", a: "tama" },
+  { q: "Ang bunga ay ang dahilan ng pangyayari.", a: "mali" },
+  { q: "Ang bunga ay ang resulta o kinalabasan ng pangyayari.", a: "tama" },
+  { q: "Ang \"kaya\" ay pang-ugnay na ginagamit sa pagsasabi ng sanhi.", a: "mali" },
+  { q: "Ang \"sapagkat\" ay pang-ugnay na ginagamit sa pagsasabi ng sanhi.", a: "tama" },
+  { q: "Ang \"tuloy\" ay pang-ugnay na naglalahad ng resulta.", a: "tama" },
+  { q: "Ang \"bunga nito\" ay pang-ugnay na naglalahad ng resulta.", a: "tama" },
+  { q: "Ang \"kasi\" ay pang-ugnay na naglalahad ng bunga.", a: "mali" },
+  { q: "Sa pangungusap na \"Makatarungan ang mga batas kaya sinusunod ito ng mga tao,\" ang sanhi ay \"Makatarungan ang mga batas.\"", a: "tama" },
+  { q: "Ang masamang pag-uugali ng rajah ang sanhi kung bakit halos walang nakipaglibing sa kaniya.", a: "tama" },
+  { q: "Ang pandiwa ay salitang nagsasaad ng kilos o galaw.", a: "tama" },
+  { q: "Ang aspekto o panahunan ng pandiwa ay ipinahahayag sa pamamagitan ng pagbabanghay.", a: "tama" },
+  { q: "Ang aspektong naganap na ay nagpapakita na ang kilos ay hindi pa nasisimulan.", a: "mali" },
+  { q: "Ang naganap na ay tinatawag ding pangnagdaan.", a: "tama" },
+  { q: "Ang \"kanina,\" \"noon,\" at \"kagabi\" ay mga salitang nagpapakita ng naganap na aksiyon.", a: "tama" },
+  { q: "Ang katatapos pa lamang ay nagpapakitang matagal nang natapos ang gawain.", a: "mali" },
+  { q: "Ang pandiwang katatapos pa lamang ay karaniwang may panlaping ka- at inuulit ang unang pantig ng salitang-ugat.", a: "tama" },
+  { q: "Ang \"kaaalis\" ay halimbawa ng pandiwang katatapos pa lamang.", a: "tama" },
+  { q: "Ang \"kauupo\" ay anyong katatapos ng \"umupo.\"", a: "tama" },
+  { q: "May tatlong aspekto ng pandiwa sa aralin: perpektibo, imperpektibo, at kontemplatibo.", a: "tama" },
+  { q: "Ang perpektibo ay nangangahulugang naganap na ang kilos.", a: "tama" },
+  { q: "Ang imperpektibo ay nangangahulugang magaganap pa lamang ang kilos.", a: "mali" },
+  { q: "Ang kontemplatibo ay nangangahulugang magaganap pa lamang ang kilos.", a: "tama" },
+  { q: "Ang \"Naglaro si Mia\" ay halimbawa ng perpektibo.", a: "tama" },
+  { q: "Ang \"Naglalaro si Mia\" ay halimbawa ng kontemplatibo.", a: "mali" },
+  { q: "Ang \"Maglalaro si Mia\" ay nagpapakitang gagawin pa lamang ang kilos.", a: "tama" },
+  { q: "Ang \"Nagbabasa si Carlo ng aklat\" ay imperpektibo.", a: "tama" },
+  { q: "Ang \"Sasayaw kami sa programa\" ay perpektibo.", a: "mali" },
+  { q: "Ang \"Bumili ako ng tinapay\" ay perpektibo.", a: "tama" },
+  { q: "Ang aspekto ng pandiwa ay tumutulong upang malaman ang kalagayan ng kilos.", a: "tama" },
+];
+
+// ── KILALANIN ──────────────────────────────────────────────────────────────
+const identifyQuestions = [
+  { q: "Ang dahilan o paliwanag sa mga pangyayari.", a: "Sanhi", choices: ["Sanhi","Bunga","Aspekto","Pang-ugnay"] },
+  { q: "Ang resulta o kinalabasan ng pangyayari.", a: "Bunga", choices: ["Bunga","Sanhi","Aspekto","Panlapi"] },
+  { q: "\"Makatarungan ang mga batas\" sa pangungusap na \"Makatarungan ang mga batas kaya sinusunod ito ng mga tao.\"", a: "Sanhi", choices: ["Sanhi","Bunga","Pandiwa","Pang-ugnay"] },
+  { q: "\"Sinusunod ito ng mga tao\" sa pangungusap na \"Makatarungan ang mga batas kaya sinusunod ito ng mga tao.\"", a: "Bunga", choices: ["Bunga","Sanhi","Pandiwa","Pang-ugnay"] },
+  { q: "\"Halos walang nakipaglibing\" sa pangungusap na \"Halos walang nakipaglibing dahil sa masamang pag-uugali.\"", a: "Bunga", choices: ["Bunga","Sanhi","Pang-uri","Pang-ugnay"] },
+  { q: "\"Masamang pag-uugali\" sa pangungusap na \"Halos walang nakipaglibing dahil sa masamang pag-uugali.\"", a: "Sanhi", choices: ["Sanhi","Bunga","Pandiwa","Pang-ugnay"] },
+  { q: "Ang pang-ugnay na \"sapagkat.\"", a: "Pang-ugnay ng sanhi", choices: ["Pang-ugnay ng sanhi","Pang-ugnay ng bunga","Pandiwa","Panlapi"] },
+  { q: "Ang pang-ugnay na \"dahil sa.\"", a: "Pang-ugnay ng sanhi", choices: ["Pang-ugnay ng sanhi","Pang-ugnay ng bunga","Pandiwa","Panlapi"] },
+  { q: "Ang pang-ugnay na \"kapag.\"", a: "Pang-ugnay ng sanhi", choices: ["Pang-ugnay ng sanhi","Pang-ugnay ng bunga","Pandiwa","Panlapi"] },
+  { q: "Ang pang-ugnay na \"kaya.\"", a: "Pang-ugnay ng bunga", choices: ["Pang-ugnay ng bunga","Pang-ugnay ng sanhi","Pandiwa","Panlapi"] },
+  { q: "Ang pang-ugnay na \"bunga nito.\"", a: "Pang-ugnay ng bunga", choices: ["Pang-ugnay ng bunga","Pang-ugnay ng sanhi","Pandiwa","Panlapi"] },
+  { q: "Ang pang-ugnay na \"tuloy.\"", a: "Pang-ugnay ng bunga", choices: ["Pang-ugnay ng bunga","Pang-ugnay ng sanhi","Pandiwa","Panlapi"] },
+  { q: "Noong isang araw, itinulak niya ang matanda.", a: "Naganap na (Perpektibo)", choices: ["Naganap na (Perpektibo)","Katatapos pa lamang","Nagaganap pa (Imperpektibo)","Magaganap pa lamang (Kontemplatibo)"] },
+  { q: "Humarang ang matanda sa kaniyang daraanan kanina.", a: "Naganap na (Perpektibo)", choices: ["Naganap na (Perpektibo)","Katatapos pa lamang","Nagaganap pa (Imperpektibo)","Magaganap pa lamang (Kontemplatibo)"] },
+  { q: "Kaaalis pa lamang ng matanda nang bigla siyang nagkasakit.", a: "Katatapos pa lamang", choices: ["Katatapos pa lamang","Naganap na (Perpektibo)","Nagaganap pa (Imperpektibo)","Magaganap pa lamang (Kontemplatibo)"] },
+  { q: "Dumating kahapon ang matanda sa palasyo.", a: "Naganap na (Perpektibo)", choices: ["Naganap na (Perpektibo)","Katatapos pa lamang","Nagaganap pa (Imperpektibo)","Magaganap pa lamang (Kontemplatibo)"] },
+  { q: "Kapapatupad lang ng bagong batas sa mga nasasakupan.", a: "Katatapos pa lamang", choices: ["Katatapos pa lamang","Naganap na (Perpektibo)","Nagaganap pa (Imperpektibo)","Magaganap pa lamang (Kontemplatibo)"] },
+  { q: "Nagbabasa si Carlo ng aklat.", a: "Nagaganap pa (Imperpektibo)", choices: ["Nagaganap pa (Imperpektibo)","Naganap na (Perpektibo)","Magaganap pa lamang (Kontemplatibo)","Katatapos pa lamang"] },
+  { q: "Nagpunas si Ella ng mesa.", a: "Naganap na (Perpektibo)", choices: ["Naganap na (Perpektibo)","Nagaganap pa (Imperpektibo)","Magaganap pa lamang (Kontemplatibo)","Katatapos pa lamang"] },
+  { q: "Sasayaw kami sa programa.", a: "Magaganap pa lamang (Kontemplatibo)", choices: ["Magaganap pa lamang (Kontemplatibo)","Naganap na (Perpektibo)","Nagaganap pa (Imperpektibo)","Katatapos pa lamang"] },
+  { q: "Nagdidilig si Tatay ng halaman.", a: "Nagaganap pa (Imperpektibo)", choices: ["Nagaganap pa (Imperpektibo)","Naganap na (Perpektibo)","Magaganap pa lamang (Kontemplatibo)","Katatapos pa lamang"] },
+  { q: "Bumili ako ng tinapay.", a: "Naganap na (Perpektibo)", choices: ["Naganap na (Perpektibo)","Nagaganap pa (Imperpektibo)","Magaganap pa lamang (Kontemplatibo)","Katatapos pa lamang"] },
+  { q: "Naglinis si Marco ng silid.", a: "Naganap na (Perpektibo)", choices: ["Naganap na (Perpektibo)","Nagaganap pa (Imperpektibo)","Magaganap pa lamang (Kontemplatibo)","Katatapos pa lamang"] },
+  { q: "Nagluluto si Nanay ng hapunan.", a: "Nagaganap pa (Imperpektibo)", choices: ["Nagaganap pa (Imperpektibo)","Naganap na (Perpektibo)","Magaganap pa lamang (Kontemplatibo)","Katatapos pa lamang"] },
+  { q: "Susulat ako ng liham.", a: "Magaganap pa lamang (Kontemplatibo)", choices: ["Magaganap pa lamang (Kontemplatibo)","Naganap na (Perpektibo)","Nagaganap pa (Imperpektibo)","Katatapos pa lamang"] },
+  { q: "Kumakain si Liza.", a: "Nagaganap pa (Imperpektibo)", choices: ["Nagaganap pa (Imperpektibo)","Naganap na (Perpektibo)","Magaganap pa lamang (Kontemplatibo)","Katatapos pa lamang"] },
+  { q: "Kakain si Liza.", a: "Magaganap pa lamang (Kontemplatibo)", choices: ["Magaganap pa lamang (Kontemplatibo)","Naganap na (Perpektibo)","Nagaganap pa (Imperpektibo)","Katatapos pa lamang"] },
+  { q: "Anyong katatapos ng \"umupo.\"", a: "Kauupo", choices: ["Kauupo","Uupo","Umuupo","Umupo"] },
+  { q: "Anyong katatapos ng \"bumangon.\"", a: "Kababangon", choices: ["Kababangon","Babangon","Bumabangon","Bumangon"] },
+  { q: "Anyong katatapos ng \"humingi.\"", a: "Kahihingi", choices: ["Kahihingi","Hihingi","Humihingi","Humingi"] },
+  { q: "Anyong katatapos ng \"lumuhod.\"", a: "Kaluluhod", choices: ["Kaluluhod","Luluhod","Lumuluhod","Lumuhod"] },
+  { q: "Anong aspekto ng pandiwa ang \"maglalaro\"?", a: "Kontemplatibo", choices: ["Kontemplatibo","Perpektibo","Imperpektibo","Katatapos"] },
+];
+
+// ═══════════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════════
+let state = {
+  awaiting: 'menu',
+  mode: null,
+  questions: [],
+  allAnswers: [],
+  qIndex: 0,
+  score: 0,
+  total: 0,
+  hintUsed: false,
+  audioEnabled: true,
+};
+
+// ═══════════════════════════════════════════════════════════════
+// TTS (UPGRADED FOR TRUE FILIPINO ACCENT)
+// ═══════════════════════════════════════════════════════════════
+let currentAudioStream = null;
+
+function speak(text) {
+  if (!state.audioEnabled) return;
+  
+  // Linisin ang mga nakaraang audio task
+  window.speechSynthesis.cancel();
+  if (currentAudioStream) {
+    currentAudioStream.pause();
+    currentAudioStream = null;
+  }
+  
+  // Tanggalin ang HTML tags at emojis para hindi basahin nang paputol-putol
+  const clean = text.replace(/<[^>]+>/g,'').replace(/[🇵🇭🌟✅❌💡⏭️🏆😊💪🔄🔲📚👋⭐✕🧭📏🗺️]/g,'');
+  
+  // PRIMARY METHOD: Google Translation Engine cloud voice stream (May natural na Filipino accent)
+  const googleTtsUrl = `https://translate.google.com/translate_tts?ie=UTF-8&tl=tl&client=tw-ob&q=${encodeURIComponent(clean)}`;
+  
+  currentAudioStream = new Audio(googleTtsUrl);
+  currentAudioStream.onplaying = () => showWave(true);
+  currentAudioStream.onended = currentAudioStream.onerror = () => showWave(false);
+  
+  currentAudioStream.play().catch(err => {
+    // BACKUP METHOD: Web Speech API (Gagana kapag walang internet connection)
+    console.warn("Google TTS blocked or offline. Falling back to local system speech engine.");
+    
+    const streamFallback = new SpeechSynthesisUtterance(clean);
+    streamFallback.lang = 'fil-PH';
+    streamFallback.rate = 0.95; streamFallback.pitch = 1.05; streamFallback.volume = 1;
+    
+    const voices = window.speechSynthesis.getVoices();
+    const filVoice = voices.find(v => v.lang.startsWith('fil') || v.lang.startsWith('tl'));
+    const engVoice = voices.find(v => v.lang.startsWith('en') && v.name.toLowerCase().includes('female'))
+                   || voices.find(v => v.lang.startsWith('en'));
+              
+    if (filVoice) {
+      streamFallback.voice = filVoice;
+    } else if (engVoice) {
+      streamFallback.voice = engVoice; 
+      streamFallback.lang = 'en-US'; 
+    }
+    
+    streamFallback.onstart = () => showWave(true);
+    streamFallback.onend = streamFallback.onerror = () => showWave(false);
+    window.speechSynthesis.speak(streamFallback);
+  });
+}
+
+function showWave(on) {
+  document.querySelectorAll('.speaker-wave').forEach(w => w.style.display = on ? 'inline-flex' : 'none');
+}
+
+// I-initialize ang mga boses ng system
+let localSystemVoices = [];
+function lookupSystemVoices() {
+  localSystemVoices = window.speechSynthesis.getVoices();
+}
+lookupSystemVoices();
+if (window.speechSynthesis.onvoiceschanged !== undefined) {
+  window.speechSynthesis.onvoiceschanged = lookupSystemVoices;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// UI HELPERS
+// ═══════════════════════════════════════════════════════════════
+const chatBox = document.getElementById('chat-box');
+const input = document.getElementById('user-input');
+const sendBtn = document.getElementById('send-btn');
+
+function scrollBottom() { chatBox.scrollTop = chatBox.scrollHeight; }
+
+function addMessage(role, html, speakText) {
+  const div = document.createElement('div');
+  div.className = `msg ${role}`;
+  const av = document.createElement('div');
+  av.className = 'avatar';
+  av.textContent = role === 'bot' ? '🤖' : '🧑';
+  const bub = document.createElement('div');
+  bub.className = 'bubble';
+  bub.innerHTML = role === 'bot'
+    ? html + '<span class="speaker-wave" style="display:none"><span></span><span></span><span></span><span></span><span></span></span>'
+    : html;
+  div.appendChild(av); div.appendChild(bub);
+  chatBox.appendChild(div);
+  scrollBottom(); bindChips();
+  if (role === 'bot') {
+    const txt = speakText || html.replace(/<[^>]+>/g,' ');
+    setTimeout(() => speak(txt), 350);
+  }
+}
+
+function addTyping() {
+  const d = document.createElement('div');
+  d.className = 'msg bot'; d.id = 'typing';
+  d.innerHTML = '<div class="avatar">🤖</div><div class="typing"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>';
+  chatBox.appendChild(d); scrollBottom();
+}
+function removeTyping() { const t = document.getElementById('typing'); if(t) t.remove(); }
+
+function bindChips() {
+  document.querySelectorAll('.chip:not([data-bound])').forEach(c => {
+    c.dataset.bound = '1';
+    c.addEventListener('click', () => handleUserMessage(c.dataset.val));
+  });
+}
+
+function updateScore() {
+  document.getElementById('score-val').textContent = state.score;
+  document.getElementById('total-val').textContent = state.total;
+}
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length-1; i > 0; i--) {
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]] = [a[j],a[i]];
+  }
+  return a;
+}
+
+function normalize(s) { return s.toLowerCase().trim().replace(/\s+/g,' '); }
+
+function checkAnswer(user, correct) {
+  const u = normalize(user), c = normalize(correct);
+  if (u === c) return true;
+  if (c.includes(u) && u.length > 5) return true;
+  const parts = c.split(/[,;\/]/);
+  for (const p of parts) if (u.includes(p.trim()) && p.trim().length > 4) return true;
+  return false;
+}
+
+function showResult() {
+  const pct = Math.round((state.score/state.total)*100);
+  const emoji = pct>=90?'🏆':pct>=70?'🌟':pct>=50?'😊':'💪';
+  const msg = pct>=90?'Napakahusay! Alam mo ang lahat!':pct>=70?'Magaling! Patuloy ka lang!':pct>=50?'Mabuti! Pag-aralan pa nang kaunti!':'Huwag sumuko! Subukan ulit!';
+  document.getElementById('res-emoji').textContent = emoji;
+  document.getElementById('res-score').textContent = state.score;
+  document.getElementById('res-total').textContent = state.total;
+  document.getElementById('res-msg').textContent = msg;
+  document.getElementById('result-overlay').classList.add('show');
+  speak(`Tapos na! Ang iyong puntos ay ${state.score} sa ${state.total}. ${msg}`);
+}
+
+function restartApp() {
+  document.getElementById('result-overlay').classList.remove('show');
+  state = { awaiting:'menu', mode:null, questions:[], allAnswers:[], qIndex:0, score:0, total:0, hintUsed:false, audioEnabled:state.audioEnabled };
+  chatBox.innerHTML = '';
+  document.querySelector('.input-bar').style.display = 'flex';
+  updateScore();
+  showMenu();
+}
+
+// ═══════════════════════════════════════════════════════════════
+// MC HELPERS
+// ═══════════════════════════════════════════════════════════════
+function getAllAnswers() {
+  const ans = [];
+  for (const qs of Object.values(topics)) for (const q of qs) ans.push(q.a);
+  return ans;
+}
+
+function generateChoices(correct, pool) {
+  const others = pool.filter(a => a !== correct);
+  const near = shuffle(others).sort((x, y) => Math.abs(x.length - correct.length) - Math.abs(y.length - correct.length)).slice(0, 7);
+  return shuffle([correct, ...shuffle(near).slice(0, 3)]);
+}
+
+function buildMCBtns(choices, correctAnswer) {
+  const letters = ['A','B','C','D','E'];
+  return `<div class="mc-options">${choices.map((c,i)=>
+    `<button class="mc-btn" data-answer="${encodeURIComponent(c)}" data-correct="${encodeURIComponent(correctAnswer)}" onclick="handleMCClick(this)">
+      <span class="letter">${letters[i]}</span>${c}
+    </button>`
+  ).join('')}</div>`;
+}
+
+function handleMCClick(btn) {
+  const allBtns = btn.closest('.mc-options').querySelectorAll('.mc-btn');
+  allBtns.forEach(b => b.disabled = true);
+  const chosen = decodeURIComponent(btn.dataset.answer);
+  const correct = decodeURIComponent(btn.dataset.correct);
+  const isCorrect = chosen === correct;
+  allBtns.forEach(b => { if(decodeURIComponent(b.dataset.answer)===correct) b.classList.add('correct'); });
+  if (!isCorrect) btn.classList.add('wrong');
+  setTimeout(() => {
+    if (isCorrect) {
+      state.score++;
+      addMessage('bot', `✅ <strong>Tama!</strong> +1 puntos! Ang sagot ay: <strong>${correct}</strong>`, `Tama! Ang sagot ay: ${correct}`);
+    } else {
+      addMessage('bot', `❌ <strong>Hindi tama.</strong> Ang tamang sagot ay: <strong>${correct}</strong>`, `Hindi tama. Ang tamang sagot ay: ${correct}`);
+    }
+    state.qIndex++; updateScore();
+    if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+    else setTimeout(showResult, 900);
+  }, 650);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// NEXT QUESTION
+// ═══════════════════════════════════════════════════════════════
+function nextQuestion() {
+  const qi = state.qIndex;
+  const q = state.questions[qi];
+  const num = qi + 1;
+
+  if (state.mode === 'full' || state.mode === 'topic_mc') {
+    const choices = generateChoices(q.a, state.allAnswers);
+    const tag = q.topic ? `<span class="topic-tag">${q.topic}</span><br>` : '';
+    const html = `${tag}<strong>T${num} sa ${state.total}:</strong> ${q.q}${buildMCBtns(choices, q.a)}`;
+    addMessage('bot', html, `Tanong ${num}. ${q.q}`);
+    return;
+  }
+
+  if (state.mode === 'tf') {
+    const html = `<strong>T${num} sa ${state.total}:</strong> <div class="scenario-card">${q.q}</div>
+      <span class="chip" data-val="tama">✅ Tama</span><span class="chip" data-val="mali">❌ Mali</span>`;
+    addMessage('bot', html, `Tanong ${num}. Tama o Mali: ${q.q}`);
+    return;
+  }
+
+  if (state.mode === 'identify') {
+    const btns = buildMCBtns(q.choices, q.a);
+    const html = `<strong>T${num} sa ${state.total}:</strong> Kilalanin kung ano ang tinutukoy:<div class="scenario-card">${q.q}</div>${btns}`;
+    addMessage('bot', html, `Tanong ${num}. Kilalanin ang tinutukoy: ${q.q}`);
+    return;
+  }
+
+  // typed answer mode
+  const tag = q.topic ? `<span class="topic-tag">${q.topic}</span><br>` : '';
+  const html = `${tag}<strong>T${num} sa ${state.total}:</strong> ${q.q}<br><small style="color:var(--muted)">Isulat ang sagot · i-type ang <em>hint</em> para sa tulong · <em>skip</em> para lumipat</small>`;
+  addMessage('bot', html, `Tanong ${num}. ${q.q}`);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// MENU
+// ═══════════════════════════════════════════════════════════════
+function showMenu() {
+  addMessage('bot',
+    `👋 <strong>Kumusta! Ako ang iyong Filipino Reviewer!</strong><br>Pag-aaralan natin ang <em>Sanhi at Bunga</em> at ang <em>Aspekto ng Pandiwa</em>: naganap na, katatapos pa lamang, perpektibo, imperpektibo, at kontemplatibo.<br><br>Ano ang gusto mong gawin?<br>
+    <span class="chip" data-val="1">📚 Pag-aralan ang Paksa</span>
+    <span class="chip" data-val="2">✅ Tama o Mali</span>
+    <span class="chip" data-val="3">🌐 Kilalanin: Sanhi, Bunga, at Aspekto</span>
+    <span class="chip" data-val="4">🌟 Buong Review (Multiple Choice)</span>`,
+    "Kumusta! Ako ang iyong Filipino Reviewer tungkol sa Sanhi at Bunga at Aspekto ng Pandiwa. Ano ang gusto mong gawin? Pag-aralan ang paksa, Tama o Mali, Kilalanin, o Buong Review na multiple choice?"
+  );
+  state.awaiting = 'menu';
+}
+
+// ═══════════════════════════════════════════════════════════════
+// PROCESS MESSAGE
+// ═══════════════════════════════════════════════════════════════
+function processMessage(msg) {
+  const aw = state.awaiting;
+
+  // ── MENU ──────────────────────────────────────────────────
+  if (aw === 'menu') {
+    if (msg === '1') {
+      state.awaiting = 'topic';
+      const keys = Object.keys(topics);
+      const chips = keys.map((t,i) => `<span class="chip" data-val="${i+1}">${i+1}. ${t}</span>`).join(' ');
+      addMessage('bot', `📚 Alin ang paksang gusto mong pag-aralan?<br>${chips}`, 'Alin ang paksang gusto mong pag-aralan?');
+
+    } else if (msg === '2') {
+      state.mode = 'tf';
+      state.questions = shuffle(trueOrFalse);
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'tf_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `✅ <strong>Tama o Mali!</strong> ${state.total} tanong. Simulan na!`, `Tama o Mali! ${state.total} tanong. Simulan na!`);
+      setTimeout(nextQuestion, 800);
+
+    } else if (msg === '3') {
+      state.mode = 'identify';
+      state.questions = shuffle(identifyQuestions);
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'mc_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `🌐 <strong>Kilalanin!</strong> Alamin kung sanhi o bunga, pang-ugnay, o aspekto ng pandiwa ang tinutukoy.`, 'Kilalanin! Alamin kung ano ang tinutukoy sa bawat pahayag.');
+      setTimeout(nextQuestion, 800);
+
+    } else if (msg === '4') {
+      state.mode = 'full';
+      const all = [];
+      for (const [topicName, qs] of Object.entries(topics)) {
+        qs.forEach(q => all.push({...q, topic: topicName}));
+      }
+      state.questions = shuffle(all);
+      state.allAnswers = getAllAnswers();
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'mc_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `🌟 <strong>Buong Review — Multiple Choice!</strong> ${state.total} tanong. Pag-isipang mabuti!`, `Buong Review! Multiple Choice! ${state.total} tanong. Pag-isipang mabuti!`);
+      setTimeout(nextQuestion, 800);
+
+    } else {
+      addMessage('bot',
+        `Pumili ng opsyon:<br>
+        <span class="chip" data-val="1">📚 Pag-aralan ang Paksa</span>
+        <span class="chip" data-val="2">✅ Tama o Mali</span>
+        <span class="chip" data-val="3">🌐 Kilalanin</span>
+        <span class="chip" data-val="4">🌟 Buong Review</span>`,
+        'Pumili ng opsyon.'
+      );
+    }
+    return;
+  }
+
+  // ── TOPIC SELECT ──────────────────────────────────────────
+  if (aw === 'topic') {
+    const keys = Object.keys(topics);
+    const idx = parseInt(msg) - 1;
+    if (keys[idx]) {
+      const topicName = keys[idx];
+      state.mode = 'topic_mc';
+      state.questions = shuffle(topics[topicName]);
+      state.allAnswers = getAllAnswers();
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'mc_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `📚 <strong>${topicName}</strong> — ${state.total} tanong. Handa ka na ba?`, `${topicName}. ${state.total} tanong. Handa ka na ba?`);
+      setTimeout(nextQuestion, 800);
+    } else {
+      const chips = Object.keys(topics).map((t,i) => `<span class="chip" data-val="${i+1}">${i+1}. ${t}</span>`).join(' ');
+      addMessage('bot', `Pumili ng wastong paksa:<br>${chips}`, 'Pumili ng wastong paksa.');
+    }
+    return;
+  }
+
+  // ── TYPED ANSWER ──────────────────────────────────────────
+  if (aw === 'answer') {
+    const q = state.questions[state.qIndex];
+    const m = normalize(msg);
+
+    if (m === 'hint') {
+      state.hintUsed = true;
+      addMessage('bot', `💡 <strong>Hint:</strong> ${q.hint}`, `Hint: ${q.hint}`);
+      return;
+    }
+    if (m === 'skip') {
+      addMessage('bot', `⏭️ Nilaktawan! Ang tamang sagot ay: <strong>${q.a}</strong>`, `Nilaktawan. Ang tamang sagot ay: ${q.a}`);
+      state.qIndex++; state.hintUsed = false;
+      if (state.qIndex < state.total) setTimeout(nextQuestion, 700);
+      else showResult();
+      return;
+    }
+
+    const correct = checkAnswer(msg, q.a);
+    if (correct) {
+      if (!state.hintUsed) state.score++;
+      const note = state.hintUsed ? ' <em>(ginamit ang hint — walang puntos)</em>' : ' +1 puntos!';
+      addMessage('bot', `✅ <strong>Tama!</strong>${note} Sagot: <strong>${q.a}</strong>`, `Tama! Ang sagot ay: ${q.a}`);
+    } else {
+      addMessage('bot', `❌ <strong>Hindi tama.</strong> Ang tamang sagot ay: <strong>${q.a}</strong>`, `Hindi tama. Ang tamang sagot ay: ${q.a}`);
+    }
+    state.qIndex++; state.hintUsed = false; updateScore();
+    if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+    else setTimeout(showResult, 900);
+    return;
+  }
+
+  // ── TRUE OR FALSE ─────────────────────────────────────────
+  if (aw === 'tf_answer') {
+    const q = state.questions[state.qIndex];
+    const ans = normalize(msg);
+    const valid = ans === 'tama' || ans === 'mali' || ans === 'true' || ans === 'false';
+    const mapped = (ans === 'true') ? 'tama' : (ans === 'false') ? 'mali' : ans;
+
+    if (valid) {
+      const correct = mapped === q.a;
+      if (correct) {
+        state.score++;
+        addMessage('bot', `✅ <strong>Tama!</strong> Ang sagot ay <strong>${q.a.toUpperCase()}</strong>.`, `Tama! Ang sagot ay ${q.a}.`);
+      } else {
+        addMessage('bot', `❌ <strong>Mali.</strong> Ang tamang sagot ay <strong>${q.a.toUpperCase()}</strong>.`, `Mali. Ang tamang sagot ay ${q.a}.`);
+      }
+      state.qIndex++; updateScore();
+      if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+      else setTimeout(showResult, 900);
+    } else {
+      addMessage('bot',
+        `Sagot: Tama o Mali?<br><span class="chip" data-val="tama">✅ Tama</span><span class="chip" data-val="mali">❌ Mali</span>`,
+        'Sagot: Tama o Mali?'
+      );
+    }
+    return;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// CONTROLS
+// ═══════════════════════════════════════════════════════════════
+function handleUserMessage(msg) {
+  if (!msg.trim()) return;
+  
+  // Ihinto nang malinis ang nagsasalitang audio kapag sumagot ang user
+  window.speechSynthesis.cancel();
+  if (currentAudioStream) {
+    currentAudioStream.pause();
+    currentAudioStream = null;
+    showWave(false);
+  }
+  
+  addMessage('user', msg.replace(/</g,'&lt;'));
+  input.value = '';
+  input.disabled = true; sendBtn.disabled = true;
+  addTyping();
+  setTimeout(() => {
+    removeTyping();
+    input.disabled = false; sendBtn.disabled = false;
+    input.focus();
+    processMessage(msg);
+  }, 480);
+}
+
+sendBtn.addEventListener('click', () => { handleUserMessage(input.value); });
+input.addEventListener('keydown', e => { if(e.key==='Enter') handleUserMessage(input.value); });
+
+document.getElementById('audio-toggle').addEventListener('click', function() {
+  state.audioEnabled = !state.audioEnabled;
+  this.textContent = state.audioEnabled ? '🔊' : '🔇';
+  this.classList.toggle('active', state.audioEnabled);
+  if (!state.audioEnabled) {
+    window.speechSynthesis.cancel();
+    if (currentAudioStream) {
+      currentAudioStream.pause();
+      currentAudioStream = null;
+      showWave(false);
+    }
+  }
+});
+
+// ═══════════════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════════════
+window.addEventListener('load', () => {
+  lookupSystemVoices();
+  showMenu();
+});
+
+function printPracticeTest() {
+  document.body.classList.add('printing-test');
+  window.print();
+}
+window.addEventListener('afterprint', () => {
+  document.body.classList.remove('printing-test');
+});
+
+// ═══════════════════════════════════════════════════════════════
+// BASAHIN ANG TALA (gumagamit ng boses ng browser — walang limitasyon
+// sa haba, hindi tulad ng maiikling audio clip ng Google TTS sa chat)
+// ═══════════════════════════════════════════════════════════════
+function getNotesText(section) {
+  const clone = section.cloneNode(true);
+  clone.querySelectorAll('button').forEach(b => b.remove());
+  let text = clone.innerText || clone.textContent || '';
+  text = text.replace(/\s+/g, ' ').trim();
+  return text;
+}
+
+function toggleNotesAudio() {
+  const btn = document.getElementById('notes-audio-btn');
+  if (!btn) return;
+
+  if (window.speechSynthesis.speaking || window.speechSynthesis.pending) {
+    window.speechSynthesis.cancel();
+    btn.innerHTML = '🔊 Basahin ang Tala';
+    btn.classList.remove('active');
+    return;
+  }
+
+  const activeSection = document.querySelector('.notes-section.active');
+  if (!activeSection) return;
+  const text = getNotesText(activeSection);
+  if (!text) return;
+
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.lang = 'fil-PH';
+  utter.rate = 0.95;
+  utter.pitch = 1.05;
+  utter.volume = 1;
+
+  const voices = window.speechSynthesis.getVoices();
+  const filVoice = voices.find(v => v.lang.startsWith('fil') || v.lang.startsWith('tl'));
+  const engVoice = voices.find(v => v.lang.startsWith('en') && v.name.toLowerCase().includes('female'))
+                 || voices.find(v => v.lang.startsWith('en'));
+  if (filVoice) {
+    utter.voice = filVoice;
+  } else if (engVoice) {
+    utter.voice = engVoice;
+    utter.lang = 'en-US';
+  }
+
+  utter.onstart = () => { btn.innerHTML = '⏹️ Ihinto ang Pagbasa'; btn.classList.add('active'); };
+  utter.onend = utter.onerror = () => { btn.innerHTML = '🔊 Basahin ang Tala'; btn.classList.remove('active'); };
+
+  window.speechSynthesis.speak(utter);
+}
+
+function switchTab(tabId, btn) {
+  window.speechSynthesis.cancel();
+  const audioBtn = document.getElementById('notes-audio-btn');
+  if (audioBtn) { audioBtn.innerHTML = '🔊 Basahin ang Tala'; audioBtn.classList.remove('active'); }
+  document.querySelectorAll('.notes-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.notes-tab').forEach(b => b.classList.remove('active'));
+  document.getElementById(tabId).classList.add('active');
+  btn.classList.add('active');
+}
+
+function closeNotesPanel() {
+  window.speechSynthesis.cancel();
+  const audioBtn = document.getElementById('notes-audio-btn');
+  if (audioBtn) { audioBtn.innerHTML = '🔊 Basahin ang Tala'; audioBtn.classList.remove('active'); }
+  document.getElementById('notes-overlay').classList.remove('show');
+}
+</script>
+
+<!-- ── Notes Panel ── -->
+<div class="notes-overlay" id="notes-overlay">
+  <div class="notes-panel">
+    <div class="notes-header">
+      <h2>📖 Sanhi at Bunga at Aspekto ng Pandiwa — Mga Tala</h2>
+      <div class="notes-header-actions">
+        <button class="print-btn" id="notes-audio-btn" onclick="toggleNotesAudio()" title="Basahin nang malakas ang tab na ito">🔊 Basahin ang Tala</button>
+        <button class="print-btn" onclick="printPracticeTest()" title="I-print o i-save bilang PDF ang Practice Test at Answer Key">🖨️ I-print ang Test &amp; Key</button>
+        <button class="notes-close" onclick="closeNotesPanel()">✕</button>
+      </div>
+    </div>
+    <div class="notes-tabs">
+      <button class="notes-tab active" onclick="switchTab('tab-sb', this)">🔗 Sanhi at Bunga</button>
+      <button class="notes-tab" onclick="switchTab('tab-nk', this)">⏰ Naganap na at Katatapos</button>
+      <button class="notes-tab" onclick="switchTab('tab-tatlo', this)">🔺 Tatlong Aspekto</button>
+      <button class="notes-tab" onclick="switchTab('tab-bb', this)">✍️ Mga Sagot sa Gawain</button>
+      <button class="notes-tab" onclick="switchTab('tab-tamomali', this)">✅ Tama o Mali</button>
+      <button class="notes-tab" onclick="switchTab('tab-ptest', this)">📝 Practice Test</button>
+      <button class="notes-tab" onclick="switchTab('tab-key', this)">🔑 Answer Key</button>
+      <button class="notes-tab" onclick="switchTab('tab-raw', this)">📄 Raw Notes</button>
+    </div>
+    <div class="notes-body">
+
+      <div class="notes-section active" id="tab-sb">
+        <div class="chapter-summary">
+          📚 <strong>Buod:</strong> Ang <strong>sanhi</strong> ay ang <strong>dahilan o paliwanag</strong> sa mga pangyayari. Ang <strong>bunga</strong> ay ang <strong>resulta o kinalabasan</strong>. Ang malinaw na sanhi at bunga ay tumutulong upang ganap na maunawaan ang teksto.
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 PAMPADALING TANDAAN</span>
+          <strong>SAnhi = SAn galing</strong> (ang simula o dahilan). <strong>BUnga = BUnga ng nangyari</strong> (ang resulta). Pang-ugnay ng bunga: <strong>"KA-BU-TU"</strong> = <strong>Ka</strong>ya, <strong>Bu</strong>nga nito, <strong>Tu</strong>loy. Pang-ugnay ng sanhi: <strong>sapagkat, dahil, dahil sa, kapag, kasi</strong>.
+        </div>
+        <table class="compare-table">
+          <tr><th>Pang-ugnay ng Sanhi</th><th>Pang-ugnay ng Bunga</th></tr>
+          <tr><td>sapagkat, dahil, dahil sa, kapag, kasi</td><td>kaya, bunga nito, tuloy</td></tr>
+        </table>
+        <div class="notes-topic">
+          <div class="notes-topic-title">📖 Mga Halimbawa</div>
+          <div class="notes-item"><span class="notes-term">Halimbawa 1</span><span class="notes-def"><strong>Makatarungan ang mga batas</strong> <em>(sanhi)</em> <u>kaya</u> <strong>sinusunod ito ng mga tao</strong> <em>(bunga)</em>.</span></div>
+          <div class="notes-item"><span class="notes-term">Halimbawa 2</span><span class="notes-def"><strong>Halos walang nakipaglibing</strong> <em>(bunga)</em> <u>dahil</u> <strong>sa masamang pag-uugali na ipinakita niya sa kaniyang mga nasasakupan</strong> <em>(sanhi)</em>.</span></div>
+        </div>
+        <div class="tandaan-box">
+          <span class="tandaan-label">PAALALA</span>
+          Sa dokumentong ini-upload, ang mga label sa Halimbawa 1 ay nakasulat nang baligtad (nakalagay na "bunga" ang <em>Makatarungan ang mga batas</em>). Sinusunod ng reviewer ang tamang lohika: ang bahaging kasunod ng <strong>kaya</strong> ay <strong>bunga</strong>, kaya ang <em>Makatarungan ang mga batas</em> ang <strong>sanhi</strong>.
+        </div>
+        <table class="compare-table">
+          <tr><th>Sitwasyon (sa dokumento)</th><th>Halimbawang Sagot ko</th></tr>
+          <tr><td>Malimit ang pagputol ng matandang kahoy sa kagubatan (sanhi)</td><td><strong>Bunga:</strong> Nauubos ang mga puno at maaaring gumuho ang lupa</td></tr>
+          <tr><td>Biglang gumuho ang lupa sa kabundukan (bunga)</td><td><strong>Sanhi:</strong> Walang habas na pagputol ng mga puno</td></tr>
+          <tr><td>Umuunti na ang nahuhuling isda sa karagatan (bunga)</td><td><strong>Sanhi:</strong> Labis na panghuhuli at pagdumi sa dagat</td></tr>
+          <tr><td>Palaging nanghuhuli ng mga kakaibang ibon tulad ng kuwago (sanhi)</td><td><strong>Bunga:</strong> Nauubos o nanganganib maubos ang mga ibon</td></tr>
+          <tr><td>Nagsasagawa ng programa ang gobyerno para buhayin ang mga kagubatan (sanhi)</td><td><strong>Bunga:</strong> Muling dumarami ang mga puno</td></tr>
+          <tr><td>Pinangangalagaan ng mga Bantay Gubat ang mga agila (sanhi)</td><td><strong>Bunga:</strong> Naililigtas at dumarami ang mga agila</td></tr>
+          <tr><td>Nagkasakit ka sa balat (bunga)</td><td><strong>Sanhi:</strong> Naligo o nabasa sa maruming tubig</td></tr>
+          <tr><td>Tinatambakan ng lupa ang ilog (sanhi)</td><td><strong>Bunga:</strong> Bumabaw ang ilog at maaaring bumaha</td></tr>
+        </table>
+        <div class="tandaan-box">
+          <span class="tandaan-label">TANDAAN</span>
+          Walang nakasulat na sagot ang dokumento sa talahanayan ng sanhi at bunga. Ang mga sagot sa itaas ay <strong>halimbawa</strong> na ginawa ko; maaaring iba ang isulat ng iyong anak, basta makatwiran ang ugnayan.
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-nk">
+        <div class="chapter-summary">
+          📚 <strong>Buod:</strong> Ang <strong>aspekto o panahunan</strong> ng pandiwa ay nagpapakita kung <strong>kailan ginawa o gagawin</strong> ang kilos. Ipinahahayag ito sa pamamagitan ng <strong>pagbabanghay</strong>.
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 PAMPADALING TANDAAN</span>
+          <strong>Katatapos = KA + ULIT + UGAT.</strong> Idagdag ang <strong>ka-</strong>, ulitin ang <strong>unang pantig</strong>, at isunod ang <strong>salitang-ugat</strong>: <strong>ka-da-dating</strong>, <strong>ka-u-upo</strong>, <strong>ka-ba-bangon</strong>. Naganap na: hanapin ang <strong>kanina, noon, kagabi</strong>.
+        </div>
+        <table class="compare-table">
+          <tr><th>Aspekto</th><th>Kahulugan</th><th>Halimbawa</th></tr>
+          <tr><td>Naganap na (pangnagdaan)</td><td>Natapos na o nasimulan na ang kilos; may salitang pamanahon tulad ng <em>kanina, noon, kagabi</em></td><td><strong>Pinamunuan</strong> nila ang buong isla. <strong>Nagmakaawa</strong> kanina ang matanda.</td></tr>
+          <tr><td>Katatapos pa lamang</td><td>Hindi pa katagalan mula nang natapos ang gawain; may <em>ka-</em> sa unahan at inuulit ang unang pantig ng salitang-ugat</td><td><strong>Kaaalis</strong> pa lamang ng matanda. <strong>Kapapatupad</strong> lang ng bagong batas.</td></tr>
+        </table>
+      </div>
+
+      <div class="notes-section" id="tab-tatlo">
+        <div class="chapter-summary">
+          📚 <strong>Buod:</strong> Ang pandiwa ay salitang nagsasaad ng <strong>kilos o galaw</strong>. May <strong>tatlong aspekto</strong>: <strong>perpektibo</strong> (naganap na), <strong>imperpektibo</strong> (nagaganap pa), at <strong>kontemplatibo</strong> (magaganap pa lamang).
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 PAMPADALING TANDAAN</span>
+          <strong>"P-I-K" = Tapos – Ginagawa – Gagawin.</strong> <strong>P</strong>erpektibo = <strong>P</strong>asado (tapos na). <strong>I</strong>mperpektibo = <strong>I</strong>pinagpapatuloy (ginagawa pa). <strong>K</strong>ontemplatibo = <strong>K</strong>ontemplahin pa lang (gagawin pa). Gamit ang LARO: <strong>naglaro – naglalaro – maglalaro</strong>.
+        </div>
+        <table class="compare-table">
+          <tr><th>Aspekto</th><th>Kahulugan</th><th>Tandaan</th><th>Halimbawa</th></tr>
+          <tr><td>Perpektibo</td><td>Naganap na ang kilos</td><td>Tapos na ang kilos</td><td>Kumain si Liza. · Naglinis si Marco ng silid. · Sumulat ako ng liham.</td></tr>
+          <tr><td>Imperpektibo</td><td>Nagaganap pa ang kilos</td><td>Kasalukuyang ginagawa o inuulit ang kilos</td><td>Kumakain si Liza. · Naglilinis si Marco ng silid. · Sumusulat ako ng liham.</td></tr>
+          <tr><td>Kontemplatibo</td><td>Magaganap pa lamang ang kilos</td><td>Hindi pa nasisimulan ang kilos</td><td>Kakain si Liza. · Maglilinis si Marco ng silid. · Susulat ako ng liham.</td></tr>
+        </table>
+        <table class="compare-table">
+          <tr><th>Aspekto</th><th>Pangungusap</th><th>Kahulugan</th></tr>
+          <tr><td>Perpektibo</td><td>Naglaro si Mia.</td><td>Tapos na</td></tr>
+          <tr><td>Imperpektibo</td><td>Naglalaro si Mia.</td><td>Ginagawa pa</td></tr>
+          <tr><td>Kontemplatibo</td><td>Maglalaro si Mia.</td><td>Gagawin pa</td></tr>
+        </table>
+        <div class="notes-topic">
+          <div class="notes-topic-title">✅ Sagot sa Subukan Mo!</div>
+          <div class="notes-item"><span class="notes-term">1. Nagbabasa si Carlo ng aklat.</span><span class="notes-def"><strong>Imperpektibo</strong> — nagbabasa (ginagawa pa)</span></div>
+          <div class="notes-item"><span class="notes-term">2. Nagpunas si Ella ng mesa.</span><span class="notes-def"><strong>Perpektibo</strong> — nagpunas (tapos na)</span></div>
+          <div class="notes-item"><span class="notes-term">3. Sasayaw kami sa programa.</span><span class="notes-def"><strong>Kontemplatibo</strong> — sasayaw (gagawin pa)</span></div>
+          <div class="notes-item"><span class="notes-term">4. Nagdidilig si Tatay ng halaman.</span><span class="notes-def"><strong>Imperpektibo</strong> — nagdidilig (ginagawa pa)</span></div>
+          <div class="notes-item"><span class="notes-term">5. Bumili ako ng tinapay.</span><span class="notes-def"><strong>Perpektibo</strong> — bumili (tapos na)</span></div>
+        </div>
+        <div class="tandaan-box">
+          <span class="tandaan-label">TANDAAN!</span>
+          Perpektibo = Naganap na · Imperpektibo = Nagaganap pa · Kontemplatibo = Magaganap pa lamang. Ang aspekto ng pandiwa ay tumutulong upang malaman ang kalagayan ng kilos.
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-bb">
+        <div class="chapter-summary">
+          📚 <strong>Buod:</strong> Dito makikita ang mga sagot sa mga <strong>gawain ng dokumento</strong> tungkol sa pagbabanghay. Ang mga <strong>makapal na salita</strong> ang mga sagot na hinango ko mula sa panuntunang <strong>ka- + ulit ng unang pantig + salitang-ugat</strong>, dahil walang susi ang dokumento.
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 PAMPADALING TANDAAN</span>
+          Ugat → pantig na uulitin → <strong>ka-</strong>: <strong>dating → da → ka-da-dating</strong>. Kapag nagsisimula sa patinig, inuulit din ang patinig: <strong>upo → u → ka-u-upo</strong>.
+        </div>
+        <table class="compare-table">
+          <tr><th>Naganap na</th><th>Katatapos Lamang</th></tr>
+          <tr><td>1. dumating</td><td><strong>kadarating</strong></td></tr>
+          <tr><td>2. <strong>nakilala</strong></td><td>kakikilala</td></tr>
+          <tr><td>3. umupo</td><td><strong>kauupo</strong></td></tr>
+          <tr><td>4. <strong>tumupad</strong></td><td>katutupad</td></tr>
+          <tr><td>5. <strong>humingi</strong></td><td>kahihingi</td></tr>
+          <tr><td>6. <strong>lumuhod</strong></td><td>kaluluhod</td></tr>
+          <tr><td>7. nagsumamo</td><td><strong>kasusumamo</strong></td></tr>
+          <tr><td>8. hinikayat</td><td><strong>kahihikayat</strong></td></tr>
+          <tr><td>9. <strong>namasid</strong></td><td>kamamasid</td></tr>
+          <tr><td>10. bumangon</td><td><strong>kababangon</strong></td></tr>
+        </table>
+        <table class="compare-table">
+          <tr><th>Pangnagdaan</th><th>Katatapos</th></tr>
+          <tr><td>1. narinig</td><td><strong>karirinig</strong></td></tr>
+          <tr><td>2. nakita</td><td><strong>kakikita</strong></td></tr>
+          <tr><td>3. sinabi</td><td><strong>kasasabi</strong></td></tr>
+          <tr><td>4. umalis</td><td><strong>kaaalis</strong></td></tr>
+          <tr><td>5. nagburda</td><td><strong>kabuburda</strong></td></tr>
+          <tr><td>6. naghain</td><td><strong>kahahain</strong></td></tr>
+          <tr><td>7. tumakas</td><td><strong>katatakas</strong></td></tr>
+          <tr><td>8. nagtinda</td><td><strong>katitinda</strong></td></tr>
+          <tr><td>9. nagdasal</td><td><strong>kadadasal</strong></td></tr>
+          <tr><td>10. nagwalis</td><td><strong>kawawalis</strong></td></tr>
+        </table>
+        <table class="compare-table">
+          <tr><th>Pagtataya B (aspekto ng may diin na pandiwa)</th><th>Sagot</th></tr>
+          <tr><td>1. itinulak</td><td>Naganap na</td></tr>
+          <tr><td>2. Humarang</td><td>Naganap na</td></tr>
+          <tr><td>3. tumubong</td><td>Naganap na</td></tr>
+          <tr><td>4. Humingi (noon)</td><td>Naganap na</td></tr>
+          <tr><td>5. Kaaalis pa lamang</td><td><strong>Katatapos pa lamang</strong></td></tr>
+          <tr><td>6. iginawad</td><td>Naganap na</td></tr>
+          <tr><td>7. Nagbago</td><td>Naganap na</td></tr>
+          <tr><td>8. nakipaglibing (noon)</td><td>Naganap na</td></tr>
+          <tr><td>9. Dumating (kahapon)</td><td>Naganap na</td></tr>
+          <tr><td>10. Pinatawad (na)</td><td>Naganap na</td></tr>
+        </table>
+      </div>
+
+      <div class="notes-section" id="tab-tamomali">
+        <div class="notes-topic">
+          <div class="notes-topic-title">✅ Tama o Mali — Mga Paalala</div>
+          <div class="notes-item"><span class="notes-term"><span style="color:#ef4444">MALI</span></span><span class="notes-def">Ang bunga ang dahilan → ang <strong>sanhi</strong> ang dahilan; ang bunga ang resulta.</span></div>
+          <div class="notes-item"><span class="notes-term"><span style="color:#ef4444">MALI</span></span><span class="notes-def">Ang "kaya" ay pang-ugnay ng sanhi → pang-ugnay ito ng <strong>bunga</strong>.</span></div>
+          <div class="notes-item"><span class="notes-term"><span style="color:#ef4444">MALI</span></span><span class="notes-def">Ang "kasi" ay pang-ugnay ng bunga → pang-ugnay ito ng <strong>sanhi</strong>.</span></div>
+          <div class="notes-item"><span class="notes-term"><span style="color:#ef4444">MALI</span></span><span class="notes-def">Ang naganap na ay hindi pa nasisimulan → ang <strong>kontemplatibo</strong> ang hindi pa nasisimulan.</span></div>
+          <div class="notes-item"><span class="notes-term"><span style="color:#ef4444">MALI</span></span><span class="notes-def">Ang katatapos ay matagal nang natapos → <strong>hindi pa katagalan</strong> mula nang natapos.</span></div>
+          <div class="notes-item"><span class="notes-term"><span style="color:#ef4444">MALI</span></span><span class="notes-def">Ang imperpektibo ay magaganap pa lamang → <strong>nagaganap pa</strong>; ang kontemplatibo ang magaganap pa lamang.</span></div>
+          <div class="notes-item"><span class="notes-term"><span style="color:#ef4444">MALI</span></span><span class="notes-def">Ang "Naglalaro si Mia" ay kontemplatibo → <strong>imperpektibo</strong> ito.</span></div>
+          <div class="notes-item"><span class="notes-term"><span style="color:#ef4444">MALI</span></span><span class="notes-def">Ang "Sasayaw kami" ay perpektibo → <strong>kontemplatibo</strong> ito.</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-ptest">
+        <div class="notes-topic">
+          <div class="notes-topic-title">📝 Practice Test (54 aytem)</div>
+<div class="ptest-part-title">Bahagi I — Sanhi o Bunga?</div>
+<div class="ptest-bank">Isulat ang <b>S</b> kung <b>sanhi</b> at <b>B</b> kung <b>bunga</b> ang bahaging nasa loob ng panaklong [ ].</div>
+<div class="ptest-q"><b>1.</b> Nabasa ang mga damit [dahil sa biglang ulan]. <span class="opt">Sagot: ______</span></div>
+<div class="ptest-q"><b>2.</b> Madalas mag-ehersisyo si Ben kaya [lumakas ang kaniyang katawan]. <span class="opt">Sagot: ______</span></div>
+<div class="ptest-q"><b>3.</b> [Hindi siya nag-aral] kaya bumagsak siya sa pagsusulit. <span class="opt">Sagot: ______</span></div>
+<div class="ptest-q"><b>4.</b> Naubos ang mga puno sa bundok [dahil sa walang habas na pagputol]. <span class="opt">Sagot: ______</span></div>
+<div class="ptest-q"><b>5.</b> Sapagkat [maraming basura sa ilog], bumabaw ito. <span class="opt">Sagot: ______</span></div>
+<div class="ptest-q"><b>6.</b> Maraming nagtanim ng puno kaya [muling naging luntian ang kagubatan]. <span class="opt">Sagot: ______</span></div>
+<div class="ptest-q"><b>7.</b> Nagkasakit si Ana [dahil nabasa siya sa ulan]. <span class="opt">Sagot: ______</span></div>
+<div class="ptest-q"><b>8.</b> Kumain nang kumain si Lito, tuloy [sumakit ang kaniyang tiyan]. <span class="opt">Sagot: ______</span></div>
+<div class="ptest-q"><b>9.</b> Walang tubig sa gripo [kasi nasira ang tubo]. <span class="opt">Sagot: ______</span></div>
+<div class="ptest-q"><b>10.</b> Nag-ipon si Maya ng pera kaya [nakabili siya ng bagong bag]. <span class="opt">Sagot: ______</span></div>
+<div class="ptest-part-title">Bahagi II — Pang-ugnay</div>
+<div class="ptest-bank">Isulat ang <b>S</b> kung ang pang-ugnay ay para sa <b>sanhi</b> at <b>B</b> kung para sa <b>bunga</b>.</div>
+<div class="ptest-q"><b>11.</b> sapagkat <span class="opt">Sagot: ______</span></div>
+<div class="ptest-q"><b>12.</b> kaya <span class="opt">Sagot: ______</span></div>
+<div class="ptest-q"><b>13.</b> dahil <span class="opt">Sagot: ______</span></div>
+<div class="ptest-q"><b>14.</b> tuloy <span class="opt">Sagot: ______</span></div>
+<div class="ptest-q"><b>15.</b> kasi <span class="opt">Sagot: ______</span></div>
+<div class="ptest-q"><b>16.</b> bunga nito <span class="opt">Sagot: ______</span></div>
+<div class="ptest-q"><b>17.</b> dahil sa <span class="opt">Sagot: ______</span></div>
+<div class="ptest-q"><b>18.</b> kapag <span class="opt">Sagot: ______</span></div>
+<div class="ptest-part-title">Bahagi III — Piliin ang Tamang Sagot</div>
+<div class="ptest-q"><b>19.</b> Ano ang sanhi?<br><span class="opt">a) ang resulta ng pangyayari</span><span class="opt">b) ang dahilan o paliwanag sa pangyayari</span><span class="opt">c) ang kilos ng pandiwa</span><span class="opt">d) ang panlapi ng salita</span></div>
+<div class="ptest-q"><b>20.</b> Ano ang bunga?<br><span class="opt">a) ang resulta o kinalabasan ng pangyayari</span><span class="opt">b) ang dahilan ng pangyayari</span><span class="opt">c) ang simula ng kuwento</span><span class="opt">d) ang tauhan ng kuwento</span></div>
+<div class="ptest-q"><b>21.</b> Alin ang pang-ugnay ng sanhi?<br><span class="opt">a) kaya</span><span class="opt">b) tuloy</span><span class="opt">c) dahil sa</span><span class="opt">d) bunga nito</span></div>
+<div class="ptest-q"><b>22.</b> Alin ang pang-ugnay ng bunga?<br><span class="opt">a) sapagkat</span><span class="opt">b) kasi</span><span class="opt">c) kapag</span><span class="opt">d) kaya</span></div>
+<div class="ptest-q"><b>23.</b> Sa pangungusap na &quot;Makatarungan ang mga batas kaya sinusunod ito ng mga tao,&quot; ano ang bunga?<br><span class="opt">a) Makatarungan ang mga batas</span><span class="opt">b) sinusunod ito ng mga tao</span><span class="opt">c) kaya</span><span class="opt">d) mga batas</span></div>
+<div class="ptest-q"><b>24.</b> Ano ang aspekto o panahunan ng pandiwa?<br><span class="opt">a) anyo ng pandiwa na nagpapakita kung kailan ginawa o gagawin ang kilos</span><span class="opt">b) bilang ng pantig ng salita</span><span class="opt">c) uri ng pang-uri</span><span class="opt">d) bahagi ng liham</span></div>
+<div class="ptest-q"><b>25.</b> Anong aspekto ang nagpapakitang natapos na o nasimulan na ang kilos?<br><span class="opt">a) naganap na</span><span class="opt">b) magaganap pa lamang</span><span class="opt">c) nagaganap pa</span><span class="opt">d) walang aspekto</span></div>
+<div class="ptest-q"><b>26.</b> Alin ang salitang pamanahon ng naganap na kilos?<br><span class="opt">a) bukas</span><span class="opt">b) mamaya</span><span class="opt">c) kagabi</span><span class="opt">d) sa makalawa</span></div>
+<div class="ptest-q"><b>27.</b> Ano ang ipinapakita ng katatapos pa lamang?<br><span class="opt">a) hindi pa katagalan mula nang natapos ang gawain</span><span class="opt">b) matagal nang natapos ang gawain</span><span class="opt">c) hindi pa nasisimulan ang gawain</span><span class="opt">d) paulit-ulit na ginagawa ang gawain</span></div>
+<div class="ptest-q"><b>28.</b> Paano binubuo ang pandiwang katatapos?<br><span class="opt">a) ka- + ulit ng unang pantig + salitang-ugat</span><span class="opt">b) mag- + salitang-ugat</span><span class="opt">c) -um- + salitang-ugat</span><span class="opt">d) pang- + salitang-ugat</span></div>
+<div class="ptest-q"><b>29.</b> Alin ang pandiwang katatapos pa lamang?<br><span class="opt">a) kaaalis</span><span class="opt">b) aalis</span><span class="opt">c) umalis</span><span class="opt">d) umaalis</span></div>
+<div class="ptest-q"><b>30.</b> Ano ang ibig sabihin ng perpektibo?<br><span class="opt">a) naganap na ang kilos</span><span class="opt">b) nagaganap pa ang kilos</span><span class="opt">c) magaganap pa lamang ang kilos</span><span class="opt">d) walang kilos</span></div>
+<div class="ptest-q"><b>31.</b> Ano ang ibig sabihin ng imperpektibo?<br><span class="opt">a) naganap na ang kilos</span><span class="opt">b) nagaganap pa o paulit-ulit na ginagawa ang kilos</span><span class="opt">c) magaganap pa lamang ang kilos</span><span class="opt">d) natapos na ang kilos</span></div>
+<div class="ptest-q"><b>32.</b> Ano ang ibig sabihin ng kontemplatibo?<br><span class="opt">a) tapos na ang kilos</span><span class="opt">b) ginagawa pa ang kilos</span><span class="opt">c) magaganap pa lamang ang kilos</span><span class="opt">d) hindi na gagawin ang kilos</span></div>
+<div class="ptest-q"><b>33.</b> Anong aspekto ang &quot;Maglalaro si Mia&quot;?<br><span class="opt">a) perpektibo</span><span class="opt">b) imperpektibo</span><span class="opt">c) kontemplatibo</span><span class="opt">d) katatapos</span></div>
+<div class="ptest-part-title">Bahagi IV — Aspekto ng Pandiwa</div>
+<div class="ptest-bank">Isulat kung <b>Perpektibo</b>, <b>Imperpektibo</b>, o <b>Kontemplatibo</b> ang aspekto ng pangungusap.</div>
+<div class="ptest-q"><b>34.</b> Kumain si Liza kanina. <span class="opt">Sagot: ______________</span></div>
+<div class="ptest-q"><b>35.</b> Kumakain si Liza ngayon. <span class="opt">Sagot: ______________</span></div>
+<div class="ptest-q"><b>36.</b> Kakain si Liza mamaya. <span class="opt">Sagot: ______________</span></div>
+<div class="ptest-q"><b>37.</b> Naglinis si Marco ng silid. <span class="opt">Sagot: ______________</span></div>
+<div class="ptest-q"><b>38.</b> Nagluluto si Nanay ng hapunan. <span class="opt">Sagot: ______________</span></div>
+<div class="ptest-q"><b>39.</b> Susulat ako ng liham. <span class="opt">Sagot: ______________</span></div>
+<div class="ptest-q"><b>40.</b> Naglalaro si Mia. <span class="opt">Sagot: ______________</span></div>
+<div class="ptest-q"><b>41.</b> Sumayaw sila kagabi. <span class="opt">Sagot: ______________</span></div>
+<div class="ptest-q"><b>42.</b> Maglalaba si Lola bukas. <span class="opt">Sagot: ______________</span></div>
+<div class="ptest-q"><b>43.</b> Nagdidilig si Tatay ng halaman. <span class="opt">Sagot: ______________</span></div>
+<div class="ptest-part-title">Bahagi V — Katatapos Pa Lamang</div>
+<div class="ptest-bank">Isulat ang anyong <b>katatapos</b> ng bawat pandiwa. Gamitin ang ka- + ulit ng unang pantig + salitang-ugat.</div>
+<div class="ptest-q"><b>44.</b> dumating <span class="opt">Sagot: ______________</span></div>
+<div class="ptest-q"><b>45.</b> umupo <span class="opt">Sagot: ______________</span></div>
+<div class="ptest-q"><b>46.</b> humingi <span class="opt">Sagot: ______________</span></div>
+<div class="ptest-q"><b>47.</b> lumuhod <span class="opt">Sagot: ______________</span></div>
+<div class="ptest-q"><b>48.</b> bumangon <span class="opt">Sagot: ______________</span></div>
+<div class="ptest-part-title">Bahagi VI — Maikling Sagot</div>
+<div class="ptest-q"><b>49.</b> Ano ang sanhi at ano ang bunga? Magbigay ng halimbawa.<br><span class="opt">______________________________________</span></div>
+<div class="ptest-q"><b>50.</b> Isulat ang tatlong aspekto ng pandiwa at ang kahulugan ng bawat isa.<br><span class="opt">______________________________________</span></div>
+<div class="ptest-q"><b>51.</b> Gamit ang salitang-ugat na LARO, sumulat ng pangungusap na perpektibo.<br><span class="opt">______________________________________</span></div>
+<div class="ptest-q"><b>52.</b> Gamit ang salitang-ugat na LARO, sumulat ng pangungusap na imperpektibo.<br><span class="opt">______________________________________</span></div>
+<div class="ptest-q"><b>53.</b> Gamit ang salitang-ugat na LARO, sumulat ng pangungusap na kontemplatibo.<br><span class="opt">______________________________________</span></div>
+<div class="ptest-q"><b>54.</b> Ano ang katatapos pa lamang? Paano ito binubuo? Magbigay ng halimbawa.<br><span class="opt">______________________________________</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-key">
+        <div class="notes-topic">
+<div class="notes-topic-title">Bahagi I — Sanhi o Bunga</div>
+<div class="key-grid"><div class="key-pill">1. <b>S</b></div><div class="key-pill">2. <b>B</b></div><div class="key-pill">3. <b>S</b></div><div class="key-pill">4. <b>S</b></div><div class="key-pill">5. <b>S</b></div><div class="key-pill">6. <b>B</b></div><div class="key-pill">7. <b>S</b></div><div class="key-pill">8. <b>B</b></div><div class="key-pill">9. <b>S</b></div><div class="key-pill">10. <b>B</b></div></div>
+<div class="notes-topic-title">Bahagi II — Pang-ugnay</div>
+<div class="key-grid"><div class="key-pill">11. <b>S</b></div><div class="key-pill">12. <b>B</b></div><div class="key-pill">13. <b>S</b></div><div class="key-pill">14. <b>B</b></div><div class="key-pill">15. <b>S</b></div><div class="key-pill">16. <b>B</b></div><div class="key-pill">17. <b>S</b></div><div class="key-pill">18. <b>S</b></div></div>
+<div class="notes-topic-title">Bahagi III — Multiple Choice</div>
+<div class="key-grid"><div class="key-pill">19. <b>b) ang dahilan o paliwanag sa pangyayari</b></div><div class="key-pill">20. <b>a) ang resulta o kinalabasan ng pangyayari</b></div><div class="key-pill">21. <b>c) dahil sa</b></div><div class="key-pill">22. <b>d) kaya</b></div><div class="key-pill">23. <b>b) sinusunod ito ng mga tao</b></div><div class="key-pill">24. <b>a) anyo ng pandiwa na nagpapakita kung kailan ginawa o gagawin ang kilos</b></div><div class="key-pill">25. <b>a) naganap na</b></div><div class="key-pill">26. <b>c) kagabi</b></div><div class="key-pill">27. <b>a) hindi pa katagalan mula nang natapos ang gawain</b></div><div class="key-pill">28. <b>a) ka- + ulit ng unang pantig + salitang-ugat</b></div><div class="key-pill">29. <b>a) kaaalis</b></div><div class="key-pill">30. <b>a) naganap na ang kilos</b></div><div class="key-pill">31. <b>b) nagaganap pa o paulit-ulit na ginagawa ang kilos</b></div><div class="key-pill">32. <b>c) magaganap pa lamang ang kilos</b></div><div class="key-pill">33. <b>c) kontemplatibo</b></div></div>
+<div class="notes-topic-title">Bahagi IV — Aspekto</div>
+<div class="key-grid"><div class="key-pill">34. <b>Perpektibo</b></div><div class="key-pill">35. <b>Imperpektibo</b></div><div class="key-pill">36. <b>Kontemplatibo</b></div><div class="key-pill">37. <b>Perpektibo</b></div><div class="key-pill">38. <b>Imperpektibo</b></div><div class="key-pill">39. <b>Kontemplatibo</b></div><div class="key-pill">40. <b>Imperpektibo</b></div><div class="key-pill">41. <b>Perpektibo</b></div><div class="key-pill">42. <b>Kontemplatibo</b></div><div class="key-pill">43. <b>Imperpektibo</b></div></div>
+<div class="notes-topic-title">Bahagi V — Katatapos</div>
+<div class="key-grid"><div class="key-pill">44. <b>kadarating</b></div><div class="key-pill">45. <b>kauupo</b></div><div class="key-pill">46. <b>kahihingi</b></div><div class="key-pill">47. <b>kaluluhod</b></div><div class="key-pill">48. <b>kababangon</b></div></div>
+<div class="notes-topic-title">Bahagi VI — Maikling Sagot (mga halimbawang sagot)</div>
+<div class="ptest-q"><b>49.</b> Ang sanhi ay ang dahilan o paliwanag sa pangyayari; ang bunga ay ang resulta o kinalabasan. Halimbawa: &quot;Makatarungan ang mga batas kaya sinusunod ito ng mga tao.&quot; (sanhi: makatarungan ang mga batas; bunga: sinusunod ito ng mga tao)</div><div class="ptest-q"><b>50.</b> Perpektibo: naganap na ang kilos. Imperpektibo: nagaganap pa o paulit-ulit na ginagawa ang kilos. Kontemplatibo: magaganap pa lamang ang kilos.</div><div class="ptest-q"><b>51.</b> Halimbawa: Naglaro si Mia.</div><div class="ptest-q"><b>52.</b> Halimbawa: Naglalaro si Mia.</div><div class="ptest-q"><b>53.</b> Halimbawa: Maglalaro si Mia.</div><div class="ptest-q"><b>54.</b> Nagpapakita ito na hindi pa katagalan mula nang natapos ang gawain. Binubuo ito ng ka- + ulit ng unang pantig + salitang-ugat. Halimbawa: kaaalis, kapapatupad.</div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-raw">
+        <div class="rawnotes-intro">
+          📌 Ito ang orihinal na nilalaman ng dokumentong ini-upload, nang walang binago — para madali mong masangguni ang buong teksto kapag kailangan mo ng detalye na wala sa reviewer.
+        </div>
+        <div class="rawnotes-doc">
+<h3 class="doc-heading">Sanhi at Bunga</h3>
+<p>Sa pagbabasa ng kuwento, mapapansin na dumadaloy ang mga pangyayari bunga ng mga naunang pangyayari. Lagi nang nagkakaroon ng problema dahil sa isang aksiyon, at nalulutas naman ito dahil sa isa pang aksiyon.</p>
+<p>Mahalagang maging malinaw ang mga pangyayaring pinag-uugnay sa teksto gaya ng sanhi at bunga upang ganap itong maunawaan. Tinatawag na <strong>sanhi</strong> ang dahilan o paliwanag sa mga pangyayari. Samantala, ang <strong>bunga</strong> ay ang resulta o kinalabasan ng pangyayari.</p>
+<p>Sa tulong ng mga salitang nagpapakita ng ugnayang sanhi at bunga, madaling matutukoy ang sanhi o dahilan at bunga o resulta ng pangyayari. Ginagamit ang mga pang-ugnay na <em>sapagkat, dahil, dahil sa, kapag,</em> at <em>kasi</em> sa pagsasabi ng sanhi o dahilan. Samantalang naglalahad naman ng resulta ang mga pang-ugnay na <em>kaya, bunga nito,</em> at <em>tuloy.</em></p>
+<p><em>Mga Halimbawa:</em></p>
+<ol type="1">
+<li><p>(bunga) <strong>Makatarungan ang mga batas</strong> <em>kaya</em> (sanhi) <strong>sinusunod ito ng mga tao.</strong></p></li>
+<li><p>(bunga) <strong>Halos walang nakipaglibing</strong> <em>dahil</em> (sanhi) <strong>sa masamang pag-uugali na ipinakita niya sa kaniyang mga nasasakupan.</strong></p></li>
+</ol>
+<p><strong>B.</strong> Punan ng sanhi o bunga ang talahanayan batay sa sitwasyong inilahad sa bawat bilang.</p>
+<table style="width:99%;">
+<colgroup>
+<col style="width: 67%" />
+<col style="width: 30%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>Sanhi</strong></th>
+<th style="text-align: left;"><strong>Bunga</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">1. Malimit ang pagputol ng matandang kahoy sa kagubatan.</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2.</td>
+<td style="text-align: left;">Biglang gumuho ang lupa sa kabundukan.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">3.</td>
+<td style="text-align: left;">Umuunti na ang nahuhuling isda sa karagatan.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">4. Palaging nanghuhuli ang mga tao ng mga kakaibang uri ng ibon tulad ng kuwago.</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">5. Nagsasagawa ng mga programa ang gobyerno para muling buhayin ang mga kagubatan.</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">6. Pinangangalagaan ng mga Bantay Gubat ang mga agilang nahuhuli at dinadala sa kanilang tanggapan.</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">7.</td>
+<td style="text-align: left;">Nagkasakit ka sa balat.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">8. Tinatambakan ng lupa ang ilog.</td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table>
+<h3 class="doc-heading">Paglinang sa Pagbasa</h3>
+<h3 class="doc-heading">Aspekto ng Pandiwa</h3>
+<p>May iba’t ibang anyo ang mga pandiwa na nagpapakita kung kailan ginawa o gagawin ang isang aksiyon. Ito ang tinatawag na <strong>aspekto</strong> o panahunan ng pandiwa na ipinahahayag sa pamamagitan ng pagbabanghay.</p>
+<p>Narito ang iba’t ibang aspekto ng pandiwa:</p>
+<p>Ang aspektong <strong>naganap na</strong> o <strong>pangnagdaan</strong> ay nagpapakita na ang isang aksiyon o gawain ay natapos na o nasimulan na. Maaaring gumamit ng mga salitang nagsasaad ng panahon gaya ng <em>kanina, noon, kagabi,</em> at iba pa sa pangungusap upang ipakitang naganap na ang aksiyon o gawain.</p>
+<p><em>Mga Halimbawa:</em></p>
+<ol type="1">
+<li><p>Noong unang panahon, <strong>pinamunuan</strong> nila ang buong isla.</p></li>
+<li><p><strong>Nagmakaawa</strong> kanina ang matanda kay Rajah Kawayan.</p></li>
+</ol>
+<p>Ang aspektong <strong>katatapos pa lamang</strong> ay nagpapakitang hindi pa katagalan mula nang natapos ang gawain. Karaniwan, ito’y may panlaping <em>ka-</em> sa unahan ng salita at inuulit ang unang pantig ng salitang-ugat.</p>
+<p><em>Mga Halimbawa:</em></p>
+<ol type="1">
+<li><p><strong>Kaaalis</strong> pa lamang ng matandang pinagmalupitan ni Rajah Kawayan.</p></li>
+<li><p><strong>Kapapatupad</strong> lang ng bagong batas sa mga nasasakupan.</p></li>
+</ol>
+<h3 class="doc-heading">Pagtataya</h3>
+<p><strong>A.</strong> Punan ang talahanayan ayon sa aspekto ng pandiwang hinihingi.</p>
+<table style="width:97%;">
+<colgroup>
+<col style="width: 43%" />
+<col style="width: 54%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>Naganap na</strong></th>
+<th style="text-align: left;"><strong>Katatapos lamang</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">1. dumating</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2.</td>
+<td style="text-align: left;">kakikilala</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">3. umupo</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">4.</td>
+<td style="text-align: left;">katutupad</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">5.</td>
+<td style="text-align: left;">kahihingi</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">6.</td>
+<td style="text-align: left;">kaluluhod</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">7. nagsumamo</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">8. hinikayat</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">9.</td>
+<td style="text-align: left;">kamamasid</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">10. bumangon</td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table>
+<p><strong>B.</strong> Tukuyin kung anong aspekto ng pandiwa ang ginamit sa bawat pangungusap. Isulat ang sagot sa patlang.</p>
+<ol type="1">
+<li><p>_____ Noong isang araw, <strong>itinulak</strong> niya ang matanda.</p></li>
+<li><p>_____ <strong>Humarang</strong> ang matanda sa kaniyang daraanan kanina.</p></li>
+<li><p>_____ May <strong>tumubong</strong> halaman sa libingan ni Rajah Kawayan makalipas ang ilang araw.</p></li>
+<li><p>_____ <strong>Humingi</strong> noon ng pagkain ang matanda.</p></li>
+<li><p>_____ <strong>Kaaalis</strong> pa lamang ng matanda nang bigla siyang nagkasakit.</p></li>
+<li><p>_____ Mabagsik ang mga parusang <strong>iginawad</strong> niya sa kaniyang mga nasasakupan.</p></li>
+<li><p>_____ <strong>Nagbago</strong> na raw ang rajah.</p></li>
+<li><p>_____ Walang <strong>nakipaglibing</strong> noon dahil masama ang ugali ng rajah.</p></li>
+<li><p>_____ <strong>Dumating</strong> kahapon ang matanda sa palasyo.</p></li>
+<li><p>_____ <strong>Pinatawad</strong> na ng mga tao ang rajah noong namatay ito.</p></li>
+<li><h3 class="doc-heading">Pagpapayamang Gawain</h3></li>
+<li><p>Banghayin ang mga aspekto ng pandiwa sa talahanayan. Gawing gabay ang aspektong pangnagdaan sa pagpuno ng talahanayan.</p></li>
+</ol>
+<table style="width:97%;">
+<colgroup>
+<col style="width: 40%" />
+<col style="width: 56%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>Pangnagdaan</strong></th>
+<th style="text-align: left;"><strong>Katatapos</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">1. narinig</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2. nakita</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">3. sinabi</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">4. umalis</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">5. nagburda</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">6. naghain</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">7. tumakas</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">8. nagtinda</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">9. nagdasal</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">10. nagwalis</td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table>
+
+<h3 class="doc-heading">3 Aspekto ng Pandiwa (PDF)</h3>
+<p><em>Teksto mula sa PDF na ini-upload, bawat pahina ayon sa pagkakasunod.</em></p>
+<p><strong>Pahina 1</strong><br>3 ASPEKTO NG<br>PANDIWA<br>Aspektong naglalarawan kung kailan naganap ang kilos<br>Aralin sa Filipino</p>
+<p><strong>Pahina 2</strong><br>Mga Layunin<br>Pagkatapos ng aralin, inaasahang kaya mong:<br>1 · 2 · 3<br>Matukoy · Maipaliwanag · Makabuo<br>ang tatlong aspeto ng · ang gamit ng bawat aspeto. · ng pangungusap gamit ang<br>pandiwa. · angkop na pandiwa.</p>
+<p><strong>Pahina 3</strong><br>Balik-aral: Ano ang Pandiwa?<br>Ang pandiwa ay salitang nagsasaad ng kilos o galaw.<br>Mga halimbawa:<br>tumakbo · Ang bata ay tumakbo.<br>kumakain · Si Ana ay kumakain.<br>magsusulat · Magsusulat si Ben ng liham.</p>
+<p><strong>Pahina 4</strong><br>Tatlong Aspeto ng Pandiwa<br>Tumutukoy ito sa kalagayan o panahon ng kilos.<br>PERPEKTIBO · IMPERPEKTIBO · KONTEMPLATIBO<br>Naganap na ang kilos · Nagaganap pa ang kilos · Magaganap pa lamang ang<br>kilos<br>Kumain si Liza. · Kumakain si Liza. · Kakain si Liza.</p>
+<p><strong>Pahina 5</strong><br>1. Perpektibo<br>Naganap na o natapos na ang kilos.<br>Tandaan:<br>Tapos na ang kilos.<br>Mga halimbawa:<br>• Naglinis si Marco ng silid.<br>• Nagluto si Nanay ng hapunan.<br>• Sumulat ako ng liham.</p>
+<p><strong>Pahina 6</strong><br>2. Imperpektibo<br>Nagaganap pa o paulit-ulit na ginagawa ang kilos.<br>Tandaan:<br>Kasalukuyang ginagawa o inuulit ang kilos.<br>Mga halimbawa:<br>• Naglilinis si Marco ng silid.<br>• Nagluluto si Nanay ng hapunan.<br>• Sumusulat ako ng liham.</p>
+<p><strong>Pahina 7</strong><br>3. Kontemplatibo<br>Magaganap pa lamang ang kilos.<br>Tandaan:<br>Hindi pa nasisimulan ang kilos.<br>Mga halimbawa:<br>• Maglilinis si Marco ng silid.<br>• Magluluto si Nanay ng hapunan.<br>• Susulat ako ng liham.</p>
+<p><strong>Pahina 8</strong><br>Paghambingin Natin<br>Pansinin kung paano nagbabago ang pandiwa ayon sa aspeto.<br>Aspeto<br>Aspeto · Pangungusap<br>Pangungusap · Kahulugan<br>Kahulugan<br>Perpektibo · Naglaro si Mia. · Tapos na<br>Imperpektibo · Naglalaro si Mia. · Ginagawa pa<br>Kontemplatibo · Maglalaro si Mia. · Gagawin pa</p>
+<p><strong>Pahina 9</strong><br>Subukan Mo!<br>Tukuyin kung anong aspeto ng pandiwa ang ginamit.<br>1. Nagbabasa si Carlo ng aklat. · Perpektibo / Imperpektibo / Kontemplatibo<br>2. Nagpunas si Ella ng mesa. · Perpektibo / Imperpektibo / Kontemplatibo<br>3. Sasayaw kami sa programa. · Perpektibo / Imperpektibo / Kontemplatibo<br>4. Nagdidilig si Tatay ng halaman. · Perpektibo / Imperpektibo / Kontemplatibo<br>5. Bumili ako ng tinapay. · Perpektibo / Imperpektibo / Kontemplatibo</p>
+<p><strong>Pahina 10</strong><br>Sagot sa Pagsasanay<br>Tingnan kung tama ang iyong mga sagot.<br>• 1. Imperpektibo — nagbabasa (ginagawa pa)<br>• 2. Perpektibo — nagpunas (tapos na)<br>• 3. Kontemplatibo — sasayaw (gagawin pa)<br>• 4. Imperpektibo — nagdidilig (ginagawa pa)<br>• 5. Perpektibo — bumili (tapos na)</p>
+<p><strong>Pahina 11</strong><br>Gawain: Baguhin ang Pandiwa<br>Gamitin ang salitang-ugat na LARO.<br>Perpektibo · Isulat ang pangungusap na nagsasaad na tapos nang maglaro.<br>Imperpektibo · Isulat ang pangungusap na nagsasaad na naglalaro pa.<br>Kontemplatibo · Isulat ang pangungusap na nagsasaad na maglalaro pa lamang.</p>
+<p><strong>Pahina 12</strong><br>TANDAAN!<br>Perpektibo = Naganap na<br>Imperpektibo = Nagaganap pa<br>Kontemplatibo = Magaganap pa lamang<br>Ang aspeto ng pandiwa ay tumutulong upang malaman ang kalagayan ng kilos.<br>Maraming salamat!</p>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ── Hidden Print Area (Practice Test + Answer Key) ── -->
+<div id="print-area">
+<div class="p-cover"><div class="p-icon">🗣️</div><h1>Filipino 5 — Sanhi at Bunga at Aspekto ng Pandiwa Practice Test</h1><div class="p-sub">Sanhi at Bunga · Naganap na · Katatapos · Perpektibo · Imperpektibo · Kontemplatibo</div>
+<div class="p-info-box"><div><strong>Pangalan:</strong> _____________________________________</div><div><strong>Baitang/Pangkat:</strong> ___________________ &nbsp; <strong>Petsa:</strong> ___________________</div><div><strong>Iskor:</strong> _______ / 54</div></div>
+<div class="p-instructions"><strong>Panuto:</strong> Basahing mabuti ang bawat aytem. Isulat ang sagot sa patlang (Bahagi I, II, IV, V), piliin ang tamang letra (Bahagi III), o sagutin sa buong pangungusap (Bahagi VI). Good luck!</div></div>
+<h2 class="p-part-title">Bahagi I — Sanhi o Bunga?</h2>
+<div class="p-bank">Isulat ang <b>S</b> kung <b>sanhi</b> at <b>B</b> kung <b>bunga</b> ang bahaging nasa loob ng panaklong [ ].</div>
+<div class="p-q"><b>1.</b> Nabasa ang mga damit [dahil sa biglang ulan]. <span class="p-blank"></span></div>
+<div class="p-q"><b>2.</b> Madalas mag-ehersisyo si Ben kaya [lumakas ang kaniyang katawan]. <span class="p-blank"></span></div>
+<div class="p-q"><b>3.</b> [Hindi siya nag-aral] kaya bumagsak siya sa pagsusulit. <span class="p-blank"></span></div>
+<div class="p-q"><b>4.</b> Naubos ang mga puno sa bundok [dahil sa walang habas na pagputol]. <span class="p-blank"></span></div>
+<div class="p-q"><b>5.</b> Sapagkat [maraming basura sa ilog], bumabaw ito. <span class="p-blank"></span></div>
+<div class="p-q"><b>6.</b> Maraming nagtanim ng puno kaya [muling naging luntian ang kagubatan]. <span class="p-blank"></span></div>
+<div class="p-q"><b>7.</b> Nagkasakit si Ana [dahil nabasa siya sa ulan]. <span class="p-blank"></span></div>
+<div class="p-q"><b>8.</b> Kumain nang kumain si Lito, tuloy [sumakit ang kaniyang tiyan]. <span class="p-blank"></span></div>
+<div class="p-q"><b>9.</b> Walang tubig sa gripo [kasi nasira ang tubo]. <span class="p-blank"></span></div>
+<div class="p-q"><b>10.</b> Nag-ipon si Maya ng pera kaya [nakabili siya ng bagong bag]. <span class="p-blank"></span></div>
+<div class="p-break"></div>
+<h2 class="p-part-title">Bahagi II — Pang-ugnay</h2>
+<div class="p-bank">Isulat ang <b>S</b> kung ang pang-ugnay ay para sa <b>sanhi</b> at <b>B</b> kung para sa <b>bunga</b>.</div>
+<div class="p-q"><b>11.</b> sapagkat <span class="p-blank"></span></div>
+<div class="p-q"><b>12.</b> kaya <span class="p-blank"></span></div>
+<div class="p-q"><b>13.</b> dahil <span class="p-blank"></span></div>
+<div class="p-q"><b>14.</b> tuloy <span class="p-blank"></span></div>
+<div class="p-q"><b>15.</b> kasi <span class="p-blank"></span></div>
+<div class="p-q"><b>16.</b> bunga nito <span class="p-blank"></span></div>
+<div class="p-q"><b>17.</b> dahil sa <span class="p-blank"></span></div>
+<div class="p-q"><b>18.</b> kapag <span class="p-blank"></span></div>
+<h2 class="p-part-title">Bahagi III — Piliin ang Tamang Sagot</h2>
+<div class="p-q"><b>19.</b> Ano ang sanhi?<br><span class="p-opt">a) ang resulta ng pangyayari</span><span class="p-opt">b) ang dahilan o paliwanag sa pangyayari</span><span class="p-opt">c) ang kilos ng pandiwa</span><span class="p-opt">d) ang panlapi ng salita</span></div>
+<div class="p-q"><b>20.</b> Ano ang bunga?<br><span class="p-opt">a) ang resulta o kinalabasan ng pangyayari</span><span class="p-opt">b) ang dahilan ng pangyayari</span><span class="p-opt">c) ang simula ng kuwento</span><span class="p-opt">d) ang tauhan ng kuwento</span></div>
+<div class="p-q"><b>21.</b> Alin ang pang-ugnay ng sanhi?<br><span class="p-opt">a) kaya</span><span class="p-opt">b) tuloy</span><span class="p-opt">c) dahil sa</span><span class="p-opt">d) bunga nito</span></div>
+<div class="p-q"><b>22.</b> Alin ang pang-ugnay ng bunga?<br><span class="p-opt">a) sapagkat</span><span class="p-opt">b) kasi</span><span class="p-opt">c) kapag</span><span class="p-opt">d) kaya</span></div>
+<div class="p-q"><b>23.</b> Sa pangungusap na &quot;Makatarungan ang mga batas kaya sinusunod ito ng mga tao,&quot; ano ang bunga?<br><span class="p-opt">a) Makatarungan ang mga batas</span><span class="p-opt">b) sinusunod ito ng mga tao</span><span class="p-opt">c) kaya</span><span class="p-opt">d) mga batas</span></div>
+<div class="p-q"><b>24.</b> Ano ang aspekto o panahunan ng pandiwa?<br><span class="p-opt">a) anyo ng pandiwa na nagpapakita kung kailan ginawa o gagawin ang kilos</span><span class="p-opt">b) bilang ng pantig ng salita</span><span class="p-opt">c) uri ng pang-uri</span><span class="p-opt">d) bahagi ng liham</span></div>
+<div class="p-q"><b>25.</b> Anong aspekto ang nagpapakitang natapos na o nasimulan na ang kilos?<br><span class="p-opt">a) naganap na</span><span class="p-opt">b) magaganap pa lamang</span><span class="p-opt">c) nagaganap pa</span><span class="p-opt">d) walang aspekto</span></div>
+<div class="p-q"><b>26.</b> Alin ang salitang pamanahon ng naganap na kilos?<br><span class="p-opt">a) bukas</span><span class="p-opt">b) mamaya</span><span class="p-opt">c) kagabi</span><span class="p-opt">d) sa makalawa</span></div>
+<div class="p-q"><b>27.</b> Ano ang ipinapakita ng katatapos pa lamang?<br><span class="p-opt">a) hindi pa katagalan mula nang natapos ang gawain</span><span class="p-opt">b) matagal nang natapos ang gawain</span><span class="p-opt">c) hindi pa nasisimulan ang gawain</span><span class="p-opt">d) paulit-ulit na ginagawa ang gawain</span></div>
+<div class="p-q"><b>28.</b> Paano binubuo ang pandiwang katatapos?<br><span class="p-opt">a) ka- + ulit ng unang pantig + salitang-ugat</span><span class="p-opt">b) mag- + salitang-ugat</span><span class="p-opt">c) -um- + salitang-ugat</span><span class="p-opt">d) pang- + salitang-ugat</span></div>
+<div class="p-q"><b>29.</b> Alin ang pandiwang katatapos pa lamang?<br><span class="p-opt">a) kaaalis</span><span class="p-opt">b) aalis</span><span class="p-opt">c) umalis</span><span class="p-opt">d) umaalis</span></div>
+<div class="p-q"><b>30.</b> Ano ang ibig sabihin ng perpektibo?<br><span class="p-opt">a) naganap na ang kilos</span><span class="p-opt">b) nagaganap pa ang kilos</span><span class="p-opt">c) magaganap pa lamang ang kilos</span><span class="p-opt">d) walang kilos</span></div>
+<div class="p-q"><b>31.</b> Ano ang ibig sabihin ng imperpektibo?<br><span class="p-opt">a) naganap na ang kilos</span><span class="p-opt">b) nagaganap pa o paulit-ulit na ginagawa ang kilos</span><span class="p-opt">c) magaganap pa lamang ang kilos</span><span class="p-opt">d) natapos na ang kilos</span></div>
+<div class="p-q"><b>32.</b> Ano ang ibig sabihin ng kontemplatibo?<br><span class="p-opt">a) tapos na ang kilos</span><span class="p-opt">b) ginagawa pa ang kilos</span><span class="p-opt">c) magaganap pa lamang ang kilos</span><span class="p-opt">d) hindi na gagawin ang kilos</span></div>
+<div class="p-q"><b>33.</b> Anong aspekto ang &quot;Maglalaro si Mia&quot;?<br><span class="p-opt">a) perpektibo</span><span class="p-opt">b) imperpektibo</span><span class="p-opt">c) kontemplatibo</span><span class="p-opt">d) katatapos</span></div>
+<div class="p-break"></div>
+<h2 class="p-part-title">Bahagi IV — Aspekto ng Pandiwa</h2>
+<div class="p-bank">Isulat kung <b>Perpektibo</b>, <b>Imperpektibo</b>, o <b>Kontemplatibo</b> ang aspekto ng pangungusap.</div>
+<div class="p-q"><b>34.</b> Kumain si Liza kanina. <span class="p-blank"></span></div>
+<div class="p-q"><b>35.</b> Kumakain si Liza ngayon. <span class="p-blank"></span></div>
+<div class="p-q"><b>36.</b> Kakain si Liza mamaya. <span class="p-blank"></span></div>
+<div class="p-q"><b>37.</b> Naglinis si Marco ng silid. <span class="p-blank"></span></div>
+<div class="p-q"><b>38.</b> Nagluluto si Nanay ng hapunan. <span class="p-blank"></span></div>
+<div class="p-q"><b>39.</b> Susulat ako ng liham. <span class="p-blank"></span></div>
+<div class="p-q"><b>40.</b> Naglalaro si Mia. <span class="p-blank"></span></div>
+<div class="p-q"><b>41.</b> Sumayaw sila kagabi. <span class="p-blank"></span></div>
+<div class="p-q"><b>42.</b> Maglalaba si Lola bukas. <span class="p-blank"></span></div>
+<div class="p-q"><b>43.</b> Nagdidilig si Tatay ng halaman. <span class="p-blank"></span></div>
+<h2 class="p-part-title">Bahagi V — Katatapos Pa Lamang</h2>
+<div class="p-bank">Isulat ang anyong <b>katatapos</b> ng bawat pandiwa. Gamitin ang ka- + ulit ng unang pantig + salitang-ugat.</div>
+<div class="p-q"><b>44.</b> dumating <span class="p-blank"></span></div>
+<div class="p-q"><b>45.</b> umupo <span class="p-blank"></span></div>
+<div class="p-q"><b>46.</b> humingi <span class="p-blank"></span></div>
+<div class="p-q"><b>47.</b> lumuhod <span class="p-blank"></span></div>
+<div class="p-q"><b>48.</b> bumangon <span class="p-blank"></span></div>
+<div class="p-break"></div>
+<h2 class="p-part-title">Bahagi VI — Maikling Sagot</h2>
+<div class="p-q"><b>49.</b> Ano ang sanhi at ano ang bunga? Magbigay ng halimbawa.<br><br>_________________________________________________<br><br>_________________________________________________</div>
+<div class="p-q"><b>50.</b> Isulat ang tatlong aspekto ng pandiwa at ang kahulugan ng bawat isa.<br><br>_________________________________________________<br><br>_________________________________________________</div>
+<div class="p-q"><b>51.</b> Gamit ang salitang-ugat na LARO, sumulat ng pangungusap na perpektibo.<br><br>_________________________________________________<br><br>_________________________________________________</div>
+<div class="p-q"><b>52.</b> Gamit ang salitang-ugat na LARO, sumulat ng pangungusap na imperpektibo.<br><br>_________________________________________________<br><br>_________________________________________________</div>
+<div class="p-q"><b>53.</b> Gamit ang salitang-ugat na LARO, sumulat ng pangungusap na kontemplatibo.<br><br>_________________________________________________<br><br>_________________________________________________</div>
+<div class="p-q"><b>54.</b> Ano ang katatapos pa lamang? Paano ito binubuo? Magbigay ng halimbawa.<br><br>_________________________________________________<br><br>_________________________________________________</div>
+<div class="p-break"></div><h2 class="p-part-title">✅ Kumpletong Susi sa Pagwawasto</h2>
+<div class="p-key-part-title">Bahagi I — Sanhi o Bunga</div>
+<div class="p-key-grid"><div class="p-key-pill">1. <b>S</b></div><div class="p-key-pill">2. <b>B</b></div><div class="p-key-pill">3. <b>S</b></div><div class="p-key-pill">4. <b>S</b></div><div class="p-key-pill">5. <b>S</b></div><div class="p-key-pill">6. <b>B</b></div><div class="p-key-pill">7. <b>S</b></div><div class="p-key-pill">8. <b>B</b></div><div class="p-key-pill">9. <b>S</b></div><div class="p-key-pill">10. <b>B</b></div></div>
+<div class="p-key-part-title">Bahagi II — Pang-ugnay</div>
+<div class="p-key-grid"><div class="p-key-pill">11. <b>S</b></div><div class="p-key-pill">12. <b>B</b></div><div class="p-key-pill">13. <b>S</b></div><div class="p-key-pill">14. <b>B</b></div><div class="p-key-pill">15. <b>S</b></div><div class="p-key-pill">16. <b>B</b></div><div class="p-key-pill">17. <b>S</b></div><div class="p-key-pill">18. <b>S</b></div></div>
+<div class="p-key-part-title">Bahagi III — Multiple Choice</div>
+<div class="p-key-grid"><div class="p-key-pill">19. <b>b) ang dahilan o paliwanag sa pangyayari</b></div><div class="p-key-pill">20. <b>a) ang resulta o kinalabasan ng pangyayari</b></div><div class="p-key-pill">21. <b>c) dahil sa</b></div><div class="p-key-pill">22. <b>d) kaya</b></div><div class="p-key-pill">23. <b>b) sinusunod ito ng mga tao</b></div><div class="p-key-pill">24. <b>a) anyo ng pandiwa na nagpapakita kung kailan ginawa o gagawin ang kilos</b></div><div class="p-key-pill">25. <b>a) naganap na</b></div><div class="p-key-pill">26. <b>c) kagabi</b></div><div class="p-key-pill">27. <b>a) hindi pa katagalan mula nang natapos ang gawain</b></div><div class="p-key-pill">28. <b>a) ka- + ulit ng unang pantig + salitang-ugat</b></div><div class="p-key-pill">29. <b>a) kaaalis</b></div><div class="p-key-pill">30. <b>a) naganap na ang kilos</b></div><div class="p-key-pill">31. <b>b) nagaganap pa o paulit-ulit na ginagawa ang kilos</b></div><div class="p-key-pill">32. <b>c) magaganap pa lamang ang kilos</b></div><div class="p-key-pill">33. <b>c) kontemplatibo</b></div></div>
+<div class="p-key-part-title">Bahagi IV — Aspekto</div>
+<div class="p-key-grid"><div class="p-key-pill">34. <b>Perpektibo</b></div><div class="p-key-pill">35. <b>Imperpektibo</b></div><div class="p-key-pill">36. <b>Kontemplatibo</b></div><div class="p-key-pill">37. <b>Perpektibo</b></div><div class="p-key-pill">38. <b>Imperpektibo</b></div><div class="p-key-pill">39. <b>Kontemplatibo</b></div><div class="p-key-pill">40. <b>Imperpektibo</b></div><div class="p-key-pill">41. <b>Perpektibo</b></div><div class="p-key-pill">42. <b>Kontemplatibo</b></div><div class="p-key-pill">43. <b>Imperpektibo</b></div></div>
+<div class="p-key-part-title">Bahagi V — Katatapos</div>
+<div class="p-key-grid"><div class="p-key-pill">44. <b>kadarating</b></div><div class="p-key-pill">45. <b>kauupo</b></div><div class="p-key-pill">46. <b>kahihingi</b></div><div class="p-key-pill">47. <b>kaluluhod</b></div><div class="p-key-pill">48. <b>kababangon</b></div></div>
+<div class="p-key-part-title">Bahagi VI — Maikling Sagot (mga halimbawang sagot)</div>
+<div class="p-q"><b>49.</b> Ang sanhi ay ang dahilan o paliwanag sa pangyayari; ang bunga ay ang resulta o kinalabasan. Halimbawa: &quot;Makatarungan ang mga batas kaya sinusunod ito ng mga tao.&quot; (sanhi: makatarungan ang mga batas; bunga: sinusunod ito ng mga tao)</div><div class="p-q"><b>50.</b> Perpektibo: naganap na ang kilos. Imperpektibo: nagaganap pa o paulit-ulit na ginagawa ang kilos. Kontemplatibo: magaganap pa lamang ang kilos.</div><div class="p-q"><b>51.</b> Halimbawa: Naglaro si Mia.</div><div class="p-q"><b>52.</b> Halimbawa: Naglalaro si Mia.</div><div class="p-q"><b>53.</b> Halimbawa: Maglalaro si Mia.</div><div class="p-q"><b>54.</b> Nagpapakita ito na hindi pa katagalan mula nang natapos ang gawain. Binubuo ito ng ka- + ulit ng unang pantig + salitang-ugat. Halimbawa: kaaalis, kapapatupad.</div>
+</div>
+
+</body>
+</html>
