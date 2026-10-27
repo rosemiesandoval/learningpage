@@ -1,0 +1,2299 @@
+<!DOCTYPE html>
+<html lang="tl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🎯 MAPEH: Batuhang-Bola, Movement &amp; Melody Reviewer 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --gold: #f59e0b;
+  --gold-dark: #b45309;
+  --blue: #3b82f6;
+  --blue-dark: #1d4ed8;
+  --red: #ef4444;
+  --green: #22c55e;
+  --bg: #0c1a0e;
+  --surface: #132015;
+  --surface2: #1a2e1d;
+  --text: #f0fdf4;
+  --muted: #86efac;
+  --border: #166534;
+}
+
+body {
+  font-family: 'Baloo 2', cursive;
+  background: var(--bg);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--text);
+  background-image:
+    radial-gradient(ellipse at 10% 30%, rgba(245,158,11,.06) 0%, transparent 55%),
+    radial-gradient(ellipse at 90% 70%, rgba(59,130,246,.06) 0%, transparent 55%);
+}
+
+header {
+  width: 100%;
+  background: linear-gradient(135deg, #14532d, #1e3a5f);
+  border-bottom: 2px solid var(--gold-dark);
+  padding: 13px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 4px 30px rgba(0,0,0,.5);
+}
+.header-icon { font-size: 2rem; animation: float 3s ease-in-out infinite; }
+@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
+
+header h1 {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.45rem;
+  background: linear-gradient(90deg, var(--gold), #fde68a, var(--gold));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+header .sub { font-size: .72rem; color: var(--muted); margin-top: 1px; }
+
+.header-controls { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+.score-pill {
+  background: rgba(245,158,11,.15);
+  border: 1px solid rgba(245,158,11,.4);
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-weight: 800;
+  font-size: .85rem;
+  color: var(--gold);
+}
+.audio-btn {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  background: var(--surface2);
+  color: var(--text);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all .2s;
+  display: flex; align-items: center; justify-content: center;
+}
+.audio-btn:hover, .audio-btn.active { background: #14532d; border-color: var(--gold); }
+
+.chat-wrap {
+  width: 100%; max-width: 700px; flex: 1;
+  display: flex; flex-direction: column;
+  padding: 16px 14px 0;
+}
+
+#chat-box {
+  flex: 1; overflow-y: auto;
+  display: flex; flex-direction: column;
+  gap: 14px; padding-bottom: 10px;
+  max-height: calc(100vh - 200px);
+  scroll-behavior: smooth;
+}
+#chat-box::-webkit-scrollbar { width: 4px; }
+#chat-box::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+.msg { display: flex; gap: 8px; }
+.msg.user { flex-direction: row-reverse; }
+
+.avatar {
+  width: 34px; height: 34px; border-radius: 50%;
+  font-size: 1rem; display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 2px;
+}
+.msg.bot .avatar { background: linear-gradient(135deg, #14532d, #1e3a5f); border: 1.5px solid rgba(245,158,11,.4); }
+.msg.user .avatar { background: linear-gradient(135deg, #1e3a5f, #14532d); border: 1.5px solid rgba(59,130,246,.3); }
+
+.bubble {
+  max-width: 80%;
+  padding: 11px 16px;
+  border-radius: 18px;
+  font-size: .9rem;
+  line-height: 1.65;
+  animation: pop .22s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes pop { from{transform:scale(.88) translateY(6px);opacity:0} to{transform:scale(1) translateY(0);opacity:1} }
+
+.msg.bot .bubble {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-bottom-left-radius: 5px;
+}
+.msg.user .bubble {
+  background: linear-gradient(135deg, #1e3a5f, var(--blue-dark));
+  border-bottom-right-radius: 5px;
+}
+
+/* chips */
+.chip {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: rgba(245,158,11,.12);
+  border: 1.5px solid rgba(245,158,11,.4);
+  color: var(--gold);
+  border-radius: 30px;
+  padding: 5px 13px; margin: 5px 4px 0 0;
+  font-size: .8rem; font-weight: 700;
+  cursor: pointer; transition: all .15s;
+  user-select: none; font-family: 'Baloo 2', cursive;
+}
+.chip:hover {
+  background: var(--gold-dark); color: white;
+  border-color: var(--gold);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(245,158,11,.3);
+}
+
+/* topic tag */
+.topic-tag {
+  display: inline-block;
+  background: linear-gradient(135deg, #14532d, #166534);
+  border: 1px solid var(--gold-dark);
+  color: var(--gold);
+  font-size: .68rem; font-weight: 800;
+  border-radius: 20px; padding: 2px 10px;
+  margin-bottom: 5px; letter-spacing: .5px;
+  text-transform: uppercase;
+}
+
+/* multiple choice */
+.mc-options { display: flex; flex-direction: column; gap: 7px; margin-top: 10px; width: 100%; }
+.mc-btn {
+  display: flex; align-items: center; gap: 10px;
+  background: rgba(255,255,255,.03);
+  border: 1.5px solid var(--border);
+  border-radius: 12px; padding: 9px 14px;
+  color: var(--text); font-family: 'Baloo 2', cursive;
+  font-size: .87rem; font-weight: 600;
+  cursor: pointer; transition: all .15s; text-align: left; width: 100%;
+}
+.mc-btn:hover:not(:disabled) {
+  background: rgba(245,158,11,.12); border-color: var(--gold);
+  color: var(--gold); transform: translateX(3px);
+}
+.mc-btn .letter {
+  display: flex; align-items: center; justify-content: center;
+  width: 26px; height: 26px; border-radius: 8px;
+  background: rgba(245,158,11,.15); border: 1px solid rgba(245,158,11,.35);
+  color: var(--gold); font-size: .78rem; font-weight: 800;
+  flex-shrink: 0; transition: all .15s;
+}
+.mc-btn:hover:not(:disabled) .letter { background: var(--gold-dark); color: white; border-color: var(--gold-dark); }
+.mc-btn.correct { background: rgba(34,197,94,.15)!important; border-color: #22c55e!important; color: #22c55e!important; cursor: default; }
+.mc-btn.correct .letter { background: #22c55e!important; color: white!important; border-color: #22c55e!important; }
+.mc-btn.wrong { background: rgba(239,68,68,.12)!important; border-color: #ef4444!important; color: #ef4444!important; cursor: default; }
+.mc-btn.wrong .letter { background: #ef4444!important; color: white!important; border-color: #ef4444!important; }
+.mc-btn:disabled { cursor: default; transform: none!important; }
+
+/* speaker wave */
+.speaker-wave {
+  display: inline-flex; align-items: flex-end;
+  gap: 2px; height: 14px; margin-left: 6px; vertical-align: middle;
+}
+.speaker-wave span {
+  display: block; width: 3px; border-radius: 2px;
+  background: var(--gold); animation: wave 1s ease-in-out infinite;
+}
+.speaker-wave span:nth-child(1){height:4px;animation-delay:0s}
+.speaker-wave span:nth-child(2){height:10px;animation-delay:.1s}
+.speaker-wave span:nth-child(3){height:6px;animation-delay:.2s}
+.speaker-wave span:nth-child(4){height:12px;animation-delay:.15s}
+.speaker-wave span:nth-child(5){height:4px;animation-delay:.05s}
+@keyframes wave{0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.8)}}
+
+/* typing */
+.typing {
+  display: flex; gap: 4px; padding: 12px 16px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 18px; border-bottom-left-radius: 5px; width: fit-content;
+}
+.dot { width: 7px; height: 7px; border-radius: 50%; background: var(--gold); animation: bounce .9s infinite; }
+.dot:nth-child(2){animation-delay:.15s} .dot:nth-child(3){animation-delay:.3s}
+@keyframes bounce{0%,80%,100%{transform:translateY(0);opacity:.6}40%{transform:translateY(-7px);opacity:1}}
+
+/* input bar */
+.input-bar {
+  width: 100%; max-width: 700px;
+  padding: 10px 14px 18px;
+  display: flex; gap: 8px;
+  background: var(--bg); position: sticky; bottom: 0;
+}
+#user-input {
+  flex: 1; padding: 12px 18px;
+  border: 2px solid var(--border); border-radius: 30px;
+  font-family: 'Baloo 2', cursive; font-size: .92rem;
+  outline: none; background: var(--surface); color: var(--text);
+  transition: border-color .2s, box-shadow .2s;
+}
+#user-input::placeholder { color: var(--muted); }
+#user-input:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(245,158,11,.12); }
+
+#send-btn {
+  width: 48px; height: 48px; border-radius: 50%; border: none;
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  color: white; font-size: 1.1rem; cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 3px 14px rgba(245,158,11,.4); flex-shrink: 0;
+}
+#send-btn:hover { transform: scale(1.08); box-shadow: 0 5px 20px rgba(245,158,11,.55); }
+#send-btn:disabled { opacity: .5; transform: none; }
+
+/* result modal */
+.result-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.75); backdrop-filter: blur(6px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 100; opacity: 0; pointer-events: none; transition: opacity .3s;
+}
+.result-overlay.show { opacity: 1; pointer-events: all; }
+.result-card {
+  background: linear-gradient(135deg, #132015, #0c1a0e);
+  border: 2px solid var(--gold-dark);
+  border-radius: 24px; padding: 36px 40px;
+  text-align: center; max-width: 380px; width: 90%;
+  box-shadow: 0 20px 60px rgba(0,0,0,.6);
+  transform: scale(.9); transition: transform .3s cubic-bezier(.34,1.56,.64,1);
+}
+.result-overlay.show .result-card { transform: scale(1); }
+.result-emoji { font-size: 4rem; margin-bottom: 12px; display: block; }
+.result-title {
+  font-family: 'Fredoka One', cursive; font-size: 1.7rem; margin-bottom: 6px;
+  background: linear-gradient(90deg, var(--gold), #fde68a);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.result-score { font-size: 3rem; font-weight: 900; margin: 10px 0; color: white; }
+.result-msg { color: var(--muted); font-size: .9rem; margin-bottom: 22px; }
+.result-btn {
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  border: none; border-radius: 30px; padding: 12px 30px;
+  color: white; font-family: 'Baloo 2', cursive; font-weight: 800;
+  font-size: 1rem; cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+  box-shadow: 0 4px 16px rgba(245,158,11,.35);
+}
+.result-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 22px rgba(245,158,11,.5); }
+
+/* scenario card for identify questions */
+.scenario-card {
+  background: rgba(245,158,11,.07);
+  border: 1px solid rgba(245,158,11,.25);
+  border-radius: 12px; padding: 10px 14px;
+  margin: 8px 0 6px; font-style: italic;
+  font-size: .87rem; color: #fde68a; line-height: 1.5;
+}
+
+/* ── Notes Panel ─────────────────────────────────────────────── */
+.notes-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.78); backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 200; opacity: 0; pointer-events: none; transition: opacity .3s;
+}
+.notes-overlay.show { opacity: 1; pointer-events: all; }
+.notes-panel {
+  background: linear-gradient(160deg, #0c1a0e, #132015);
+  border: 2px solid var(--gold-dark);
+  border-radius: 20px;
+  width: 92%; max-width: 720px;
+  max-height: 88vh;
+  display: flex; flex-direction: column;
+  box-shadow: 0 24px 60px rgba(0,0,0,.7);
+  overflow: hidden;
+  transform: translateY(30px);
+  transition: transform .35s cubic-bezier(.34,1.2,.64,1);
+}
+.notes-overlay.show .notes-panel { transform: translateY(0); }
+.notes-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 22px; border-bottom: 1px solid var(--border);
+  background: linear-gradient(135deg, #14532d44, #1e3a5f44);
+}
+.notes-header h2 { font-family: 'Fredoka One', cursive; font-size: 1.3rem; color: var(--gold); }
+.notes-close {
+  width: 34px; height: 34px; border-radius: 50%;
+  border: 1.5px solid var(--border); background: var(--surface2);
+  color: var(--text); font-size: 1rem; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; transition: all .2s;
+}
+.notes-close:hover { background: #b91c1c; border-color: #ef4444; }
+.notes-body { overflow-y: auto; padding: 20px 22px; flex: 1; }
+.notes-body::-webkit-scrollbar { width: 4px; }
+.notes-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+.notes-topic { margin-bottom: 28px; }
+.notes-topic-title {
+  font-family: 'Fredoka One', cursive; font-size: 1.05rem;
+  color: var(--gold); margin-bottom: 10px;
+  padding-bottom: 6px; border-bottom: 1px solid var(--border);
+}
+.notes-item {
+  display: flex; gap: 10px; align-items: flex-start;
+  padding: 7px 0; border-bottom: 1px solid rgba(255,255,255,.04);
+  font-size: .87rem; line-height: 1.55;
+}
+.notes-item:last-child { border-bottom: none; }
+.notes-term { font-weight: 800; color: var(--gold); min-width: 150px; flex-shrink: 0; font-size: .84rem; }
+.notes-def { color: #d1fae5; }
+.notes-tabs {
+  display: flex; flex-wrap: wrap; gap: 8px; padding: 14px 22px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(0,0,0,.15);
+}
+.notes-tab {
+  padding: 12px 20px; border-radius: 10px;
+  border: 1.5px solid var(--border); 
+  background: rgba(255,255,255,.04); color: var(--muted);
+  font-family: 'Baloo 2', cursive; font-size: .9rem; font-weight: 700;
+  cursor: pointer; transition: all .15s; white-space: nowrap;
+  min-height: 48px; display: flex; align-items: center;
+}
+.notes-tab.active { background: var(--surface); color: var(--gold); border-color: var(--gold-dark); }
+.notes-tab:hover:not(.active) { color: var(--text); background: var(--surface2); }
+.notes-section { display: none; }
+.notes-section.active { display: block; }
+
+
+/* ── Print button in notes header ─────────────────────────────── */
+.notes-header-actions { display: flex; align-items: center; gap: 10px; }
+.print-btn {
+  display: flex; align-items: center; gap: 6px;
+  background: rgba(245,158,11,.12);
+  border: 1.5px solid rgba(245,158,11,.4);
+  color: var(--gold);
+  border-radius: 20px;
+  padding: 7px 14px;
+  font-family: 'Baloo 2', cursive;
+  font-size: .78rem;
+  font-weight: 800;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all .15s;
+}
+.print-btn:hover { background: var(--gold); color: #0c1a0e; border-color: var(--gold); }
+.print-btn.active { background: var(--gold); color: #0c1a0e; border-color: var(--gold); }
+
+/* ── On-screen Practice Test / Answer Key ─────────────────────── */
+.ptest-part-title {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1rem;
+  color: var(--gold);
+  margin: 22px 0 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+.ptest-part-title:first-child { margin-top: 0; }
+.ptest-q {
+  font-size: .87rem;
+  line-height: 1.6;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed rgba(255,255,255,.06);
+  color: #d1fae5;
+}
+.ptest-q b { color: var(--gold); }
+.ptest-q .opt { display: block; margin: 2px 0 2px 18px; color: #d1fae5; }
+.ptest-bank {
+  background: rgba(59,130,246,.08);
+  border: 1px solid rgba(59,130,246,.3);
+  border-radius: 10px;
+  padding: 10px 16px;
+  margin-bottom: 14px;
+  font-size: .82rem;
+  color: #dbeafe;
+  line-height: 1.6;
+}
+.key-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.key-pill {
+  background: rgba(245,158,11,.1);
+  border: 1px solid rgba(245,158,11,.25);
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: .78rem;
+  color: #fde68a;
+}
+.key-pill b { color: #34d399; }
+
+/* ── Print / Save-as-PDF styles ──────────────────────────────────
+   By default everything is hidden from print. When body carries
+   .printing-test, only #print-area (a light-themed clone of the
+   Practice Test + Answer Key) is shown, laid out for paper. ──── */
+@media print {
+  body * { visibility: hidden; }
+  #print-area, #print-area * { visibility: visible; }
+  #print-area {
+    display: block !important;
+    position: absolute; top: 0; left: 0; width: 100%;
+    background: #fff; color: #14290f;
+    font-family: 'Helvetica', Arial, sans-serif;
+    font-size: 10.5pt;
+    line-height: 1.5;
+  }
+  #print-area .p-cover { text-align: center; padding-top: 40px; }
+  #print-area .p-cover .p-icon { font-size: 34pt; }
+  #print-area .p-cover h1 { font-size: 19pt; color: #b45309; margin: 8px 0 4px; }
+  #print-area .p-cover .p-sub { font-size: 10.5pt; color: #166534; margin-bottom: 20px; }
+  #print-area .p-info-box {
+    border: 1.5px solid #fcd34d; border-radius: 10px;
+    max-width: 460px; margin: 0 auto 20px; padding: 14px 20px;
+    text-align: left; font-size: 10pt;
+  }
+  #print-area .p-info-box div { margin: 6px 0; border-bottom: 1px dotted #fde68a; padding-bottom: 6px; }
+  #print-area .p-instructions {
+    max-width: 460px; margin: 0 auto; text-align: left;
+    background: #fffbeb; border: 1px solid #fcd34d; border-radius: 10px;
+    padding: 12px 18px; font-size: 9.5pt; color: #78350f;
+  }
+  #print-area h2.p-part-title {
+    font-size: 12.5pt; color: #fff;
+    background: linear-gradient(135deg, #b45309, #14532d) !important;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    padding: 6px 12px; border-radius: 7px; margin: 18px 0 10px;
+    page-break-after: avoid;
+  }
+  #print-area .p-bank {
+    background: #f0fdf4 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    border: 1px solid #86efac; border-radius: 8px; padding: 8px 14px;
+    margin-bottom: 12px; font-size: 9.5pt; color: #14532d;
+  }
+  #print-area .p-q {
+    margin-bottom: 8px; padding-bottom: 8px;
+    border-bottom: 1px dotted #fde68a; font-size: 10pt;
+    page-break-inside: avoid; color: #14290f;
+  }
+  #print-area .p-q b { color: #b45309; }
+  #print-area .p-q .p-blank { display: inline-block; min-width: 65px; border-bottom: 1px solid #64748b; }
+  #print-area .p-q .p-opt { display: block; margin: 2px 0 0 20px; color: #365314; }
+  #print-area .p-break { page-break-before: always; }
+  #print-area .p-key-part-title {
+    font-size: 11pt; color: #b45309; font-weight: bold;
+    margin: 14px 0 8px; border-bottom: 2px solid #b45309; padding-bottom: 4px;
+  }
+  #print-area .p-key-grid {
+    display: grid; grid-template-columns: repeat(5, 1fr);
+    gap: 5px 8px; margin-bottom: 14px;
+  }
+  #print-area .p-key-pill {
+    background: #f0fdf4 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    border: 1px solid #86efac; border-radius: 6px;
+    padding: 4px 8px; font-size: 8.5pt; color: #166534;
+  }
+  #print-area .p-key-pill b { color: #b45309; }
+  @page { size: letter; margin: 1.5cm 1.8cm; }
+}
+#print-area { display: none; }
+
+
+/* ── Chapter Summary / Tandaan / Memory boxes (fix: previously missing) ── */
+.chapter-summary {
+  background: linear-gradient(135deg, rgba(59,130,246,.1), rgba(34,197,94,.08));
+  border: 1px solid rgba(59,130,246,.25);
+  border-left: 4px solid var(--blue);
+  border-radius: 12px;
+  padding: 14px 18px;
+  margin-bottom: 18px;
+  font-size: .88rem;
+  line-height: 1.65;
+  color: #dbeafe;
+}
+.tandaan-box {
+  background: rgba(245,158,11,.08);
+  border: 1px solid rgba(245,158,11,.3);
+  border-left: 4px solid var(--gold);
+  border-radius: 12px;
+  padding: 12px 18px;
+  margin: 14px 0;
+  font-size: .86rem;
+  line-height: 1.6;
+  color: #fde68a;
+}
+.tandaan-label {
+  display: block;
+  font-family: 'Baloo 2', cursive;
+  font-size: .8rem;
+  color: var(--gold);
+  letter-spacing: .5px;
+  margin-bottom: 5px;
+}
+.memory-box {
+  background: rgba(34,197,94,.08);
+  border: 1px solid rgba(34,197,94,.3);
+  border-left: 4px solid var(--green);
+  border-radius: 12px;
+  padding: 12px 18px;
+  margin: 14px 0 22px;
+  font-size: .86rem;
+  line-height: 1.6;
+  color: #bbf7d0;
+}
+.memory-label {
+  display: block;
+  font-family: 'Baloo 2', cursive;
+  font-size: .8rem;
+  color: var(--green);
+  letter-spacing: .5px;
+  margin-bottom: 5px;
+}
+.compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0 20px;
+  font-size: .82rem;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.compare-table th {
+  background: linear-gradient(135deg, var(--blue-dark), var(--gold-dark));
+  color: white;
+  text-align: left;
+  padding: 9px 12px;
+  font-size: .78rem;
+  text-transform: uppercase;
+  letter-spacing: .4px;
+}
+.compare-table td {
+  padding: 9px 12px;
+  border-top: 1px solid var(--border);
+  color: var(--text);
+  vertical-align: top;
+}
+.compare-table tr:nth-child(even) td { background: rgba(255,255,255,.02); }
+
+/* ── Story Box (for reading Bible stories aloud) ─────────────────── */
+.story-box {
+  background: rgba(255,255,255,.03);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px 20px;
+  margin-bottom: 16px;
+  font-size: .92rem;
+  line-height: 1.8;
+  color: var(--text);
+}
+.story-box p { margin-bottom: 10px; }
+.story-box p:last-child { margin-bottom: 0; }
+.story-ref {
+  display: block;
+  text-align: right;
+  font-style: italic;
+  color: var(--muted);
+  font-size: .8rem;
+  margin-top: 10px;
+}
+.story-label {
+  display: block;
+  font-family: 'Baloo 2', cursive;
+  font-size: .9rem;
+  color: var(--gold);
+  letter-spacing: .5px;
+  margin-bottom: 10px;
+}
+/* ── Raw Notes (original document view) ──────────────────────── */
+.rawnotes-intro {
+  font-size: .82rem;
+  color: var(--muted);
+  line-height: 1.6;
+  background: rgba(59,130,246,.1);
+  border: 1px solid rgba(59,130,246,.3);
+  border-left: 4px solid var(--blue);
+  border-radius: 10px;
+  padding: 12px 18px;
+  margin-bottom: 20px;
+}
+.rawnotes-doc {
+  font-family: 'Lora', Georgia, serif;
+  line-height: 1.75;
+}
+.rawnotes-doc p {
+  font-size: .95rem;
+  margin-bottom: 14px;
+  color: #e2f5e6;
+}
+.rawnotes-doc strong { color: var(--gold); font-weight: 700; }
+.rawnotes-doc em { color: var(--muted); font-style: italic; }
+.rawnotes-doc h3.doc-heading {
+  font-family: 'Baloo 2', cursive;
+  font-size: 1.05rem;
+  color: var(--gold);
+  margin: 26px 0 12px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid var(--border);
+}
+.rawnotes-doc h3.doc-heading:first-child { margin-top: 0; }
+.rawnotes-doc ul, .rawnotes-doc ol {
+  margin: 0 0 14px 26px;
+  color: #e2f5e6;
+}
+.rawnotes-doc li { margin-bottom: 6px; font-size: .95rem; }
+.rawnotes-doc table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0 20px;
+  font-size: .82rem;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.rawnotes-doc th {
+  background: linear-gradient(135deg, var(--blue-dark), var(--gold-dark));
+  color: white;
+  text-align: left;
+  padding: 9px 12px;
+  font-size: .78rem;
+}
+.rawnotes-doc td {
+  padding: 9px 12px;
+  border-top: 1px solid var(--border);
+  color: var(--text);
+  vertical-align: top;
+}
+.rawnotes-doc tr:nth-child(even) td { background: rgba(255,255,255,.02); }
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE: TABLET (≤820px)
+   ═══════════════════════════════════════════════════════════════ */
+@media (max-width: 820px) {
+  .notes-panel { width: 95%; max-height: 92vh; }
+  .notes-tabs { padding: 12px 16px; gap: 6px; }
+  .notes-tab { padding: 10px 14px; font-size: .82rem; min-height: 42px; }
+  .notes-body { padding: 16px; }
+  .notes-header { padding: 14px 16px; }
+  .chat-wrap { padding: 14px 10px 0; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE: MOBILE (≤600px)
+   ═══════════════════════════════════════════════════════════════ */
+@media (max-width: 600px) {
+  header {
+    padding: 10px 12px;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .header-icon { font-size: 1.5rem; }
+  header h1 { font-size: 1.05rem; line-height: 1.2; }
+  header .sub { font-size: .62rem; }
+  .header-controls { gap: 6px; margin-left: auto; }
+  .score-pill { padding: 4px 10px; font-size: .74rem; }
+  .audio-btn { width: 32px; height: 32px; font-size: .85rem; }
+
+  .chat-wrap { padding: 10px 6px 0; }
+  #chat-box { gap: 12px; }
+  .bubble { max-width: 88%; font-size: .88rem; padding: 10px 13px; }
+  .avatar { width: 30px; height: 30px; font-size: .85rem; }
+
+  .chip { font-size: .78rem; padding: 7px 12px; }
+  .mc-btn { font-size: .84rem; padding: 10px 12px; }
+  .mc-btn .letter { width: 22px; height: 22px; font-size: .74rem; }
+  .topic-tag { font-size: .68rem; }
+  .scenario-card { font-size: .88rem; padding: 10px 14px; }
+
+  .input-bar { padding: 8px 8px calc(8px + env(safe-area-inset-bottom)); gap: 8px; }
+  #user-input { font-size: .88rem; padding: 10px 14px; }
+  #send-btn { width: 40px; height: 40px; font-size: 1rem; }
+
+  .result-card { width: 92%; padding: 26px 20px; }
+  .result-emoji { font-size: 2.6rem; }
+  .result-title { font-size: 1.2rem; }
+  .result-score { font-size: 1.8rem; }
+
+  /* ── Notes panel: near-full-screen on phones ── */
+  .notes-overlay { align-items: flex-end; }
+  .notes-panel {
+    width: 100%; max-width: 100%;
+    max-height: 94vh;
+    border-radius: 20px 20px 0 0;
+    border-left: none; border-right: none; border-bottom: none;
+  }
+  .notes-header { padding: 12px 14px; flex-wrap: wrap; gap: 8px; }
+  .notes-header h2 { font-size: 1.05rem; flex: 1 1 100%; }
+  .notes-header-actions { flex-wrap: wrap; gap: 6px; width: 100%; justify-content: flex-start; }
+  .print-btn { font-size: .7rem; padding: 6px 11px; }
+  .notes-close { width: 30px; height: 30px; font-size: .9rem; margin-left: auto; }
+
+  .notes-tabs { padding: 10px 12px; gap: 5px; }
+  .notes-tab { padding: 8px 12px; font-size: .76rem; min-height: 38px; }
+  .notes-body { padding: 14px; }
+
+  .notes-item { flex-direction: column; gap: 2px; }
+  .notes-term { min-width: 0; font-size: .82rem; }
+  .notes-def { font-size: .84rem; }
+  .notes-topic-title { font-size: .95rem; }
+  .chapter-summary, .memory-box, .tandaan-box, .story-box, .verse-card { font-size: .82rem; padding: 12px 14px; }
+
+  /* ── Tables: allow horizontal scroll instead of squeezing ── */
+  .compare-table { display: block; overflow-x: auto; white-space: nowrap; }
+  .compare-table th, .compare-table td { white-space: normal; min-width: 110px; }
+
+  .key-grid { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 5px; }
+  .key-pill { font-size: .72rem; padding: 5px 8px; }
+  .ptest-part-title { font-size: .92rem; }
+  .ptest-q { font-size: .82rem; }
+  .ptest-bank { font-size: .78rem; padding: 8px 12px; }
+
+  .rawnotes-doc p, .rawnotes-doc li { font-size: .87rem; }
+  .rawnotes-doc h3.doc-heading { font-size: .95rem; }
+  .rawnotes-doc table { display: block; overflow-x: auto; white-space: nowrap; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE: VERY SMALL PHONES (≤380px)
+   ═══════════════════════════════════════════════════════════════ */
+@media (max-width: 380px) {
+  header h1 { font-size: .92rem; }
+  header .sub { display: none; }
+  .score-pill span { font-size: .7rem; }
+  .bubble { max-width: 92%; font-size: .84rem; }
+  .notes-tab { font-size: .7rem; padding: 7px 10px; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE: LANDSCAPE PHONES (short height)
+   ═══════════════════════════════════════════════════════════════ */
+@media (max-height: 480px) and (orientation: landscape) {
+  .notes-panel { max-height: 98vh; }
+  .notes-tabs { padding: 6px 12px; }
+  .notes-tab { min-height: 32px; padding: 6px 10px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-icon">🎯</div>
+  <div>
+    <h1>Batuhang-Bola, Movement &amp; Melody</h1>
+    <div class="sub">PE: Target Games · Movement Skills · Fitness &nbsp;|&nbsp; Music: Melody · Hinilawod · Darangen</div>
+  </div>
+  <div class="header-controls">
+    <div class="score-pill">⭐ <span id="score-val">0</span> / <span id="total-val">0</span></div>
+    <button class="audio-btn" id="notes-toggle" title="Open Reviewer" onclick="document.getElementById('notes-overlay').classList.add('show')">📖</button>
+    <button class="audio-btn active" id="audio-toggle" title="Toggle Audio">🔊</button>
+  </div>
+</header>
+
+<div class="chat-wrap">
+  <div id="chat-box"></div>
+</div>
+
+<div class="input-bar">
+  <input type="text" id="user-input" placeholder="Type your answer here…" autocomplete="off" />
+  <button id="send-btn">➤</button>
+</div>
+
+<div class="result-overlay" id="result-overlay">
+  <div class="result-card">
+    <span class="result-emoji" id="res-emoji">🏆</span>
+    <div class="result-title">Quiz Complete!</div>
+    <div class="result-score"><span id="res-score">0</span>/<span id="res-total">0</span></div>
+    <div class="result-msg" id="res-msg">Great job!</div>
+    <button class="result-btn" onclick="restartApp()">🔄 Maglaro Ulit</button>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+// QUESTION BANK
+// ═══════════════════════════════════════════════════════════════
+const topics = {
+
+  "Target Games and Batuhang-Bola": [
+    { q: "What are games?", a: "Activities in which players move around, with or without an object, following rules they all agreed on", hint: "Players + agreed rules." },
+    { q: "What are the four basic classifications of games?", a: "Invasion or territory, net or wall, striking or fielding, and target games", hint: "I-N-S-T." },
+    { q: "What are target games?", a: "Games in which players hit a target using an object, so they must throw precisely and with great control", hint: "Hit something or someone." },
+    { q: "Which skills do target games require?", a: "Throwing, catching, running, jumping, stretching, and dodging", hint: "A variety of manipulative skills." },
+    { q: "What is one of the most popular target games in the Philippines?", a: "Batuhang-bola", hint: "Our version of dodgeball." },
+    { q: "Which Philippine game is the closest equivalent to dodgeball?", a: "Batuhang-bola", hint: "It is simpler than the U.S. version." },
+    { q: "According to the lesson, what did dodgeball originate from?", a: "A game among certain tribes in Africa in which rocks were thrown to injure opponents", hint: "Tribes dodged rocks." },
+    { q: "Why did the tribe members play the rock-throwing game?", a: "As training so they could work together against other tribes", hint: "Teamwork against enemies." },
+    { q: "Who brought the game to England?", a: "An English missionary", hint: "Not a soldier or a trader." },
+    { q: "What replaced the rocks when the game reached England?", a: "Rubber balls", hint: "Simple rules were created too." },
+    { q: "Where did the game gain wide popularity after England?", a: "The United States", hint: "New rules were added there." },
+    { q: "How do the two teams in batuhang-bola take their places?", a: "The first team surrounds the court on both sides while the second team stands in the middle", hint: "One team outside, one inside." },
+    { q: "What shape is the court used in batuhang-bola?", a: "Rectangular", hint: "Like a long box." },
+    { q: "What happens to a second-team member who is hit by the ball?", a: "That player is out of the game", hint: "Hit = out." },
+    { q: "What happens when a second-team member catches the ball with the hands?", a: "That player stays in the game, and an eliminated teammate rejoins", hint: "Catch = save and revive." },
+    { q: "What is the goal of batuhang-bola?", a: "For the first team to eliminate all members of the second team, usually within a time limit", hint: "Eliminate everyone." },
+  ],
+
+  "Movement Concepts and Relationships": [
+    { q: "What are movement concepts?", a: "Knowledge and comprehension of movements that let people change and adjust their motion to meet specific movement goals", hint: "Knowing how to adjust your movement." },
+    { q: "What are the four concepts related to movement?", a: "Body awareness, space awareness, quality or effort, and movement relationships", hint: "B-S-Q-M." },
+    { q: "What do you gain when you become good at movement concepts?", a: "More confidence in your body and more motivation to try and enjoy sports and activities", hint: "Confidence and motivation." },
+    { q: "Movement concepts help you build a strong relationship with whom or what?", a: "Yourself, others, and objects", hint: "Three kinds of relationships." },
+    { q: "What do movement relationships reveal?", a: "The body's connections with other things or with itself", hint: "How the body connects." },
+    { q: "In movement relationships, what is more important than the \"who\" or \"what\" of a movement?", a: "The connections between and among the movers or objects", hint: "The connection itself." },
+    { q: "Which relationships are the simplest to learn first?", a: "Self-relationships, such as body parts and body shapes", hint: "Start with yourself." },
+    { q: "What is a relationship of body parts?", a: "Moving by using one body part to hold another body part and touch things around you", hint: "One part works with another." },
+    { q: "Which are examples of movement relationships of body parts and shapes?", a: "Round (curved), narrow, wide, twisted, and symmetrical or nonsymmetrical", hint: "R-N-W-T-S." },
+    { q: "How do you make a round (curved) shape?", a: "Curve the spine, curling either forward or backward", hint: "Think of a ball." },
+    { q: "How does a round shape help in batuhang-bola?", a: "It helps you avoid the ball when it comes at higher areas and gives you space from the opponent", hint: "Curl and duck." },
+    { q: "How do you form a narrow shape?", a: "Stretch the body, with the arms and legs helping to form a tight shape", hint: "Thin like a pencil." },
+    { q: "When is a narrow shape useful?", a: "To occupy small spaces when there are too many people in the play area", hint: "Crowded space." },
+    { q: "How do you form a wide shape?", a: "Keep the arms and legs away from the body center", hint: "Spread out." },
+    { q: "How can a wide shape help you in a game?", a: "It can help you catch the ball", hint: "A bigger target for the ball." },
+    { q: "What must you check before forming a wide shape?", a: "That you have enough space on your sides, and your distance from other players", hint: "Do not bump others." },
+    { q: "How is a twisted shape formed?", a: "By contorting some body parts from their natural positions", hint: "Like wringing a towel." },
+    { q: "How does a twisted shape help in batuhang-bola?", a: "It helps you dodge the ball", hint: "Twist away." },
+    { q: "What is a symmetrical shape?", a: "A shape in which the figures on the two halves of the body are equal or the same", hint: "Both halves match." },
+    { q: "What is an asymmetrical shape?", a: "A shape in which the two halves of the body look uneven or different", hint: "Halves do not match." },
+  ],
+
+  "Locomotor Skills": [
+    { q: "What are movement skills?", a: "The basic motor skills that involve different body parts and lead to the more complicated movements used in games and sports", hint: "Basic motor skills." },
+    { q: "Into what two groups are movement skills divided?", a: "Locomotor and manipulative skills", hint: "Moving vs using objects." },
+    { q: "What are locomotor skills?", a: "Movements performed by moving from one place to another", hint: "Travel from place to place." },
+    { q: "What are the five locomotor skills in the lesson?", a: "Jumping, hopping, running, walking, and galloping", hint: "J-H-R-W-G." },
+    { q: "How is jumping done?", a: "Springing from one foot or two feet and landing on both feet", hint: "Land on both." },
+    { q: "How do you jump forcefully?", a: "Spring with your feet, swing the arms backward then forcefully forward and upward", hint: "Arms help the jump." },
+    { q: "What helps you jump comfortably?", a: "Bending the knees", hint: "Soft knees." },
+    { q: "How is hopping different from jumping?", a: "In hopping, you use only one foot and land on the same foot", hint: "One foot only." },
+    { q: "How should you land when you hop?", a: "On the toes first, then the ball of the foot, with the knee bent", hint: "Toes first." },
+    { q: "What is it called when you hop alternately on each foot?", a: "Skipping", hint: "Switch feet while hopping." },
+    { q: "What is running?", a: "A series of forward-moving steps or strides that are continuous, fast, and long", hint: "Fast and long strides." },
+    { q: "What is the correct body position for running?", a: "A slight forward lean with a straight back, arms bent and swinging freely, knees held high", hint: "Lean, straight back, high knees." },
+    { q: "How do you walk comfortably?", a: "Lift and lower each foot alternately at a regular pace, stepping heel first and rolling through the ball and toes", hint: "Heel, then toes." },
+    { q: "What do you do last before lifting the foot for another step in walking?", a: "Push out with your toes", hint: "The push-off." },
+    { q: "How is galloping done?", a: "One foot goes forward and the other behind; the front foot springs and the back foot is lifted forward, keeping the same foot in front", hint: "Same foot leads." },
+    { q: "In which direction do the feet move when galloping?", a: "In one direction", hint: "Same foot in front." },
+  ],
+
+  "Manipulative Skills": [
+    { q: "What are manipulative skills?", a: "Skills done with the use of implements", hint: "Using objects." },
+    { q: "Manipulative skills can also be a combination of which movements?", a: "Locomotor and nonlocomotor movements that you can control", hint: "Moving plus staying in place." },
+    { q: "What are the five manipulative skills in the lesson?", a: "Throwing, catching, kicking, striking, and dribbling", hint: "T-C-K-S-D." },
+    { q: "What is throwing?", a: "Transferring an object to another side by forcefully hurling it through the air using an arm and a hand", hint: "Hurl it." },
+    { q: "What is catching?", a: "Positioning a hand or hands where you expect a thrown object to be received", hint: "Receive the object." },
+    { q: "What do you need to adjust in order to catch well?", a: "The rest of the body, with good footwork, to receive the object at the exact spot", hint: "Footwork." },
+    { q: "What is kicking?", a: "Striking an object or someone using the foot or shin", hint: "Foot or shin." },
+    { q: "What is striking?", a: "Forcefully hitting something using an object or a body part, usually the arm or hand", hint: "Hit with force." },
+    { q: "What is dribbling?", a: "Quick tapping or kicking of an object using the hands or feet, keeping possession and control", hint: "Keep control." },
+  ],
+
+  "Fitness Concepts": [
+    { q: "What is physical fitness?", a: "The body's capacity to cope with daily activities and adapt to the outside environment", hint: "Daily tasks and surroundings." },
+    { q: "What are the two categories of physical fitness?", a: "Health-related physical fitness and sports-related physical fitness", hint: "Health vs sports." },
+    { q: "What are the four indicators of fitness in the lesson?", a: "Coordination, balance, agility, and speed", hint: "C-B-A-S." },
+    { q: "What is coordination?", a: "The senses working in agreement with one or more body parts, or body parts working together at the same time", hint: "Working together." },
+    { q: "Which body parts work together in batuhang-bola to dodge or catch the ball?", a: "The eyes, feet, and arms", hint: "See, move, catch." },
+    { q: "What is balance?", a: "The ability to control the position of the body to stay steady while moving or staying still", hint: "Do not fall over." },
+    { q: "Which movements in batuhang-bola require balance?", a: "Leaping, hopping, and jumping", hint: "Avoid falling when throwing or dodging." },
+    { q: "What is agility?", a: "The ability to quickly change position, direction, or speed in response to something", hint: "Quick changes." },
+    { q: "Why do you need agility in batuhang-bola?", a: "To move quickly to dodge a fast-moving ball and react to other players", hint: "Dodge fast." },
+    { q: "What is speed?", a: "The ability to quickly move the entire body or a portion of it", hint: "Fast movement." },
+    { q: "Why is speed important in batuhang-bola?", a: "To retrieve a fallen ball and throw it again at an opponent", hint: "Get the ball back." },
+    { q: "Which activities improve coordination?", a: "Jumping rope, juggling, and dribbling a ball", hint: "Rope, juggle, dribble." },
+    { q: "Which activities improve balance?", a: "Standing on one leg and one-leg squats", hint: "Use one leg." },
+    { q: "Which activities improve agility?", a: "Ladder drills, cone drills, and box jumps", hint: "Footwork drills." },
+    { q: "Which activities improve speed?", a: "Running or brisk walking and squat jumps", hint: "Go faster." },
+    { q: "In standing on one leg, how long do you hold the lifted leg before resting?", a: "Five seconds", hint: "Hold onto a chair." },
+    { q: "What equipment is used in ladder drills?", a: "An agility ladder", hint: "Quick, precise foot placement." },
+    { q: "How are the boxes arranged in box jumps?", a: "In a square pattern, and you jump onto them clockwise and counterclockwise", hint: "Three-inch-high boxes." },
+  ],
+
+  "Game Concepts": [
+    { q: "What is the focus of game concepts?", a: "Technique or specific physical action skills", hint: "How you do the action." },
+    { q: "What are the four categories of games?", a: "Invasion games, court or net games, striking or fielding games, and target games", hint: "Based on how they are played." },
+    { q: "To play different games well, what should you understand?", a: "The rules and the movement principles based on the ideas of time and space", hint: "Rules, time, and space." },
+    { q: "What does maintaining possession of the ball mean?", a: "Passing the ball or game object to a teammate using proper passing techniques", hint: "Keep it with your team." },
+    { q: "Which passing techniques are mentioned in the lesson?", a: "Long pass, short pass, bounce pass, overhead pass, and high pass", hint: "Five passes." },
+    { q: "Why must you keep good communication with teammates?", a: "So teammates easily understand your signals before you pass the ball, which makes a strong play", hint: "Signals." },
+    { q: "Where is a strong bond with teammates developed?", a: "In practice sessions", hint: "Train together." },
+    { q: "What do you need to know in positioning?", a: "How to make and use space to keep ball possession, and to make room for your teammates", hint: "Use space well." },
+    { q: "How do you regain possession in a game?", a: "By throwing, dodging, or striking", hint: "T-D-S." },
+    { q: "What should you perform to dodge or avoid the ball?", a: "The movement relationship of body parts", hint: "Use body shapes." },
+  ],
+
+  "Playing Batuhang-Bola: Safety and Mechanics": [
+    { q: "What should you do if you are medically unfit to play a physical game?", a: "Excuse yourself from playing", hint: "Safety first." },
+    { q: "What should you wear when playing batuhang-bola?", a: "A loose shirt and jogging pants or shorts", hint: "Comfortable clothes." },
+    { q: "What kind of ball is recommended?", a: "A lightweight ball, preferably a foam ball", hint: "Soft and light." },
+    { q: "What should you do before and after the game?", a: "Warm up before and cool down after", hint: "Before and after." },
+    { q: "Where should throwers aim?", a: "At the bodies of opponents, not their heads", hint: "Never the head." },
+    { q: "How should you treat a player you hit?", a: "Do not strike a player forcefully, and maintain good sportsmanship", hint: "Gentle and fair." },
+    { q: "How many members are in each team?", a: "Four or six", hint: "Even numbers." },
+    { q: "Which team throws the ball and which team is the target?", a: "Team A throws, and team B is the target", hint: "A = attack." },
+    { q: "How is team A arranged?", a: "Divided equally, lined up on either side of the court", hint: "Both sides." },
+    { q: "Where do team B members line up?", a: "In the center of the court", hint: "Middle." },
+    { q: "Where does a team B member who is hit stay?", a: "In a designated space outside the court", hint: "Out of the court." },
+    { q: "When does an out member rejoin the game?", a: "When a team B member catches the ball", hint: "A catch revives." },
+    { q: "When does team A win a game set?", a: "When no team B member remains", hint: "All of B is out." },
+    { q: "How long does each game set last?", a: "Five minutes, then the teams change roles", hint: "Five minutes." },
+  ],
+
+  "Melody": [
+    { q: "What is a melody?", a: "A series of musical sounds that combine to form a complete and memorable idea", hint: "The tune." },
+    { q: "What is another way to describe the melody of a song?", a: "The tune, the part you might hum, sing, or whistle", hint: "You can hum it." },
+    { q: "How can you think of a melody?", a: "As a musical story, not just random notes", hint: "A story." },
+    { q: "What are the six ingredients that shape a melody?", a: "Pitch, rhythm, contour, phrasing, intervals, and scale and key", hint: "P-R-C-P-I-S." },
+    { q: "What is pitch?", a: "How high or low the notes are", hint: "High or low." },
+    { q: "What is rhythm in a melody?", a: "The timing of the notes: how long each sound lasts and how they are patterned", hint: "The pulse." },
+    { q: "What is contour, or shape?", a: "The overall up-and-down movement of the melody", hint: "Rise, fall, or wave." },
+    { q: "What do you call the smaller musical \"sentences\" in a melody?", a: "Phrases", hint: "Phrasing." },
+    { q: "What are intervals?", a: "The distances between individual notes", hint: "Gaps between notes." },
+    { q: "Why do most melodies follow a scale and a key?", a: "It makes them sound coherent, with a central musical home", hint: "A musical home." },
+    { q: "What does the melodic shape add to music?", a: "An emotional feel", hint: "Feelings." },
+    { q: "What is harmony?", a: "Notes played together", hint: "At the same time." },
+    { q: "Which part of the music usually stands out as the most prominent and memorable?", a: "The melody", hint: "The main voice." },
+  ],
+
+  "Melodic Direction and Shape": [
+    { q: "What is melodic direction?", a: "The step-by-step movement of individual notes within a melody", hint: "The path from one note to the next." },
+    { q: "What three things can each note do?", a: "Go up, go down, or stay the same", hint: "Up, down, same." },
+    { q: "What does it mean when a note goes up?", a: "The note gets higher", hint: "Higher pitch." },
+    { q: "What does it mean when a note goes down?", a: "The note gets lower", hint: "Lower pitch." },
+    { q: "What does it mean when a note stays the same?", a: "The note repeats itself at the same pitch", hint: "Repeating." },
+    { q: "What is melodic shape?", a: "The path or road that the notes of a song take us on", hint: "A hike through music." },
+    { q: "In the hiking comparison, what is a hill?", a: "The notes get higher", hint: "Going up." },
+    { q: "In the hiking comparison, what is a valley?", a: "The notes get lower", hint: "Going down." },
+    { q: "In the hiking comparison, what is a flat, straight path?", a: "The notes stay the same", hint: "No change." },
+    { q: "What can a happy and bouncy melodic shape feel like?", a: "Jumping up the hills", hint: "Going up." },
+    { q: "What can a sad and slow melodic shape feel like?", a: "Sliding down into the valleys", hint: "Going down." },
+    { q: "What are the nine melodic shapes in the lesson?", a: "Rising, rising-repeating, rising-falling, repeating-rising, repeating, repeating-falling, falling-rising, falling-repeating, and falling", hint: "Rising, repeating, falling and their combinations." },
+  ],
+
+  "Hinilawod": [
+    { q: "What is Hinilawod?", a: "A very long and old epic tale from the Visayas region", hint: "An epic." },
+    { q: "Which people in which place tell the Hinilawod?", a: "The Sulodnon people of Panay Island", hint: "Panay." },
+    { q: "What does the word Hinilawod mean?", a: "Stories from the mouth of Halawod (also Jalaud) River", hint: "A river." },
+    { q: "How long is the Hinilawod compared with other Philippine epics?", a: "It is one of the longest epics recorded in the Philippines", hint: "Very long." },
+    { q: "What themes is the Hinilawod rich in?", a: "Adventure, romance, and mythology", hint: "A-R-M." },
+    { q: "Who are the three superhero brothers in the Hinilawod?", a: "Labaw Donggon, Humadapnon, and Dumalapdap", hint: "L-H-D." },
+    { q: "Where do the brothers travel and what do they look for?", a: "Magical places, to have adventures and find their true love", hint: "Adventure and love." },
+    { q: "What short film is an adaptation of the Hinilawod?", a: "Sa Paglupad Ka Banog", hint: "The flight of a bird." },
+    { q: "What does \"Sa Paglupad Ka Banog\" mean?", a: "The Flight of Banog", hint: "Banog." },
+    { q: "Who cowrote and directed the film?", a: "Elvert Bañares", hint: "A director." },
+    { q: "What award did the film win in 2023?", a: "Best Short Film at the Gawad Urian", hint: "Gawad ___." },
+    { q: "Where was the film shown at a big movie event?", a: "Iloilo City", hint: "A city in Panay." },
+  ],
+
+  "Darangen and Bantugan": [
+    { q: "What is the Darangen?", a: "The epic poem of the Maranao people from Mindanao", hint: "A Maranao epic." },
+    { q: "Which lake do the heroes of the Darangen protect?", a: "Lake Lanao", hint: "Maranao home." },
+    { q: "What can the powerful spells in the Darangen do?", a: "Heal wounds, turn night into day, and control animals", hint: "Magic." },
+    { q: "What is the Darangen's story at its heart?", a: "Bravery, loyalty, and the search for justice", hint: "B-L-J." },
+    { q: "What themes does the Darangen explore through its musical tales?", a: "Courage, love, and mysticism", hint: "C-L-M." },
+    { q: "Who is the central figure in the Darangen?", a: "Prince Bantugan", hint: "A prince." },
+    { q: "What is Prince Bantugan known for?", a: "Incredible strength, unmatched bravery, and skill in both fighting and diplomacy", hint: "Strong and wise." },
+    { q: "What do Bantugan's adventures include?", a: "Heroic feats, battles with mythical creatures, and journeys to the afterlife", hint: "Heroic adventures." },
+    { q: "Which Maranao values do Bantugan's tales highlight?", a: "Honor, loyalty, and the importance of family and community", hint: "Values." },
+    { q: "What does Bantugan's character represent?", a: "Ideal leadership", hint: "A good leader." },
+    { q: "Besides entertaining, what do Bantugan's stories do?", a: "Teach important lessons and preserve the traditions and virtues of the Maranao people", hint: "Teach and preserve." },
+  ],
+};
+
+const trueOrFalse = [
+  { q: "Target games require players to hit a target using an object.", a: "true" },
+  { q: "Batuhang-bola is one of the most popular target games in the Philippines.", a: "true" },
+  { q: "The four basic classifications of games are invasion, net or wall, striking or fielding, and target games.", a: "true" },
+  { q: "In batuhang-bola, a player who is hit by the ball stays in the game.", a: "false" },
+  { q: "In batuhang-bola, a second-team member who catches the ball lets an eliminated teammate rejoin.", a: "true" },
+  { q: "Movement concepts are the knowledge and comprehension of movements that help people adjust their motion.", a: "true" },
+  { q: "Movement relationships tell the body's connections with other things or with itself.", a: "true" },
+  { q: "A round shape is made by curving the spine.", a: "true" },
+  { q: "A narrow shape is made by keeping the arms and legs away from the body center.", a: "false" },
+  { q: "A wide shape can help you catch the ball.", a: "true" },
+  { q: "A symmetrical shape has two halves of the body that are equal or the same.", a: "true" },
+  { q: "Hopping uses two feet and lands on both feet.", a: "false" },
+  { q: "Jumping is springing from one or two feet and landing on both feet.", a: "true" },
+  { q: "Running is a series of continuous, fast, and long strides.", a: "true" },
+  { q: "In walking, you step on the ground with your toes first.", a: "false" },
+  { q: "In galloping, the same foot stays in front.", a: "true" },
+  { q: "Locomotor skills are done with the use of implements.", a: "false" },
+  { q: "Throwing, catching, kicking, striking, and dribbling are manipulative skills.", a: "true" },
+  { q: "Dribbling is the quick tapping or kicking of an object while keeping control of it.", a: "true" },
+  { q: "Physical fitness is the body's capacity to cope with daily activities and adapt to the environment.", a: "true" },
+  { q: "Balance is the ability to quickly change position, direction, or speed.", a: "false" },
+  { q: "Agility is the ability to quickly change position, direction, or speed.", a: "true" },
+  { q: "Ladder drills help improve agility.", a: "true" },
+  { q: "Juggling helps improve balance.", a: "false" },
+  { q: "Technique or specific physical action skills are the focus of movement concepts.", a: "false" },
+  { q: "Appreciating the importance of rules and conditions is barely important in a game.", a: "false" },
+  { q: "In a game, strategic use of space can help you win against your opponents.", a: "true" },
+  { q: "Good communication between teammates contributes to a good game.", a: "true" },
+  { q: "In batuhang-bola, throwers should aim for the heads of opponents.", a: "false" },
+  { q: "A foam ball is recommended for batuhang-bola.", a: "true" },
+  { q: "A melody is a series of musical sounds that combine to form a complete and memorable idea.", a: "true" },
+  { q: "A melody can only go up in pitch.", a: "false" },
+  { q: "Pitch refers to how high or low the notes are.", a: "true" },
+  { q: "Rhythm is the same as melody.", a: "false" },
+  { q: "Notes in a melody can go up, go down, or stay the same.", a: "true" },
+  { q: "A flat, straight melodic path means the notes stay the same.", a: "true" },
+  { q: "Every song has a unique melodic shape that gives it a special feel.", a: "true" },
+  { q: "The Hinilawod is an epic from the Visayas region.", a: "true" },
+  { q: "The Hinilawod is about three superhero brothers named Labaw Donggon, Humadapnon, and Dumalapdap.", a: "true" },
+  { q: "The Darangen is the epic poem of the Maranao people from Luzon.", a: "false" },
+  { q: "Prince Bantugan is the central figure in the Darangen.", a: "true" },
+];
+
+const identifyQuestions = [
+  { q: "Activities in which players hit a target using an object, with great control and precise throwing.", a: "Target games", choices: ["Target games","Invasion games","Net games","Striking games"] },
+  { q: "The Philippine game that is the closest equivalent of dodgeball.", a: "Batuhang-bola", choices: ["Batuhang-bola","Patintero","Luksong-tinik","Sipa"] },
+  { q: "The knowledge and comprehension of movements that help people adjust their motion to meet goals.", a: "Movement concepts", choices: ["Movement concepts","Game concepts","Fitness concepts","Movement skills"] },
+  { q: "The movement concept that tells the body's connections with other things or with itself.", a: "Movement relationships", choices: ["Movement relationships","Body awareness","Space awareness","Quality or effort"] },
+  { q: "A shape made by curving the spine forward or backward.", a: "Round", choices: ["Round","Narrow","Wide","Twisted"] },
+  { q: "A shape made by stretching the body tightly to occupy small spaces.", a: "Narrow", choices: ["Narrow","Round","Wide","Symmetrical"] },
+  { q: "A shape made by keeping the arms and legs away from the body center.", a: "Wide", choices: ["Wide","Narrow","Round","Twisted"] },
+  { q: "A shape made by contorting body parts from their natural positions, useful to dodge a ball.", a: "Twisted", choices: ["Twisted","Wide","Narrow","Round"] },
+  { q: "A shape in which the two halves of the body look uneven or different.", a: "Asymmetrical", choices: ["Asymmetrical","Symmetrical","Round","Narrow"] },
+  { q: "A shape in which the two halves of the body are equal or the same.", a: "Symmetrical", choices: ["Symmetrical","Asymmetrical","Wide","Twisted"] },
+  { q: "The basic motor skills that involve different body parts.", a: "Movement skills", choices: ["Movement skills","Movement concepts","Game concepts","Fitness concepts"] },
+  { q: "Springing from one foot or two feet and landing on both feet.", a: "Jumping", choices: ["Jumping","Hopping","Galloping","Walking"] },
+  { q: "Springing from one foot and landing on the same foot.", a: "Hopping", choices: ["Hopping","Jumping","Running","Galloping"] },
+  { q: "A series of forward-moving strides that are continuous, fast, and long.", a: "Running", choices: ["Running","Walking","Hopping","Galloping"] },
+  { q: "Lifting and lowering each foot alternately at a regular pace, heel first.", a: "Walking", choices: ["Walking","Running","Jumping","Galloping"] },
+  { q: "Putting one foot forward and the other behind, springing the front foot and lifting the back foot forward.", a: "Galloping", choices: ["Galloping","Hopping","Walking","Jumping"] },
+  { q: "Forcefully hurling an object through the air using an arm and a hand.", a: "Throwing", choices: ["Throwing","Catching","Striking","Kicking"] },
+  { q: "Positioning your hands where you expect a thrown object to arrive.", a: "Catching", choices: ["Catching","Throwing","Dribbling","Striking"] },
+  { q: "Striking an object using the foot or shin.", a: "Kicking", choices: ["Kicking","Dribbling","Striking","Throwing"] },
+  { q: "Forcefully hitting something using an object or a body part, usually the arm or hand.", a: "Striking", choices: ["Striking","Kicking","Throwing","Catching"] },
+  { q: "Quickly tapping or kicking an object while keeping possession and control.", a: "Dribbling", choices: ["Dribbling","Kicking","Catching","Throwing"] },
+  { q: "The body's capacity to cope with daily activities and adapt to the environment.", a: "Physical fitness", choices: ["Physical fitness","Game concepts","Movement concepts","Agility"] },
+  { q: "The senses working in agreement with one or more body parts.", a: "Coordination", choices: ["Coordination","Balance","Agility","Speed"] },
+  { q: "The ability to control the position of the body to stay steady.", a: "Balance", choices: ["Balance","Agility","Speed","Coordination"] },
+  { q: "The ability to quickly change position, direction, or speed.", a: "Agility", choices: ["Agility","Balance","Speed","Coordination"] },
+  { q: "The ability to quickly move the entire body or a portion of it.", a: "Speed", choices: ["Speed","Agility","Balance","Coordination"] },
+  { q: "Training that uses cones arranged at intervals to sprint, slide, or change direction.", a: "Cone drills", choices: ["Cone drills","Ladder drills","Box jumps","Squat jumps"] },
+  { q: "Passing the ball to a teammate to keep it with your team.", a: "Maintaining possession", choices: ["Maintaining possession","Positioning","Regaining possession","Communication"] },
+  { q: "Making and using space and leaving room for your teammates.", a: "Positioning", choices: ["Positioning","Maintaining possession","Regaining possession","Communication"] },
+  { q: "A series of musical sounds that form a complete and memorable idea; the \"tune\" of a song.", a: "Melody", choices: ["Melody","Harmony","Rhythm","Phrase"] },
+  { q: "How high or low the notes are.", a: "Pitch", choices: ["Pitch","Rhythm","Contour","Interval"] },
+  { q: "The timing of the notes, giving the melody its pulse.", a: "Rhythm", choices: ["Rhythm","Pitch","Contour","Phrasing"] },
+  { q: "The overall up-and-down movement of a melody.", a: "Contour", choices: ["Contour","Pitch","Intervals","Phrasing"] },
+  { q: "The distances between individual notes.", a: "Intervals", choices: ["Intervals","Phrases","Contour","Pitch"] },
+  { q: "The step-by-step movement of individual notes within a melody.", a: "Melodic direction", choices: ["Melodic direction","Melodic shape","Harmony","Rhythm"] },
+  { q: "The path or road that the notes of a song take us on.", a: "Melodic shape", choices: ["Melodic shape","Melodic direction","Intervals","Phrase"] },
+  { q: "The epic of the Sulodnon people of Panay Island whose name means stories from the mouth of the Halawod River.", a: "Hinilawod", choices: ["Hinilawod","Darangen","Biag ni Lam-ang","Ibalon"] },
+  { q: "The short film adapted from the Hinilawod that won Best Short Film at the 2023 Gawad Urian.", a: "Sa Paglupad Ka Banog", choices: ["Sa Paglupad Ka Banog","Labaw Donggon","Halawod","Bantugan"] },
+  { q: "The epic poem of the Maranao people of Mindanao.", a: "Darangen", choices: ["Darangen","Hinilawod","Ibalon","Hudhud"] },
+  { q: "The central figure of the Darangen, known for strength, bravery, and diplomacy.", a: "Prince Bantugan", choices: ["Prince Bantugan","Labaw Donggon","Humadapnon","Dumalapdap"] },
+];
+
+// ═══════════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════════
+let state = {
+  awaiting: 'menu',
+  mode: null,
+  questions: [],
+  allAnswers: [],
+  qIndex: 0,
+  score: 0,
+  total: 0,
+  hintUsed: false,
+  audioEnabled: true,
+};
+
+// ═══════════════════════════════════════════════════════════════
+// TTS (UPGRADED FOR TRUE FILIPINO ACCENT)
+// ═══════════════════════════════════════════════════════════════
+let currentAudioStream = null;
+
+function speak(text) {
+  if (!state.audioEnabled) return;
+  
+  // Linisin ang mga nakaraang audio task
+  window.speechSynthesis.cancel();
+  if (currentAudioStream) {
+    currentAudioStream.pause();
+    currentAudioStream = null;
+  }
+  
+  // Tanggalin ang HTML tags at emojis para hindi basahin nang paputol-putol
+  const clean = text.replace(/<[^>]+>/g,'').replace(/[🇵🇭🌟✅❌💡⏭️🏆😊💪🔄🔲📚👋⭐✕🧭📏🗺️]/g,'');
+  
+  // PRIMARY METHOD: Google Translation Engine cloud voice stream (natural-sounding accent)
+  const googleTtsUrl = `https://translate.google.com/translate_tts?ie=UTF-8&tl=tl&client=tw-ob&q=${encodeURIComponent(clean)}`;
+  
+  currentAudioStream = new Audio(googleTtsUrl);
+  currentAudioStream.onplaying = () => showWave(true);
+  currentAudioStream.onended = currentAudioStream.onerror = () => showWave(false);
+  
+  currentAudioStream.play().catch(err => {
+    // BACKUP METHOD: Web Speech API (works even without internet)
+    console.warn("Google TTS blocked or offline. Falling back to local system speech engine.");
+    
+    const streamFallback = new SpeechSynthesisUtterance(clean);
+    streamFallback.lang = 'fil-PH';
+    streamFallback.rate = 0.95; streamFallback.pitch = 1.05; streamFallback.volume = 1;
+    
+    const voices = window.speechSynthesis.getVoices();
+    const filVoice = voices.find(v => v.lang.startsWith('fil') || v.lang.startsWith('tl'));
+    const engVoice = voices.find(v => v.lang.startsWith('en') && v.name.toLowerCase().includes('female'))
+                   || voices.find(v => v.lang.startsWith('en'));
+              
+    if (filVoice) {
+      streamFallback.voice = filVoice;
+    } else if (engVoice) {
+      streamFallback.voice = engVoice; 
+      streamFallback.lang = 'en-US'; 
+    }
+    
+    streamFallback.onstart = () => showWave(true);
+    streamFallback.onend = streamFallback.onerror = () => showWave(false);
+    window.speechSynthesis.speak(streamFallback);
+  });
+}
+
+function showWave(on) {
+  document.querySelectorAll('.speaker-wave').forEach(w => w.style.display = on ? 'inline-flex' : 'none');
+}
+
+// I-initialize ang mga boses ng system
+let localSystemVoices = [];
+function lookupSystemVoices() {
+  localSystemVoices = window.speechSynthesis.getVoices();
+}
+lookupSystemVoices();
+if (window.speechSynthesis.onvoiceschanged !== undefined) {
+  window.speechSynthesis.onvoiceschanged = lookupSystemVoices;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// UI HELPERS
+// ═══════════════════════════════════════════════════════════════
+const chatBox = document.getElementById('chat-box');
+const input = document.getElementById('user-input');
+const sendBtn = document.getElementById('send-btn');
+
+function scrollBottom() { chatBox.scrollTop = chatBox.scrollHeight; }
+
+function addMessage(role, html, speakText) {
+  const div = document.createElement('div');
+  div.className = `msg ${role}`;
+  const av = document.createElement('div');
+  av.className = 'avatar';
+  av.textContent = role === 'bot' ? '🤖' : '🧑';
+  const bub = document.createElement('div');
+  bub.className = 'bubble';
+  bub.innerHTML = role === 'bot'
+    ? html + '<span class="speaker-wave" style="display:none"><span></span><span></span><span></span><span></span><span></span></span>'
+    : html;
+  div.appendChild(av); div.appendChild(bub);
+  chatBox.appendChild(div);
+  scrollBottom(); bindChips();
+  if (role === 'bot') {
+    const txt = speakText || html.replace(/<[^>]+>/g,' ');
+    setTimeout(() => speak(txt), 350);
+  }
+}
+
+function addTyping() {
+  const d = document.createElement('div');
+  d.className = 'msg bot'; d.id = 'typing';
+  d.innerHTML = '<div class="avatar">🤖</div><div class="typing"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>';
+  chatBox.appendChild(d); scrollBottom();
+}
+function removeTyping() { const t = document.getElementById('typing'); if(t) t.remove(); }
+
+function bindChips() {
+  document.querySelectorAll('.chip:not([data-bound])').forEach(c => {
+    c.dataset.bound = '1';
+    c.addEventListener('click', () => handleUserMessage(c.dataset.val));
+  });
+}
+
+function updateScore() {
+  document.getElementById('score-val').textContent = state.score;
+  document.getElementById('total-val').textContent = state.total;
+}
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length-1; i > 0; i--) {
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]] = [a[j],a[i]];
+  }
+  return a;
+}
+
+function normalize(s) { return s.toLowerCase().trim().replace(/\s+/g,' '); }
+
+function checkAnswer(user, correct) {
+  const u = normalize(user), c = normalize(correct);
+  if (u === c) return true;
+  if (c.includes(u) && u.length > 5) return true;
+  const parts = c.split(/[,;\/]/);
+  for (const p of parts) if (u.includes(p.trim()) && p.trim().length > 4) return true;
+  return false;
+}
+
+function showResult() {
+  const pct = Math.round((state.score/state.total)*100);
+  const emoji = pct>=90?'🏆':pct>=70?'🌟':pct>=50?'😊':'💪';
+  const msg = pct>=90?'Excellent! You know it all!':pct>=70?'Great job! Keep it up!':pct>=50?'Good! Study a little more!':"Don't give up! Try again!";
+  document.getElementById('res-emoji').textContent = emoji;
+  document.getElementById('res-score').textContent = state.score;
+  document.getElementById('res-total').textContent = state.total;
+  document.getElementById('res-msg').textContent = msg;
+  document.getElementById('result-overlay').classList.add('show');
+  speak(`All done! Your score is ${state.score} out of ${state.total}. ${msg}`);
+}
+
+function restartApp() {
+  document.getElementById('result-overlay').classList.remove('show');
+  state = { awaiting:'menu', mode:null, questions:[], allAnswers:[], qIndex:0, score:0, total:0, hintUsed:false, audioEnabled:state.audioEnabled };
+  chatBox.innerHTML = '';
+  document.querySelector('.input-bar').style.display = 'flex';
+  updateScore();
+  showMenu();
+}
+
+// ═══════════════════════════════════════════════════════════════
+// MC HELPERS
+// ═══════════════════════════════════════════════════════════════
+function getAllAnswers() {
+  const ans = [];
+  for (const qs of Object.values(topics)) for (const q of qs) ans.push(q.a);
+  return ans;
+}
+
+function generateChoices(correct, pool) {
+  const others = pool.filter(a => a !== correct);
+  const near = shuffle(others).sort((x, y) => Math.abs(x.length - correct.length) - Math.abs(y.length - correct.length)).slice(0, 7);
+  return shuffle([correct, ...shuffle(near).slice(0, 3)]);
+}
+
+function buildMCBtns(choices, correctAnswer) {
+  const letters = ['A','B','C','D','E'];
+  return `<div class="mc-options">${choices.map((c,i)=>
+    `<button class="mc-btn" data-answer="${encodeURIComponent(c)}" data-correct="${encodeURIComponent(correctAnswer)}" onclick="handleMCClick(this)">
+      <span class="letter">${letters[i]}</span>${c}
+    </button>`
+  ).join('')}</div>`;
+}
+
+function handleMCClick(btn) {
+  const allBtns = btn.closest('.mc-options').querySelectorAll('.mc-btn');
+  allBtns.forEach(b => b.disabled = true);
+  const chosen = decodeURIComponent(btn.dataset.answer);
+  const correct = decodeURIComponent(btn.dataset.correct);
+  const isCorrect = chosen === correct;
+  allBtns.forEach(b => { if(decodeURIComponent(b.dataset.answer)===correct) b.classList.add('correct'); });
+  if (!isCorrect) btn.classList.add('wrong');
+  setTimeout(() => {
+    if (isCorrect) {
+      state.score++;
+      addMessage('bot', `✅ <strong>Correct!</strong> +1 point! The answer is: <strong>${correct}</strong>`, `Correct! The answer is: ${correct}`);
+    } else {
+      addMessage('bot', `❌ <strong>Not quite.</strong> The correct answer is: <strong>${correct}</strong>`, `Not quite. The correct answer is: ${correct}`);
+    }
+    state.qIndex++; updateScore();
+    if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+    else setTimeout(showResult, 900);
+  }, 650);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// NEXT QUESTION
+// ═══════════════════════════════════════════════════════════════
+function nextQuestion() {
+  const qi = state.qIndex;
+  const q = state.questions[qi];
+  const num = qi + 1;
+
+  if (state.mode === 'full' || state.mode === 'topic_mc') {
+    const choices = generateChoices(q.a, state.allAnswers);
+    const tag = q.topic ? `<span class="topic-tag">${q.topic}</span><br>` : '';
+    const html = `${tag}<strong>Q${num} of ${state.total}:</strong> ${q.q}${buildMCBtns(choices, q.a)}`;
+    addMessage('bot', html, `Question ${num}. ${q.q}`);
+    return;
+  }
+
+  if (state.mode === 'tf') {
+    const html = `<strong>Q${num} of ${state.total}:</strong> <div class="scenario-card">${q.q}</div>
+      <span class="chip" data-val="true">✅ True</span><span class="chip" data-val="false">❌ False</span>`;
+    addMessage('bot', html, `Question ${num}. True or False: ${q.q}`);
+    return;
+  }
+
+  if (state.mode === 'identify') {
+    const btns = buildMCBtns(q.choices, q.a);
+    const html = `<strong>Q${num} of ${state.total}:</strong> Identify what is being described:<div class="scenario-card">${q.q}</div>${btns}`;
+    addMessage('bot', html, `Question ${num}. Identify: ${q.q}`);
+    return;
+  }
+
+  // typed answer mode
+  const tag = q.topic ? `<span class="topic-tag">${q.topic}</span><br>` : '';
+  const html = `${tag}<strong>Q${num} of ${state.total}:</strong> ${q.q}<br><small style="color:var(--muted)">Type your answer · type <em>hint</em> for help · <em>skip</em> to move on</small>`;
+  addMessage('bot', html, `Question ${num}. ${q.q}`);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// MENU
+// ═══════════════════════════════════════════════════════════════
+function showMenu() {
+  addMessage('bot',
+    `👋 <strong>Hi! I'm your MAPEH Reviewer!</strong><br>Let's study <em>Physical Education</em> (target games, movement concepts, movement skills, fitness, and game concepts) and <em>Music</em> (melody, melodic direction and shape, the Hinilawod, and the Darangen).<br><br>What would you like to do?<br>
+    <span class="chip" data-val="1">📚 Study by Topic</span>
+    <span class="chip" data-val="2">✅ True or False</span>
+    <span class="chip" data-val="3">🌐 Identify</span>
+    <span class="chip" data-val="4">🌟 Full Review (Multiple Choice)</span>`,
+    "Hi! I'm your MAPEH Reviewer on Physical Education and Music. What would you like to do? Study a topic, True or False, Identify, or a Full Review with multiple choice?"
+  );
+  state.awaiting = 'menu';
+}
+
+// ═══════════════════════════════════════════════════════════════
+// PROCESS MESSAGE
+// ═══════════════════════════════════════════════════════════════
+function processMessage(msg) {
+  const aw = state.awaiting;
+
+  // ── MENU ──────────────────────────────────────────────────
+  if (aw === 'menu') {
+    if (msg === '1') {
+      state.awaiting = 'topic';
+      const keys = Object.keys(topics);
+      const chips = keys.map((t,i) => `<span class="chip" data-val="${i+1}">${i+1}. ${t}</span>`).join(' ');
+      addMessage('bot', `📚 Which topic would you like to study?<br>${chips}`, 'Which topic would you like to study?');
+
+    } else if (msg === '2') {
+      state.mode = 'tf';
+      state.questions = shuffle(trueOrFalse);
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'tf_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `✅ <strong>True or False!</strong> ${state.total} questions. Let's start!`, `True or False! ${state.total} questions. Let's start!`);
+      setTimeout(nextQuestion, 800);
+
+    } else if (msg === '3') {
+      state.mode = 'identify';
+      state.questions = shuffle(identifyQuestions);
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'mc_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `🌐 <strong>Identify!</strong> Name the movement skill, fitness indicator, melody part, or epic being described.`, "Identify! Figure out what's being described in each item.");
+      setTimeout(nextQuestion, 800);
+
+    } else if (msg === '4') {
+      state.mode = 'full';
+      const all = [];
+      for (const [topicName, qs] of Object.entries(topics)) {
+        qs.forEach(q => all.push({...q, topic: topicName}));
+      }
+      state.questions = shuffle(all);
+      state.allAnswers = getAllAnswers();
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'mc_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `🌟 <strong>Full Review — Multiple Choice!</strong> ${state.total} questions. Think carefully!`, `Full Review! Multiple Choice! ${state.total} questions. Think carefully!`);
+      setTimeout(nextQuestion, 800);
+
+    } else {
+      addMessage('bot',
+        `Choose an option:<br>
+        <span class="chip" data-val="1">📚 Study by Topic</span>
+        <span class="chip" data-val="2">✅ True or False</span>
+        <span class="chip" data-val="3">🌐 Identify</span>
+        <span class="chip" data-val="4">🌟 Full Review</span>`,
+        'Choose an option.'
+      );
+    }
+    return;
+  }
+
+  // ── TOPIC SELECT ──────────────────────────────────────────
+  if (aw === 'topic') {
+    const keys = Object.keys(topics);
+    const idx = parseInt(msg) - 1;
+    if (keys[idx]) {
+      const topicName = keys[idx];
+      state.mode = 'topic_mc';
+      state.questions = shuffle(topics[topicName]);
+      state.allAnswers = getAllAnswers();
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'mc_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `📚 <strong>${topicName}</strong> — ${state.total} questions. Ready?`, `${topicName}. ${state.total} questions. Ready?`);
+      setTimeout(nextQuestion, 800);
+    } else {
+      const chips = Object.keys(topics).map((t,i) => `<span class="chip" data-val="${i+1}">${i+1}. ${t}</span>`).join(' ');
+      addMessage('bot', `Please choose a valid topic:<br>${chips}`, 'Please choose a valid topic.');
+    }
+    return;
+  }
+
+  // ── TYPED ANSWER ──────────────────────────────────────────
+  if (aw === 'answer') {
+    const q = state.questions[state.qIndex];
+    const m = normalize(msg);
+
+    if (m === 'hint') {
+      state.hintUsed = true;
+      addMessage('bot', `💡 <strong>Hint:</strong> ${q.hint}`, `Hint: ${q.hint}`);
+      return;
+    }
+    if (m === 'skip') {
+      addMessage('bot', `⏭️ Skipped! The correct answer is: <strong>${q.a}</strong>`, `Skipped. The correct answer is: ${q.a}`);
+      state.qIndex++; state.hintUsed = false;
+      if (state.qIndex < state.total) setTimeout(nextQuestion, 700);
+      else showResult();
+      return;
+    }
+
+    const correct = checkAnswer(msg, q.a);
+    if (correct) {
+      if (!state.hintUsed) state.score++;
+      const note = state.hintUsed ? ' <em>(hint used — no point)</em>' : ' +1 point!';
+      addMessage('bot', `✅ <strong>Correct!</strong>${note} Answer: <strong>${q.a}</strong>`, `Correct! The answer is: ${q.a}`);
+    } else {
+      addMessage('bot', `❌ <strong>Not quite.</strong> The correct answer is: <strong>${q.a}</strong>`, `Not quite. The correct answer is: ${q.a}`);
+    }
+    state.qIndex++; state.hintUsed = false; updateScore();
+    if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+    else setTimeout(showResult, 900);
+    return;
+  }
+
+  // ── TRUE OR FALSE ─────────────────────────────────────────
+  if (aw === 'tf_answer') {
+    const q = state.questions[state.qIndex];
+    const ans = normalize(msg);
+    const valid = ans === 'true' || ans === 'false';
+
+    if (valid) {
+      const correct = ans === q.a;
+      if (correct) {
+        state.score++;
+        addMessage('bot', `✅ <strong>Correct!</strong> The answer is <strong>${q.a.toUpperCase()}</strong>.`, `Correct! The answer is ${q.a}.`);
+      } else {
+        addMessage('bot', `❌ <strong>Incorrect.</strong> The correct answer is <strong>${q.a.toUpperCase()}</strong>.`, `Incorrect. The correct answer is ${q.a}.`);
+      }
+      state.qIndex++; updateScore();
+      if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+      else setTimeout(showResult, 900);
+    } else {
+      addMessage('bot',
+        `Answer: True or False?<br><span class="chip" data-val="true">✅ True</span><span class="chip" data-val="false">❌ False</span>`,
+        'Answer: True or False?'
+      );
+    }
+    return;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// CONTROLS
+// ═══════════════════════════════════════════════════════════════
+function handleUserMessage(msg) {
+  if (!msg.trim()) return;
+  
+  // Stop any speaking audio cleanly when the user answers
+  window.speechSynthesis.cancel();
+  if (currentAudioStream) {
+    currentAudioStream.pause();
+    currentAudioStream = null;
+    showWave(false);
+  }
+  
+  addMessage('user', msg.replace(/</g,'&lt;'));
+  input.value = '';
+  input.disabled = true; sendBtn.disabled = true;
+  addTyping();
+  setTimeout(() => {
+    removeTyping();
+    input.disabled = false; sendBtn.disabled = false;
+    input.focus();
+    processMessage(msg);
+  }, 480);
+}
+
+sendBtn.addEventListener('click', () => { handleUserMessage(input.value); });
+input.addEventListener('keydown', e => { if(e.key==='Enter') handleUserMessage(input.value); });
+
+document.getElementById('audio-toggle').addEventListener('click', function() {
+  state.audioEnabled = !state.audioEnabled;
+  this.textContent = state.audioEnabled ? '🔊' : '🔇';
+  this.classList.toggle('active', state.audioEnabled);
+  if (!state.audioEnabled) {
+    window.speechSynthesis.cancel();
+    if (currentAudioStream) {
+      currentAudioStream.pause();
+      currentAudioStream = null;
+      showWave(false);
+    }
+  }
+});
+
+// ═══════════════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════════════
+window.addEventListener('load', () => {
+  lookupSystemVoices();
+  showMenu();
+});
+
+function printPracticeTest() {
+  document.body.classList.add('printing-test');
+  window.print();
+}
+window.addEventListener('afterprint', () => {
+  document.body.classList.remove('printing-test');
+});
+
+// ═══════════════════════════════════════════════════════════════
+// READ NOTES ALOUD (uses the browser's own voice — no length limit,
+// unlike the short Google TTS clips used for chat messages)
+// ═══════════════════════════════════════════════════════════════
+function getNotesText(section) {
+  // Skip the Practice Test / Answer Key tabs — too long and not meant to be read aloud
+  const clone = section.cloneNode(true);
+  clone.querySelectorAll('button').forEach(b => b.remove());
+  let text = clone.innerText || clone.textContent || '';
+  text = text.replace(/\s+/g, ' ').trim();
+  return text;
+}
+
+function toggleNotesAudio() {
+  const btn = document.getElementById('notes-audio-btn');
+  if (!btn) return;
+
+  if (window.speechSynthesis.speaking || window.speechSynthesis.pending) {
+    window.speechSynthesis.cancel();
+    btn.innerHTML = '🔊 Read Notes Aloud';
+    btn.classList.remove('active');
+    return;
+  }
+
+  const activeSection = document.querySelector('.notes-section.active');
+  if (!activeSection) return;
+  const text = getNotesText(activeSection);
+  if (!text) return;
+
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.lang = 'en-US';
+  utter.rate = 0.95;
+  utter.pitch = 1.05;
+  utter.volume = 1;
+
+  const voices = window.speechSynthesis.getVoices();
+  const voice = voices.find(v => v.lang.startsWith('en') && v.name.toLowerCase().includes('female'))
+             || voices.find(v => v.lang.startsWith('en'));
+  if (voice) utter.voice = voice;
+
+  utter.onstart = () => { btn.innerHTML = '⏹️ Stop Reading'; btn.classList.add('active'); };
+  utter.onend = utter.onerror = () => { btn.innerHTML = '🔊 Read Notes Aloud'; btn.classList.remove('active'); };
+
+  window.speechSynthesis.speak(utter);
+}
+
+function switchTab(tabId, btn) {
+  window.speechSynthesis.cancel();
+  const audioBtn = document.getElementById('notes-audio-btn');
+  if (audioBtn) { audioBtn.innerHTML = '🔊 Read Notes Aloud'; audioBtn.classList.remove('active'); }
+  document.querySelectorAll('.notes-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.notes-tab').forEach(b => b.classList.remove('active'));
+  document.getElementById(tabId).classList.add('active');
+  btn.classList.add('active');
+}
+
+function closeNotesPanel() {
+  window.speechSynthesis.cancel();
+  const audioBtn = document.getElementById('notes-audio-btn');
+  if (audioBtn) { audioBtn.innerHTML = '🔊 Read Notes Aloud'; audioBtn.classList.remove('active'); }
+  document.getElementById('notes-overlay').classList.remove('show');
+}
+</script>
+
+<!-- ── Notes Panel ── -->
+<div class="notes-overlay" id="notes-overlay">
+  <div class="notes-panel">
+    <div class="notes-header">
+      <h2>📖 MAPEH: PE &amp; Music — Notes</h2>
+      <div class="notes-header-actions">
+        <button class="print-btn" id="notes-audio-btn" onclick="toggleNotesAudio()" title="Have this tab read aloud">🔊 Read Notes Aloud</button>
+        <button class="print-btn" onclick="printPracticeTest()" title="Print or save the Practice Test &amp; Answer Key as PDF">🖨️ Print Test &amp; Key</button>
+        <button class="notes-close" onclick="closeNotesPanel()">✕</button>
+      </div>
+    </div>
+    <div class="notes-tabs">
+      <button class="notes-tab active" onclick="switchTab('tab-games', this)">🎯 PE: Games &amp; Movement</button>
+      <button class="notes-tab" onclick="switchTab('tab-skills', this)">🏃 PE: Movement Skills</button>
+      <button class="notes-tab" onclick="switchTab('tab-fit', this)">💪 PE: Fitness &amp; Games</button>
+      <button class="notes-tab" onclick="switchTab('tab-melody', this)">🎵 Music: Melody</button>
+      <button class="notes-tab" onclick="switchTab('tab-epic', this)">📜 Music: Epics</button>
+      <button class="notes-tab" onclick="switchTab('tab-tf', this)">✅ True or False</button>
+      <button class="notes-tab" onclick="switchTab('tab-ptest', this)">📝 Practice Test</button>
+      <button class="notes-tab" onclick="switchTab('tab-key', this)">🔑 Answer Key</button>
+      <button class="notes-tab" onclick="switchTab('tab-raw', this)">📄 Raw Notes</button>
+    </div>
+    <div class="notes-body">
+
+      <div class="notes-section active" id="tab-games">
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> <strong>Games</strong> are activities with rules everyone agreed on. The four classes are <strong>invasion/territory, net/wall, striking/fielding, and target games</strong>. <strong>Target games</strong> need precise, controlled throws to hit a target. <strong>Batuhang-bola</strong> is the Philippine version of dodgeball. <strong>Movement concepts</strong> (body awareness, space awareness, quality/effort, movement relationships) help you adjust your movement.
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 MEMORY TRICK</span>
+          <strong>Four games = "I-N-S-T"</strong>: <strong>I</strong>nvasion, <strong>N</strong>et/wall, <strong>S</strong>triking/fielding, <strong>T</strong>arget. <strong>Four movement concepts = "B-S-Q-M"</strong>: <strong>B</strong>ody awareness, <strong>S</strong>pace awareness, <strong>Q</strong>uality/effort, <strong>M</strong>ovement relationships. <strong>Shapes = "R-N-W-T-S"</strong>: <strong>R</strong>ound, <strong>N</strong>arrow, <strong>W</strong>ide, <strong>T</strong>wisted, <strong>S</strong>ymmetrical.
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">🎯 Batuhang-Bola</div>
+          <div class="notes-item"><span class="notes-term">Type</span><span class="notes-def">A target game; the closest Philippine equivalent of dodgeball; simpler than the U.S. version</span></div>
+          <div class="notes-item"><span class="notes-term">Court</span><span class="notes-def">Rectangular. The first team surrounds the court on both sides; the second team stands in the middle</span></div>
+          <div class="notes-item"><span class="notes-term">Hit</span><span class="notes-def">A second-team member hit by the ball is out</span></div>
+          <div class="notes-item"><span class="notes-term">Catch</span><span class="notes-def">A member who catches the ball with the hands stays in, and an out teammate rejoins</span></div>
+          <div class="notes-item"><span class="notes-term">Goal</span><span class="notes-def">The first team eliminates all second-team members, usually within a time limit</span></div>
+          <div class="notes-item"><span class="notes-term">History (per lesson)</span><span class="notes-def">Started from a rock-throwing game of tribes in Africa → an English missionary brought it to England and changed rocks to rubber balls → it reached the United States and gained popularity</span></div>
+        </div>
+        <table class="compare-table">
+          <tr><th>Shape</th><th>How to Make It</th><th>How It Helps</th></tr>
+          <tr><td>Round (curved)</td><td>Curve the spine forward or backward</td><td>Avoid high balls; keep distance from the opponent</td></tr>
+          <tr><td>Narrow</td><td>Stretch the body so arms and legs form a tight shape</td><td>Occupy small spaces in a crowded area; make space from others and the ball</td></tr>
+          <tr><td>Wide</td><td>Keep arms and legs away from the body center (check your side space)</td><td>Catch the ball</td></tr>
+          <tr><td>Twisted</td><td>Contort body parts from their natural positions</td><td>Dodge the ball</td></tr>
+          <tr><td>Symmetrical / Asymmetrical</td><td>Two halves equal or the same / two halves uneven or different</td><td>Different body shapes for games, figures, and word spelling</td></tr>
+        </table>
+        <div class="tandaan-box">
+          <span class="tandaan-label">REMEMBER</span>
+          <strong>Movement relationships</strong> are about the <strong>connections</strong> between and among movers or objects, more than the "who" or "what". Start with <strong>self-relationships</strong> (body parts and body shapes).
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">✅ Checkpoint 4.1 Answers (answers supplied by this reviewer)</div>
+          <div class="notes-item"><span class="notes-term">1</span><span class="notes-def">c. movement concepts</span></div>
+          <div class="notes-item"><span class="notes-term">2</span><span class="notes-def">d. movement relationships</span></div>
+          <div class="notes-item"><span class="notes-term">3</span><span class="notes-def">c. twisted</span></div>
+          <div class="notes-item"><span class="notes-term">4</span><span class="notes-def">c. curving the spine either forward or backward</span></div>
+          <div class="notes-item"><span class="notes-term">5</span><span class="notes-def">d. symmetrical</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-skills">
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> <strong>Movement skills</strong> are basic motor skills. <strong>Locomotor skills</strong> move you from one place to another: jumping, hopping, running, walking, galloping. <strong>Manipulative skills</strong> use implements: throwing, catching, kicking, striking, dribbling.
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 MEMORY TRICK</span>
+          <strong>Locomotor = "J-H-R-W-G"</strong> (<strong>J</strong>ump, <strong>H</strong>op, <strong>R</strong>un, <strong>W</strong>alk, <strong>G</strong>allop). <strong>Jump = lands on 2 feet; Hop = 1 foot, same foot.</strong> <strong>Manipulative = "T-C-K-S-D"</strong> (<strong>T</strong>hrow, <strong>C</strong>atch, <strong>K</strong>ick, <strong>S</strong>trike, <strong>D</strong>ribble). <strong>Locomotor = you travel; Manipulative = you handle an object.</strong>
+        </div>
+        <table class="compare-table">
+          <tr><th>Locomotor Skill</th><th>How It Is Done</th></tr>
+          <tr><td>Jumping</td><td>Spring from one or two feet and land on both feet; bend the knees; swing arms back then forcefully forward and upward</td></tr>
+          <tr><td>Hopping</td><td>Use one foot and land on the same foot; land on the toes first, then the ball of the foot, with the knee bent. The other leg stays bent for balance. (Hopping alternately on each foot = <strong>skipping</strong>)</td></tr>
+          <tr><td>Running</td><td>Continuous, fast, long strides; slight forward lean, straight back, bent arms swinging freely, knees held high</td></tr>
+          <tr><td>Walking</td><td>Lift and lower each foot alternately at a regular pace; heel first, roll through the ball and toes, push out with the toes</td></tr>
+          <tr><td>Galloping</td><td>One foot forward and the other behind; spring the front foot, lift the back foot forward; the same foot stays in front; feet move in one direction</td></tr>
+        </table>
+        <table class="compare-table">
+          <tr><th>Manipulative Skill</th><th>Meaning</th></tr>
+          <tr><td>Throwing</td><td>Transferring an object by forcefully hurling it through the air using an arm and a hand</td></tr>
+          <tr><td>Catching</td><td>Positioning the hand(s) where a thrown object is expected, with good footwork</td></tr>
+          <tr><td>Kicking</td><td>Striking an object (or someone) using the foot or shin</td></tr>
+          <tr><td>Striking</td><td>Forcefully hitting something using an object or a body part, usually the arm or hand</td></tr>
+          <tr><td>Dribbling</td><td>Quick tapping or kicking of an object using the hands or feet, keeping possession and control</td></tr>
+        </table>
+        <div class="notes-topic">
+          <div class="notes-topic-title">✅ Checkpoint 4.2 Answers (answers supplied by this reviewer)</div>
+          <div class="notes-item"><span class="notes-term">A1</span><span class="notes-def">hopping</span></div>
+          <div class="notes-item"><span class="notes-term">A2</span><span class="notes-def">walking</span></div>
+          <div class="notes-item"><span class="notes-term">A3</span><span class="notes-def">jumping</span></div>
+          <div class="notes-item"><span class="notes-term">A4</span><span class="notes-def">galloping</span></div>
+          <div class="notes-item"><span class="notes-term">A5</span><span class="notes-def">running</span></div>
+          <div class="notes-item"><span class="notes-term">B1</span><span class="notes-def">striking</span></div>
+          <div class="notes-item"><span class="notes-term">B2</span><span class="notes-def">throwing</span></div>
+          <div class="notes-item"><span class="notes-term">B3</span><span class="notes-def">catching</span></div>
+          <div class="notes-item"><span class="notes-term">B4</span><span class="notes-def">kicking</span></div>
+          <div class="notes-item"><span class="notes-term">B5</span><span class="notes-def">dribbling (bouncing the ball)</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-fit">
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> <strong>Physical fitness</strong> is the body's capacity to cope with daily activities and adapt to the environment. It has two categories: <strong>health-related</strong> and <strong>sports-related</strong>. The four indicators in the lesson are <strong>coordination, balance, agility, and speed</strong>. <strong>Game concepts</strong> focus on techniques and physical action skills.
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 MEMORY TRICK</span>
+          <strong>Fitness = "C-B-A-S"</strong>: <strong>C</strong>oordination (parts work together), <strong>B</strong>alance (stay steady), <strong>A</strong>gility (change quickly), <strong>S</strong>peed (move fast). <strong>Game concepts = "P-C-P-R"</strong>: <strong>P</strong>ossession, <strong>C</strong>ommunication, <strong>P</strong>ositioning, <strong>R</strong>egaining possession.
+        </div>
+        <table class="compare-table">
+          <tr><th>Indicator</th><th>Meaning</th><th>In Batuhang-Bola</th><th>Activities</th></tr>
+          <tr><td>Coordination</td><td>Senses work in agreement with body parts; parts work together at the same time</td><td>Eyes, feet, and arms work together to dodge or catch</td><td>Jumping rope, juggling, dribbling a ball</td></tr>
+          <tr><td>Balance</td><td>Control body position to stay steady while moving or still</td><td>Prevents falling when throwing or dodging; leaping, hopping, jumping</td><td>Standing on one leg (hold five seconds), one-leg squat</td></tr>
+          <tr><td>Agility</td><td>Quickly change position, direction, or speed</td><td>Dodge a fast-moving ball and react to other players</td><td>Ladder drills, cone drills, box jumps</td></tr>
+          <tr><td>Speed</td><td>Quickly move the whole body or a part of it</td><td>Retrieve a fallen ball and throw it again</td><td>Running or brisk walking, squat jumps</td></tr>
+        </table>
+        <div class="notes-topic">
+          <div class="notes-topic-title">🎮 Game Concepts</div>
+          <div class="notes-item"><span class="notes-term">Four game types</span><span class="notes-def">Invasion games, court or net games, striking or fielding games, target games</span></div>
+          <div class="notes-item"><span class="notes-term">1. Maintaining possession</span><span class="notes-def">Pass to a teammate using proper techniques: long, short, bounce, overhead, or high pass</span></div>
+          <div class="notes-item"><span class="notes-term">2. Good communication</span><span class="notes-def">Teammates must understand your signals before you pass; bonds grow in practice</span></div>
+          <div class="notes-item"><span class="notes-term">3. Positioning</span><span class="notes-def">Make and use space; make room for teammates</span></div>
+          <div class="notes-item"><span class="notes-term">4. Regaining possession</span><span class="notes-def">Throw, dodge, or strike; use movement relationships of body parts to dodge</span></div>
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">🛡️ Playing Batuhang-Bola: Safety</div>
+          <div class="notes-item"><span class="notes-term">Before</span><span class="notes-def">Excuse yourself if medically unfit; wear a loose shirt and jogging pants or shorts; use a lightweight (foam) ball; warm up</span></div>
+          <div class="notes-item"><span class="notes-term">During</span><span class="notes-def">Aim for bodies, not heads; do not strike forcefully; keep good sportsmanship</span></div>
+          <div class="notes-item"><span class="notes-term">After</span><span class="notes-def">Cool down</span></div>
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">📋 Mechanics</div>
+          <div class="notes-item"><span class="notes-term">Teams</span><span class="notes-def">Two teams of four or six; team A throws, team B is the target</span></div>
+          <div class="notes-item"><span class="notes-term">Positions</span><span class="notes-def">Team A is divided equally on either side of the court; team B lines up in the center</span></div>
+          <div class="notes-item"><span class="notes-term">Hit</span><span class="notes-def">Team B member hit on any body part is out and stays in a designated space outside the court</span></div>
+          <div class="notes-item"><span class="notes-term">Catch</span><span class="notes-def">A team B catch lets an out member rejoin</span></div>
+          <div class="notes-item"><span class="notes-term">Winning</span><span class="notes-def">Team A wins a set if no team B member remains; otherwise team B wins</span></div>
+          <div class="notes-item"><span class="notes-term">Time</span><span class="notes-def">Each set lasts five minutes; then the teams swap roles</span></div>
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">✅ Game Concepts True or False Answers (answers supplied by this reviewer)</div>
+          <div class="notes-item"><span class="notes-term">1</span><span class="notes-def">False (it is the focus of game concepts)</span></div>
+          <div class="notes-item"><span class="notes-term">2</span><span class="notes-def">True</span></div>
+          <div class="notes-item"><span class="notes-term">3</span><span class="notes-def">False</span></div>
+          <div class="notes-item"><span class="notes-term">4</span><span class="notes-def">True</span></div>
+          <div class="notes-item"><span class="notes-term">5</span><span class="notes-def">True</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-melody">
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> A <strong>melody</strong> is a series of musical sounds that form a complete, memorable idea: the "tune" of a song. It is shaped by <strong>pitch, rhythm, contour, phrasing, intervals, and scale and key</strong>. <strong>Melodic direction</strong> is how each note moves (up, down, or the same). <strong>Melodic shape</strong> is the overall path of the notes.
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 MEMORY TRICK</span>
+          <strong>Melody ingredients = "P-R-C-P-I-S"</strong>: <strong>P</strong>itch, <strong>R</strong>hythm, <strong>C</strong>ontour, <strong>P</strong>hrasing, <strong>I</strong>ntervals, <strong>S</strong>cale &amp; key. <strong>Direction = "Up, Down, Same"</strong>. Think of a <strong>hike</strong>: a <strong>hill</strong> = notes go up, a <strong>valley</strong> = notes go down, a <strong>flat path</strong> = notes repeat.
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">🎼 Six Ingredients of a Melody</div>
+          <div class="notes-item"><span class="notes-term">Pitch</span><span class="notes-def">How high or low the notes are</span></div>
+          <div class="notes-item"><span class="notes-term">Rhythm</span><span class="notes-def">The timing of the notes; gives the melody its pulse</span></div>
+          <div class="notes-item"><span class="notes-term">Contour (shape)</span><span class="notes-def">The overall up-and-down movement; adds emotional feel</span></div>
+          <div class="notes-item"><span class="notes-term">Phrasing</span><span class="notes-def">Grouping notes into smaller musical "sentences" called phrases</span></div>
+          <div class="notes-item"><span class="notes-term">Intervals</span><span class="notes-def">The distances between individual notes; affect the melody's character</span></div>
+          <div class="notes-item"><span class="notes-term">Scale and key</span><span class="notes-def">The set of notes and the central "home"; make the melody sound coherent</span></div>
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">⬆️ Melodic Direction</div>
+          <div class="notes-item"><span class="notes-term">Go up</span><span class="notes-def">The note gets higher</span></div>
+          <div class="notes-item"><span class="notes-term">Go down</span><span class="notes-def">The note gets lower</span></div>
+          <div class="notes-item"><span class="notes-term">Stay the same</span><span class="notes-def">The note repeats at the same pitch</span></div>
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">🏔️ Melodic Shapes (nine in the lesson)</div>
+          <div class="notes-item"><span class="notes-term">Rising</span><span class="notes-def">Notes keep going up</span></div>
+          <div class="notes-item"><span class="notes-term">Falling</span><span class="notes-def">Notes keep going down</span></div>
+          <div class="notes-item"><span class="notes-term">Repeating</span><span class="notes-def">Notes stay the same</span></div>
+          <div class="notes-item"><span class="notes-term">Combinations</span><span class="notes-def">Rising-repeating · Rising-falling · Repeating-rising · Repeating-falling · Falling-rising · Falling-repeating</span></div>
+        </div>
+        <div class="tandaan-box">
+          <span class="tandaan-label">REMEMBER</span>
+          Harmony is notes played <strong>together</strong>. The <strong>melody</strong> is usually the most prominent and memorable part. Every song has its own unique melodic shape.
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">✅ Checkpoint 1.1 Answers (answers supplied by this reviewer)</div>
+          <div class="notes-item"><span class="notes-term">1</span><span class="notes-def">False</span></div>
+          <div class="notes-item"><span class="notes-term">2</span><span class="notes-def">True</span></div>
+          <div class="notes-item"><span class="notes-term">3</span><span class="notes-def">False (rhythm is a part of melody)</span></div>
+          <div class="notes-item"><span class="notes-term">4</span><span class="notes-def">False</span></div>
+          <div class="notes-item"><span class="notes-term">5</span><span class="notes-def">True</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-epic">
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> The <strong>Hinilawod</strong> is a Visayan epic of the Sulodnon people of Panay Island. The <strong>Darangen</strong> is the Maranao epic of Mindanao. Both are long, old epics with heroes, adventure, and cultural values.
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 MEMORY TRICK</span>
+          <strong>Hinilawod = Halawod River, Panay, three brothers "L-H-D"</strong>: <strong>L</strong>abaw Donggon, <strong>H</strong>umadapnon, <strong>D</strong>umalapdap. <strong>Darangen = Maranao, Mindanao, Lake Lanao, Prince Bantugan</strong>. <strong>Visayas = Hinilawod; Mindanao = Darangen.</strong>
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">🌊 Hinilawod</div>
+          <div class="notes-item"><span class="notes-term">Where</span><span class="notes-def">Visayas region; the Sulodnon people of Panay Island</span></div>
+          <div class="notes-item"><span class="notes-term">Meaning</span><span class="notes-def">"Stories from the mouth of Halawod (also Jalaud) River"</span></div>
+          <div class="notes-item"><span class="notes-term">About</span><span class="notes-def">One of the longest epics recorded in the Philippines; themes of adventure, romance, and mythology</span></div>
+          <div class="notes-item"><span class="notes-term">Heroes</span><span class="notes-def">Three superhero brothers: Labaw Donggon, Humadapnon, and Dumalapdap</span></div>
+          <div class="notes-item"><span class="notes-term">Story</span><span class="notes-def">They travel to magical places to have adventures and find their true love</span></div>
+          <div class="notes-item"><span class="notes-term">Film</span><span class="notes-def"><em>Sa Paglupad Ka Banog</em> ("The Flight of Banog"), cowritten and directed by Elvert Bañares; Best Short Film, 2023 Gawad Urian; shown in Iloilo City</span></div>
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">🏞️ Darangen and Prince Bantugan</div>
+          <div class="notes-item"><span class="notes-term">Where</span><span class="notes-def">Maranao people of Mindanao; the heroes protect their home by Lake Lanao</span></div>
+          <div class="notes-item"><span class="notes-term">Story</span><span class="notes-def">Bravery, loyalty, and the search for justice; themes of courage, love, and mysticism</span></div>
+          <div class="notes-item"><span class="notes-term">Magic</span><span class="notes-def">Spells that heal wounds, turn night into day, or control animals</span></div>
+          <div class="notes-item"><span class="notes-term">Prince Bantugan</span><span class="notes-def">The central figure; incredible strength, unmatched bravery, and skill in fighting and diplomacy</span></div>
+          <div class="notes-item"><span class="notes-term">His adventures</span><span class="notes-def">Heroic feats, battles with mythical creatures, and journeys to the afterlife</span></div>
+          <div class="notes-item"><span class="notes-term">Values</span><span class="notes-def">Honor, loyalty, and the importance of family and community; represents ideal leadership</span></div>
+          <div class="notes-item"><span class="notes-term">Purpose</span><span class="notes-def">Teaches lessons and preserves Maranao traditions and virtues</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-tf">
+        <div class="notes-topic">
+          <div class="notes-topic-title">✅ True or False — Key Reminders</div>
+          <div class="notes-item"><span class="notes-term"><span style="color:#ef4444">FALSE</span></span><span class="notes-def">Hopping lands on both feet → hopping lands on the <strong>same one foot</strong>; jumping lands on both feet.</span></div>
+          <div class="notes-item"><span class="notes-term"><span style="color:#ef4444">FALSE</span></span><span class="notes-def">A narrow shape keeps arms and legs away from the center → that is a <strong>wide</strong> shape.</span></div>
+          <div class="notes-item"><span class="notes-term"><span style="color:#ef4444">FALSE</span></span><span class="notes-def">Locomotor skills use implements → <strong>manipulative</strong> skills use implements.</span></div>
+          <div class="notes-item"><span class="notes-term"><span style="color:#ef4444">FALSE</span></span><span class="notes-def">Balance is quickly changing direction → that is <strong>agility</strong>.</span></div>
+          <div class="notes-item"><span class="notes-term"><span style="color:#ef4444">FALSE</span></span><span class="notes-def">Game technique is the focus of movement concepts → it is the focus of <strong>game concepts</strong>.</span></div>
+          <div class="notes-item"><span class="notes-term"><span style="color:#ef4444">FALSE</span></span><span class="notes-def">A hit player stays in the game → the hit player is <strong>out</strong>.</span></div>
+          <div class="notes-item"><span class="notes-term"><span style="color:#ef4444">FALSE</span></span><span class="notes-def">Aim for the head → aim for the <strong>body</strong>, never the head.</span></div>
+          <div class="notes-item"><span class="notes-term"><span style="color:#ef4444">FALSE</span></span><span class="notes-def">A melody only goes up → notes can go <strong>up, down, or stay the same</strong>.</span></div>
+          <div class="notes-item"><span class="notes-term"><span style="color:#ef4444">FALSE</span></span><span class="notes-def">Rhythm is the melody → rhythm is only <strong>one part</strong> of a melody.</span></div>
+          <div class="notes-item"><span class="notes-term"><span style="color:#ef4444">FALSE</span></span><span class="notes-def">The Darangen is from Luzon → it is from <strong>Mindanao</strong> (Maranao).</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-ptest">
+        <div class="notes-topic">
+          <div class="notes-topic-title">📝 Practice Test (62 items)</div>
+<div class="ptest-part-title">Part I — Name the Term</div>
+<div class="ptest-bank"><strong>Word Bank (use each once):</strong> batuhang-bola &middot; movement concepts &middot; movement relationships &middot; melody &middot; pitch &middot; rhythm &middot; contour &middot; melodic shape &middot; Hinilawod &middot; Darangen</div>
+<div class="ptest-q"><b>1.</b> The Philippine target game that is the closest equivalent of dodgeball. <span class="opt">Answer: ______________</span></div>
+<div class="ptest-q"><b>2.</b> The knowledge and comprehension of movements that let people adjust their motion to meet movement goals. <span class="opt">Answer: ______________</span></div>
+<div class="ptest-q"><b>3.</b> It tells the body&#x27;s connections with other things or with itself. <span class="opt">Answer: ______________</span></div>
+<div class="ptest-q"><b>4.</b> The &quot;tune&quot; of a song, the part you might hum, sing, or whistle. <span class="opt">Answer: ______________</span></div>
+<div class="ptest-q"><b>5.</b> How high or low the notes are. <span class="opt">Answer: ______________</span></div>
+<div class="ptest-q"><b>6.</b> The timing of the notes: how long each sound lasts and how the sounds are patterned. <span class="opt">Answer: ______________</span></div>
+<div class="ptest-q"><b>7.</b> The overall up-and-down movement of a melody. <span class="opt">Answer: ______________</span></div>
+<div class="ptest-q"><b>8.</b> The path or road that the notes of a song take us on. <span class="opt">Answer: ______________</span></div>
+<div class="ptest-q"><b>9.</b> The epic of the Sulodnon people of Panay Island about three superhero brothers. <span class="opt">Answer: ______________</span></div>
+<div class="ptest-q"><b>10.</b> The epic poem of the Maranao people from Mindanao that features Prince Bantugan. <span class="opt">Answer: ______________</span></div>
+<div class="ptest-part-title">Part II — Multiple Choice</div>
+<div class="ptest-q"><b>11.</b> What are target games?<br><span class="opt">a. games where players strike and field</span><span class="opt">b. games where players hit a target with an object</span><span class="opt">c. games where players invade a territory</span><span class="opt">d. games played over a net</span></div>
+<div class="ptest-q"><b>12.</b> Who brought the dodgeball game to England?<br><span class="opt">a. an English missionary</span><span class="opt">b. a Spanish soldier</span><span class="opt">c. an American coach</span><span class="opt">d. a Filipino teacher</span></div>
+<div class="ptest-q"><b>13.</b> What happens to a team B member who catches the ball in batuhang-bola?<br><span class="opt">a. the thrower is out</span><span class="opt">b. the game ends</span><span class="opt">c. team A wins</span><span class="opt">d. an out teammate rejoins the game</span></div>
+<div class="ptest-q"><b>14.</b> Which is NOT a movement concept?<br><span class="opt">a. quality or effort</span><span class="opt">b. melodic shape</span><span class="opt">c. body awareness</span><span class="opt">d. space awareness</span></div>
+<div class="ptest-q"><b>15.</b> Which shape is made by curving the spine?<br><span class="opt">a. twisted</span><span class="opt">b. round</span><span class="opt">c. narrow</span><span class="opt">d. wide</span></div>
+<div class="ptest-q"><b>16.</b> Which shape helps you catch the ball?<br><span class="opt">a. wide</span><span class="opt">b. narrow</span><span class="opt">c. round</span><span class="opt">d. twisted</span></div>
+<div class="ptest-q"><b>17.</b> A shape whose two halves look uneven or different is ____.<br><span class="opt">a. symmetrical</span><span class="opt">b. round</span><span class="opt">c. narrow</span><span class="opt">d. asymmetrical</span></div>
+<div class="ptest-q"><b>18.</b> Which locomotor skill uses one foot and lands on the same foot?<br><span class="opt">a. galloping</span><span class="opt">b. walking</span><span class="opt">c. hopping</span><span class="opt">d. jumping</span></div>
+<div class="ptest-q"><b>19.</b> Which locomotor skill keeps the same foot in front?<br><span class="opt">a. hopping</span><span class="opt">b. galloping</span><span class="opt">c. running</span><span class="opt">d. walking</span></div>
+<div class="ptest-q"><b>20.</b> When walking, which part of the foot touches the ground first?<br><span class="opt">a. the heel</span><span class="opt">b. the toes</span><span class="opt">c. the side</span><span class="opt">d. the whole foot</span></div>
+<div class="ptest-q"><b>21.</b> Which is a manipulative skill?<br><span class="opt">a. galloping</span><span class="opt">b. hopping</span><span class="opt">c. walking</span><span class="opt">d. dribbling</span></div>
+<div class="ptest-q"><b>22.</b> Which fitness indicator is the ability to control body position to stay steady?<br><span class="opt">a. agility</span><span class="opt">b. coordination</span><span class="opt">c. balance</span><span class="opt">d. speed</span></div>
+<div class="ptest-q"><b>23.</b> Which activity improves agility?<br><span class="opt">a. jumping rope</span><span class="opt">b. ladder drills</span><span class="opt">c. standing on one leg</span><span class="opt">d. juggling</span></div>
+<div class="ptest-q"><b>24.</b> Which activity improves balance?<br><span class="opt">a. one-leg squat</span><span class="opt">b. cone drills</span><span class="opt">c. juggling</span><span class="opt">d. box jumps</span></div>
+<div class="ptest-q"><b>25.</b> Which is NOT a passing technique in the lesson?<br><span class="opt">a. bounce pass</span><span class="opt">b. overhead pass</span><span class="opt">c. long pass</span><span class="opt">d. kick pass</span></div>
+<div class="ptest-q"><b>26.</b> Where should throwers aim in batuhang-bola?<br><span class="opt">a. at the feet only</span><span class="opt">b. at the ground</span><span class="opt">c. at the bodies of opponents</span><span class="opt">d. at the heads of opponents</span></div>
+<div class="ptest-q"><b>27.</b> How long does each game set of batuhang-bola last?<br><span class="opt">a. thirty seconds</span><span class="opt">b. five minutes</span><span class="opt">c. one minute</span><span class="opt">d. ten minutes</span></div>
+<div class="ptest-q"><b>28.</b> What can a melodic note do?<br><span class="opt">a. go up, go down, or stay the same</span><span class="opt">b. only go up</span><span class="opt">c. only go down</span><span class="opt">d. only stay the same</span></div>
+<div class="ptest-q"><b>29.</b> Which of these is an ingredient of a melody?<br><span class="opt">a. tributary</span><span class="opt">b. canopy</span><span class="opt">c. habitat</span><span class="opt">d. intervals</span></div>
+<div class="ptest-q"><b>30.</b> Which prince is the central figure in the Darangen?<br><span class="opt">a. Humadapnon</span><span class="opt">b. Dumalapdap</span><span class="opt">c. Prince Bantugan</span><span class="opt">d. Labaw Donggon</span></div>
+<div class="ptest-part-title">Part III — Locomotor or Manipulative?</div>
+<div class="ptest-bank">Write <b>L</b> if the skill is locomotor and <b>M</b> if it is manipulative.</div>
+<div class="ptest-q"><b>31.</b> hopping <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>32.</b> dribbling <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>33.</b> galloping <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>34.</b> throwing <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>35.</b> walking <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>36.</b> kicking <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>37.</b> running <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>38.</b> catching <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>39.</b> jumping <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>40.</b> striking <span class="opt">Answer: ______</span></div>
+<div class="ptest-part-title">Part IV — True or False</div>
+<div class="ptest-q"><b>41.</b> Batuhang-bola is a target game. <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>42.</b> A twisted shape helps you dodge the ball. <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>43.</b> Hopping lands on both feet. <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>44.</b> Locomotor skills are movements performed by moving from one place to another. <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>45.</b> Technique or specific physical action skills are the focus of movement concepts. <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>46.</b> A foam ball is recommended for batuhang-bola. <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>47.</b> Melody is the same as rhythm. <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>48.</b> A flat, straight melodic path means the notes stay the same. <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>49.</b> The Darangen is an epic of the Maranao people. <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>50.</b> The Hinilawod is an epic from Mindanao. <span class="opt">Answer: ______</span></div>
+<div class="ptest-part-title">Part V — Match the Term</div>
+<div class="ptest-bank"><strong>Column B:</strong> a. agility &middot; b. balance &middot; c. coordination &middot; d. speed &middot; e. symmetrical &middot; f. twisted &middot; g. narrow</div>
+<div class="ptest-q"><b>51.</b> shape formed by contorting body parts, used to dodge a ball <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>52.</b> the eyes, feet, and arms working together to dodge or catch the ball <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>53.</b> shape used to occupy small spaces when the play area is crowded <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>54.</b> staying steady while hopping or jumping so you do not fall over <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>55.</b> quickly changing direction to dodge a fast-moving ball <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>56.</b> quickly retrieving a fallen ball to throw it again <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>57.</b> a shape whose two halves of the body are equal or the same <span class="opt">Answer: ______</span></div>
+<div class="ptest-part-title">Part VI — Short Answer</div>
+<div class="ptest-q"><b>58.</b> Describe how batuhang-bola is played.<br><span class="opt">______________________________________</span></div>
+<div class="ptest-q"><b>59.</b> Give two safety precautions before playing batuhang-bola.<br><span class="opt">______________________________________</span></div>
+<div class="ptest-q"><b>60.</b> How are jumping and hopping different?<br><span class="opt">______________________________________</span></div>
+<div class="ptest-q"><b>61.</b> Name the six ingredients of a melody.<br><span class="opt">______________________________________</span></div>
+<div class="ptest-q"><b>62.</b> What does Prince Bantugan represent, and which values do his tales highlight?<br><span class="opt">______________________________________</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-key">
+        <div class="notes-topic">
+<div class="notes-topic-title">Part I — Name the Term</div>
+<div class="key-grid"><div class="key-pill">1. <b>batuhang-bola</b></div><div class="key-pill">2. <b>movement concepts</b></div><div class="key-pill">3. <b>movement relationships</b></div><div class="key-pill">4. <b>melody</b></div><div class="key-pill">5. <b>pitch</b></div><div class="key-pill">6. <b>rhythm</b></div><div class="key-pill">7. <b>contour</b></div><div class="key-pill">8. <b>melodic shape</b></div><div class="key-pill">9. <b>Hinilawod</b></div><div class="key-pill">10. <b>Darangen</b></div></div>
+<div class="notes-topic-title">Part II — Multiple Choice</div>
+<div class="key-grid"><div class="key-pill">11. <b>b. games where players hit a target with an object</b></div><div class="key-pill">12. <b>a. an English missionary</b></div><div class="key-pill">13. <b>d. an out teammate rejoins the game</b></div><div class="key-pill">14. <b>b. melodic shape</b></div><div class="key-pill">15. <b>b. round</b></div><div class="key-pill">16. <b>a. wide</b></div><div class="key-pill">17. <b>d. asymmetrical</b></div><div class="key-pill">18. <b>c. hopping</b></div><div class="key-pill">19. <b>b. galloping</b></div><div class="key-pill">20. <b>a. the heel</b></div><div class="key-pill">21. <b>d. dribbling</b></div><div class="key-pill">22. <b>c. balance</b></div><div class="key-pill">23. <b>b. ladder drills</b></div><div class="key-pill">24. <b>a. one-leg squat</b></div><div class="key-pill">25. <b>d. kick pass</b></div><div class="key-pill">26. <b>c. at the bodies of opponents</b></div><div class="key-pill">27. <b>b. five minutes</b></div><div class="key-pill">28. <b>a. go up, go down, or stay the same</b></div><div class="key-pill">29. <b>d. intervals</b></div><div class="key-pill">30. <b>c. Prince Bantugan</b></div></div>
+<div class="notes-topic-title">Part III — L or M</div>
+<div class="key-grid"><div class="key-pill">31. <b>L</b></div><div class="key-pill">32. <b>M</b></div><div class="key-pill">33. <b>L</b></div><div class="key-pill">34. <b>M</b></div><div class="key-pill">35. <b>L</b></div><div class="key-pill">36. <b>M</b></div><div class="key-pill">37. <b>L</b></div><div class="key-pill">38. <b>M</b></div><div class="key-pill">39. <b>L</b></div><div class="key-pill">40. <b>M</b></div></div>
+<div class="notes-topic-title">Part IV — True or False</div>
+<div class="key-grid"><div class="key-pill">41. <b>TRUE</b></div><div class="key-pill">42. <b>TRUE</b></div><div class="key-pill">43. <b>FALSE</b></div><div class="key-pill">44. <b>TRUE</b></div><div class="key-pill">45. <b>FALSE</b></div><div class="key-pill">46. <b>TRUE</b></div><div class="key-pill">47. <b>FALSE</b></div><div class="key-pill">48. <b>TRUE</b></div><div class="key-pill">49. <b>TRUE</b></div><div class="key-pill">50. <b>FALSE</b></div></div>
+<div class="notes-topic-title">Part V — Match the Term</div>
+<div class="key-grid"><div class="key-pill">51. <b>f</b></div><div class="key-pill">52. <b>c</b></div><div class="key-pill">53. <b>g</b></div><div class="key-pill">54. <b>b</b></div><div class="key-pill">55. <b>a</b></div><div class="key-pill">56. <b>d</b></div><div class="key-pill">57. <b>e</b></div></div>
+<div class="notes-topic-title">Part VI — Short Answer (sample answers)</div>
+<div class="ptest-q"><b>58.</b> Two teams play on a rectangular court. Team A is divided and stands on both sides of the court and takes turns throwing the ball at team B, who stand in the middle and dodge. A hit player is out; a team B player who catches the ball lets an out teammate rejoin. Team A wins if no team B member remains.</div><div class="ptest-q"><b>59.</b> Any two: excuse yourself if medically unfit; wear a loose shirt and jogging pants or shorts; use a lightweight foam ball; do warm-up exercises; aim for bodies and not heads; do not strike a player forcefully; keep good sportsmanship; do cool-down exercises after.</div><div class="ptest-q"><b>60.</b> Jumping springs from one or two feet and lands on both feet. Hopping uses only one foot and lands on the same foot.</div><div class="ptest-q"><b>61.</b> Pitch, rhythm, contour (or shape), phrasing, intervals, and scale and key.</div><div class="ptest-q"><b>62.</b> He represents ideal leadership. His tales highlight honor, loyalty, and the importance of family and community, and they teach lessons and preserve Maranao traditions.</div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-raw">
+        <div class="rawnotes-intro">
+          📌 This is the original content of the uploaded lesson, unedited — for whenever you need to check the exact wording or an example not covered in the reviewer.
+        </div>
+        <div class="rawnotes-doc">
+<p>Games are activities that involve players moving around, with or without an object or implement, playing by a set of rules that have been mutually agreed upon. Games can be used for competitive play, cooperative play, or skill practice and self-testing. The four basic classifications are invasion or territory games, net or wall games, striking or fielding games, and target games. In this lesson, we will focus on a target game.</p>
+<h3 class="doc-heading">Target Games</h3>
+<p>Target games require players to hit something or someone (target) using an object to score. To hit this target, the players must throw the object precisely and with great control.</p>
+<p>Target games require players to use a variety of manipulative skills, including throwing, catching, running, jumping, stretching, and dodging. One of the most popular target games in the Philippines is “batuhang-bola.”</p>
+<h3 class="doc-heading">Batuhang-Bola</h3>
+<p>Dodgeball originated from a deadly game among certain tribes in Africa. Tribe members used to play a game of throwing rocks in order to injure opponents. To avoid being injured, the tribe members must dodge the rocks. This served as training among tribe members so they could work together against other tribes. This game was brought by an English missionary to England, replacing rocks with rubber balls and creating simple rules. Eventually, the game reached the United States where new rules were added and the game gained wide popularity.</p>
+<p>In the Philippines, the closest equivalent to dodgeball is called batuhang-bola. It is simpler than dodgeball in the United States. Two teams play in a rectangular court. The first team is divided into two and surrounds the court on both sides while the second team stands in the middle of the court.</p>
+<p>Members of the first team on both sides take turns throwing the ball to hit members of the second team, who may run around within the court or dodge the ball. Any second-team member to be hit by the ball is out of the game. However, one remains in the game if he or she catches the ball with his or her hands; additionally, another team member who was eliminated gets to rejoin the game and play again. The goal of the game is for the first team to eliminate all members of the second team usually within a time limit.</p>
+<h3 class="doc-heading">Movement Concepts</h3>
+<p>In playing target games, you should be equipped with the proper concepts and skills. Knowledge and comprehension of movements are known as <strong>movement concepts</strong>, and they enable people to change and adjust their motion to meet specific movement goals.</p>
+<p>Concepts related to movement include body awareness, space awareness, quality or effort, and movement relationships. When you become good at these things, you will be more confident in your body and be more motivated to try out and enjoy a variety of sports and activities. Thus, movement concepts can help you build a strong relationship with yourself, with others, and with objects.</p>
+<h3 class="doc-heading">Movement Relationships</h3>
+<p>The body’s connections with other things or with itself are revealed by <strong>movement relationships</strong>. The forms of connections that can happen when moving should be the focus of the relationship’s movement idea. In this idea, the connections between and among the movers or objects are more important than the “who” or “what” of a movement.</p>
+<p>Begin learning the simplest concept to help you understand self-relationships (body parts, body shapes). The parts of our body can do many things. Your hands can do brushing and combing, and can touch objects around you. When you move using one body part to hold another body part and touch things around you, it is considered a relationship of body parts.</p>
+<p>These are the examples of movement relationships of body parts and shape: round (curved), narrow, wide, twisted, and symmetrical/nonsymmetrical. These body parts and shapes can be used in different fun activities, such as word spelling using body parts, forming geometrical and animal figures, and dodging the ball in the game batuhang-bola. To avoid the ball, you have to move your body in any space while forming different shapes.</p>
+<p>Below are movement relationships with whom or what the body is connecting while it moves.</p>
+<ol type="1">
+<li><p><strong>Round (Curved)</strong> – Make a round shape by curving the spine. Curl either forward or backward to create a circular shape. Forming round or curved shapes can help you avoid the ball in the game especially if it strikes in higher areas. Doing this makes sure that you have enough space and distance from the opponent, too.</p></li>
+<li><p><strong>Narrow</strong> – To be as narrow as possible, stretch the body with your arms and legs assisting in forming the tight shape. It is used to occupy small spaces. You can use this shape when there are too many people in the play area. Form narrow shapes to create as much space between you and the other people or the ball.</p></li>
+<li><p><strong>Wide</strong> – Keep your arms and legs away from the body center to create a wide shape. In doing this, make sure you have enough space on your sides. Check your distance from other players. Forming a wide shape can help you catch the ball.</p></li>
+<li><p><strong>Twisted</strong> – You can form all sorts of twisted shapes by contorting some body parts from their natural positions. Twisting your body during a game will help you dodge the ball.</p></li>
+<li><p><strong>Symmetrical and Nonsymmetrical</strong> – A symmetrical shape is produced when the figures on the two halves of the body are equal or the same. An asymmetrical shape has two halves of the body looking uneven or different from each other.</p></li>
+</ol>
+<h3 class="doc-heading">My Checkpoint 4.1</h3>
+<p><em>Answer the questions by circling the letter of your answer.</em></p>
+<ol type="1">
+<li>This refers to the knowledge and comprehension of movements that enable people to change and adjust their motions to meet specific movement goals.<br />
+
+<ol type="a">
+<li>fitness concepts b. game concepts c. movement concepts d. movement skills</li>
+</ol></li>
+<li>This is a movement concept that tells the body’s connections with other things or with itself.<br />
+
+<ol type="a">
+<li>body awareness b. space awareness c. quality or effort d. movement relationships</li>
+</ol></li>
+<li>This body shape is created if you firmly contort your body parts from their natural positions.<br />
+
+<ol type="a">
+<li>narrow b. round c. twisted d. wide</li>
+</ol></li>
+<li>This is how you can form a round shape using your body parts.<br />
+
+<ol type="a">
+<li>twisting some body parts from their natural positions<br />
+</li>
+<li>keeping or extending the arms and legs away from the body<br />
+</li>
+<li>curving the spine either forward or backward<br />
+</li>
+<li>contorting the body to fit into small spaces</li>
+</ol></li>
+<li>This is produced when two halves of the body are equal or the same.<br />
+
+<ol type="a">
+<li>asymmetrical b. round c. twisted d. symmetrical</li>
+</ol></li>
+</ol>
+<h3 class="doc-heading">Movement Skills</h3>
+<p><strong>Movement skills</strong> are the basic motor skills that involve different body parts. They are the primary motions to the more complicated movements used in games and certain sports.</p>
+<p>You can further group different movement skills under locomotor and manipulative skills.</p>
+<h3 class="doc-heading">Locomotor Skills</h3>
+<p>These are movements performed by moving from one place to another.</p>
+<ol type="1">
+<li><p><strong>Jumping</strong> – You do this by springing from one foot or two feet and landing on both feet. Bending the knees allows you to do this comfortably. To jump forcefully, spring with your feet, swing your arms backward then forcefully forward and upward.</p></li>
+<li><p><strong>Hopping</strong> – This is like jumping, except you only use one foot and land with the same foot. To hop comfortably, bend the leg and push from the toes to take off. Swing the arms back then forward and upward. More importantly, land on the toes first then on the ball of the foot while the knee is bent. Meanwhile, the other leg is bent throughout and swings to serve as a balance. (When you hop alternately each foot, you are doing <em>skipping</em>.)</p></li>
+<li><p><strong>Running</strong> – Running consists of a series of forward-moving steps or strides that are continuous, fast, and long. In order to run correctly, you must maintain a slight forward lean while maintaining a straight back. Bend your arms, then let them swing freely at your sides while you move forward. The knees should be held high.</p></li>
+<li><p><strong>Walking</strong> – To do this comfortably, lift and lower each foot alternately, moving at a regular pace. Step on the ground with your heel first then roll through your ball and toes. Finally, push out with your toes before lifting the foot for another step.</p></li>
+<li><p><strong>Galloping</strong> – To do this, put one foot forward and the other one behind. Spring the front foot then lift the back foot forward, keeping the same foot in front and the other behind. As you do this, weight is transferred from the front foot to the back foot before the front foot lands on the next step. The feet move in one direction.</p></li>
+</ol>
+<h3 class="doc-heading">Manipulative Skills</h3>
+<p>These skills are done with the use of implements. These skills can also be a combination of locomotor and nonlocomotor movements that you can control.</p>
+<ol type="1">
+<li><p><strong>Throwing</strong> – This involves transferring an object to another side by forcefully hurling it through the air using an arm and a hand.</p></li>
+<li><p><strong>Catching</strong> – This requires positioning a hand (or hands) at a certain spot where you expect a thrown object could be captured or received. You need to adjust the rest of the body, with good footwork, to be able to receive the object at the exact spot.</p></li>
+<li><p><strong>Kicking</strong> – This is the act of striking an object (or someone) using the foot or shin (lower part of the leg).</p></li>
+<li><p><strong>Striking</strong> – This involves forcefully hitting something using an object or a body part (usually the arm or the hand).</p></li>
+<li><p><strong>Dribbling</strong> – This is the quick tapping or kicking of an object using the hands or feet, maintaining possession and control of the object.</p></li>
+</ol>
+<h3 class="doc-heading">My Checkpoint 4.2</h3>
+<p><strong>A. Identify the locomotor skills described. Write your answer on the blank.</strong></p>
+<ol type="1">
+<li><p>______ springing and landing on the same foot</p></li>
+<li><p>______ moving the feet alternately in a moderate way</p></li>
+<li><p>______ springing and landing on both feet</p></li>
+<li><p>______ springing the front foot forward followed by the back foot closely behind</p></li>
+<li><p>______ moving the feet alternately in long strides and in a fast way</p></li>
+</ol>
+<p><strong>B. Identify the manipulative skills needed in each given action. Write your answer on the blank.</strong></p>
+<ol type="1">
+<li><p>______ hitting a shuttlecock with badminton racket</p></li>
+<li><p>______ passing a basketball to a teammate</p></li>
+<li><p>______ receiving a baseball flying through the air</p></li>
+<li><p>______ hitting the body of an opponent in karate with a leg</p></li>
+<li><p>______ bouncing the volleyball before serving it</p></li>
+</ol>
+<h3 class="doc-heading">Fitness Concepts</h3>
+<p><strong>Physical fitness</strong> refers to the body’s capacity to cope with daily activities and adapt to the outside environment. A person who is physically fit is not only better able to perform daily tasks, but also has more energy to engage in leisure activities. The body should be able to adapt to environmental changes and pressures. Health-related physical fitness and sports-related physical fitness are the two categories of physical fitness. The following are the indicators of fitness:</p>
+<ol type="1">
+<li><p><strong>Coordination</strong> – This happens when the senses work in agreement with one or more body parts. This is the capacity of various body parts to work together simultaneously or at the same time. For example, you need a well-coordinated response of your body when playing batuhang-bola. Here you use your eyes, feet, and even arms in order to dodge the ball [?] or catch it.</p></li>
+<li><p><strong>Balance</strong> – This is the ability to control the position of the body to remain steady either when moving or staying still. In playing batuhang-bola, for example, balance is needed to prevent the players from falling over when throwing the ball or dodging it. Leaping, hopping, and jumping while playing all require balance.</p></li>
+<li><p><strong>Agility</strong> – This is the ability to quickly change position, direction, or speed in response to something. In playing batuhang-bola, having an agile body allows you to quickly move to dodge a fast-moving ball. You should be able to react too after seeing the movements of other players.</p></li>
+<li><p><strong>Speed</strong> – This is the ability to quickly move the entire body or a portion of it. In playing batuhang-bola, speed is important in moving to retrieve a fallen ball and in throwing it again at an opponent. You can improve your speed or rate of movement through specific training.</p></li>
+</ol>
+<p>The following are some examples to help you improve on the given indicators of fitness.</p>
+<table style="width:99%;">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 90%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>Indicator</strong></th>
+<th style="text-align: left;"><strong>Physical Activity</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Coordination</strong></td>
+<td style="text-align: left;">• <strong>Jumping rope</strong> – You may perform regular jumps, side-to-side jumps, or one-legged jumps.<br />
+• <strong>Juggling</strong> – Throw and catch palm-sized balls successively. You may increase the number of objects as you get the hang of it.<br />
+• <strong>Dribbling a ball</strong> – You can dribble a ball with your hands (basketball) or with your feet (football or soccer ball). Practice dribbling the ball in a zigzag pattern.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Balance</strong></td>
+<td style="text-align: left;">• <strong>Standing on one leg</strong> – Hold onto a stable object (such as a chair) and lift one leg. Hold it for five seconds, rest, then lift again. You can prolong standing on one leg if you can.<br />
+• <strong>One-leg squat</strong> – Perform this on both left and right legs for one to three minutes.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Agility</strong></td>
+<td style="text-align: left;">• <strong>Ladder drills</strong> – Exercise your agility by quick and precise foot placement along a piece of equipment called an agility ladder.<br />
+• <strong>Cone drills</strong> – Arrange training cones along certain intervals and forming different shapes. You can sprint, slide, or change direction depending on which cone you are approaching.<br />
+• <strong>Box jumps</strong> – Arrange three-inch-high boxes in a square pattern. Jump onto the boxes in clockwise and counterclockwise patterns.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Speed</strong></td>
+<td style="text-align: left;">• <strong>Running or brisk walking</strong> – Practice a faster pace in running by trying to exceed your previous records one at a time.<br />
+• <strong>Squat jumps</strong> – Perform this as fast as you can, and record how many squats jump you perform in one to three minutes.</td>
+</tr>
+</tbody>
+</table>
+<h3 class="doc-heading">Game Concepts</h3>
+<p>Technique or specific physical action skills are the focus of game concepts. Invasion games, court or net games, striking or fielding games, and target games are four categories of games based on how they are played. In playing these different games, you should understand the rules and movement principles based on the ideas of time and space:</p>
+<ol type="1">
+<li><p><strong>Maintaining possession of the ball</strong> – You can pass the ball or any other game object to a teammate using proper passing techniques (long pass, short pass, bounce pass, overhead pass, or high pass).</p></li>
+<li><p><strong>Maintaining good communication with teammates</strong> – Ensure that your teammates can easily understand your signals before you pass the ball. This is essential for creating a strong play. Building a strong bond with your teammates is developed in practice sessions.</p></li>
+<li><p><strong>Positioning</strong> – You need to know how to make and use space if you want to maintain ball possession. Make room for your teammates so they can move around as well. In a game, good use of space can help you win against your opponents.</p></li>
+<li><p><strong>Regaining possession by throwing, dodging, or striking</strong> – Learn to throw or strike the ball properly to aim at your target. If you are in a playing area, apply the concept of relationship to other people and objects by performing the movement relationship of body parts to help you dodge or avoid the ball.</p></li>
+</ol>
+<p><strong>B. Write <em>True</em> on the blank if the statement is correct and <em>False</em> if it is incorrect.</strong></p>
+<ol type="1">
+<li><p>______ Technique or specific physical action skills are the focus of movement concepts.</p></li>
+<li><p>______ The four major categories of games are invasion games, court or net games, striking or fielding games, and target games.</p></li>
+<li><p>______ Appreciating the importance of imposing rules and conditions is barely important in a game.</p></li>
+<li><p>______ In a game, strategic use of space can help you win against your opponents.</p></li>
+<li><p>______ One factor that contributes to a good game is good communication between teammates.</p></li>
+</ol>
+<h3 class="doc-heading">I Can Enhance My Skill</h3>
+<p>Play the game batuhang-bola as two sets of opposing players. Before you start, take note of the following safety precautions:</p>
+<ul>
+<li><p>Excuse yourself if you are medically unfit to play a physical game.</p></li>
+<li><p>Dress appropriately. Wear a loose shirt and jogging pants (or shorts).</p></li>
+<li><p>Choose a throwing ball that is lightweight. A foam ball is recommended.</p></li>
+<li><p>Do warm-up exercises before the game.</p></li>
+<li><p>Players throwing the ball should aim for the bodies of opponents and not their heads.</p></li>
+<li><p>Do not strike a player forcefully.</p></li>
+<li><p>Maintain good sportsmanship when playing.</p></li>
+<li><p>Do cool-down exercises after the game.</p></li>
+</ul>
+<h3 class="doc-heading">Mechanics:</h3>
+<ul>
+<li><p>Form two teams with four or six members each. Draw a rectangular court where the game will be played.</p></li>
+<li><p>The throwing team will be called team A, while the target team will be team B.</p></li>
+<li><p>Members of team A will be divided equally. They will line up on either side of the court.</p></li>
+<li><p>Team B members will all line up in the center of the court.</p></li>
+<li><p>During the game, members of team A will throw the ball at team B, whose players must try to dodge the ball in any way they can within the playing area. (Apply the movement skills you learned in this lesson.)</p></li>
+<li><p>Team A members on either side of the court will take turns throwing the ball.</p></li>
+<li><p>If a team B member is hit on any part of his or her body, that player is “out” of the game. He or she will stay in a designated space outside the court.</p></li>
+<li><p>If a team B member manages to catch the ball, an “out” member rejoins the game once more.</p></li>
+<li><p>Team A will win if none from team B remains in each game set. Otherwise, team B will win.</p></li>
+<li><p>Each game set will last for five minutes. Each team will change roles after five minutes.</p></li>
+</ul>
+<h3 class="doc-heading">MUSIC</h3>
+<h3 class="doc-heading">Melody Voyage</h3>
+<h3 class="doc-heading">My Targets</h3>
+<p>In this lesson, you will be able to:</p>
+<ul>
+<li><p>define melody in music, emphasizing its role as a series of organized, distinct musical notes;</p></li>
+<li><p>examine the role of melody in different musical traditions and historical periods;</p></li>
+<li><p>reflect on the cultural and historical significance of melodies, connecting them to broader contexts and artistic movements; and</p></li>
+<li><p>analyze music with a focus on melodic direction and its role in shaping the overall composition.</p></li>
+</ul>
+<h3 class="doc-heading">I Can Construct</h3>
+<p>Sing your favorite song, but instead of using your normal singing voice, pretend you are your favorite animal making the sounds. After your performance in front of the class, participate in a class discussion by answering the following questions.</p>
+<ol type="1">
+<li><p>What animal sound did you choose to make while singing, and why?</p></li>
+<li><p>Do you believe that using the correct pitch variations in your singing enhances the song’s appeal?</p></li>
+<li><p>What do you know about <em>melody</em>, which is a really important part of music?</p></li>
+</ol>
+<h3 class="doc-heading">I Can Converse</h3>
+<h3 class="doc-heading">Melody</h3>
+<p>A <strong>melody</strong> is a series of musical sounds that combine to form a complete and memorable idea. It is the “tune” of a song—the part you might hum, sing, or whistle. Think of a melody as a musical story. It is not just random notes; it is shaped by several key ingredients:</p>
+<ul>
+<li><p><em>Pitch</em> – How high or low the notes are. A melody moves between different pitches.</p></li>
+<li><p><em>Rhythm</em> – The timing of the notes—how long each sound lasts and how they are patterned. This gives the melody its pulse.</p></li>
+<li><p><em>Contour (or Shape)</em> – The overall up-and-down movement of the melody. Does it rise, fall, or wave? The melodic shape adds emotional feel to the music.</p></li>
+<li><p><em>Phrasing</em> – Melodies are often grouped into smaller, musical “sentences” called <strong>phrases</strong>, making them flow logically.</p></li>
+<li><p><em>Intervals</em> – The distances between individual notes, which affect the melody’s character.</p></li>
+<li><p><em>Scale and Key</em> – Most melodies follow a specific set of notes (a scale) and a central musical home (a key), which makes them sound coherent.</p></li>
+</ul>
+<p>In essence, a melody is the main voice or story in a piece of music. It is what makes a song recognizable and can stir our emotions. While other parts like harmony (notes played together) and overall rhythm are important, the melody usually stands out as the most prominent and memorable element for most listeners.</p>
+<h3 class="doc-heading">Melodic Direction</h3>
+<p>This refers to the step-by-step movement of individual notes within a melody. Think of it as the immediate “path” from one note to the next.</p>
+<p>Each note can do one of three things:</p>
+<ul>
+<li><p>Go up: The note gets higher. <em>(music staff example)</em></p></li>
+<li><p>Go down: The note gets lower. <em>(music staff example)</em></p></li>
+<li><p>Stay the same: The note repeats itself, staying at the same pitch. <em>(music staff example)</em></p></li>
+</ul>
+<p>So, if you are looking at musical notes, you would observe if the line of notes is moving upward, downward, or staying flat from one to the next.</p>
+<h3 class="doc-heading">Melodic Shape</h3>
+<p>The <em>melodic shape</em> is like the path or the road the notes of a song take us on. Imagine you are going on a hike through a musical landscape. In this landscape, instead of walking on trails, you are following the path of a song. Sometimes, the path goes up a hill when the notes get higher. Other times, it goes down into a valley when the notes get lower. And sometimes, it is flat and straight when the notes stay the same. Just like every adventure has its path, every song has its unique melodic shape. This shape gives the song its special feel, whether it is happy and bouncy as you jump up the hills or sad and slow as you slide down into the valleys. Look at the samples of melodic shapes.</p>
+<p><em>(Diagram of nine shapes: Rising, Rising–Repeating, Rising–Falling, Repeating–Rising, Repeating, Repeating–Falling, Falling–Rising, Falling–Repeating, Falling)</em></p>
+<h3 class="doc-heading">My Checkpoint 1.1</h3>
+<p><em>Write True if the statement is correct and False if it is incorrect.</em></p>
+<ol type="1">
+<li><p>______ A melody is a musical story that can only go up in pitch.</p></li>
+<li><p>______ Understanding melodic direction and melodic shape helps you find out if a musical story climbs mountains, slides down hills, or travels on a straight road.</p></li>
+<li><p>______ Melody is considered the rhythm of the song.</p></li>
+<li><p>______ In a melody, notes can only go up or stay the same.</p></li>
+<li><p>______ Every song has a unique melodic shape that gives it a special feel, whether happy, sad, bouncy, or slow.</p></li>
+</ol>
+<h3 class="doc-heading">Melodies and Filipino Myths: A Journey through Sound and Story</h3>
+<h3 class="doc-heading">“Sa Paglupad Ka Banog”: A Glimpse into Hinilawod</h3>
+<p>After learning how tunes move up and down through melodic directions and their shapes, you will now explore a story called “Sa Paglupad Ka Banog” (translated as The Flight of Banog), from a very long and old story called <em>Hinilawod</em>, an epic tale from the Visayas region, particularly among the Sulodnon people of Panay Island. <em>Hinilawod</em> is one of the longest epics recorded in the Philippines and is rich in themes of adventure, romance, and mythology. The word <em>Hinilawod</em> means “stories from the mouth of Halawod (also, Jalaud) River.” It is a big adventure about three superhero brothers, Labaw Donggon, Humadapnon, and Dumalapdap. They travel to magical places to have adventures and find their true love.</p>
+<p>An adaptation of this story was made into a short film titled <em>Sa Paglupad Ka Banog</em>, cowritten and directed by Elvert Bañares. It won the Best Short Film at the 2023 Gawad Urian. It was shown at a big movie event in Iloilo City that celebrated movies from different places in the Philippines. You can watch the trailer and the story behind the film (director’s notes) through the following links: <em>(links not visible in the photo)</em></p>
+<h3 class="doc-heading">The Darangen Epic: A Maranao Treasure</h3>
+<p>The <em>Darangen</em>, the epic poem of the Maranao people from Mindanao, is filled with captivating tales. Imagine a warrior parting a lake with a simple gesture, or chanting mysterious words to summon a giant ally in battle. This epic features powerful spells that can heal wounds, turn night into day, or even control animals. Every victory, every defeated beast, and every completed hunt in the <em>Darangen</em> showcases the heroes’ dedication to protecting their home by Lake Lanao.</p>
+<p>At its heart, the <em>Darangen</em> tells a story of bravery, loyalty, and the search for justice. Through its musical tales, it explores profound themes of courage, love, and mysticism, beautifully showcasing the rich culture and traditions of the Maranao community.</p>
+<p>Prince Bantugan is the central figure in the <em>Darangen</em>. He is known for his incredible strength, unmatched bravery, and skill in both fighting and diplomacy. His adventures are marked by heroic feats, battles with mythical creatures, and even journeys to the afterlife, all demonstrating his courage and wisdom.</p>
+<p>Bantugan’s tales perfectly capture Maranao cultural values, highlighting honor, loyalty, and the importance of family and community. His character often represents ideal leadership, inspiring listeners with his ability to handle tough challenges, in both war and peace. Bantugan’s stories do not just entertain; they also teach important lessons and preserve the traditions and virtues of the Maranao people. Through his epic journey, the <em>Darangen</em> celebrates the strength of the human spirit and the lasting power of love and bravery, even when facing great difficulties.</p>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ── Hidden Print Area (Practice Test + Answer Key) ── -->
+<div id="print-area">
+<div class="p-cover"><div class="p-icon">🎯</div><h1>MAPEH — Physical Education &amp; Music Practice Test</h1><div class="p-sub">Batuhang-Bola · Movement Skills · Fitness · Melody · Hinilawod &amp; Darangen</div>
+<div class="p-info-box"><div><strong>Name:</strong> _____________________________________</div><div><strong>Section:</strong> ___________________ &nbsp; <strong>Date:</strong> ___________________</div><div><strong>Score:</strong> _______ / 62</div></div>
+<div class="p-instructions"><strong>Instructions:</strong> Read each item carefully. Write your answer on the blank provided (Parts I, III, IV, V), write the letter of the correct answer (Part II), or answer in complete sentences (Part VI). Good luck!</div></div>
+<h2 class="p-part-title">Part I — Name the Term</h2>
+<div class="p-bank"><strong>Word Bank (use each once):</strong> batuhang-bola &middot; movement concepts &middot; movement relationships &middot; melody &middot; pitch &middot; rhythm &middot; contour &middot; melodic shape &middot; Hinilawod &middot; Darangen</div>
+<div class="p-q"><b>1.</b> The Philippine target game that is the closest equivalent of dodgeball. <span class="p-blank"></span></div>
+<div class="p-q"><b>2.</b> The knowledge and comprehension of movements that let people adjust their motion to meet movement goals. <span class="p-blank"></span></div>
+<div class="p-q"><b>3.</b> It tells the body&#x27;s connections with other things or with itself. <span class="p-blank"></span></div>
+<div class="p-q"><b>4.</b> The &quot;tune&quot; of a song, the part you might hum, sing, or whistle. <span class="p-blank"></span></div>
+<div class="p-q"><b>5.</b> How high or low the notes are. <span class="p-blank"></span></div>
+<div class="p-q"><b>6.</b> The timing of the notes: how long each sound lasts and how the sounds are patterned. <span class="p-blank"></span></div>
+<div class="p-q"><b>7.</b> The overall up-and-down movement of a melody. <span class="p-blank"></span></div>
+<div class="p-q"><b>8.</b> The path or road that the notes of a song take us on. <span class="p-blank"></span></div>
+<div class="p-q"><b>9.</b> The epic of the Sulodnon people of Panay Island about three superhero brothers. <span class="p-blank"></span></div>
+<div class="p-q"><b>10.</b> The epic poem of the Maranao people from Mindanao that features Prince Bantugan. <span class="p-blank"></span></div>
+<div class="p-break"></div>
+<h2 class="p-part-title">Part II — Multiple Choice</h2>
+<div class="p-q"><b>11.</b> What are target games?<br><span class="p-opt">a. games where players strike and field</span><span class="p-opt">b. games where players hit a target with an object</span><span class="p-opt">c. games where players invade a territory</span><span class="p-opt">d. games played over a net</span></div>
+<div class="p-q"><b>12.</b> Who brought the dodgeball game to England?<br><span class="p-opt">a. an English missionary</span><span class="p-opt">b. a Spanish soldier</span><span class="p-opt">c. an American coach</span><span class="p-opt">d. a Filipino teacher</span></div>
+<div class="p-q"><b>13.</b> What happens to a team B member who catches the ball in batuhang-bola?<br><span class="p-opt">a. the thrower is out</span><span class="p-opt">b. the game ends</span><span class="p-opt">c. team A wins</span><span class="p-opt">d. an out teammate rejoins the game</span></div>
+<div class="p-q"><b>14.</b> Which is NOT a movement concept?<br><span class="p-opt">a. quality or effort</span><span class="p-opt">b. melodic shape</span><span class="p-opt">c. body awareness</span><span class="p-opt">d. space awareness</span></div>
+<div class="p-q"><b>15.</b> Which shape is made by curving the spine?<br><span class="p-opt">a. twisted</span><span class="p-opt">b. round</span><span class="p-opt">c. narrow</span><span class="p-opt">d. wide</span></div>
+<div class="p-q"><b>16.</b> Which shape helps you catch the ball?<br><span class="p-opt">a. wide</span><span class="p-opt">b. narrow</span><span class="p-opt">c. round</span><span class="p-opt">d. twisted</span></div>
+<div class="p-q"><b>17.</b> A shape whose two halves look uneven or different is ____.<br><span class="p-opt">a. symmetrical</span><span class="p-opt">b. round</span><span class="p-opt">c. narrow</span><span class="p-opt">d. asymmetrical</span></div>
+<div class="p-q"><b>18.</b> Which locomotor skill uses one foot and lands on the same foot?<br><span class="p-opt">a. galloping</span><span class="p-opt">b. walking</span><span class="p-opt">c. hopping</span><span class="p-opt">d. jumping</span></div>
+<div class="p-q"><b>19.</b> Which locomotor skill keeps the same foot in front?<br><span class="p-opt">a. hopping</span><span class="p-opt">b. galloping</span><span class="p-opt">c. running</span><span class="p-opt">d. walking</span></div>
+<div class="p-q"><b>20.</b> When walking, which part of the foot touches the ground first?<br><span class="p-opt">a. the heel</span><span class="p-opt">b. the toes</span><span class="p-opt">c. the side</span><span class="p-opt">d. the whole foot</span></div>
+<div class="p-q"><b>21.</b> Which is a manipulative skill?<br><span class="p-opt">a. galloping</span><span class="p-opt">b. hopping</span><span class="p-opt">c. walking</span><span class="p-opt">d. dribbling</span></div>
+<div class="p-q"><b>22.</b> Which fitness indicator is the ability to control body position to stay steady?<br><span class="p-opt">a. agility</span><span class="p-opt">b. coordination</span><span class="p-opt">c. balance</span><span class="p-opt">d. speed</span></div>
+<div class="p-q"><b>23.</b> Which activity improves agility?<br><span class="p-opt">a. jumping rope</span><span class="p-opt">b. ladder drills</span><span class="p-opt">c. standing on one leg</span><span class="p-opt">d. juggling</span></div>
+<div class="p-q"><b>24.</b> Which activity improves balance?<br><span class="p-opt">a. one-leg squat</span><span class="p-opt">b. cone drills</span><span class="p-opt">c. juggling</span><span class="p-opt">d. box jumps</span></div>
+<div class="p-q"><b>25.</b> Which is NOT a passing technique in the lesson?<br><span class="p-opt">a. bounce pass</span><span class="p-opt">b. overhead pass</span><span class="p-opt">c. long pass</span><span class="p-opt">d. kick pass</span></div>
+<div class="p-q"><b>26.</b> Where should throwers aim in batuhang-bola?<br><span class="p-opt">a. at the feet only</span><span class="p-opt">b. at the ground</span><span class="p-opt">c. at the bodies of opponents</span><span class="p-opt">d. at the heads of opponents</span></div>
+<div class="p-q"><b>27.</b> How long does each game set of batuhang-bola last?<br><span class="p-opt">a. thirty seconds</span><span class="p-opt">b. five minutes</span><span class="p-opt">c. one minute</span><span class="p-opt">d. ten minutes</span></div>
+<div class="p-q"><b>28.</b> What can a melodic note do?<br><span class="p-opt">a. go up, go down, or stay the same</span><span class="p-opt">b. only go up</span><span class="p-opt">c. only go down</span><span class="p-opt">d. only stay the same</span></div>
+<div class="p-q"><b>29.</b> Which of these is an ingredient of a melody?<br><span class="p-opt">a. tributary</span><span class="p-opt">b. canopy</span><span class="p-opt">c. habitat</span><span class="p-opt">d. intervals</span></div>
+<div class="p-q"><b>30.</b> Which prince is the central figure in the Darangen?<br><span class="p-opt">a. Humadapnon</span><span class="p-opt">b. Dumalapdap</span><span class="p-opt">c. Prince Bantugan</span><span class="p-opt">d. Labaw Donggon</span></div>
+<div class="p-break"></div>
+<h2 class="p-part-title">Part III — Locomotor or Manipulative?</h2>
+<div class="p-bank">Write <b>L</b> if the skill is locomotor and <b>M</b> if it is manipulative.</div>
+<div class="p-q"><b>31.</b> hopping <span class="p-blank"></span></div>
+<div class="p-q"><b>32.</b> dribbling <span class="p-blank"></span></div>
+<div class="p-q"><b>33.</b> galloping <span class="p-blank"></span></div>
+<div class="p-q"><b>34.</b> throwing <span class="p-blank"></span></div>
+<div class="p-q"><b>35.</b> walking <span class="p-blank"></span></div>
+<div class="p-q"><b>36.</b> kicking <span class="p-blank"></span></div>
+<div class="p-q"><b>37.</b> running <span class="p-blank"></span></div>
+<div class="p-q"><b>38.</b> catching <span class="p-blank"></span></div>
+<div class="p-q"><b>39.</b> jumping <span class="p-blank"></span></div>
+<div class="p-q"><b>40.</b> striking <span class="p-blank"></span></div>
+<h2 class="p-part-title">Part IV — True or False</h2>
+<div class="p-q"><b>41.</b> Batuhang-bola is a target game. <span class="p-blank"></span></div>
+<div class="p-q"><b>42.</b> A twisted shape helps you dodge the ball. <span class="p-blank"></span></div>
+<div class="p-q"><b>43.</b> Hopping lands on both feet. <span class="p-blank"></span></div>
+<div class="p-q"><b>44.</b> Locomotor skills are movements performed by moving from one place to another. <span class="p-blank"></span></div>
+<div class="p-q"><b>45.</b> Technique or specific physical action skills are the focus of movement concepts. <span class="p-blank"></span></div>
+<div class="p-q"><b>46.</b> A foam ball is recommended for batuhang-bola. <span class="p-blank"></span></div>
+<div class="p-q"><b>47.</b> Melody is the same as rhythm. <span class="p-blank"></span></div>
+<div class="p-q"><b>48.</b> A flat, straight melodic path means the notes stay the same. <span class="p-blank"></span></div>
+<div class="p-q"><b>49.</b> The Darangen is an epic of the Maranao people. <span class="p-blank"></span></div>
+<div class="p-q"><b>50.</b> The Hinilawod is an epic from Mindanao. <span class="p-blank"></span></div>
+<div class="p-break"></div>
+<h2 class="p-part-title">Part V — Match the Term</h2>
+<div class="p-bank"><strong>Column B:</strong> a. agility &middot; b. balance &middot; c. coordination &middot; d. speed &middot; e. symmetrical &middot; f. twisted &middot; g. narrow</div>
+<div class="p-q"><b>51.</b> shape formed by contorting body parts, used to dodge a ball <span class="p-blank"></span></div>
+<div class="p-q"><b>52.</b> the eyes, feet, and arms working together to dodge or catch the ball <span class="p-blank"></span></div>
+<div class="p-q"><b>53.</b> shape used to occupy small spaces when the play area is crowded <span class="p-blank"></span></div>
+<div class="p-q"><b>54.</b> staying steady while hopping or jumping so you do not fall over <span class="p-blank"></span></div>
+<div class="p-q"><b>55.</b> quickly changing direction to dodge a fast-moving ball <span class="p-blank"></span></div>
+<div class="p-q"><b>56.</b> quickly retrieving a fallen ball to throw it again <span class="p-blank"></span></div>
+<div class="p-q"><b>57.</b> a shape whose two halves of the body are equal or the same <span class="p-blank"></span></div>
+<h2 class="p-part-title">Part VI — Short Answer</h2>
+<div class="p-q"><b>58.</b> Describe how batuhang-bola is played.<br><br>_________________________________________________<br><br>_________________________________________________</div>
+<div class="p-q"><b>59.</b> Give two safety precautions before playing batuhang-bola.<br><br>_________________________________________________<br><br>_________________________________________________</div>
+<div class="p-q"><b>60.</b> How are jumping and hopping different?<br><br>_________________________________________________<br><br>_________________________________________________</div>
+<div class="p-q"><b>61.</b> Name the six ingredients of a melody.<br><br>_________________________________________________<br><br>_________________________________________________</div>
+<div class="p-q"><b>62.</b> What does Prince Bantugan represent, and which values do his tales highlight?<br><br>_________________________________________________<br><br>_________________________________________________</div>
+<div class="p-break"></div><h2 class="p-part-title">✅ Complete Answer Key</h2>
+<div class="p-key-part-title">Part I — Name the Term</div>
+<div class="p-key-grid"><div class="p-key-pill">1. <b>batuhang-bola</b></div><div class="p-key-pill">2. <b>movement concepts</b></div><div class="p-key-pill">3. <b>movement relationships</b></div><div class="p-key-pill">4. <b>melody</b></div><div class="p-key-pill">5. <b>pitch</b></div><div class="p-key-pill">6. <b>rhythm</b></div><div class="p-key-pill">7. <b>contour</b></div><div class="p-key-pill">8. <b>melodic shape</b></div><div class="p-key-pill">9. <b>Hinilawod</b></div><div class="p-key-pill">10. <b>Darangen</b></div></div>
+<div class="p-key-part-title">Part II — Multiple Choice</div>
+<div class="p-key-grid"><div class="p-key-pill">11. <b>b. games where players hit a target with an object</b></div><div class="p-key-pill">12. <b>a. an English missionary</b></div><div class="p-key-pill">13. <b>d. an out teammate rejoins the game</b></div><div class="p-key-pill">14. <b>b. melodic shape</b></div><div class="p-key-pill">15. <b>b. round</b></div><div class="p-key-pill">16. <b>a. wide</b></div><div class="p-key-pill">17. <b>d. asymmetrical</b></div><div class="p-key-pill">18. <b>c. hopping</b></div><div class="p-key-pill">19. <b>b. galloping</b></div><div class="p-key-pill">20. <b>a. the heel</b></div><div class="p-key-pill">21. <b>d. dribbling</b></div><div class="p-key-pill">22. <b>c. balance</b></div><div class="p-key-pill">23. <b>b. ladder drills</b></div><div class="p-key-pill">24. <b>a. one-leg squat</b></div><div class="p-key-pill">25. <b>d. kick pass</b></div><div class="p-key-pill">26. <b>c. at the bodies of opponents</b></div><div class="p-key-pill">27. <b>b. five minutes</b></div><div class="p-key-pill">28. <b>a. go up, go down, or stay the same</b></div><div class="p-key-pill">29. <b>d. intervals</b></div><div class="p-key-pill">30. <b>c. Prince Bantugan</b></div></div>
+<div class="p-key-part-title">Part III — L or M</div>
+<div class="p-key-grid"><div class="p-key-pill">31. <b>L</b></div><div class="p-key-pill">32. <b>M</b></div><div class="p-key-pill">33. <b>L</b></div><div class="p-key-pill">34. <b>M</b></div><div class="p-key-pill">35. <b>L</b></div><div class="p-key-pill">36. <b>M</b></div><div class="p-key-pill">37. <b>L</b></div><div class="p-key-pill">38. <b>M</b></div><div class="p-key-pill">39. <b>L</b></div><div class="p-key-pill">40. <b>M</b></div></div>
+<div class="p-key-part-title">Part IV — True or False</div>
+<div class="p-key-grid"><div class="p-key-pill">41. <b>TRUE</b></div><div class="p-key-pill">42. <b>TRUE</b></div><div class="p-key-pill">43. <b>FALSE</b></div><div class="p-key-pill">44. <b>TRUE</b></div><div class="p-key-pill">45. <b>FALSE</b></div><div class="p-key-pill">46. <b>TRUE</b></div><div class="p-key-pill">47. <b>FALSE</b></div><div class="p-key-pill">48. <b>TRUE</b></div><div class="p-key-pill">49. <b>TRUE</b></div><div class="p-key-pill">50. <b>FALSE</b></div></div>
+<div class="p-key-part-title">Part V — Match the Term</div>
+<div class="p-key-grid"><div class="p-key-pill">51. <b>f</b></div><div class="p-key-pill">52. <b>c</b></div><div class="p-key-pill">53. <b>g</b></div><div class="p-key-pill">54. <b>b</b></div><div class="p-key-pill">55. <b>a</b></div><div class="p-key-pill">56. <b>d</b></div><div class="p-key-pill">57. <b>e</b></div></div>
+<div class="p-key-part-title">Part VI — Short Answer (sample answers)</div>
+<div class="p-q"><b>58.</b> Two teams play on a rectangular court. Team A is divided and stands on both sides of the court and takes turns throwing the ball at team B, who stand in the middle and dodge. A hit player is out; a team B player who catches the ball lets an out teammate rejoin. Team A wins if no team B member remains.</div><div class="p-q"><b>59.</b> Any two: excuse yourself if medically unfit; wear a loose shirt and jogging pants or shorts; use a lightweight foam ball; do warm-up exercises; aim for bodies and not heads; do not strike a player forcefully; keep good sportsmanship; do cool-down exercises after.</div><div class="p-q"><b>60.</b> Jumping springs from one or two feet and lands on both feet. Hopping uses only one foot and lands on the same foot.</div><div class="p-q"><b>61.</b> Pitch, rhythm, contour (or shape), phrasing, intervals, and scale and key.</div><div class="p-q"><b>62.</b> He represents ideal leadership. His tales highlight honor, loyalty, and the importance of family and community, and they teach lessons and preserve Maranao traditions.</div>
+</div>
+
+</body>
+</html>
