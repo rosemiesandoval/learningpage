@@ -1,0 +1,1958 @@
+<!DOCTYPE html>
+<html lang="tl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>📖 English: Point of View, Purpose &amp; Complex Sentences Reviewer 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --gold: #f59e0b;
+  --gold-dark: #b45309;
+  --blue: #3b82f6;
+  --blue-dark: #1d4ed8;
+  --red: #ef4444;
+  --green: #22c55e;
+  --bg: #0c1a0e;
+  --surface: #132015;
+  --surface2: #1a2e1d;
+  --text: #f0fdf4;
+  --muted: #86efac;
+  --border: #166534;
+}
+
+body {
+  font-family: 'Baloo 2', cursive;
+  background: var(--bg);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--text);
+  background-image:
+    radial-gradient(ellipse at 10% 30%, rgba(245,158,11,.06) 0%, transparent 55%),
+    radial-gradient(ellipse at 90% 70%, rgba(59,130,246,.06) 0%, transparent 55%);
+}
+
+header {
+  width: 100%;
+  background: linear-gradient(135deg, #14532d, #1e3a5f);
+  border-bottom: 2px solid var(--gold-dark);
+  padding: 13px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 4px 30px rgba(0,0,0,.5);
+}
+.header-icon { font-size: 2rem; animation: float 3s ease-in-out infinite; }
+@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
+
+header h1 {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.45rem;
+  background: linear-gradient(90deg, var(--gold), #fde68a, var(--gold));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+header .sub { font-size: .72rem; color: var(--muted); margin-top: 1px; }
+
+.header-controls { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+.score-pill {
+  background: rgba(245,158,11,.15);
+  border: 1px solid rgba(245,158,11,.4);
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-weight: 800;
+  font-size: .85rem;
+  color: var(--gold);
+}
+.audio-btn {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  background: var(--surface2);
+  color: var(--text);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all .2s;
+  display: flex; align-items: center; justify-content: center;
+}
+.audio-btn:hover, .audio-btn.active { background: #14532d; border-color: var(--gold); }
+
+.chat-wrap {
+  width: 100%; max-width: 700px; flex: 1;
+  display: flex; flex-direction: column;
+  padding: 16px 14px 0;
+}
+
+#chat-box {
+  flex: 1; overflow-y: auto;
+  display: flex; flex-direction: column;
+  gap: 14px; padding-bottom: 10px;
+  max-height: calc(100vh - 200px);
+  scroll-behavior: smooth;
+}
+#chat-box::-webkit-scrollbar { width: 4px; }
+#chat-box::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+.msg { display: flex; gap: 8px; }
+.msg.user { flex-direction: row-reverse; }
+
+.avatar {
+  width: 34px; height: 34px; border-radius: 50%;
+  font-size: 1rem; display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 2px;
+}
+.msg.bot .avatar { background: linear-gradient(135deg, #14532d, #1e3a5f); border: 1.5px solid rgba(245,158,11,.4); }
+.msg.user .avatar { background: linear-gradient(135deg, #1e3a5f, #14532d); border: 1.5px solid rgba(59,130,246,.3); }
+
+.bubble {
+  max-width: 80%;
+  padding: 11px 16px;
+  border-radius: 18px;
+  font-size: .9rem;
+  line-height: 1.65;
+  animation: pop .22s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes pop { from{transform:scale(.88) translateY(6px);opacity:0} to{transform:scale(1) translateY(0);opacity:1} }
+
+.msg.bot .bubble {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-bottom-left-radius: 5px;
+}
+.msg.user .bubble {
+  background: linear-gradient(135deg, #1e3a5f, var(--blue-dark));
+  border-bottom-right-radius: 5px;
+}
+
+/* chips */
+.chip {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: rgba(245,158,11,.12);
+  border: 1.5px solid rgba(245,158,11,.4);
+  color: var(--gold);
+  border-radius: 30px;
+  padding: 5px 13px; margin: 5px 4px 0 0;
+  font-size: .8rem; font-weight: 700;
+  cursor: pointer; transition: all .15s;
+  user-select: none; font-family: 'Baloo 2', cursive;
+}
+.chip:hover {
+  background: var(--gold-dark); color: white;
+  border-color: var(--gold);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(245,158,11,.3);
+}
+
+/* topic tag */
+.topic-tag {
+  display: inline-block;
+  background: linear-gradient(135deg, #14532d, #166534);
+  border: 1px solid var(--gold-dark);
+  color: var(--gold);
+  font-size: .68rem; font-weight: 800;
+  border-radius: 20px; padding: 2px 10px;
+  margin-bottom: 5px; letter-spacing: .5px;
+  text-transform: uppercase;
+}
+
+/* multiple choice */
+.mc-options { display: flex; flex-direction: column; gap: 7px; margin-top: 10px; width: 100%; }
+.mc-btn {
+  display: flex; align-items: center; gap: 10px;
+  background: rgba(255,255,255,.03);
+  border: 1.5px solid var(--border);
+  border-radius: 12px; padding: 9px 14px;
+  color: var(--text); font-family: 'Baloo 2', cursive;
+  font-size: .87rem; font-weight: 600;
+  cursor: pointer; transition: all .15s; text-align: left; width: 100%;
+}
+.mc-btn:hover:not(:disabled) {
+  background: rgba(245,158,11,.12); border-color: var(--gold);
+  color: var(--gold); transform: translateX(3px);
+}
+.mc-btn .letter {
+  display: flex; align-items: center; justify-content: center;
+  width: 26px; height: 26px; border-radius: 8px;
+  background: rgba(245,158,11,.15); border: 1px solid rgba(245,158,11,.35);
+  color: var(--gold); font-size: .78rem; font-weight: 800;
+  flex-shrink: 0; transition: all .15s;
+}
+.mc-btn:hover:not(:disabled) .letter { background: var(--gold-dark); color: white; border-color: var(--gold-dark); }
+.mc-btn.correct { background: rgba(34,197,94,.15)!important; border-color: #22c55e!important; color: #22c55e!important; cursor: default; }
+.mc-btn.correct .letter { background: #22c55e!important; color: white!important; border-color: #22c55e!important; }
+.mc-btn.wrong { background: rgba(239,68,68,.12)!important; border-color: #ef4444!important; color: #ef4444!important; cursor: default; }
+.mc-btn.wrong .letter { background: #ef4444!important; color: white!important; border-color: #ef4444!important; }
+.mc-btn:disabled { cursor: default; transform: none!important; }
+
+/* speaker wave */
+.speaker-wave {
+  display: inline-flex; align-items: flex-end;
+  gap: 2px; height: 14px; margin-left: 6px; vertical-align: middle;
+}
+.speaker-wave span {
+  display: block; width: 3px; border-radius: 2px;
+  background: var(--gold); animation: wave 1s ease-in-out infinite;
+}
+.speaker-wave span:nth-child(1){height:4px;animation-delay:0s}
+.speaker-wave span:nth-child(2){height:10px;animation-delay:.1s}
+.speaker-wave span:nth-child(3){height:6px;animation-delay:.2s}
+.speaker-wave span:nth-child(4){height:12px;animation-delay:.15s}
+.speaker-wave span:nth-child(5){height:4px;animation-delay:.05s}
+@keyframes wave{0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.8)}}
+
+/* typing */
+.typing {
+  display: flex; gap: 4px; padding: 12px 16px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 18px; border-bottom-left-radius: 5px; width: fit-content;
+}
+.dot { width: 7px; height: 7px; border-radius: 50%; background: var(--gold); animation: bounce .9s infinite; }
+.dot:nth-child(2){animation-delay:.15s} .dot:nth-child(3){animation-delay:.3s}
+@keyframes bounce{0%,80%,100%{transform:translateY(0);opacity:.6}40%{transform:translateY(-7px);opacity:1}}
+
+/* input bar */
+.input-bar {
+  width: 100%; max-width: 700px;
+  padding: 10px 14px 18px;
+  display: flex; gap: 8px;
+  background: var(--bg); position: sticky; bottom: 0;
+}
+#user-input {
+  flex: 1; padding: 12px 18px;
+  border: 2px solid var(--border); border-radius: 30px;
+  font-family: 'Baloo 2', cursive; font-size: .92rem;
+  outline: none; background: var(--surface); color: var(--text);
+  transition: border-color .2s, box-shadow .2s;
+}
+#user-input::placeholder { color: var(--muted); }
+#user-input:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(245,158,11,.12); }
+
+#send-btn {
+  width: 48px; height: 48px; border-radius: 50%; border: none;
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  color: white; font-size: 1.1rem; cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 3px 14px rgba(245,158,11,.4); flex-shrink: 0;
+}
+#send-btn:hover { transform: scale(1.08); box-shadow: 0 5px 20px rgba(245,158,11,.55); }
+#send-btn:disabled { opacity: .5; transform: none; }
+
+/* result modal */
+.result-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.75); backdrop-filter: blur(6px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 100; opacity: 0; pointer-events: none; transition: opacity .3s;
+}
+.result-overlay.show { opacity: 1; pointer-events: all; }
+.result-card {
+  background: linear-gradient(135deg, #132015, #0c1a0e);
+  border: 2px solid var(--gold-dark);
+  border-radius: 24px; padding: 36px 40px;
+  text-align: center; max-width: 380px; width: 90%;
+  box-shadow: 0 20px 60px rgba(0,0,0,.6);
+  transform: scale(.9); transition: transform .3s cubic-bezier(.34,1.56,.64,1);
+}
+.result-overlay.show .result-card { transform: scale(1); }
+.result-emoji { font-size: 4rem; margin-bottom: 12px; display: block; }
+.result-title {
+  font-family: 'Fredoka One', cursive; font-size: 1.7rem; margin-bottom: 6px;
+  background: linear-gradient(90deg, var(--gold), #fde68a);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.result-score { font-size: 3rem; font-weight: 900; margin: 10px 0; color: white; }
+.result-msg { color: var(--muted); font-size: .9rem; margin-bottom: 22px; }
+.result-btn {
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  border: none; border-radius: 30px; padding: 12px 30px;
+  color: white; font-family: 'Baloo 2', cursive; font-weight: 800;
+  font-size: 1rem; cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+  box-shadow: 0 4px 16px rgba(245,158,11,.35);
+}
+.result-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 22px rgba(245,158,11,.5); }
+
+/* scenario card for identify questions */
+.scenario-card {
+  background: rgba(245,158,11,.07);
+  border: 1px solid rgba(245,158,11,.25);
+  border-radius: 12px; padding: 10px 14px;
+  margin: 8px 0 6px; font-style: italic;
+  font-size: .87rem; color: #fde68a; line-height: 1.5;
+}
+
+/* ── Notes Panel ─────────────────────────────────────────────── */
+.notes-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.78); backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 200; opacity: 0; pointer-events: none; transition: opacity .3s;
+}
+.notes-overlay.show { opacity: 1; pointer-events: all; }
+.notes-panel {
+  background: linear-gradient(160deg, #0c1a0e, #132015);
+  border: 2px solid var(--gold-dark);
+  border-radius: 20px;
+  width: 92%; max-width: 720px;
+  max-height: 88vh;
+  display: flex; flex-direction: column;
+  box-shadow: 0 24px 60px rgba(0,0,0,.7);
+  overflow: hidden;
+  transform: translateY(30px);
+  transition: transform .35s cubic-bezier(.34,1.2,.64,1);
+}
+.notes-overlay.show .notes-panel { transform: translateY(0); }
+.notes-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 22px; border-bottom: 1px solid var(--border);
+  background: linear-gradient(135deg, #14532d44, #1e3a5f44);
+}
+.notes-header h2 { font-family: 'Fredoka One', cursive; font-size: 1.3rem; color: var(--gold); }
+.notes-close {
+  width: 34px; height: 34px; border-radius: 50%;
+  border: 1.5px solid var(--border); background: var(--surface2);
+  color: var(--text); font-size: 1rem; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; transition: all .2s;
+}
+.notes-close:hover { background: #b91c1c; border-color: #ef4444; }
+.notes-body { overflow-y: auto; padding: 20px 22px; flex: 1; }
+.notes-body::-webkit-scrollbar { width: 4px; }
+.notes-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+.notes-topic { margin-bottom: 28px; }
+.notes-topic-title {
+  font-family: 'Fredoka One', cursive; font-size: 1.05rem;
+  color: var(--gold); margin-bottom: 10px;
+  padding-bottom: 6px; border-bottom: 1px solid var(--border);
+}
+.notes-item {
+  display: flex; gap: 10px; align-items: flex-start;
+  padding: 7px 0; border-bottom: 1px solid rgba(255,255,255,.04);
+  font-size: .87rem; line-height: 1.55;
+}
+.notes-item:last-child { border-bottom: none; }
+.notes-term { font-weight: 800; color: var(--gold); min-width: 150px; flex-shrink: 0; font-size: .84rem; }
+.notes-def { color: #d1fae5; }
+.notes-tabs {
+  display: flex; flex-wrap: wrap; gap: 8px; padding: 14px 22px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(0,0,0,.15);
+}
+.notes-tab {
+  padding: 12px 20px; border-radius: 10px;
+  border: 1.5px solid var(--border); 
+  background: rgba(255,255,255,.04); color: var(--muted);
+  font-family: 'Baloo 2', cursive; font-size: .9rem; font-weight: 700;
+  cursor: pointer; transition: all .15s; white-space: nowrap;
+  min-height: 48px; display: flex; align-items: center;
+}
+.notes-tab.active { background: var(--surface); color: var(--gold); border-color: var(--gold-dark); }
+.notes-tab:hover:not(.active) { color: var(--text); background: var(--surface2); }
+.notes-section { display: none; }
+.notes-section.active { display: block; }
+
+
+/* ── Print button in notes header ─────────────────────────────── */
+.notes-header-actions { display: flex; align-items: center; gap: 10px; }
+.print-btn {
+  display: flex; align-items: center; gap: 6px;
+  background: rgba(245,158,11,.12);
+  border: 1.5px solid rgba(245,158,11,.4);
+  color: var(--gold);
+  border-radius: 20px;
+  padding: 7px 14px;
+  font-family: 'Baloo 2', cursive;
+  font-size: .78rem;
+  font-weight: 800;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all .15s;
+}
+.print-btn:hover { background: var(--gold); color: #0c1a0e; border-color: var(--gold); }
+.print-btn.active { background: var(--gold); color: #0c1a0e; border-color: var(--gold); }
+
+/* ── On-screen Practice Test / Answer Key ─────────────────────── */
+.ptest-part-title {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1rem;
+  color: var(--gold);
+  margin: 22px 0 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+.ptest-part-title:first-child { margin-top: 0; }
+.ptest-q {
+  font-size: .87rem;
+  line-height: 1.6;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed rgba(255,255,255,.06);
+  color: #d1fae5;
+}
+.ptest-q b { color: var(--gold); }
+.ptest-q .opt { display: block; margin: 2px 0 2px 18px; color: #d1fae5; }
+.ptest-bank {
+  background: rgba(59,130,246,.08);
+  border: 1px solid rgba(59,130,246,.3);
+  border-radius: 10px;
+  padding: 10px 16px;
+  margin-bottom: 14px;
+  font-size: .82rem;
+  color: #dbeafe;
+  line-height: 1.6;
+}
+.key-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.key-pill {
+  background: rgba(245,158,11,.1);
+  border: 1px solid rgba(245,158,11,.25);
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: .78rem;
+  color: #fde68a;
+}
+.key-pill b { color: #34d399; }
+
+/* ── Print / Save-as-PDF styles ──────────────────────────────────
+   By default everything is hidden from print. When body carries
+   .printing-test, only #print-area (a light-themed clone of the
+   Practice Test + Answer Key) is shown, laid out for paper. ──── */
+@media print {
+  body * { visibility: hidden; }
+  #print-area, #print-area * { visibility: visible; }
+  #print-area {
+    display: block !important;
+    position: absolute; top: 0; left: 0; width: 100%;
+    background: #fff; color: #14290f;
+    font-family: 'Helvetica', Arial, sans-serif;
+    font-size: 10.5pt;
+    line-height: 1.5;
+  }
+  #print-area .p-cover { text-align: center; padding-top: 40px; }
+  #print-area .p-cover .p-icon { font-size: 34pt; }
+  #print-area .p-cover h1 { font-size: 19pt; color: #b45309; margin: 8px 0 4px; }
+  #print-area .p-cover .p-sub { font-size: 10.5pt; color: #166534; margin-bottom: 20px; }
+  #print-area .p-info-box {
+    border: 1.5px solid #fcd34d; border-radius: 10px;
+    max-width: 460px; margin: 0 auto 20px; padding: 14px 20px;
+    text-align: left; font-size: 10pt;
+  }
+  #print-area .p-info-box div { margin: 6px 0; border-bottom: 1px dotted #fde68a; padding-bottom: 6px; }
+  #print-area .p-instructions {
+    max-width: 460px; margin: 0 auto; text-align: left;
+    background: #fffbeb; border: 1px solid #fcd34d; border-radius: 10px;
+    padding: 12px 18px; font-size: 9.5pt; color: #78350f;
+  }
+  #print-area h2.p-part-title {
+    font-size: 12.5pt; color: #fff;
+    background: linear-gradient(135deg, #b45309, #14532d) !important;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    padding: 6px 12px; border-radius: 7px; margin: 18px 0 10px;
+    page-break-after: avoid;
+  }
+  #print-area .p-bank {
+    background: #f0fdf4 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    border: 1px solid #86efac; border-radius: 8px; padding: 8px 14px;
+    margin-bottom: 12px; font-size: 9.5pt; color: #14532d;
+  }
+  #print-area .p-q {
+    margin-bottom: 8px; padding-bottom: 8px;
+    border-bottom: 1px dotted #fde68a; font-size: 10pt;
+    page-break-inside: avoid; color: #14290f;
+  }
+  #print-area .p-q b { color: #b45309; }
+  #print-area .p-q .p-blank { display: inline-block; min-width: 65px; border-bottom: 1px solid #64748b; }
+  #print-area .p-q .p-opt { display: block; margin: 2px 0 0 20px; color: #365314; }
+  #print-area .p-break { page-break-before: always; }
+  #print-area .p-key-part-title {
+    font-size: 11pt; color: #b45309; font-weight: bold;
+    margin: 14px 0 8px; border-bottom: 2px solid #b45309; padding-bottom: 4px;
+  }
+  #print-area .p-key-grid {
+    display: grid; grid-template-columns: repeat(5, 1fr);
+    gap: 5px 8px; margin-bottom: 14px;
+  }
+  #print-area .p-key-pill {
+    background: #f0fdf4 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    border: 1px solid #86efac; border-radius: 6px;
+    padding: 4px 8px; font-size: 8.5pt; color: #166534;
+  }
+  #print-area .p-key-pill b { color: #b45309; }
+  @page { size: letter; margin: 1.5cm 1.8cm; }
+}
+#print-area { display: none; }
+
+
+/* ── Chapter Summary / Tandaan / Memory boxes (fix: previously missing) ── */
+.chapter-summary {
+  background: linear-gradient(135deg, rgba(59,130,246,.1), rgba(34,197,94,.08));
+  border: 1px solid rgba(59,130,246,.25);
+  border-left: 4px solid var(--blue);
+  border-radius: 12px;
+  padding: 14px 18px;
+  margin-bottom: 18px;
+  font-size: .88rem;
+  line-height: 1.65;
+  color: #dbeafe;
+}
+.tandaan-box {
+  background: rgba(245,158,11,.08);
+  border: 1px solid rgba(245,158,11,.3);
+  border-left: 4px solid var(--gold);
+  border-radius: 12px;
+  padding: 12px 18px;
+  margin: 14px 0;
+  font-size: .86rem;
+  line-height: 1.6;
+  color: #fde68a;
+}
+.tandaan-label {
+  display: block;
+  font-family: 'Baloo 2', cursive;
+  font-size: .8rem;
+  color: var(--gold);
+  letter-spacing: .5px;
+  margin-bottom: 5px;
+}
+.memory-box {
+  background: rgba(34,197,94,.08);
+  border: 1px solid rgba(34,197,94,.3);
+  border-left: 4px solid var(--green);
+  border-radius: 12px;
+  padding: 12px 18px;
+  margin: 14px 0 22px;
+  font-size: .86rem;
+  line-height: 1.6;
+  color: #bbf7d0;
+}
+.memory-label {
+  display: block;
+  font-family: 'Baloo 2', cursive;
+  font-size: .8rem;
+  color: var(--green);
+  letter-spacing: .5px;
+  margin-bottom: 5px;
+}
+.compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0 20px;
+  font-size: .82rem;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.compare-table th {
+  background: linear-gradient(135deg, var(--blue-dark), var(--gold-dark));
+  color: white;
+  text-align: left;
+  padding: 9px 12px;
+  font-size: .78rem;
+  text-transform: uppercase;
+  letter-spacing: .4px;
+}
+.compare-table td {
+  padding: 9px 12px;
+  border-top: 1px solid var(--border);
+  color: var(--text);
+  vertical-align: top;
+}
+.compare-table tr:nth-child(even) td { background: rgba(255,255,255,.02); }
+
+/* ── Story Box (for reading Bible stories aloud) ─────────────────── */
+.story-box {
+  background: rgba(255,255,255,.03);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px 20px;
+  margin-bottom: 16px;
+  font-size: .92rem;
+  line-height: 1.8;
+  color: var(--text);
+}
+.story-box p { margin-bottom: 10px; }
+.story-box p:last-child { margin-bottom: 0; }
+.story-ref {
+  display: block;
+  text-align: right;
+  font-style: italic;
+  color: var(--muted);
+  font-size: .8rem;
+  margin-top: 10px;
+}
+.story-label {
+  display: block;
+  font-family: 'Baloo 2', cursive;
+  font-size: .9rem;
+  color: var(--gold);
+  letter-spacing: .5px;
+  margin-bottom: 10px;
+}
+/* ── Raw Notes (original document view) ──────────────────────── */
+.rawnotes-intro {
+  font-size: .82rem;
+  color: var(--muted);
+  line-height: 1.6;
+  background: rgba(59,130,246,.1);
+  border: 1px solid rgba(59,130,246,.3);
+  border-left: 4px solid var(--blue);
+  border-radius: 10px;
+  padding: 12px 18px;
+  margin-bottom: 20px;
+}
+.rawnotes-doc {
+  font-family: 'Lora', Georgia, serif;
+  line-height: 1.75;
+}
+.rawnotes-doc p {
+  font-size: .95rem;
+  margin-bottom: 14px;
+  color: #e2f5e6;
+}
+.rawnotes-doc strong { color: var(--gold); font-weight: 700; }
+.rawnotes-doc em { color: var(--muted); font-style: italic; }
+.rawnotes-doc h3.doc-heading {
+  font-family: 'Baloo 2', cursive;
+  font-size: 1.05rem;
+  color: var(--gold);
+  margin: 26px 0 12px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid var(--border);
+}
+.rawnotes-doc h3.doc-heading:first-child { margin-top: 0; }
+.rawnotes-doc ul, .rawnotes-doc ol {
+  margin: 0 0 14px 26px;
+  color: #e2f5e6;
+}
+.rawnotes-doc li { margin-bottom: 6px; font-size: .95rem; }
+.rawnotes-doc table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0 20px;
+  font-size: .82rem;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.rawnotes-doc th {
+  background: linear-gradient(135deg, var(--blue-dark), var(--gold-dark));
+  color: white;
+  text-align: left;
+  padding: 9px 12px;
+  font-size: .78rem;
+}
+.rawnotes-doc td {
+  padding: 9px 12px;
+  border-top: 1px solid var(--border);
+  color: var(--text);
+  vertical-align: top;
+}
+.rawnotes-doc tr:nth-child(even) td { background: rgba(255,255,255,.02); }
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE: TABLET (≤820px)
+   ═══════════════════════════════════════════════════════════════ */
+@media (max-width: 820px) {
+  .notes-panel { width: 95%; max-height: 92vh; }
+  .notes-tabs { padding: 12px 16px; gap: 6px; }
+  .notes-tab { padding: 10px 14px; font-size: .82rem; min-height: 42px; }
+  .notes-body { padding: 16px; }
+  .notes-header { padding: 14px 16px; }
+  .chat-wrap { padding: 14px 10px 0; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE: MOBILE (≤600px)
+   ═══════════════════════════════════════════════════════════════ */
+@media (max-width: 600px) {
+  header {
+    padding: 10px 12px;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .header-icon { font-size: 1.5rem; }
+  header h1 { font-size: 1.05rem; line-height: 1.2; }
+  header .sub { font-size: .62rem; }
+  .header-controls { gap: 6px; margin-left: auto; }
+  .score-pill { padding: 4px 10px; font-size: .74rem; }
+  .audio-btn { width: 32px; height: 32px; font-size: .85rem; }
+
+  .chat-wrap { padding: 10px 6px 0; }
+  #chat-box { gap: 12px; }
+  .bubble { max-width: 88%; font-size: .88rem; padding: 10px 13px; }
+  .avatar { width: 30px; height: 30px; font-size: .85rem; }
+
+  .chip { font-size: .78rem; padding: 7px 12px; }
+  .mc-btn { font-size: .84rem; padding: 10px 12px; }
+  .mc-btn .letter { width: 22px; height: 22px; font-size: .74rem; }
+  .topic-tag { font-size: .68rem; }
+  .scenario-card { font-size: .88rem; padding: 10px 14px; }
+
+  .input-bar { padding: 8px 8px calc(8px + env(safe-area-inset-bottom)); gap: 8px; }
+  #user-input { font-size: .88rem; padding: 10px 14px; }
+  #send-btn { width: 40px; height: 40px; font-size: 1rem; }
+
+  .result-card { width: 92%; padding: 26px 20px; }
+  .result-emoji { font-size: 2.6rem; }
+  .result-title { font-size: 1.2rem; }
+  .result-score { font-size: 1.8rem; }
+
+  /* ── Notes panel: near-full-screen on phones ── */
+  .notes-overlay { align-items: flex-end; }
+  .notes-panel {
+    width: 100%; max-width: 100%;
+    max-height: 94vh;
+    border-radius: 20px 20px 0 0;
+    border-left: none; border-right: none; border-bottom: none;
+  }
+  .notes-header { padding: 12px 14px; flex-wrap: wrap; gap: 8px; }
+  .notes-header h2 { font-size: 1.05rem; flex: 1 1 100%; }
+  .notes-header-actions { flex-wrap: wrap; gap: 6px; width: 100%; justify-content: flex-start; }
+  .print-btn { font-size: .7rem; padding: 6px 11px; }
+  .notes-close { width: 30px; height: 30px; font-size: .9rem; margin-left: auto; }
+
+  .notes-tabs { padding: 10px 12px; gap: 5px; }
+  .notes-tab { padding: 8px 12px; font-size: .76rem; min-height: 38px; }
+  .notes-body { padding: 14px; }
+
+  .notes-item { flex-direction: column; gap: 2px; }
+  .notes-term { min-width: 0; font-size: .82rem; }
+  .notes-def { font-size: .84rem; }
+  .notes-topic-title { font-size: .95rem; }
+  .chapter-summary, .memory-box, .tandaan-box, .story-box, .verse-card { font-size: .82rem; padding: 12px 14px; }
+
+  /* ── Tables: allow horizontal scroll instead of squeezing ── */
+  .compare-table { display: block; overflow-x: auto; white-space: nowrap; }
+  .compare-table th, .compare-table td { white-space: normal; min-width: 110px; }
+
+  .key-grid { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 5px; }
+  .key-pill { font-size: .72rem; padding: 5px 8px; }
+  .ptest-part-title { font-size: .92rem; }
+  .ptest-q { font-size: .82rem; }
+  .ptest-bank { font-size: .78rem; padding: 8px 12px; }
+
+  .rawnotes-doc p, .rawnotes-doc li { font-size: .87rem; }
+  .rawnotes-doc h3.doc-heading { font-size: .95rem; }
+  .rawnotes-doc table { display: block; overflow-x: auto; white-space: nowrap; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE: VERY SMALL PHONES (≤380px)
+   ═══════════════════════════════════════════════════════════════ */
+@media (max-width: 380px) {
+  header h1 { font-size: .92rem; }
+  header .sub { display: none; }
+  .score-pill span { font-size: .7rem; }
+  .bubble { max-width: 92%; font-size: .84rem; }
+  .notes-tab { font-size: .7rem; padding: 7px 10px; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE: LANDSCAPE PHONES (short height)
+   ═══════════════════════════════════════════════════════════════ */
+@media (max-height: 480px) and (orientation: landscape) {
+  .notes-panel { max-height: 98vh; }
+  .notes-tabs { padding: 6px 12px; }
+  .notes-tab { min-height: 32px; padding: 6px 10px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-icon">📖</div>
+  <div>
+    <h1>Point of View, Purpose &amp; Clauses</h1>
+    <div class="sub">Narrator's Point of View · Purpose of Writing · Independent &amp; Dependent Clauses</div>
+  </div>
+  <div class="header-controls">
+    <div class="score-pill">⭐ <span id="score-val">0</span> / <span id="total-val">0</span></div>
+    <button class="audio-btn" id="notes-toggle" title="Open Reviewer" onclick="document.getElementById('notes-overlay').classList.add('show')">📖</button>
+    <button class="audio-btn active" id="audio-toggle" title="Toggle Audio">🔊</button>
+  </div>
+</header>
+
+<div class="chat-wrap">
+  <div id="chat-box"></div>
+</div>
+
+<div class="input-bar">
+  <input type="text" id="user-input" placeholder="Type your answer here…" autocomplete="off" />
+  <button id="send-btn">➤</button>
+</div>
+
+<div class="result-overlay" id="result-overlay">
+  <div class="result-card">
+    <span class="result-emoji" id="res-emoji">🏆</span>
+    <div class="result-title">Quiz Complete!</div>
+    <div class="result-score"><span id="res-score">0</span>/<span id="res-total">0</span></div>
+    <div class="result-msg" id="res-msg">Great job!</div>
+    <button class="result-btn" onclick="restartApp()">🔄 Maglaro Ulit</button>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+// QUESTION BANK
+// ═══════════════════════════════════════════════════════════════
+const topics = {
+
+  "Point of View": [
+    { q: "What is a story's point of view?", a: "The writer's way of choosing who is telling the story to the readers", hint: "Who tells the story." },
+    { q: "Through whom are stories told?", a: "The narrator", hint: "The one telling the story." },
+    { q: "Who can the narrator be?", a: "Another character in the story or an observer who seems to see everything that happens", hint: "Inside or outside the story." },
+    { q: "What are the three points of view in a narration?", a: "First person, second person, and third person", hint: "1st, 2nd, 3rd." },
+    { q: "In the first-person point of view, who is the narrator?", a: "One of the characters, telling events in his or her own way of looking", hint: "A character in the story." },
+    { q: "Which pronouns does a first-person narrator use?", a: "I, me, we, and us", hint: "Speaking about oneself." },
+    { q: "In the second-person point of view, who becomes a character in the story?", a: "The reader", hint: "The spotlight is on you." },
+    { q: "Which pronoun does a second-person narrator mostly use?", a: "You", hint: "Talking to the reader." },
+    { q: "How often is the second-person point of view used?", a: "Rarely", hint: "Not common." },
+    { q: "Which point of view is the most common one used by writers?", a: "Third person", hint: "The narrator is an observer." },
+    { q: "In the third-person point of view, how does the narrator tell the events?", a: "As an observer who seems to know many things about the characters, including thoughts and emotions", hint: "An observer who knows a lot." },
+    { q: "Which pronouns does a third-person narrator use?", a: "He, she, it, they, him, her, and them", hint: "Talking about others." },
+    { q: "Moby-Dick begins with \"Call me Ishmael.\" Which point of view is this?", a: "First person", hint: "\"Call me\" uses me." },
+    { q: "Bright Lights, Big City says, \"You get a seat and hoist a copy of the New York Post.\" Which point of view is this?", a: "Second person", hint: "The narrator says you." },
+    { q: "Peter Pan says, \"She gave him a look of the most intense admiration.\" Which point of view is this?", a: "Third person", hint: "She and him." },
+  ],
+
+  "Purpose of Writing": [
+    { q: "What is the purpose of a text?", a: "The reason why the writer writes the text", hint: "Why the writer writes." },
+    { q: "What are the four general purposes of writing?", a: "To inform or explain, to entertain, to persuade, and to express", hint: "I-E-P-E." },
+    { q: "What is a text written to inform or explain used for?", a: "Presenting facts and information and describing something", hint: "Facts." },
+    { q: "Which related words go with writing to inform or explain?", a: "Describe, define, and report", hint: "Give information." },
+    { q: "Which texts are examples of writing to inform or explain?", a: "News article, product manual, textbook, and encyclopedia", hint: "Facts and information." },
+    { q: "What is a text written to entertain used for?", a: "Amusing the readers by presenting a text creatively", hint: "Fun and creative." },
+    { q: "Which related words go with writing to entertain?", a: "Narrate, relax, and amuse", hint: "Stories and fun." },
+    { q: "Which texts are examples of writing to entertain?", a: "Short story, poem, novel, song, screenplay, and playscript", hint: "Creative texts." },
+    { q: "What is a text written to persuade used for?", a: "Convincing the readers to take a stand or believe in a certain way", hint: "Convince." },
+    { q: "Which related words go with writing to persuade?", a: "Argue, defend, and support", hint: "Take a stand." },
+    { q: "Which texts are examples of writing to persuade?", a: "Opinion article, advertisement, campaign speech, and movie review", hint: "Make you agree or buy." },
+    { q: "What is a text written to express used for?", a: "Conveying the feelings and thoughts of the writer", hint: "Feelings and thoughts." },
+    { q: "Which texts are examples of writing to express?", a: "Diary, social media post, personal journal, and blog", hint: "Personal writing." },
+    { q: "A product manual is written mainly for which purpose?", a: "To inform or explain", hint: "It gives instructions and facts." },
+    { q: "An advertisement is written mainly for which purpose?", a: "To persuade", hint: "It wants you to buy." },
+    { q: "A diary is written mainly for which purpose?", a: "To express", hint: "Personal feelings." },
+  ],
+
+  "Complex Sentences and Clauses": [
+    { q: "What is a complex sentence?", a: "A sentence with two ideas, where one is the main idea and the other depends on it", hint: "Main idea + dependent idea." },
+    { q: "What is the main idea of a complex sentence called?", a: "The independent clause", hint: "It stands alone." },
+    { q: "What is the other idea in a complex sentence called?", a: "The dependent clause", hint: "It depends on the main one." },
+    { q: "What is true about an independent clause?", a: "It can stand on its own even without the dependent clause", hint: "Complete meaning." },
+    { q: "What is true about a dependent clause?", a: "It does not have a complete meaning on its own", hint: "Needs the main clause." },
+    { q: "What does a dependent clause always have attached to it?", a: "A subordinator", hint: "A connecting word." },
+    { q: "What does a subordinator allow?", a: "The dependent clause to be connected to the independent clause", hint: "It connects the clauses." },
+    { q: "Which subordinator fits? \"She was happy ______ it was cold.\" (the two ideas contrast)", a: "Although", hint: "Contrast." },
+    { q: "Which subordinator fits? \"We stayed home ______ it was raining.\" (a reason)", a: "Because", hint: "Reason." },
+    { q: "Which subordinator fits? \"You will not pass ______ you study.\" (a condition)", a: "Unless", hint: "Condition." },
+    { q: "Which subordinator fits? \"Wait here ______ I return.\" (up to a time)", a: "Until", hint: "Time limit." },
+    { q: "Which subordinator fits? \"Dad cooked ______ we set the table.\" (at the same time)", a: "While", hint: "Same time." },
+    { q: "Complex sentences are made up of what?", a: "An independent clause and a dependent clause", hint: "Two clauses." },
+    { q: "A clause has just how many idea(s)?", a: "One idea", hint: "Task 2 asks for clauses with one idea." },
+    { q: "What do you need to add to combine two clauses into a complex sentence?", a: "A subordinator", hint: "One classmate adds it." },
+    { q: "In \"Pedro was darting his kite up and down while Juan and Manuel were fighting their kites,\" what is the subordinator?", a: "While", hint: "It connects the two ideas." },
+    { q: "In \"As they worked on their kites, they talked of the fights they would have,\" what is the subordinator?", a: "As", hint: "It starts the sentence." },
+    { q: "In \"As they worked on their kites, they talked of the fights they would have,\" what is the independent clause?", a: "They talked of the fights they would have", hint: "It can stand alone." },
+  ],
+
+  "Practice: Point of View and Purpose": [
+    { q: "\"You wake up one morning, feeling a bit better about yourself. Your dad calls you from downstairs.\" What is the point of view?", a: "Second person", hint: "You and your." },
+    { q: "\"I met my friend Johnny for a meal at the restaurant. So I asked him about it.\" What is the point of view?", a: "First person", hint: "I." },
+    { q: "\"Kaye and Meghan were playing in the park when the sky turned dark.\" What is the point of view?", a: "Third person", hint: "Names and they." },
+    { q: "\"The Constantino siblings are all successful professionals. Vina, the eldest, is employed as a hotel manager.\" What is the point of view?", a: "Third person", hint: "An observer telling about others." },
+    { q: "\"Edwin felt excited to go to his hometown after years in the city.\" What is the point of view?", a: "Third person", hint: "He and his." },
+    { q: "\"What a beautiful evening. Go out and look at the bright moon on the horizon. #fullmoon\" What is the purpose?", a: "To express", hint: "A social media post." },
+    { q: "\"If you are still undecided what movie to watch this weekend, include Gomburza in your options.\" What is the purpose?", a: "To persuade", hint: "It encourages you to watch." },
+    { q: "\"Manta rays always open their mouth, gulping in very small marine organisms.\" What is the purpose?", a: "To inform or explain", hint: "Facts about manta rays." },
+    { q: "\"High above the city, on a tall column, stood the statue of the Happy Prince.\" What is the purpose?", a: "To entertain", hint: "A story." },
+    { q: "\"To turn the Wi-Fi on, go to Settings then choose Network.\" What is the purpose?", a: "To inform or explain", hint: "Step-by-step instructions." },
+    { q: "In the Carissa passage, what is the purpose of the text?", a: "To entertain", hint: "It tells a short story." },
+    { q: "In the Carissa passage, what is the point of view?", a: "Third person", hint: "Carissa, she, and her." },
+  ],
+
+  "Practice: Dependent Clauses": [
+    { q: "Which is the dependent clause in \"You will never be in the best society unless you can stand on your heads\"?", a: "unless you can stand on your heads", hint: "It starts with unless." },
+    { q: "Which is the dependent clause in \"I feel quite warm now although it is so cold\"?", a: "although it is so cold", hint: "It starts with although." },
+    { q: "Which is the dependent clause in \"So the swallow saw the rich making merry in their beautiful houses, while the beggars were sitting at the gates\"?", a: "while the beggars were sitting at the gates", hint: "It starts with while." },
+    { q: "Which is the dependent clause in \"Because he was the king, no one had ever dared to tell about his bad playing of the flute\"?", a: "Because he was the king", hint: "It starts with because." },
+    { q: "Which is the dependent clause in \"A disappointed man muttered something as he gazed at the wonderful statue\"?", a: "as he gazed at the wonderful statue", hint: "It starts with as." },
+    { q: "Which word is the subordinator in \"I will go to the park if it does not rain\"?", a: "if", hint: "It sets a condition." },
+    { q: "Which word is the subordinator in \"We stayed home because it was raining\"?", a: "because", hint: "It gives a reason." },
+    { q: "Which is the dependent clause in \"Mia will wait until the bus arrives\"?", a: "until the bus arrives", hint: "It starts with until." },
+    { q: "Which word is the subordinator in \"She smiled when she saw the cake\"?", a: "when", hint: "It tells when." },
+  ],
+};
+
+const trueOrFalse = [
+  { q: "A story's point of view is the writer's way of choosing who is telling the story to the readers.", a: "true" },
+  { q: "The narrator can be a character in the story or an observer who seems to see everything.", a: "true" },
+  { q: "There are three points of view in a narration.", a: "true" },
+  { q: "In the first-person point of view, the narrator is one of the characters.", a: "true" },
+  { q: "First-person narrators use the pronouns he, she, and they.", a: "false" },
+  { q: "The pronouns I, me, we, and us are used in the first-person point of view.", a: "true" },
+  { q: "In the second-person point of view, the reader becomes a character in the story.", a: "true" },
+  { q: "The second-person point of view is the most common one used by writers.", a: "false" },
+  { q: "The pronoun you is mostly used by a second-person narrator.", a: "true" },
+  { q: "The third-person point of view is the most common point of view used by writers.", a: "true" },
+  { q: "A third-person narrator seems to know the thoughts and emotions of the characters.", a: "true" },
+  { q: "The pronouns he, she, it, they, him, her, and them are used in the third-person point of view.", a: "true" },
+  { q: "The purpose of a text is the reason why the writer writes it.", a: "true" },
+  { q: "The four general purposes of writing are to inform, to entertain, to persuade, and to express.", a: "true" },
+  { q: "A news article is written to entertain.", a: "false" },
+  { q: "A textbook and an encyclopedia are written to inform or explain.", a: "true" },
+  { q: "A short story, a poem, and a song are written to entertain.", a: "true" },
+  { q: "An advertisement is written to persuade.", a: "true" },
+  { q: "A campaign speech is written to express.", a: "false" },
+  { q: "A diary and a personal journal are written to express the feelings and thoughts of the writer.", a: "true" },
+  { q: "The words argue, defend, and support are related to writing to persuade.", a: "true" },
+  { q: "The words describe, define, and report are related to writing to entertain.", a: "false" },
+  { q: "A complex sentence has an independent clause and a dependent clause.", a: "true" },
+  { q: "A dependent clause can stand on its own.", a: "false" },
+  { q: "An independent clause can stand on its own even without the dependent clause.", a: "true" },
+  { q: "A dependent clause always has a subordinator attached to it.", a: "true" },
+  { q: "A subordinator connects the dependent clause to the independent clause.", a: "true" },
+  { q: "Although, because, and unless are subordinators.", a: "true" },
+  { q: "And, but, and or are the subordinators listed in the lesson.", a: "false" },
+  { q: "The sentence \"I feel quite warm now although it is so cold\" is a complex sentence.", a: "true" },
+  { q: "In \"I feel quite warm now although it is so cold,\" the dependent clause is \"I feel quite warm now.\"", a: "false" },
+  { q: "A clause has just one idea.", a: "true" },
+];
+
+const identifyQuestions = [
+  { q: "A point of view in which the narrator is one of the characters and uses I, me, we, and us.", a: "First person", choices: ["First person","Second person","Third person","Fourth person"] },
+  { q: "A point of view in which the narrator puts the spotlight on the reader, who becomes a character.", a: "Second person", choices: ["Second person","First person","Third person","Fourth person"] },
+  { q: "The most common point of view, in which the narrator is an observer who uses he, she, and they.", a: "Third person", choices: ["Third person","First person","Second person","Fourth person"] },
+  { q: "\"Call me Ishmael. Some years ago I thought I would sail about a little and see the watery part of the world.\"", a: "First person", choices: ["First person","Second person","Third person","Fourth person"] },
+  { q: "\"You get a seat and hoist a copy of the New York Post.\"", a: "Second person", choices: ["Second person","First person","Third person","Fourth person"] },
+  { q: "\"Wendy had lived such a home life that to know fairies struck her as quite delightful.\"", a: "Third person", choices: ["Third person","First person","Second person","Fourth person"] },
+  { q: "\"You wake up one morning, feeling a bit better about yourself. Your dad calls you from downstairs.\"", a: "Second person", choices: ["Second person","First person","Third person","Fourth person"] },
+  { q: "\"I met my friend Johnny for a meal at the restaurant. So I asked him about it.\"", a: "First person", choices: ["First person","Second person","Third person","Fourth person"] },
+  { q: "\"Kaye and Meghan were playing in the park when the sky turned dark.\"", a: "Third person", choices: ["Third person","First person","Second person","Fourth person"] },
+  { q: "\"We walked to school together, and I carried her bag for her.\"", a: "First person", choices: ["First person","Second person","Third person","Fourth person"] },
+  { q: "\"They finished their homework and then they ate dinner.\"", a: "Third person", choices: ["Third person","First person","Second person","Fourth person"] },
+  { q: "\"You open the box and find a tiny kitten inside.\"", a: "Second person", choices: ["Second person","First person","Third person","Fourth person"] },
+  { q: "The purpose of presenting facts and information and describing something.", a: "To inform or explain", choices: ["To inform or explain","To entertain","To persuade","To express"] },
+  { q: "The purpose of amusing the readers by presenting a text creatively.", a: "To entertain", choices: ["To entertain","To inform or explain","To persuade","To express"] },
+  { q: "The purpose of convincing the readers to take a stand or believe in a certain way.", a: "To persuade", choices: ["To persuade","To entertain","To inform or explain","To express"] },
+  { q: "The purpose of conveying the feelings and thoughts of the writer.", a: "To express", choices: ["To express","To persuade","To entertain","To inform or explain"] },
+  { q: "\"What a beautiful evening. Go out and look at the bright moon on the horizon. #fullmoon\"", a: "To express", choices: ["To express","To persuade","To entertain","To inform or explain"] },
+  { q: "\"If you are still undecided what movie to watch this weekend, include Gomburza in your options.\"", a: "To persuade", choices: ["To persuade","To express","To entertain","To inform or explain"] },
+  { q: "\"Manta rays always open their mouth, gulping in very small marine organisms.\"", a: "To inform or explain", choices: ["To inform or explain","To entertain","To persuade","To express"] },
+  { q: "\"High above the city, on a tall column, stood the statue of the Happy Prince.\"", a: "To entertain", choices: ["To entertain","To inform or explain","To express","To persuade"] },
+  { q: "\"To turn the Wi-Fi on, go to Settings then choose Network.\"", a: "To inform or explain", choices: ["To inform or explain","To persuade","To entertain","To express"] },
+  { q: "A news article or a product manual.", a: "To inform or explain", choices: ["To inform or explain","To entertain","To persuade","To express"] },
+  { q: "A novel, a poem, or a screenplay.", a: "To entertain", choices: ["To entertain","To inform or explain","To persuade","To express"] },
+  { q: "An opinion article or a movie review.", a: "To persuade", choices: ["To persuade","To entertain","To inform or explain","To express"] },
+  { q: "A blog or a personal journal.", a: "To express", choices: ["To express","To persuade","To inform or explain","To entertain"] },
+  { q: "The main idea in a complex sentence that can stand on its own.", a: "Independent clause", choices: ["Independent clause","Dependent clause","Subordinator","Complex sentence"] },
+  { q: "The clause that does not have a complete meaning and always has a subordinator.", a: "Dependent clause", choices: ["Dependent clause","Independent clause","Subordinator","Complex sentence"] },
+  { q: "The word that connects a dependent clause to an independent clause.", a: "Subordinator", choices: ["Subordinator","Dependent clause","Independent clause","Narrator"] },
+  { q: "A sentence made up of an independent clause and a dependent clause.", a: "Complex sentence", choices: ["Complex sentence","Subordinator","Independent clause","Dependent clause"] },
+  { q: "The subordinator in \"I feel quite warm now although it is so cold.\"", a: "although", choices: ["although","now","quite","feel"] },
+  { q: "The subordinator in \"You will never be in the best society unless you can stand on your heads.\"", a: "unless", choices: ["unless","never","society","stand"] },
+  { q: "The subordinator in \"Because he was the king, no one had ever dared to tell about his bad playing of the flute.\"", a: "Because", choices: ["Because","king","dared","tell"] },
+  { q: "The dependent clause in \"A disappointed man muttered something as he gazed at the wonderful statue.\"", a: "as he gazed at the wonderful statue", choices: ["as he gazed at the wonderful statue","A disappointed man muttered something","muttered something as","the wonderful statue"] },
+  { q: "The independent clause in \"Because he was the king, no one had ever dared to tell about his bad playing of the flute.\"", a: "no one had ever dared to tell about his bad playing of the flute", choices: ["no one had ever dared to tell about his bad playing of the flute","Because he was the king","he was the king","bad playing of the flute"] },
+  { q: "The dependent clause in \"Pedro was darting his kite up and down while Juan and Manuel were fighting their kites.\"", a: "while Juan and Manuel were fighting their kites", choices: ["while Juan and Manuel were fighting their kites","Pedro was darting his kite up and down","darting his kite up and down","Juan and Manuel"] },
+];
+
+// ═══════════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════════
+let state = {
+  awaiting: 'menu',
+  mode: null,
+  questions: [],
+  allAnswers: [],
+  qIndex: 0,
+  score: 0,
+  total: 0,
+  hintUsed: false,
+  audioEnabled: true,
+};
+
+// ═══════════════════════════════════════════════════════════════
+// TTS (UPGRADED FOR TRUE FILIPINO ACCENT)
+// ═══════════════════════════════════════════════════════════════
+let currentAudioStream = null;
+
+function speak(text) {
+  if (!state.audioEnabled) return;
+  
+  // Linisin ang mga nakaraang audio task
+  window.speechSynthesis.cancel();
+  if (currentAudioStream) {
+    currentAudioStream.pause();
+    currentAudioStream = null;
+  }
+  
+  // Tanggalin ang HTML tags at emojis para hindi basahin nang paputol-putol
+  const clean = text.replace(/<[^>]+>/g,'').replace(/[🇵🇭🌟✅❌💡⏭️🏆😊💪🔄🔲📚👋⭐✕🧭📏🗺️]/g,'');
+  
+  // PRIMARY METHOD: Google Translation Engine cloud voice stream (natural-sounding accent)
+  const googleTtsUrl = `https://translate.google.com/translate_tts?ie=UTF-8&tl=tl&client=tw-ob&q=${encodeURIComponent(clean)}`;
+  
+  currentAudioStream = new Audio(googleTtsUrl);
+  currentAudioStream.onplaying = () => showWave(true);
+  currentAudioStream.onended = currentAudioStream.onerror = () => showWave(false);
+  
+  currentAudioStream.play().catch(err => {
+    // BACKUP METHOD: Web Speech API (works even without internet)
+    console.warn("Google TTS blocked or offline. Falling back to local system speech engine.");
+    
+    const streamFallback = new SpeechSynthesisUtterance(clean);
+    streamFallback.lang = 'fil-PH';
+    streamFallback.rate = 0.95; streamFallback.pitch = 1.05; streamFallback.volume = 1;
+    
+    const voices = window.speechSynthesis.getVoices();
+    const filVoice = voices.find(v => v.lang.startsWith('fil') || v.lang.startsWith('tl'));
+    const engVoice = voices.find(v => v.lang.startsWith('en') && v.name.toLowerCase().includes('female'))
+                   || voices.find(v => v.lang.startsWith('en'));
+              
+    if (filVoice) {
+      streamFallback.voice = filVoice;
+    } else if (engVoice) {
+      streamFallback.voice = engVoice; 
+      streamFallback.lang = 'en-US'; 
+    }
+    
+    streamFallback.onstart = () => showWave(true);
+    streamFallback.onend = streamFallback.onerror = () => showWave(false);
+    window.speechSynthesis.speak(streamFallback);
+  });
+}
+
+function showWave(on) {
+  document.querySelectorAll('.speaker-wave').forEach(w => w.style.display = on ? 'inline-flex' : 'none');
+}
+
+// I-initialize ang mga boses ng system
+let localSystemVoices = [];
+function lookupSystemVoices() {
+  localSystemVoices = window.speechSynthesis.getVoices();
+}
+lookupSystemVoices();
+if (window.speechSynthesis.onvoiceschanged !== undefined) {
+  window.speechSynthesis.onvoiceschanged = lookupSystemVoices;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// UI HELPERS
+// ═══════════════════════════════════════════════════════════════
+const chatBox = document.getElementById('chat-box');
+const input = document.getElementById('user-input');
+const sendBtn = document.getElementById('send-btn');
+
+function scrollBottom() { chatBox.scrollTop = chatBox.scrollHeight; }
+
+function addMessage(role, html, speakText) {
+  const div = document.createElement('div');
+  div.className = `msg ${role}`;
+  const av = document.createElement('div');
+  av.className = 'avatar';
+  av.textContent = role === 'bot' ? '🤖' : '🧑';
+  const bub = document.createElement('div');
+  bub.className = 'bubble';
+  bub.innerHTML = role === 'bot'
+    ? html + '<span class="speaker-wave" style="display:none"><span></span><span></span><span></span><span></span><span></span></span>'
+    : html;
+  div.appendChild(av); div.appendChild(bub);
+  chatBox.appendChild(div);
+  scrollBottom(); bindChips();
+  if (role === 'bot') {
+    const txt = speakText || html.replace(/<[^>]+>/g,' ');
+    setTimeout(() => speak(txt), 350);
+  }
+}
+
+function addTyping() {
+  const d = document.createElement('div');
+  d.className = 'msg bot'; d.id = 'typing';
+  d.innerHTML = '<div class="avatar">🤖</div><div class="typing"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>';
+  chatBox.appendChild(d); scrollBottom();
+}
+function removeTyping() { const t = document.getElementById('typing'); if(t) t.remove(); }
+
+function bindChips() {
+  document.querySelectorAll('.chip:not([data-bound])').forEach(c => {
+    c.dataset.bound = '1';
+    c.addEventListener('click', () => handleUserMessage(c.dataset.val));
+  });
+}
+
+function updateScore() {
+  document.getElementById('score-val').textContent = state.score;
+  document.getElementById('total-val').textContent = state.total;
+}
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length-1; i > 0; i--) {
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]] = [a[j],a[i]];
+  }
+  return a;
+}
+
+function normalize(s) { return s.toLowerCase().trim().replace(/\s+/g,' '); }
+
+function checkAnswer(user, correct) {
+  const u = normalize(user), c = normalize(correct);
+  if (u === c) return true;
+  if (c.includes(u) && u.length > 5) return true;
+  const parts = c.split(/[,;\/]/);
+  for (const p of parts) if (u.includes(p.trim()) && p.trim().length > 4) return true;
+  return false;
+}
+
+function showResult() {
+  const pct = Math.round((state.score/state.total)*100);
+  const emoji = pct>=90?'🏆':pct>=70?'🌟':pct>=50?'😊':'💪';
+  const msg = pct>=90?'Excellent! You know it all!':pct>=70?'Great job! Keep it up!':pct>=50?'Good! Study a little more!':"Don't give up! Try again!";
+  document.getElementById('res-emoji').textContent = emoji;
+  document.getElementById('res-score').textContent = state.score;
+  document.getElementById('res-total').textContent = state.total;
+  document.getElementById('res-msg').textContent = msg;
+  document.getElementById('result-overlay').classList.add('show');
+  speak(`All done! Your score is ${state.score} out of ${state.total}. ${msg}`);
+}
+
+function restartApp() {
+  document.getElementById('result-overlay').classList.remove('show');
+  state = { awaiting:'menu', mode:null, questions:[], allAnswers:[], qIndex:0, score:0, total:0, hintUsed:false, audioEnabled:state.audioEnabled };
+  chatBox.innerHTML = '';
+  document.querySelector('.input-bar').style.display = 'flex';
+  updateScore();
+  showMenu();
+}
+
+// ═══════════════════════════════════════════════════════════════
+// MC HELPERS
+// ═══════════════════════════════════════════════════════════════
+function getAllAnswers() {
+  const ans = [];
+  for (const qs of Object.values(topics)) for (const q of qs) ans.push(q.a);
+  return ans;
+}
+
+function generateChoices(correct, pool) {
+  const others = pool.filter(a => a !== correct);
+  const near = shuffle(others).sort((x, y) => Math.abs(x.length - correct.length) - Math.abs(y.length - correct.length)).slice(0, 7);
+  return shuffle([correct, ...shuffle(near).slice(0, 3)]);
+}
+
+function buildMCBtns(choices, correctAnswer) {
+  const letters = ['A','B','C','D','E'];
+  return `<div class="mc-options">${choices.map((c,i)=>
+    `<button class="mc-btn" data-answer="${encodeURIComponent(c)}" data-correct="${encodeURIComponent(correctAnswer)}" onclick="handleMCClick(this)">
+      <span class="letter">${letters[i]}</span>${c}
+    </button>`
+  ).join('')}</div>`;
+}
+
+function handleMCClick(btn) {
+  const allBtns = btn.closest('.mc-options').querySelectorAll('.mc-btn');
+  allBtns.forEach(b => b.disabled = true);
+  const chosen = decodeURIComponent(btn.dataset.answer);
+  const correct = decodeURIComponent(btn.dataset.correct);
+  const isCorrect = chosen === correct;
+  allBtns.forEach(b => { if(decodeURIComponent(b.dataset.answer)===correct) b.classList.add('correct'); });
+  if (!isCorrect) btn.classList.add('wrong');
+  setTimeout(() => {
+    if (isCorrect) {
+      state.score++;
+      addMessage('bot', `✅ <strong>Correct!</strong> +1 point! The answer is: <strong>${correct}</strong>`, `Correct! The answer is: ${correct}`);
+    } else {
+      addMessage('bot', `❌ <strong>Not quite.</strong> The correct answer is: <strong>${correct}</strong>`, `Not quite. The correct answer is: ${correct}`);
+    }
+    state.qIndex++; updateScore();
+    if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+    else setTimeout(showResult, 900);
+  }, 650);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// NEXT QUESTION
+// ═══════════════════════════════════════════════════════════════
+function nextQuestion() {
+  const qi = state.qIndex;
+  const q = state.questions[qi];
+  const num = qi + 1;
+
+  if (state.mode === 'full' || state.mode === 'topic_mc') {
+    const choices = generateChoices(q.a, state.allAnswers);
+    const tag = q.topic ? `<span class="topic-tag">${q.topic}</span><br>` : '';
+    const html = `${tag}<strong>Q${num} of ${state.total}:</strong> ${q.q}${buildMCBtns(choices, q.a)}`;
+    addMessage('bot', html, `Question ${num}. ${q.q}`);
+    return;
+  }
+
+  if (state.mode === 'tf') {
+    const html = `<strong>Q${num} of ${state.total}:</strong> <div class="scenario-card">${q.q}</div>
+      <span class="chip" data-val="true">✅ True</span><span class="chip" data-val="false">❌ False</span>`;
+    addMessage('bot', html, `Question ${num}. True or False: ${q.q}`);
+    return;
+  }
+
+  if (state.mode === 'identify') {
+    const btns = buildMCBtns(q.choices, q.a);
+    const html = `<strong>Q${num} of ${state.total}:</strong> Identify what is being described:<div class="scenario-card">${q.q}</div>${btns}`;
+    addMessage('bot', html, `Question ${num}. Identify: ${q.q}`);
+    return;
+  }
+
+  // typed answer mode
+  const tag = q.topic ? `<span class="topic-tag">${q.topic}</span><br>` : '';
+  const html = `${tag}<strong>Q${num} of ${state.total}:</strong> ${q.q}<br><small style="color:var(--muted)">Type your answer · type <em>hint</em> for help · <em>skip</em> to move on</small>`;
+  addMessage('bot', html, `Question ${num}. ${q.q}`);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// MENU
+// ═══════════════════════════════════════════════════════════════
+function showMenu() {
+  addMessage('bot',
+    `👋 <strong>Hi! I'm your English Reviewer!</strong><br>Let's study the <em>Narrator's Point of View</em>, the <em>Purpose of Writing</em>, and <em>Complex Sentences</em> with independent and dependent clauses.<br><br>What would you like to do?<br>
+    <span class="chip" data-val="1">📚 Study by Topic</span>
+    <span class="chip" data-val="2">✅ True or False</span>
+    <span class="chip" data-val="3">🌐 Identify</span>
+    <span class="chip" data-val="4">🌟 Full Review (Multiple Choice)</span>`,
+    "Hi! I'm your English Reviewer on Point of View, Purpose of Writing, and Complex Sentences. What would you like to do? Study a topic, True or False, Identify, or a Full Review with multiple choice?"
+  );
+  state.awaiting = 'menu';
+}
+
+// ═══════════════════════════════════════════════════════════════
+// PROCESS MESSAGE
+// ═══════════════════════════════════════════════════════════════
+function processMessage(msg) {
+  const aw = state.awaiting;
+
+  // ── MENU ──────────────────────────────────────────────────
+  if (aw === 'menu') {
+    if (msg === '1') {
+      state.awaiting = 'topic';
+      const keys = Object.keys(topics);
+      const chips = keys.map((t,i) => `<span class="chip" data-val="${i+1}">${i+1}. ${t}</span>`).join(' ');
+      addMessage('bot', `📚 Which topic would you like to study?<br>${chips}`, 'Which topic would you like to study?');
+
+    } else if (msg === '2') {
+      state.mode = 'tf';
+      state.questions = shuffle(trueOrFalse);
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'tf_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `✅ <strong>True or False!</strong> ${state.total} questions. Let's start!`, `True or False! ${state.total} questions. Let's start!`);
+      setTimeout(nextQuestion, 800);
+
+    } else if (msg === '3') {
+      state.mode = 'identify';
+      state.questions = shuffle(identifyQuestions);
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'mc_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `🌐 <strong>Identify!</strong> Name the point of view, the purpose of the text, and the clauses and subordinators in each item.`, "Identify! Figure out what's being described in each item.");
+      setTimeout(nextQuestion, 800);
+
+    } else if (msg === '4') {
+      state.mode = 'full';
+      const all = [];
+      for (const [topicName, qs] of Object.entries(topics)) {
+        qs.forEach(q => all.push({...q, topic: topicName}));
+      }
+      state.questions = shuffle(all);
+      state.allAnswers = getAllAnswers();
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'mc_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `🌟 <strong>Full Review — Multiple Choice!</strong> ${state.total} questions. Think carefully!`, `Full Review! Multiple Choice! ${state.total} questions. Think carefully!`);
+      setTimeout(nextQuestion, 800);
+
+    } else {
+      addMessage('bot',
+        `Choose an option:<br>
+        <span class="chip" data-val="1">📚 Study by Topic</span>
+        <span class="chip" data-val="2">✅ True or False</span>
+        <span class="chip" data-val="3">🌐 Identify</span>
+        <span class="chip" data-val="4">🌟 Full Review</span>`,
+        'Choose an option.'
+      );
+    }
+    return;
+  }
+
+  // ── TOPIC SELECT ──────────────────────────────────────────
+  if (aw === 'topic') {
+    const keys = Object.keys(topics);
+    const idx = parseInt(msg) - 1;
+    if (keys[idx]) {
+      const topicName = keys[idx];
+      state.mode = 'topic_mc';
+      state.questions = shuffle(topics[topicName]);
+      state.allAnswers = getAllAnswers();
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'mc_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `📚 <strong>${topicName}</strong> — ${state.total} questions. Ready?`, `${topicName}. ${state.total} questions. Ready?`);
+      setTimeout(nextQuestion, 800);
+    } else {
+      const chips = Object.keys(topics).map((t,i) => `<span class="chip" data-val="${i+1}">${i+1}. ${t}</span>`).join(' ');
+      addMessage('bot', `Please choose a valid topic:<br>${chips}`, 'Please choose a valid topic.');
+    }
+    return;
+  }
+
+  // ── TYPED ANSWER ──────────────────────────────────────────
+  if (aw === 'answer') {
+    const q = state.questions[state.qIndex];
+    const m = normalize(msg);
+
+    if (m === 'hint') {
+      state.hintUsed = true;
+      addMessage('bot', `💡 <strong>Hint:</strong> ${q.hint}`, `Hint: ${q.hint}`);
+      return;
+    }
+    if (m === 'skip') {
+      addMessage('bot', `⏭️ Skipped! The correct answer is: <strong>${q.a}</strong>`, `Skipped. The correct answer is: ${q.a}`);
+      state.qIndex++; state.hintUsed = false;
+      if (state.qIndex < state.total) setTimeout(nextQuestion, 700);
+      else showResult();
+      return;
+    }
+
+    const correct = checkAnswer(msg, q.a);
+    if (correct) {
+      if (!state.hintUsed) state.score++;
+      const note = state.hintUsed ? ' <em>(hint used — no point)</em>' : ' +1 point!';
+      addMessage('bot', `✅ <strong>Correct!</strong>${note} Answer: <strong>${q.a}</strong>`, `Correct! The answer is: ${q.a}`);
+    } else {
+      addMessage('bot', `❌ <strong>Not quite.</strong> The correct answer is: <strong>${q.a}</strong>`, `Not quite. The correct answer is: ${q.a}`);
+    }
+    state.qIndex++; state.hintUsed = false; updateScore();
+    if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+    else setTimeout(showResult, 900);
+    return;
+  }
+
+  // ── TRUE OR FALSE ─────────────────────────────────────────
+  if (aw === 'tf_answer') {
+    const q = state.questions[state.qIndex];
+    const ans = normalize(msg);
+    const valid = ans === 'true' || ans === 'false';
+
+    if (valid) {
+      const correct = ans === q.a;
+      if (correct) {
+        state.score++;
+        addMessage('bot', `✅ <strong>Correct!</strong> The answer is <strong>${q.a.toUpperCase()}</strong>.`, `Correct! The answer is ${q.a}.`);
+      } else {
+        addMessage('bot', `❌ <strong>Incorrect.</strong> The correct answer is <strong>${q.a.toUpperCase()}</strong>.`, `Incorrect. The correct answer is ${q.a}.`);
+      }
+      state.qIndex++; updateScore();
+      if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+      else setTimeout(showResult, 900);
+    } else {
+      addMessage('bot',
+        `Answer: True or False?<br><span class="chip" data-val="true">✅ True</span><span class="chip" data-val="false">❌ False</span>`,
+        'Answer: True or False?'
+      );
+    }
+    return;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// CONTROLS
+// ═══════════════════════════════════════════════════════════════
+function handleUserMessage(msg) {
+  if (!msg.trim()) return;
+  
+  // Stop any speaking audio cleanly when the user answers
+  window.speechSynthesis.cancel();
+  if (currentAudioStream) {
+    currentAudioStream.pause();
+    currentAudioStream = null;
+    showWave(false);
+  }
+  
+  addMessage('user', msg.replace(/</g,'&lt;'));
+  input.value = '';
+  input.disabled = true; sendBtn.disabled = true;
+  addTyping();
+  setTimeout(() => {
+    removeTyping();
+    input.disabled = false; sendBtn.disabled = false;
+    input.focus();
+    processMessage(msg);
+  }, 480);
+}
+
+sendBtn.addEventListener('click', () => { handleUserMessage(input.value); });
+input.addEventListener('keydown', e => { if(e.key==='Enter') handleUserMessage(input.value); });
+
+document.getElementById('audio-toggle').addEventListener('click', function() {
+  state.audioEnabled = !state.audioEnabled;
+  this.textContent = state.audioEnabled ? '🔊' : '🔇';
+  this.classList.toggle('active', state.audioEnabled);
+  if (!state.audioEnabled) {
+    window.speechSynthesis.cancel();
+    if (currentAudioStream) {
+      currentAudioStream.pause();
+      currentAudioStream = null;
+      showWave(false);
+    }
+  }
+});
+
+// ═══════════════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════════════
+window.addEventListener('load', () => {
+  lookupSystemVoices();
+  showMenu();
+});
+
+function printPracticeTest() {
+  document.body.classList.add('printing-test');
+  window.print();
+}
+window.addEventListener('afterprint', () => {
+  document.body.classList.remove('printing-test');
+});
+
+// ═══════════════════════════════════════════════════════════════
+// READ NOTES ALOUD (uses the browser's own voice — no length limit,
+// unlike the short Google TTS clips used for chat messages)
+// ═══════════════════════════════════════════════════════════════
+function getNotesText(section) {
+  // Skip the Practice Test / Answer Key tabs — too long and not meant to be read aloud
+  const clone = section.cloneNode(true);
+  clone.querySelectorAll('button').forEach(b => b.remove());
+  let text = clone.innerText || clone.textContent || '';
+  text = text.replace(/\s+/g, ' ').trim();
+  return text;
+}
+
+function toggleNotesAudio() {
+  const btn = document.getElementById('notes-audio-btn');
+  if (!btn) return;
+
+  if (window.speechSynthesis.speaking || window.speechSynthesis.pending) {
+    window.speechSynthesis.cancel();
+    btn.innerHTML = '🔊 Read Notes Aloud';
+    btn.classList.remove('active');
+    return;
+  }
+
+  const activeSection = document.querySelector('.notes-section.active');
+  if (!activeSection) return;
+  const text = getNotesText(activeSection);
+  if (!text) return;
+
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.lang = 'en-US';
+  utter.rate = 0.95;
+  utter.pitch = 1.05;
+  utter.volume = 1;
+
+  const voices = window.speechSynthesis.getVoices();
+  const voice = voices.find(v => v.lang.startsWith('en') && v.name.toLowerCase().includes('female'))
+             || voices.find(v => v.lang.startsWith('en'));
+  if (voice) utter.voice = voice;
+
+  utter.onstart = () => { btn.innerHTML = '⏹️ Stop Reading'; btn.classList.add('active'); };
+  utter.onend = utter.onerror = () => { btn.innerHTML = '🔊 Read Notes Aloud'; btn.classList.remove('active'); };
+
+  window.speechSynthesis.speak(utter);
+}
+
+function switchTab(tabId, btn) {
+  window.speechSynthesis.cancel();
+  const audioBtn = document.getElementById('notes-audio-btn');
+  if (audioBtn) { audioBtn.innerHTML = '🔊 Read Notes Aloud'; audioBtn.classList.remove('active'); }
+  document.querySelectorAll('.notes-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.notes-tab').forEach(b => b.classList.remove('active'));
+  document.getElementById(tabId).classList.add('active');
+  btn.classList.add('active');
+}
+
+function closeNotesPanel() {
+  window.speechSynthesis.cancel();
+  const audioBtn = document.getElementById('notes-audio-btn');
+  if (audioBtn) { audioBtn.innerHTML = '🔊 Read Notes Aloud'; audioBtn.classList.remove('active'); }
+  document.getElementById('notes-overlay').classList.remove('show');
+}
+</script>
+
+<!-- ── Notes Panel ── -->
+<div class="notes-overlay" id="notes-overlay">
+  <div class="notes-panel">
+    <div class="notes-header">
+      <h2>📖 Point of View, Purpose &amp; Clauses — Notes</h2>
+      <div class="notes-header-actions">
+        <button class="print-btn" id="notes-audio-btn" onclick="toggleNotesAudio()" title="Have this tab read aloud">🔊 Read Notes Aloud</button>
+        <button class="print-btn" onclick="printPracticeTest()" title="Print or save the Practice Test &amp; Answer Key as PDF">🖨️ Print Test &amp; Key</button>
+        <button class="notes-close" onclick="closeNotesPanel()">✕</button>
+      </div>
+    </div>
+    <div class="notes-tabs">
+      <button class="notes-tab active" onclick="switchTab('tab-pov', this)">👁️ Point of View</button>
+      <button class="notes-tab" onclick="switchTab('tab-purpose', this)">✍️ Purpose of Writing</button>
+      <button class="notes-tab" onclick="switchTab('tab-clause', this)">🔗 Complex Sentences</button>
+      <button class="notes-tab" onclick="switchTab('tab-tf', this)">✅ True or False</button>
+      <button class="notes-tab" onclick="switchTab('tab-ptest', this)">📝 Practice Test</button>
+      <button class="notes-tab" onclick="switchTab('tab-key', this)">🔑 Answer Key</button>
+      <button class="notes-tab" onclick="switchTab('tab-raw', this)">📄 Raw Notes</button>
+    </div>
+    <div class="notes-body">
+
+      <div class="notes-section active" id="tab-pov">
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> A story's <strong>point of view</strong> is the writer's way of choosing <strong>who is telling the story</strong>. The teller is the <strong>narrator</strong>: a character in the story, or an observer who seems to see everything. The three points of view are <strong>first, second, and third person</strong>.
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 MEMORY TRICK</span>
+          <strong>"1-2-3 = I, You, They"</strong>: <strong>1st</strong> person = <strong>I</strong> (the narrator is in the story), <strong>2nd</strong> person = <strong>you</strong> (the reader is in the story), <strong>3rd</strong> person = <strong>he/she/they</strong> (the narrator watches from outside). Third person is the <strong>most common</strong>; second person is the <strong>rarest</strong>.
+        </div>
+        <table class="compare-table">
+          <tr><th>Point of View</th><th>Narrator</th><th>Pronouns</th><th>Example</th></tr>
+          <tr><td>First person</td><td>One of the characters, telling events in his or her way of looking</td><td>I, me, we, us</td><td>"Call me Ishmael." — <em>Moby-Dick</em>, Herman Melville</td></tr>
+          <tr><td>Second person</td><td>Puts the spotlight on the reader, who becomes a character; rarely used</td><td>you</td><td>"You get a seat and hoist a copy of the New York Post." — <em>Bright Lights, Big City</em>, Jay McInerney</td></tr>
+          <tr><td>Third person</td><td>An observer who seems to know many things about the characters, including thoughts and emotions; the most common</td><td>he, she, it, they, him, her, them</td><td>"She gave him a look of the most intense admiration..." — <em>Peter Pan</em>, J. M. Barrie</td></tr>
+        </table>
+        <div class="tandaan-box">
+          <span class="tandaan-label">REMEMBER</span>
+          To find the point of view, look at the <strong>pronouns</strong> the narrator uses and ask: <strong>who is telling the story?</strong>
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">✅ Task 1 Answers (answers supplied by this reviewer)</div>
+          <div class="notes-item"><span class="notes-term">1</span><span class="notes-def">2 (second person: "You wake up...")</span></div>
+          <div class="notes-item"><span class="notes-term">2</span><span class="notes-def">1 (first person: "I met my friend...")</span></div>
+          <div class="notes-item"><span class="notes-term">3</span><span class="notes-def">3 (third person: Kaye and Meghan)</span></div>
+          <div class="notes-item"><span class="notes-term">4</span><span class="notes-def">3 (third person: the Constantino siblings)</span></div>
+          <div class="notes-item"><span class="notes-term">5</span><span class="notes-def">3 (third person: Edwin)</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-purpose">
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> The <strong>purpose</strong> is the reason why the writer writes a text. The four general purposes are <strong>to inform or explain, to entertain, to persuade, and to express</strong>.
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 MEMORY TRICK</span>
+          <strong>"I-E-P-E"</strong>: <strong>I</strong>nform = <strong>I</strong>nfo and facts; <strong>E</strong>ntertain = <strong>E</strong>njoy and amuse; <strong>P</strong>ersuade = <strong>P</strong>ush you to agree or buy; <strong>E</strong>xpress = <strong>E</strong>motions and thoughts of the writer. Ask: <strong>facts? fun? convince? feelings?</strong>
+        </div>
+        <table class="compare-table">
+          <tr><th>Purpose</th><th>Description</th><th>Related Words</th><th>Examples of Text</th></tr>
+          <tr><td>To inform or explain</td><td>Presents facts and information, and describes something</td><td>describe, define, report</td><td>news article, product manual, textbook, encyclopedia</td></tr>
+          <tr><td>To entertain</td><td>Amuses the readers by presenting a text creatively</td><td>narrate, relax, amuse</td><td>short story, poem, novel, song, screenplay, playscript</td></tr>
+          <tr><td>To persuade</td><td>Convinces the readers to take a stand or believe in a certain way</td><td>argue, defend, support</td><td>opinion article, advertisement, campaign speech, movie review</td></tr>
+          <tr><td>To express</td><td>Conveys the feelings and thoughts of the writer</td><td>—</td><td>diary, social media post, personal journal, blog</td></tr>
+        </table>
+        <div class="notes-topic">
+          <div class="notes-topic-title">✅ Task 2 and Task 3 Answers (answers supplied by this reviewer)</div>
+          <div class="notes-item"><span class="notes-term">Task 2</span><span class="notes-def">1 D (a social media post) · 2 C (encourages you to watch the movie) · 3 A (facts about manta rays) · 4 B (a story passage, <em>The Happy Prince</em>) · 5 A (step-by-step instructions)</span></div>
+          <div class="notes-item"><span class="notes-term">Task 3 (Carissa)</span><span class="notes-def">Purpose: to entertain, because the text tells a short story. Point of view: third person, because it tells about Carissa using she, her, and her parents.</span></div>
+        </div>
+        <div class="tandaan-box">
+          <span class="tandaan-label">NOTE</span>
+          The "Save Your Progress" questions in the lesson (playing with friends, being humble) refer to a story that was not included in the uploaded file, so they have no answers here.
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-clause">
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> A <strong>complex sentence</strong> has two ideas: the main idea (<strong>independent clause</strong>) and an idea that depends on it (<strong>dependent clause</strong>). A <strong>subordinator</strong> connects the dependent clause to the independent clause.
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 MEMORY TRICK</span>
+          <strong>"Independent = stands alone; Dependent = needs help."</strong> The dependent clause needs the <strong>subordinator</strong> and the main clause. Study the subordinators in groups (grouping is added by this reviewer): <strong>Reason</strong>: because, since, as · <strong>Contrast</strong>: although, though, even if/though · <strong>Condition</strong>: if, unless · <strong>Time</strong>: when, whenever, until, while, as · <strong>Place</strong>: where, wherever · <strong>Purpose</strong>: so that, that.
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">🔗 Clauses</div>
+          <div class="notes-item"><span class="notes-term">Independent clause</span><span class="notes-def">The main idea; can stand on its own even without the dependent clause</span></div>
+          <div class="notes-item"><span class="notes-term">Dependent clause</span><span class="notes-def">Does not have a complete meaning; always has a subordinator attached to it</span></div>
+          <div class="notes-item"><span class="notes-term">Subordinator</span><span class="notes-def">Connects the whole dependent clause to the independent clause</span></div>
+          <div class="notes-item"><span class="notes-term">Clause</span><span class="notes-def">Has just one idea</span></div>
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">📋 Common Subordinators</div>
+          <div class="notes-item"><span class="notes-term">From the lesson</span><span class="notes-def">although, as, because, even if/though, if, since, so that, that, though, unless, until, when, whenever, where, wherever, while</span></div>
+        </div>
+        <table class="compare-table">
+          <tr><th>Complex Sentence</th><th>Subordinator</th><th>Dependent Clause</th><th>Independent Clause</th></tr>
+          <tr><td>As they worked on their kites, they talked of the fights they would have.</td><td>As</td><td>they worked on their kites</td><td>they talked of the fights they would have</td></tr>
+          <tr><td>Pedro was darting his kite up and down while Juan and Manuel were fighting their kites.</td><td>while</td><td>Juan and Manuel were fighting their kites</td><td>Pedro was darting his kite up and down</td></tr>
+        </table>
+        <div class="notes-topic">
+          <div class="notes-topic-title">✅ Task 1 Answers: Dependent Clauses (answers supplied by this reviewer)</div>
+          <div class="notes-item"><span class="notes-term">1</span><span class="notes-def">unless you can stand on your heads</span></div>
+          <div class="notes-item"><span class="notes-term">2</span><span class="notes-def">although it is so cold</span></div>
+          <div class="notes-item"><span class="notes-term">3</span><span class="notes-def">while the beggars were sitting at the gates</span></div>
+          <div class="notes-item"><span class="notes-term">4</span><span class="notes-def">Because he was the king</span></div>
+          <div class="notes-item"><span class="notes-term">5</span><span class="notes-def">as he gazed at the wonderful statue</span></div>
+        </div>
+        <div class="tandaan-box">
+          <span class="tandaan-label">TASK 3 TIP</span>
+          To write your own complex sentences, put the subordinator at the start of the dependent clause. Example: <em>I will go outside <strong>when</strong> the rain stops.</em>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-tf">
+        <div class="notes-topic">
+          <div class="notes-topic-title">✅ True or False — Key Reminders</div>
+          <div class="notes-item"><span class="notes-term"><span style="color:#ef4444">FALSE</span></span><span class="notes-def">First-person narrators use he, she, and they → they use <strong>I, me, we, us</strong>.</span></div>
+          <div class="notes-item"><span class="notes-term"><span style="color:#ef4444">FALSE</span></span><span class="notes-def">Second person is the most common point of view → <strong>third person</strong> is the most common.</span></div>
+          <div class="notes-item"><span class="notes-term"><span style="color:#ef4444">FALSE</span></span><span class="notes-def">A news article is written to entertain → it is written to <strong>inform or explain</strong>.</span></div>
+          <div class="notes-item"><span class="notes-term"><span style="color:#ef4444">FALSE</span></span><span class="notes-def">A campaign speech is written to express → it is written to <strong>persuade</strong>.</span></div>
+          <div class="notes-item"><span class="notes-term"><span style="color:#ef4444">FALSE</span></span><span class="notes-def">Describe, define, and report relate to entertaining → they relate to <strong>informing or explaining</strong>.</span></div>
+          <div class="notes-item"><span class="notes-term"><span style="color:#ef4444">FALSE</span></span><span class="notes-def">A dependent clause can stand on its own → only an <strong>independent</strong> clause can.</span></div>
+          <div class="notes-item"><span class="notes-term"><span style="color:#ef4444">FALSE</span></span><span class="notes-def">And, but, and or are subordinators → the lesson lists <strong>although, as, because, if, unless, until, when, while</strong>, and others.</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-ptest">
+        <div class="notes-topic">
+          <div class="notes-topic-title">📝 Practice Test (55 items)</div>
+<div class="ptest-part-title">Part I — Point of View</div>
+<div class="ptest-bank">Write <b>1</b> for first person, <b>2</b> for second person, and <b>3</b> for third person.</div>
+<div class="ptest-q"><b>1.</b> I always wake up early because I like to watch the sunrise. <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>2.</b> You step onto the stage and the lights shine in your eyes. <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>3.</b> Mara packed her bag and walked to school with her brother. <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>4.</b> We planted tomatoes in our garden, and I watered them every day. <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>5.</b> The farmers worked in the field until the sun set. They were tired but happy. <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>6.</b> You open your lunch box and smell the fresh bread. <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>7.</b> My teacher gave me a book, and I thanked her. <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>8.</b> Lito looked at the sky. He wondered if it would rain. <span class="opt">Answer: ______</span></div>
+<div class="ptest-part-title">Part II — Purpose of the Text</div>
+<div class="ptest-bank">Write <b>A</b> if to inform, <b>B</b> if to entertain, <b>C</b> if to persuade, and <b>D</b> if to express.</div>
+<div class="ptest-q"><b>9.</b> Eat more vegetables! They keep you strong and healthy, so make them part of every meal. <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>10.</b> The Philippines has more than 7,000 islands. Luzon is the largest island. <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>11.</b> Once upon a time, a clever turtle challenged a monkey to share a banana tree. <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>12.</b> Today I feel so happy because my best friend visited me. I will never forget this day. <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>13.</b> Boil the water, add the noodles, and cook for three minutes. <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>14.</b> Buy our new school bag now! It is strong, light, and colorful. <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>15.</b> Dear diary, I felt nervous before the quiz, but I did my best. <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>16.</b> The dragon roared, the knight raised his shield, and the whole village held its breath. <span class="opt">Answer: ______</span></div>
+<div class="ptest-part-title">Part III — Multiple Choice</div>
+<div class="ptest-q"><b>17.</b> Which point of view mostly uses the pronoun &quot;you&quot;?<br><span class="opt">a. fourth person</span><span class="opt">b. second person</span><span class="opt">c. first person</span><span class="opt">d. third person</span></div>
+<div class="ptest-q"><b>18.</b> In which point of view is the narrator one of the characters?<br><span class="opt">a. first person</span><span class="opt">b. second person</span><span class="opt">c. third person</span><span class="opt">d. none of these</span></div>
+<div class="ptest-q"><b>19.</b> Which is the most common point of view used by writers?<br><span class="opt">a. first person</span><span class="opt">b. second person</span><span class="opt">c. fourth person</span><span class="opt">d. third person</span></div>
+<div class="ptest-q"><b>20.</b> Which pronouns are used in the third-person point of view?<br><span class="opt">a. you, your</span><span class="opt">b. us, our</span><span class="opt">c. he, she, they</span><span class="opt">d. I, me, we</span></div>
+<div class="ptest-q"><b>21.</b> What is the reason why the writer writes a text?<br><span class="opt">a. subordinator</span><span class="opt">b. purpose</span><span class="opt">c. point of view</span><span class="opt">d. clause</span></div>
+<div class="ptest-q"><b>22.</b> An encyclopedia is written mainly for which purpose?<br><span class="opt">a. to inform or explain</span><span class="opt">b. to entertain</span><span class="opt">c. to persuade</span><span class="opt">d. to express</span></div>
+<div class="ptest-q"><b>23.</b> A campaign speech is written mainly for which purpose?<br><span class="opt">a. to inform or explain</span><span class="opt">b. to express</span><span class="opt">c. to entertain</span><span class="opt">d. to persuade</span></div>
+<div class="ptest-q"><b>24.</b> Which text is written to entertain?<br><span class="opt">a. an advertisement</span><span class="opt">b. a news article</span><span class="opt">c. a playscript</span><span class="opt">d. a product manual</span></div>
+<div class="ptest-q"><b>25.</b> Which clause can stand on its own?<br><span class="opt">a. phrase</span><span class="opt">b. independent clause</span><span class="opt">c. dependent clause</span><span class="opt">d. subordinator</span></div>
+<div class="ptest-q"><b>26.</b> Which word connects a dependent clause to an independent clause?<br><span class="opt">a. subordinator</span><span class="opt">b. narrator</span><span class="opt">c. pronoun</span><span class="opt">d. verb</span></div>
+<div class="ptest-q"><b>27.</b> Which of these is NOT a subordinator?<br><span class="opt">a. because</span><span class="opt">b. unless</span><span class="opt">c. while</span><span class="opt">d. and</span></div>
+<div class="ptest-q"><b>28.</b> A complex sentence is made up of what?<br><span class="opt">a. one word</span><span class="opt">b. two subordinators</span><span class="opt">c. an independent clause and a dependent clause</span><span class="opt">d. two independent clauses only</span></div>
+<div class="ptest-q"><b>29.</b> Which related words go with writing to persuade?<br><span class="opt">a. feel, think, write</span><span class="opt">b. argue, defend, support</span><span class="opt">c. describe, define, report</span><span class="opt">d. narrate, relax, amuse</span></div>
+<div class="ptest-q"><b>30.</b> Which sentence is a complex sentence?<br><span class="opt">a. I stayed home because it rained.</span><span class="opt">b. I stayed home.</span><span class="opt">c. It rained.</span><span class="opt">d. Stay home.</span></div>
+<div class="ptest-q"><b>31.</b> What is the dependent clause in &quot;Mia sang while she cooked&quot;?<br><span class="opt">a. Mia sang</span><span class="opt">b. Mia</span><span class="opt">c. sang while</span><span class="opt">d. while she cooked</span></div>
+<div class="ptest-part-title">Part IV — Find the Dependent Clause</div>
+<div class="ptest-bank">Write the dependent clause of each complex sentence.</div>
+<div class="ptest-q"><b>32.</b> Ben will help us if he finishes early. <span class="opt">Answer: ______________________</span></div>
+<div class="ptest-q"><b>33.</b> We can play outside when the rain stops. <span class="opt">Answer: ______________________</span></div>
+<div class="ptest-q"><b>34.</b> Although she was tired, Ana finished her project. <span class="opt">Answer: ______________________</span></div>
+<div class="ptest-q"><b>35.</b> Please wait here until your name is called. <span class="opt">Answer: ______________________</span></div>
+<div class="ptest-q"><b>36.</b> I took an umbrella because the sky was dark. <span class="opt">Answer: ______________________</span></div>
+<div class="ptest-part-title">Part V — Choose the Subordinator</div>
+<div class="ptest-bank"><strong>Word Bank (use each once):</strong> although &middot; because &middot; unless &middot; until &middot; when &middot; while &middot; since</div>
+<div class="ptest-q"><b>37.</b> She stayed calm ______ the test was difficult. <span class="opt">Answer: ______________</span></div>
+<div class="ptest-q"><b>38.</b> Pedro was late ______ the bus broke down. <span class="opt">Answer: ______________</span></div>
+<div class="ptest-q"><b>39.</b> You will not pass ______ you study. <span class="opt">Answer: ______________</span></div>
+<div class="ptest-q"><b>40.</b> Wait here ______ I return. <span class="opt">Answer: ______________</span></div>
+<div class="ptest-q"><b>41.</b> Lea smiled ______ she saw her friends. <span class="opt">Answer: ______________</span></div>
+<div class="ptest-q"><b>42.</b> Dad cooked ______ we set the table. <span class="opt">Answer: ______________</span></div>
+<div class="ptest-q"><b>43.</b> We have been friends ______ we were five. <span class="opt">Answer: ______________</span></div>
+<div class="ptest-part-title">Part VI — True or False</div>
+<div class="ptest-q"><b>44.</b> In the second-person point of view, the reader becomes a character in the story. <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>45.</b> Third-person narrators use the pronouns I and we. <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>46.</b> A diary is written to express the writer&#x27;s feelings and thoughts. <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>47.</b> A news article is written to persuade. <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>48.</b> A dependent clause can stand on its own. <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>49.</b> A subordinator connects a dependent clause to an independent clause. <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>50.</b> Unless is a subordinator. <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>51.</b> A complex sentence has only one clause. <span class="opt">Answer: ______</span></div>
+<div class="ptest-part-title">Part VII — Short Answer</div>
+<div class="ptest-q"><b>52.</b> Read: &quot;Rico ran to the field with his kite. The wind was strong, so it flew high. He laughed as it danced in the sky.&quot; Tell the purpose of the text and the point of view, and explain each.<br><span class="opt">______________________________________</span></div>
+<div class="ptest-q"><b>53.</b> How is an independent clause different from a dependent clause?<br><span class="opt">______________________________________</span></div>
+<div class="ptest-q"><b>54.</b> Write a complex sentence using &quot;so that.&quot;<br><span class="opt">______________________________________</span></div>
+<div class="ptest-q"><b>55.</b> Name the three points of view and give the pronouns used in each.<br><span class="opt">______________________________________</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-key">
+        <div class="notes-topic">
+<div class="notes-topic-title">Part I — Point of View</div>
+<div class="key-grid"><div class="key-pill">1. <b>1</b></div><div class="key-pill">2. <b>2</b></div><div class="key-pill">3. <b>3</b></div><div class="key-pill">4. <b>1</b></div><div class="key-pill">5. <b>3</b></div><div class="key-pill">6. <b>2</b></div><div class="key-pill">7. <b>1</b></div><div class="key-pill">8. <b>3</b></div></div>
+<div class="notes-topic-title">Part II — Purpose of the Text</div>
+<div class="key-grid"><div class="key-pill">9. <b>C</b></div><div class="key-pill">10. <b>A</b></div><div class="key-pill">11. <b>B</b></div><div class="key-pill">12. <b>D</b></div><div class="key-pill">13. <b>A</b></div><div class="key-pill">14. <b>C</b></div><div class="key-pill">15. <b>D</b></div><div class="key-pill">16. <b>B</b></div></div>
+<div class="notes-topic-title">Part III — Multiple Choice</div>
+<div class="key-grid"><div class="key-pill">17. <b>b. second person</b></div><div class="key-pill">18. <b>a. first person</b></div><div class="key-pill">19. <b>d. third person</b></div><div class="key-pill">20. <b>c. he, she, they</b></div><div class="key-pill">21. <b>b. purpose</b></div><div class="key-pill">22. <b>a. to inform or explain</b></div><div class="key-pill">23. <b>d. to persuade</b></div><div class="key-pill">24. <b>c. a playscript</b></div><div class="key-pill">25. <b>b. independent clause</b></div><div class="key-pill">26. <b>a. subordinator</b></div><div class="key-pill">27. <b>d. and</b></div><div class="key-pill">28. <b>c. an independent clause and a dependent clause</b></div><div class="key-pill">29. <b>b. argue, defend, support</b></div><div class="key-pill">30. <b>a. I stayed home because it rained.</b></div><div class="key-pill">31. <b>d. while she cooked</b></div></div>
+<div class="notes-topic-title">Part IV — Find the Dependent Clause</div>
+<div class="ptest-q"><b>32.</b> if he finishes early</div><div class="ptest-q"><b>33.</b> when the rain stops</div><div class="ptest-q"><b>34.</b> Although she was tired</div><div class="ptest-q"><b>35.</b> until your name is called</div><div class="ptest-q"><b>36.</b> because the sky was dark</div>
+<div class="notes-topic-title">Part V — Choose the Subordinator</div>
+<div class="key-grid"><div class="key-pill">37. <b>although</b></div><div class="key-pill">38. <b>because</b></div><div class="key-pill">39. <b>unless</b></div><div class="key-pill">40. <b>until</b></div><div class="key-pill">41. <b>when</b></div><div class="key-pill">42. <b>while</b></div><div class="key-pill">43. <b>since</b></div></div>
+<div class="notes-topic-title">Part VI — True or False</div>
+<div class="key-grid"><div class="key-pill">44. <b>TRUE</b></div><div class="key-pill">45. <b>FALSE</b></div><div class="key-pill">46. <b>TRUE</b></div><div class="key-pill">47. <b>FALSE</b></div><div class="key-pill">48. <b>FALSE</b></div><div class="key-pill">49. <b>TRUE</b></div><div class="key-pill">50. <b>TRUE</b></div><div class="key-pill">51. <b>FALSE</b></div></div>
+<div class="notes-topic-title">Part VII — Short Answer (sample answers)</div>
+<div class="ptest-q"><b>52.</b> Purpose: to entertain, because it tells a creative short story. Point of view: third person, because the narrator is an observer who uses the name Rico and the pronouns he and it.</div><div class="ptest-q"><b>53.</b> An independent clause has a complete meaning and can stand on its own. A dependent clause does not have a complete meaning and always has a subordinator attached to it.</div><div class="ptest-q"><b>54.</b> Sample: I woke up early so that I could finish my project. (Any complete sentence with so that plus a dependent clause is correct.)</div><div class="ptest-q"><b>55.</b> First person: I, me, we, us. Second person: you. Third person: he, she, it, they, him, her, them.</div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-raw">
+        <div class="rawnotes-intro">
+          📌 This is the original content of the uploaded lesson, unedited — for whenever you need to check the exact wording or an example not covered in the reviewer.
+        </div>
+        <div class="rawnotes-doc">
+<h3 class="doc-heading">Point of View</h3>
+<p>A story’s point of view is the writer’s way of choosing who is telling the story to the readers. Stories are told through the narrator, who can be another character in the story or an observer that seems to see everything that happens.</p>
+<p>These are the three points of view in a narration:</p>
+<ul>
+<li><strong>First person</strong> – In this point of view, the narrator is one of the characters telling events according to its way of looking. The pronouns <em>I, me, we,</em> and <em>us</em> are used by the narrator.</li>
+</ul>
+<p>Call me Ishmael. Some years ago—never mind how long precisely—having little or no money in my purse, and nothing particular to interest me on shore, I thought I would sail about a little and see the watery part of the world.</p>
+<p>—from <em>Moby-Dick</em> by Herman Melville</p>
+<ul>
+<li><strong>Second person</strong> – In this point of view, the narrator puts the spotlight to the reader, who becomes a character in the story. This point of view is rarely used. The pronoun <em>you</em> is mostly used by the narrator.</li>
+</ul>
+<p>At the subway station you wait fifteen minutes on the platform for a train. Finally a local, enervated by graffiti, shuffles into the station. You get a seat and hoist a copy of the New York Post. The Post is the most shameful of your several addictions.</p>
+<p>—from <em>Bright Lights, Big City</em> by Jay McInerney</p>
+<ul>
+<li><strong>Third person</strong> – This is the most common point of view used by writers. The narrator tells events as an observer and seems to know many things about the characters including thoughts and emotions. The pronouns <em>he, she, it, they, him, her,</em> and <em>them</em> are used by the narrator.</li>
+</ul>
+<p>She gave him a look of the most intense admiration, and he thought it was because he had run away, but it was really because he knew fairies. Wendy had lived such a home life that to know fairies struck her as quite delightful.</p>
+<p>—from <em>Peter Pan</em> by J. M. Barrie</p>
+<h3 class="doc-heading">Purpose of Writing</h3>
+<p>Writers have different purposes in writing. The purpose is the reason why the writer writes a text. There are many purposes for writing a text, but generally they are grouped into the following:</p>
+<table style="width:99%;">
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 47%" />
+<col style="width: 37%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>Purpose</strong></th>
+<th style="text-align: left;"><strong>Description</strong></th>
+<th style="text-align: left;"><strong>Example of Text</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">To inform or explain</td>
+<td style="text-align: left;">• used in presenting facts and information and in describing something<br />
+• related words: describe, define, report</td>
+<td style="text-align: left;">news article, product manual, textbook, encyclopedia</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">To entertain</td>
+<td style="text-align: left;">• used in amusing the readers by presenting a text creatively<br />
+• related words: narrate, relax, amuse</td>
+<td style="text-align: left;">short story, poem, novel, song, screenplay, playscript</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">To persuade</td>
+<td style="text-align: left;">• used in convincing the readers to take a stand or believe in a certain way<br />
+• related words: argue, defend, support</td>
+<td style="text-align: left;">opinion article, advertisement, campaign speech, movie review</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">To express</td>
+<td style="text-align: left;">• used in conveying the feelings and thoughts of the writer</td>
+<td style="text-align: left;">diary, social media post, personal journal, blog</td>
+</tr>
+</tbody>
+</table>
+<h3 class="doc-heading">Build New Knowledge</h3>
+<ul>
+<li><p>The narrator’s point of view allows the story to be told to the readers in a certain outlook.</p></li>
+<li><p>Writers have different purposes for writing. The most common are to inform or explain, to entertain, to persuade, and to express.</p></li>
+</ul>
+<h3 class="doc-heading">Upgrade Your Equipment</h3>
+<p><strong>Task 1</strong> Read the following passages. Determine the point of view used by the narrator. Write 1 for first person, 2 for second person, and 3 for third person.</p>
+<ol type="1">
+<li><p>____ You wake up one morning, feeling a bit better about yourself. Your day starts with the warm sunshine touching your skin. Your dad calls you from downstairs. It’s time for breakfast.</p></li>
+<li><p>____ I met my friend Johnny for a meal at the restaurant. When we were talking, I noticed that something was wrong. So I asked him about it and he said that he was just tired.</p></li>
+<li><p>____ Kaye and Meghan were playing in the park when the sky turned dark. They immediately ran to the park clubhouse, just in time because rain started to pelt down.</p></li>
+<li><p>____ The Constantino siblings are all successful professionals. Their parents worked hard to give them good education. Vina, the eldest, is employed as a hotel manager. Victor lands a teaching job in a high school. Von owns an online business. And Vince, the youngest, models for clothes.</p></li>
+<li><p>____ Edwin felt excited to go to his hometown after years in the city. He had a plan to surprise his parents and bring them to Taiwan for a one-week vacation. He was thrilled just to imagine their reaction.</p></li>
+</ol>
+<p><strong>Task 2</strong> Determine the purpose of the following texts. Write A if to inform, B if to entertain, C if to persuade, and D if to express.</p>
+<p><em>(You will get the “Purpose Expert” badge if you get a perfect score in this task.)</em></p>
+<ol type="1">
+<li><p>____ What a beautiful evening. Go out and look at the bright moon on the horizon. #fullmoon</p></li>
+<li><p>____ If you are still undecided what movie to watch this weekend, include Gomburza in your options. It is not only about historical figures but also a reminder for Filipinos not to stop calling for equality.</p></li>
+<li><p>____ Manta rays always open their mouth, gulping in very small marine organisms. They are also able to remember their environment through smell and sight. They are truly a wonder of the ocean.</p></li>
+<li><p>____ High above the city, on a tall column, stood the statue of the Happy Prince. He was gilded all over with thin leaves of fine gold, for eyes he had two bright sapphires, and a large red ruby glowed on his sword-hilt.</p></li>
+<li><p>____ To turn the Wi-Fi on, go to “Settings” then choose “Network.” Search for a nearby network signal and key in the password.</p></li>
+</ol>
+<p><strong>Task 3</strong> Determine the purpose of the text and the narrator’s point of view. Write a brief explanation of your answer.</p>
+<p>One fine morning, Carissa opened her window to look at the sky. She saw blue birds flying in a V formation. As she looked down from her window, she saw yellow flowers, and their fragrance calmed her soul. Carissa smiled and went to her bed to fix it. She opened her door when someone knocked. She was surprised to see her parents and her grandparents standing in front of her door. Carissa’s parents were holding a banner with a birthday greeting on it. Her grandparents greeted her with a happy birthday.</p>
+<ul>
+<li><p>Purpose of the text: ________</p></li>
+<li><p>Explanation: ________</p></li>
+<li><p>Point of view: ________</p></li>
+<li><p>Explanation: ________</p></li>
+</ul>
+<h3 class="doc-heading">Save Your Progress</h3>
+<p>Think about what you have learned from the story. Answer these questions:</p>
+<ol type="1">
+<li><p>What did you realize about playing with friends?</p></li>
+<li><p>Why is it important to be humble?</p></li>
+</ol>
+<h3 class="doc-heading">Level Up Your Skills</h3>
+<h3 class="doc-heading">Independent and Dependent Clauses</h3>
+<p>A <strong>complex sentence</strong> has two ideas with one serving as the main idea and the other dependent to it. The main idea is called the <em>independent clause</em>, and the other one is called a <em>dependent clause</em>.</p>
+<p>An independent clause can stand on its own even without the dependent clause. However, the dependent clause does not have a complete meaning. Study these examples of complex sentences:</p>
+<ul>
+<li><p><strong>As</strong> <u>they worked on their kites</u>, they talked of the fights they would have.</p></li>
+<li><p>Pedro was darting his kite up and down <strong>while</strong> <u>Juan and Manuel were fighting their kites</u>.</p></li>
+</ul>
+<p>The underlined parts are dependent clauses, while the circled words (shown in bold above) are what you call subordinators. The rest of the sentence are independent clauses.</p>
+<p>A dependent clause always has a subordinator attached to it. A subordinator allows the whole clause to be connected to the independent clause.</p>
+<p>Common subordinators you can use are the following:</p>
+<p>although, as, because, even if/though, if, since, so that, that, though, unless, until, when, whenever, where, wherever, while</p>
+<h3 class="doc-heading">Build New Knowledge</h3>
+<ul>
+<li><p>Complex sentences are made up of an independent clause and a dependent clause.</p></li>
+<li><p>A subordinator allows a dependent clause to be connected to an independent clause.</p></li>
+</ul>
+<h3 class="doc-heading">Upgrade Your Equipment</h3>
+<p><strong>Task 1</strong> Highlight the dependent clause in the following complex sentences.</p>
+<p><em>(You will get the “Complex Thinker” badge if you get a perfect score in this task.)</em></p>
+<ol type="1">
+<li><p>You will never be in the best society unless you can stand on your heads.</p></li>
+<li><p>I feel quite warm now although it is so cold.</p></li>
+<li><p>So the swallow saw the rich making merry in their beautiful houses, while the beggars were sitting at the gates.</p></li>
+<li><p>Because he was the king, no one had ever dared to tell about his bad playing of the flute.</p></li>
+<li><p>A disappointed man muttered something as he gazed at the wonderful statue.</p></li>
+</ol>
+<p><strong>Task 2</strong> In 10 minutes, create five clauses (having just one idea). After the given time, go around and ask your classmates for their clauses. Try to combine your clauses to make a meaningful complex sentence. Remember that one of you needs to add a subordinator to combine your clauses. Share some of your complex sentences during the class discussion.</p>
+<p><strong>Task 3</strong> Write complex sentences using the given subordinators.</p>
+<ol type="1">
+<li><p>even though ________</p></li>
+<li><p>when ________</p></li>
+<li><p>so that ________</p></li>
+<li><p>unless ________</p></li>
+<li><p>as ________</p></li>
+</ol>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ── Hidden Print Area (Practice Test + Answer Key) ── -->
+<div id="print-area">
+<div class="p-cover"><div class="p-icon">📖</div><h1>English — Point of View, Purpose &amp; Complex Sentences Practice Test</h1><div class="p-sub">Narrator's Point of View · Purpose of Writing · Independent &amp; Dependent Clauses</div>
+<div class="p-info-box"><div><strong>Name:</strong> _____________________________________</div><div><strong>Section:</strong> ___________________ &nbsp; <strong>Date:</strong> ___________________</div><div><strong>Score:</strong> _______ / 55</div></div>
+<div class="p-instructions"><strong>Instructions:</strong> Read each item carefully. Write your answer on the blank provided (Parts I, II, IV, V, VI), write the letter of the correct answer (Part III), or answer in complete sentences (Part VII). Good luck!</div></div>
+<h2 class="p-part-title">Part I — Point of View</h2>
+<div class="p-bank">Write <b>1</b> for first person, <b>2</b> for second person, and <b>3</b> for third person.</div>
+<div class="p-q"><b>1.</b> I always wake up early because I like to watch the sunrise. <span class="p-blank"></span></div>
+<div class="p-q"><b>2.</b> You step onto the stage and the lights shine in your eyes. <span class="p-blank"></span></div>
+<div class="p-q"><b>3.</b> Mara packed her bag and walked to school with her brother. <span class="p-blank"></span></div>
+<div class="p-q"><b>4.</b> We planted tomatoes in our garden, and I watered them every day. <span class="p-blank"></span></div>
+<div class="p-q"><b>5.</b> The farmers worked in the field until the sun set. They were tired but happy. <span class="p-blank"></span></div>
+<div class="p-q"><b>6.</b> You open your lunch box and smell the fresh bread. <span class="p-blank"></span></div>
+<div class="p-q"><b>7.</b> My teacher gave me a book, and I thanked her. <span class="p-blank"></span></div>
+<div class="p-q"><b>8.</b> Lito looked at the sky. He wondered if it would rain. <span class="p-blank"></span></div>
+<h2 class="p-part-title">Part II — Purpose of the Text</h2>
+<div class="p-bank">Write <b>A</b> if to inform, <b>B</b> if to entertain, <b>C</b> if to persuade, and <b>D</b> if to express.</div>
+<div class="p-q"><b>9.</b> Eat more vegetables! They keep you strong and healthy, so make them part of every meal. <span class="p-blank"></span></div>
+<div class="p-q"><b>10.</b> The Philippines has more than 7,000 islands. Luzon is the largest island. <span class="p-blank"></span></div>
+<div class="p-q"><b>11.</b> Once upon a time, a clever turtle challenged a monkey to share a banana tree. <span class="p-blank"></span></div>
+<div class="p-q"><b>12.</b> Today I feel so happy because my best friend visited me. I will never forget this day. <span class="p-blank"></span></div>
+<div class="p-q"><b>13.</b> Boil the water, add the noodles, and cook for three minutes. <span class="p-blank"></span></div>
+<div class="p-q"><b>14.</b> Buy our new school bag now! It is strong, light, and colorful. <span class="p-blank"></span></div>
+<div class="p-q"><b>15.</b> Dear diary, I felt nervous before the quiz, but I did my best. <span class="p-blank"></span></div>
+<div class="p-q"><b>16.</b> The dragon roared, the knight raised his shield, and the whole village held its breath. <span class="p-blank"></span></div>
+<h2 class="p-part-title">Part III — Multiple Choice</h2>
+<div class="p-q"><b>17.</b> Which point of view mostly uses the pronoun &quot;you&quot;?<br><span class="p-opt">a. fourth person</span><span class="p-opt">b. second person</span><span class="p-opt">c. first person</span><span class="p-opt">d. third person</span></div>
+<div class="p-q"><b>18.</b> In which point of view is the narrator one of the characters?<br><span class="p-opt">a. first person</span><span class="p-opt">b. second person</span><span class="p-opt">c. third person</span><span class="p-opt">d. none of these</span></div>
+<div class="p-q"><b>19.</b> Which is the most common point of view used by writers?<br><span class="p-opt">a. first person</span><span class="p-opt">b. second person</span><span class="p-opt">c. fourth person</span><span class="p-opt">d. third person</span></div>
+<div class="p-q"><b>20.</b> Which pronouns are used in the third-person point of view?<br><span class="p-opt">a. you, your</span><span class="p-opt">b. us, our</span><span class="p-opt">c. he, she, they</span><span class="p-opt">d. I, me, we</span></div>
+<div class="p-q"><b>21.</b> What is the reason why the writer writes a text?<br><span class="p-opt">a. subordinator</span><span class="p-opt">b. purpose</span><span class="p-opt">c. point of view</span><span class="p-opt">d. clause</span></div>
+<div class="p-q"><b>22.</b> An encyclopedia is written mainly for which purpose?<br><span class="p-opt">a. to inform or explain</span><span class="p-opt">b. to entertain</span><span class="p-opt">c. to persuade</span><span class="p-opt">d. to express</span></div>
+<div class="p-q"><b>23.</b> A campaign speech is written mainly for which purpose?<br><span class="p-opt">a. to inform or explain</span><span class="p-opt">b. to express</span><span class="p-opt">c. to entertain</span><span class="p-opt">d. to persuade</span></div>
+<div class="p-q"><b>24.</b> Which text is written to entertain?<br><span class="p-opt">a. an advertisement</span><span class="p-opt">b. a news article</span><span class="p-opt">c. a playscript</span><span class="p-opt">d. a product manual</span></div>
+<div class="p-q"><b>25.</b> Which clause can stand on its own?<br><span class="p-opt">a. phrase</span><span class="p-opt">b. independent clause</span><span class="p-opt">c. dependent clause</span><span class="p-opt">d. subordinator</span></div>
+<div class="p-q"><b>26.</b> Which word connects a dependent clause to an independent clause?<br><span class="p-opt">a. subordinator</span><span class="p-opt">b. narrator</span><span class="p-opt">c. pronoun</span><span class="p-opt">d. verb</span></div>
+<div class="p-q"><b>27.</b> Which of these is NOT a subordinator?<br><span class="p-opt">a. because</span><span class="p-opt">b. unless</span><span class="p-opt">c. while</span><span class="p-opt">d. and</span></div>
+<div class="p-q"><b>28.</b> A complex sentence is made up of what?<br><span class="p-opt">a. one word</span><span class="p-opt">b. two subordinators</span><span class="p-opt">c. an independent clause and a dependent clause</span><span class="p-opt">d. two independent clauses only</span></div>
+<div class="p-q"><b>29.</b> Which related words go with writing to persuade?<br><span class="p-opt">a. feel, think, write</span><span class="p-opt">b. argue, defend, support</span><span class="p-opt">c. describe, define, report</span><span class="p-opt">d. narrate, relax, amuse</span></div>
+<div class="p-q"><b>30.</b> Which sentence is a complex sentence?<br><span class="p-opt">a. I stayed home because it rained.</span><span class="p-opt">b. I stayed home.</span><span class="p-opt">c. It rained.</span><span class="p-opt">d. Stay home.</span></div>
+<div class="p-q"><b>31.</b> What is the dependent clause in &quot;Mia sang while she cooked&quot;?<br><span class="p-opt">a. Mia sang</span><span class="p-opt">b. Mia</span><span class="p-opt">c. sang while</span><span class="p-opt">d. while she cooked</span></div>
+<div class="p-break"></div>
+<h2 class="p-part-title">Part IV — Find the Dependent Clause</h2>
+<div class="p-bank">Write the dependent clause of each complex sentence.</div>
+<div class="p-q"><b>32.</b> Ben will help us if he finishes early. <span class="p-blank"></span></div>
+<div class="p-q"><b>33.</b> We can play outside when the rain stops. <span class="p-blank"></span></div>
+<div class="p-q"><b>34.</b> Although she was tired, Ana finished her project. <span class="p-blank"></span></div>
+<div class="p-q"><b>35.</b> Please wait here until your name is called. <span class="p-blank"></span></div>
+<div class="p-q"><b>36.</b> I took an umbrella because the sky was dark. <span class="p-blank"></span></div>
+<h2 class="p-part-title">Part V — Choose the Subordinator</h2>
+<div class="p-bank"><strong>Word Bank (use each once):</strong> although &middot; because &middot; unless &middot; until &middot; when &middot; while &middot; since</div>
+<div class="p-q"><b>37.</b> She stayed calm ______ the test was difficult. <span class="p-blank"></span></div>
+<div class="p-q"><b>38.</b> Pedro was late ______ the bus broke down. <span class="p-blank"></span></div>
+<div class="p-q"><b>39.</b> You will not pass ______ you study. <span class="p-blank"></span></div>
+<div class="p-q"><b>40.</b> Wait here ______ I return. <span class="p-blank"></span></div>
+<div class="p-q"><b>41.</b> Lea smiled ______ she saw her friends. <span class="p-blank"></span></div>
+<div class="p-q"><b>42.</b> Dad cooked ______ we set the table. <span class="p-blank"></span></div>
+<div class="p-q"><b>43.</b> We have been friends ______ we were five. <span class="p-blank"></span></div>
+<div class="p-break"></div>
+<h2 class="p-part-title">Part VI — True or False</h2>
+<div class="p-q"><b>44.</b> In the second-person point of view, the reader becomes a character in the story. <span class="p-blank"></span></div>
+<div class="p-q"><b>45.</b> Third-person narrators use the pronouns I and we. <span class="p-blank"></span></div>
+<div class="p-q"><b>46.</b> A diary is written to express the writer&#x27;s feelings and thoughts. <span class="p-blank"></span></div>
+<div class="p-q"><b>47.</b> A news article is written to persuade. <span class="p-blank"></span></div>
+<div class="p-q"><b>48.</b> A dependent clause can stand on its own. <span class="p-blank"></span></div>
+<div class="p-q"><b>49.</b> A subordinator connects a dependent clause to an independent clause. <span class="p-blank"></span></div>
+<div class="p-q"><b>50.</b> Unless is a subordinator. <span class="p-blank"></span></div>
+<div class="p-q"><b>51.</b> A complex sentence has only one clause. <span class="p-blank"></span></div>
+<h2 class="p-part-title">Part VII — Short Answer</h2>
+<div class="p-q"><b>52.</b> Read: &quot;Rico ran to the field with his kite. The wind was strong, so it flew high. He laughed as it danced in the sky.&quot; Tell the purpose of the text and the point of view, and explain each.<br><br>_________________________________________________<br><br>_________________________________________________</div>
+<div class="p-q"><b>53.</b> How is an independent clause different from a dependent clause?<br><br>_________________________________________________<br><br>_________________________________________________</div>
+<div class="p-q"><b>54.</b> Write a complex sentence using &quot;so that.&quot;<br><br>_________________________________________________<br><br>_________________________________________________</div>
+<div class="p-q"><b>55.</b> Name the three points of view and give the pronouns used in each.<br><br>_________________________________________________<br><br>_________________________________________________</div>
+<div class="p-break"></div><h2 class="p-part-title">✅ Complete Answer Key</h2>
+<div class="p-key-part-title">Part I — Point of View</div>
+<div class="p-key-grid"><div class="p-key-pill">1. <b>1</b></div><div class="p-key-pill">2. <b>2</b></div><div class="p-key-pill">3. <b>3</b></div><div class="p-key-pill">4. <b>1</b></div><div class="p-key-pill">5. <b>3</b></div><div class="p-key-pill">6. <b>2</b></div><div class="p-key-pill">7. <b>1</b></div><div class="p-key-pill">8. <b>3</b></div></div>
+<div class="p-key-part-title">Part II — Purpose of the Text</div>
+<div class="p-key-grid"><div class="p-key-pill">9. <b>C</b></div><div class="p-key-pill">10. <b>A</b></div><div class="p-key-pill">11. <b>B</b></div><div class="p-key-pill">12. <b>D</b></div><div class="p-key-pill">13. <b>A</b></div><div class="p-key-pill">14. <b>C</b></div><div class="p-key-pill">15. <b>D</b></div><div class="p-key-pill">16. <b>B</b></div></div>
+<div class="p-key-part-title">Part III — Multiple Choice</div>
+<div class="p-key-grid"><div class="p-key-pill">17. <b>b. second person</b></div><div class="p-key-pill">18. <b>a. first person</b></div><div class="p-key-pill">19. <b>d. third person</b></div><div class="p-key-pill">20. <b>c. he, she, they</b></div><div class="p-key-pill">21. <b>b. purpose</b></div><div class="p-key-pill">22. <b>a. to inform or explain</b></div><div class="p-key-pill">23. <b>d. to persuade</b></div><div class="p-key-pill">24. <b>c. a playscript</b></div><div class="p-key-pill">25. <b>b. independent clause</b></div><div class="p-key-pill">26. <b>a. subordinator</b></div><div class="p-key-pill">27. <b>d. and</b></div><div class="p-key-pill">28. <b>c. an independent clause and a dependent clause</b></div><div class="p-key-pill">29. <b>b. argue, defend, support</b></div><div class="p-key-pill">30. <b>a. I stayed home because it rained.</b></div><div class="p-key-pill">31. <b>d. while she cooked</b></div></div>
+<div class="p-key-part-title">Part IV — Find the Dependent Clause</div>
+<div class="p-q"><b>32.</b> if he finishes early</div><div class="p-q"><b>33.</b> when the rain stops</div><div class="p-q"><b>34.</b> Although she was tired</div><div class="p-q"><b>35.</b> until your name is called</div><div class="p-q"><b>36.</b> because the sky was dark</div>
+<div class="p-key-part-title">Part V — Choose the Subordinator</div>
+<div class="p-key-grid"><div class="p-key-pill">37. <b>although</b></div><div class="p-key-pill">38. <b>because</b></div><div class="p-key-pill">39. <b>unless</b></div><div class="p-key-pill">40. <b>until</b></div><div class="p-key-pill">41. <b>when</b></div><div class="p-key-pill">42. <b>while</b></div><div class="p-key-pill">43. <b>since</b></div></div>
+<div class="p-key-part-title">Part VI — True or False</div>
+<div class="p-key-grid"><div class="p-key-pill">44. <b>TRUE</b></div><div class="p-key-pill">45. <b>FALSE</b></div><div class="p-key-pill">46. <b>TRUE</b></div><div class="p-key-pill">47. <b>FALSE</b></div><div class="p-key-pill">48. <b>FALSE</b></div><div class="p-key-pill">49. <b>TRUE</b></div><div class="p-key-pill">50. <b>TRUE</b></div><div class="p-key-pill">51. <b>FALSE</b></div></div>
+<div class="p-key-part-title">Part VII — Short Answer (sample answers)</div>
+<div class="p-q"><b>52.</b> Purpose: to entertain, because it tells a creative short story. Point of view: third person, because the narrator is an observer who uses the name Rico and the pronouns he and it.</div><div class="p-q"><b>53.</b> An independent clause has a complete meaning and can stand on its own. A dependent clause does not have a complete meaning and always has a subordinator attached to it.</div><div class="p-q"><b>54.</b> Sample: I woke up early so that I could finish my project. (Any complete sentence with so that plus a dependent clause is correct.)</div><div class="p-q"><b>55.</b> First person: I, me, we, us. Second person: you. Third person: he, she, it, they, him, her, them.</div>
+</div>
+
+</body>
+</html>
