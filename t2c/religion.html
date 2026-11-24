@@ -1,0 +1,2160 @@
+<!DOCTYPE html>
+<html lang="tl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>✝️ Religion: Anointing, Marriage &amp; Family Reviewer 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --gold: #f59e0b;
+  --gold-dark: #b45309;
+  --blue: #3b82f6;
+  --blue-dark: #1d4ed8;
+  --red: #ef4444;
+  --green: #22c55e;
+  --bg: #0c1a0e;
+  --surface: #132015;
+  --surface2: #1a2e1d;
+  --text: #f0fdf4;
+  --muted: #86efac;
+  --border: #166534;
+}
+
+body {
+  font-family: 'Baloo 2', cursive;
+  background: var(--bg);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--text);
+  background-image:
+    radial-gradient(ellipse at 10% 30%, rgba(245,158,11,.06) 0%, transparent 55%),
+    radial-gradient(ellipse at 90% 70%, rgba(59,130,246,.06) 0%, transparent 55%);
+}
+
+header {
+  width: 100%;
+  background: linear-gradient(135deg, #14532d, #1e3a5f);
+  border-bottom: 2px solid var(--gold-dark);
+  padding: 13px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 4px 30px rgba(0,0,0,.5);
+}
+.header-icon { font-size: 2rem; animation: float 3s ease-in-out infinite; }
+@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
+
+header h1 {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.45rem;
+  background: linear-gradient(90deg, var(--gold), #fde68a, var(--gold));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+header .sub { font-size: .72rem; color: var(--muted); margin-top: 1px; }
+
+.header-controls { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+.score-pill {
+  background: rgba(245,158,11,.15);
+  border: 1px solid rgba(245,158,11,.4);
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-weight: 800;
+  font-size: .85rem;
+  color: var(--gold);
+}
+.audio-btn {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  background: var(--surface2);
+  color: var(--text);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all .2s;
+  display: flex; align-items: center; justify-content: center;
+}
+.audio-btn:hover, .audio-btn.active { background: #14532d; border-color: var(--gold); }
+
+.chat-wrap {
+  width: 100%; max-width: 700px; flex: 1;
+  display: flex; flex-direction: column;
+  padding: 16px 14px 0;
+}
+
+#chat-box {
+  flex: 1; overflow-y: auto;
+  display: flex; flex-direction: column;
+  gap: 14px; padding-bottom: 10px;
+  max-height: calc(100vh - 200px);
+  scroll-behavior: smooth;
+}
+#chat-box::-webkit-scrollbar { width: 4px; }
+#chat-box::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+.msg { display: flex; gap: 8px; }
+.msg.user { flex-direction: row-reverse; }
+
+.avatar {
+  width: 34px; height: 34px; border-radius: 50%;
+  font-size: 1rem; display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 2px;
+}
+.msg.bot .avatar { background: linear-gradient(135deg, #14532d, #1e3a5f); border: 1.5px solid rgba(245,158,11,.4); }
+.msg.user .avatar { background: linear-gradient(135deg, #1e3a5f, #14532d); border: 1.5px solid rgba(59,130,246,.3); }
+
+.bubble {
+  max-width: 80%;
+  padding: 11px 16px;
+  border-radius: 18px;
+  font-size: .9rem;
+  line-height: 1.65;
+  animation: pop .22s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes pop { from{transform:scale(.88) translateY(6px);opacity:0} to{transform:scale(1) translateY(0);opacity:1} }
+
+.msg.bot .bubble {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-bottom-left-radius: 5px;
+}
+.msg.user .bubble {
+  background: linear-gradient(135deg, #1e3a5f, var(--blue-dark));
+  border-bottom-right-radius: 5px;
+}
+
+/* chips */
+.chip {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: rgba(245,158,11,.12);
+  border: 1.5px solid rgba(245,158,11,.4);
+  color: var(--gold);
+  border-radius: 30px;
+  padding: 5px 13px; margin: 5px 4px 0 0;
+  font-size: .8rem; font-weight: 700;
+  cursor: pointer; transition: all .15s;
+  user-select: none; font-family: 'Baloo 2', cursive;
+}
+.chip:hover {
+  background: var(--gold-dark); color: white;
+  border-color: var(--gold);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(245,158,11,.3);
+}
+
+/* topic tag */
+.topic-tag {
+  display: inline-block;
+  background: linear-gradient(135deg, #14532d, #166534);
+  border: 1px solid var(--gold-dark);
+  color: var(--gold);
+  font-size: .68rem; font-weight: 800;
+  border-radius: 20px; padding: 2px 10px;
+  margin-bottom: 5px; letter-spacing: .5px;
+  text-transform: uppercase;
+}
+
+/* multiple choice */
+.mc-options { display: flex; flex-direction: column; gap: 7px; margin-top: 10px; width: 100%; }
+.mc-btn {
+  display: flex; align-items: center; gap: 10px;
+  background: rgba(255,255,255,.03);
+  border: 1.5px solid var(--border);
+  border-radius: 12px; padding: 9px 14px;
+  color: var(--text); font-family: 'Baloo 2', cursive;
+  font-size: .87rem; font-weight: 600;
+  cursor: pointer; transition: all .15s; text-align: left; width: 100%;
+}
+.mc-btn:hover:not(:disabled) {
+  background: rgba(245,158,11,.12); border-color: var(--gold);
+  color: var(--gold); transform: translateX(3px);
+}
+.mc-btn .letter {
+  display: flex; align-items: center; justify-content: center;
+  width: 26px; height: 26px; border-radius: 8px;
+  background: rgba(245,158,11,.15); border: 1px solid rgba(245,158,11,.35);
+  color: var(--gold); font-size: .78rem; font-weight: 800;
+  flex-shrink: 0; transition: all .15s;
+}
+.mc-btn:hover:not(:disabled) .letter { background: var(--gold-dark); color: white; border-color: var(--gold-dark); }
+.mc-btn.correct { background: rgba(34,197,94,.15)!important; border-color: #22c55e!important; color: #22c55e!important; cursor: default; }
+.mc-btn.correct .letter { background: #22c55e!important; color: white!important; border-color: #22c55e!important; }
+.mc-btn.wrong { background: rgba(239,68,68,.12)!important; border-color: #ef4444!important; color: #ef4444!important; cursor: default; }
+.mc-btn.wrong .letter { background: #ef4444!important; color: white!important; border-color: #ef4444!important; }
+.mc-btn:disabled { cursor: default; transform: none!important; }
+
+/* speaker wave */
+.speaker-wave {
+  display: inline-flex; align-items: flex-end;
+  gap: 2px; height: 14px; margin-left: 6px; vertical-align: middle;
+}
+.speaker-wave span {
+  display: block; width: 3px; border-radius: 2px;
+  background: var(--gold); animation: wave 1s ease-in-out infinite;
+}
+.speaker-wave span:nth-child(1){height:4px;animation-delay:0s}
+.speaker-wave span:nth-child(2){height:10px;animation-delay:.1s}
+.speaker-wave span:nth-child(3){height:6px;animation-delay:.2s}
+.speaker-wave span:nth-child(4){height:12px;animation-delay:.15s}
+.speaker-wave span:nth-child(5){height:4px;animation-delay:.05s}
+@keyframes wave{0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.8)}}
+
+/* typing */
+.typing {
+  display: flex; gap: 4px; padding: 12px 16px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 18px; border-bottom-left-radius: 5px; width: fit-content;
+}
+.dot { width: 7px; height: 7px; border-radius: 50%; background: var(--gold); animation: bounce .9s infinite; }
+.dot:nth-child(2){animation-delay:.15s} .dot:nth-child(3){animation-delay:.3s}
+@keyframes bounce{0%,80%,100%{transform:translateY(0);opacity:.6}40%{transform:translateY(-7px);opacity:1}}
+
+/* input bar */
+.input-bar {
+  width: 100%; max-width: 700px;
+  padding: 10px 14px 18px;
+  display: flex; gap: 8px;
+  background: var(--bg); position: sticky; bottom: 0;
+}
+#user-input {
+  flex: 1; padding: 12px 18px;
+  border: 2px solid var(--border); border-radius: 30px;
+  font-family: 'Baloo 2', cursive; font-size: .92rem;
+  outline: none; background: var(--surface); color: var(--text);
+  transition: border-color .2s, box-shadow .2s;
+}
+#user-input::placeholder { color: var(--muted); }
+#user-input:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(245,158,11,.12); }
+
+#send-btn {
+  width: 48px; height: 48px; border-radius: 50%; border: none;
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  color: white; font-size: 1.1rem; cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 3px 14px rgba(245,158,11,.4); flex-shrink: 0;
+}
+#send-btn:hover { transform: scale(1.08); box-shadow: 0 5px 20px rgba(245,158,11,.55); }
+#send-btn:disabled { opacity: .5; transform: none; }
+
+/* result modal */
+.result-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.75); backdrop-filter: blur(6px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 100; opacity: 0; pointer-events: none; transition: opacity .3s;
+}
+.result-overlay.show { opacity: 1; pointer-events: all; }
+.result-card {
+  background: linear-gradient(135deg, #132015, #0c1a0e);
+  border: 2px solid var(--gold-dark);
+  border-radius: 24px; padding: 36px 40px;
+  text-align: center; max-width: 380px; width: 90%;
+  box-shadow: 0 20px 60px rgba(0,0,0,.6);
+  transform: scale(.9); transition: transform .3s cubic-bezier(.34,1.56,.64,1);
+}
+.result-overlay.show .result-card { transform: scale(1); }
+.result-emoji { font-size: 4rem; margin-bottom: 12px; display: block; }
+.result-title {
+  font-family: 'Fredoka One', cursive; font-size: 1.7rem; margin-bottom: 6px;
+  background: linear-gradient(90deg, var(--gold), #fde68a);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.result-score { font-size: 3rem; font-weight: 900; margin: 10px 0; color: white; }
+.result-msg { color: var(--muted); font-size: .9rem; margin-bottom: 22px; }
+.result-btn {
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  border: none; border-radius: 30px; padding: 12px 30px;
+  color: white; font-family: 'Baloo 2', cursive; font-weight: 800;
+  font-size: 1rem; cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+  box-shadow: 0 4px 16px rgba(245,158,11,.35);
+}
+.result-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 22px rgba(245,158,11,.5); }
+
+/* scenario card for identify questions */
+.scenario-card {
+  background: rgba(245,158,11,.07);
+  border: 1px solid rgba(245,158,11,.25);
+  border-radius: 12px; padding: 10px 14px;
+  margin: 8px 0 6px; font-style: italic;
+  font-size: .87rem; color: #fde68a; line-height: 1.5;
+}
+
+/* ── Notes Panel ─────────────────────────────────────────────── */
+.notes-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.78); backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 200; opacity: 0; pointer-events: none; transition: opacity .3s;
+}
+.notes-overlay.show { opacity: 1; pointer-events: all; }
+.notes-panel {
+  background: linear-gradient(160deg, #0c1a0e, #132015);
+  border: 2px solid var(--gold-dark);
+  border-radius: 20px;
+  width: 92%; max-width: 720px;
+  max-height: 88vh;
+  display: flex; flex-direction: column;
+  box-shadow: 0 24px 60px rgba(0,0,0,.7);
+  overflow: hidden;
+  transform: translateY(30px);
+  transition: transform .35s cubic-bezier(.34,1.2,.64,1);
+}
+.notes-overlay.show .notes-panel { transform: translateY(0); }
+.notes-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 22px; border-bottom: 1px solid var(--border);
+  background: linear-gradient(135deg, #14532d44, #1e3a5f44);
+}
+.notes-header h2 { font-family: 'Fredoka One', cursive; font-size: 1.3rem; color: var(--gold); }
+.notes-close {
+  width: 34px; height: 34px; border-radius: 50%;
+  border: 1.5px solid var(--border); background: var(--surface2);
+  color: var(--text); font-size: 1rem; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; transition: all .2s;
+}
+.notes-close:hover { background: #b91c1c; border-color: #ef4444; }
+.notes-body { overflow-y: auto; padding: 20px 22px; flex: 1; }
+.notes-body::-webkit-scrollbar { width: 4px; }
+.notes-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+.notes-topic { margin-bottom: 28px; }
+.notes-topic-title {
+  font-family: 'Fredoka One', cursive; font-size: 1.05rem;
+  color: var(--gold); margin-bottom: 10px;
+  padding-bottom: 6px; border-bottom: 1px solid var(--border);
+}
+.notes-item {
+  display: flex; gap: 10px; align-items: flex-start;
+  padding: 7px 0; border-bottom: 1px solid rgba(255,255,255,.04);
+  font-size: .87rem; line-height: 1.55;
+}
+.notes-item:last-child { border-bottom: none; }
+.notes-term { font-weight: 800; color: var(--gold); min-width: 150px; flex-shrink: 0; font-size: .84rem; }
+.notes-def { color: #d1fae5; }
+.notes-tabs {
+  display: flex; flex-wrap: wrap; gap: 8px; padding: 14px 22px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(0,0,0,.15);
+}
+.notes-tab {
+  padding: 12px 20px; border-radius: 10px;
+  border: 1.5px solid var(--border); 
+  background: rgba(255,255,255,.04); color: var(--muted);
+  font-family: 'Baloo 2', cursive; font-size: .9rem; font-weight: 700;
+  cursor: pointer; transition: all .15s; white-space: nowrap;
+  min-height: 48px; display: flex; align-items: center;
+}
+.notes-tab.active { background: var(--surface); color: var(--gold); border-color: var(--gold-dark); }
+.notes-tab:hover:not(.active) { color: var(--text); background: var(--surface2); }
+.notes-section { display: none; }
+.notes-section.active { display: block; }
+
+
+/* ── Print button in notes header ─────────────────────────────── */
+.notes-header-actions { display: flex; align-items: center; gap: 10px; }
+.print-btn {
+  display: flex; align-items: center; gap: 6px;
+  background: rgba(245,158,11,.12);
+  border: 1.5px solid rgba(245,158,11,.4);
+  color: var(--gold);
+  border-radius: 20px;
+  padding: 7px 14px;
+  font-family: 'Baloo 2', cursive;
+  font-size: .78rem;
+  font-weight: 800;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all .15s;
+}
+.print-btn:hover { background: var(--gold); color: #0c1a0e; border-color: var(--gold); }
+.print-btn.active { background: var(--gold); color: #0c1a0e; border-color: var(--gold); }
+
+/* ── On-screen Practice Test / Answer Key ─────────────────────── */
+.ptest-part-title {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1rem;
+  color: var(--gold);
+  margin: 22px 0 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+.ptest-part-title:first-child { margin-top: 0; }
+.ptest-q {
+  font-size: .87rem;
+  line-height: 1.6;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed rgba(255,255,255,.06);
+  color: #d1fae5;
+}
+.ptest-q b { color: var(--gold); }
+.ptest-q .opt { display: block; margin: 2px 0 2px 18px; color: #d1fae5; }
+.ptest-bank {
+  background: rgba(59,130,246,.08);
+  border: 1px solid rgba(59,130,246,.3);
+  border-radius: 10px;
+  padding: 10px 16px;
+  margin-bottom: 14px;
+  font-size: .82rem;
+  color: #dbeafe;
+  line-height: 1.6;
+}
+.key-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.key-pill {
+  background: rgba(245,158,11,.1);
+  border: 1px solid rgba(245,158,11,.25);
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: .78rem;
+  color: #fde68a;
+}
+.key-pill b { color: #34d399; }
+
+/* ── Print / Save-as-PDF styles ──────────────────────────────────
+   By default everything is hidden from print. When body carries
+   .printing-test, only #print-area (a light-themed clone of the
+   Practice Test + Answer Key) is shown, laid out for paper. ──── */
+@media print {
+  body * { visibility: hidden; }
+  #print-area, #print-area * { visibility: visible; }
+  #print-area {
+    display: block !important;
+    position: absolute; top: 0; left: 0; width: 100%;
+    background: #fff; color: #14290f;
+    font-family: 'Helvetica', Arial, sans-serif;
+    font-size: 10.5pt;
+    line-height: 1.5;
+  }
+  #print-area .p-cover { text-align: center; padding-top: 40px; }
+  #print-area .p-cover .p-icon { font-size: 34pt; }
+  #print-area .p-cover h1 { font-size: 19pt; color: #b45309; margin: 8px 0 4px; }
+  #print-area .p-cover .p-sub { font-size: 10.5pt; color: #166534; margin-bottom: 20px; }
+  #print-area .p-info-box {
+    border: 1.5px solid #fcd34d; border-radius: 10px;
+    max-width: 460px; margin: 0 auto 20px; padding: 14px 20px;
+    text-align: left; font-size: 10pt;
+  }
+  #print-area .p-info-box div { margin: 6px 0; border-bottom: 1px dotted #fde68a; padding-bottom: 6px; }
+  #print-area .p-instructions {
+    max-width: 460px; margin: 0 auto; text-align: left;
+    background: #fffbeb; border: 1px solid #fcd34d; border-radius: 10px;
+    padding: 12px 18px; font-size: 9.5pt; color: #78350f;
+  }
+  #print-area h2.p-part-title {
+    font-size: 12.5pt; color: #fff;
+    background: linear-gradient(135deg, #b45309, #14532d) !important;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    padding: 6px 12px; border-radius: 7px; margin: 18px 0 10px;
+    page-break-after: avoid;
+  }
+  #print-area .p-bank {
+    background: #f0fdf4 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    border: 1px solid #86efac; border-radius: 8px; padding: 8px 14px;
+    margin-bottom: 12px; font-size: 9.5pt; color: #14532d;
+  }
+  #print-area .p-q {
+    margin-bottom: 8px; padding-bottom: 8px;
+    border-bottom: 1px dotted #fde68a; font-size: 10pt;
+    page-break-inside: avoid; color: #14290f;
+  }
+  #print-area .p-q b { color: #b45309; }
+  #print-area .p-q .p-blank { display: inline-block; min-width: 65px; border-bottom: 1px solid #64748b; }
+  #print-area .p-q .p-opt { display: block; margin: 2px 0 0 20px; color: #365314; }
+  #print-area .p-break { page-break-before: always; }
+  #print-area .p-key-part-title {
+    font-size: 11pt; color: #b45309; font-weight: bold;
+    margin: 14px 0 8px; border-bottom: 2px solid #b45309; padding-bottom: 4px;
+  }
+  #print-area .p-key-grid {
+    display: grid; grid-template-columns: repeat(5, 1fr);
+    gap: 5px 8px; margin-bottom: 14px;
+  }
+  #print-area .p-key-pill {
+    background: #f0fdf4 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    border: 1px solid #86efac; border-radius: 6px;
+    padding: 4px 8px; font-size: 8.5pt; color: #166534;
+  }
+  #print-area .p-key-pill b { color: #b45309; }
+  @page { size: letter; margin: 1.5cm 1.8cm; }
+}
+#print-area { display: none; }
+
+
+/* ── Chapter Summary / Tandaan / Memory boxes (fix: previously missing) ── */
+.chapter-summary {
+  background: linear-gradient(135deg, rgba(59,130,246,.1), rgba(34,197,94,.08));
+  border: 1px solid rgba(59,130,246,.25);
+  border-left: 4px solid var(--blue);
+  border-radius: 12px;
+  padding: 14px 18px;
+  margin-bottom: 18px;
+  font-size: .88rem;
+  line-height: 1.65;
+  color: #dbeafe;
+}
+.tandaan-box {
+  background: rgba(245,158,11,.08);
+  border: 1px solid rgba(245,158,11,.3);
+  border-left: 4px solid var(--gold);
+  border-radius: 12px;
+  padding: 12px 18px;
+  margin: 14px 0;
+  font-size: .86rem;
+  line-height: 1.6;
+  color: #fde68a;
+}
+.tandaan-label {
+  display: block;
+  font-family: 'Baloo 2', cursive;
+  font-size: .8rem;
+  color: var(--gold);
+  letter-spacing: .5px;
+  margin-bottom: 5px;
+}
+.memory-box {
+  background: rgba(34,197,94,.08);
+  border: 1px solid rgba(34,197,94,.3);
+  border-left: 4px solid var(--green);
+  border-radius: 12px;
+  padding: 12px 18px;
+  margin: 14px 0 22px;
+  font-size: .86rem;
+  line-height: 1.6;
+  color: #bbf7d0;
+}
+.memory-label {
+  display: block;
+  font-family: 'Baloo 2', cursive;
+  font-size: .8rem;
+  color: var(--green);
+  letter-spacing: .5px;
+  margin-bottom: 5px;
+}
+.compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0 20px;
+  font-size: .82rem;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.compare-table th {
+  background: linear-gradient(135deg, var(--blue-dark), var(--gold-dark));
+  color: white;
+  text-align: left;
+  padding: 9px 12px;
+  font-size: .78rem;
+  text-transform: uppercase;
+  letter-spacing: .4px;
+}
+.compare-table td {
+  padding: 9px 12px;
+  border-top: 1px solid var(--border);
+  color: var(--text);
+  vertical-align: top;
+}
+.compare-table tr:nth-child(even) td { background: rgba(255,255,255,.02); }
+
+/* ── Story Box (for reading Bible stories aloud) ─────────────────── */
+.story-box {
+  background: rgba(255,255,255,.03);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px 20px;
+  margin-bottom: 16px;
+  font-size: .92rem;
+  line-height: 1.8;
+  color: var(--text);
+}
+.story-box p { margin-bottom: 10px; }
+.story-box p:last-child { margin-bottom: 0; }
+.story-ref {
+  display: block;
+  text-align: right;
+  font-style: italic;
+  color: var(--muted);
+  font-size: .8rem;
+  margin-top: 10px;
+}
+.story-label {
+  display: block;
+  font-family: 'Baloo 2', cursive;
+  font-size: .9rem;
+  color: var(--gold);
+  letter-spacing: .5px;
+  margin-bottom: 10px;
+}
+/* ── Raw Notes (original document view) ──────────────────────── */
+.rawnotes-intro {
+  font-size: .82rem;
+  color: var(--muted);
+  line-height: 1.6;
+  background: rgba(59,130,246,.1);
+  border: 1px solid rgba(59,130,246,.3);
+  border-left: 4px solid var(--blue);
+  border-radius: 10px;
+  padding: 12px 18px;
+  margin-bottom: 20px;
+}
+.rawnotes-doc {
+  font-family: 'Lora', Georgia, serif;
+  line-height: 1.75;
+}
+.rawnotes-doc p {
+  font-size: .95rem;
+  margin-bottom: 14px;
+  color: #e2f5e6;
+}
+.rawnotes-doc strong { color: var(--gold); font-weight: 700; }
+.rawnotes-doc em { color: var(--muted); font-style: italic; }
+.rawnotes-doc h3.doc-heading {
+  font-family: 'Baloo 2', cursive;
+  font-size: 1.05rem;
+  color: var(--gold);
+  margin: 26px 0 12px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid var(--border);
+}
+.rawnotes-doc h3.doc-heading:first-child { margin-top: 0; }
+.rawnotes-doc ul, .rawnotes-doc ol {
+  margin: 0 0 14px 26px;
+  color: #e2f5e6;
+}
+.rawnotes-doc li { margin-bottom: 6px; font-size: .95rem; }
+.rawnotes-doc table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0 20px;
+  font-size: .82rem;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.rawnotes-doc th {
+  background: linear-gradient(135deg, var(--blue-dark), var(--gold-dark));
+  color: white;
+  text-align: left;
+  padding: 9px 12px;
+  font-size: .78rem;
+}
+.rawnotes-doc td {
+  padding: 9px 12px;
+  border-top: 1px solid var(--border);
+  color: var(--text);
+  vertical-align: top;
+}
+.rawnotes-doc tr:nth-child(even) td { background: rgba(255,255,255,.02); }
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE: TABLET (≤820px)
+   ═══════════════════════════════════════════════════════════════ */
+@media (max-width: 820px) {
+  .notes-panel { width: 95%; max-height: 92vh; }
+  .notes-tabs { padding: 12px 16px; gap: 6px; }
+  .notes-tab { padding: 10px 14px; font-size: .82rem; min-height: 42px; }
+  .notes-body { padding: 16px; }
+  .notes-header { padding: 14px 16px; }
+  .chat-wrap { padding: 14px 10px 0; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE: MOBILE (≤600px)
+   ═══════════════════════════════════════════════════════════════ */
+@media (max-width: 600px) {
+  header {
+    padding: 10px 12px;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .header-icon { font-size: 1.5rem; }
+  header h1 { font-size: 1.05rem; line-height: 1.2; }
+  header .sub { font-size: .62rem; }
+  .header-controls { gap: 6px; margin-left: auto; }
+  .score-pill { padding: 4px 10px; font-size: .74rem; }
+  .audio-btn { width: 32px; height: 32px; font-size: .85rem; }
+
+  .chat-wrap { padding: 10px 6px 0; }
+  #chat-box { gap: 12px; }
+  .bubble { max-width: 88%; font-size: .88rem; padding: 10px 13px; }
+  .avatar { width: 30px; height: 30px; font-size: .85rem; }
+
+  .chip { font-size: .78rem; padding: 7px 12px; }
+  .mc-btn { font-size: .84rem; padding: 10px 12px; }
+  .mc-btn .letter { width: 22px; height: 22px; font-size: .74rem; }
+  .topic-tag { font-size: .68rem; }
+  .scenario-card { font-size: .88rem; padding: 10px 14px; }
+
+  .input-bar { padding: 8px 8px calc(8px + env(safe-area-inset-bottom)); gap: 8px; }
+  #user-input { font-size: .88rem; padding: 10px 14px; }
+  #send-btn { width: 40px; height: 40px; font-size: 1rem; }
+
+  .result-card { width: 92%; padding: 26px 20px; }
+  .result-emoji { font-size: 2.6rem; }
+  .result-title { font-size: 1.2rem; }
+  .result-score { font-size: 1.8rem; }
+
+  /* ── Notes panel: near-full-screen on phones ── */
+  .notes-overlay { align-items: flex-end; }
+  .notes-panel {
+    width: 100%; max-width: 100%;
+    max-height: 94vh;
+    border-radius: 20px 20px 0 0;
+    border-left: none; border-right: none; border-bottom: none;
+  }
+  .notes-header { padding: 12px 14px; flex-wrap: wrap; gap: 8px; }
+  .notes-header h2 { font-size: 1.05rem; flex: 1 1 100%; }
+  .notes-header-actions { flex-wrap: wrap; gap: 6px; width: 100%; justify-content: flex-start; }
+  .print-btn { font-size: .7rem; padding: 6px 11px; }
+  .notes-close { width: 30px; height: 30px; font-size: .9rem; margin-left: auto; }
+
+  .notes-tabs { padding: 10px 12px; gap: 5px; }
+  .notes-tab { padding: 8px 12px; font-size: .76rem; min-height: 38px; }
+  .notes-body { padding: 14px; }
+
+  .notes-item { flex-direction: column; gap: 2px; }
+  .notes-term { min-width: 0; font-size: .82rem; }
+  .notes-def { font-size: .84rem; }
+  .notes-topic-title { font-size: .95rem; }
+  .chapter-summary, .memory-box, .tandaan-box, .story-box, .verse-card { font-size: .82rem; padding: 12px 14px; }
+
+  /* ── Tables: allow horizontal scroll instead of squeezing ── */
+  .compare-table { display: block; overflow-x: auto; white-space: nowrap; }
+  .compare-table th, .compare-table td { white-space: normal; min-width: 110px; }
+
+  .key-grid { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 5px; }
+  .key-pill { font-size: .72rem; padding: 5px 8px; }
+  .ptest-part-title { font-size: .92rem; }
+  .ptest-q { font-size: .82rem; }
+  .ptest-bank { font-size: .78rem; padding: 8px 12px; }
+
+  .rawnotes-doc p, .rawnotes-doc li { font-size: .87rem; }
+  .rawnotes-doc h3.doc-heading { font-size: .95rem; }
+  .rawnotes-doc table { display: block; overflow-x: auto; white-space: nowrap; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE: VERY SMALL PHONES (≤380px)
+   ═══════════════════════════════════════════════════════════════ */
+@media (max-width: 380px) {
+  header h1 { font-size: .92rem; }
+  header .sub { display: none; }
+  .score-pill span { font-size: .7rem; }
+  .bubble { max-width: 92%; font-size: .84rem; }
+  .notes-tab { font-size: .7rem; padding: 7px 10px; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE: LANDSCAPE PHONES (short height)
+   ═══════════════════════════════════════════════════════════════ */
+@media (max-height: 480px) and (orientation: landscape) {
+  .notes-panel { max-height: 98vh; }
+  .notes-tabs { padding: 6px 12px; }
+  .notes-tab { min-height: 32px; padding: 6px 10px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-icon">💒</div>
+  <div>
+    <h1>Anointing, Marriage &amp; Family</h1>
+    <div class="sub">Anointing of the Sick · Friendship &amp; Matrimony · Joseph's Dreams · Pray and Forgive</div>
+  </div>
+  <div class="header-controls">
+    <div class="score-pill">⭐ <span id="score-val">0</span> / <span id="total-val">0</span></div>
+    <button class="audio-btn" id="notes-toggle" title="Open Reviewer" onclick="document.getElementById('notes-overlay').classList.add('show')">📖</button>
+    <button class="audio-btn active" id="audio-toggle" title="Toggle Audio">🔊</button>
+  </div>
+</header>
+
+<div class="chat-wrap">
+  <div id="chat-box"></div>
+</div>
+
+<div class="input-bar">
+  <input type="text" id="user-input" placeholder="Type your answer here…" autocomplete="off" />
+  <button id="send-btn">➤</button>
+</div>
+
+<div class="result-overlay" id="result-overlay">
+  <div class="result-card">
+    <span class="result-emoji" id="res-emoji">🏆</span>
+    <div class="result-title">Quiz Complete!</div>
+    <div class="result-score"><span id="res-score">0</span>/<span id="res-total">0</span></div>
+    <div class="result-msg" id="res-msg">Great job!</div>
+    <button class="result-btn" onclick="restartApp()">🔄 Maglaro Ulit</button>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+// QUESTION BANK
+// ═══════════════════════════════════════════════════════════════
+const topics = {
+
+  "Anointing of the Sick": [
+    { q: "How did Jesus reach out to the sick during His public life?", a: "He healed them physically and spiritually", hint: "Body and soul." },
+    { q: "Through whom does Jesus continue to be a Healer today?", a: "The Catholic Church", hint: "Through the Church." },
+    { q: "In which sacrament is Jesus' healing presence experienced?", a: "The sacrament of anointing of the sick", hint: "For the sick." },
+    { q: "Besides reconciliation, which other sacrament is a sacrament of healing?", a: "Anointing of the sick", hint: "Two sacraments of healing." },
+    { q: "To whom does the Church give the anointing of the sick?", a: "The sick, the aged, and the dying", hint: "Three groups." },
+    { q: "What does the sacrament encourage the sick to do?", a: "Trust in God", hint: "Trust." },
+    { q: "What strength does the sacrament give the sick?", a: "Strength to resist temptation and anxiety about death", hint: "Against fear." },
+    { q: "How many key elements are in the sacrament of anointing of the sick?", a: "Five", hint: "P-C-L-A-H." },
+    { q: "What do prayer and Scripture reading serve as in the sacrament?", a: "A source of comfort in times of pain and suffering caused by sickness", hint: "Comfort." },
+    { q: "What does confession do for the sick?", a: "It reconciles the sick with God, the Church, and others", hint: "Reconcile." },
+    { q: "What is the laying on of hands by the priest a sign of?", a: "The healing touch of Christ and the care of the Church community", hint: "Healing touch." },
+    { q: "Where is the blessed oil or chrism placed on the sick person?", a: "On the forehead and hands", hint: "Two places." },
+    { q: "What does the anointing with blessed oil provide the sick?", a: "The grace of the Holy Spirit and mental, physical, emotional, and spiritual strength", hint: "Grace and strength." },
+    { q: "What is the Holy Viaticum?", a: "The Holy Communion or Final Eucharist given to the dying Christian", hint: "Given to the dying." },
+    { q: "What does the Holy Viaticum picture about Christ?", a: "Christ leading and accompanying the dying person into heaven", hint: "Going to heaven." },
+    { q: "How does sickness help us in a positive way?", a: "It helps us mature in faith and see what matters more in life", hint: "Growth." },
+    { q: "What can sickness cause in a negative way?", a: "Anguish or depression, and the temptation to lose faith and hope", hint: "Hard feelings." },
+    { q: "How are we called to treat those who are sick?", a: "With kindness, patience, care, support, gentleness, and love, visiting and praying for them", hint: "Visit and pray." },
+    { q: "What do sick people need and want?", a: "Understanding, patience, comfort, care, compassion, support, and love", hint: "Special care." },
+    { q: "What is the anointing of oil a sign of?", a: "The Holy Spirit, of strength, and of health", hint: "Oil." },
+    { q: "What is the laying on of hands a sign of?", a: "The healing touch of Jesus and the care of God and the Church", hint: "Hands." },
+    { q: "What does the priest's visit to the sick show?", a: "The Church's concern for the sick", hint: "The priest visits." },
+    { q: "To whom does the priest pray for the sick person?", a: "The risen Jesus", hint: "He rose from the dead." },
+    { q: "What are the three things the priest prays for the sick person?", a: "Easing of suffering with strength to cope, physical healing of mind and body, and forgiveness of sins", hint: "E-P-F." },
+    { q: "Who lays hands on the sick and anoints them with blessed oil, according to the lesson?", a: "The priest", hint: "Not only the bishop." },
+  ],
+
+  "The First Husband and Wife": [
+    { q: "What did God make the first man from?", a: "The dust of the ground", hint: "Dust." },
+    { q: "What did God do so that the man became a living being?", a: "He breathed the breath of life into his nostrils", hint: "Breath." },
+    { q: "Why did God say He would make a helper for the man?", a: "Because it is not good for the man to be alone", hint: "Alone." },
+    { q: "What did God do before He took one of the man's ribs?", a: "He caused the man to fall into a deep sleep", hint: "While he slept." },
+    { q: "From what did God make the woman?", a: "One of the man's ribs", hint: "A rib." },
+    { q: "What did the man say about the woman?", a: "\"This is now bone of my bones and flesh of my flesh\"", hint: "Bone and flesh." },
+    { q: "What did the man call his wife?", a: "Woman", hint: "Taken out of man." },
+    { q: "What happens when a man leaves his father and mother?", a: "He is united to his wife, and they become one flesh", hint: "United." },
+    { q: "Which Bible passage tells the story of the first husband and wife?", a: "Genesis 2:7, 18, 21–24", hint: "Genesis." },
+  ],
+
+  "Friendship and Marriage": [
+    { q: "What kind of being is every human person?", a: "A relational being", hint: "Relationships." },
+    { q: "What do we share with our friends?", a: "Our thoughts, ideas, interests, dreams, secrets, and even problems", hint: "Everything." },
+    { q: "What does a true friend do for us?", a: "Brings out our best qualities", hint: "Best qualities." },
+    { q: "What should we be willing to share as a friend?", a: "The same qualities we look for in a friend", hint: "Be what you look for." },
+    { q: "What forms the basis of all relationships?", a: "Friendship", hint: "Friend." },
+    { q: "What is the lifelong relationship between a man and a woman called?", a: "Marriage", hint: "Matrimony." },
+    { q: "What does \"it is not good for man to be alone\" mean?", a: "Man and woman need each other to love, care for, and help one another", hint: "Need each other." },
+    { q: "According to CCC 1605, man and woman form what?", a: "An unbreakable union of their two lives", hint: "Unbreakable." },
+    { q: "In which sacrament is the love between a man and a woman blessed?", a: "The sacrament of matrimony", hint: "Marriage." },
+    { q: "What is another name for matrimony?", a: "Marriage", hint: "Same thing." },
+    { q: "Matrimony is one of which kind of sacrament?", a: "Sacraments of vocation", hint: "Vocation." },
+    { q: "What is marriage?", a: "The union of a man and a woman as husband and wife", hint: "Husband and wife." },
+    { q: "How do husband and wife treat each other?", a: "They trust, love, respect, forgive, and are faithful to each other", hint: "Faithful." },
+    { q: "What should married couples pray for?", a: "God's guidance to help them overcome marital problems", hint: "Guidance." },
+    { q: "What does the marriage vow promise?", a: "To be of one heart and soul, for better or worse, in sickness and in health, until death do us part", hint: "Until death." },
+    { q: "Who are the ministers of the sacrament of matrimony?", a: "The bride and groom themselves", hint: "Not the priest." },
+    { q: "What does the priest do at the wedding?", a: "He represents the Church and presides over the marriage ceremony", hint: "Presides." },
+    { q: "When does a marriage ceremony become valid?", a: "When contracted in the presence of a priest and two witnesses", hint: "Priest + two witnesses." },
+    { q: "Which Canon law says a marriage is valid with a priest and two witnesses?", a: "Canon 1108 § 1", hint: "Canon." },
+    { q: "Where is the love of husband and wife blessed in the Church?", a: "In the sacrament of matrimony", hint: "Sacrament." },
+  ],
+
+  "Symbols and Rite of Matrimony": [
+    { q: "Which wedding symbol stands for love and fidelity?", a: "Rings", hint: "Exchanged by the couple." },
+    { q: "Which wedding symbol stands for Christ, the Light of the world?", a: "Lighted candle", hint: "Light." },
+    { q: "Which wedding symbol stands for the holiness of marriage and the couple's total self-giving?", a: "Veil", hint: "Covering." },
+    { q: "Which wedding symbol stands for unity and an unbreakable bond?", a: "Cord", hint: "Ties them together." },
+    { q: "Which wedding symbol stands for material possessions and the husband's willingness to provide?", a: "Arrhae", hint: "Coins." },
+    { q: "Where is matrimony normally celebrated?", a: "Within the Mass, after the Gospel and homily and before the Prayer of the Faithful", hint: "During Mass." },
+    { q: "What is the first step in the Rite of Matrimony?", a: "Introduction", hint: "After the homily." },
+    { q: "What do the couple do in the Statement of Intention?", a: "State publicly that they have come freely, will love and honor each other, and accept children", hint: "Intention." },
+    { q: "What do the bride and groom do in the Giving of Consent?", a: "Join hands and express their total commitment and lifelong fidelity, and exchange marriage vows", hint: "Join hands." },
+    { q: "What does the priest do in the Reception of Consent?", a: "Accepts the couple's consent in the name of God and the community and blesses their commitment", hint: "Priest receives." },
+    { q: "Who gives the arrhae to whom?", a: "The husband gives it to his wife", hint: "After it is blessed." },
+    { q: "When does the long nuptial blessing follow?", a: "After the Lord's Prayer", hint: "Last step." },
+    { q: "What are the six steps in the Rite of Matrimony?", a: "Introduction, Statement of Intention, Giving of Consent, Reception of Consent, Blessing of Arrhae and Exchange of Rings, and Nuptial Blessings", hint: "I-S-G-R-B-N." },
+  ],
+
+  "Love: 1 Corinthians 13": [
+    { q: "Which passage reminds us of the importance of love in any relationship?", a: "1 Corinthians 13:4–8", hint: "Love is patient." },
+    { q: "What does the passage say love is?", a: "Patient and kind", hint: "First lines." },
+    { q: "What does love not do, according to the passage?", a: "It does not envy, boast, or dishonor others", hint: "Not proud." },
+    { q: "What does love keep, according to the passage?", a: "No record of wrongs", hint: "Forgiving." },
+    { q: "In what does love rejoice?", a: "The truth", hint: "Not evil." },
+    { q: "What does love always do, according to the passage?", a: "Always protects, trusts, hopes, and perseveres", hint: "Always." },
+    { q: "What does the verse 1 Corinthians 13:13 say remains?", a: "Faith, hope, and love; the greatest of these is love", hint: "Three remain." },
+    { q: "According to 1 Corinthians 13:8, what never fails?", a: "Love", hint: "Prophecies cease; this does not." },
+  ],
+
+  "Joseph's Dreams": [
+    { q: "How old was Joseph in the story?", a: "Seventeen", hint: "Young man." },
+    { q: "What was Joseph doing with his brothers?", a: "Tending the flocks", hint: "Shepherds." },
+    { q: "What did Joseph bring to his father about his brothers?", a: "A hard report", hint: "Not good news." },
+    { q: "Whom did Israel (Jacob) love more than any of his other sons?", a: "Joseph", hint: "The dreamer." },
+    { q: "Why did Israel love Joseph more?", a: "Because he had been born to him in his old age", hint: "Old age." },
+    { q: "What did Israel make for Joseph?", a: "An ornate robe", hint: "A special garment." },
+    { q: "How did the brothers react when they saw their father loved Joseph more?", a: "They hated him and could not speak a kind word to him", hint: "Hated." },
+    { q: "What was Joseph's first dream about?", a: "Binding sheaves of grain, where his sheaf stood upright while theirs bowed down to it", hint: "Grain." },
+    { q: "What did the brothers say about the first dream?", a: "\"Do you intend to reign over us? Will you actually rule us?\"", hint: "Reign." },
+    { q: "What was Joseph's second dream about?", a: "The sun, the moon, and eleven stars bowing down to him", hint: "Sky." },
+    { q: "How did Joseph's father react to the second dream?", a: "He rebuked him but kept the matter in mind", hint: "Rebuked." },
+    { q: "How did the brothers feel about Joseph after the second dream?", a: "They were jealous of him", hint: "Jealous." },
+    { q: "Which Bible passage tells the story of Joseph's dreams?", a: "Genesis 37:2–11", hint: "Genesis." },
+    { q: "What was the reason for the family's problem?", a: "The father's favoritism and the brothers' jealousy", hint: "Two causes." },
+  ],
+
+  "Family: Favoritism, Jealousy, and Forgiveness": [
+    { q: "What does the story of Joseph reveal?", a: "Favoritism and jealousy can cause problems in family relationships", hint: "Problems." },
+    { q: "What did favoritism and jealousy bring to Joseph's family?", a: "Grief, guilt, suffering, and division", hint: "Four effects." },
+    { q: "What must parents and children learn to do?", a: "Communicate openly and honestly in a loving and forgiving atmosphere", hint: "Open and loving." },
+    { q: "What must families be willing to do?", a: "Admit mistakes", hint: "Be humble." },
+    { q: "Through which Gospel values should families offer Christian witness?", a: "Justice and protection of human rights", hint: "CFC 1027." },
+    { q: "What advice did St. Teresa of Calcutta give to couples, young people, and a single mother?", a: "\"Pray and forgive.\"", hint: "Two words." },
+    { q: "What is the foundation of the family?", a: "Marriage", hint: "Husband and wife." },
+    { q: "What does marriage form the basis of?", a: "A common life of man, woman, and children", hint: "Family." },
+    { q: "To what are married couples called, according to GS 48?", a: "To form a Christian family where God's love is experienced through parents and children", hint: "Christian family." },
+    { q: "What must parents do to ensure the family's happiness?", a: "Love one another and take good care of their children", hint: "Love and care." },
+    { q: "What must children show their parents?", a: "Love, gratitude, and honor, by respecting, obeying, appreciating, and caring for them in old age", hint: "Honor." },
+    { q: "What responsibility do followers of Jesus have toward the family and marriage?", a: "To protect and preserve their sanctity", hint: "Sanctity." },
+  ],
+};
+
+const trueOrFalse = [
+  { q: "Anointing of the sick is a sacrament of healing.", a: "true" },
+  { q: "Anointing of the sick brings Christ's compassionate healing love by giving strength, forgiveness, and cure to people who are suffering serious sickness.", a: "true" },
+  { q: "Only the bishop can administer anointing of the sick.", a: "false" },
+  { q: "Viaticum is the reception of Holy Communion when there is a probable danger of death.", a: "true" },
+  { q: "Chrism is used to provide healing.", a: "true" },
+  { q: "The Church gives anointing of the sick only to the healthy.", a: "false" },
+  { q: "Anointing of the sick encourages the sick to trust in God.", a: "true" },
+  { q: "The laying on of hands is a sign of the healing touch of Christ.", a: "true" },
+  { q: "The priest prays for easing of suffering, physical healing, and forgiveness of sins.", a: "true" },
+  { q: "Sickness can only have negative effects on us.", a: "false" },
+  { q: "We should visit the sick and pray for them.", a: "true" },
+  { q: "God made the first man from the dust of the ground.", a: "true" },
+  { q: "God made the woman from the man's rib.", a: "true" },
+  { q: "The man called his wife \"Eve\" in Genesis 2.", a: "false" },
+  { q: "God said it is not good for the man to be alone.", a: "true" },
+  { q: "Friendship forms the basis of all relationships.", a: "true" },
+  { q: "Marriage is the lifelong relationship between a man and a woman.", a: "true" },
+  { q: "Matrimony is a sacrament of vocation.", a: "true" },
+  { q: "The priest is the minister of the sacrament of matrimony.", a: "false" },
+  { q: "The bride and groom are the ministers of the sacrament of matrimony.", a: "true" },
+  { q: "A marriage ceremony is valid when contracted before a priest and two witnesses.", a: "true" },
+  { q: "The rings are a symbol of love and fidelity.", a: "true" },
+  { q: "The lighted candle is a symbol of Christ, the Light of the world.", a: "true" },
+  { q: "The veil is a symbol of material possessions.", a: "false" },
+  { q: "The cord is a symbol of unity and an unbreakable bond.", a: "true" },
+  { q: "The arrhae is a symbol of the husband's willingness to provide for his family's needs.", a: "true" },
+  { q: "Matrimony is normally celebrated within the Mass.", a: "true" },
+  { q: "The couple exchange rings before they are blessed.", a: "false" },
+  { q: "The long nuptial blessing follows after the Lord's Prayer.", a: "true" },
+  { q: "According to 1 Corinthians 13, love keeps a record of wrongs.", a: "false" },
+  { q: "According to 1 Corinthians 13:13, the greatest of faith, hope, and love is love.", a: "true" },
+  { q: "Joseph was seventeen years old in the story.", a: "true" },
+  { q: "Israel loved Joseph more because he was the oldest son.", a: "false" },
+  { q: "Israel made an ornate robe for Joseph.", a: "true" },
+  { q: "Joseph's brothers loved him more because of his dreams.", a: "false" },
+  { q: "In Joseph's second dream, the sun, moon, and eleven stars bowed down to him.", a: "true" },
+  { q: "Favoritism and jealousy can cause problems in a family.", a: "true" },
+  { q: "St. Teresa of Calcutta's advice to troubled families was \"Pray and forgive.\"", a: "true" },
+  { q: "The foundation of the family is marriage.", a: "true" },
+];
+
+const identifyQuestions = [
+  { q: "The sacrament in which Jesus' healing presence is experienced by the sick, the aged, and the dying.", a: "Anointing of the sick", choices: ["Anointing of the sick","Reconciliation","Matrimony","Confirmation"] },
+  { q: "The Holy Communion or Final Eucharist given to the dying Christian.", a: "Holy Viaticum", choices: ["Holy Viaticum","Chrism","Absolution","Arrhae"] },
+  { q: "The blessed oil placed on the forehead and hands of the sick.", a: "Chrism or blessed oil", choices: ["Chrism or blessed oil","Holy water","Candle wax","Incense"] },
+  { q: "The sign of the healing touch of Christ and the care of the Church community.", a: "Laying on of hands", choices: ["Laying on of hands","Anointing of oil","Confession","Viaticum"] },
+  { q: "The sign of the Holy Spirit, of strength, and of health.", a: "Anointing of oil", choices: ["Anointing of oil","Laying on of hands","Rings","Veil"] },
+  { q: "The element of anointing that reconciles the sick with God, the Church, and others.", a: "Confession", choices: ["Confession","Viaticum","Prayer and Scripture reading","Chrism"] },
+  { q: "The source of comfort in times of pain and suffering caused by sickness.", a: "Prayer and Scripture reading", choices: ["Prayer and Scripture reading","Confession","Laying on of hands","Viaticum"] },
+  { q: "The one to whom the priest prays for the sick person.", a: "The risen Jesus", choices: ["The risen Jesus","The bishop","The community","The doctor"] },
+  { q: "The first man, from the dust of the ground.", a: "Adam", choices: ["Adam","Joseph","Jacob","Abraham"] },
+  { q: "The part of the man God used to make the woman.", a: "A rib", choices: ["A rib","The dust","An arm","His breath"] },
+  { q: "What the man called his wife in Genesis 2.", a: "Woman", choices: ["Woman","Eve","Helper","Sarah"] },
+  { q: "The relationship that forms the basis of all relationships.", a: "Friendship", choices: ["Friendship","Marriage","Kinship","Leadership"] },
+  { q: "The lifelong relationship of a man and a woman as husband and wife.", a: "Marriage", choices: ["Marriage","Friendship","Brotherhood","Priesthood"] },
+  { q: "Another word for matrimony.", a: "Marriage", choices: ["Marriage","Baptism","Vocation","Covenant"] },
+  { q: "The ministers of the sacrament of matrimony.", a: "The bride and groom", choices: ["The bride and groom","The priest","The two witnesses","The parents"] },
+  { q: "The one who represents the Church and presides over the marriage ceremony.", a: "The priest", choices: ["The priest","The bride","The groom","The witness"] },
+  { q: "The number of witnesses needed with the priest to make a marriage valid.", a: "Two", choices: ["Two","One","Three","Four"] },
+  { q: "The symbol of love and fidelity in a wedding.", a: "Rings", choices: ["Rings","Cord","Veil","Arrhae"] },
+  { q: "The symbol of Christ, the Light of the world, in a wedding.", a: "Lighted candle", choices: ["Lighted candle","Veil","Cord","Rings"] },
+  { q: "The symbol of the holiness of marriage and the couple's total self-giving.", a: "Veil", choices: ["Veil","Cord","Rings","Candle"] },
+  { q: "The symbol of unity and an unbreakable bond between husband and wife.", a: "Cord", choices: ["Cord","Veil","Arrhae","Rings"] },
+  { q: "The symbol of material possessions and the husband's willingness to provide for his family.", a: "Arrhae", choices: ["Arrhae","Rings","Candle","Veil"] },
+  { q: "The first step of the Rite of Matrimony, when the priest addresses the couple after the homily.", a: "Introduction", choices: ["Introduction","Statement of Intention","Giving of Consent","Nuptial Blessings"] },
+  { q: "The step when the couple states they have come freely and will accept children.", a: "Statement of Intention", choices: ["Statement of Intention","Giving of Consent","Reception of Consent","Introduction"] },
+  { q: "The step when the bride and groom join hands and exchange marriage vows.", a: "Giving of Consent", choices: ["Giving of Consent","Reception of Consent","Introduction","Nuptial Blessings"] },
+  { q: "The step when the priest accepts the consent in the name of God and the community.", a: "Reception of Consent", choices: ["Reception of Consent","Giving of Consent","Statement of Intention","Introduction"] },
+  { q: "The long blessing that follows after the Lord's Prayer.", a: "Nuptial blessing", choices: ["Nuptial blessing","Final blessing","Homily","Offertory"] },
+  { q: "\"Love is patient, love is kind.\"", a: "1 Corinthians 13:4", choices: ["1 Corinthians 13:4","Genesis 2:18","Genesis 37:5","John 3:16"] },
+  { q: "\"And now these three remain: faith, hope and love. But the greatest of these is love.\"", a: "1 Corinthians 13:13", choices: ["1 Corinthians 13:13","1 Corinthians 13:4","Genesis 2:24","Luke 5:20"] },
+  { q: "The father who loved Joseph more than his other sons.", a: "Israel (Jacob)", choices: ["Israel (Jacob)","Abraham","Isaac","Noah"] },
+  { q: "The gift Israel made for Joseph.", a: "An ornate robe", choices: ["An ornate robe","A shepherd's staff","A flock of sheep","A ring"] },
+  { q: "The dream where Joseph's sheaf stood upright and the others' sheaves bowed down.", a: "First dream", choices: ["First dream","Second dream","Third dream","Fourth dream"] },
+  { q: "The dream where the sun, moon, and eleven stars bowed down to Joseph.", a: "Second dream", choices: ["Second dream","First dream","Third dream","Fourth dream"] },
+  { q: "The two things that caused problems in Joseph's family.", a: "Favoritism and jealousy", choices: ["Favoritism and jealousy","Poverty and hunger","War and fear","Laziness and pride"] },
+  { q: "The advice of St. Teresa of Calcutta to struggling families.", a: "Pray and forgive", choices: ["Pray and forgive","Work and save","Study and obey","Rest and wait"] },
+  { q: "The foundation of the family.", a: "Marriage", choices: ["Marriage","Wealth","Friendship","School"] },
+];
+
+// ═══════════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════════
+let state = {
+  awaiting: 'menu',
+  mode: null,
+  questions: [],
+  allAnswers: [],
+  qIndex: 0,
+  score: 0,
+  total: 0,
+  hintUsed: false,
+  audioEnabled: true,
+};
+
+// ═══════════════════════════════════════════════════════════════
+// TTS (UPGRADED FOR TRUE FILIPINO ACCENT)
+// ═══════════════════════════════════════════════════════════════
+let currentAudioStream = null;
+
+function speak(text) {
+  if (!state.audioEnabled) return;
+  
+  // Linisin ang mga nakaraang audio task
+  window.speechSynthesis.cancel();
+  if (currentAudioStream) {
+    currentAudioStream.pause();
+    currentAudioStream = null;
+  }
+  
+  // Tanggalin ang HTML tags at emojis para hindi basahin nang paputol-putol
+  const clean = text.replace(/<[^>]+>/g,'').replace(/[🇵🇭🌟✅❌💡⏭️🏆😊💪🔄🔲📚👋⭐✕🧭📏🗺️]/g,'');
+  
+  // PRIMARY METHOD: Google Translation Engine cloud voice stream (natural-sounding accent)
+  const googleTtsUrl = `https://translate.google.com/translate_tts?ie=UTF-8&tl=tl&client=tw-ob&q=${encodeURIComponent(clean)}`;
+  
+  currentAudioStream = new Audio(googleTtsUrl);
+  currentAudioStream.onplaying = () => showWave(true);
+  currentAudioStream.onended = currentAudioStream.onerror = () => showWave(false);
+  
+  currentAudioStream.play().catch(err => {
+    // BACKUP METHOD: Web Speech API (works even without internet)
+    console.warn("Google TTS blocked or offline. Falling back to local system speech engine.");
+    
+    const streamFallback = new SpeechSynthesisUtterance(clean);
+    streamFallback.lang = 'fil-PH';
+    streamFallback.rate = 0.95; streamFallback.pitch = 1.05; streamFallback.volume = 1;
+    
+    const voices = window.speechSynthesis.getVoices();
+    const filVoice = voices.find(v => v.lang.startsWith('fil') || v.lang.startsWith('tl'));
+    const engVoice = voices.find(v => v.lang.startsWith('en') && v.name.toLowerCase().includes('female'))
+                   || voices.find(v => v.lang.startsWith('en'));
+              
+    if (filVoice) {
+      streamFallback.voice = filVoice;
+    } else if (engVoice) {
+      streamFallback.voice = engVoice; 
+      streamFallback.lang = 'en-US'; 
+    }
+    
+    streamFallback.onstart = () => showWave(true);
+    streamFallback.onend = streamFallback.onerror = () => showWave(false);
+    window.speechSynthesis.speak(streamFallback);
+  });
+}
+
+function showWave(on) {
+  document.querySelectorAll('.speaker-wave').forEach(w => w.style.display = on ? 'inline-flex' : 'none');
+}
+
+// I-initialize ang mga boses ng system
+let localSystemVoices = [];
+function lookupSystemVoices() {
+  localSystemVoices = window.speechSynthesis.getVoices();
+}
+lookupSystemVoices();
+if (window.speechSynthesis.onvoiceschanged !== undefined) {
+  window.speechSynthesis.onvoiceschanged = lookupSystemVoices;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// UI HELPERS
+// ═══════════════════════════════════════════════════════════════
+const chatBox = document.getElementById('chat-box');
+const input = document.getElementById('user-input');
+const sendBtn = document.getElementById('send-btn');
+
+function scrollBottom() { chatBox.scrollTop = chatBox.scrollHeight; }
+
+function addMessage(role, html, speakText) {
+  const div = document.createElement('div');
+  div.className = `msg ${role}`;
+  const av = document.createElement('div');
+  av.className = 'avatar';
+  av.textContent = role === 'bot' ? '🤖' : '🧑';
+  const bub = document.createElement('div');
+  bub.className = 'bubble';
+  bub.innerHTML = role === 'bot'
+    ? html + '<span class="speaker-wave" style="display:none"><span></span><span></span><span></span><span></span><span></span></span>'
+    : html;
+  div.appendChild(av); div.appendChild(bub);
+  chatBox.appendChild(div);
+  scrollBottom(); bindChips();
+  if (role === 'bot') {
+    const txt = speakText || html.replace(/<[^>]+>/g,' ');
+    setTimeout(() => speak(txt), 350);
+  }
+}
+
+function addTyping() {
+  const d = document.createElement('div');
+  d.className = 'msg bot'; d.id = 'typing';
+  d.innerHTML = '<div class="avatar">🤖</div><div class="typing"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>';
+  chatBox.appendChild(d); scrollBottom();
+}
+function removeTyping() { const t = document.getElementById('typing'); if(t) t.remove(); }
+
+function bindChips() {
+  document.querySelectorAll('.chip:not([data-bound])').forEach(c => {
+    c.dataset.bound = '1';
+    c.addEventListener('click', () => handleUserMessage(c.dataset.val));
+  });
+}
+
+function updateScore() {
+  document.getElementById('score-val').textContent = state.score;
+  document.getElementById('total-val').textContent = state.total;
+}
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length-1; i > 0; i--) {
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]] = [a[j],a[i]];
+  }
+  return a;
+}
+
+function normalize(s) { return s.toLowerCase().trim().replace(/\s+/g,' '); }
+
+function checkAnswer(user, correct) {
+  const u = normalize(user), c = normalize(correct);
+  if (u === c) return true;
+  if (c.includes(u) && u.length > 5) return true;
+  const parts = c.split(/[,;\/]/);
+  for (const p of parts) if (u.includes(p.trim()) && p.trim().length > 4) return true;
+  return false;
+}
+
+function showResult() {
+  const pct = Math.round((state.score/state.total)*100);
+  const emoji = pct>=90?'🏆':pct>=70?'🌟':pct>=50?'😊':'💪';
+  const msg = pct>=90?'Excellent! You know it all!':pct>=70?'Great job! Keep it up!':pct>=50?'Good! Study a little more!':"Don't give up! Try again!";
+  document.getElementById('res-emoji').textContent = emoji;
+  document.getElementById('res-score').textContent = state.score;
+  document.getElementById('res-total').textContent = state.total;
+  document.getElementById('res-msg').textContent = msg;
+  document.getElementById('result-overlay').classList.add('show');
+  speak(`All done! Your score is ${state.score} out of ${state.total}. ${msg}`);
+}
+
+function restartApp() {
+  document.getElementById('result-overlay').classList.remove('show');
+  state = { awaiting:'menu', mode:null, questions:[], allAnswers:[], qIndex:0, score:0, total:0, hintUsed:false, audioEnabled:state.audioEnabled };
+  chatBox.innerHTML = '';
+  document.querySelector('.input-bar').style.display = 'flex';
+  updateScore();
+  showMenu();
+}
+
+// ═══════════════════════════════════════════════════════════════
+// MC HELPERS
+// ═══════════════════════════════════════════════════════════════
+function getAllAnswers() {
+  const ans = [];
+  for (const qs of Object.values(topics)) for (const q of qs) ans.push(q.a);
+  return ans;
+}
+
+function generateChoices(correct, pool) {
+  const others = pool.filter(a => a !== correct);
+  const near = shuffle(others).sort((x, y) => Math.abs(x.length - correct.length) - Math.abs(y.length - correct.length)).slice(0, 7);
+  return shuffle([correct, ...shuffle(near).slice(0, 3)]);
+}
+
+function buildMCBtns(choices, correctAnswer) {
+  const letters = ['A','B','C','D','E'];
+  return `<div class="mc-options">${choices.map((c,i)=>
+    `<button class="mc-btn" data-answer="${encodeURIComponent(c)}" data-correct="${encodeURIComponent(correctAnswer)}" onclick="handleMCClick(this)">
+      <span class="letter">${letters[i]}</span>${c}
+    </button>`
+  ).join('')}</div>`;
+}
+
+function handleMCClick(btn) {
+  const allBtns = btn.closest('.mc-options').querySelectorAll('.mc-btn');
+  allBtns.forEach(b => b.disabled = true);
+  const chosen = decodeURIComponent(btn.dataset.answer);
+  const correct = decodeURIComponent(btn.dataset.correct);
+  const isCorrect = chosen === correct;
+  allBtns.forEach(b => { if(decodeURIComponent(b.dataset.answer)===correct) b.classList.add('correct'); });
+  if (!isCorrect) btn.classList.add('wrong');
+  setTimeout(() => {
+    if (isCorrect) {
+      state.score++;
+      addMessage('bot', `✅ <strong>Correct!</strong> +1 point! The answer is: <strong>${correct}</strong>`, `Correct! The answer is: ${correct}`);
+    } else {
+      addMessage('bot', `❌ <strong>Not quite.</strong> The correct answer is: <strong>${correct}</strong>`, `Not quite. The correct answer is: ${correct}`);
+    }
+    state.qIndex++; updateScore();
+    if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+    else setTimeout(showResult, 900);
+  }, 650);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// NEXT QUESTION
+// ═══════════════════════════════════════════════════════════════
+function nextQuestion() {
+  const qi = state.qIndex;
+  const q = state.questions[qi];
+  const num = qi + 1;
+
+  if (state.mode === 'full' || state.mode === 'topic_mc') {
+    const choices = generateChoices(q.a, state.allAnswers);
+    const tag = q.topic ? `<span class="topic-tag">${q.topic}</span><br>` : '';
+    const html = `${tag}<strong>Q${num} of ${state.total}:</strong> ${q.q}${buildMCBtns(choices, q.a)}`;
+    addMessage('bot', html, `Question ${num}. ${q.q}`);
+    return;
+  }
+
+  if (state.mode === 'tf') {
+    const html = `<strong>Q${num} of ${state.total}:</strong> <div class="scenario-card">${q.q}</div>
+      <span class="chip" data-val="true">✅ True</span><span class="chip" data-val="false">❌ False</span>`;
+    addMessage('bot', html, `Question ${num}. True or False: ${q.q}`);
+    return;
+  }
+
+  if (state.mode === 'identify') {
+    const btns = buildMCBtns(q.choices, q.a);
+    const html = `<strong>Q${num} of ${state.total}:</strong> Identify what is being described:<div class="scenario-card">${q.q}</div>${btns}`;
+    addMessage('bot', html, `Question ${num}. Identify: ${q.q}`);
+    return;
+  }
+
+  // typed answer mode
+  const tag = q.topic ? `<span class="topic-tag">${q.topic}</span><br>` : '';
+  const html = `${tag}<strong>Q${num} of ${state.total}:</strong> ${q.q}<br><small style="color:var(--muted)">Type your answer · type <em>hint</em> for help · <em>skip</em> to move on</small>`;
+  addMessage('bot', html, `Question ${num}. ${q.q}`);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// MENU
+// ═══════════════════════════════════════════════════════════════
+function showMenu() {
+  addMessage('bot',
+    `👋 <strong>Hi! I'm your Religion Reviewer!</strong><br>Let's study the <em>Anointing of the Sick</em>, the <em>First Husband and Wife</em>, <em>Friendship and Marriage</em> (symbols and rite), and the story of <em>Joseph's Dreams</em>.<br><br>What would you like to do?<br>
+    <span class="chip" data-val="1">📚 Study by Topic</span>
+    <span class="chip" data-val="2">✅ True or False</span>
+    <span class="chip" data-val="3">🌐 Identify</span>
+    <span class="chip" data-val="4">🌟 Full Review (Multiple Choice)</span>`,
+    "Hi! I'm your Religion Reviewer on Anointing of the Sick, Marriage, and Family. What would you like to do? Study a topic, True or False, Identify, or a Full Review with multiple choice?"
+  );
+  state.awaiting = 'menu';
+}
+
+// ═══════════════════════════════════════════════════════════════
+// PROCESS MESSAGE
+// ═══════════════════════════════════════════════════════════════
+function processMessage(msg) {
+  const aw = state.awaiting;
+
+  // ── MENU ──────────────────────────────────────────────────
+  if (aw === 'menu') {
+    if (msg === '1') {
+      state.awaiting = 'topic';
+      const keys = Object.keys(topics);
+      const chips = keys.map((t,i) => `<span class="chip" data-val="${i+1}">${i+1}. ${t}</span>`).join(' ');
+      addMessage('bot', `📚 Which topic would you like to study?<br>${chips}`, 'Which topic would you like to study?');
+
+    } else if (msg === '2') {
+      state.mode = 'tf';
+      state.questions = shuffle(trueOrFalse);
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'tf_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `✅ <strong>True or False!</strong> ${state.total} questions. Let's start!`, `True or False! ${state.total} questions. Let's start!`);
+      setTimeout(nextQuestion, 800);
+
+    } else if (msg === '3') {
+      state.mode = 'identify';
+      state.questions = shuffle(identifyQuestions);
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'mc_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `🌐 <strong>Identify!</strong> Match the parts of anointing, the wedding symbols, and the Bible stories to what is being described.`, "Identify! Figure out what's being described in each item.");
+      setTimeout(nextQuestion, 800);
+
+    } else if (msg === '4') {
+      state.mode = 'full';
+      const all = [];
+      for (const [topicName, qs] of Object.entries(topics)) {
+        qs.forEach(q => all.push({...q, topic: topicName}));
+      }
+      state.questions = shuffle(all);
+      state.allAnswers = getAllAnswers();
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'mc_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `🌟 <strong>Full Review — Multiple Choice!</strong> ${state.total} questions. Think carefully!`, `Full Review! Multiple Choice! ${state.total} questions. Think carefully!`);
+      setTimeout(nextQuestion, 800);
+
+    } else {
+      addMessage('bot',
+        `Choose an option:<br>
+        <span class="chip" data-val="1">📚 Study by Topic</span>
+        <span class="chip" data-val="2">✅ True or False</span>
+        <span class="chip" data-val="3">🌐 Identify</span>
+        <span class="chip" data-val="4">🌟 Full Review</span>`,
+        'Choose an option.'
+      );
+    }
+    return;
+  }
+
+  // ── TOPIC SELECT ──────────────────────────────────────────
+  if (aw === 'topic') {
+    const keys = Object.keys(topics);
+    const idx = parseInt(msg) - 1;
+    if (keys[idx]) {
+      const topicName = keys[idx];
+      state.mode = 'topic_mc';
+      state.questions = shuffle(topics[topicName]);
+      state.allAnswers = getAllAnswers();
+      state.qIndex = 0; state.score = 0;
+      state.total = state.questions.length;
+      state.awaiting = 'mc_answer';
+      document.querySelector('.input-bar').style.display = 'none';
+      updateScore();
+      addMessage('bot', `📚 <strong>${topicName}</strong> — ${state.total} questions. Ready?`, `${topicName}. ${state.total} questions. Ready?`);
+      setTimeout(nextQuestion, 800);
+    } else {
+      const chips = Object.keys(topics).map((t,i) => `<span class="chip" data-val="${i+1}">${i+1}. ${t}</span>`).join(' ');
+      addMessage('bot', `Please choose a valid topic:<br>${chips}`, 'Please choose a valid topic.');
+    }
+    return;
+  }
+
+  // ── TYPED ANSWER ──────────────────────────────────────────
+  if (aw === 'answer') {
+    const q = state.questions[state.qIndex];
+    const m = normalize(msg);
+
+    if (m === 'hint') {
+      state.hintUsed = true;
+      addMessage('bot', `💡 <strong>Hint:</strong> ${q.hint}`, `Hint: ${q.hint}`);
+      return;
+    }
+    if (m === 'skip') {
+      addMessage('bot', `⏭️ Skipped! The correct answer is: <strong>${q.a}</strong>`, `Skipped. The correct answer is: ${q.a}`);
+      state.qIndex++; state.hintUsed = false;
+      if (state.qIndex < state.total) setTimeout(nextQuestion, 700);
+      else showResult();
+      return;
+    }
+
+    const correct = checkAnswer(msg, q.a);
+    if (correct) {
+      if (!state.hintUsed) state.score++;
+      const note = state.hintUsed ? ' <em>(hint used — no point)</em>' : ' +1 point!';
+      addMessage('bot', `✅ <strong>Correct!</strong>${note} Answer: <strong>${q.a}</strong>`, `Correct! The answer is: ${q.a}`);
+    } else {
+      addMessage('bot', `❌ <strong>Not quite.</strong> The correct answer is: <strong>${q.a}</strong>`, `Not quite. The correct answer is: ${q.a}`);
+    }
+    state.qIndex++; state.hintUsed = false; updateScore();
+    if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+    else setTimeout(showResult, 900);
+    return;
+  }
+
+  // ── TRUE OR FALSE ─────────────────────────────────────────
+  if (aw === 'tf_answer') {
+    const q = state.questions[state.qIndex];
+    const ans = normalize(msg);
+    const valid = ans === 'true' || ans === 'false';
+
+    if (valid) {
+      const correct = ans === q.a;
+      if (correct) {
+        state.score++;
+        addMessage('bot', `✅ <strong>Correct!</strong> The answer is <strong>${q.a.toUpperCase()}</strong>.`, `Correct! The answer is ${q.a}.`);
+      } else {
+        addMessage('bot', `❌ <strong>Incorrect.</strong> The correct answer is <strong>${q.a.toUpperCase()}</strong>.`, `Incorrect. The correct answer is ${q.a}.`);
+      }
+      state.qIndex++; updateScore();
+      if (state.qIndex < state.total) setTimeout(nextQuestion, 900);
+      else setTimeout(showResult, 900);
+    } else {
+      addMessage('bot',
+        `Answer: True or False?<br><span class="chip" data-val="true">✅ True</span><span class="chip" data-val="false">❌ False</span>`,
+        'Answer: True or False?'
+      );
+    }
+    return;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// CONTROLS
+// ═══════════════════════════════════════════════════════════════
+function handleUserMessage(msg) {
+  if (!msg.trim()) return;
+  
+  // Stop any speaking audio cleanly when the user answers
+  window.speechSynthesis.cancel();
+  if (currentAudioStream) {
+    currentAudioStream.pause();
+    currentAudioStream = null;
+    showWave(false);
+  }
+  
+  addMessage('user', msg.replace(/</g,'&lt;'));
+  input.value = '';
+  input.disabled = true; sendBtn.disabled = true;
+  addTyping();
+  setTimeout(() => {
+    removeTyping();
+    input.disabled = false; sendBtn.disabled = false;
+    input.focus();
+    processMessage(msg);
+  }, 480);
+}
+
+sendBtn.addEventListener('click', () => { handleUserMessage(input.value); });
+input.addEventListener('keydown', e => { if(e.key==='Enter') handleUserMessage(input.value); });
+
+document.getElementById('audio-toggle').addEventListener('click', function() {
+  state.audioEnabled = !state.audioEnabled;
+  this.textContent = state.audioEnabled ? '🔊' : '🔇';
+  this.classList.toggle('active', state.audioEnabled);
+  if (!state.audioEnabled) {
+    window.speechSynthesis.cancel();
+    if (currentAudioStream) {
+      currentAudioStream.pause();
+      currentAudioStream = null;
+      showWave(false);
+    }
+  }
+});
+
+// ═══════════════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════════════
+window.addEventListener('load', () => {
+  lookupSystemVoices();
+  showMenu();
+});
+
+function printPracticeTest() {
+  document.body.classList.add('printing-test');
+  window.print();
+}
+window.addEventListener('afterprint', () => {
+  document.body.classList.remove('printing-test');
+});
+
+// ═══════════════════════════════════════════════════════════════
+// READ NOTES ALOUD (uses the browser's own voice — no length limit,
+// unlike the short Google TTS clips used for chat messages)
+// ═══════════════════════════════════════════════════════════════
+function getNotesText(section) {
+  // Skip the Practice Test / Answer Key tabs — too long and not meant to be read aloud
+  const clone = section.cloneNode(true);
+  clone.querySelectorAll('button').forEach(b => b.remove());
+  let text = clone.innerText || clone.textContent || '';
+  text = text.replace(/\s+/g, ' ').trim();
+  return text;
+}
+
+function toggleNotesAudio() {
+  const btn = document.getElementById('notes-audio-btn');
+  if (!btn) return;
+
+  if (window.speechSynthesis.speaking || window.speechSynthesis.pending) {
+    window.speechSynthesis.cancel();
+    btn.innerHTML = '🔊 Read Notes Aloud';
+    btn.classList.remove('active');
+    return;
+  }
+
+  const activeSection = document.querySelector('.notes-section.active');
+  if (!activeSection) return;
+  const text = getNotesText(activeSection);
+  if (!text) return;
+
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.lang = 'en-US';
+  utter.rate = 0.95;
+  utter.pitch = 1.05;
+  utter.volume = 1;
+
+  const voices = window.speechSynthesis.getVoices();
+  const voice = voices.find(v => v.lang.startsWith('en') && v.name.toLowerCase().includes('female'))
+             || voices.find(v => v.lang.startsWith('en'));
+  if (voice) utter.voice = voice;
+
+  utter.onstart = () => { btn.innerHTML = '⏹️ Stop Reading'; btn.classList.add('active'); };
+  utter.onend = utter.onerror = () => { btn.innerHTML = '🔊 Read Notes Aloud'; btn.classList.remove('active'); };
+
+  window.speechSynthesis.speak(utter);
+}
+
+function switchTab(tabId, btn) {
+  window.speechSynthesis.cancel();
+  const audioBtn = document.getElementById('notes-audio-btn');
+  if (audioBtn) { audioBtn.innerHTML = '🔊 Read Notes Aloud'; audioBtn.classList.remove('active'); }
+  document.querySelectorAll('.notes-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.notes-tab').forEach(b => b.classList.remove('active'));
+  document.getElementById(tabId).classList.add('active');
+  btn.classList.add('active');
+}
+
+function closeNotesPanel() {
+  window.speechSynthesis.cancel();
+  const audioBtn = document.getElementById('notes-audio-btn');
+  if (audioBtn) { audioBtn.innerHTML = '🔊 Read Notes Aloud'; audioBtn.classList.remove('active'); }
+  document.getElementById('notes-overlay').classList.remove('show');
+}
+</script>
+
+<!-- ── Notes Panel ── -->
+<div class="notes-overlay" id="notes-overlay">
+  <div class="notes-panel">
+    <div class="notes-header">
+      <h2>📖 Anointing, Marriage &amp; Family — Notes</h2>
+      <div class="notes-header-actions">
+        <button class="print-btn" id="notes-audio-btn" onclick="toggleNotesAudio()" title="Have this tab read aloud">🔊 Read Notes Aloud</button>
+        <button class="print-btn" onclick="printPracticeTest()" title="Print or save the Practice Test &amp; Answer Key as PDF">🖨️ Print Test &amp; Key</button>
+        <button class="notes-close" onclick="closeNotesPanel()">✕</button>
+      </div>
+    </div>
+    <div class="notes-tabs">
+      <button class="notes-tab active" onclick="switchTab('tab-anoint', this)">🛐 Anointing of the Sick</button>
+      <button class="notes-tab" onclick="switchTab('tab-adam', this)">🌳 First Husband &amp; Wife</button>
+      <button class="notes-tab" onclick="switchTab('tab-marr', this)">💍 Friendship &amp; Marriage</button>
+      <button class="notes-tab" onclick="switchTab('tab-rite', this)">💒 Symbols &amp; Rite</button>
+      <button class="notes-tab" onclick="switchTab('tab-joseph', this)">🧥 Joseph's Dreams</button>
+      <button class="notes-tab" onclick="switchTab('tab-verses', this)">❤️ Memory Verses</button>
+      <button class="notes-tab" onclick="switchTab('tab-tf', this)">✅ True or False</button>
+      <button class="notes-tab" onclick="switchTab('tab-ptest', this)">📝 Practice Test</button>
+      <button class="notes-tab" onclick="switchTab('tab-key', this)">🔑 Answer Key</button>
+      <button class="notes-tab" onclick="switchTab('tab-raw', this)">📄 Raw Notes</button>
+    </div>
+    <div class="notes-body">
+
+      <div class="notes-section active" id="tab-anoint">
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> <strong>Anointing of the sick</strong> is a <strong>sacrament of healing</strong> (with Reconciliation). The Church gives it to <strong>the sick, the aged, and the dying</strong>. Jesus brings <strong>physical and spiritual healing</strong>, encourages the sick to <strong>trust in God</strong>, and gives strength to resist temptation and anxiety about death. <em>(CFC 1867, CCC 1499)</em>
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 MEMORY TRICK</span>
+          <strong>5 key elements = "P-C-L-A-H"</strong>: <strong>P</strong>rayer and Scripture, <strong>C</strong>onfession, <strong>L</strong>aying on of hands, <strong>A</strong>nointing with oil, <strong>H</strong>oly Viaticum. <strong>Priest prays for "E-P-F"</strong>: <strong>E</strong>asing of suffering, <strong>P</strong>hysical healing, <strong>F</strong>orgiveness of sins. <strong>Oil = Holy Spirit; Hands = Healing touch.</strong>
+        </div>
+        <table class="compare-table">
+          <tr><th>Key Element</th><th>Meaning</th></tr>
+          <tr><td>1. Prayer and Scripture reading</td><td>A source of comfort in times of pain and suffering caused by sickness</td></tr>
+          <tr><td>2. Confession</td><td>Reconciles the sick with God, the Church, and others</td></tr>
+          <tr><td>3. Laying on of hands by the priest</td><td>A sign of the healing touch of Christ and the care of the Church community</td></tr>
+          <tr><td>4. Anointing with blessed oil or chrism</td><td>On the forehead and hands; gives the grace of the Holy Spirit and mental, physical, emotional, and spiritual strength</td></tr>
+          <tr><td>5. Holy Communion or Final Eucharist (Holy Viaticum)</td><td>Given to the dying Christian; pictures Christ leading and accompanying him or her into heaven</td></tr>
+        </table>
+        <table class="compare-table">
+          <tr><th>Sign</th><th>Meaning</th></tr>
+          <tr><td>Anointing of oil</td><td>A sign of the Holy Spirit, of strength, and of health</td></tr>
+          <tr><td>Laying on of hands</td><td>A sign of the healing touch of Jesus and the care of God and the Church</td></tr>
+        </table>
+        <div class="notes-topic">
+          <div class="notes-topic-title">📋 Symbolic Actions and Words</div>
+          <div class="notes-item"><span class="notes-term">1</span><span class="notes-def">The priest visits the sick as a sign of the Church's concern for the sick</span></div>
+          <div class="notes-item"><span class="notes-term">2</span><span class="notes-def">The priest places his hands on the head of the sick and anoints the forehead and hands with blessed oil, praying: "Through this holy anointing may the Lord in His love and mercy help you with the grace of the Holy Spirit. May the Lord who frees you from sin save you and raise you up."</span></div>
+          <div class="notes-item"><span class="notes-term">3</span><span class="notes-def">The priest prays to the risen Jesus for three things: (a) easing of suffering with strength to cope with it; (b) physical healing of mind and body; (c) forgiveness of sins</span></div>
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">🤒 Sickness</div>
+          <div class="notes-item"><span class="notes-term">Positive effects</span><span class="notes-def">Helps us mature in faith and see what matters more in life; faith helps us understand the mystery of suffering and bear pain more bravely</span></div>
+          <div class="notes-item"><span class="notes-term">Negative effects</span><span class="notes-def">Can lead to anguish or depression; makes us feel useless, afraid, insecure, and helpless; tempts us to lose faith and hope; makes us blame God and ourselves</span></div>
+          <div class="notes-item"><span class="notes-term">Our response</span><span class="notes-def">Show kindness, patience, care, support, gentleness, and love; visit the sick and pray for them</span></div>
+          <div class="notes-item"><span class="notes-term">What the sick need</span><span class="notes-def">Understanding, patience, comfort, care, compassion, support, and love; even simple words, actions, or presence can bring healing</span></div>
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">✅ Answers to the Lesson Questions (answers supplied by this reviewer)</div>
+          <div class="notes-item"><span class="notes-term">True or False 1</span><span class="notes-def">True</span></div>
+          <div class="notes-item"><span class="notes-term">2</span><span class="notes-def">True</span></div>
+          <div class="notes-item"><span class="notes-term">3</span><span class="notes-def">False (the priest anoints the sick)</span></div>
+          <div class="notes-item"><span class="notes-term">4</span><span class="notes-def">True</span></div>
+          <div class="notes-item"><span class="notes-term">5</span><span class="notes-def">True (the lesson says the oil or chrism gives healing and strength)</span></div>
+          <div class="notes-item"><span class="notes-term">What can the sick hope for?</span><span class="notes-def">Comfort, strength to trust in God and resist temptation and anxiety about death, forgiveness, and physical and spiritual healing</span></div>
+          <div class="notes-item"><span class="notes-term">Three prayers of the priest</span><span class="notes-def">Easing of suffering with strength to cope; physical healing of mind and body; forgiveness of sins</span></div>
+          <div class="notes-item"><span class="notes-term">How can you share God's healing love?</span><span class="notes-def">Your own answer, such as visiting and praying for the sick and showing kindness and patience</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-adam">
+        <div class="story-box">
+          <span class="story-label">📖 Read Aloud: The First Husband and Wife</span>
+          <p>God made a man from the dust of the ground and breathed into his nostrils the breath of life, and the man became a living being. Then God said, "It is not good for the man to be alone. I will make a helper suitable for him."</p>
+          <p>So God caused the man to fall into a deep sleep. While the man was sleeping, God took one of the man's ribs and made a woman from it. Then He brought her to the man.</p>
+          <p>The man said, "This is now bone of my bones and flesh of my flesh; she shall be called 'woman,' for she was taken out of man."</p>
+          <p>That is why a man leaves his father and mother and is united to his wife, and they become one flesh.</p>
+          <span class="story-ref">— Genesis 2:7, 18, 21–24</span>
+        </div>
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> God made the <strong>first man from the dust</strong> and breathed life into him. Because it was <strong>not good for the man to be alone</strong>, God made the <strong>woman from his rib</strong>. Husband and wife are <strong>united</strong> and become <strong>one flesh</strong>.
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 MEMORY TRICK</span>
+          <strong>"Dust, Breath, Sleep, Rib, Woman, One flesh"</strong> = the story in order: man from <strong>dust</strong> → <strong>breath</strong> of life → <strong>deep sleep</strong> → woman from a <strong>rib</strong> → called <strong>"woman"</strong> → <strong>one flesh</strong>.
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">🌳 Story Questions and Answers (answers supplied by this reviewer)</div>
+          <div class="notes-item"><span class="notes-term">How did God make the first man and woman?</span><span class="notes-def">God made the man from the dust of the ground and breathed life into him; He made the woman from one of the man's ribs while he slept</span></div>
+          <div class="notes-item"><span class="notes-term">Why did God say it was not good for the man to be alone?</span><span class="notes-def">Your own answer: man needs a helper and companion, and man and woman need each other to love, care for, and help one another</span></div>
+          <div class="notes-item"><span class="notes-term">What did the man call his wife?</span><span class="notes-def">"Woman"</span></div>
+          <div class="notes-item"><span class="notes-term">Why does a man leave his father and mother?</span><span class="notes-def">To be united to his wife; the two become one flesh</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-marr">
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> Every person is a <strong>relational being</strong>. <strong>Friendship</strong> forms the basis of all relationships, especially <strong>marriage</strong>, the lifelong union of a man and a woman. <strong>Matrimony</strong> is a <strong>sacrament of vocation</strong> where their love is blessed.
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 MEMORY TRICK</span>
+          <strong>Matrimony = Marriage.</strong> The <strong>bride and groom</strong> are the ministers; the <strong>priest</strong> only represents the Church. Valid = <strong>priest + 2 witnesses</strong> (Canon 1108 § 1). Vow in one line: <strong>"one heart and soul, better or worse, richer or poorer, sickness and health, until death."</strong>
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">🤝 Friendship</div>
+          <div class="notes-item"><span class="notes-term">What it is</span><span class="notes-def">A relationship we should treasure; we share thoughts, ideas, interests, dreams, secrets, and even problems</span></div>
+          <div class="notes-item"><span class="notes-term">A true friend</span><span class="notes-def">Brings out our best qualities; we should share the same qualities we look for in a friend</span></div>
+          <div class="notes-item"><span class="notes-term">Why it matters</span><span class="notes-def">Forms the basis of all relationships, especially the lifelong relationship of marriage</span></div>
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">💍 Matrimony</div>
+          <div class="notes-item"><span class="notes-term">Why God made woman</span><span class="notes-def">It is not good for man to be alone; man and woman need each other to love, care for, and help one another</span></div>
+          <div class="notes-item"><span class="notes-term">Unbreakable union</span><span class="notes-def">"A man leaves his father and mother and is united to his wife, and they become one flesh" (CCC 1605)</span></div>
+          <div class="notes-item"><span class="notes-term">What it is</span><span class="notes-def">The union of a man and a woman as husband and wife; a sacrament of vocation (CFC 1912)</span></div>
+          <div class="notes-item"><span class="notes-term">How couples treat each other</span><span class="notes-def">They trust, love, and believe in each other; serve each other's needs; respect and forgive; express feelings and thoughts lovingly; are faithful</span></div>
+          <div class="notes-item"><span class="notes-term">Prayer</span><span class="notes-def">Couples should pray for God's guidance to overcome marital problems</span></div>
+          <div class="notes-item"><span class="notes-term">Marriage vow</span><span class="notes-def">"To be of one heart and soul, from this day forward, for better, for worse, for richer, for poorer, in sickness and in health, until death do us part."</span></div>
+          <div class="notes-item"><span class="notes-term">Ministers</span><span class="notes-def">The bride and groom themselves</span></div>
+          <div class="notes-item"><span class="notes-term">The priest</span><span class="notes-def">Represents the Church and presides over the marriage ceremony</span></div>
+          <div class="notes-item"><span class="notes-term">Valid marriage</span><span class="notes-def">Contracted in the presence of a priest and two witnesses (Canon 1108 § 1)</span></div>
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">✅ Answers to the Lesson Exercises (answers supplied by this reviewer)</div>
+          <div class="notes-item"><span class="notes-term">Matching 1–10</span><span class="notes-def">1 h friendship · 2 i priest · 3 c rings · 4 a marriage · 5 b bride and groom · 6 g arrhae · 7 d lighted candle · 8 f cord · 9 e veil · 10 j Church</span></div>
+          <div class="notes-item"><span class="notes-term">What is matrimony?</span><span class="notes-def">The union of a man and a woman as husband and wife; a sacrament of vocation</span></div>
+          <div class="notes-item"><span class="notes-term">Responsibilities of married couples</span><span class="notes-def">Trust, love, serve each other's needs, respect, forgive, be faithful, and pray for God's guidance</span></div>
+          <div class="notes-item"><span class="notes-term">How can you be a better friend?</span><span class="notes-def">Your own answer, such as being kind, honest, and a good listener</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-rite">
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> Wedding <strong>symbols</strong> explain the deeper meaning of matrimony. The <strong>Rite of Matrimony</strong> is normally celebrated <strong>within the Mass</strong>, after the Gospel and homily and before the Prayer of the Faithful <em>(SC 78)</em>.
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 MEMORY TRICK</span>
+          <strong>Symbols = "R-L-V-C-A"</strong>: <strong>R</strong>ings = Round, no end = love and fidelity · <strong>L</strong>ighted candle = Light of Christ · <strong>V</strong>eil = Very holy · <strong>C</strong>ord = Connects = unity · <strong>A</strong>rrhae = provide. <strong>Rite = "I-S-G-R-B-N"</strong>: <strong>I</strong>ntroduction, <strong>S</strong>tatement of intention, <strong>G</strong>iving of consent, <strong>R</strong>eception of consent, <strong>B</strong>lessing of arrhae and rings, <strong>N</strong>uptial blessings (<em>"I Say Good Rings Bring Nuptials"</em>).
+        </div>
+        <table class="compare-table">
+          <tr><th>Symbol</th><th>Meaning</th></tr>
+          <tr><td>Rings</td><td>Symbol of love and fidelity</td></tr>
+          <tr><td>Lighted candle</td><td>Symbol of Christ, the Light of the world, who will give light to the married life of the couple</td></tr>
+          <tr><td>Veil</td><td>Symbol of the holiness of marriage and the commitment and total self-giving of the couple to one another</td></tr>
+          <tr><td>Cord</td><td>Symbol of unity and the unbreakable bond between husband and wife</td></tr>
+          <tr><td>Arrhae</td><td>Symbol of material possessions and the husband's willingness to provide for the material needs of his wife and children</td></tr>
+        </table>
+        <table class="compare-table">
+          <tr><th>Step</th><th>What Happens</th></tr>
+          <tr><td>1. Introduction</td><td>After the homily, the priest addresses the couple and asks them to state their intentions publicly</td></tr>
+          <tr><td>2. Statement of Intention</td><td>The couple state they have come freely and without reservation, will love and honor each other for life, and accept the children God may give them and bring them up in the law of Christ and the Catholic faith</td></tr>
+          <tr><td>3. Giving of Consent</td><td>The priest instructs the bride and groom to join hands and express total commitment and lifelong fidelity; they exchange marriage vows</td></tr>
+          <tr><td>4. Reception of Consent</td><td>The priest, in the name of God and the community, accepts the consent and blesses their commitment; they are welcomed as husband and wife</td></tr>
+          <tr><td>5. Blessing of Arrhae and Exchange of Rings</td><td>The arrhae is blessed and given by the husband to his wife; the couple exchange rings after these have been blessed</td></tr>
+          <tr><td>6. Nuptial Blessings</td><td>A long nuptial blessing follows after the Lord's Prayer</td></tr>
+        </table>
+      </div>
+
+      <div class="notes-section" id="tab-joseph">
+        <div class="story-box">
+          <span class="story-label">📖 Read Aloud: Joseph's Dreams</span>
+          <p>Joseph, a young man of seventeen, was tending the flocks with his brothers, the sons of Bilhah and the sons of Zilpah, his father's wives, and he brought their father a hard report about them.</p>
+          <p>Now Israel loved Joseph more than any of his other sons, because he had been born to him in his old age; and he made an ornate robe for him. When his brothers saw that their father loved him more than any of them, they hated him and could not speak a kind word to him.</p>
+          <p>Joseph had a dream, and when he told it to his brothers, they hated him all the more. He said to them, "Listen to this dream I had: We were binding sheaves of grain out in the field when suddenly my sheaf rose and stood upright, while your sheaves gathered around mine and bowed down to it."</p>
+          <p>His brothers said to him, "Do you intend to reign over us? Will you actually rule us?" And they hated him all the more because of his dream and what he had said.</p>
+          <p>Then he had another dream, and he told it to his brothers. "Listen," he said, "I had another dream, and this time the sun and moon and eleven stars were bowing down to me."</p>
+          <p>When he told his father as well as his brothers, his father rebuked him and said, "What is this dream you had? Will your mother and I and your brothers actually come and bow down to the ground before you?" His brothers were jealous of him, but his father kept the matter in mind.</p>
+          <span class="story-ref">— Genesis 37:2–11</span>
+        </div>
+        <div class="chapter-summary">
+          📚 <strong>Chapter Summary:</strong> <strong>Favoritism and jealousy</strong> can cause problems in a family. <strong>Israel</strong> favored <strong>Joseph</strong> (ornate robe), so the brothers <strong>hated and were jealous</strong> of him, especially after his <strong>two dreams</strong>. The result was <strong>grief, guilt, suffering, and division</strong>.
+        </div>
+        <div class="memory-box">
+          <span class="memory-label">🧠 MEMORY TRICK</span>
+          <strong>"Robe + Dreams = Hate"</strong>. Dream 1 = <strong>sheaves</strong> (grain on the ground) · Dream 2 = <strong>sun, moon, and 11 stars</strong> (sky). <strong>Favoritism (father) + Jealousy (brothers) = family problem.</strong> The cure: <strong>"Pray and forgive."</strong>
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">🧥 Story Questions and Answers (answers supplied by this reviewer)</div>
+          <div class="notes-item"><span class="notes-term">1. Whom did Israel love more? Why?</span><span class="notes-def">Joseph, because he was born in Israel's old age</span></div>
+          <div class="notes-item"><span class="notes-term">2. What did his father give Joseph?</span><span class="notes-def">An ornate robe</span></div>
+          <div class="notes-item"><span class="notes-term">3. First dream</span><span class="notes-def">Binding sheaves of grain; Joseph's sheaf stood upright while the brothers' sheaves bowed down to it</span></div>
+          <div class="notes-item"><span class="notes-term">4. Second dream</span><span class="notes-def">The sun, the moon, and eleven stars bowing down to him</span></div>
+          <div class="notes-item"><span class="notes-term">5. How did the brothers react? Why?</span><span class="notes-def">They hated him all the more and were jealous, because they thought he wanted to reign over them</span></div>
+          <div class="notes-item"><span class="notes-term">6. Reason for the family's problem</span><span class="notes-def">The father's favoritism and the brothers' jealousy</span></div>
+        </div>
+        <div class="notes-topic">
+          <div class="notes-topic-title">👪 The Family Today</div>
+          <div class="notes-item"><span class="notes-term">Lesson</span><span class="notes-def">Favoritism and jealousy still threaten unity and love among family members today</span></div>
+          <div class="notes-item"><span class="notes-term">Parents and children</span><span class="notes-def">Communicate openly and honestly in a loving and forgiving atmosphere; admit mistakes</span></div>
+          <div class="notes-item"><span class="notes-term">The whole family</span><span class="notes-def">Look beyond itself and offer Christian witness through Gospel values of justice and protection of human rights (CFC 1027)</span></div>
+          <div class="notes-item"><span class="notes-term">St. Teresa of Calcutta</span><span class="notes-def">"Pray and forgive." (to married couples, young people from violent homes, and a single mother)</span></div>
+          <div class="notes-item"><span class="notes-term">Our responsibility</span><span class="notes-def">Protect and preserve the sanctity of the family and of marriage; marriage is the foundation of the family (DOCAT, 125)</span></div>
+          <div class="notes-item"><span class="notes-term">Married couples</span><span class="notes-def">Called to form a Christian family where God's love is experienced through parents and children (GS 48)</span></div>
+          <div class="notes-item"><span class="notes-term">Parents</span><span class="notes-def">Work hard for the family's happiness by loving one another and taking good care of their children</span></div>
+          <div class="notes-item"><span class="notes-term">Children</span><span class="notes-def">Show love, gratitude, and honor to their parents: respect, obey, appreciate, and care for them in old age</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-verses">
+        <div class="verse-intro">❤️ Practice saying these from memory!</div>
+<div class="verse-grid"><div class="verse-card"><span class="verse-theme">Love Is Patient</span><div class="verse-text">Love is patient, love is kind. It does not envy, it does not boast, it is not proud. It does not dishonor others, it is not self-seeking, it is not easily angered, it keeps no record of wrongs.</div><span class="verse-ref">1 Corinthians 13:4–5</span></div><div class="verse-card"><span class="verse-theme">Love Rejoices in Truth</span><div class="verse-text">Love does not delight in evil but rejoices with the truth. It always protects, always trusts, always hopes, always perseveres.</div><span class="verse-ref">1 Corinthians 13:6–7</span></div><div class="verse-card"><span class="verse-theme">Love Never Fails</span><div class="verse-text">Love never fails.</div><span class="verse-ref">1 Corinthians 13:8</span></div><div class="verse-card"><span class="verse-theme">Faith, Hope and Love (Bookmark Verse)</span><div class="verse-text">And now these three remain: faith, hope and love. But the greatest of these is love.</div><span class="verse-ref">1 Corinthians 13:13</span></div><div class="verse-card"><span class="verse-theme">One Flesh</span><div class="verse-text">That is why a man leaves his father and mother and is united to his wife, and they become one flesh.</div><span class="verse-ref">Genesis 2:24</span></div><div class="verse-card"><span class="verse-theme">Pray and Forgive</span><div class="verse-text">Pray and forgive.</div><span class="verse-ref">St. Teresa of Calcutta</span></div></div>
+      </div>
+
+      <div class="notes-section" id="tab-tf">
+        <div class="notes-topic">
+          <div class="notes-topic-title">✅ True or False — Key Reminders</div>
+          <div class="notes-item"><span class="notes-term"><span style="color:#ef4444">FALSE</span></span><span class="notes-def">Only the bishop can give anointing of the sick → the <strong>priest</strong> lays on hands and anoints the sick.</span></div>
+          <div class="notes-item"><span class="notes-term"><span style="color:#ef4444">FALSE</span></span><span class="notes-def">The man called his wife "Eve" (Genesis 2) → he called her <strong>"woman"</strong>.</span></div>
+          <div class="notes-item"><span class="notes-term"><span style="color:#ef4444">FALSE</span></span><span class="notes-def">The priest is the minister of matrimony → the <strong>bride and groom</strong> are the ministers.</span></div>
+          <div class="notes-item"><span class="notes-term"><span style="color:#ef4444">FALSE</span></span><span class="notes-def">The veil is a symbol of material possessions → that is the <strong>arrhae</strong>; the veil is the holiness of marriage.</span></div>
+          <div class="notes-item"><span class="notes-term"><span style="color:#ef4444">FALSE</span></span><span class="notes-def">Rings are exchanged before they are blessed → they are exchanged <strong>after</strong> being blessed.</span></div>
+          <div class="notes-item"><span class="notes-term"><span style="color:#ef4444">FALSE</span></span><span class="notes-def">Love keeps a record of wrongs → love keeps <strong>no</strong> record of wrongs.</span></div>
+          <div class="notes-item"><span class="notes-term"><span style="color:#ef4444">FALSE</span></span><span class="notes-def">Israel loved Joseph because he was the oldest → because he was <strong>born in his old age</strong>.</span></div>
+          <div class="notes-item"><span class="notes-term"><span style="color:#ef4444">FALSE</span></span><span class="notes-def">The brothers loved Joseph more after the dreams → they <strong>hated</strong> him more.</span></div>
+          <div class="notes-item"><span class="notes-term"><span style="color:#ef4444">FALSE</span></span><span class="notes-def">Sickness has only negative effects → it can also help us <strong>mature in faith</strong>.</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-ptest">
+        <div class="notes-topic">
+          <div class="notes-topic-title">📝 Practice Test (62 items)</div>
+<div class="ptest-part-title">Part I — Name the Term</div>
+<div class="ptest-bank"><strong>Word Bank (use each once):</strong> rings &middot; lighted candle &middot; veil &middot; cord &middot; arrhae &middot; Viaticum &middot; chrism &middot; friendship &middot; marriage &middot; introduction</div>
+<div class="ptest-q"><b>1.</b> The symbol of love and fidelity in a wedding. <span class="opt">Answer: ______________</span></div>
+<div class="ptest-q"><b>2.</b> The symbol of Christ, the Light of the world. <span class="opt">Answer: ______________</span></div>
+<div class="ptest-q"><b>3.</b> The symbol of the holiness of marriage and the couple&#x27;s total self-giving. <span class="opt">Answer: ______________</span></div>
+<div class="ptest-q"><b>4.</b> The symbol of unity and an unbreakable bond. <span class="opt">Answer: ______________</span></div>
+<div class="ptest-q"><b>5.</b> The symbol of material possessions and the husband&#x27;s willingness to provide. <span class="opt">Answer: ______________</span></div>
+<div class="ptest-q"><b>6.</b> The Holy Communion given to a dying Christian. <span class="opt">Answer: ______________</span></div>
+<div class="ptest-q"><b>7.</b> The blessed oil placed on the forehead and hands of the sick. <span class="opt">Answer: ______________</span></div>
+<div class="ptest-q"><b>8.</b> The relationship that forms the basis of all relationships. <span class="opt">Answer: ______________</span></div>
+<div class="ptest-q"><b>9.</b> The lifelong relationship between a man and a woman. <span class="opt">Answer: ______________</span></div>
+<div class="ptest-q"><b>10.</b> The first step in the Rite of Matrimony. <span class="opt">Answer: ______________</span></div>
+<div class="ptest-part-title">Part II — Multiple Choice</div>
+<div class="ptest-q"><b>11.</b> Who are the ministers of the sacrament of matrimony?<br><span class="opt">a. the parents</span><span class="opt">b. the bride and groom</span><span class="opt">c. the priest</span><span class="opt">d. the witnesses</span></div>
+<div class="ptest-q"><b>12.</b> Which sacrament is given to the sick, the aged, and the dying?<br><span class="opt">a. anointing of the sick</span><span class="opt">b. matrimony</span><span class="opt">c. baptism</span><span class="opt">d. confirmation</span></div>
+<div class="ptest-q"><b>13.</b> To whom is the Holy Viaticum given?<br><span class="opt">a. the newly married</span><span class="opt">b. a newborn baby</span><span class="opt">c. the priest</span><span class="opt">d. the dying Christian</span></div>
+<div class="ptest-q"><b>14.</b> Where does the priest anoint the sick with blessed oil?<br><span class="opt">a. on the shoulders</span><span class="opt">b. on the knees</span><span class="opt">c. on the forehead and hands</span><span class="opt">d. on the feet</span></div>
+<div class="ptest-q"><b>15.</b> The laying on of hands is a sign of ____.<br><span class="opt">a. forgiveness only</span><span class="opt">b. the healing touch of Christ and the care of the Church</span><span class="opt">c. the end of life</span><span class="opt">d. the wedding vow</span></div>
+<div class="ptest-q"><b>16.</b> Which is one of the three things the priest prays for the sick?<br><span class="opt">a. forgiveness of sins</span><span class="opt">b. a long life</span><span class="opt">c. wealth</span><span class="opt">d. a new house</span></div>
+<div class="ptest-q"><b>17.</b> From what did God make the first man?<br><span class="opt">a. a rib</span><span class="opt">b. water</span><span class="opt">c. a tree</span><span class="opt">d. the dust of the ground</span></div>
+<div class="ptest-q"><b>18.</b> From what did God make the woman?<br><span class="opt">a. a cloud</span><span class="opt">b. a seed</span><span class="opt">c. one of the man&#x27;s ribs</span><span class="opt">d. the dust of the ground</span></div>
+<div class="ptest-q"><b>19.</b> What did the man call his wife?<br><span class="opt">a. helper</span><span class="opt">b. woman</span><span class="opt">c. Eve</span><span class="opt">d. sister</span></div>
+<div class="ptest-q"><b>20.</b> What forms the basis of all relationships?<br><span class="opt">a. friendship</span><span class="opt">b. money</span><span class="opt">c. school</span><span class="opt">d. work</span></div>
+<div class="ptest-q"><b>21.</b> Matrimony is a sacrament of ____.<br><span class="opt">a. initiation</span><span class="opt">b. healing</span><span class="opt">c. penance</span><span class="opt">d. vocation</span></div>
+<div class="ptest-q"><b>22.</b> A marriage is valid when it is contracted before ____.<br><span class="opt">a. one witness</span><span class="opt">b. no one</span><span class="opt">c. a priest and two witnesses</span><span class="opt">d. a bishop only</span></div>
+<div class="ptest-q"><b>23.</b> Which symbol stands for Christ, the Light of the world?<br><span class="opt">a. arrhae</span><span class="opt">b. lighted candle</span><span class="opt">c. veil</span><span class="opt">d. cord</span></div>
+<div class="ptest-q"><b>24.</b> Which symbol stands for unity?<br><span class="opt">a. cord</span><span class="opt">b. rings</span><span class="opt">c. veil</span><span class="opt">d. candle</span></div>
+<div class="ptest-q"><b>25.</b> Which step comes right after the homily?<br><span class="opt">a. nuptial blessings</span><span class="opt">b. blessing of arrhae</span><span class="opt">c. giving of consent</span><span class="opt">d. introduction</span></div>
+<div class="ptest-q"><b>26.</b> When does the long nuptial blessing follow?<br><span class="opt">a. before the homily</span><span class="opt">b. after the Introduction</span><span class="opt">c. after the Lord&#x27;s Prayer</span><span class="opt">d. before the Gospel</span></div>
+<div class="ptest-q"><b>27.</b> According to 1 Corinthians 13, love is ____.<br><span class="opt">a. easily angered</span><span class="opt">b. patient and kind</span><span class="opt">c. proud and angry</span><span class="opt">d. self-seeking</span></div>
+<div class="ptest-q"><b>28.</b> Why did Israel love Joseph more than his other sons?<br><span class="opt">a. he was born in Israel&#x27;s old age</span><span class="opt">b. he was the strongest</span><span class="opt">c. he was the oldest</span><span class="opt">d. he was the richest</span></div>
+<div class="ptest-q"><b>29.</b> What was Joseph&#x27;s second dream about?<br><span class="opt">a. sheaves of grain</span><span class="opt">b. a flock of sheep</span><span class="opt">c. a ladder to heaven</span><span class="opt">d. the sun, moon, and eleven stars bowing down</span></div>
+<div class="ptest-q"><b>30.</b> What advice did St. Teresa of Calcutta give to struggling families?<br><span class="opt">a. &quot;Move away.&quot;</span><span class="opt">b. &quot;Stay silent.&quot;</span><span class="opt">c. &quot;Pray and forgive.&quot;</span><span class="opt">d. &quot;Work harder.&quot;</span></div>
+<div class="ptest-part-title">Part III — Matching Type</div>
+<div class="ptest-bank"><strong>Column B:</strong> a. marriage &middot; b. bride and groom &middot; c. rings &middot; d. lighted candle &middot; e. veil &middot; f. cord &middot; g. arrhae &middot; h. friendship &middot; i. priest &middot; j. Church</div>
+<div class="ptest-q"><b>31.</b> It forms the basis of all relationships. <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>32.</b> He represents the Church and presides over the marriage ceremony. <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>33.</b> These are the symbol of love and fidelity. <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>34.</b> It is another word for matrimony. <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>35.</b> They are the ministers of the sacrament of matrimony. <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>36.</b> It is a symbol of material possessions and the husband&#x27;s willingness to provide for his wife and children. <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>37.</b> It is a symbol of Christ. <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>38.</b> It is a symbol of unity. <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>39.</b> It is a symbol of the holiness of marriage. <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>40.</b> It is where the love between a man and a woman can be blessed. <span class="opt">Answer: ______</span></div>
+<div class="ptest-part-title">Part IV — True or False</div>
+<div class="ptest-q"><b>41.</b> Anointing of the sick is a sacrament of healing. <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>42.</b> Only the bishop can administer anointing of the sick. <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>43.</b> Viaticum is Holy Communion given when there is a probable danger of death. <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>44.</b> The man called his wife &quot;Eve&quot; in Genesis 2. <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>45.</b> Friendship forms the basis of all relationships. <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>46.</b> The veil is a symbol of material possessions. <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>47.</b> The couple exchange rings after they have been blessed. <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>48.</b> Love keeps a record of wrongs. <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>49.</b> Joseph&#x27;s brothers were jealous of him. <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>50.</b> Favoritism and jealousy can bring division in a family. <span class="opt">Answer: ______</span></div>
+<div class="ptest-part-title">Part V — Order of the Rite of Matrimony</div>
+<div class="ptest-bank">Write <b>1</b> to <b>6</b> to show the correct order of the steps in the Rite of Matrimony.</div>
+<div class="ptest-q"><b>51.</b> Blessing of Arrhae and Exchange of Rings <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>52.</b> Introduction <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>53.</b> Reception of Consent <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>54.</b> Nuptial Blessings <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>55.</b> Statement of Intention <span class="opt">Answer: ______</span></div>
+<div class="ptest-q"><b>56.</b> Giving of Consent <span class="opt">Answer: ______</span></div>
+<div class="ptest-part-title">Part VI — Short Answer</div>
+<div class="ptest-q"><b>57.</b> Name the five key elements in the sacrament of anointing of the sick.<br><span class="opt">______________________________________</span></div>
+<div class="ptest-q"><b>58.</b> What are the three things the priest prays for the sick person?<br><span class="opt">______________________________________</span></div>
+<div class="ptest-q"><b>59.</b> What are the oil and the laying on of hands signs of?<br><span class="opt">______________________________________</span></div>
+<div class="ptest-q"><b>60.</b> How should husbands and wives treat each other?<br><span class="opt">______________________________________</span></div>
+<div class="ptest-q"><b>61.</b> What caused the problems in Joseph&#x27;s family?<br><span class="opt">______________________________________</span></div>
+<div class="ptest-q"><b>62.</b> How can families avoid these problems?<br><span class="opt">______________________________________</span></div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-key">
+        <div class="notes-topic">
+<div class="notes-topic-title">Part I — Name the Term</div>
+<div class="key-grid"><div class="key-pill">1. <b>rings</b></div><div class="key-pill">2. <b>lighted candle</b></div><div class="key-pill">3. <b>veil</b></div><div class="key-pill">4. <b>cord</b></div><div class="key-pill">5. <b>arrhae</b></div><div class="key-pill">6. <b>Viaticum</b></div><div class="key-pill">7. <b>chrism</b></div><div class="key-pill">8. <b>friendship</b></div><div class="key-pill">9. <b>marriage</b></div><div class="key-pill">10. <b>introduction</b></div></div>
+<div class="notes-topic-title">Part II — Multiple Choice</div>
+<div class="key-grid"><div class="key-pill">11. <b>b. the bride and groom</b></div><div class="key-pill">12. <b>a. anointing of the sick</b></div><div class="key-pill">13. <b>d. the dying Christian</b></div><div class="key-pill">14. <b>c. on the forehead and hands</b></div><div class="key-pill">15. <b>b. the healing touch of Christ and the care of the Church</b></div><div class="key-pill">16. <b>a. forgiveness of sins</b></div><div class="key-pill">17. <b>d. the dust of the ground</b></div><div class="key-pill">18. <b>c. one of the man&#x27;s ribs</b></div><div class="key-pill">19. <b>b. woman</b></div><div class="key-pill">20. <b>a. friendship</b></div><div class="key-pill">21. <b>d. vocation</b></div><div class="key-pill">22. <b>c. a priest and two witnesses</b></div><div class="key-pill">23. <b>b. lighted candle</b></div><div class="key-pill">24. <b>a. cord</b></div><div class="key-pill">25. <b>d. introduction</b></div><div class="key-pill">26. <b>c. after the Lord&#x27;s Prayer</b></div><div class="key-pill">27. <b>b. patient and kind</b></div><div class="key-pill">28. <b>a. he was born in Israel&#x27;s old age</b></div><div class="key-pill">29. <b>d. the sun, moon, and eleven stars bowing down</b></div><div class="key-pill">30. <b>c. &quot;Pray and forgive.&quot;</b></div></div>
+<div class="notes-topic-title">Part III — Matching Type</div>
+<div class="key-grid"><div class="key-pill">31. <b>h</b></div><div class="key-pill">32. <b>i</b></div><div class="key-pill">33. <b>c</b></div><div class="key-pill">34. <b>a</b></div><div class="key-pill">35. <b>b</b></div><div class="key-pill">36. <b>g</b></div><div class="key-pill">37. <b>d</b></div><div class="key-pill">38. <b>f</b></div><div class="key-pill">39. <b>e</b></div><div class="key-pill">40. <b>j</b></div></div>
+<div class="notes-topic-title">Part IV — True or False</div>
+<div class="key-grid"><div class="key-pill">41. <b>TRUE</b></div><div class="key-pill">42. <b>FALSE</b></div><div class="key-pill">43. <b>TRUE</b></div><div class="key-pill">44. <b>FALSE</b></div><div class="key-pill">45. <b>TRUE</b></div><div class="key-pill">46. <b>FALSE</b></div><div class="key-pill">47. <b>TRUE</b></div><div class="key-pill">48. <b>FALSE</b></div><div class="key-pill">49. <b>TRUE</b></div><div class="key-pill">50. <b>TRUE</b></div></div>
+<div class="notes-topic-title">Part V — Order of the Rite of Matrimony</div>
+<div class="key-grid"><div class="key-pill">51. <b>5</b></div><div class="key-pill">52. <b>1</b></div><div class="key-pill">53. <b>4</b></div><div class="key-pill">54. <b>6</b></div><div class="key-pill">55. <b>2</b></div><div class="key-pill">56. <b>3</b></div></div>
+<div class="notes-topic-title">Part VI — Short Answer (sample answers)</div>
+<div class="ptest-q"><b>57.</b> Prayer and Scripture reading; confession; laying on of hands by the priest; anointing with blessed oil or chrism; Holy Communion or Holy Viaticum.</div><div class="ptest-q"><b>58.</b> Easing of suffering with strength to cope with it; physical healing of mind and body; and forgiveness of sins.</div><div class="ptest-q"><b>59.</b> The anointing of oil is a sign of the Holy Spirit, of strength, and of health. The laying on of hands is a sign of the healing touch of Jesus and the care of God and the Church.</div><div class="ptest-q"><b>60.</b> They trust, love, and believe in each other; serve each other&#x27;s needs; respect and forgive each other; express their feelings and thoughts lovingly; and are faithful to one another.</div><div class="ptest-q"><b>61.</b> The father&#x27;s favoritism toward Joseph and the brothers&#x27; jealousy of him.</div><div class="ptest-q"><b>62.</b> Communicate openly and honestly in a loving and forgiving atmosphere, admit mistakes, and, as St. Teresa of Calcutta said, &quot;pray and forgive.&quot;</div>
+        </div>
+      </div>
+
+      <div class="notes-section" id="tab-raw">
+        <div class="rawnotes-intro">
+          📌 This is the original content of the uploaded lesson, unedited — for whenever you need to check the exact wording or an example not covered in the reviewer.
+        </div>
+        <div class="rawnotes-doc">
+<h3 class="doc-heading">Anointing of the Sick</h3>
+<h3 class="doc-heading">We Believe</h3>
+<p>During His public life, Jesus reached out to those who were suffering from sickness. He healed them physically and spiritually.</p>
+<p>Today, Jesus continues to be a Healer through the Catholic Church. His healing presence is experienced in the sacrament of anointing of the sick. Besides reconciliation, anointing of the sick is also a sacrament of healing. The Church gives it to the sick, aged, and dying. Jesus brings physical and spiritual healing through this sacrament. It encourages the sick to trust in God. It also gives them strength to resist temptation and anxiety about death. (CFC 1867, CCC 1499)</p>
+<p>The following are the key elements in the sacrament of anointing of the sick:</p>
+<ol type="1">
+<li><p><strong>Prayer and Scripture reading</strong> which serves as a source of comfort in times of pain and suffering caused by sickness</p></li>
+<li><p><strong>Confession</strong> which reconciles the sick with God, the Church, and others</p></li>
+<li><p><strong>Laying on of hands by the priest</strong> which is a sign of the healing touch of Christ and the care of the Church community</p></li>
+<li><p><strong>Anointing with blessed oil or chrism</strong> on the forehead and hands which provides the sick with the grace of the Holy Spirit as well as mental, physical, emotional, and spiritual strength</p></li>
+<li><p><strong>Holy Communion or the Final Eucharist called Holy Viaticum</strong> which is given to the dying Christian. It vividly pictures Christ as leading and accompanying him or her into heaven. (CFC 1873)</p></li>
+</ol>
+<p>All of us have experienced sickness at some point in our lives. Sickness has both positive and negative effects on us. It helps us mature in faith. It helps us see what matters more in life. Faith makes us understand better the mystery of suffering and therefore enables us to bear pain more bravely. On the other hand, sickness can lead to anguish or depression. It makes us feel useless, afraid, insecure, and helpless. It tempts us to lose faith and hope. It makes us blame God and ourselves. As God's children, we are called to show kindness, patience, care, support, gentleness, and love to those who are sick. We should visit them and pray for them.</p>
+<h3 class="doc-heading">B. Write True if the statement is correct and False if it is not.</h3>
+<p>_______ 1. Anointing of the sick is a sacrament of healing.</p>
+<p>_______ 2. Anointing of the sick brings Christ's compassionate healing love by giving strength, forgiveness, and cure to people who are suffering serious sickness.</p>
+<p>_______ 3. Only the bishop can administer anointing of the sick.</p>
+<p>_______ 4. Viaticum is the reception of the Holy Communion when there is a probable danger of death.</p>
+<p>_______ 5. Chrism is used to provide healing.</p>
+<h3 class="doc-heading">We Remember</h3>
+<p>All people need and want special care and attention when they are sick. They need understanding, patience, comfort, care, compassion, support, and love. Sometimes, our simple words, actions, or mere presence could already bring healing to them, maybe not physically but psychologically. These can encourage and strengthen them to face their suffering and pain.</p>
+<p>The sacrament of anointing of the sick celebrates God's healing and strength. The Church gives it to the sick, the aged, and dying. Jesus brings physical and spiritual healing through this sacrament.</p>
+<h3 class="doc-heading">We Believe</h3>
+<p>Since the early days of the Church, the Christian communities have continued the healing ministry of Jesus. Special signs were used to bring the healing presence of Jesus to those who were sick and dying.</p>
+<p>Today, the Church still uses the same signs to show to sick people that Jesus is present and healing them. In the sacrament of anointing of the sick especially in the two gestures of anointing with oil and the laying on of hands, the Church hopes that the sick would recover and may be given strength by the power of the Holy Spirit (CFC 1830–1831).</p>
+<p>The <strong>anointing of oil</strong> is a sign of the Holy Spirit, of strength, and of health.</p>
+<p>The <strong>laying on of hands</strong> is a sign of the healing touch of Jesus and the care of God and the Church.</p>
+<p>Important symbolic actions and words used during the anointing of the sick can also help us understand the meaning and importance of this sacrament.</p>
+<ol type="1">
+<li><p>The priest visits the sick as sign of the Church's concern for the sick.</p></li>
+<li><p>The priest places his hands on the head of the sick and anoints the forehead and hands with blessed oil as he prays these words: "Through this holy anointing may the Lord in His love and mercy help you with the grace of the Holy Spirit. May the Lord who frees you from sin save you and raise you up." (Pastoral Care of the Sick: Rites of Anointing and Viaticum)</p></li>
+<li><p>The priest prays to the risen Jesus. He prays for three things for the sick person: (a) easing of suffering, with strength to cope with it; (b) physical healing of mind and body; and (c) forgiveness of sins.</p></li>
+</ol>
+<h3 class="doc-heading">B. Answer the following questions.</h3>
+<ol type="1">
+<li><p>What can sick people hope for in celebrating the sacrament of anointing of the sick?</p></li>
+<li><p>What are the three prayers the priest prays for the sick?</p></li>
+<li><p>How can you participate in God's healing love?</p></li>
+</ol>
+<h3 class="doc-heading">The First Husband and Wife</h3>
+<p>God made a man from the dust of the ground and breathed into his nostrils the breath of life, and the man became a living being. Then God said, "It is not good for the man to be alone. I will make a helper suitable for him."</p>
+<p>So God caused the man to fall into a deep sleep. While the man was sleeping, God took one of the man's ribs and made a woman from it. Then He brought her to the man.</p>
+<p>The man said, "This is now bone of my bones and flesh of my flesh; she shall be called 'woman,' for she was taken out of man."</p>
+<p>That is why a man leaves his father and mother and is united to his wife, and they become one flesh. (Genesis 2:7, 18, 21–24)</p>
+<h3 class="doc-heading">B. Answer these questions.</h3>
+<ol type="1">
+<li><p>How did God make the first man and woman?</p></li>
+<li><p>Why do you think God said that it was not good for the man to be alone?</p></li>
+<li><p>What did the man call his wife?</p></li>
+<li><p>Why does a man leave his father and mother?</p></li>
+</ol>
+<h3 class="doc-heading">We Believe</h3>
+<p>Every human person is a relational being. As human persons, we develop relationships outside of our families. We reach out to others in friendship.</p>
+<p><strong>Friendship</strong> is a relationship that we should treasure. We share our thoughts, ideas, interests, dreams, secrets, and even problems with our friends. A true friend brings out our best qualities. The qualities we look for in a friend are the same qualities we should be willing to share as a friend.</p>
+<p>Friendship forms the basis of all relationships, especially the lifelong relationship between a man and a woman called marriage.</p>
+<p>God said that it is not good for man to be alone. So He made a suitable partner for him. This means that man and woman need each other. They need to love, care for, and help one another.</p>
+<p>The Bible also says, "That is why a man leaves his father and mother and is united to his wife, and they become one flesh." This means that man and woman were created for one another. They form an unbreakable union of their two lives. (CCC 1605)</p>
+<p>In the Church, the love between a man and a woman is blessed. This blessing is given in the sacrament of matrimony. Matrimony is also known as marriage.</p>
+<p>Marriage is one of the sacraments of vocation. It is the union of a man and a woman as husband and wife. They trust, love, and believe in each other. They serve each other's needs. They respect and forgive each other. They express their feelings and thoughts to each other lovingly. They are faithful to one another. (CFC 1912)</p>
+<p>Married couples should pray for God's guidance to help them overcome marital problems. They should be reminded by their marriage vow or promise that says: "To be of one heart and soul, from this day forward, for better, for worse, for richer, for poorer, in sickness and in health, until death do us part."</p>
+<p>The bride and groom themselves are the ministers of the sacrament of matrimony. The priest represents the Church and presides over the marriage ceremony. When contracted in the presence of a priest and two witnesses, the marriage ceremony becomes valid (Canon 1108 § 1).</p>
+<p>The following symbols are used in a wedding ceremony to explain the deeper meaning of the sacrament of matrimony:</p>
+<ol type="1">
+<li><p><strong>Rings</strong> as symbol of love and fidelity</p></li>
+<li><p><strong>Lighted candle</strong> as symbol of Christ, the Light of the world who will give light to the married life of the couple</p></li>
+<li><p><strong>Veil</strong> as symbol of the holiness of marriage and the commitment and total self-giving of the couple to one another</p></li>
+<li><p><strong>Cord</strong> as symbol of unity and unbreakable bond between the husband and wife</p></li>
+<li><p><strong>Arrhae</strong> as symbol of material possessions and willingness of the husband to provide for the material needs of his wife and children</p></li>
+</ol>
+<h3 class="doc-heading">Rite of the Sacrament of Matrimony</h3>
+<p>Matrimony is normally celebrated within the Mass, after the reading of the Gospel and the homily and before the Prayer of the Faithful (SC 78).</p>
+<ol type="1">
+<li><p><strong>Introduction.</strong> After the homily the priest addresses the couple and requests them to state their intentions publicly.</p></li>
+<li><p><strong>Statement of Intention.</strong> The couple states their intention to be married. They testify that they have come freely and without reservation and that they will love and honor each other for the rest of their lives. They accept the children that God may give them and bring them up according to the law of Christ and the Catholic faith.</p></li>
+<li><p><strong>Giving of Consent.</strong> The priest instructs the bride and groom to join hands and express their total commitment and lifelong fidelity to one another. They exchange marriage vows.</p></li>
+<li><p><strong>Reception of Consent.</strong> The priest, in the name of God and the community, accepts the consent of the couple and blesses their commitment. They are acknowledged or welcomed as husband and wife.</p></li>
+<li><p><strong>Blessing of Arrhae and Exchange of Rings.</strong> The arrhae is blessed and is given by the husband to his wife. The couple exchange rings after these have been blessed as a symbol of their love and fidelity.</p></li>
+<li><p><strong>Nuptial Blessings.</strong> A long nuptial blessing follows after the Lord's Prayer.</p></li>
+</ol>
+<h3 class="doc-heading">A. Read the scriptural passage prayerfully. It is a reminder of the importance of love in any relationships.</h3>
+<p>Love is patient, love is kind. It does not envy, it does not boast, it is not proud. It does not dishonor others, it is not self-seeking, it is not easily angered, it keeps no record of wrongs. Love does not delight in evil but rejoices with the truth. It always protects, always trusts, always hopes, always perseveres.</p>
+<p>Love never fails. But where there are prophecies, they will cease; where there are tongues, they will be stilled; where there is knowledge, it will pass away. (1 Corinthians 13:4–8)</p>
+<h3 class="doc-heading">B. Decorate the bookmark and memorize the verse.</h3>
+<p>And now these three remain: faith, hope and love. But the greatest of these is love. (1 Corinthians 13:13)</p>
+<h3 class="doc-heading">A. Answer the following questions.</h3>
+<ol type="1">
+<li><p>What is matrimony or marriage?</p></li>
+<li><p>What are the important responsibilities of married couples?</p></li>
+<li><p>How should husbands and wives treat each other?</p></li>
+<li><p>How can you be a better friend to others?</p></li>
+</ol>
+<h3 class="doc-heading">B. Match column A with column B. Write the letter of your answer in the blank.</h3>
+<table style="width:99%;">
+<colgroup>
+<col style="width: 6%" />
+<col style="width: 78%" />
+<col style="width: 3%" />
+<col style="width: 10%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th style="text-align: left;"><strong>Column A</strong></th>
+<th></th>
+<th style="text-align: left;"><strong>Column B</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>____</td>
+<td style="text-align: left;">1. It forms the basis of all relationships.</td>
+<td>a.</td>
+<td style="text-align: left;">marriage</td>
+</tr>
+<tr class="even">
+<td>____</td>
+<td style="text-align: left;">2. He represents the Church and presides over the marriage ceremony.</td>
+<td>b.</td>
+<td style="text-align: left;">bride and groom</td>
+</tr>
+<tr class="odd">
+<td>____</td>
+<td style="text-align: left;">3. These are the symbol of love and fidelity.</td>
+<td>c.</td>
+<td style="text-align: left;">rings</td>
+</tr>
+<tr class="even">
+<td>____</td>
+<td style="text-align: left;">4. It is another word for matrimony.</td>
+<td>d.</td>
+<td style="text-align: left;">lighted candle</td>
+</tr>
+<tr class="odd">
+<td>____</td>
+<td style="text-align: left;">5. They are the ministers of the sacrament of matrimony.</td>
+<td>e.</td>
+<td style="text-align: left;">veil</td>
+</tr>
+<tr class="even">
+<td>____</td>
+<td style="text-align: left;">6. It is a symbol of material possessions and willingness of the husband to provide for the material needs of his wife and children.</td>
+<td>f.</td>
+<td style="text-align: left;">cord</td>
+</tr>
+<tr class="odd">
+<td>____</td>
+<td style="text-align: left;">7. It is a symbol of Christ.</td>
+<td>g.</td>
+<td style="text-align: left;">arrhae</td>
+</tr>
+<tr class="even">
+<td>____</td>
+<td style="text-align: left;">8. It is a symbol of unity.</td>
+<td>h.</td>
+<td style="text-align: left;">friendship</td>
+</tr>
+<tr class="odd">
+<td>____</td>
+<td style="text-align: left;">9. It is a symbol of the holiness of marriage.</td>
+<td>i.</td>
+<td style="text-align: left;">priest</td>
+</tr>
+<tr class="even">
+<td>____</td>
+<td style="text-align: left;">10. It is where the love between a man and a woman can be blessed.</td>
+<td>j.</td>
+<td style="text-align: left;">Church</td>
+</tr>
+</tbody>
+</table>
+<p>Matrimony is a sacrament of vocation. It celebrates love and unity between the husband and wife. Married couples should be reminded by their marriage vow to remain faithful to each other until death separates them. We thank God for the gift of marriage. We should pray for married couples.</p>
+<h3 class="doc-heading">A. Read the Story</h3>
+<h3 class="doc-heading">Joseph's Dreams</h3>
+<p>Joseph, a young man of seventeen, was tending the flocks with his brothers, the sons of Bilhah and the sons of Zilpah, his father's wives, and he brought their father a hard report about them.</p>
+<p>Now Israel loved Joseph more than any of his other sons, because he had been born to him in his old age; and he made an ornate robe for him. When his brothers saw that their father loved him more than any of them, they hated him and could not speak a kind word to him.</p>
+<p>Joseph had a dream, and when he told it to his brothers, they hated him all the more. He said to them, “Listen to this dream I had: We were binding sheaves of grain out in the field when suddenly my sheaf rose and stood upright, while your sheaves gathered around mine and bowed down to it.”</p>
+<p>His brothers said to him, “Do you intend to reign over us? Will you actually rule us?” And they hated him all the more because of his dream and what he had said.</p>
+<p>Then he had another dream, and he told it to his brothers. “Listen,” he said, “I had another dream, and this time the sun and moon and eleven stars were bowing down to me.”</p>
+<p>When he told his father as well as his brothers, his father rebuked him and said, “What is this dream you had? Will your mother and I and your brothers actually come and bow down to the ground before you?” His brothers were jealous of him, but his father kept the matter in mind. (Genesis 37:2–11)</p>
+<h3 class="doc-heading">B. Answer the Following Questions</h3>
+<p>1. Whom did Israel (Jacob) love more than any of his other sons? Why did he love him more?</p>
+<p>2. What did his father give Joseph?</p>
+<p>3. What was the first dream of Joseph about?</p>
+<p>4. What was his second dream about?</p>
+<p>5. How did his brothers react to his dreams? Why do you think they reacted that way?</p>
+<p>6. What is the reason for their family's problem?</p>
+<h3 class="doc-heading">C. We Believe</h3>
+<p>The story of Joseph reveals that favoritism and jealousy can cause problems in the relationships in the family. His father's favoritism and his brothers' jealousy brought grief, guilt, suffering, and division in the family.</p>
+<p>The same problems threaten the unity and love among family members today. Hence parents and children alike must learn how to communicate with one another openly and honestly in a loving and forgiving atmosphere. They must also be willing to admit mistakes and the whole family must look beyond itself and strive to offer Christian witness through the Gospel values of justice and protection of human rights (CFC 1027). St. Teresa of Calcutta even gave this advice to a married couple struggling in their relationship: “Pray and forgive.” And to young people from violent homes, “I say pray and forgive.” And again even to single mother with no family support: “Pray and forgive.”</p>
+<p>As followers of Jesus we have the responsibilities to protect and preserve the sanctity of the family and of marriage. The foundation of the family is marriage. It is the basis for a common life of man, woman, and children. Only in marriage is unconditional reliability guaranteed for its roots, protection, and room for development (DOCAT, 125).</p>
+<p>In marriage or matrimony, the married couples are called to commit themselves to form a Christian family where God's love is experienced through the parents and children (GS 48). Parents must work hard to ensure the happiness of the family by loving one another as they take good care of their children. Children, on the other hand, must show love, gratitude, and honor to their parents by respecting, obeying, appreciating, and taking good care of them in their old age.</p>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ── Hidden Print Area (Practice Test + Answer Key) ── -->
+<div id="print-area">
+<div class="p-cover"><div class="p-icon">💒</div><h1>Religion — Anointing, Marriage &amp; Family Practice Test</h1><div class="p-sub">Anointing of the Sick · Friendship &amp; Matrimony · Joseph's Dreams · Pray and Forgive</div>
+<div class="p-info-box"><div><strong>Name:</strong> _____________________________________</div><div><strong>Section:</strong> ___________________ &nbsp; <strong>Date:</strong> ___________________</div><div><strong>Score:</strong> _______ / 62</div></div>
+<div class="p-instructions"><strong>Instructions:</strong> Read each item carefully. Write your answer on the blank provided (Parts I, III, IV, V), write the letter of the correct answer (Part II), or answer in complete sentences (Part VI). Good luck!</div></div>
+<h2 class="p-part-title">Part I — Name the Term</h2>
+<div class="p-bank"><strong>Word Bank (use each once):</strong> rings &middot; lighted candle &middot; veil &middot; cord &middot; arrhae &middot; Viaticum &middot; chrism &middot; friendship &middot; marriage &middot; introduction</div>
+<div class="p-q"><b>1.</b> The symbol of love and fidelity in a wedding. <span class="p-blank"></span></div>
+<div class="p-q"><b>2.</b> The symbol of Christ, the Light of the world. <span class="p-blank"></span></div>
+<div class="p-q"><b>3.</b> The symbol of the holiness of marriage and the couple&#x27;s total self-giving. <span class="p-blank"></span></div>
+<div class="p-q"><b>4.</b> The symbol of unity and an unbreakable bond. <span class="p-blank"></span></div>
+<div class="p-q"><b>5.</b> The symbol of material possessions and the husband&#x27;s willingness to provide. <span class="p-blank"></span></div>
+<div class="p-q"><b>6.</b> The Holy Communion given to a dying Christian. <span class="p-blank"></span></div>
+<div class="p-q"><b>7.</b> The blessed oil placed on the forehead and hands of the sick. <span class="p-blank"></span></div>
+<div class="p-q"><b>8.</b> The relationship that forms the basis of all relationships. <span class="p-blank"></span></div>
+<div class="p-q"><b>9.</b> The lifelong relationship between a man and a woman. <span class="p-blank"></span></div>
+<div class="p-q"><b>10.</b> The first step in the Rite of Matrimony. <span class="p-blank"></span></div>
+<h2 class="p-part-title">Part II — Multiple Choice</h2>
+<div class="p-q"><b>11.</b> Who are the ministers of the sacrament of matrimony?<br><span class="p-opt">a. the parents</span><span class="p-opt">b. the bride and groom</span><span class="p-opt">c. the priest</span><span class="p-opt">d. the witnesses</span></div>
+<div class="p-q"><b>12.</b> Which sacrament is given to the sick, the aged, and the dying?<br><span class="p-opt">a. anointing of the sick</span><span class="p-opt">b. matrimony</span><span class="p-opt">c. baptism</span><span class="p-opt">d. confirmation</span></div>
+<div class="p-q"><b>13.</b> To whom is the Holy Viaticum given?<br><span class="p-opt">a. the newly married</span><span class="p-opt">b. a newborn baby</span><span class="p-opt">c. the priest</span><span class="p-opt">d. the dying Christian</span></div>
+<div class="p-q"><b>14.</b> Where does the priest anoint the sick with blessed oil?<br><span class="p-opt">a. on the shoulders</span><span class="p-opt">b. on the knees</span><span class="p-opt">c. on the forehead and hands</span><span class="p-opt">d. on the feet</span></div>
+<div class="p-q"><b>15.</b> The laying on of hands is a sign of ____.<br><span class="p-opt">a. forgiveness only</span><span class="p-opt">b. the healing touch of Christ and the care of the Church</span><span class="p-opt">c. the end of life</span><span class="p-opt">d. the wedding vow</span></div>
+<div class="p-q"><b>16.</b> Which is one of the three things the priest prays for the sick?<br><span class="p-opt">a. forgiveness of sins</span><span class="p-opt">b. a long life</span><span class="p-opt">c. wealth</span><span class="p-opt">d. a new house</span></div>
+<div class="p-q"><b>17.</b> From what did God make the first man?<br><span class="p-opt">a. a rib</span><span class="p-opt">b. water</span><span class="p-opt">c. a tree</span><span class="p-opt">d. the dust of the ground</span></div>
+<div class="p-q"><b>18.</b> From what did God make the woman?<br><span class="p-opt">a. a cloud</span><span class="p-opt">b. a seed</span><span class="p-opt">c. one of the man&#x27;s ribs</span><span class="p-opt">d. the dust of the ground</span></div>
+<div class="p-q"><b>19.</b> What did the man call his wife?<br><span class="p-opt">a. helper</span><span class="p-opt">b. woman</span><span class="p-opt">c. Eve</span><span class="p-opt">d. sister</span></div>
+<div class="p-q"><b>20.</b> What forms the basis of all relationships?<br><span class="p-opt">a. friendship</span><span class="p-opt">b. money</span><span class="p-opt">c. school</span><span class="p-opt">d. work</span></div>
+<div class="p-q"><b>21.</b> Matrimony is a sacrament of ____.<br><span class="p-opt">a. initiation</span><span class="p-opt">b. healing</span><span class="p-opt">c. penance</span><span class="p-opt">d. vocation</span></div>
+<div class="p-q"><b>22.</b> A marriage is valid when it is contracted before ____.<br><span class="p-opt">a. one witness</span><span class="p-opt">b. no one</span><span class="p-opt">c. a priest and two witnesses</span><span class="p-opt">d. a bishop only</span></div>
+<div class="p-q"><b>23.</b> Which symbol stands for Christ, the Light of the world?<br><span class="p-opt">a. arrhae</span><span class="p-opt">b. lighted candle</span><span class="p-opt">c. veil</span><span class="p-opt">d. cord</span></div>
+<div class="p-q"><b>24.</b> Which symbol stands for unity?<br><span class="p-opt">a. cord</span><span class="p-opt">b. rings</span><span class="p-opt">c. veil</span><span class="p-opt">d. candle</span></div>
+<div class="p-q"><b>25.</b> Which step comes right after the homily?<br><span class="p-opt">a. nuptial blessings</span><span class="p-opt">b. blessing of arrhae</span><span class="p-opt">c. giving of consent</span><span class="p-opt">d. introduction</span></div>
+<div class="p-q"><b>26.</b> When does the long nuptial blessing follow?<br><span class="p-opt">a. before the homily</span><span class="p-opt">b. after the Introduction</span><span class="p-opt">c. after the Lord&#x27;s Prayer</span><span class="p-opt">d. before the Gospel</span></div>
+<div class="p-q"><b>27.</b> According to 1 Corinthians 13, love is ____.<br><span class="p-opt">a. easily angered</span><span class="p-opt">b. patient and kind</span><span class="p-opt">c. proud and angry</span><span class="p-opt">d. self-seeking</span></div>
+<div class="p-q"><b>28.</b> Why did Israel love Joseph more than his other sons?<br><span class="p-opt">a. he was born in Israel&#x27;s old age</span><span class="p-opt">b. he was the strongest</span><span class="p-opt">c. he was the oldest</span><span class="p-opt">d. he was the richest</span></div>
+<div class="p-q"><b>29.</b> What was Joseph&#x27;s second dream about?<br><span class="p-opt">a. sheaves of grain</span><span class="p-opt">b. a flock of sheep</span><span class="p-opt">c. a ladder to heaven</span><span class="p-opt">d. the sun, moon, and eleven stars bowing down</span></div>
+<div class="p-q"><b>30.</b> What advice did St. Teresa of Calcutta give to struggling families?<br><span class="p-opt">a. &quot;Move away.&quot;</span><span class="p-opt">b. &quot;Stay silent.&quot;</span><span class="p-opt">c. &quot;Pray and forgive.&quot;</span><span class="p-opt">d. &quot;Work harder.&quot;</span></div>
+<div class="p-break"></div>
+<h2 class="p-part-title">Part III — Matching Type</h2>
+<div class="p-bank"><strong>Column B:</strong> a. marriage &middot; b. bride and groom &middot; c. rings &middot; d. lighted candle &middot; e. veil &middot; f. cord &middot; g. arrhae &middot; h. friendship &middot; i. priest &middot; j. Church</div>
+<div class="p-q"><b>31.</b> It forms the basis of all relationships. <span class="p-blank"></span></div>
+<div class="p-q"><b>32.</b> He represents the Church and presides over the marriage ceremony. <span class="p-blank"></span></div>
+<div class="p-q"><b>33.</b> These are the symbol of love and fidelity. <span class="p-blank"></span></div>
+<div class="p-q"><b>34.</b> It is another word for matrimony. <span class="p-blank"></span></div>
+<div class="p-q"><b>35.</b> They are the ministers of the sacrament of matrimony. <span class="p-blank"></span></div>
+<div class="p-q"><b>36.</b> It is a symbol of material possessions and the husband&#x27;s willingness to provide for his wife and children. <span class="p-blank"></span></div>
+<div class="p-q"><b>37.</b> It is a symbol of Christ. <span class="p-blank"></span></div>
+<div class="p-q"><b>38.</b> It is a symbol of unity. <span class="p-blank"></span></div>
+<div class="p-q"><b>39.</b> It is a symbol of the holiness of marriage. <span class="p-blank"></span></div>
+<div class="p-q"><b>40.</b> It is where the love between a man and a woman can be blessed. <span class="p-blank"></span></div>
+<h2 class="p-part-title">Part IV — True or False</h2>
+<div class="p-q"><b>41.</b> Anointing of the sick is a sacrament of healing. <span class="p-blank"></span></div>
+<div class="p-q"><b>42.</b> Only the bishop can administer anointing of the sick. <span class="p-blank"></span></div>
+<div class="p-q"><b>43.</b> Viaticum is Holy Communion given when there is a probable danger of death. <span class="p-blank"></span></div>
+<div class="p-q"><b>44.</b> The man called his wife &quot;Eve&quot; in Genesis 2. <span class="p-blank"></span></div>
+<div class="p-q"><b>45.</b> Friendship forms the basis of all relationships. <span class="p-blank"></span></div>
+<div class="p-q"><b>46.</b> The veil is a symbol of material possessions. <span class="p-blank"></span></div>
+<div class="p-q"><b>47.</b> The couple exchange rings after they have been blessed. <span class="p-blank"></span></div>
+<div class="p-q"><b>48.</b> Love keeps a record of wrongs. <span class="p-blank"></span></div>
+<div class="p-q"><b>49.</b> Joseph&#x27;s brothers were jealous of him. <span class="p-blank"></span></div>
+<div class="p-q"><b>50.</b> Favoritism and jealousy can bring division in a family. <span class="p-blank"></span></div>
+<div class="p-break"></div>
+<h2 class="p-part-title">Part V — Order of the Rite of Matrimony</h2>
+<div class="p-bank">Write <b>1</b> to <b>6</b> to show the correct order of the steps in the Rite of Matrimony.</div>
+<div class="p-q"><b>51.</b> Blessing of Arrhae and Exchange of Rings <span class="p-blank"></span></div>
+<div class="p-q"><b>52.</b> Introduction <span class="p-blank"></span></div>
+<div class="p-q"><b>53.</b> Reception of Consent <span class="p-blank"></span></div>
+<div class="p-q"><b>54.</b> Nuptial Blessings <span class="p-blank"></span></div>
+<div class="p-q"><b>55.</b> Statement of Intention <span class="p-blank"></span></div>
+<div class="p-q"><b>56.</b> Giving of Consent <span class="p-blank"></span></div>
+<h2 class="p-part-title">Part VI — Short Answer</h2>
+<div class="p-q"><b>57.</b> Name the five key elements in the sacrament of anointing of the sick.<br><br>_________________________________________________<br><br>_________________________________________________</div>
+<div class="p-q"><b>58.</b> What are the three things the priest prays for the sick person?<br><br>_________________________________________________<br><br>_________________________________________________</div>
+<div class="p-q"><b>59.</b> What are the oil and the laying on of hands signs of?<br><br>_________________________________________________<br><br>_________________________________________________</div>
+<div class="p-q"><b>60.</b> How should husbands and wives treat each other?<br><br>_________________________________________________<br><br>_________________________________________________</div>
+<div class="p-q"><b>61.</b> What caused the problems in Joseph&#x27;s family?<br><br>_________________________________________________<br><br>_________________________________________________</div>
+<div class="p-q"><b>62.</b> How can families avoid these problems?<br><br>_________________________________________________<br><br>_________________________________________________</div>
+<div class="p-break"></div><h2 class="p-part-title">✅ Complete Answer Key</h2>
+<div class="p-key-part-title">Part I — Name the Term</div>
+<div class="p-key-grid"><div class="p-key-pill">1. <b>rings</b></div><div class="p-key-pill">2. <b>lighted candle</b></div><div class="p-key-pill">3. <b>veil</b></div><div class="p-key-pill">4. <b>cord</b></div><div class="p-key-pill">5. <b>arrhae</b></div><div class="p-key-pill">6. <b>Viaticum</b></div><div class="p-key-pill">7. <b>chrism</b></div><div class="p-key-pill">8. <b>friendship</b></div><div class="p-key-pill">9. <b>marriage</b></div><div class="p-key-pill">10. <b>introduction</b></div></div>
+<div class="p-key-part-title">Part II — Multiple Choice</div>
+<div class="p-key-grid"><div class="p-key-pill">11. <b>b. the bride and groom</b></div><div class="p-key-pill">12. <b>a. anointing of the sick</b></div><div class="p-key-pill">13. <b>d. the dying Christian</b></div><div class="p-key-pill">14. <b>c. on the forehead and hands</b></div><div class="p-key-pill">15. <b>b. the healing touch of Christ and the care of the Church</b></div><div class="p-key-pill">16. <b>a. forgiveness of sins</b></div><div class="p-key-pill">17. <b>d. the dust of the ground</b></div><div class="p-key-pill">18. <b>c. one of the man&#x27;s ribs</b></div><div class="p-key-pill">19. <b>b. woman</b></div><div class="p-key-pill">20. <b>a. friendship</b></div><div class="p-key-pill">21. <b>d. vocation</b></div><div class="p-key-pill">22. <b>c. a priest and two witnesses</b></div><div class="p-key-pill">23. <b>b. lighted candle</b></div><div class="p-key-pill">24. <b>a. cord</b></div><div class="p-key-pill">25. <b>d. introduction</b></div><div class="p-key-pill">26. <b>c. after the Lord&#x27;s Prayer</b></div><div class="p-key-pill">27. <b>b. patient and kind</b></div><div class="p-key-pill">28. <b>a. he was born in Israel&#x27;s old age</b></div><div class="p-key-pill">29. <b>d. the sun, moon, and eleven stars bowing down</b></div><div class="p-key-pill">30. <b>c. &quot;Pray and forgive.&quot;</b></div></div>
+<div class="p-key-part-title">Part III — Matching Type</div>
+<div class="p-key-grid"><div class="p-key-pill">31. <b>h</b></div><div class="p-key-pill">32. <b>i</b></div><div class="p-key-pill">33. <b>c</b></div><div class="p-key-pill">34. <b>a</b></div><div class="p-key-pill">35. <b>b</b></div><div class="p-key-pill">36. <b>g</b></div><div class="p-key-pill">37. <b>d</b></div><div class="p-key-pill">38. <b>f</b></div><div class="p-key-pill">39. <b>e</b></div><div class="p-key-pill">40. <b>j</b></div></div>
+<div class="p-key-part-title">Part IV — True or False</div>
+<div class="p-key-grid"><div class="p-key-pill">41. <b>TRUE</b></div><div class="p-key-pill">42. <b>FALSE</b></div><div class="p-key-pill">43. <b>TRUE</b></div><div class="p-key-pill">44. <b>FALSE</b></div><div class="p-key-pill">45. <b>TRUE</b></div><div class="p-key-pill">46. <b>FALSE</b></div><div class="p-key-pill">47. <b>TRUE</b></div><div class="p-key-pill">48. <b>FALSE</b></div><div class="p-key-pill">49. <b>TRUE</b></div><div class="p-key-pill">50. <b>TRUE</b></div></div>
+<div class="p-key-part-title">Part V — Order of the Rite of Matrimony</div>
+<div class="p-key-grid"><div class="p-key-pill">51. <b>5</b></div><div class="p-key-pill">52. <b>1</b></div><div class="p-key-pill">53. <b>4</b></div><div class="p-key-pill">54. <b>6</b></div><div class="p-key-pill">55. <b>2</b></div><div class="p-key-pill">56. <b>3</b></div></div>
+<div class="p-key-part-title">Part VI — Short Answer (sample answers)</div>
+<div class="p-q"><b>57.</b> Prayer and Scripture reading; confession; laying on of hands by the priest; anointing with blessed oil or chrism; Holy Communion or Holy Viaticum.</div><div class="p-q"><b>58.</b> Easing of suffering with strength to cope with it; physical healing of mind and body; and forgiveness of sins.</div><div class="p-q"><b>59.</b> The anointing of oil is a sign of the Holy Spirit, of strength, and of health. The laying on of hands is a sign of the healing touch of Jesus and the care of God and the Church.</div><div class="p-q"><b>60.</b> They trust, love, and believe in each other; serve each other&#x27;s needs; respect and forgive each other; express their feelings and thoughts lovingly; and are faithful to one another.</div><div class="p-q"><b>61.</b> The father&#x27;s favoritism toward Joseph and the brothers&#x27; jealousy of him.</div><div class="p-q"><b>62.</b> Communicate openly and honestly in a loving and forgiving atmosphere, admit mistakes, and, as St. Teresa of Calcutta said, &quot;pray and forgive.&quot;</div>
+</div>
+
+</body>
+</html>
